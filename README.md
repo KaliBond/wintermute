@@ -1,18 +1,38 @@
-Welcome to the Common Adaptive Model State (CAMS) Framework
+Common Adaptive Model State — Open Source Civilisation Analysis
+Raison d’être
+CAMS exists to free the study of civilisation from ideology by grounding it in natural systems science. We treat societies not as moral puzzles or political abstractions, but as Complex Adaptive Systems — evolving, learning, and occasionally collapsing under the weight of their own contradictions. CAMS provides a clear language and set of tools to understand that process.
 
-Purpose: CAMS is designed to analyse societal structures as Complex Adaptive Systems (CAS), focusing on the interplay between societal nodes (such as governance, economy, and culture) and their emergent behaviors over time.
+What It Is
+CAMS is a scientifically validated framework for decoding societal behaviour across time and space. It models societies as networks of nine functional nodes — like governance, economy, knowledge, and memory — and measures them across four universal system modes:
 
-Components:
+Coherence (social trust and unity)
 
-Nodes: Coherence, Capacity, Stress, Activity
+Capacity (ability to act and organise)
 
-Interactions: Node interactions are visualised to reflect societal dynamics and evolutionary patterns.
+Stress (pressures faced)
 
+Abstraction (knowledge, symbol use, foresight)
 
-Usage: This framework aids in the quantification and comparison of societies, assisting researchers and analysts in understanding patterns of resilience, adaptation, and evolution across different civilisations.
+These variables reveal the structure beneath the story — showing why some societies thrive, others stagnate, and many fall.
 
-Tools: Included are analytical tools for data collection, scoring, and visualisation, supporting a comprehensive understanding of societal complexities.
+What You Can Do
+CAMS is open-source. Use it to:
 
-Contribution: Your insights and modifications are valuable to us. Please contribute by documenting your findings or suggesting improvements.
+Compare civilisations as systems
 
-Contact: For more information or to discuss collaboration, please reach out to [kari.freyr.4@gmail.com ].
+Detect fragility, resilience, or adaptability
+
+Quantify the health of social networks, not just economies
+
+Forecast transitions before collapse arrives
+
+Share insights, refine metrics, build new datasets
+
+Why It Matters
+History is not random. It’s not destiny either. It’s feedback. CAMS helps us read the loops — the growth spirals, collapse thresholds, and adaptation windows that shape our shared future.
+
+Join Us
+We invite you to explore, expand, and evolve this framework. Document your findings, test hypotheses, and help chart a new course for understanding civilisation not as ideology, but as information embodied in matter.
+
+📬 Contact: kari.freyr.4@gmail.com
+
