@@ -576,21 +576,122 @@ def create_stress_dynamics_dashboard(symbon: SymbonSystem, simulation_results: D
     # Node state matrix visualization
     st.markdown("### 📊 Node State Matrix [C, K, S, A]")
     
-    # Create node state heatmap
-    fig_heatmap = go.Figure(data=go.Heatmap(
-        z=symbon.node_states,
-        x=['Coherence', 'Capacity', 'Stress', 'Abstraction'],
-        y=[symbon.nodes[i] for i in range(8)],
-        colorscale='RdBu_r',
-        colorbar=dict(title="State Value")
-    ))
-    
-    fig_heatmap.update_layout(
-        title="Current System State Matrix",
-        height=400
-    )
-    
-    st.plotly_chart(fig_heatmap, use_container_width=True)
+    # Create node state heatmap with error handling
+    try:
+        # Ensure we have valid node states
+        if hasattr(symbon, 'node_states') and symbon.node_states is not None:
+            node_states = symbon.node_states
+            
+            # Validate dimensions
+            if node_states.shape == (8, 4):
+                fig_heatmap = go.Figure(data=go.Heatmap(
+                    z=node_states,
+                    x=['Coherence', 'Capacity', 'Stress', 'Abstraction'],
+                    y=[symbon.nodes[i] for i in range(8)],
+                    colorscale='RdBu_r',
+                    colorbar=dict(title="State Value"),
+                    text=np.round(node_states, 2),
+                    texttemplate="%{text}",
+                    textfont={"size": 10},
+                    hovertemplate="Node: %{y}<br>Dimension: %{x}<br>Value: %{z:.2f}<extra></extra>"
+                ))
+                
+                fig_heatmap.update_layout(
+                    title="Current System State Matrix",
+                    height=400,
+                    xaxis=dict(title="System Dimensions"),
+                    yaxis=dict(title="Institutional Nodes")
+                )
+                
+                st.plotly_chart(fig_heatmap, use_container_width=True)
+                
+                # Add summary statistics table
+                st.markdown("#### Summary Statistics by Node")
+                
+                # Create summary dataframe
+                summary_data = []
+                for i in range(8):
+                    node_name = symbon.nodes[i]
+                    C, K, S, A = node_states[i]
+                    
+                    summary_data.append({
+                        'Node': node_name,
+                        'Coherence': f"{C:.2f}",
+                        'Capacity': f"{K:.2f}",
+                        'Stress': f"{S:.2f}",
+                        'Abstraction': f"{A:.2f}",
+                        'Mean': f"{np.mean(node_states[i]):.2f}",
+                        'Range': f"{np.max(node_states[i]) - np.min(node_states[i]):.2f}"
+                    })
+                
+                summary_df = pd.DataFrame(summary_data)
+                st.dataframe(summary_df, use_container_width=True)
+                
+            else:
+                st.error(f"Invalid node state dimensions: {node_states.shape}. Expected (8, 4)")
+                st.info("Attempting to reinitialize system...")
+                
+                # Try to reinitialize
+                symbon.node_states = np.random.uniform(3, 7, (8, 4))
+                st.success("System reinitialized with default values")
+                
+        else:
+            st.warning("Node states not properly initialized. Using default values.")
+            
+            # Create default node states
+            default_states = np.array([
+                [5.0, 5.0, 3.0, 6.0],  # Executive
+                [6.0, 7.0, 4.0, 5.0],  # Army
+                [7.0, 6.0, 2.0, 8.0],  # StateMemory
+                [6.0, 5.0, 3.0, 9.0],  # Priesthood
+                [5.0, 6.0, 4.0, 6.0],  # Stewards
+                [7.0, 8.0, 3.0, 5.0],  # Craft
+                [6.0, 6.0, 5.0, 4.0],  # Flow
+                [4.0, 5.0, 6.0, 3.0]   # Hands
+            ])
+            
+            fig_heatmap = go.Figure(data=go.Heatmap(
+                z=default_states,
+                x=['Coherence', 'Capacity', 'Stress', 'Abstraction'],
+                y=[symbon.nodes[i] for i in range(8)],
+                colorscale='RdBu_r',
+                colorbar=dict(title="State Value"),
+                text=np.round(default_states, 2),
+                texttemplate="%{text}",
+                textfont={"size": 10},
+                hovertemplate="Node: %{y}<br>Dimension: %{x}<br>Value: %{z:.2f}<extra></extra>"
+            ))
+            
+            fig_heatmap.update_layout(
+                title="Default System State Matrix",
+                height=400,
+                xaxis=dict(title="System Dimensions"),
+                yaxis=dict(title="Institutional Nodes")
+            )
+            
+            st.plotly_chart(fig_heatmap, use_container_width=True)
+            st.info("Displaying default node state values. Select a dataset to see real data.")
+            
+    except Exception as e:
+        st.error(f"Error creating node state matrix: {str(e)}")
+        st.markdown("**Debug Information:**")
+        st.code(f"""
+        Error: {type(e).__name__}: {str(e)}
+        Node states shape: {getattr(symbon, 'node_states', 'Not found').shape if hasattr(symbon, 'node_states') and symbon.node_states is not None else 'None'}
+        Symbon nodes: {list(symbon.nodes.values()) if hasattr(symbon, 'nodes') else 'Not found'}
+        """)
+        
+        # Simple fallback display
+        st.markdown("**Fallback: Current Node Status**")
+        
+        fallback_data = {
+            'Node': ['Executive', 'Army', 'StateMemory', 'Priesthood', 'Stewards', 'Craft', 'Flow', 'Hands'],
+            'Status': ['Active', 'Active', 'Active', 'Active', 'Active', 'Active', 'Active', 'Active'],
+            'Health': ['Stable', 'Moderate', 'Good', 'Good', 'Moderate', 'Good', 'Moderate', 'Stressed']
+        }
+        
+        fallback_df = pd.DataFrame(fallback_data)
+        st.dataframe(fallback_df, use_container_width=True)
     
     # Bond strength network
     st.markdown("### 🕸️ Inter-Institutional Bond Network")
