@@ -1,0 +1,35 @@
+📁 CAMS DATA INPUT DIRECTORY
+========================
+
+🎯 PURPOSE: Drop your raw CAMS data files here for automatic cleaning and processing.
+
+📋 HOW TO USE:
+1. Copy/paste your data files into this directory
+2. Run: python process_data_input.py
+3. Your cleaned files will appear in the main wintermute directory
+4. Dashboard will automatically detect the new files
+
+📊 SUPPORTED FORMATS:
+- CSV files (.csv)
+- Excel files (.xlsx, .xls) 
+- Text files (.txt) with delimiters
+
+🏛️ EXPECTED DATA STRUCTURE:
+Your files should contain columns for:
+- Year/Date (time period)
+- Nation/Country (nation name)
+- Node/Component (societal element)
+- Coherence/Alignment (-10 to 10)
+- Capacity/Resources (-10 to 10)
+- Stress/Pressure (-10 to 10, usually negative)
+- Abstraction/Innovation (0 to 10)
+
+✅ AUTOMATIC FEATURES:
+- Flexible column name recognition
+- Node name standardization
+- Missing data calculation
+- Data validation and quality checks
+- Backup of original files
+
+🚀 READY TO PROCESS YOUR DATA!
+Drop files here and run the processor.

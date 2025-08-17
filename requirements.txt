@@ -1,0 +1,51 @@
+# CAMS Framework v2.1 - Production Dependencies
+# Core scientific computing stack (exact versions for reproducibility)
+numpy==1.24.3
+pandas==2.0.3
+scipy==1.11.1
+scikit-learn==1.3.0
+
+# Visualization and dashboard
+matplotlib==3.7.2
+plotly==5.15.0
+streamlit==1.25.0
+seaborn==0.12.2
+
+# Network analysis
+networkx==3.1
+
+# Additional dashboard components
+dash==2.10.1
+dash-bootstrap-components==1.4.1
+
+# Time series analysis
+fastdtw==0.3.4
+
+# Interactive computing
+jupyter==1.0.0
+ipywidgets==8.0.7
+
+# Testing dependencies (for development)
+pytest==7.4.0
+pytest-cov==4.1.0
+
+# Data validation
+jsonschema==4.17.3
+pyyaml==6.0.1
+
+# Performance optimizations (optional)
+numba==0.57.1
+
+# Documentation generation (for contributors)
+sphinx==7.1.2
+sphinx-rtd-theme==1.3.0
+
+# Code quality tools (for development)
+black==23.7.0
+flake8==6.0.0
+isort==5.12.0
+
+# Note: TensorFlow is optional for advanced neural network features
+# tensorflow==2.13.0  # Uncomment if using advanced ML components
+
+# Minimum Python version: 3.8

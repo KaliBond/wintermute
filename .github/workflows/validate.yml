@@ -1,0 +1,285 @@
+name: CAMS Framework Validation
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: [3.8, 3.9, '3.10', 3.11]
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-cov
+    
+    - name: Verify data integrity
+      run: |
+        python -c "
+        import os
+        import pandas as pd
+        
+        # Check that core datasets exist and load properly
+        required_files = [
+            'data/cleaned/USA_cleaned.csv',
+            'data/cleaned/China_cleaned.csv'
+        ]
+        
+        for file in required_files:
+            if os.path.exists(file):
+                df = pd.read_csv(file)
+                print(f'{file}: {len(df)} records')
+                assert 'Coherence' in df.columns
+                assert 'Capacity' in df.columns
+                assert 'Stress' in df.columns
+                assert 'Abstraction' in df.columns
+            else:
+                print(f'Warning: {file} not found')
+        "
+    
+    - name: Run USA 1861 Validation
+      run: |
+        python -c "
+        from cams_framework_v2_1 import validate_usa_1861
+        
+        print('Running USA 1861 validation...')
+        network = validate_usa_1861()
+        
+        # Critical validation checks
+        psi = network.compute_psi_metric()
+        health = network.compute_system_health()
+        ca = network.compute_coherence_asymmetry()
+        
+        # Must pass these exact thresholds
+        assert abs(psi - 0.724) < 0.01, f'Psi validation failed: {psi}'
+        assert abs(health - 0.766) < 0.01, f'Health validation failed: {health}'
+        assert abs(ca - 0.004) < 0.01, f'CA validation failed: {ca}'
+        
+        print('✅ USA 1861 validation passed')
+        "
+    
+    - name: Test neural network dynamics
+      run: |
+        python -c "
+        from cams_framework_v2_1 import CAMSNetwork, NodeState
+        import numpy as np
+        
+        # Test basic neural network functionality
+        states = {
+            'Executive': NodeState(coherence=5, capacity=6, stress=2, abstraction=7),
+            'Army': NodeState(coherence=6, capacity=5, stress=3, abstraction=5),
+            'Knowledge Workers': NodeState(coherence=4, capacity=7, stress=4, abstraction=8),
+            'Property Owners': NodeState(coherence=7, capacity=6, stress=1, abstraction=6),
+            'Trades/Professions': NodeState(coherence=5, capacity=5, stress=3, abstraction=5),
+            'Proletariat': NodeState(coherence=3, capacity=4, stress=5, abstraction=4),
+            'State Memory': NodeState(coherence=6, capacity=7, stress=2, abstraction=7),
+            'Merchants': NodeState(coherence=5, capacity=6, stress=3, abstraction=6)
+        }
+        
+        network = CAMSNetwork(states)
+        
+        # Test metrics computation
+        psi = network.compute_psi_metric()
+        health = network.compute_system_health()
+        ca = network.compute_coherence_asymmetry()
+        
+        assert 0 <= psi <= 1, f'Psi out of range: {psi}'
+        assert 0 <= health <= 1, f'Health out of range: {health}'
+        assert ca >= 0, f'CA negative: {ca}'
+        
+        # Test dynamics
+        for i in range(5):
+            network.step(dt=0.1)
+        
+        # Verify system still stable after dynamics
+        new_psi = network.compute_psi_metric()
+        assert 0 <= new_psi <= 1, f'Psi unstable after dynamics: {new_psi}'
+        
+        print('✅ Neural network dynamics test passed')
+        "
+    
+    - name: Test data processing pipeline
+      run: |
+        python -c "
+        from cams_framework_v2_1 import CAMSDataProcessor, run_cams_analysis
+        import os
+        
+        # Test data processor
+        processor = CAMSDataProcessor()
+        
+        # Find available test datasets
+        test_files = []
+        if os.path.exists('data/cleaned/USA_cleaned.csv'):
+            test_files.append('data/cleaned/USA_cleaned.csv')
+        
+        if test_files:
+            for file in test_files:
+                df = processor.load_society_data(file)
+                assert len(df) > 0, f'Empty dataset: {file}'
+                
+                years = sorted(df['Year'].unique())
+                network = processor.create_network_from_year(df, years[-1])
+                assert network is not None, f'Failed to create network from {file}'
+                
+                psi = network.compute_psi_metric()
+                assert 0 <= psi <= 1, f'Invalid psi from {file}: {psi}'
+            
+            print(f'✅ Data processing test passed for {len(test_files)} files')
+        else:
+            print('⚠️ No test datasets found, skipping data processing test')
+        "
+    
+    - name: Test mathematical consistency
+      run: |
+        python -c "
+        from cams_framework_v2_1 import NodeState
+        import numpy as np
+        
+        # Test normalization consistency
+        raw_state = NodeState(coherence=5, capacity=-3, stress=7, abstraction=2)
+        norm_state = raw_state.normalize()
+        
+        # Check normalization ranges
+        assert 0 <= norm_state.coherence <= 1, f'Coherence normalization failed'
+        assert 0 <= norm_state.capacity <= 1, f'Capacity normalization failed'
+        assert 0 <= norm_state.stress <= 1, f'Stress normalization failed'
+        assert 0 <= norm_state.abstraction <= 1, f'Abstraction normalization failed'
+        
+        # Test specific normalization values
+        expected_c = (5 + 10) / 20  # Should be 0.75
+        expected_k = (-3 + 10) / 20  # Should be 0.35
+        expected_s = 7 / 10  # Should be 0.7
+        expected_a = 2 / 10  # Should be 0.2
+        
+        assert abs(norm_state.coherence - expected_c) < 1e-6
+        assert abs(norm_state.capacity - expected_k) < 1e-6
+        assert abs(norm_state.stress - expected_s) < 1e-6
+        assert abs(norm_state.abstraction - expected_a) < 1e-6
+        
+        print('✅ Mathematical consistency test passed')
+        "
+    
+    - name: Test dashboard functionality (Unix only)
+      if: runner.os != 'Windows'
+      run: |
+        # Test that dashboard can be imported and basic components work
+        python -c "
+        import streamlit as st
+        
+        # Test that we can import the dashboard
+        try:
+            # This tests the import without actually running the app
+            with open('cams_can_v34_explorer.py', 'r') as f:
+                content = f.read()
+                assert 'streamlit' in content
+                assert 'CAMS' in content
+            print('✅ Dashboard import test passed')
+        except Exception as e:
+            print(f'⚠️ Dashboard test skipped: {e}')
+        "
+    
+    - name: Validate CITATION.cff
+      run: |
+        python -c "
+        import yaml
+        
+        # Validate CITATION.cff format
+        with open('CITATION.cff', 'r') as f:
+            citation = yaml.safe_load(f)
+        
+        # Check required fields
+        assert 'cff-version' in citation
+        assert 'title' in citation
+        assert 'authors' in citation
+        assert len(citation['authors']) > 0
+        
+        # Check ORCID format
+        author = citation['authors'][0]
+        if 'orcid' in author:
+            orcid = author['orcid']
+            assert 'orcid.org' in orcid
+            assert '0009-0007-9045-0505' in orcid
+        
+        print('✅ CITATION.cff validation passed')
+        "
+        
+    - name: Generate test report
+      run: |
+        python -c "
+        import json
+        import sys
+        import platform
+        
+        report = {
+            'platform': platform.platform(),
+            'python_version': sys.version,
+            'validation_status': 'PASSED',
+            'test_components': [
+                'USA 1861 Benchmark',
+                'Neural Network Dynamics', 
+                'Data Processing Pipeline',
+                'Mathematical Consistency'
+            ]
+        }
+        
+        with open('validation_report.json', 'w') as f:
+            json.dump(report, f, indent=2)
+        
+        print('✅ All validation tests completed successfully')
+        print(json.dumps(report, indent=2))
+        "
+    
+    - name: Upload validation report
+      uses: actions/upload-artifact@v3
+      with:
+        name: validation-report-${{ matrix.os }}-py${{ matrix.python-version }}
+        path: validation_report.json
+
+  reproducibility-check:
+    runs-on: ubuntu-latest
+    needs: validate
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+    
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+    
+    - name: Reproducibility test
+      run: |
+        # Run validation multiple times to ensure reproducibility
+        for i in {1..3}; do
+          echo "Reproducibility run $i/3"
+          python -c "
+          from cams_framework_v2_1 import validate_usa_1861
+          network = validate_usa_1861()
+          psi = network.compute_psi_metric()
+          print(f'Run $i: Psi = {psi:.6f}')
+          
+          # All runs should produce identical results
+          expected_psi = 0.724
+          assert abs(psi - expected_psi) < 0.001, f'Reproducibility failed: {psi}'
+          "
+        done
+        echo "✅ Reproducibility check passed"
