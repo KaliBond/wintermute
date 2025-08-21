@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAMS Power-Type Attractor Space (3D)</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #1a1a1a;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      margin: 20px;
+      color: #fff;
+      font-size: 1.8em;
+    }
+    #plot {
+      width: 95vw;
+      height: 80vh;
+    }
+    #controls {
+      margin: 10px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    button, input {
+      padding: 8px;
+      background: #333;
+      color: white;
+      border: 1px solid #555;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover, input:hover {
+      background: #444;
+    }
+  </style>
+</head>
+<body>
+  <h1>CAMS Attractor Space of Power Types</h1>
+  <div id="controls">
+    <button onclick="toggleTrace(0)">Toggle Technocratic</button>
+    <button onclick="toggleTrace(1)">Toggle Theocratic</button>
+    <button onclick="toggleTrace(2)">Toggle Militarist</button>
+    <button onclick="toggleTrace(3)">Toggle Plutocratic</button>
+    <button onclick="toggleTrace(4)">Toggle Democratic</button>
+    <button onclick="toggleTrace(5)">Toggle Kleptocratic</button>
+    <input type="range" id="timeSlider" min="500" max="3000" value="1500" oninput="updatePlot(this.value)">
+    <span>Steps: <span id="stepValue">1500</span></span>
+  </div>
+  <div id="plot"></div>
+  <script>
+    // Sample Norway data (2025, aggregated for demo)
+    const norwayData = {
+      Executive: { C: 7, K: 10, S: 5, A: 9, NV: 16.5 },
+      Proletariat: { C: 8, K: 9, S: 8, A: 9, NV: 13.5 },
+      'State Memory': { C: 9, K: 9, S: 8, A: 10, NV: 15 }
+    };
+
+    function attractorPath(sigma, rho, beta, steps, dt, color, label, nodeData) {
+      let x = 1, y = 1, z = 1;
+      const xVals = [], yVals = [], zVals = [], texts = [];
+      for (let i = 0; i < steps; i++) {
+        const dx = sigma * (y - x);
+        const dy = x * (rho - z) - y;
+        const dz = x * y - beta * z;
+        x += dx * dt;
+        y += dy * dt;
+        z += dz * dt;
+        xVals.push(x);
+        yVals.push(y);
+        zVals.push(z);
+        texts.push(`Step: ${i}<br>Node: ${label}<br>C: ${nodeData.C}<br>K: ${nodeData.K}<br>S: ${nodeData.S}<br>A: ${nodeData.A}<br>NV: ${nodeData.NV}`);
+      }
+      return {
+        type: 'scatter3d',
+        mode: 'lines',
+        line: { width: 3, color: color },
+        x: xVals,
+        y: yVals,
+        z: zVals,
+        name: label,
+        hoverinfo: 'text',
+        text: texts
+      };
+    }
+
+    const powerTypes = [
+      { label: 'Technocratic', color: 'deepskyblue', sigma: 10, rho: 30, beta: 8/3, node: norwayData['Priesthood / Knowledge Workers'] || norwayData['State Memory'] },
+      { label: 'Theocratic', color: 'indigo', sigma: 8, rho: 45, beta: 3, node: norwayData['State Memory'] },
+      { label: 'Militarist', color: 'crimson', sigma: 12, rho: 50, beta: 2.5, node: norwayData['Army'] || norwayData['Executive'] },
+      { label: 'Plutocratic', color: 'gold', sigma: 9, rho: 40, beta: 2.8, node: norwayData['Property Owners'] || norwayData['Merchants / Shopkeepers'] },
+      { label: 'Democratic', color: 'lime', sigma: 11, rho: 28, beta: 2.7, node: norwayData['Executive'] },
+      { label: 'Kleptocratic', color: 'darkorange', sigma: 7, rho: 55, beta: 3.2, node: norwayData['Proletariat'] }
+    ];
+
+    let currentSteps = 1500;
+    let traceVisibility = powerTypes.map(() => true);
+
+    function generateData(steps) {
+      return powerTypes.map((p, i) => ({
+        ...attractorPath(p.sigma, p.rho, p.beta, steps, 0.01, p.color, p.label, p.node || { C: 0, K: 0, S: 0, A: 0, NV: 0 }),
+        visible: traceVisibility[i]
+      }));
+    }
+
+    const layout = {
+      paper_bgcolor: '#1a1a1a',
+      plot_bgcolor: '#1a1a1a',
+      scene: {
+        xaxis: { title: 'Abstraction (A)', color: 'white', gridcolor: '#555' },
+        yaxis: { title: 'Stress (S)', color: 'white', gridcolor: '#555' },
+        zaxis: { title: 'Control Capacity (K)', color: 'white', gridcolor: '#555' },
+        camera: { eye: { x: 1.5, y: 1.5, z: 1 } }
+      },
+      legend: {
+        font: { color: 'white' },
+        x: 0.05,
+        y: 0.95,
+        bgcolor: 'rgba(0,0,0,0.5)'
+      },
+      margin: { l: 0, r: 0, t: 0, b: 0 }
+    };
+
+    Plotly.newPlot('plot', generateData(currentSteps), layout);
+
+    function toggleTrace(index) {
+      traceVisibility[index] = !traceVisibility[index];
+      Plotly.restyle('plot', 'visible', traceVisibility);
+    }
+
+    function updatePlot(steps) {
+      currentSteps = parseInt(steps);
+      document.getElementById('stepValue').textContent = steps;
+      Plotly.newPlot('plot', generateData(currentSteps), layout);
+    }
+  </script>
+</body>
+</html>
