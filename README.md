@@ -23,6 +23,35 @@ Where:
 - `P_C` = Coherence Penalty (1 - dispersion)
 - `P_A` = Abstraction Penalty (1 - Ā')
 
+## 🚀 CAMS-CAN Integrated Dashboard
+
+**NEW**: Access the complete CAMS-CAN analysis system at [cams-integrated-dashboard.html](cams-integrated-dashboard.html)
+
+### **Key Features**
+- **Interactive Data Upload**: CSV files or manual entry
+- **Real-time Calculations**: All CAMS-CAN formulas implemented
+- **Critical Threshold Alerts**: Automatic risk assessment
+- **Multi-tab Interface**: Dashboard, Data, Formulas, Samples, Validation
+- **Time Series Visualization**: Track system evolution
+- **Network Analysis**: Node relationship mapping
+- **Sample Datasets**: Norway historical, crisis scenarios
+- **Validation Protocol**: Data quality checks
+
+### **Getting Started**
+1. Visit the dashboard
+2. Upload your CSV data (format: Society,Year,Node,Coherence,Capacity,Stress,Abstraction,Node_Value,Bond_Strength)
+3. View automated calculations and visualizations
+4. Download sample datasets for testing
+5. Run validation checks for data quality
+
+### **For Researchers & Practitioners**
+- Use the Model Reference tab for formula documentation
+- Access sample datasets for benchmarking
+- Follow validation protocols for rigorous analysis
+- Export results for further study
+
+**Submit this framework to any AI for thesis testing**: [Download one-shot test file](cams-one-shot-test.txt) - provides complete framework description with Norway data for independent validation.
+
 ## 📊 Analysis Capabilities
 
 ### **System Classification**
