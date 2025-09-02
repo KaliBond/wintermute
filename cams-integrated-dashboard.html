@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMS-CAN Integrated Analysis Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0; padding: 0; background: #f5f7fa; color: #333;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                  color: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; }
+        .section { background: white; padding: 25px; margin: 20px 0; border-radius: 12px; 
+                   box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .metric-card { background: #f8fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #3498db; }
+        .critical { border-left-color: #e74c3c; }
+        .warning { border-left-color: #f39c12; }
+        .healthy { border-left-color: #27ae60; }
+        .input-group { margin: 10px 0; }
+        .input-group label { display: block; font-weight: bold; margin-bottom: 5px; }
+        .input-group input, .input-group select, .input-group textarea { 
+            width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; 
+        }
+        .btn { background: #3498db; color: white; padding: 10px 20px; border: none; 
+               border-radius: 5px; cursor: pointer; margin: 5px; }
+        .btn:hover { background: #2980b9; }
+        .btn-secondary { background: #95a5a6; }
+        .btn-danger { background: #e74c3c; }
+        .formula-ref { background: #ecf0f1; padding: 15px; border-radius: 8px; 
+                       font-family: monospace; margin: 10px 0; }
+        .explanation { background: #e8f4fd; padding: 12px; border-radius: 6px; 
+                       border-left: 3px solid #3498db; margin: 8px 0; }
+        .tabs { display: flex; background: #ecf0f1; border-radius: 8px; margin-bottom: 20px; }
+        .tab { padding: 12px 20px; cursor: pointer; border-radius: 6px; }
+        .tab.active { background: #3498db; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        #dataTable { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        #dataTable th, #dataTable td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        #dataTable th { background: #f2f2f2; }
+        .upload-area { border: 2px dashed #ccc; padding: 20px; text-align: center; 
+                       border-radius: 8px; margin: 10px 0; }
+        .upload-area:hover { border-color: #3498db; background: #f8fafc; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CAMS-CAN Integrated Analysis Dashboard</h1>
+            <p>Complex Adaptive Model State - Comprehensive Analysis & Navigation</p>
+            <p><em>Merge the best of rigorous formalization with actionable insights</em></p>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('dashboard')">Dashboard</div>
+            <div class="tab" onclick="showTab('data')">Data Input</div>
+            <div class="tab" onclick="showTab('formulas')">Model Reference</div>
+            <div class="tab" onclick="showTab('samples')">Sample Datasets</div>
+            <div class="tab" onclick="showTab('validation')">Validation</div>
+        </div>
+
+        <!-- DASHBOARD TAB -->
+        <div id="dashboard" class="tab-content active">
+            <div class="section">
+                <h2>System Overview</h2>
+                <div class="grid">
+                    <div class="metric-card" id="systemHealthCard">
+                        <h3>System Health (H)</h3>
+                        <div id="systemHealth">--</div>
+                        <div class="explanation" id="systemHealthExplanation">Upload data to calculate system metrics</div>
+                    </div>
+                    <div class="metric-card" id="phaseRiskCard">
+                        <h3>Phase Transition Risk (β)</h3>
+                        <div id="phaseRisk">--</div>
+                        <div class="explanation" id="phaseRiskExplanation">System stability indicator</div>
+                    </div>
+                    <div class="metric-card" id="eliteAdaptCard">
+                        <h3>Elite Adaptation (A)</h3>
+                        <div id="eliteAdapt">--</div>
+                        <div class="explanation" id="eliteAdaptExplanation">Leadership system responsiveness</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Node Analysis</h2>
+                <div id="nodeMetrics"></div>
+            </div>
+
+            <div class="section">
+                <h2>Time Series Visualization</h2>
+                <div id="timeSeriesPlot" style="width:100%; height:500px;"></div>
+            </div>
+
+            <div class="section">
+                <h2>Network Visualization</h2>
+                <div id="networkPlot" style="width:100%; height:400px;"></div>
+            </div>
+        </div>
+
+        <!-- DATA INPUT TAB -->
+        <div id="data" class="tab-content">
+            <div class="section">
+                <h2>Data Input Methods</h2>
+                
+                <h3>Method 1: Upload CSV File</h3>
+                <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                    <input type="file" id="fileInput" accept=".csv" style="display:none;" onchange="handleFileUpload(event)">
+                    <p>Click to upload CSV file or drag & drop</p>
+                    <small>Expected format: Society,Year,Node,Coherence,Capacity,Stress,Abstraction,Node_Value,Bond_Strength</small>
+                </div>
+
+                <h3>Method 2: Manual Data Entry</h3>
+                <div class="input-group">
+                    <label for="manualData">Paste CSV data:</label>
+                    <textarea id="manualData" rows="10" placeholder="Society,Year,Node,Coherence,Capacity,Stress,Abstraction,Node_Value,Bond_Strength
+Norway,2025,Executive,7,10,5,9,16.5,3.16
+Norway,2025,Army,7,7,6,7,11.5,2.84
+..."></textarea>
+                </div>
+                <button class="btn" onclick="processManualData()">Process Data</button>
+
+                <h3>Current Dataset</h3>
+                <div style="max-height: 400px; overflow-y: auto;">
+                    <table id="dataTable">
+                        <thead>
+                            <tr><th>Society</th><th>Year</th><th>Node</th><th>Coherence</th><th>Capacity</th><th>Stress</th><th>Abstraction</th><th>Node Value</th><th>Bond Strength</th></tr>
+                        </thead>
+                        <tbody id="dataTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODEL REFERENCE TAB -->
+        <div id="formulas" class="tab-content">
+            <div class="section">
+                <h2>CAMS-CAN Mathematical Framework</h2>
+                
+                <h3>Core Structure</h3>
+                <p>Each society is modeled as an 8-node network with 4-dimensional state vectors:</p>
+                <ul>
+                    <li><strong>Nodes:</strong> Executive, Army, State Memory, Priesthood/Knowledge Workers, Property Owners, Merchants/Shopkeepers, Trades/Professions, Proletariat</li>
+                    <li><strong>Dimensions:</strong> Coherence (C), Capacity (K/P), Stress (S), Abstraction (A)</li>
+                </ul>
+
+                <h3>Node Metrics</h3>
+                <div class="formula-ref">
+                    <strong>Node Value (NV):</strong> NV = C + K - S + 0.5 × A<br>
+                    <strong>Bond Strength (BS):</strong> BS ≈ 0.95 × NV<br>
+                    <strong>Node Fitness:</strong> f_i(t) = C_i + K_i + A_i - |S_i|
+                </div>
+
+                <h3>System Metrics</h3>
+                <div class="formula-ref">
+                    <strong>System Health (H):</strong> H(t) = [∑(EROI_i × K_i)] / [∑|S_i|] × e^(-A(t)/T)<br>
+                    <strong>Phase Transition Risk (β):</strong> β = (σ_stress / μ_health) × complexity_factor<br>
+                    <strong>Resilience (R):</strong> R = (Avg K) / (Avg |S|)
+                </div>
+
+                <h3>Critical Thresholds</h3>
+                <div class="formula-ref">
+                    <strong>System Fragility:</strong> H < 2.5 (High collapse risk)<br>
+                    <strong>Phase Transition:</strong> β > 0.5 (Critical instability)<br>
+                    <strong>Elite Maladaptation:</strong> A < 0 (Leadership failure)<br>
+                    <strong>Resilience Threshold:</strong> R < 1.5 (System vulnerability)
+                </div>
+            </div>
+        </div>
+
+        <!-- SAMPLE DATASETS TAB -->
+        <div id="samples" class="tab-content">
+            <div class="section">
+                <h2>Sample Datasets</h2>
+                <p>Pre-loaded examples for testing and benchmarking:</p>
+                
+                <button class="btn" onclick="loadSampleData('norway')">Norway Historical (1850-2025)</button>
+                <button class="btn" onclick="loadSampleData('crisis')">Crisis Scenario</button>
+                <button class="btn" onclick="loadSampleData('stability')">High Stability Example</button>
+                
+                <div class="explanation">
+                    <h4>Dataset Descriptions:</h4>
+                    <p><strong>Norway Historical:</strong> 175-year dataset showing industrialization, oil discovery, and modern development</p>
+                    <p><strong>Crisis Scenario:</strong> Demonstrates system under stress with phase transition indicators</p>
+                    <p><strong>High Stability:</strong> Example of resilient system with strong institutional coherence</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- VALIDATION TAB -->
+        <div id="validation" class="tab-content">
+            <div class="section">
+                <h2>Validation Protocol</h2>
+                
+                <h3>Data Quality Checks</h3>
+                <div id="validationResults">
+                    <p>Upload data to run validation checks:</p>
+                    <ul>
+                        <li>Range validation (C,K,A: 0-10, S: 0.5-10)</li>
+                        <li>Temporal consistency</li>
+                        <li>Node completeness</li>
+                        <li>Calculation verification</li>
+                    </ul>
+                </div>
+
+                <h3>Interpretation Guidelines</h3>
+                <div class="explanation">
+                    <h4>Using CAMS-CAN for Analysis:</h4>
+                    <p>1. <strong>Historical Analysis:</strong> Track system evolution over time</p>
+                    <p>2. <strong>Crisis Detection:</strong> Monitor threshold crossings</p>
+                    <p>3. <strong>Comparative Studies:</strong> Compare different societies/periods</p>
+                    <p>4. <strong>Scenario Planning:</strong> Model potential futures</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentData = [];
+        
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            // Remove active from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                Papa.parse(file, {
+                    header: true,
+                    complete: function(results) {
+                        currentData = results.data;
+                        updateDataTable();
+                        calculateMetrics();
+                    }
+                });
+            }
+        }
+
+        function processManualData() {
+            const data = document.getElementById('manualData').value;
+            Papa.parse(data, {
+                header: true,
+                complete: function(results) {
+                    currentData = results.data;
+                    updateDataTable();
+                    calculateMetrics();
+                }
+            });
+        }
+
+        function updateDataTable() {
+            const tbody = document.getElementById('dataTableBody');
+            tbody.innerHTML = '';
+            
+            currentData.slice(0, 50).forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.Society || ''}</td>
+                    <td>${row.Year || ''}</td>
+                    <td>${row.Node || ''}</td>
+                    <td>${row.Coherence || ''}</td>
+                    <td>${row.Capacity || ''}</td>
+                    <td>${row.Stress || ''}</td>
+                    <td>${row.Abstraction || ''}</td>
+                    <td>${row.Node_Value || ''}</td>
+                    <td>${row.Bond_Strength || ''}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function calculateMetrics() {
+            if (currentData.length === 0) return;
+            
+            // Calculate system-level metrics
+            const latestYear = Math.max(...currentData.map(d => parseInt(d.Year) || 0));
+            const latestData = currentData.filter(d => parseInt(d.Year) === latestYear);
+            
+            if (latestData.length === 0) return;
+            
+            // System Health calculation
+            const avgCapacity = latestData.reduce((sum, d) => sum + (parseFloat(d.Capacity) || 0), 0) / latestData.length;
+            const avgStress = latestData.reduce((sum, d) => sum + Math.abs(parseFloat(d.Stress) || 0), 0) / latestData.length;
+            const avgAbstraction = latestData.reduce((sum, d) => sum + (parseFloat(d.Abstraction) || 0), 0) / latestData.length;
+            
+            const systemHealth = avgStress > 0 ? (avgCapacity * 15) / avgStress * Math.exp(-avgAbstraction/7) : 0;
+            const resilience = avgStress > 0 ? avgCapacity / avgStress : 0;
+            const phaseRisk = avgStress / Math.max(systemHealth, 0.1);
+            
+            // Update dashboard
+            updateMetricCard('systemHealth', systemHealth, 'systemHealthCard', 'systemHealthExplanation', 
+                systemHealth < 2.5 ? 'CRITICAL: High collapse risk' : 
+                systemHealth < 4.0 ? 'WARNING: System under stress' : 'HEALTHY: System stable');
+                
+            updateMetricCard('phaseRisk', phaseRisk, 'phaseRiskCard', 'phaseRiskExplanation',
+                phaseRisk > 0.5 ? 'CRITICAL: High instability' :
+                phaseRisk > 0.3 ? 'WARNING: Elevated risk' : 'STABLE: Low transition risk');
+                
+            updateMetricCard('eliteAdapt', avgAbstraction, 'eliteAdaptCard', 'eliteAdaptExplanation',
+                avgAbstraction < 3 ? 'CRITICAL: Leadership failure' :
+                avgAbstraction < 6 ? 'WARNING: Adaptation challenges' : 'EFFECTIVE: Good leadership');
+            
+            // Update visualizations
+            createTimeSeriesPlot();
+            createNetworkVisualization();
+            updateNodeMetrics(latestData);
+        }
+
+        function updateMetricCard(elementId, value, cardId, explanationId, explanation) {
+            document.getElementById(elementId).textContent = value.toFixed(2);
+            document.getElementById(explanationId).textContent = explanation;
+            
+            const card = document.getElementById(cardId);
+            card.className = 'metric-card';
+            if (explanation.includes('CRITICAL')) card.classList.add('critical');
+            else if (explanation.includes('WARNING')) card.classList.add('warning');
+            else card.classList.add('healthy');
+        }
+
+        function createTimeSeriesPlot() {
+            const years = [...new Set(currentData.map(d => parseInt(d.Year)))].sort();
+            const traces = [];
+            
+            // System Health over time
+            const healthData = years.map(year => {
+                const yearData = currentData.filter(d => parseInt(d.Year) === year);
+                const avgCapacity = yearData.reduce((sum, d) => sum + (parseFloat(d.Capacity) || 0), 0) / yearData.length;
+                const avgStress = yearData.reduce((sum, d) => sum + Math.abs(parseFloat(d.Stress) || 0), 0) / yearData.length;
+                const avgAbstraction = yearData.reduce((sum, d) => sum + (parseFloat(d.Abstraction) || 0), 0) / yearData.length;
+                return avgStress > 0 ? (avgCapacity * 15) / avgStress * Math.exp(-avgAbstraction/7) : 0;
+            });
+            
+            traces.push({
+                x: years,
+                y: healthData,
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: 'System Health',
+                line: { color: '#3498db', width: 3 }
+            });
+            
+            // Critical threshold line
+            traces.push({
+                x: years,
+                y: Array(years.length).fill(2.5),
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Critical Threshold',
+                line: { color: '#e74c3c', width: 2, dash: 'dash' }
+            });
+            
+            const layout = {
+                title: 'System Health Over Time',
+                xaxis: { title: 'Year' },
+                yaxis: { title: 'System Health (H)' },
+                height: 400
+            };
+            
+            Plotly.newPlot('timeSeriesPlot', traces, layout);
+        }
+
+        function createNetworkVisualization() {
+            const latestYear = Math.max(...currentData.map(d => parseInt(d.Year) || 0));
+            const latestData = currentData.filter(d => parseInt(d.Year) === latestYear);
+            
+            if (latestData.length === 0) return;
+            
+            // Create network graph
+            const nodes = latestData.map(d => d.Node).filter(n => n);
+            const nodeValues = latestData.map(d => parseFloat(d.Node_Value) || 0);
+            
+            const trace = {
+                x: nodes.map((_, i) => Math.cos(2 * Math.PI * i / nodes.length)),
+                y: nodes.map((_, i) => Math.sin(2 * Math.PI * i / nodes.length)),
+                mode: 'markers+text',
+                marker: {
+                    size: nodeValues.map(v => Math.max(10, v * 2)),
+                    color: nodeValues,
+                    colorscale: 'RdYlBu',
+                    showscale: true
+                },
+                text: nodes,
+                textposition: 'middle center',
+                type: 'scatter'
+            };
+            
+            const layout = {
+                title: `Network State (${latestYear})`,
+                showlegend: false,
+                xaxis: { showgrid: false, zeroline: false, visible: false },
+                yaxis: { showgrid: false, zeroline: false, visible: false },
+                height: 400
+            };
+            
+            Plotly.newPlot('networkPlot', [trace], layout);
+        }
+
+        function updateNodeMetrics(latestData) {
+            const nodeMetricsDiv = document.getElementById('nodeMetrics');
+            nodeMetricsDiv.innerHTML = '<div class="grid">' + 
+                latestData.map(d => `
+                    <div class="metric-card">
+                        <h4>${d.Node}</h4>
+                        <p>Coherence: ${d.Coherence} | Capacity: ${d.Capacity}</p>
+                        <p>Stress: ${d.Stress} | Abstraction: ${d.Abstraction}</p>
+                        <p><strong>Node Value: ${d.Node_Value}</strong></p>
+                    </div>
+                `).join('') + '</div>';
+        }
+
+        function loadSampleData(type) {
+            // Sample data loading - in real implementation, load from server
+            const sampleNorway = \`Society,Year,Node,Coherence,Capacity,Stress,Abstraction,Node_Value,Bond_Strength
+Norway,2025,Executive,7,10,5,9,16.5,3.16
+Norway,2025,Army,7,7,6,7,11.5,2.84
+Norway,2025,State Memory,9,9,8,10,15,2.99
+Norway,2025,Priesthood / Knowledge Workers,7,9,4,10,17,3.16
+Norway,2025,Property Owners,8,9,3,9,18.5,3.38
+Norway,2025,Merchants / Shopkeepers,8,9,4,9,17.5,3.28
+Norway,2025,Trades / Professions,9,10,2,10,22,3.63
+Norway,2025,Proletariat,8,9,8,9,13.5,2.96\`;
+
+            if (type === 'norway') {
+                document.getElementById('manualData').value = sampleNorway;
+                processManualData();
+            }
+        }
+
+        // Initialize with sample data
+        window.onload = function() {
+            loadSampleData('norway');
+        };
+    </script>
+</body>
+</html>

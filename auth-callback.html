@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Processing - Neural Nations</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0; padding: 0; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+        }
+        .callback-container {
+            background: white; border-radius: 20px; padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center;
+            max-width: 500px; width: 90%;
+        }
+        .spinner {
+            width: 50px; height: 50px; border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db; border-radius: 50%;
+            animation: spin 1s linear infinite; margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        h1 { color: #2c3e50; margin-bottom: 20px; }
+        p { color: #666; line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <div class="callback-container">
+        <div class="spinner"></div>
+        <h1>🔐 Processing Authentication</h1>
+        <p>Verifying your GitHub credentials and repository access permissions...</p>
+        <p><em>This may take a few moments.</em></p>
+    </div>
+
+    <script>
+        // Handle OAuth callback
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            const state = urlParams.get('state');
+            const error = urlParams.get('error');
+
+            if (error) {
+                window.location.href = 'repository-access.html?error=' + encodeURIComponent(error);
+                return;
+            }
+
+            if (code && state) {
+                // Verify state matches what we stored
+                const storedState = localStorage.getItem('oauth_state');
+                if (state !== storedState) {
+                    window.location.href = 'repository-access.html?error=invalid_state';
+                    return;
+                }
+
+                // Redirect back to repository access with the code
+                window.location.href = `repository-access.html?code=${code}&state=${state}`;
+            } else {
+                // No valid parameters, redirect back
+                window.location.href = 'repository-access.html?error=no_code';
+            }
+        };
+    </script>
+</body>
+</html>

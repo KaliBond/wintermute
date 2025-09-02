@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Repository Access - Neural Nations</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0; padding: 0; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+        }
+        .container { max-width: 700px; width: 90%; }
+        .request-card {
+            background: white; border-radius: 20px; padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { color: #2c3e50; font-size: 2.5em; margin: 0 0 10px 0; }
+        .header p { color: #666; font-size: 1.2em; margin: 0; }
+        
+        .section { margin: 30px 0; }
+        .section h2 { color: #2c3e50; margin-bottom: 15px; }
+        .section p { color: #666; line-height: 1.6; margin-bottom: 15px; }
+        
+        .info-box {
+            background: #f8f9fa; padding: 20px; border-radius: 10px;
+            border-left: 4px solid #3498db; margin: 20px 0;
+        }
+        .info-box h3 { color: #2c3e50; margin: 0 0 15px 0; }
+        .info-box ul { margin: 0; padding-left: 20px; }
+        .info-box li { margin: 8px 0; color: #555; }
+        
+        .request-form {
+            background: #f8f9fa; padding: 30px; border-radius: 15px;
+            margin: 20px 0; border: 2px solid #e9ecef;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block; font-weight: bold; color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 12px; border: 2px solid #ddd;
+            border-radius: 8px; font-size: 1em; box-sizing: border-box;
+        }
+        .form-group textarea { height: 100px; resize: vertical; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none; border-color: #3498db;
+        }
+        
+        .contact-options {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px; margin: 20px 0;
+        }
+        .contact-card {
+            background: white; padding: 25px; border-radius: 15px;
+            border: 2px solid #e9ecef; text-align: center;
+            transition: all 0.3s ease;
+        }
+        .contact-card:hover {
+            border-color: #3498db; transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .contact-card h3 { color: #2c3e50; margin: 0 0 15px 0; }
+        .contact-card p { color: #666; margin: 10px 0; }
+        
+        .btn {
+            background: #3498db; color: white; border: none;
+            padding: 15px 30px; border-radius: 10px; font-size: 1.1em;
+            font-weight: bold; cursor: pointer; text-decoration: none;
+            display: inline-block; transition: all 0.3s ease; margin: 10px 5px;
+        }
+        .btn:hover {
+            background: #2980b9; transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        .btn-secondary { background: #95a5a6; }
+        .btn-secondary:hover { background: #7f8c8d; }
+        .btn-success { background: #27ae60; }
+        .btn-success:hover { background: #2ecc71; }
+        
+        .back-link {
+            text-align: center; margin-top: 30px;
+        }
+        .back-link a {
+            color: #3498db; text-decoration: none; font-weight: bold;
+        }
+        .back-link a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="request-card">
+            <div class="header">
+                <h1>📝 Request Repository Access</h1>
+                <p>Neural Nations CAMS Research Repository</p>
+            </div>
+
+            <div class="section">
+                <h2>🎯 Access Request Process</h2>
+                <p>If you don't have a GitHub account or need special access permissions to the Neural Nations repository, you can request access through the following methods:</p>
+            </div>
+
+            <div class="info-box">
+                <h3>📋 What You'll Get Access To:</h3>
+                <ul>
+                    <li>Complete CAMS framework source code and implementations</li>
+                    <li>Historical datasets for multiple civilizations (1750-2025)</li>
+                    <li>Research papers, documentation, and methodologies</li>
+                    <li>Validation protocols and testing frameworks</li>
+                    <li>Sample analyses and case studies</li>
+                    <li>Interactive tools and visualization code</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>✅ Requirements for Access:</h3>
+                <ul>
+                    <li>Academic, educational, or legitimate research purposes</li>
+                    <li>Agreement to cite work appropriately</li>
+                    <li>Commitment to open science principles</li>
+                    <li>Non-commercial use (commercial licensing available separately)</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>📬 Contact Methods</h2>
+                <div class="contact-options">
+                    <div class="contact-card">
+                        <h3>📧 Email Request</h3>
+                        <p>Send a detailed access request directly to the researcher</p>
+                        <a href="mailto:kari.freyr.4@gmail.com?subject=Neural Nations Repository Access Request&body=Dear Kari,%0D%0A%0D%0AI would like to request access to the Neural Nations CAMS repository.%0D%0A%0D%0APurpose:%0D%0AInstitution/Affiliation:%0D%0AProject Description:%0D%0A%0D%0AThank you,%0D%0A[Your Name]" class="btn btn-success">
+                            📧 Send Email Request
+                        </a>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <h3>💬 GitHub Discussion</h3>
+                        <p>Start a discussion on the public repository for community access</p>
+                        <a href="https://github.com/KaliBond/wintermute/discussions" class="btn" target="_blank">
+                            💬 GitHub Discussions
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="request-form">
+                <h3>📝 Quick Access Request Form</h3>
+                <p>Fill out this form and we'll send it via your email client:</p>
+                
+                <form id="accessForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name *</label>
+                        <input type="text" id="fullName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="institution">Institution/Organization</label>
+                        <input type="text" id="institution">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="purpose">Purpose of Access *</label>
+                        <select id="purpose" required>
+                            <option value="">Select purpose...</option>
+                            <option value="academic">Academic Research</option>
+                            <option value="education">Educational Use</option>
+                            <option value="policy">Policy Analysis</option>
+                            <option value="journalism">Journalism/Media</option>
+                            <option value="personal">Personal Research</option>
+                            <option value="other">Other (specify below)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Project Description *</label>
+                        <textarea id="description" placeholder="Please describe how you plan to use the CAMS framework and repository..." required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="timeline">Expected Timeline</label>
+                        <input type="text" id="timeline" placeholder="e.g., 6 months, ongoing research, etc.">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success">
+                        📧 Generate Email Request
+                    </button>
+                </form>
+            </div>
+
+            <div class="info-box">
+                <h3>⚡ Alternative Options:</h3>
+                <ul>
+                    <li><strong>Create GitHub Account:</strong> Free and gives you immediate access to public repositories</li>
+                    <li><strong>Download Releases:</strong> Check GitHub releases for packaged versions</li>
+                    <li><strong>Fork Repository:</strong> Create your own copy for modifications</li>
+                    <li><strong>Collaborate:</strong> Contribute improvements back to the project</li>
+                </ul>
+            </div>
+
+            <div class="back-link">
+                <a href="repository-access.html">← Back to Repository Access</a> | 
+                <a href="index.html">← Back to Neural Nations Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('accessForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                institution: document.getElementById('institution').value,
+                purpose: document.getElementById('purpose').value,
+                description: document.getElementById('description').value,
+                timeline: document.getElementById('timeline').value
+            };
+            
+            // Validate required fields
+            if (!formData.fullName || !formData.email || !formData.purpose || !formData.description) {
+                alert('Please fill in all required fields (marked with *)');
+                return;
+            }
+            
+            // Generate email body
+            const emailBody = `Dear Kari,
+
+I would like to request access to the Neural Nations CAMS repository.
+
+REQUESTER DETAILS:
+Name: ${formData.fullName}
+Email: ${formData.email}
+Institution: ${formData.institution || 'Not specified'}
+
+ACCESS REQUEST:
+Purpose: ${formData.purpose}
+Timeline: ${formData.timeline || 'Not specified'}
+
+PROJECT DESCRIPTION:
+${formData.description}
+
+I agree to:
+- Use this repository for legitimate research/educational purposes
+- Cite the work appropriately in any publications
+- Respect open science principles
+- Use for non-commercial purposes (unless separately licensed)
+
+Thank you for your consideration.
+
+Best regards,
+${formData.fullName}`;
+            
+            // Create mailto link
+            const mailtoLink = `mailto:kari.freyr.4@gmail.com?subject=Neural Nations Repository Access Request - ${formData.fullName}&body=${encodeURIComponent(emailBody)}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            // Show confirmation
+            alert('Email client opened! Please send the pre-filled email to complete your request.');
+        });
+    </script>
+</body>
+</html>
