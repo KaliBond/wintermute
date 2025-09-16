@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neural Nations - Kari McKern CAMS Research</title>
+    <link rel="stylesheet" href="style.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
     <script>
@@ -13,33 +14,19 @@
 
       gtag('config', 'G-ESZ16XVVNN');
     </script>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6; margin: 0; padding: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333; min-height: 100vh;
-        }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .card { 
-            background: rgba(255, 255, 255, 0.95); border-radius: 15px; padding: 30px; 
-            margin-bottom: 30px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px); 
-        }
-        h1 { color: #2c3e50; text-align: center; font-size: 2.5em; margin-bottom: 10px; }
-        .subtitle { text-align: center; color: #7f8c8d; font-size: 1.2em; margin-bottom: 30px; }
-        .researcher-info { text-align: center; background: rgba(52, 73, 94, 0.1); padding: 20px; border-radius: 10px; margin: 20px 0; }
-        .researcher-name { font-size: 1.4em; font-weight: bold; color: #2c3e50; margin-bottom: 5px; }
-        .researcher-email { color: #3498db; font-size: 1.1em; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 30px; }
-        .feature { text-align: center; padding: 20px; }
-        .feature h3 { color: #34495e; margin-bottom: 15px; }
-        .btn { display: inline-block; background: #3498db; color: white; padding: 12px 30px; text-decoration: none; border-radius: 25px; transition: all 0.3s ease; margin: 10px; }
-        .btn:hover { background: #2980b9; transform: translateY(-2px); }
-        .footer { text-align: center; margin-top: 50px; color: #7f8c8d; }
-    </style>
 </head>
 <body>
-    <div class="container">
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">Neural Nations</a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link active">Home</a>
+            <a href="research.html" class="nav-link">Research</a>
+            <a href="mailto:kari.freyr.4@gmail.com" class="nav-link">Contact</a>
+        </div>
+    </div>
+</nav>
+<div class="container">
         <div class="card">
             <h1>Neural Nations</h1>
             <p class="subtitle">Complex Adaptive Model of Societies (CAMS) Research Platform</p>
@@ -83,21 +70,17 @@
             </div>
             
             <div style="text-align: center; margin-top: 40px;">
-                <a href="cams-integrated-dashboard.html" class="btn">🚀 CAMS-CAN Dashboard</a>
-                <a href="attractors.html" class="btn">🌐 CAMS Attractors</a>
-                <a href="cams-3d-attractor.html" class="btn">🎯 3D Attractor Space</a>
-                <a href="https://research.neuralnations.org" class="btn" target="_blank">📚 Research Archive</a>
+                <a href="research.html" class="btn">🧠 Research Details</a>
                 <a href="https://www.perplexity.ai/apps/b0b67c5b-f9d2-48e9-9f4d-b1409be15ddb" class="btn" target="_blank">🔍 Perplexity App 1</a>
                 <a href="https://www.perplexity.ai/apps/1118f864-822c-46b8-9fc4-52e7781d5d80" class="btn" target="_blank">🔍 Perplexity App 2</a>
-                <a href="README.md" class="btn">Documentation</a>
                 <a href="mailto:kari.freyr.4@gmail.com" class="btn">Contact Researcher</a>
-                <a href="repository-access.html" class="btn">🔐 Access Repository</a>
             </div>
         </div>
         
-        <div class="footer">
-            <p>&copy; 2025 Kari McKern - Neural Nations CAMS Research. Understanding civilisations through complexity science.</p>
-        </div>
+    </div>
+    <footer class="footer">
+        <p>&copy; 2025 Kari McKern - Neural Nations CAMS Research. Understanding civilisations through complexity science.</p>
+    </footer>
     </div>
 </body>
 </html>
