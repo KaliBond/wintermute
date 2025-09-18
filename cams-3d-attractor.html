@@ -1,62 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CAMS Power-Type Attractor Space (3D)</title>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #1a1a1a;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    h1 {
-      margin: 20px;
-      color: #fff;
-      font-size: 1.8em;
-    }
-    #plot {
-      width: 95vw;
-      height: 80vh;
-    }
-    #controls {
-      margin: 10px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    button, input {
-      padding: 8px;
-      background: #333;
-      color: white;
-      border: 1px solid #555;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:hover, input:hover {
-      background: #444;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMS 3D Attractor Space - Neural Nations</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        .plot-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        #plot {
+            width: 100%;
+            height: 70vh;
+            min-height: 500px;
+        }
+        .controls {
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .control-btn {
+            padding: 8px 16px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .control-btn:hover {
+            background: #2980b9;
+        }
+        .control-btn.inactive {
+            background: #95a5a6;
+        }
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 20px;
+        }
+        .power-type-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .power-type {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid;
+        }
+        .technocratic { border-color: deepskyblue; }
+        .theocratic { border-color: indigo; }
+        .militarist { border-color: crimson; }
+        .plutocratic { border-color: gold; }
+        .democratic { border-color: lime; }
+        .kleptocratic { border-color: darkorange; }
+    </style>
 </head>
 <body>
-  <h1>CAMS Attractor Space of Power Types</h1>
-  <div id="controls">
-    <button onclick="toggleTrace(0)">Toggle Technocratic</button>
-    <button onclick="toggleTrace(1)">Toggle Theocratic</button>
-    <button onclick="toggleTrace(2)">Toggle Militarist</button>
-    <button onclick="toggleTrace(3)">Toggle Plutocratic</button>
-    <button onclick="toggleTrace(4)">Toggle Democratic</button>
-    <button onclick="toggleTrace(5)">Toggle Kleptocratic</button>
-    <input type="range" id="timeSlider" min="500" max="3000" value="1500" oninput="updatePlot(this.value)">
-    <span>Steps: <span id="stepValue">1500</span></span>
-  </div>
-  <div id="plot"></div>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">Neural Nations</a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="research.html" class="nav-link">Research</a>
+            <a href="mailto:kari.freyr.4@gmail.com" class="nav-link">Contact</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="hero-section">
+        <h1>CAMS 3D Attractor Space</h1>
+        <p class="hero-subtitle">Visualizing Power Types as Dynamic Attractors</p>
+    </div>
+
+    <div class="card">
+        <h2>🎯 Power-Type Attractors</h2>
+        <p>This visualization maps different power structures as dynamic attractors in 3D space, showing how societies evolve through distinct trajectories based on their institutional configurations.</p>
+        
+        <div class="power-type-info">
+            <div class="power-type technocratic">
+                <h4>Technocratic</h4>
+                <p>Knowledge-driven governance with moderate stress and high abstraction capacity.</p>
+            </div>
+            <div class="power-type theocratic">
+                <h4>Theocratic</h4>
+                <p>Religious authority structures with traditional hierarchies and spiritual legitimacy.</p>
+            </div>
+            <div class="power-type militarist">
+                <h4>Militarist</h4>
+                <p>Force-based control systems with high stress tolerance and rigid command structures.</p>
+            </div>
+            <div class="power-type plutocratic">
+                <h4>Plutocratic</h4>
+                <p>Wealth-concentrated power with economic elites driving institutional dynamics.</p>
+            </div>
+            <div class="power-type democratic">
+                <h4>Democratic</h4>
+                <p>Distributed authority with lower stress and adaptive governance mechanisms.</p>
+            </div>
+            <div class="power-type kleptocratic">
+                <h4>Kleptocratic</h4>
+                <p>Extractive systems with high stress and institutional degradation patterns.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="plot-container">
+        <div class="controls">
+            <button class="control-btn" onclick="toggleTrace(0)" id="btn0">Technocratic</button>
+            <button class="control-btn" onclick="toggleTrace(1)" id="btn1">Theocratic</button>
+            <button class="control-btn" onclick="toggleTrace(2)" id="btn2">Militarist</button>
+            <button class="control-btn" onclick="toggleTrace(3)" id="btn3">Plutocratic</button>
+            <button class="control-btn" onclick="toggleTrace(4)" id="btn4">Democratic</button>
+            <button class="control-btn" onclick="toggleTrace(5)" id="btn5">Kleptocratic</button>
+            <div class="slider-container">
+                <label>Steps:</label>
+                <input type="range" id="timeSlider" min="500" max="3000" value="1500" oninput="updatePlot(this.value)">
+                <span id="stepValue">1500</span>
+            </div>
+        </div>
+        <div id="plot"></div>
+    </div>
+
+    <div class="card">
+        <h2>📊 Interpretation Guide</h2>
+        <ul>
+            <li><strong>X-Axis (Abstraction):</strong> Society's capacity for innovation and conceptual thinking</li>
+            <li><strong>Y-Axis (Stress):</strong> Internal pressures and institutional strain</li>
+            <li><strong>Z-Axis (Control Capacity):</strong> Ability to maintain order and implement decisions</li>
+            <li><strong>Trajectory Patterns:</strong> Each power type follows distinct paths through this space</li>
+            <li><strong>Attractor Basins:</strong> Regions where societies naturally gravitate based on their structure</li>
+        </ul>
+    </div>
+
+    <div style="text-align: center; margin: 2rem;">
+        <a href="index.html" class="btn-primary">Back to Home</a>
+        <a href="research.html" class="btn-secondary">Research Details</a>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2025 Kari McKern - Neural Nations CAMS Research</p>
+</footer>
   <script>
     // Sample Norway data (2025, aggregated for demo)
     const norwayData = {
@@ -113,19 +212,34 @@
     }
 
     const layout = {
-      paper_bgcolor: '#1a1a1a',
-      plot_bgcolor: '#1a1a1a',
+      paper_bgcolor: 'rgba(0,0,0,0)',
+      plot_bgcolor: 'rgba(0,0,0,0)',
       scene: {
-        xaxis: { title: 'Abstraction (A)', color: 'white', gridcolor: '#555' },
-        yaxis: { title: 'Stress (S)', color: 'white', gridcolor: '#555' },
-        zaxis: { title: 'Control Capacity (K)', color: 'white', gridcolor: '#555' },
-        camera: { eye: { x: 1.5, y: 1.5, z: 1 } }
+        bgcolor: 'rgba(0,0,0,0)',
+        xaxis: { 
+          title: 'Abstraction (A)', 
+          color: '#333',
+          gridcolor: 'rgba(100,100,100,0.3)'
+        },
+        yaxis: { 
+          title: 'Stress (S)', 
+          color: '#333',
+          gridcolor: 'rgba(100,100,100,0.3)'
+        },
+        zaxis: { 
+          title: 'Control Capacity (K)', 
+          color: '#333',
+          gridcolor: 'rgba(100,100,100,0.3)'
+        },
+        camera: { eye: { x: 1.5, y: 1.5, z: 1.5 } }
       },
       legend: {
-        font: { color: 'white' },
-        x: 0.05,
-        y: 0.95,
-        bgcolor: 'rgba(0,0,0,0.5)'
+        font: { color: '#333', size: 12 },
+        x: 0.02,
+        y: 0.98,
+        bgcolor: 'rgba(255,255,255,0.8)',
+        bordercolor: 'rgba(0,0,0,0.2)',
+        borderwidth: 1
       },
       margin: { l: 0, r: 0, t: 0, b: 0 }
     };
@@ -134,6 +248,12 @@
 
     function toggleTrace(index) {
       traceVisibility[index] = !traceVisibility[index];
+      const btn = document.getElementById(`btn${index}`);
+      if (traceVisibility[index]) {
+        btn.classList.remove('inactive');
+      } else {
+        btn.classList.add('inactive');
+      }
       Plotly.restyle('plot', 'visible', traceVisibility);
     }
 
