@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Neural Nations</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .contact-form {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .submit-btn {
+            background: #3498db;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .submit-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        .contact-info {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        .contact-method {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+        }
+        .contact-method span {
+            font-size: 1.5em;
+            margin-right: 15px;
+            width: 30px;
+        }
+        .required {
+            color: #e74c3c;
+        }
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">Neural Nations</a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="research.html" class="nav-link">Research</a>
+            <a href="research/index.html" class="nav-link">Research Diary</a>
+            <a href="newsletter.html" class="nav-link">Newsletter</a>
+            <a href="contact.html" class="nav-link active">Contact</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="hero-section">
+        <h1>Contact Neural Nations</h1>
+        <p class="hero-subtitle">Connect with CAMS Research Team</p>
+    </div>
+
+    <div class="contact-info">
+        <h2>📧 Get in Touch</h2>
+        <p>Interested in CAMS research, collaboration opportunities, or have questions about societal neural networks? We'd love to hear from you.</p>
+        
+        <div class="contact-method">
+            <span>👤</span>
+            <div>
+                <strong>Kari McKern</strong><br>
+                Retired Career Public Servant | Librarian & IT Specialist | Geopolitical Analyst
+            </div>
+        </div>
+        
+        <div class="contact-method">
+            <span>📧</span>
+            <div>
+                <strong>Email:</strong> <a href="mailto:kari.freyr.4@gmail.com">kari.freyr.4@gmail.com</a>
+            </div>
+        </div>
+        
+        <div class="contact-method">
+            <span>📍</span>
+            <div>
+                <strong>Location:</strong> Sydney, Australia
+            </div>
+        </div>
+        
+        <div class="contact-method">
+            <span>🔬</span>
+            <div>
+                <strong>Specializations:</strong> Asian Affairs • Geopolitics • Technology Policy • Complex Systems
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-form">
+        <h2>📝 Contact Form</h2>
+        <form action="mailto:kari.freyr.4@gmail.com" method="post" enctype="text/plain">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="organization">Organization/Affiliation</label>
+                    <input type="text" id="organization" name="organization">
+                </div>
+                <div class="form-group">
+                    <label for="subject-type">Subject Area</label>
+                    <select id="subject-type" name="subject-type">
+                        <option value="">Select a topic...</option>
+                        <option value="cams-research">CAMS Research Collaboration</option>
+                        <option value="newsletter">Elogon Newsletter Subscription</option>
+                        <option value="data-access">Dataset Access Request</option>
+                        <option value="methodology">Methodology Questions</option>
+                        <option value="geopolitical">Geopolitical Analysis</option>
+                        <option value="technology">Technology Policy Discussion</option>
+                        <option value="academic">Academic Collaboration</option>
+                        <option value="media">Media/Interview Request</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="subject">Subject <span class="required">*</span></label>
+                <input type="text" id="subject" name="subject" required>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message <span class="required">*</span></label>
+                <textarea id="message" name="message" placeholder="Please describe your inquiry, research interests, or collaboration proposal..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="background">Research Background (Optional)</label>
+                <textarea id="background" name="background" placeholder="Brief description of your research background or institutional affiliation (helps us provide more targeted responses)"></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>🤝 Collaboration Opportunities</h2>
+        <p>We welcome collaboration in the following areas:</p>
+        <ul>
+            <li><strong>Academic Research:</strong> Joint publications, dataset sharing, methodology validation</li>
+            <li><strong>Policy Applications:</strong> Implementing CAMS framework for institutional analysis</li>
+            <li><strong>Technical Development:</strong> Visualization tools, data processing, AI applications</li>
+            <li><strong>Cross-Cultural Validation:</strong> Expanding CAMS analysis to additional civilizations</li>
+            <li><strong>Real-Time Monitoring:</strong> Developing early warning systems for institutional stress</li>
+        </ul>
+        
+        <h3>🎯 Current Research Priorities</h3>
+        <ul>
+            <li>Validation across 15+ diverse civilizations</li>
+            <li>Individual-level CAMS modeling</li>
+            <li>Economic integration and EROI analysis</li>
+            <li>Information commons health diagnostics</li>
+            <li>Predictive accuracy improvement</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>📚 Resources & Links</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+            <div>
+                <h4>🔬 Research Materials</h4>
+                <ul>
+                    <li><a href="research.html">CAMS Framework</a></li>
+                    <li><a href="research/index.html">Research Diary</a></li>
+                    <li><a href="cams-3d-attractor.html">3D Visualizations</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>📰 Publications</h4>
+                <ul>
+                    <li><a href="newsletter.html">Elogon Newsletter</a></li>
+                    <li><a href="https://github.com/KaliBond/wintermute">Research Repository</a></li>
+                    <li><a href="https://www.perplexity.ai/apps/2417147b-4e43-4222-9f9a-896c2217ff09">Great Library Test App</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>🌐 External Tools</h4>
+                <ul>
+                    <li><a href="https://www.perplexity.ai/apps/b0b67c5b-f9d2-48e9-9f4d-b1409be15ddb">Perplexity App 1</a></li>
+                    <li><a href="https://www.perplexity.ai/apps/1118f864-822c-46b8-9fc4-52e7781d5d80">Perplexity App 2</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin: 2rem;">
+        <a href="index.html" class="btn-primary">Back to Home</a>
+        <a href="newsletter.html" class="btn-secondary">Subscribe to Newsletter</a>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2025 Kari McKern - Neural Nations CAMS Research</p>
+</footer>
+
+<script>
+// Form enhancement
+document.querySelector('form').addEventListener('submit', function(e) {
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value;
+    const subjectType = document.getElementById('subject-type').value;
+    const organization = document.getElementById('organization').value;
+    const background = document.getElementById('background').value;
+    
+    // Create formatted email body
+    let emailBody = `Name: ${name}\n`;
+    emailBody += `Email: ${email}\n`;
+    if (organization) emailBody += `Organization: ${organization}\n`;
+    if (subjectType) emailBody += `Subject Area: ${subjectType}\n`;
+    emailBody += `Subject: ${subject}\n\n`;
+    emailBody += `Message:\n${message}\n\n`;
+    if (background) emailBody += `Research Background:\n${background}\n\n`;
+    emailBody += `---\nSent via Neural Nations Contact Form\n${new Date().toLocaleString()}`;
+    
+    // Update form action with formatted content
+    this.action = `mailto:kari.freyr.4@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+});
+
+// Auto-populate subject based on subject type
+document.getElementById('subject-type').addEventListener('change', function() {
+    const subjectField = document.getElementById('subject');
+    const selectedType = this.value;
+    
+    if (selectedType && !subjectField.value) {
+        const subjectMap = {
+            'cams-research': 'CAMS Research Collaboration Inquiry',
+            'newsletter': 'Elogon Newsletter Subscription',
+            'data-access': 'Dataset Access Request',
+            'methodology': 'CAMS Methodology Question',
+            'geopolitical': 'Geopolitical Analysis Discussion',
+            'technology': 'Technology Policy Discussion',
+            'academic': 'Academic Collaboration Proposal',
+            'media': 'Media/Interview Request'
+        };
+        
+        if (subjectMap[selectedType]) {
+            subjectField.value = subjectMap[selectedType];
+        }
+    }
+});
+</script>
+</body>
+</html>
