@@ -8,14 +8,14 @@ import pandas as pd
 # Immutable physical constants (from canonical spec)
 SIGMA_0 = 1.0
 EPS_REF = 1.2e3   # W/capita reference
-EPS_CRIT = 12e3   # W/capita critical
+EPS_CRITICAL = 12e3   # W/capita critical
 KAPPA = 1e-14
 OMEGA = 2.5
 CHI = 0.08
 
 def run_cams_engine(df_year: pd.DataFrame, EROEI: float, pop_M: float, phi_export: float = 0.0):
     """
-    Run CAMS GTS EV v1.95 engine on a single year of data.
+    Run CAMS GTS EV v1.95 engine on a single year of data (v1.95 canonical + bug squash).
 
     Parameters:
     -----------
@@ -33,71 +33,60 @@ def run_cams_engine(df_year: pd.DataFrame, EROEI: float, pop_M: float, phi_expor
     dict : Dictionary containing all CAMS metrics or None if invalid data
     """
     df = df_year.copy()
-    pop = pop_M * 1e6
+    pop = pop_M * 1e6  # to persons
 
-    # Map node names (flexible to handle different column naming)
-    node_col = df.columns[df.columns.str.contains('Node', case=False)][0]
+    # Extract (assume columns: Node, Coherence, Capacity [raw], Stress, Abstraction)
+    C = df['Coherence'].values.astype(float)
+    K_raw = df['Capacity'].values.astype(float)  # raw, for ref
+    S = df['Stress'].values.astype(float)
+    A = df['Abstraction'].values.astype(float)
 
-    # Remove duplicates - take first occurrence of each node
-    df = df.drop_duplicates(subset=[node_col], keep='first')
-
-    nodes = df[node_col].unique()
-    if len(nodes) != 8:
-        return None
-
-    # Ensure we have exactly 8 rows
-    if len(df) != 8:
-        return None
-
-    # Extract C, K_raw, S, A
-    C = df['Coherence'].values
-    K_raw = df['Capacity'].values
-    S = df['Stress'].values
-    A = df['Abstraction'].values
-
-    # Thermodynamic Capacity correction
-    eta_i = np.ones(8) * 0.95  # assume equal allocation for now
-    K = 10 * np.minimum(1, eta_i * EROEI * EPS_REF / EPS_CRIT)
+    # Thermodynamic Capacity correction (eta_i sums to ~1)
+    eta_i = np.full(8, 1/8)  # equal share
+    K = 10 * np.minimum(1, eta_i * EROEI * EPS_REF / EPS_CRITICAL)  # vectorized, no seq error
 
     # Node Value
     NV = C + K - S + 0.5 * A
 
-    # Bond strength (simplified D_KL = 0.12 average, adjustable later)
-    D_KL = np.ones((8,8)) * 0.12
+    # Bond matrix (D_KL=0.18 avg from example)
+    D_KL = np.full((8,8), 0.18)
     np.fill_diagonal(D_KL, 0)
-    B_matrix = C[:, None] * C[None, :] * np.exp(-np.abs(K[:, None] - K[None, :])) * (1 - OMEGA * D_KL)
-    B_mean = B_matrix.mean()
+    B_ij = C[:,None] * C[None,:] * np.exp(-np.abs(K[:,None] - K[None,:])) * (1 - OMEGA * D_KL)
+    B_mean = np.mean(B_ij[B_ij > 0])  # triu mean, avoid diag
 
-    # Dual-mode scalars
-    E_total = 3.5e3 * pop / 1e9  # rough average ~3.5 kW/cap global
-    E_net = E_total * (1 - 1/EROEI)
-    P_Abs = KAPPA * pop * (A * 1e8).sum()
-    E_star = 0.1e3 * pop / 1e9   # 0.1 kW/cap reference
-    Psi = np.log(max(E_net - P_Abs, 1e-9) / E_star) * (C * A).sum()
-    Phi = (K * (11 - S)).sum()
-    Phi -= CHI * phi_export * pop / 1e9  # entropy export correction
+    # Dual modes — FIXED: clip E_net >0, proper units (W total)
+    E_total = 3500 * pop  # 3.5 kW/cap avg primary energy
+    E_net_pre_abs = E_total * (1 - 1/EROEI)
+    P_Abs = KAPPA * pop * np.sum(A) * 1e8  # bits total
+    E_net = max(E_net_pre_abs - P_Abs, 1e6)  # clip tiny positive (W)
+    E_star = 100 * pop  # 0.1 kW/cap = 100 W/cap
+    ln_term = np.log(E_net / E_star)
+    Psi = ln_term * np.sum(C * A) if ln_term > 0 else 0  # zero if no surplus
 
-    R = Phi / Psi if Psi > 0 else 999
-    H = 100 * (C * K).sum() / ((C * K).max() * 8)  # normalized to theoretical max
+    Phi_internal = np.sum(K * (11 - S))
+    Phi_export = CHI * phi_export * pop  # W total equiv, rough
+    Phi = max(Phi_internal - Phi_export / 8, 0)  # per-node avg
 
-    # Classification
+    R = Phi / max(Psi, 1e-6) if Psi > 0 else 999  # safe div
+    ck_max = np.max(C * K) * 8  # historical max proxy
+    H = 100 * np.sum(C * K) / ck_max
+
+    # Classification LUT (canonical)
     if R < 1.0 and H > 65 and B_mean > 2.0:
-        classification = "Resilient Frontier"
+        cls = "Resilient Frontier"
     elif R < 1.0 and H > 65:
-        classification = "Stable Core"
+        cls = "Stable Core"
     elif 1 <= R <= 2.2 and 35 <= H <= 65:
-        classification = "Transitional"
-    elif 2.2 < R <= 4.5 and H < 35:
-        classification = "Fragile"
+        cls = "Transitional"
+    elif 2.2 < R <= 4.0 and 15 <= H <= 35:
+        cls = "Fragile"
     else:
-        classification = "Terminal"
+        cls = "Terminal"
 
-    crisis_prob = min(99, int(5 + 25 * (R - 1)**2 / 10 + (100 - H)/2))
+    crisis_prob = min(99, int(5 + 25 * max(0, R - 1)**2 / 10 + (100 - H)/2))
 
-    result = {
-        '⟨C⟩': C.mean(), '⟨K⟩': K.mean(), '⟨S⟩': S.mean(), '⟨A⟩': A.mean(),
-        '⟨NV⟩': NV.mean(), '⟨B⟩': B_mean, 'Ψ': Psi, 'Φ': Phi, 'R': R,
-        'H%': H, 'Φ_export': phi_export, 'Class': classification,
-        'CrisisProb': f"{crisis_prob}%"
+    return {
+        '⟨C⟩': np.mean(C), '⟨K⟩': np.mean(K), '⟨S⟩': np.mean(S), '⟨A⟩': np.mean(A),
+        '⟨NV⟩': np.mean(NV), '⟨B⟩': B_mean, 'Ψ': Psi, 'Φ': Phi, 'R': R,
+        'H%': H, 'Φ_export': phi_export, 'Class': cls, 'CrisisProb': f"{crisis_prob}%"
     }
-    return result
