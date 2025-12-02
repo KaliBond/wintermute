@@ -261,11 +261,38 @@
             <li>Public API coming 15 Dec 2025</li>
         </ul>
 
-        <div style="text-align: center; margin: 40px 0;">
-            <a href="#" id="dashboard-link" class="dashboard-btn">🚀 Enter the Dashboard</a>
-            <p style="margin-top: 20px; color: #666; font-size: 0.95em;">
-                <em>Dashboard will be deployed to Streamlit Cloud shortly</em>
-            </p>
+        <h2>Interactive Dashboards</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 40px 0;">
+            <div style="padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <h3 style="color: white; margin-top: 0;">CAMS GTS EV v2.0</h3>
+                <p style="color: rgba(255,255,255,0.9); line-height: 1.6;">
+                    <strong>Thermodynamic Analysis</strong><br>
+                    • EROEI-based energy modeling<br>
+                    • R ratio (Φ/Ψ) analysis<br>
+                    • Model archaeology<br>
+                    • 32 pre-loaded datasets
+                </p>
+                <a href="#" id="dashboard-link-gts" class="dashboard-btn" style="display: block; background: white; color: #667eea; margin-top: 20px;">
+                    🔬 Open GTS EV Dashboard
+                </a>
+            </div>
+
+            <div style="padding: 30px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <h3 style="color: white; margin-top: 0;">CAMS GT Dual-Mode</h3>
+                <p style="color: rgba(255,255,255,0.9); line-height: 1.6;">
+                    <strong>Interactive Network Analysis</strong><br>
+                    • Upload CSV or select datasets<br>
+                    • Interactive network graphs<br>
+                    • Phase classification<br>
+                    • Enhanced visualizations
+                </p>
+                <a href="#" id="dashboard-link-gt" class="dashboard-btn" style="display: block; background: white; color: #f5576c; margin-top: 20px;">
+                    🧠 Open GT Dashboard
+                </a>
+                <p style="margin-top: 15px; color: rgba(255,255,255,0.8); font-size: 0.9em; font-style: italic;">
+                    Deploy this second dashboard to get URL
+                </p>
+            </div>
         </div>
 
         <h2>Selected Publications</h2>
@@ -289,9 +316,12 @@
 </footer>
 
 <script>
-    // Update this URL once deployed to Streamlit Cloud
-    const DASHBOARD_URL = "https://wintermute-rgc7a5pgkcw8eg3luqinmq.streamlit.app"; // Deployed Dec 2025
-    document.getElementById('dashboard-link').href = DASHBOARD_URL;
+    // CAMS Dashboard URLs
+    const DASHBOARD_URL_GTS = "https://wintermute-rgc7a5pgkcw8eg3luqinmq.streamlit.app"; // GTS EV v2.0
+    const DASHBOARD_URL_GT = "https://YOUR-APP-NAME.streamlit.app"; // GT Dual-Mode (update after deployment)
+
+    document.getElementById('dashboard-link-gts').href = DASHBOARD_URL_GTS;
+    document.getElementById('dashboard-link-gt').href = DASHBOARD_URL_GT;
 </script>
 </body>
 </html>
