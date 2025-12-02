@@ -35,11 +35,23 @@ def run_cams_engine(df_year: pd.DataFrame, EROEI: float, pop_M: float, phi_expor
     df = df_year.copy()
     pop = pop_M * 1e6  # to persons
 
+    # Remove duplicate nodes - take first occurrence
+    if 'Node' in df.columns:
+        df = df.drop_duplicates(subset=['Node'], keep='first')
+
+    # Validate we have exactly 8 nodes
+    if len(df) != 8:
+        return None
+
     # Extract (assume columns: Node, Coherence, Capacity [raw], Stress, Abstraction)
     C = df['Coherence'].values.astype(float)
     K_raw = df['Capacity'].values.astype(float)  # raw, for ref
     S = df['Stress'].values.astype(float)
     A = df['Abstraction'].values.astype(float)
+
+    # Double-check all arrays have length 8
+    if not all(len(arr) == 8 for arr in [C, K_raw, S, A]):
+        return None
 
     # Thermodynamic Capacity correction (eta_i sums to ~1)
     eta_i = np.full(8, 1/8)  # equal share
