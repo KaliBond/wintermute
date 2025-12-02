@@ -112,4 +112,9 @@ logs/
 .pytest_cache/
 
 # Streamlit
-.streamlit/
+.streamlit/secrets.toml
+
+# Exports
+exports/*.csv
+exports/*.json
+!exports/.gitkeep
