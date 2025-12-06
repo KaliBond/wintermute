@@ -1,16 +1,18 @@
 # CAMS Framework: Complex Adaptive Metrics of Society
-## Version 2.1 - Production Ready Neural Network Implementation
+## Version 2.1 - Production Ready Thermodynamic Implementation
 
 ![CAMS Logo](https://img.shields.io/badge/CAMS-v2.1-blue) ![License](https://img.shields.io/badge/License-Open%20Science-green) ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 
-**Purpose**: CAMS analyzes societal structures as stress-modulated neural networks, focusing on the mathematical dynamics between 8 institutional nodes and their emergent behaviors across civilizations and time periods.
+**Purpose**: CAMS analyzes societal structures as thermodynamic Complex Adaptive Systems, focusing on the mathematical dynamics between 8 institutional nodes and their emergent behaviors across civilizations and time periods.
 
-## 🧠 Core Architecture
+> **Note**: The neural network hypothesis has been falsified (December 2025). CAMS now focuses on thermodynamic principles, entropy flows, and phase transitions.
 
-### **Neural Network Foundation**
+## 🌡️ Core Architecture
+
+### **Thermodynamic Foundation**
 - **8 Institutional Nodes**: Executive (Helm), Army (Shield), Knowledge Workers (Lore), Property Owners (Stewards), Trades/Professions (Craft), Proletariat (Hands), State Memory (Archive), Merchants (Flow)
 - **4 State Variables per Node**: Coherence (C), Capacity (K), Stress (S), Abstraction (A)
-- **Stress-Modulated Plasticity**: Dynamic weight updates with error-driven learning
+- **Thermodynamic Dynamics**: Entropy flows, phase transitions, and bistability (Ψ vs Φ modes)
 - **Normalized Mathematics**: End-to-end unit scaling for mathematical consistency
 
 ### **Grand System Metric (Ψ)**
@@ -202,4 +204,4 @@ USA,2025,Executive,5.2,6.1,-2.3,7.8
 
 ---
 
-*CAMS Framework v2.1 represents a production-ready implementation of stress-modulated neural network dynamics for societal analysis, validated against historical data and ready for rigorous academic and policy research.*
+*CAMS Framework v2.1 represents a production-ready implementation of thermodynamic Complex Adaptive Systems analysis for societal dynamics, validated against historical data and ready for rigorous academic and policy research.*

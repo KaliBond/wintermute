@@ -2,16 +2,19 @@
 """
 CAMS Framework: Complex Adaptive Metrics of Society
 ====================================================
-Complete formalization with stress-modulated neural-network dynamics
+Complete thermodynamic formalization with entropy flows and phase transitions
 
 Authors : Kari McKern & GPT-4
 Version : 2.1 — Production Ready (August 15, 2025)
 License : Open Science — Common Property
 
+NOTE: The neural network hypothesis has been falsified (December 2025).
+CAMS now focuses on thermodynamic principles, entropy flows, and phase transitions.
+
 This implementation includes:
-- Full mathematical formulation (CAMS + stress-isomorphism refinements)
+- Full mathematical formulation (CAMS + thermodynamic refinements)
 - Data processing for multi-society/company CSV inputs
-- Stress-modulated plasticity and discrete-time network dynamics
+- Inter-institutional bond dynamics and discrete-time evolution
 - Early-warning system with validated thresholds and uncertainty bands
 - Visualization/diagnostic helpers and reproducible pipeline
 

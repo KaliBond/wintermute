@@ -1,20 +1,22 @@
 # CAMS Framework v2.1 - Release Notes
-## Neural Network Implementation Complete
+## Thermodynamic Implementation Complete
 
-**Release Date**: August 15, 2025  
-**Version**: 2.1 Production Ready  
-**Major Update**: Complete neural network formalization with stress-modulated dynamics
+**Release Date**: August 15, 2025
+**Version**: 2.1 Production Ready
+**Major Update**: Complete thermodynamic formalization with entropy flows and phase transitions
+
+> **⚠️ SCIENTIFIC CORRECTION (December 2025)**: The neural network hypothesis has been falsified. CAMS now focuses on thermodynamic principles, entropy flows, and phase transitions as the fundamental description of societal dynamics.
 
 ---
 
 ## 🚀 **Major Features**
 
-### **Neural Network Architecture**
-- **Stress-Modulated Plasticity**: Complete implementation of `Δw_ij = η·tanh(C_i C_j/100)·(1 - S̄'_i) - γ·w_ij + ζ·ε_ij`
-- **Error-Driven Learning**: One-step capacity forecasting with persistence (ε_ij = K'_j - K̂'_j)
+### **Thermodynamic Architecture**
+- **Inter-Institutional Bond Dynamics**: Complete implementation of `Δw_ij = η·tanh(C_i C_j/100)·(1 - S̄'_i) - γ·w_ij + ζ·ε_ij`
+- **Capacity Evolution**: One-step forecasting with thermodynamic persistence (ε_ij = K'_j - K̂'_j)
 - **8 Institutional Nodes**: Executive, Army, Knowledge Workers, Property Owners, Trades/Professions, Proletariat, State Memory, Merchants
-- **Range-Safe Activation**: Weighted neighbor averaging with adaptive thresholds θ ∈ [0.5, 1.0]
-- **Discrete-Time Integration**: Euler method with configurable time steps
+- **Phase Transition Detection**: Weighted averaging with adaptive thresholds θ ∈ [0.5, 1.0]
+- **Discrete-Time Integration**: Euler method with configurable time steps for thermodynamic evolution
 
 ### **Mathematical Formalization**
 - **Grand System Metric**: `Ψ = 0.35H' + 0.25P_S + 0.20P_C + 0.20P_A` (exact implementation)
@@ -62,7 +64,7 @@ All 8 node values match expected values exactly:
 ### **Repository Organization**
 ```
 wintermute/
-├── 📄 cams_framework_v2_1.py     # Production neural network framework
+├── 📄 cams_framework_v2_1.py     # Production thermodynamic framework
 ├── 📄 cams_can_v34_explorer.py   # Interactive dashboard (port 8501)
 ├── 📄 organize_data_directory.py # Data organization toolkit
 ├── 📁 data/
@@ -98,7 +100,7 @@ streamlit run cams_can_v34_explorer.py --server.port 8501
 ```
 **URL**: http://localhost:8501
 
-### **Neural Network Analysis**
+### **Thermodynamic Analysis**
 ```bash
 python cams_framework_v2_1.py
 ```
@@ -171,4 +173,4 @@ results = run_cams_analysis(["data/cleaned/USA_cleaned.csv"])
 
 ---
 
-**CAMS Framework v2.1 represents the definitive implementation of stress-modulated neural network dynamics for societal analysis, validated against historical data and ready for rigorous academic and policy research.**
+**CAMS Framework v2.1 represents the definitive implementation of thermodynamic Complex Adaptive Systems analysis for societal dynamics, validated against historical data and ready for rigorous academic and policy research.**

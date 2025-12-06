@@ -1,7 +1,10 @@
 """
 Unified CAMS-CAN + 13 Laws Mathematical Framework
-Complete implementation of the stress-modulated neural network with constraint architecture
+Complete thermodynamic implementation with inter-institutional bond dynamics
 Simulation-ready continuous/discrete time system
+
+NOTE: The neural network hypothesis has been falsified (December 2025).
+CAMS now focuses on thermodynamic principles, entropy flows, and phase transitions.
 """
 
 import streamlit as st
@@ -25,9 +28,10 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-st.title("🧠⚖️ Unified CAMS-CAN + 13 Laws Framework")
-st.markdown("**Complete stress-modulated neural network with constraint architecture**")
+st.title("🌡️⚖️ Unified CAMS-CAN + 13 Laws Framework")
+st.markdown("**Complete thermodynamic implementation with inter-institutional bond dynamics**")
 st.markdown("*Simulation-ready continuous/discrete time system*")
+st.info("⚠️ **Scientific Update (Dec 2025)**: The neural network hypothesis has been falsified. CAMS now focuses on thermodynamic principles, entropy flows, and phase transitions.")
 
 # === Core Framework Implementation ===
 
@@ -56,8 +60,8 @@ class UnifiedCAMS13Laws:
         self.sigma_chronic = np.zeros(self.n)  # Chronic stress
         self.sigma_acute = np.zeros(self.n)    # Acute stress
         
-        # === Neural Network Components ===
-        self.w = np.random.normal(0, 0.1, (self.n, self.n))  # Neural weights w_ij
+        # === Inter-Institutional Bond Components ===
+        self.w = np.random.normal(0, 0.1, (self.n, self.n))  # Bond weights w_ij
         self.B = np.zeros((self.n, self.n))                  # Macro bonds B_ij
         self.theta_0 = np.random.normal(0.5, 0.1, self.n)    # Base thresholds θ_i^0
         self.activation = np.zeros(self.n)                    # Node activations a_i(t)
@@ -88,8 +92,8 @@ class UnifiedCAMS13Laws:
     
     def setup_parameters(self):
         """Initialize all model parameters"""
-        
-        # === Neural Network Parameters ===
+
+        # === Thermodynamic Bond Parameters ===
         self.beta = np.random.uniform(0.1, 0.5, self.n)      # Stress modulation β_i
         self.alpha_acute = 3.0                                # Acute stress multiplier
         self.eta_sigma = 0.3                                  # Stress threshold impact
@@ -198,15 +202,15 @@ class UnifiedCAMS13Laws:
         """Sigmoid activation function σ_act(x) = 1/(1+e^(-x))"""
         return 1 / (1 + np.exp(-np.clip(x, -500, 500)))
     
-    def update_neural_dynamics(self, dt):
-        """Update neural network components - equation (1)"""
-        
+    def update_bond_dynamics(self, dt):
+        """Update inter-institutional bond dynamics - equation (1)"""
+
         # Calculate effective thresholds θ_i(t)
-        theta_eff = (self.theta_0 + 
-                    self.eta_sigma * self.sigma - 
+        theta_eff = (self.theta_0 +
+                    self.eta_sigma * self.sigma -
                     self.eta_chi * self.chi)
-        
-        # Neuromodulated input u_i(t)
+
+        # Stress-modulated input u_i(t)
         u = np.zeros(self.n)
         for i in range(self.n):
             # Weighted inputs from other nodes
@@ -244,9 +248,9 @@ class UnifiedCAMS13Laws:
         self.sigma_chronic = 0.7 * sigma
         self.sigma_acute = 0.3 * sigma
         
-        # Update bonds and neural dynamics
+        # Update bonds and thermodynamic dynamics
         self.update_bonds()
-        self.update_neural_dynamics(0.01)
+        self.update_bond_dynamics(0.01)
         
         # Calculate system-level metrics for constraints
         C_complexity = np.sum(np.abs(self.B))
@@ -516,8 +520,8 @@ selected_country = st.sidebar.selectbox(
 n_steps = st.sidebar.slider("Simulation Steps", 50, 500, 200, 25)
 dt = st.sidebar.slider("Time Step (dt)", 0.01, 0.2, 0.05, 0.01)
 
-# Neural network parameters
-st.sidebar.markdown("### 🧠 Neural Parameters")
+# Thermodynamic bond parameters
+st.sidebar.markdown("### 🌡️ Thermodynamic Parameters")
 beta_stress = st.sidebar.slider("Stress Modulation (β)", 0.1, 1.0, 0.3, 0.05)
 alpha_acute = st.sidebar.slider("Acute Stress Multiplier", 1.0, 10.0, 3.0, 0.5)
 
@@ -911,7 +915,7 @@ col1, col2, col3 = st.columns(3)
 with col1:
     st.markdown("""
     **CAMS-CAN Components:**
-    - Stress-modulated neural network
+    - Thermodynamic inter-institutional bonds
     - Node state dynamics (χ,κ,σ,α)
     - Meta-cognitive emergence
     - Information integration
