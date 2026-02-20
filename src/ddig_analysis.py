@@ -110,12 +110,12 @@ def compute_dDIG_for_metric(df_wide: pd.DataFrame, metric: str, nodes: list,
 
     # era bin
     if era == "decade":
-        era_bin = (df_wide.index // 10) * 10
+        era_bin = pd.Series((df_wide.index // 10) * 10, index=df_wide.index)
     else:
         era_bin = pd.Series("all", index=df_wide.index)
 
     # context Z(t)
-    Z = _combine_context(regime.fillna("Unknown"), shock_bin, era_bin)
+    Z = _combine_context(regime.astype(str).fillna("Unknown"), shock_bin, era_bin)
 
     out = []
     for i in D.columns:
