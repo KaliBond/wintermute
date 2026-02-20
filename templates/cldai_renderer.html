@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLDai Visualization Engine</title>
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0e1117;
+            color: #fafafa;
+            overflow: hidden;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        #header {
+            background: #1e2130;
+            padding: 20px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        #header h1 {
+            color: #3498db;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        #header .subtitle {
+            color: #95a5a6;
+            font-size: 14px;
+        }
+
+        #main {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        #network {
+            flex: 1;
+            background: #1a1d29;
+        }
+
+        #sidebar {
+            width: 350px;
+            background: #1e2130;
+            border-left: 1px solid #34495e;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        #sidebar h2 {
+            color: #e74c3c;
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #34495e;
+        }
+
+        #sidebar h3 {
+            color: #f39c12;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .info-section {
+            margin-bottom: 20px;
+        }
+
+        .info-section p {
+            margin-bottom: 8px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .info-section strong {
+            color: #3498db;
+        }
+
+        .loop-item {
+            background: #262b3d;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #3498db;
+        }
+
+        .loop-item.reinforcing {
+            border-left-color: #e74c3c;
+        }
+
+        .loop-item.balancing {
+            border-left-color: #27ae60;
+        }
+
+        .loop-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .loop-nodes {
+            font-size: 12px;
+            color: #95a5a6;
+        }
+
+        .archetype-tag {
+            display: inline-block;
+            background: #34495e;
+            color: #ecf0f1;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin: 4px 4px 4px 0;
+        }
+
+        .aha-section {
+            background: #262b3d;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .aha-section .section-name {
+            color: #3498db;
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .aha-section .section-content {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #ecf0f1;
+        }
+
+        #legend {
+            background: #262b3d;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .legend-box {
+            width: 30px;
+            height: 20px;
+            margin-right: 10px;
+            border: 2px solid #ecf0f1;
+        }
+
+        .legend-box.stock {
+            background: #008080;
+        }
+
+        .legend-box.auxiliary {
+            background: #4169e1;
+            border-radius: 15px;
+        }
+
+        .legend-arrow {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .legend-arrow.positive {
+            color: #27ae60;
+        }
+
+        .legend-arrow.negative {
+            color: #e74c3c;
+        }
+
+        #controls {
+            background: #262b3d;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .control-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+
+        .control-btn:hover {
+            background: #2980b9;
+        }
+
+        .control-btn:active {
+            background: #1f618d;
+        }
+
+        .control-btn.secondary {
+            background: #95a5a6;
+        }
+
+        .control-btn.secondary:hover {
+            background: #7f8c8d;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1e2130;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #34495e;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4a5568;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <h1 id="title">CLDai Visualization Engine</h1>
+            <div class="subtitle" id="subtitle">Causal Loop Diagram Renderer</div>
+        </div>
+        <div id="main">
+            <div id="network"></div>
+            <div id="sidebar">
+                <div id="controls">
+                    <button class="control-btn" onclick="fitNetwork()">Fit to View</button>
+                    <button class="control-btn" onclick="resetPhysics()">Reset Layout</button>
+                    <button class="control-btn secondary" onclick="togglePhysics()">Toggle Physics</button>
+                    <button class="control-btn secondary" onclick="exportImage()">Export PNG</button>
+                </div>
+
+                <div id="legend">
+                    <h3 style="margin-top:0">Legend</h3>
+                    <div class="legend-item">
+                        <div class="legend-box stock"></div>
+                        <span>Stock (accumulates)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box auxiliary"></div>
+                        <span>Auxiliary (flow/rate)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-arrow positive">→ +</span>
+                        <span>Positive (same direction)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-arrow negative">→ −</span>
+                        <span>Negative (opposite)</span>
+                    </div>
+                </div>
+
+                <div id="metadata" class="info-section"></div>
+                <div id="archetypes-section"></div>
+                <div id="loops-section"></div>
+                <div id="aha-section"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        let network;
+        let networkData;
+        let physicsEnabled = true;
+
+        // CLD data will be injected here
+        const cldData = {{ CLD_JSON_PLACEHOLDER }};
+
+        function initializeNetwork(data) {
+            // Prepare nodes for vis.js
+            const visNodes = data.nodes.map((node, index) => {
+                const isStock = node.type === 'stock';
+                return {
+                    id: node.id,
+                    label: node.label,
+                    title: `<b>${node.label}</b><br>${node.description}`,
+                    shape: isStock ? 'box' : 'ellipse',
+                    color: {
+                        background: isStock ? '#008080' : '#4169e1',
+                        border: '#ecf0f1',
+                        highlight: {
+                            background: isStock ? '#00a0a0' : '#5179f1',
+                            border: '#3498db'
+                        }
+                    },
+                    font: {
+                        color: '#ffffff',
+                        size: 14,
+                        face: 'Arial'
+                    },
+                    borderWidth: 2,
+                    borderWidthSelected: 3
+                };
+            });
+
+            // Prepare edges for vis.js
+            const visEdges = data.edges.map(edge => {
+                const isPositive = edge.polarity === '+';
+                return {
+                    from: edge.from_node,
+                    to: edge.to_node,
+                    arrows: {
+                        to: {
+                            enabled: true,
+                            scaleFactor: 0.8
+                        }
+                    },
+                    color: {
+                        color: isPositive ? '#27ae60' : '#e74c3c',
+                        highlight: isPositive ? '#2ecc71' : '#e67e22'
+                    },
+                    width: edge.width || 2,
+                    dashes: edge.style === 'dashed',
+                    smooth: {
+                        type: 'curvedCW',
+                        roundness: edge.lag ? 0.1 + (edge.lag * 0.05) : 0.1
+                    },
+                    title: `<b>${isPositive ? '+' : '−'}</b> ${edge.description}${edge.lag ? '<br>Lag: ' + edge.lag + ' timesteps' : ''}`,
+                    font: {
+                        align: 'middle',
+                        color: '#ecf0f1',
+                        size: 11
+                    }
+                };
+            });
+
+            networkData = {
+                nodes: new vis.DataSet(visNodes),
+                edges: new vis.DataSet(visEdges)
+            };
+
+            const container = document.getElementById('network');
+            const options = {
+                physics: {
+                    enabled: true,
+                    stabilization: {
+                        iterations: 200,
+                        updateInterval: 25
+                    },
+                    barnesHut: {
+                        gravitationalConstant: -4000,
+                        centralGravity: 0.3,
+                        springLength: 150,
+                        springConstant: 0.04,
+                        damping: 0.09,
+                        avoidOverlap: 0.5
+                    }
+                },
+                interaction: {
+                    hover: true,
+                    tooltipDelay: 100,
+                    zoomView: true,
+                    dragView: true
+                },
+                nodes: {
+                    shadow: {
+                        enabled: true,
+                        color: 'rgba(0,0,0,0.3)',
+                        size: 10,
+                        x: 3,
+                        y: 3
+                    }
+                },
+                edges: {
+                    shadow: {
+                        enabled: true,
+                        color: 'rgba(0,0,0,0.2)',
+                        size: 5,
+                        x: 2,
+                        y: 2
+                    }
+                }
+            };
+
+            network = new vis.Network(container, networkData, options);
+
+            // Event handlers
+            network.on('stabilizationIterationsDone', function() {
+                network.setOptions({ physics: false });
+                physicsEnabled = false;
+            });
+
+            network.on('click', function(params) {
+                if (params.nodes.length > 0) {
+                    const nodeId = params.nodes[0];
+                    const node = data.nodes.find(n => n.id === nodeId);
+                    if (node) {
+                        showNodeDetails(node);
+                    }
+                }
+            });
+
+            // Populate sidebar
+            populateSidebar(data);
+        }
+
+        function populateSidebar(data) {
+            // Update title
+            if (data.metadata && data.metadata.topic) {
+                document.getElementById('title').textContent = data.metadata.topic;
+                if (data.metadata.collision_domain) {
+                    document.getElementById('subtitle').textContent = `Domain: ${data.metadata.collision_domain}`;
+                }
+            }
+
+            // Metadata
+            const metadataEl = document.getElementById('metadata');
+            if (data.metadata) {
+                metadataEl.innerHTML = '<h2>Model Info</h2>';
+                if (data.metadata.timestamp) {
+                    metadataEl.innerHTML += `<p><strong>Generated:</strong> ${data.metadata.timestamp}</p>`;
+                }
+                if (data.metadata.skin) {
+                    const skin = data.metadata.skin;
+                    metadataEl.innerHTML += `<p><strong>Audience:</strong> ${skin.type} (${skin.audience || 'General'})</p>`;
+                    if (skin.jurisdiction) {
+                        metadataEl.innerHTML += `<p><strong>Jurisdiction:</strong> ${skin.jurisdiction}</p>`;
+                    }
+                    if (skin.time_horizon) {
+                        metadataEl.innerHTML += `<p><strong>Time Horizon:</strong> ${skin.time_horizon}</p>`;
+                    }
+                }
+                metadataEl.innerHTML += `<p><strong>Nodes:</strong> ${data.nodes.length} (${data.nodes.filter(n => n.type === 'stock').length} stocks, ${data.nodes.filter(n => n.type === 'auxiliary').length} auxiliaries)</p>`;
+                metadataEl.innerHTML += `<p><strong>Edges:</strong> ${data.edges.length}</p>`;
+                metadataEl.innerHTML += `<p><strong>Loops:</strong> ${data.loops.length}</p>`;
+            }
+
+            // Archetypes
+            const archetypesEl = document.getElementById('archetypes-section');
+            if (data.archetypes && data.archetypes.length > 0) {
+                archetypesEl.innerHTML = '<h2>System Archetypes</h2>';
+                data.archetypes.forEach(arch => {
+                    archetypesEl.innerHTML += `<span class="archetype-tag">${arch}</span>`;
+                });
+            }
+
+            // Loops
+            const loopsEl = document.getElementById('loops-section');
+            if (data.loops && data.loops.length > 0) {
+                loopsEl.innerHTML = '<h2>Feedback Loops</h2>';
+                data.loops.forEach(loop => {
+                    const loopClass = loop.polarity === 'R' ? 'reinforcing' : 'balancing';
+                    const loopSymbol = loop.polarity === 'R' ? '↻' : '↺';
+                    loopsEl.innerHTML += `
+                        <div class="loop-item ${loopClass}">
+                            <div class="loop-label">${loopSymbol} Loop ${loop.loop_id}: ${loop.label}</div>
+                            <div class="loop-nodes">${loop.nodes.join(' → ')}</div>
+                            ${loop.archetype ? `<div class="loop-nodes">Archetype: ${loop.archetype}</div>` : ''}
+                        </div>
+                    `;
+                });
+            }
+
+            // Aha! Paradox
+            const ahaEl = document.getElementById('aha-section');
+            if (data.aha_paradox) {
+                const aha = data.aha_paradox;
+                ahaEl.innerHTML = '<h2>Aha! Paradox</h2>';
+
+                const sections = [
+                    { name: 'Anchor', key: 'anchor' },
+                    { name: 'Default', key: 'default' },
+                    { name: 'Bottleneck', key: 'bottleneck' },
+                    { name: 'Collision', key: 'collision' },
+                    { name: 'Reversal', key: 'reversal' },
+                    { name: 'Commitment Filter', key: 'commitment_filter' },
+                    { name: 'Kinetic Result', key: 'kinetic_result' }
+                ];
+
+                sections.forEach(section => {
+                    if (aha[section.key]) {
+                        ahaEl.innerHTML += `
+                            <div class="aha-section">
+                                <div class="section-name">${section.name}</div>
+                                <div class="section-content">${aha[section.key]}</div>
+                            </div>
+                        `;
+                    }
+                });
+            }
+        }
+
+        function showNodeDetails(node) {
+            alert(`${node.label}\n\n${node.description}\n\nType: ${node.type}\nDomain: ${node.domain || 'N/A'}`);
+        }
+
+        function fitNetwork() {
+            if (network) {
+                network.fit({ animation: true });
+            }
+        }
+
+        function resetPhysics() {
+            if (network) {
+                network.setOptions({ physics: true });
+                physicsEnabled = true;
+                setTimeout(() => {
+                    network.setOptions({ physics: false });
+                    physicsEnabled = false;
+                }, 3000);
+            }
+        }
+
+        function togglePhysics() {
+            if (network) {
+                physicsEnabled = !physicsEnabled;
+                network.setOptions({ physics: physicsEnabled });
+            }
+        }
+
+        function exportImage() {
+            if (network) {
+                const canvas = network.canvas.frame.canvas;
+                const dataURL = canvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.download = 'cld_diagram.png';
+                link.href = dataURL;
+                link.click();
+            }
+        }
+
+        // Initialize on load
+        window.addEventListener('load', function() {
+            if (cldData && cldData.nodes) {
+                initializeNetwork(cldData);
+            } else {
+                console.error('No CLD data provided');
+                document.getElementById('network').innerHTML = '<div style="padding: 40px; text-align: center; color: #e74c3c;"><h2>No CLD data loaded</h2><p>Please provide valid CLD JSON data.</p></div>';
+            }
+        });
+    </script>
+</body>
+</html>
