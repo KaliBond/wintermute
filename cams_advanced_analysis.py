@@ -163,29 +163,41 @@ if df is not None:
                                 st.plotly_chart(fig, use_container_width=True)
 
                             with col2:
-                                # dDIG vs H(Y|Z) scatter
-                                fig = px.scatter(
-                                    result.reset_index(),
-                                    x='H(Y|Z)_bits', y='dDIG_bits',
-                                    text='Node',
-                                    title='Information Transfer Landscape',
-                                    size='nDIG',
-                                    color='nDIG',
-                                    color_continuous_scale='Plasma'
-                                )
-                                fig.update_traces(textposition='top center')
-                                fig.update_layout(height=400)
-                                st.plotly_chart(fig, use_container_width=True)
+                                # dDIG vs H(Y|Z) scatter - filter out NaN values
+                                result_valid = result.dropna(subset=['nDIG', 'dDIG_bits', 'H(Y|Z)_bits']).reset_index()
+
+                                if len(result_valid) > 0:
+                                    # Ensure nDIG has positive values for size
+                                    result_valid['size_val'] = result_valid['nDIG'].clip(lower=0.001)
+
+                                    fig = px.scatter(
+                                        result_valid,
+                                        x='H(Y|Z)_bits', y='dDIG_bits',
+                                        text='Node',
+                                        title='Information Transfer Landscape',
+                                        size='size_val',
+                                        color='nDIG',
+                                        color_continuous_scale='Plasma'
+                                    )
+                                    fig.update_traces(textposition='top center')
+                                    fig.update_layout(height=400)
+                                    st.plotly_chart(fig, use_container_width=True)
+                                else:
+                                    st.warning("No valid nDIG values to plot")
 
                             # Top influencers
                             st.subheader("🎯 Key Insights")
-                            top3 = result.nlargest(3, 'nDIG')
-                            for i, (node, row) in enumerate(top3.iterrows(), 1):
-                                st.metric(
-                                    f"#{i} {node}",
-                                    f"{row['nDIG']:.3f}",
-                                    f"{row['dDIG_bits']:.3f} bits"
-                                )
+                            result_valid = result.dropna(subset=['nDIG'])
+                            if len(result_valid) > 0:
+                                top3 = result_valid.nlargest(3, 'nDIG')
+                                for i, (node, row) in enumerate(top3.iterrows(), 1):
+                                    st.metric(
+                                        f"#{i} {node}",
+                                        f"{row['nDIG']:.3f}",
+                                        f"{row['dDIG_bits']:.3f} bits"
+                                    )
+                            else:
+                                st.info("No valid nDIG values computed (insufficient data or variation)")
                         else:
                             st.error("No results generated. Check data format.")
 
