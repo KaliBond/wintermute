@@ -412,10 +412,65 @@ if df is not None:
             # Compute M, Y, B fields
             M, Y, B = compute_fields_from_wide(wide)
 
+            # Diagnostic info
+            st.sidebar.markdown("---")
+            st.sidebar.subheader("Diagnostic Info")
+            st.sidebar.metric("M (Metabolic) valid years", M.notna().sum())
+            st.sidebar.metric("Y (Mythic) valid years", Y.notna().sum())
+            st.sidebar.metric("B (Bond) valid years", B.notna().sum())
+
             # Align indices (remove NaN)
             common = M.dropna().index.intersection(Y.dropna().index).intersection(B.dropna().index)
+
             if len(common) < 2:
                 st.error("❌ Insufficient data for attractor visualization (need at least 2 valid years)")
+
+                # Show detailed diagnostics
+                st.markdown("**Diagnostic Information:**")
+
+                col1, col2, col3 = st.columns(3)
+
+                with col1:
+                    st.markdown("**M (Metabolic Load)**")
+                    stress_cols = [c for c in wide.columns if c.startswith('Stress_')]
+                    if stress_cols:
+                        st.success(f"✓ Found {len(stress_cols)} Stress columns")
+                        for col in stress_cols[:5]:
+                            st.caption(f"- {col}")
+                        st.metric("Valid M values", M.notna().sum())
+                    else:
+                        st.error("✗ No Stress columns found")
+
+                with col2:
+                    st.markdown("**Y (Mythic Integration)**")
+                    coherence_cols = [c for c in wide.columns if c.startswith('Coherence_')]
+                    abstraction_cols = [c for c in wide.columns if c.startswith('Abstraction_')]
+                    if coherence_cols and abstraction_cols:
+                        st.success(f"✓ Found {len(coherence_cols)} Coherence + {len(abstraction_cols)} Abstraction")
+                        st.metric("Valid Y values", Y.notna().sum())
+                    else:
+                        st.error(f"✗ Missing: {'Coherence' if not coherence_cols else 'Abstraction'}")
+
+                with col3:
+                    st.markdown("**B (Bond Strength)**")
+                    if 'B' in wide.columns:
+                        st.success("✓ Found pre-computed B column")
+                        st.metric("Valid B values", B.notna().sum())
+                    else:
+                        bond_cols = [c for c in wide.columns if c.startswith('Bond_')]
+                        if bond_cols:
+                            st.success(f"✓ Found {len(bond_cols)} Bond columns")
+                            st.metric("Valid B values", B.notna().sum())
+                        else:
+                            st.error("✗ No Bond Strength data")
+
+                st.info("""
+                **Possible fixes:**
+                - Ensure dataset has Stress, Coherence, Abstraction columns for multiple nodes
+                - Ensure Bond Strength data is present (or B column in wide format)
+                - Check that data covers multiple years (not just a single year)
+                - Try a different dataset with more complete time series
+                """)
             else:
                 M = M.loc[common]
                 Y = Y.loc[common]

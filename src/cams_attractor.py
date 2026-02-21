@@ -96,11 +96,21 @@ def compute_fields_from_wide(wide_df):
     Compute M, Y, B fields from already-pivoted wide-format dataframe
     (for integration with existing cams_dyad_cld.pivot_cams_long_to_wide)
 
+    Auto-detects nodes from column names instead of hardcoding.
+
     Returns: (M, Y, B) as pandas Series indexed by Year
     """
+    # Auto-detect nodes from column names
+    detected_nodes = []
+    for col in wide_df.columns:
+        if col.startswith('Stress_'):
+            node = col.replace('Stress_', '')
+            detected_nodes.append(node)
+
     # ---- Metabolic Load (M) ----
+    # Use ALL available Stress columns (not just hardcoded nodes)
     M_list = []
-    for node in METABOLIC_NODES:
+    for node in detected_nodes:
         col = f"Stress_{node}"
         if col in wide_df.columns:
             M_list.append(wide_df[col])
@@ -108,8 +118,9 @@ def compute_fields_from_wide(wide_df):
     M = pd.concat(M_list, axis=1).mean(axis=1) if M_list else pd.Series(index=wide_df.index, dtype=float)
 
     # ---- Mythic Integration (Y) ----
+    # Use ALL available Coherence + Abstraction columns
     Y_list = []
-    for node in MYTHIC_NODES:
+    for node in detected_nodes:
         C = f"Coherence_{node}"
         A = f"Abstraction_{node}"
         if C in wide_df.columns and A in wide_df.columns:
