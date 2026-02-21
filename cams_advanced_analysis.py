@@ -525,7 +525,7 @@ if df is not None:
                     fig_2d.add_trace(go.Scatter(
                         x=M_s, y=Y_s,
                         mode='lines+markers',
-                        line=dict(color=years, colorscale='Viridis', width=2),
+                        line=dict(color='rgba(150,150,150,0.3)', width=1),
                         marker=dict(
                             size=6,
                             color=years,
