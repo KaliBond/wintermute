@@ -75,8 +75,19 @@ def pivot_cams_long_to_wide(df_long: pd.DataFrame) -> pd.DataFrame:
     return out
 
 def compute_M(wide: pd.DataFrame) -> pd.Series:
+    """
+    Compute Metabolic Load (M) from stress and capacity shortfall.
+    Auto-detects all available nodes instead of hardcoding.
+    """
+    # Auto-detect nodes from Stress columns
+    detected_nodes = []
+    for col in wide.columns:
+        if col.startswith('Stress_'):
+            node = col.replace('Stress_', '')
+            detected_nodes.append(node)
+
     parts = []
-    for node in METABOLIC_NODES:
+    for node in detected_nodes:
         s = wide.get(f"Stress_{node}")
         k = wide.get(f"Capacity_{node}")
         if s is None or k is None:
@@ -87,8 +98,19 @@ def compute_M(wide: pd.DataFrame) -> pd.Series:
     return pd.concat(parts, axis=1).mean(axis=1) if parts else pd.Series(index=wide.index, dtype=float)
 
 def compute_Y(wide: pd.DataFrame) -> pd.Series:
+    """
+    Compute Mythic Integration (Y) from coherence, abstraction, and stress.
+    Auto-detects all available nodes instead of hardcoding.
+    """
+    # Auto-detect nodes from Coherence columns
+    detected_nodes = []
+    for col in wide.columns:
+        if col.startswith('Coherence_'):
+            node = col.replace('Coherence_', '')
+            detected_nodes.append(node)
+
     parts = []
-    for node in MYTH_NODES:
+    for node in detected_nodes:
         c = wide.get(f"Coherence_{node}")
         a = wide.get(f"Abstraction_{node}")
         s = wide.get(f"Stress_{node}")
