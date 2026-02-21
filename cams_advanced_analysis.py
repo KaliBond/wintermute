@@ -420,7 +420,15 @@ if df is not None:
             st.sidebar.metric("B (Bond) valid years", B.notna().sum())
 
             # Align indices (remove NaN)
-            common = M.dropna().index.intersection(Y.dropna().index).intersection(B.dropna().index)
+            # Check if we have valid B data
+            has_B_data = B.notna().sum() >= 2
+
+            if has_B_data:
+                common = M.dropna().index.intersection(Y.dropna().index).intersection(B.dropna().index)
+            else:
+                # No B data - use 2D mode (M-Y only)
+                common = M.dropna().index.intersection(Y.dropna().index)
+                st.warning("⚠️ No Bond Strength data available - using 2D mode (M-Y only)")
 
             if len(common) < 2:
                 st.error("❌ Insufficient data for attractor visualization (need at least 2 valid years)")
@@ -474,15 +482,22 @@ if df is not None:
             else:
                 M = M.loc[common]
                 Y = Y.loc[common]
-                B = B.loc[common]
+                if has_B_data:
+                    B = B.loc[common]
                 years = common.values
 
                 # Summary metrics
-                col1, col2, col3, col4 = st.columns(4)
-                col1.metric("Time Span", f"{len(years)} years")
-                col2.metric("M Range", f"{M.min():.2f} - {M.max():.2f}")
-                col3.metric("Y Range", f"{Y.min():.2f} - {Y.max():.2f}")
-                col4.metric("B Range", f"{B.min():.2f} - {B.max():.2f}")
+                if has_B_data:
+                    col1, col2, col3, col4 = st.columns(4)
+                    col1.metric("Time Span", f"{len(years)} years")
+                    col2.metric("M Range", f"{M.min():.2f} - {M.max():.2f}")
+                    col3.metric("Y Range", f"{Y.min():.2f} - {Y.max():.2f}")
+                    col4.metric("B Range", f"{B.min():.2f} - {B.max():.2f}")
+                else:
+                    col1, col2, col3 = st.columns(3)
+                    col1.metric("Time Span", f"{len(years)} years")
+                    col2.metric("M Range", f"{M.min():.2f} - {M.max():.2f}")
+                    col3.metric("Y Range", f"{Y.min():.2f} - {Y.max():.2f}")
 
                 # Smoothing control
                 st.sidebar.markdown("---")
@@ -492,13 +507,61 @@ if df is not None:
                 # Apply smoothing
                 M_s = smooth(M, sigma=sigma)
                 Y_s = smooth(Y, sigma=sigma)
-                B_s = smooth(B, sigma=sigma)
+                if has_B_data:
+                    B_s = smooth(B, sigma=sigma)
 
-                # 3D Attractor Plot
-                st.subheader("🌌 3D Phase-Space Trajectory")
-                fig_3d = plot_attractor_3d_plotly(M_s, Y_s, B_s, years,
-                                                  f"{df['Society'].iloc[0] if 'Society' in df.columns else 'CAMS'} Attractor")
-                st.plotly_chart(fig_3d, use_container_width=True)
+                # 3D Attractor Plot (or 2D if no B data)
+                if has_B_data:
+                    st.subheader("🌌 3D Phase-Space Trajectory (M-Y-B)")
+                    fig_3d = plot_attractor_3d_plotly(M_s, Y_s, B_s, years,
+                                                      f"{df['Society'].iloc[0] if 'Society' in df.columns else 'CAMS'} Attractor")
+                    st.plotly_chart(fig_3d, use_container_width=True)
+                else:
+                    st.subheader("📈 2D Phase-Space Trajectory (M-Y only)")
+                    st.info("💡 Bond Strength data not available - showing M-Y trajectory only")
+
+                    # Create 2D trajectory plot
+                    fig_2d = go.Figure()
+                    fig_2d.add_trace(go.Scatter(
+                        x=M_s, y=Y_s,
+                        mode='lines+markers',
+                        line=dict(color=years, colorscale='Viridis', width=2),
+                        marker=dict(
+                            size=6,
+                            color=years,
+                            colorscale='Viridis',
+                            showscale=True,
+                            colorbar=dict(title="Year")
+                        ),
+                        text=[f"Year: {y:.0f}<br>M: {m:.2f}<br>Y: {yval:.2f}"
+                              for y, m, yval in zip(years, M_s, Y_s)],
+                        hovertemplate='%{text}<extra></extra>',
+                        name='Trajectory'
+                    ))
+
+                    # Mark start and end
+                    fig_2d.add_trace(go.Scatter(
+                        x=[M_s[0]], y=[Y_s[0]],
+                        mode='markers',
+                        marker=dict(size=15, color='green', symbol='diamond'),
+                        name=f'Start ({years[0]:.0f})',
+                        hovertemplate=f'Start: {years[0]:.0f}<extra></extra>'
+                    ))
+                    fig_2d.add_trace(go.Scatter(
+                        x=[M_s[-1]], y=[Y_s[-1]],
+                        mode='markers',
+                        marker=dict(size=15, color='red', symbol='diamond'),
+                        name=f'End ({years[-1]:.0f})',
+                        hovertemplate=f'End: {years[-1]:.0f}<extra></extra>'
+                    ))
+
+                    fig_2d.update_layout(
+                        title=f"{df['Society'].iloc[0] if 'Society' in df.columns else 'CAMS'} M-Y Trajectory",
+                        xaxis_title="Metabolic Load (M)",
+                        yaxis_title="Mythic Integration (Y)",
+                        height=600
+                    )
+                    st.plotly_chart(fig_2d, use_container_width=True)
 
                 # Density Projection
                 st.subheader("🔥 Phase Density Projection (M-Y plane)")
@@ -513,13 +576,23 @@ if df is not None:
 
                 if st.button("🔍 Detect Regimes"):
                     with st.spinner("Clustering phase-space trajectory..."):
-                        labels, centers = detect_regimes(M_s, Y_s, B_s, n_regimes=n_regimes)
+                        if has_B_data:
+                            labels, centers = detect_regimes(M_s, Y_s, B_s, n_regimes=n_regimes)
+                            center_cols = ['M', 'Y', 'B']
+                        else:
+                            # 2D regime detection
+                            from sklearn.cluster import KMeans
+                            X = np.column_stack([M_s, Y_s])
+                            kmeans = KMeans(n_clusters=n_regimes, random_state=42, n_init=10)
+                            labels = kmeans.fit_predict(X)
+                            centers = kmeans.cluster_centers_
+                            center_cols = ['M', 'Y']
 
                         if labels is not None and centers is not None:
                             st.success(f"✓ Detected {n_regimes} distinct regimes!")
 
                             # Show regime centers
-                            regime_df = pd.DataFrame(centers, columns=['M', 'Y', 'B'])
+                            regime_df = pd.DataFrame(centers, columns=center_cols)
                             regime_df.index = [f"Regime {i+1}" for i in range(n_regimes)]
                             st.dataframe(regime_df.style.format('{:.2f}'), use_container_width=True)
 
@@ -531,43 +604,78 @@ if df is not None:
                             for i, (count, pct) in enumerate(zip(regime_counts, regime_pct)):
                                 st.metric(f"Regime {i+1}", f"{count} years ({pct}%)")
 
-                            # 3D plot with regime colors
+                            # Plot with regime colors (3D or 2D)
                             fig_regimes = go.Figure()
 
-                            for regime_id in range(n_regimes):
-                                mask = labels == regime_id
-                                regime_years = years[mask]
-                                regime_M = M_s[mask]
-                                regime_Y = Y_s[mask]
-                                regime_B = B_s[mask]
+                            if has_B_data:
+                                # 3D plot with regime colors
+                                for regime_id in range(n_regimes):
+                                    mask = labels == regime_id
+                                    regime_years = years[mask]
+                                    regime_M = M_s[mask]
+                                    regime_Y = Y_s[mask]
+                                    regime_B = B_s[mask]
 
+                                    fig_regimes.add_trace(go.Scatter3d(
+                                        x=regime_M, y=regime_Y, z=regime_B,
+                                        mode='markers',
+                                        marker=dict(size=6),
+                                        name=f'Regime {regime_id+1}',
+                                        text=[f"Year: {y:.0f}" for y in regime_years],
+                                        hovertemplate='%{text}<extra></extra>'
+                                    ))
+
+                                # Add cluster centers
                                 fig_regimes.add_trace(go.Scatter3d(
-                                    x=regime_M, y=regime_Y, z=regime_B,
+                                    x=centers[:, 0], y=centers[:, 1], z=centers[:, 2],
                                     mode='markers',
-                                    marker=dict(size=6),
-                                    name=f'Regime {regime_id+1}',
-                                    text=[f"Year: {y:.0f}" for y in regime_years],
-                                    hovertemplate='%{text}<extra></extra>'
+                                    marker=dict(size=15, color='black', symbol='diamond'),
+                                    name='Regime Centers',
+                                    hoverinfo='skip'
+                                ))
+                            else:
+                                # 2D plot with regime colors
+                                for regime_id in range(n_regimes):
+                                    mask = labels == regime_id
+                                    regime_years = years[mask]
+                                    regime_M = M_s[mask]
+                                    regime_Y = Y_s[mask]
+
+                                    fig_regimes.add_trace(go.Scatter(
+                                        x=regime_M, y=regime_Y,
+                                        mode='markers',
+                                        marker=dict(size=8),
+                                        name=f'Regime {regime_id+1}',
+                                        text=[f"Year: {y:.0f}" for y in regime_years],
+                                        hovertemplate='%{text}<extra></extra>'
+                                    ))
+
+                                # Add cluster centers
+                                fig_regimes.add_trace(go.Scatter(
+                                    x=centers[:, 0], y=centers[:, 1],
+                                    mode='markers',
+                                    marker=dict(size=20, color='black', symbol='diamond'),
+                                    name='Regime Centers',
+                                    hoverinfo='skip'
                                 ))
 
-                            # Add cluster centers
-                            fig_regimes.add_trace(go.Scatter3d(
-                                x=centers[:, 0], y=centers[:, 1], z=centers[:, 2],
-                                mode='markers',
-                                marker=dict(size=15, color='black', symbol='diamond'),
-                                name='Regime Centers',
-                                hoverinfo='skip'
-                            ))
-
-                            fig_regimes.update_layout(
-                                title="Regime-Colored Phase Space",
-                                scene=dict(
+                            if has_B_data:
+                                fig_regimes.update_layout(
+                                    title="Regime-Colored Phase Space (3D)",
+                                    scene=dict(
+                                        xaxis_title="Metabolic Load (M)",
+                                        yaxis_title="Mythic Integration (Y)",
+                                        zaxis_title="Bond Strength (B)"
+                                    ),
+                                    height=700
+                                )
+                            else:
+                                fig_regimes.update_layout(
+                                    title="Regime-Colored Phase Space (2D)",
                                     xaxis_title="Metabolic Load (M)",
                                     yaxis_title="Mythic Integration (Y)",
-                                    zaxis_title="Bond Strength (B)"
-                                ),
-                                height=700
-                            )
+                                    height=600
+                                )
 
                             st.plotly_chart(fig_regimes, use_container_width=True)
 

@@ -129,11 +129,16 @@ def compute_fields_from_wide(wide_df):
     Y = pd.concat(Y_list, axis=1).mean(axis=1) if Y_list else pd.Series(index=wide_df.index, dtype=float)
 
     # ---- Bond Strength (B) ----
-    if 'B' in wide_df.columns:
+    if 'B' in wide_df.columns and wide_df['B'].notna().sum() > 0:
         B = wide_df['B']
     else:
-        bond_cols = [c for c in wide_df.columns if c.startswith("Bond_")]
-        B = wide_df[bond_cols].mean(axis=1) if bond_cols else pd.Series(index=wide_df.index, dtype=float)
+        # Try to find individual node bond strengths
+        bond_cols = [c for c in wide_df.columns if 'Bond' in c and c != 'B']
+        if bond_cols:
+            B = wide_df[bond_cols].mean(axis=1)
+        else:
+            # No bond data - return NaN series
+            B = pd.Series(index=wide_df.index, dtype=float)
 
     return M, Y, B
 
