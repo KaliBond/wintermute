@@ -12,6 +12,10 @@ from src.cams_dyad_cld import (
     pivot_cams_long_to_wide, compute_M, compute_Y,
     normalise_B, compute_Omega, METABOLIC_NODES, MYTH_NODES
 )
+from src.cams_attractor import (
+    compute_fields_from_wide, smooth, plot_attractor_3d_plotly,
+    plot_density_projection_plotly, detect_regimes
+)
 
 st.set_page_config(page_title="CAMS Advanced Analysis", layout="wide", page_icon="🔬")
 
@@ -27,7 +31,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.title("🔬 CAMS Advanced Analysis Dashboard")
-st.markdown("**Directed Information Gain (dDIG) & Dyad Field Analysis**")
+st.markdown("**Directed Information Gain (dDIG), Dyad Field Analysis & Phase-Space Attractors**")
 
 # Sidebar - Data Selection
 st.sidebar.header("📁 Data Selection")
@@ -68,7 +72,7 @@ if df is not None:
         st.sidebar.metric("Society", df['Society'].iloc[0] if len(df) > 0 else "Unknown")
 
     # Main content tabs
-    tab1, tab2, tab3 = st.tabs(["📊 dDIG Analysis", "🌀 Dyad Field Analysis", "📈 Combined Insights"])
+    tab1, tab2, tab3, tab4 = st.tabs(["📊 dDIG Analysis", "🌀 Dyad Field Analysis", "📈 Combined Insights", "🌌 Phase-Space Attractor"])
 
     # ==================== TAB 1: dDIG Analysis ====================
     with tab1:
@@ -376,6 +380,164 @@ if df is not None:
 
         except Exception as e:
             st.error(f"Error in combined analysis: {e}")
+            st.exception(e)
+
+    # ==================== TAB 4: Phase-Space Attractor ====================
+    with tab4:
+        st.header("🌌 Phase-Space Attractor: M-Y-B Dynamics")
+        st.markdown("""
+        **3D trajectory visualization** of institutional dynamics:
+        - **X-axis**: Metabolic Load (M) - stress in material subsystem (Hands, Flow, Shield)
+        - **Y-axis**: Mythic Integration (Y) - coherence in meaning subsystem (Lore, Archive, Stewards)
+        - **Z-axis**: Bond Strength (B) - coupling between institutions
+
+        Reveals attractor basins, regime transitions, and system stability.
+        """)
+
+        try:
+            wide = pivot_cams_long_to_wide(df)
+
+            # Compute M, Y, B fields
+            M, Y, B = compute_fields_from_wide(wide)
+
+            # Align indices (remove NaN)
+            common = M.dropna().index.intersection(Y.dropna().index).intersection(B.dropna().index)
+            if len(common) < 2:
+                st.error("❌ Insufficient data for attractor visualization (need at least 2 valid years)")
+            else:
+                M = M.loc[common]
+                Y = Y.loc[common]
+                B = B.loc[common]
+                years = common.values
+
+                # Summary metrics
+                col1, col2, col3, col4 = st.columns(4)
+                col1.metric("Time Span", f"{len(years)} years")
+                col2.metric("M Range", f"{M.min():.2f} - {M.max():.2f}")
+                col3.metric("Y Range", f"{Y.min():.2f} - {Y.max():.2f}")
+                col4.metric("B Range", f"{B.min():.2f} - {B.max():.2f}")
+
+                # Smoothing control
+                st.sidebar.markdown("---")
+                st.sidebar.subheader("Attractor Settings")
+                sigma = st.sidebar.slider("Smoothing (σ)", 0, 10, 2, help="Gaussian smoothing sigma (0=no smoothing)")
+
+                # Apply smoothing
+                M_s = smooth(M, sigma=sigma)
+                Y_s = smooth(Y, sigma=sigma)
+                B_s = smooth(B, sigma=sigma)
+
+                # 3D Attractor Plot
+                st.subheader("🌌 3D Phase-Space Trajectory")
+                fig_3d = plot_attractor_3d_plotly(M_s, Y_s, B_s, years,
+                                                  f"{df['Society'].iloc[0] if 'Society' in df.columns else 'CAMS'} Attractor")
+                st.plotly_chart(fig_3d, use_container_width=True)
+
+                # Density Projection
+                st.subheader("🔥 Phase Density Projection (M-Y plane)")
+                st.markdown("*Heatmap shows time spent in different regions of phase space (attractor basins)*")
+                fig_density = plot_density_projection_plotly(M_s, Y_s,
+                                                             f"{df['Society'].iloc[0] if 'Society' in df.columns else 'CAMS'} Density")
+                st.plotly_chart(fig_density, use_container_width=True)
+
+                # Regime Detection
+                st.subheader("🎯 Regime Detection")
+                n_regimes = st.slider("Number of regimes", 2, 5, 3, help="K-means clustering of phase-space trajectory")
+
+                if st.button("🔍 Detect Regimes"):
+                    with st.spinner("Clustering phase-space trajectory..."):
+                        labels, centers = detect_regimes(M_s, Y_s, B_s, n_regimes=n_regimes)
+
+                        if labels is not None and centers is not None:
+                            st.success(f"✓ Detected {n_regimes} distinct regimes!")
+
+                            # Show regime centers
+                            regime_df = pd.DataFrame(centers, columns=['M', 'Y', 'B'])
+                            regime_df.index = [f"Regime {i+1}" for i in range(n_regimes)]
+                            st.dataframe(regime_df.style.format('{:.2f}'), use_container_width=True)
+
+                            # Regime occupancy
+                            regime_counts = pd.Series(labels).value_counts().sort_index()
+                            regime_pct = (regime_counts / len(labels) * 100).round(1)
+
+                            st.markdown("**Regime Occupancy:**")
+                            for i, (count, pct) in enumerate(zip(regime_counts, regime_pct)):
+                                st.metric(f"Regime {i+1}", f"{count} years ({pct}%)")
+
+                            # 3D plot with regime colors
+                            fig_regimes = go.Figure()
+
+                            for regime_id in range(n_regimes):
+                                mask = labels == regime_id
+                                regime_years = years[mask]
+                                regime_M = M_s[mask]
+                                regime_Y = Y_s[mask]
+                                regime_B = B_s[mask]
+
+                                fig_regimes.add_trace(go.Scatter3d(
+                                    x=regime_M, y=regime_Y, z=regime_B,
+                                    mode='markers',
+                                    marker=dict(size=6),
+                                    name=f'Regime {regime_id+1}',
+                                    text=[f"Year: {y:.0f}" for y in regime_years],
+                                    hovertemplate='%{text}<extra></extra>'
+                                ))
+
+                            # Add cluster centers
+                            fig_regimes.add_trace(go.Scatter3d(
+                                x=centers[:, 0], y=centers[:, 1], z=centers[:, 2],
+                                mode='markers',
+                                marker=dict(size=15, color='black', symbol='diamond'),
+                                name='Regime Centers',
+                                hoverinfo='skip'
+                            ))
+
+                            fig_regimes.update_layout(
+                                title="Regime-Colored Phase Space",
+                                scene=dict(
+                                    xaxis_title="Metabolic Load (M)",
+                                    yaxis_title="Mythic Integration (Y)",
+                                    zaxis_title="Bond Strength (B)"
+                                ),
+                                height=700
+                            )
+
+                            st.plotly_chart(fig_regimes, use_container_width=True)
+
+                        else:
+                            st.error("❌ Regime detection failed (insufficient data)")
+
+                # Trajectory statistics
+                st.subheader("📊 Trajectory Statistics")
+
+                # Velocity (rate of change in phase space)
+                dM = np.diff(M_s)
+                dY = np.diff(Y_s)
+                dB = np.diff(B_s)
+                velocity = np.sqrt(dM**2 + dY**2 + dB**2)
+
+                col1, col2 = st.columns(2)
+
+                with col1:
+                    st.markdown("**Phase Velocity** (rate of change)")
+                    st.line_chart(pd.DataFrame({
+                        'Velocity': velocity
+                    }, index=years[:-1]))
+
+                    st.metric("Mean Velocity", f"{velocity.mean():.3f}")
+                    st.metric("Max Velocity", f"{velocity.max():.3f} (Year {years[:-1][velocity.argmax()]:.0f})")
+
+                with col2:
+                    st.markdown("**Field Components Over Time**")
+                    components_df = pd.DataFrame({
+                        'M (Metabolic)': M_s,
+                        'Y (Mythic)': Y_s,
+                        'B (Bond)': B_s
+                    }, index=years)
+                    st.line_chart(components_df)
+
+        except Exception as e:
+            st.error(f"Error in attractor analysis: {e}")
             st.exception(e)
 
 else:
