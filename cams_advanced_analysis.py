@@ -688,8 +688,11 @@ if df is not None:
                 # Velocity (rate of change in phase space)
                 dM = np.diff(M_s)
                 dY = np.diff(Y_s)
-                dB = np.diff(B_s)
-                velocity = np.sqrt(dM**2 + dY**2 + dB**2)
+                if has_B_data:
+                    dB = np.diff(B_s)
+                    velocity = np.sqrt(dM**2 + dY**2 + dB**2)
+                else:
+                    velocity = np.sqrt(dM**2 + dY**2)
 
                 col1, col2 = st.columns(2)
 
@@ -704,11 +707,17 @@ if df is not None:
 
                 with col2:
                     st.markdown("**Field Components Over Time**")
-                    components_df = pd.DataFrame({
-                        'M (Metabolic)': M_s,
-                        'Y (Mythic)': Y_s,
-                        'B (Bond)': B_s
-                    }, index=years)
+                    if has_B_data:
+                        components_df = pd.DataFrame({
+                            'M (Metabolic)': M_s,
+                            'Y (Mythic)': Y_s,
+                            'B (Bond)': B_s
+                        }, index=years)
+                    else:
+                        components_df = pd.DataFrame({
+                            'M (Metabolic)': M_s,
+                            'Y (Mythic)': Y_s
+                        }, index=years)
                     st.line_chart(components_df)
 
         except Exception as e:
