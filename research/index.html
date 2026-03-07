@@ -106,7 +106,8 @@
             <a href="../index.html" class="nav-link">Home</a>
             <a href="../research.html" class="nav-link">Research</a>
             <a href="index.html" class="nav-link active">Research Diary</a>
-            <a href="../contact.html" class="nav-link">Contact</a>
+            <a href="../newsletter.html" class="nav-link">Newsletter</a>
+            <a href="mailto:kari.freyr.4@gmail.com" class="nav-link">Contact</a>
         </div>
     </div>
 </nav>
@@ -114,7 +115,7 @@
 <div class="container">
     <div class="hero-section">
         <h1>CAMS Research Diary</h1>
-        <p class="hero-subtitle">Documenting the Journey of Societal Neural Network Discovery</p>
+        <p class="hero-subtitle">Documenting the Development of the Complex Adaptive Model of Societies</p>
     </div>
 
     <div class="card">
@@ -139,6 +140,76 @@
 
     <!-- Research Diary Entries -->
     <div id="diary-entries">
+
+        <div class="diary-entry research-milestone">
+            <div class="entry-header">
+                <h3>CAMS v2.3: Formal Specification with Coordination Phase Space</h3>
+                <div>
+                    <span class="entry-type">Milestone</span>
+                    <span class="entry-date">2026-02-25</span>
+                </div>
+            </div>
+            <div class="entry-content">
+                <h4>🎯 Overview</h4>
+                <p>CAMS v2.3 unveils a formally complete specification of the Complex Adaptive Model of Societies. The framework represents a society as a dynamic 8×4 state matrix, bridging the mythic layer (Lore and Archive) with executive interfaces (Helm and Stewards) through to the material foundations of Shield, Craft, Hands, and Flow. Effective coupling coordination between these three node types defines societal health.</p>
+
+                <p>Through precise mathematical definitions of node health, bond strengths, and coordination phase space, CAMS v2.3 illuminates how societies maintain coherence or descend into crisis via layer decoupling — offering a universal lens for analysing civilisational resilience and transformation.</p>
+
+                <h4>📐 Formal Specification</h4>
+
+                <h5>State Representation</h5>
+                <p>Society S at time t is the state matrix <strong>X</strong>(t) ∈ ℝ<sup>8×4</sup> (rows = 8 nodes, columns = [C, K, S, A] ∈ [1,10] integers).</p>
+
+                <h5>Three Ontological Layers</h5>
+                <ul>
+                    <li><strong>Mythic</strong>: Lore (3), Archive (4) — cognitive coherence &amp; legitimacy</li>
+                    <li><strong>Interface</strong>: Helm (1), Stewards (5) — executive conduit</li>
+                    <li><strong>Material</strong>: Shield (2), Craft (6), Hands (7), Flow (8) — physical/metabolic base</li>
+                </ul>
+
+                <h5>Node Value &amp; Health</h5>
+                <pre style="background: #1e2130; color: #e0e0e0; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 0.9em;">V_i(t) = C_i + K_i + (A_i / 2) − S_i    range: [−7.5, 24.0]
+
+V̄(t)  = (1/8) Σ V_i(t)
+σ_V(t) = sqrt( (1/8) Σ (V_i − V̄)² )</pre>
+
+                <h5>Bond Strength (negative-domain safe)</h5>
+                <pre style="background: #1e2130; color: #e0e0e0; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 0.9em;">B_ij(t) = sqrt( max(V_i+8, 0) · max(V_j+8, 0) ) / 32    ∈ [0, 1]</pre>
+
+                <h5>Mythic–Material Coupling Index Λ(t)</h5>
+                <p>Mean B<sub>ij</sub> over all cross-layer edges. Primary leading indicator — values below 0.45 signal critical decoupling risk.</p>
+
+                <h5>Coordination Phase Space &amp; CPT</h5>
+                <p>Coordination state: Φ(t) = (V̄(t), σ_V(t)). Four regimes defined by thresholds V_θ ≈ 12, σ_θ ≈ 3.5: <em>Coherent-Capable / Strained-Coherent / Polarised-Capable / Crisis</em>.</p>
+                <p><strong>Coordination Phase Transition (CPT)</strong> at t* when Φ enters Crisis with dσ_V/dt &gt; 0, dV̄/dt &lt; 0, and Λ(t*) &lt; 0.45.</p>
+
+                <h5>Dynamics</h5>
+                <pre style="background: #1e2130; color: #e0e0e0; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 0.9em;">V_i(t+1) = V_i(t) + α Σ_j B_ij(V_j − V_i) + ε_i(t+1)</pre>
+
+                <h4>⚠️ Failure Modes</h4>
+                <p><strong>Societies do not fail by single-node collapse but by severed bonds between Mythic, Interface, and Material layers.</strong></p>
+                <ul>
+                    <li><strong>Chaotic Fragmentation</strong>: Material layer runs without Mythic coherence</li>
+                    <li><strong>Regime Rigidity</strong>: Mythic layer captures Helm and freezes Material</li>
+                    <li><strong>Helm Isolation</strong>: Executive fragmentation or capture</li>
+                    <li><strong>Flow Collapse</strong>: Supply/currency failure cascading to Hands/Craft/Shield</li>
+                    <li><strong>Shield Inversion</strong>: Praetorian turn — coercion dominates collapsing Helm/Lore</li>
+                    <li><strong>Archive Amnesia</strong>: Memory collapse → policy incoherence and narrative drift</li>
+                </ul>
+
+                <h4>📊 Dashboard</h4>
+                <p>Four specialised tools at <a href="https://cams-advanced-analysis.streamlit.app/" target="_blank" style="color: #3498db; font-weight: bold;">cams-advanced-analysis.streamlit.app</a>: dDIG Analysis, Dyad Field Analysis, Combined Insights, Phase-Space Attractor.</p>
+
+                <div class="tags">
+                    <span class="tag">#cams-v2.3</span>
+                    <span class="tag">#formal-specification</span>
+                    <span class="tag">#coordination-phase-space</span>
+                    <span class="tag">#layer-decoupling</span>
+                    <span class="tag">#mythic-material-coupling</span>
+                    <span class="tag">#milestone</span>
+                </div>
+            </div>
+        </div>
 
         <div class="diary-entry diary-entry">
             <div class="entry-header">
@@ -310,7 +381,7 @@
 </div>
 
 <footer class="footer">
-    <p>&copy; 2025 Kari McKern - Neural Nations CAMS Research</p>
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Open Science — Common Property.</p>
 </footer>
 
 <script>
