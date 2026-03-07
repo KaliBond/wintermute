@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAMS: How Societies Coordinate — Neural Nations</title>
+  <style>
+    :root{
+      --bg:#f3f4f6;
+      --panel:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --node-fill:#eaf2ff;
+      --node-stroke:#5b7ea6;
+      --shadow:0 6px 16px rgba(0,0,0,0.10);
+
+      --control:#2563eb;
+      --metabolic:#16a34a;
+      --mythic:#7c3aed;
+      --stress:#dc2626;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    /* ---- site nav (matches style.css conventions) ---- */
+    .navbar{
+      background:#1a1a2e;
+      padding:0 24px;
+      display:flex;
+      align-items:center;
+      height:56px;
+      position:sticky;
+      top:0;
+      z-index:100;
+    }
+    .nav-container{
+      max-width:1280px;
+      width:100%;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .nav-logo{
+      color:#fff;
+      font-weight:700;
+      font-size:18px;
+      text-decoration:none;
+    }
+    .nav-menu{
+      display:flex;
+      gap:20px;
+    }
+    .nav-link{
+      color:rgba(255,255,255,0.8);
+      text-decoration:none;
+      font-size:14px;
+    }
+    .nav-link:hover,.nav-link.active{color:#fff}
+
+    /* ---- page content ---- */
+    .wrap{
+      max-width:1280px;
+      margin:0 auto;
+      padding:28px 24px;
+    }
+
+    h1{
+      margin:0 0 6px;
+      text-align:center;
+      font-size:34px;
+      font-weight:700;
+    }
+
+    .subtitle{
+      text-align:center;
+      color:var(--muted);
+      font-size:15px;
+      margin-bottom:20px;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns: 1fr 320px;
+      gap:18px;
+      align-items:start;
+    }
+
+    .board{
+      background:var(--panel);
+      border:1px solid #d8dee8;
+      border-radius:14px;
+      box-shadow:var(--shadow);
+      padding:10px;
+    }
+
+    .side{
+      background:var(--panel);
+      border:1px solid #d8dee8;
+      border-radius:14px;
+      box-shadow:var(--shadow);
+      padding:18px 18px 16px;
+    }
+
+    .side h2{font-size:18px;margin:0 0 10px}
+    .side h3{font-size:14px;margin:16px 0 6px;color:#111827}
+    .side p,.side li{font-size:13px;line-height:1.45;color:#374151}
+
+    .legend{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px 12px;
+      margin-top:8px;
+      font-size:13px;
+    }
+    .legend-item{display:flex;align-items:center;gap:8px;color:#374151}
+    .swatch{width:22px;height:4px;border-radius:999px;flex:0 0 auto}
+    .control{background:var(--control)}
+    .metabolic{background:var(--metabolic)}
+    .mythic{background:var(--mythic)}
+    .stress{background:var(--stress)}
+
+    svg{
+      width:100%;
+      height:auto;
+      display:block;
+      background:#fbfcfe;
+      border-radius:10px;
+    }
+
+    .node ellipse{
+      fill:var(--node-fill);
+      stroke:var(--node-stroke);
+      stroke-width:2.2;
+      filter:drop-shadow(0 3px 7px rgba(0,0,0,0.12));
+    }
+    .node text{
+      font-size:16px;
+      font-weight:700;
+      fill:#1f2937;
+      text-anchor:middle;
+      dominant-baseline:middle;
+      pointer-events:none;
+    }
+    .small{font-size:12px;fill:#4b5563;font-weight:400}
+
+    .edge{fill:none;stroke-width:3.3;opacity:0.95}
+    .edge.control{stroke:var(--control)}
+    .edge.metabolic{stroke:var(--metabolic)}
+    .edge.mythic{stroke:var(--mythic)}
+    .edge.stress{stroke:var(--stress)}
+
+    .edge-label{
+      font-size:12px;
+      fill:#374151;
+      paint-order:stroke;
+      stroke:#fbfcfe;
+      stroke-width:4px;
+      stroke-linejoin:round;
+    }
+
+    .loop{
+      fill:#ffffff;
+      stroke:#374151;
+      stroke-width:2;
+      filter:drop-shadow(0 2px 4px rgba(0,0,0,0.10));
+    }
+    .loop-text{
+      font-size:12px;
+      font-weight:700;
+      text-anchor:middle;
+      dominant-baseline:middle;
+      fill:#111827;
+    }
+
+    .note{margin-top:12px;font-size:12px;color:#6b7280}
+
+    footer{
+      text-align:center;
+      padding:24px;
+      font-size:13px;
+      color:var(--muted);
+      margin-top:32px;
+    }
+
+    @media(max-width:1050px){
+      .layout{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Neural Nations</a>
+      <div class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="research.html" class="nav-link">Research</a>
+        <a href="cams.html" class="nav-link">CAMS Dashboard</a>
+        <a href="research-diary.html" class="nav-link">Research Diary</a>
+        <a href="newsletter.html" class="nav-link">Newsletter</a>
+        <a href="mailto:kari.freyr.4@gmail.com" class="nav-link">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <h1>CAMS: How Societies Coordinate</h1>
+    <div class="subtitle">
+      Eight functional nodes with four cross-cutting metrics: Mythic, Control, Metabolic, and Stress
+    </div>
+
+    <div class="layout">
+      <div class="board">
+        <svg viewBox="0 0 980 760" aria-labelledby="title desc" role="img">
+          <title id="title">CAMS 8-node coordination diagram</title>
+          <desc id="desc">
+            A causal-loop diagram showing the eight CAMS nodes: Archive, Lore, Helm, Shield, Stewards,
+            Craft, Flow, and Hands. Coloured arrows represent Mythic, Control, Metabolic, and Stress layers.
+          </desc>
+
+          <defs>
+            <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"></path>
+            </marker>
+            <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#16a34a"></path>
+            </marker>
+            <marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#7c3aed"></path>
+            </marker>
+            <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#dc2626"></path>
+            </marker>
+          </defs>
+
+          <!-- MYTHIC CIRCUIT -->
+          <path class="edge mythic" marker-end="url(#arrow-purple)"
+                d="M 490 120 C 425 120, 355 145, 310 210" />
+          <text class="edge-label" x="372" y="148">memory</text>
+
+          <path class="edge mythic" marker-end="url(#arrow-purple)"
+                d="M 340 250 C 395 232, 455 230, 520 240" />
+          <text class="edge-label" x="430" y="222">legitimacy</text>
+
+          <path class="edge mythic" marker-end="url(#arrow-purple)"
+                d="M 540 270 C 530 200, 515 160, 500 140" />
+          <text class="edge-label" x="556" y="192">recorded order</text>
+
+          <!-- CONTROL CIRCUIT -->
+          <path class="edge control" marker-end="url(#arrow-blue)"
+                d="M 560 270 C 615 310, 640 350, 620 425" />
+          <text class="edge-label" x="640" y="338">policy alignment</text>
+
+          <path class="edge control" marker-end="url(#arrow-blue)"
+                d="M 580 455 C 555 390, 540 335, 540 280" />
+          <text class="edge-label" x="564" y="372">resource backing</text>
+
+          <path class="edge control" marker-end="url(#arrow-blue)"
+                d="M 640 455 C 735 425, 770 345, 720 280" />
+          <text class="edge-label" x="748" y="372">funds coercion</text>
+
+          <path class="edge control" marker-end="url(#arrow-blue)"
+                d="M 690 240 C 645 230, 605 232, 575 240" />
+          <text class="edge-label" x="635" y="216">order secures assets</text>
+
+          <!-- METABOLIC CIRCUIT -->
+          <path class="edge metabolic" marker-end="url(#arrow-green)"
+                d="M 500 635 C 505 575, 510 530, 520 500" />
+          <text class="edge-label" x="515" y="575">labour feed</text>
+
+          <path class="edge metabolic" marker-end="url(#arrow-green)"
+                d="M 560 490 C 640 490, 710 485, 760 470" />
+          <text class="edge-label" x="655" y="478">production</text>
+
+          <path class="edge metabolic" marker-end="url(#arrow-green)"
+                d="M 770 500 C 700 585, 610 630, 520 650" />
+          <text class="edge-label" x="652" y="612">distribution</text>
+
+          <path class="edge metabolic" marker-end="url(#arrow-green)"
+                d="M 730 470 C 680 470, 645 468, 620 465" />
+          <text class="edge-label" x="676" y="454">asset turnover</text>
+
+          <!-- STRESS PATHS -->
+          <path class="edge stress" marker-end="url(#arrow-red)"
+                d="M 500 645 C 455 590, 430 545, 400 500" />
+          <text class="edge-label" x="425" y="582">social strain</text>
+
+          <path class="edge stress" marker-end="url(#arrow-red)"
+                d="M 430 470 C 505 425, 565 410, 610 435" />
+          <text class="edge-label" x="510" y="426">price and burden shock</text>
+
+          <path class="edge stress" marker-end="url(#arrow-red)"
+                d="M 610 445 C 585 385, 565 335, 548 280" />
+          <text class="edge-label" x="592" y="348">elite stress signal</text>
+
+          <path class="edge stress" marker-end="url(#arrow-red)"
+                d="M 705 265 C 645 305, 598 360, 575 430" />
+          <text class="edge-label" x="658" y="330">coercive load</text>
+
+          <!-- SECONDARY STRUCTURAL LINKS -->
+          <path class="edge metabolic" marker-end="url(#arrow-green)"
+                d="M 470 500 C 430 555, 430 592, 470 635" />
+          <text class="edge-label" x="405" y="573">skills sustain labour</text>
+
+          <path class="edge mythic" marker-end="url(#arrow-purple)"
+                d="M 325 285 C 335 355, 345 405, 375 440" />
+          <text class="edge-label" x="312" y="372">norms of property</text>
+
+          <!-- LOOP MARKERS -->
+          <circle class="loop" cx="410" cy="175" r="18"></circle>
+          <text class="loop-text" x="410" y="175">R1</text>
+
+          <circle class="loop" cx="610" cy="350" r="18"></circle>
+          <text class="loop-text" x="610" y="350">R2</text>
+
+          <circle class="loop" cx="635" cy="585" r="18"></circle>
+          <text class="loop-text" x="635" y="585">R3</text>
+
+          <circle class="loop" cx="505" cy="430" r="18"></circle>
+          <text class="loop-text" x="505" y="430">B1</text>
+
+          <!-- NODES -->
+          <g class="node">
+            <ellipse cx="490" cy="100" rx="88" ry="34"></ellipse>
+            <text x="490" y="96">Archive</text>
+            <text class="small" x="490" y="116">institutional memory</text>
+            <title>Archive: records, law, continuity, bureaucratic memory, civilisational retention.</title>
+          </g>
+
+          <g class="node">
+            <ellipse cx="300" cy="250" rx="88" ry="34"></ellipse>
+            <text x="300" y="246">Lore</text>
+            <text class="small" x="300" y="266">meaning and narrative</text>
+            <title>Lore: ideology, religion, scholarship, media, meaning-making, civilisational story.</title>
+          </g>
+
+          <g class="node">
+            <ellipse cx="550" cy="250" rx="88" ry="34"></ellipse>
+            <text x="550" y="246">Helm</text>
+            <text class="small" x="550" y="266">executive coordination</text>
+            <title>Helm: central direction, strategic coordination, sovereign or executive decision authority.</title>
+          </g>
+
+          <g class="node">
+            <ellipse cx="720" cy="250" rx="88" ry="34"></ellipse>
+            <text x="720" y="246">Shield</text>
+            <text class="small" x="720" y="266">coercive protection</text>
+            <title>Shield: military, police, defence institutions, coercive protection, enforcement capacity.</title>
+          </g>
+
+          <g class="node">
+            <ellipse cx="610" cy="460" rx="98" ry="34"></ellipse>
+            <text x="610" y="456">Stewards</text>
+            <text class="small" x="610" y="476">asset-holding class</text>
+            <title>Stewards: landowners, capital holders, proprietors, those who hold and allocate productive assets.</title>
+          </g>
+
+          <g class="node">
+            <ellipse cx="390" cy="470" rx="88" ry="34"></ellipse>
+            <text x="390" y="466">Craft</text>
+            <text class="small" x="390" y="486">skilled production</text>
+            <title>Craft: skilled labour, professions, engineering, technical competence, productive expertise.</title>
+          </g>
+
+          <g class="node">
+            <ellipse cx="770" cy="470" rx="88" ry="34"></ellipse>
+            <text x="770" y="466">Flow</text>
+            <text class="small" x="770" y="486">trade and distribution</text>
+            <title>Flow: merchants, markets, logistics, circulation of goods, money, and supply.</title>
+          </g>
+
+          <g class="node">
+            <ellipse cx="500" cy="660" rx="88" ry="34"></ellipse>
+            <text x="500" y="656">Hands</text>
+            <text class="small" x="500" y="676">labour base</text>
+            <title>Hands: workers, farmers, households, the broad labouring population that sustains the system materially.</title>
+          </g>
+        </svg>
+      </div>
+
+      <aside class="side">
+        <h2>What this diagram shows</h2>
+        <p>
+          This version maps the eight CAMS nodes as a social organism crossed by four system metrics.
+          It treats <strong>Stewards</strong> as the <strong>asset-holding class</strong>, not administrators.
+          The control layer therefore centres on the coupling between <strong>Helm</strong> and <strong>Stewards</strong>.
+        </p>
+
+        <h3>Metric layers</h3>
+        <div class="legend">
+          <div class="legend-item"><span class="swatch control"></span>Control</div>
+          <div class="legend-item"><span class="swatch metabolic"></span>Metabolic</div>
+          <div class="legend-item"><span class="swatch mythic"></span>Mythic</div>
+          <div class="legend-item"><span class="swatch stress"></span>Stress</div>
+        </div>
+
+        <h3>Core circuits</h3>
+        <ul>
+          <li><strong>R1 Mythic loop:</strong> Archive → Lore → Helm → Archive</li>
+          <li><strong>R2 Control loop:</strong> Helm ↔ Stewards, with Shield as enforcement arm</li>
+          <li><strong>R3 Metabolic loop:</strong> Hands → Craft → Flow → Hands</li>
+          <li><strong>B1 Stress path:</strong> Hands / Craft / Flow pressures move upward through Stewards and back to Helm</li>
+        </ul>
+
+        <h3>Interpretation</h3>
+        <p>
+          The diagram is not a collapse allegory. It is a coordination map. Stable systems keep mythic legitimacy,
+          elite alignment, material throughput, and stress absorption in workable relation. Unstable systems lose this fit.
+        </p>
+
+        <div class="note">
+          Hover over nodes in a browser to see their role descriptions.
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Open Science — Common Property.</p>
+  </footer>
+
+</body>
+</html>
