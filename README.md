@@ -1,58 +1,106 @@
-# CAMS Framework: Complex Adaptive Metrics of Society
-## Version 2.1 - Production Ready Thermodynamic Implementation
+# CAMS Framework: Complex Adaptive Model of Societies
+## Version 2.3 — Formal Specification with Coordination Phase Space
 
-![CAMS Logo](https://img.shields.io/badge/CAMS-v2.1-blue) ![License](https://img.shields.io/badge/License-Open%20Science-green) ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![CAMS Logo](https://img.shields.io/badge/CAMS-v2.3-blue) ![License](https://img.shields.io/badge/License-Open%20Science-green) ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 
-**Purpose**: CAMS analyzes societal structures as thermodynamic Complex Adaptive Systems, focusing on the mathematical dynamics between 8 institutional nodes and their emergent behaviors across civilizations and time periods.
-
-> **Note**: The neural network hypothesis has been falsified (December 2025). CAMS now focuses on thermodynamic principles, entropy flows, and phase transitions.
+**Purpose**: CAMS represents a society as a dynamic 8×4 state matrix, bridging the mythic layer (Lore, Archive) with executive interfaces (Helm, Stewards) through to material foundations (Shield, Craft, Hands, Flow). Effective coupling coordination between these three ontological layers defines societal health and predicts civilisational resilience or collapse.
 
 ## 🌡️ Core Architecture
 
-### **Thermodynamic Foundation**
-- **8 Institutional Nodes**: Executive (Helm), Army (Shield), Knowledge Workers (Lore), Property Owners (Stewards), Trades/Professions (Craft), Proletariat (Hands), State Memory (Archive), Merchants (Flow)
-- **4 State Variables per Node**: Coherence (C), Capacity (K), Stress (S), Abstraction (A)
-- **Thermodynamic Dynamics**: Entropy flows, phase transitions, and bistability (Ψ vs Φ modes)
-- **Normalized Mathematics**: End-to-end unit scaling for mathematical consistency
+### **State Representation**
 
-### **Grand System Metric (Ψ)**
+Society S at time t is the state matrix **X**(t) ∈ ℝ^(8×4), where rows are 8 nodes and columns are [C, K, S, A] ∈ [1,10] integers.
+
+### **Three Ontological Layers**
+
+| Layer | Nodes | Function |
+|-------|-------|----------|
+| **Mythic** | Lore (3), Archive (4) | Cognitive coherence & legitimacy |
+| **Interface** | Helm (1), Stewards (5) | Executive conduit |
+| **Material** | Shield (2), Craft (6), Hands (7), Flow (8) | Physical/metabolic base |
+
+### **Node Value & Health**
+
 ```
-Ψ = 0.35 H' + 0.25 P_S + 0.20 P_C + 0.20 P_A
+V_i(t) = C_i + K_i + (A_i / 2) - S_i    range: [-7.5, 24.0]
+
+V̄(t)  = (1/8) Σ V_i(t)
+σ_V(t) = sqrt( (1/8) Σ (V_i - V̄)² )
 ```
-Where:
-- `H'` = System Health (stress-free)
-- `P_S` = Stress Penalty (1 - S̄')
-- `P_C` = Coherence Penalty (1 - dispersion)
-- `P_A` = Abstraction Penalty (1 - Ā')
 
-## 🚀 CAMS-CAN Integrated Dashboard
+### **Bond Strength (negative-domain safe)**
 
-**NEW**: Access the complete CAMS-CAN analysis system at [cams-integrated-dashboard.html](cams-integrated-dashboard.html)
+```
+B_ij(t) = sqrt( max(V_i+8, 0) · max(V_j+8, 0) ) / 32    ∈ [0, 1]
+```
 
-### **Key Features**
-- **Interactive Data Upload**: CSV files or manual entry
-- **Real-time Calculations**: All CAMS-CAN formulas implemented
-- **Critical Threshold Alerts**: Automatic risk assessment
-- **Multi-tab Interface**: Dashboard, Data, Formulas, Samples, Validation
-- **Time Series Visualization**: Track system evolution
-- **Network Analysis**: Node relationship mapping
-- **Sample Datasets**: Norway historical, crisis scenarios
-- **Validation Protocol**: Data quality checks
+Canonical directed graph with Helm as universal hub and full Mythic ↔ Interface ↔ Material bridges.
 
-### **Getting Started**
-1. Visit the dashboard
-2. Upload your CSV data (format: Society,Year,Node,Coherence,Capacity,Stress,Abstraction,Node_Value,Bond_Strength)
-3. View automated calculations and visualizations
-4. Download sample datasets for testing
-5. Run validation checks for data quality
+### **Mythic–Material Coupling Index** (primary leading indicator)
 
-### **For Researchers & Practitioners**
-- Use the Model Reference tab for formula documentation
-- Access sample datasets for benchmarking
-- Follow validation protocols for rigorous analysis
-- Export results for further study
+```
+Λ(t) = mean B_ij over all cross-layer edges
+```
 
-**Submit this framework to any AI for thesis testing**: [Download one-shot test file](cams-one-shot-test.txt) - provides complete framework description with Norway data for independent validation.
+### **Coordination Phase Space & CPT**
+
+Coordination state: Φ(t) = (V̄(t), σ_V(t))
+
+| Regime | Condition |
+|--------|-----------|
+| Coherent-Capable | V̄ ≥ V_θ, σ_V ≤ σ_θ |
+| Strained-Coherent | V̄ ≥ V_θ, σ_V > σ_θ |
+| Polarised-Capable | V̄ < V_θ, σ_V ≤ σ_θ |
+| **Crisis** | V̄ < V_θ, σ_V > σ_θ |
+
+*(V_θ ≈ 12, σ_θ ≈ 3.5)*
+
+**Coordination Phase Transition (CPT)** at t* when Φ enters Crisis with dσ_V/dt > 0, dV̄/dt < 0, and Λ(t*) < 0.45.
+
+### **Dynamics**
+
+```
+V_i(t+1) = V_i(t) + α Σ_j B_ij(V_j - V_i) + ε_i(t+1)
+```
+
+Graph Laplacian diffusion plus shocks. Order parameters: ξ₁ = V̄, ξ₂ = σ_V, ξ₃ = Λ.
+
+## ⚠️ Failure Modes
+
+Systemic failure = layer decoupling → CPT, signalled by falling Λ(t). Societies do not fail by single-node collapse but by severed bonds between Mythic, Interface, and Material layers.
+
+**Macro-Coupling Failures (low Λ)**
+- **Chaotic Fragmentation**: Material layer runs without Mythic coherence
+- **Regime Rigidity**: Mythic layer captures Helm and freezes Material
+
+**Node-Specific Taxonomy**
+- **Helm Isolation**: Executive fragmentation or capture
+- **Mythic Decoupling**: Narrative–material gap
+- **Flow Collapse**: Supply/currency failure cascading to Hands/Craft/Shield
+- **Late Abstraction Collapse**: A_i drops after prolonged S_i rise
+- **Shield Inversion**: Praetorian turn — coercion dominates collapsing Helm/Lore
+- **Archive Amnesia**: Memory collapse → policy incoherence and narrative drift
+
+## 🔭 Universality & Falsification
+
+All societies obey identical (V̄, σ_V, Λ) geometry. Crisis = mythic–material decoupling, detectable ≥5 years pre-CPT.
+
+Falsification protocol: cross-LLM r > 0.7, Λ(t−5) AUC > 0.75, universal ρ(s, k) < −0.3.
+
+## 🚀 Interactive Dashboard
+
+Live at **[cams-advanced-analysis.streamlit.app](https://cams-advanced-analysis.streamlit.app/)** — four specialised analysis tools:
+
+| Tab | Tool | Purpose |
+|-----|------|---------|
+| 📊 Tab 1 | **dDIG Analysis** | Directed Information Gain — measures institutional influence via conditional mutual information I(X→Y\|Z) |
+| 🌀 Tab 2 | **Dyad Field Analysis** | Tracks M (metabolic load), Y (mythic integration), D (mismatch), R (risk), Ω (stress volatility) |
+| 📈 Tab 3 | **Combined Insights** | Unified cognitive + affective influence rankings, heatmaps, radar charts |
+| 🌌 Tab 4 | **Phase-Space Attractor** | 3D trajectory in M-Y-B space, regime detection, phase velocity, density projections |
+
+**Data input**: Upload CSV or select from 50+ pre-loaded societies.
+
+**Submit this framework to any AI for thesis testing**: [Download one-shot test file](cams-one-shot-test.txt)
 
 ## 📊 Analysis Capabilities
 
@@ -136,12 +184,6 @@ results = run_cams_analysis(data_files)
 
 ## 🛠️ Advanced Features
 
-### **Neural Network Dynamics**
-- **Stress-Gated Plasticity**: `Δw_ij = η·tanh(C_i C_j/100)·(1 - S̄'_i) - γ·w_ij + ζ·ε_ij`
-- **Error-Driven Learning**: One-step capacity forecasting with persistence
-- **Range-Safe Activation**: Weighted neighbor averaging with adaptive thresholds
-- **Discrete-Time Integration**: Euler method with configurable time steps
-
 ### **Validation & Testing**
 - **USA 1861 Benchmark**: All node values validated to exact specification
 - **Mathematical Consistency**: Normalized end-to-end calculations
@@ -197,11 +239,12 @@ USA,2025,Executive,5.2,6.1,-2.3,7.8
 
 ## 📧 Contact & Collaboration
 
-**Lead Researcher**: Kari McKern  
-**Email**: [kari.freyr.4@gmail.com](mailto:kari.freyr.4@gmail.com)  
-**Framework Version**: 2.1 (August 2025)  
+**Lead Researcher**: Kari McKern
+**Email**: [kari.freyr.4@gmail.com](mailto:kari.freyr.4@gmail.com)
+**Framework Version**: 2.3 (February 2026)
 **License**: Open Science - Common Property
+**Co-authored with**: Claude Sonnet 4.5 (Anthropic)
 
 ---
 
-*CAMS Framework v2.1 represents a production-ready implementation of thermodynamic Complex Adaptive Systems analysis for societal dynamics, validated against historical data and ready for rigorous academic and policy research.*
+*CAMS v2.3 provides a formally specified, falsifiable model of societal dynamics. Societies do not fail by single-node collapse but by severed bonds between Mythic, Interface, and Material layers — a universal geometry detectable years before crisis.*
