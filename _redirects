@@ -1,2 +1,6 @@
-# Cloudflare Pages redirects and rewrites
-/*    /index.html   200
+# Cloudflare Pages redirects
+# Format: [source] [destination] [status]
+
+# Canonical diary: /research/ → /research-diary (301 permanent)
+/research/          /research-diary     301
+/research           /research-diary     301
