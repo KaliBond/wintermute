@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The CAMS Model - Neural Nations</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .formula-block {
+            background: #1e2130;
+            color: #e0e0e0;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.95em;
+            margin: 12px 0;
+            overflow-x: auto;
+        }
+        .node-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .node-card {
+            padding: 14px 16px;
+            border-radius: 8px;
+            border-left: 4px solid;
+            background: #f8f9fa;
+        }
+        .node-card strong { display: block; margin-bottom: 4px; }
+        .node-card span { font-size: 0.88em; color: #555; }
+        .node-lore      { border-color: #9b59b6; }
+        .node-archive   { border-color: #3498db; }
+        .node-helm      { border-color: #e74c3c; }
+        .node-stewards  { border-color: #e67e22; }
+        .node-shield    { border-color: #c0392b; }
+        .node-craft     { border-color: #1abc9c; }
+        .node-hands     { border-color: #7f8c8d; }
+        .node-flow      { border-color: #f1c40f; }
+        .metric-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .metric-card {
+            padding: 14px 16px;
+            background: #f0f4fb;
+            border-radius: 8px;
+            border-top: 3px solid #1f77b4;
+        }
+        .metric-card strong { display: block; margin-bottom: 4px; color: #1f77b4; }
+        .metric-card span { font-size: 0.88em; color: #555; }
+        .regime-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.95em;
+        }
+        .regime-table th {
+            background: #1f77b4;
+            color: white;
+            padding: 10px 14px;
+            text-align: left;
+        }
+        .regime-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #dde4f0;
+        }
+        .regime-table tr:nth-child(even) td { background: #f8f9fa; }
+        .section-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #1f77b4;
+            margin: 32px 0 8px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">Neural Nations</a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="cams.html" class="nav-link">CAMS Dashboard</a>
+            <a href="research-diary.html" class="nav-link active">Research Diary</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <a href="newsletter.html" class="nav-link">Newsletter</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="hero-section">
+        <h1>The CAMS Model</h1>
+        <p class="hero-subtitle">Complex Adaptive Model of Societies — Version 2.3</p>
+    </div>
+
+    <div class="card">
+        <p style="font-size: 1.1em; line-height: 1.7;">
+            Neural Nations applies the <strong>Complex Adaptive Model of Societies (CAMS)</strong> — a physics-inspired, scale-invariant framework that treats societies (civilisations, nations, companies, departments) as coupled institutional networks rather than narrative-driven stories.
+        </p>
+        <p style="line-height: 1.7; margin-top: 16px;">
+            Instead of ideology or single-cause explanations, CAMS models any social system as an <strong>8-node × 4-metric matrix</strong> evolving over time. It captures coordination failures, stress accumulation, phase transitions, and resilience — before collapse becomes visible.
+        </p>
+
+        <div style="background: rgba(31,119,180,0.06); border-left: 3px solid #1f77b4; border-radius: 0 8px 8px 0; padding: 16px 20px; margin-top: 24px;">
+            <strong>Core idea in one sentence:</strong> Societies fail not from one bad node collapsing, but from severed bonds between <strong>Mythic</strong> (meaning-making), <strong>Interface</strong> (executive/coordinating), and <strong>Material</strong> (productive) layers — measurable as declining cross-layer coupling Λ(t).
+        </div>
+    </div>
+
+    <div class="card">
+        <p class="section-label">The 8 Institutional Nodes</p>
+        <p style="color: #555; margin-bottom: 16px;">Universal functional "organs" that appear in every stable society, empire, or organisation — regardless of culture, era, or scale.</p>
+
+        <div class="node-grid">
+            <div class="node-card node-lore">
+                <strong>1. Lore</strong>
+                <span>Mythic core: shared stories, ideology, cultural memory that binds identity.</span>
+            </div>
+            <div class="node-card node-archive">
+                <strong>2. Archive</strong>
+                <span>State/knowledge memory: records, institutions preserving continuity and legitimacy.</span>
+            </div>
+            <div class="node-card node-helm">
+                <strong>3. Helm</strong>
+                <span>Executive/strategic centre: decision-making, policy direction, "brain" of the system.</span>
+            </div>
+            <div class="node-card node-stewards">
+                <strong>4. Stewards</strong>
+                <span>Elite/property owners: resource controllers, guardians of capital and hierarchy.</span>
+            </div>
+            <div class="node-card node-shield">
+                <strong>5. Shield</strong>
+                <span>Military/security/defence: protective boundary, coercion capacity.</span>
+            </div>
+            <div class="node-card node-craft">
+                <strong>6. Craft</strong>
+                <span>Knowledge workers/professions: specialists, innovators, technical elite.</span>
+            </div>
+            <div class="node-card node-hands">
+                <strong>7. Hands</strong>
+                <span>Labour/proletariat: productive base, mass execution force.</span>
+            </div>
+            <div class="node-card node-flow">
+                <strong>8. Flow</strong>
+                <span>Merchants/trade/economy: circulation, exchange, resource distribution networks.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <p class="section-label">The 4 Metrics (scored 1–10 by ensemble AI)</p>
+        <p style="color: #555; margin-bottom: 16px;">Each node is evaluated blindly across four orthogonal dimensions.</p>
+
+        <div class="metric-row">
+            <div class="metric-card">
+                <strong>Coherence (C)</strong>
+                <span>Internal alignment and consistency within the node.</span>
+            </div>
+            <div class="metric-card">
+                <strong>Capacity (K)</strong>
+                <span>Resources, capability, and effectiveness.</span>
+            </div>
+            <div class="metric-card">
+                <strong>Stress (S)</strong>
+                <span>Accumulated pressure, entropy, dysfunction.</span>
+            </div>
+            <div class="metric-card">
+                <strong>Abstraction (A)</strong>
+                <span>Symbolic sophistication and long-range planning capacity.</span>
+            </div>
+        </div>
+
+        <p style="margin-top: 20px; color: #555;">Node value at time t:</p>
+        <div class="formula-block">V&#7522;(t) = C&#7522; + K&#7522; + (A&#7522; / 2) − S&#7522;     &nbsp; range ≈ [−7.5, 24.0]</div>
+    </div>
+
+    <div class="card">
+        <p class="section-label">Key Derived Quantities</p>
+
+        <div class="formula-block">Mean societal value:      V&#772;(t) = (1/8) Σ V&#7522;(t)
+Dispersion (tension):     σ_V(t) = √[ (1/8) Σ (V&#7522; − V&#772;)² ]
+Bond strength i↔j:       B&#7522;&#11388;(t) = √[ max(V&#7522;+8, 0) × max(V&#11388;+8, 0) ] / 32  ∈ [0, 1]
+Cross-layer coupling:     Λ(t)   = mean B&#7522;&#11388; over cross-layer edges</div>
+
+        <p style="color: #555; margin-top: 16px;">Dynamics update (diffusion + noise, analogous to Ising/spin-glass coordination models):</p>
+        <div class="formula-block">V&#7522;(t+1) = V&#7522;(t) + α Σ&#11388; B&#7522;&#11388; (V&#11388; − V&#7522;) + ε&#7522;(t+1)</div>
+
+        <p style="color: #555; margin-top: 16px;">Coordination phase space: <strong>Φ(t) = (V̄(t), σ_V(t))</strong></p>
+
+        <table class="regime-table">
+            <thead>
+                <tr>
+                    <th>Regime</th>
+                    <th>V̄(t)</th>
+                    <th>σ_V(t)</th>
+                    <th>Λ(t)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Coherent-Capable</strong></td>
+                    <td>&gt; ~12</td>
+                    <td>&lt; ~3.5</td>
+                    <td>High</td>
+                </tr>
+                <tr>
+                    <td><strong>Crisis / Transition</strong></td>
+                    <td>Low</td>
+                    <td>High</td>
+                    <td>Falling</td>
+                </tr>
+                <tr>
+                    <td><strong>Coordination failure</strong></td>
+                    <td colspan="2">Λ(t*) &lt; 0.45 — discharge via Shield or collapse</td>
+                    <td>&lt; 0.45</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <p class="section-label">Why Scale-Invariant — Why It Works</p>
+        <p style="line-height: 1.7;">CAMS emerged from Occam's razor: after testing neural-net approaches, the simplest structure (8 functions × 4 metrics) proved cross-culturally robust and predictive (ensemble r &gt; 0.7 across LLMs, 5+ year lead times on historical benchmarks including 1861 USA onset).</p>
+        <p style="line-height: 1.7; margin-top: 14px;">It maps directly to positive/negative feedback loops, hysteresis in institutional change, conductivity (shared abstraction enabling coordination), and thermodynamic-like entropy flows in stressed systems.</p>
+    </div>
+
+    <div class="card">
+        <p class="section-label">Full Technical Documentation</p>
+        <p style="line-height: 1.7;">Everything — raw formulas, Python implementation (<code>cams_framework_v2_1.py</code>, <code>cams_engine.py</code>), validation reports, reproducibility notes — lives in the open repository.</p>
+        <p style="margin-top: 16px;">
+            <a href="https://github.com/KaliBond/wintermute" target="_blank" class="btn">GitHub: KaliBond/wintermute</a>
+        </p>
+        <p style="font-size: 0.88em; color: #666; margin-top: 12px;">See README.md, CAMS_INDEX.md, CAMS_Validation_Formulation.md, and DATASET_VALIDATION_SUMMARY.md for complete specs.</p>
+
+        <div style="margin-top: 28px; padding-top: 20px; border-top: 1px solid #eee; display: flex; gap: 16px; flex-wrap: wrap;">
+            <a href="research-diary.html" style="color: #1f77b4; font-size: 0.95em;">← Research Diary</a>
+            <a href="explore.html" style="color: #1f77b4; font-size: 0.95em;">Explore Artefacts →</a>
+            <a href="cams.html" style="color: #1f77b4; font-size: 0.95em;">CAMS Dashboard →</a>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Open Science — Common Property.</p>
+</footer>
+</body>
+</html>
