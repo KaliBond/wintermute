@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Datasets — Neural Nations</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .hero-stat-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+            margin: 28px 0;
+        }
+        .hero-stat {
+            background: rgba(31,119,180,0.07);
+            border-radius: 8px;
+            padding: 18px 16px;
+            text-align: center;
+        }
+        .hero-stat .num {
+            font-size: 2em;
+            font-weight: 700;
+            color: #1f77b4;
+            line-height: 1.1;
+        }
+        .hero-stat .lbl {
+            font-size: 0.82em;
+            color: #555;
+            margin-top: 6px;
+        }
+        .method-box {
+            background: #f0f4fb;
+            border-left: 3px solid #1f77b4;
+            border-radius: 0 8px 8px 0;
+            padding: 18px 22px;
+            margin: 24px 0;
+            font-size: 0.95em;
+            line-height: 1.8;
+        }
+        .section-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #1f77b4;
+            margin: 32px 0 12px;
+        }
+        .dataset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        .dataset-card {
+            background: #fff;
+            border: 1px solid #dde4f0;
+            border-radius: 8px;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .dataset-card .society {
+            font-weight: 600;
+            font-size: 0.97em;
+            color: #1a1a2e;
+        }
+        .dataset-card .meta {
+            font-size: 0.82em;
+            color: #666;
+        }
+        .dataset-card .links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        .dataset-card .links a {
+            font-size: 0.8em;
+            color: #1f77b4;
+            text-decoration: none;
+            border: 1px solid #c5d8f0;
+            border-radius: 4px;
+            padding: 2px 8px;
+        }
+        .dataset-card .links a:hover { background: #eaf2ff; }
+        .dataset-card .links a.dl { color: #2ca02c; border-color: #b0d9b0; }
+        .dataset-card .links a.dl:hover { background: #edfaed; }
+        .schema-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+            margin: 12px 0;
+        }
+        .schema-table th {
+            background: #1f77b4;
+            color: white;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        .schema-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #dde4f0;
+        }
+        .schema-table tr:nth-child(even) td { background: #f8f9fa; }
+        .template-box {
+            background: linear-gradient(135deg, rgba(31,119,180,0.06) 0%, rgba(23,190,207,0.06) 100%);
+            border: 1px solid #dde4f0;
+            border-radius: 10px;
+            padding: 22px 24px;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">Neural Nations</a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="cams.html" class="nav-link">CAMS Dashboard</a>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <a href="newsletter.html" class="nav-link">Newsletter</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="hero-section">
+        <h1>Public Datasets &amp; Transparency</h1>
+        <p class="hero-subtitle">Fully Open, Blinded Datasets — Scored by GPT + Grok + Gemini Ensemble. Download anything.</p>
+    </div>
+
+    <div class="card">
+        <div class="hero-stat-row">
+            <div class="hero-stat">
+                <div class="num">32+</div>
+                <div class="lbl">Societies &amp; organisations</div>
+            </div>
+            <div class="hero-stat">
+                <div class="num">30,856</div>
+                <div class="lbl">Data records</div>
+            </div>
+            <div class="hero-stat">
+                <div class="num">3</div>
+                <div class="lbl">AI scorers (ensemble)</div>
+            </div>
+            <div class="hero-stat">
+                <div class="num">1750–2025</div>
+                <div class="lbl">Time span covered</div>
+            </div>
+        </div>
+
+        <div class="method-box">
+            <strong>Methodology — how the scores are produced:</strong><br>
+            <strong>1. Blinding.</strong> Each historical node is scored without reference to outcome — scorers do not know the terminal state of the society.<br>
+            <strong>2. Triple-AI scoring.</strong> GPT-4, Grok, and Gemini each independently assign 1–10 values for Coherence, Capacity, Stress, and Abstraction per node per time-step.<br>
+            <strong>3. Ensemble average.</strong> The three scores are averaged to produce the final CAMS matrix.<br>
+            <strong>4. Validation.</strong> Ensemble reliability (r &gt; 0.7 across models) and inter-rater agreement are documented in the repository: <code>DATASET_VALIDATION_SUMMARY.md</code>, <code>CAMS_Validation_Formulation.md</code>.
+        </div>
+
+        <p style="font-size: 0.9em; color: #555;">
+            All datasets are in the public GitHub repository under <code>data/cleaned/</code>. No login required.
+        </p>
+        <p style="margin-top: 12px;">
+            <a href="https://github.com/KaliBond/wintermute/tree/main/data/cleaned" target="_blank" class="btn">Browse all datasets on GitHub</a>
+        </p>
+    </div>
+
+    <!-- DATASETS -->
+    <div class="card">
+        <p class="section-label">Validated Datasets — 10 Published</p>
+        <p style="font-size: 0.88em; color: #666; margin-bottom: 20px;">Additional datasets are undergoing data quality review. Datasets below have passed Stress-column validation (no negative values).</p>
+
+        <div class="dataset-grid">
+            <div class="dataset-card">
+                <span class="society">United States — Master</span>
+                <span class="meta">1790–2025 · includes 1861 Civil War benchmark</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/USA_Master_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/data/cleaned/USA_Master_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card">
+                <span class="society">Canada</span>
+                <span class="meta">Standard CAMS series</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Canada_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/data/cleaned/Canada_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card">
+                <span class="society">Germany</span>
+                <span class="meta">Standard CAMS series</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Germany_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/data/cleaned/Germany_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card">
+                <span class="society">England</span>
+                <span class="meta">Standard CAMS series</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/England_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/data/cleaned/England_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card">
+                <span class="society">Italy (1900–2025)</span>
+                <span class="meta">High-resolution modern series</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Italy19002025_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/data/cleaned/Italy19002025_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card">
+                <span class="society">Russia</span>
+                <span class="meta">Standard CAMS series</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Russia_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/data/cleaned/Russia_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card">
+                <span class="society">Japan</span>
+                <span class="meta">1850–2025</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Japan_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/data/cleaned/Japan_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card">
+                <span class="society">Thailand</span>
+                <span class="meta">1850–2025</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Thailand_1850_2025_Thailand_1850_2025_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/data/cleaned/Thailand_1850_2025_Thailand_1850_2025_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card">
+                <span class="society">Ukraine</span>
+                <span class="meta">Standard CAMS series</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Ukraine.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/data/cleaned/Ukraine.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card">
+                <span class="society">Indonesia</span>
+                <span class="meta">Standard CAMS series</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Indonesia_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/data/cleaned/Indonesia_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CSV SCHEMA -->
+    <div class="card">
+        <p class="section-label">CSV Schema</p>
+        <p style="color: #555; margin-bottom: 14px; font-size: 0.95em;">Every dataset follows the same column structure — directly loadable into the CAMS Dashboard, Python scripts, or any data tool.</p>
+        <table class="schema-table">
+            <thead>
+                <tr>
+                    <th>Column</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>Society</code></td><td>string</td><td>Society or organisation name</td></tr>
+                <tr><td><code>Year</code></td><td>integer</td><td>Year of observation</td></tr>
+                <tr><td><code>Node</code></td><td>string</td><td>One of the 8 institutional nodes (Lore, Archive, Helm, Stewards, Shield, Craft, Hands, Flow)</td></tr>
+                <tr><td><code>Coherence</code></td><td>float 1–10</td><td>Internal alignment of the node</td></tr>
+                <tr><td><code>Capacity</code></td><td>float 1–10</td><td>Resources and effectiveness</td></tr>
+                <tr><td><code>Stress</code></td><td>float 1–10</td><td>Accumulated pressure and dysfunction</td></tr>
+                <tr><td><code>Abstraction</code></td><td>float 1–10</td><td>Symbolic sophistication and long-range planning</td></tr>
+                <tr><td><code>Node Value</code></td><td>float</td><td>Derived: C + K + (A/2) − S</td></tr>
+                <tr><td><code>Bond Strength</code></td><td>float 0–1</td><td>Derived: coupling with adjacent node</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SCORE YOUR OWN ORG -->
+    <div class="card">
+        <p class="section-label">Score Your Own Organisation</p>
+        <div class="template-box">
+            <p style="font-size: 1.05em; font-weight: 600; margin: 0 0 10px;">CAMS is scale-invariant — the same 8-node model applies to a 10-person startup, a government department, or a multi-national.</p>
+            <p style="color: #555; line-height: 1.7; margin-bottom: 16px;">Use the schema above, treat your 8 functional layers as nodes, rate each 1–10 across the four metrics, and run the formulas from the <a href="model.html" style="color: #1f77b4;">model page</a>. Or ask GPT, Grok, and Gemini each to score independently and average the results — that is exactly how the published datasets were produced.</p>
+            <p>
+                <a href="https://github.com/KaliBond/wintermute" target="_blank" class="btn">Get the Python scripts (cams_engine.py)</a>
+                <a href="model.html" class="btn">Model documentation</a>
+            </p>
+        </div>
+
+        <div style="margin-top: 28px; padding-top: 20px; border-top: 1px solid #eee; display: flex; gap: 16px; flex-wrap: wrap;">
+            <a href="research-diary.html" style="color: #1f77b4; font-size: 0.95em;">← Research Diary</a>
+            <a href="model.html" style="color: #1f77b4; font-size: 0.95em;">CAMS Model →</a>
+            <a href="cams.html" style="color: #1f77b4; font-size: 0.95em;">Live Dashboard →</a>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Open Science — Common Property.</p>
+</footer>
+</body>
+</html>
