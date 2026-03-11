@@ -2,5 +2,20 @@
 # Format: [source] [destination] [status]
 
 # Canonical diary: /research/ → /research-diary (301 permanent)
-/research/          /research-diary     301
-/research           /research-diary     301
+/research/              /research-diary         301
+/research               /research-diary         301
+
+# New content pages (extensionless URLs)
+/model                  /model.html             301
+/datasets               /datasets.html          301
+/applications           /applications.html      301
+
+# Existing pages (extensionless)
+/cams                   /cams.html              301
+/explore                /explore.html           301
+/research-diary         /research-diary.html    301
+/newsletter             /newsletter.html        301
+/contact                /contact.html           301
+/about                  /about.html             301
+/cams-coordination      /cams-coordination.html 301
+/attractors             /attractors.html        301
