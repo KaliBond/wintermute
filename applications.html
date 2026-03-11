@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore CAMS in Action — Neural Nations</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .section-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #1f77b4;
+            margin: 32px 0 10px;
+        }
+        .case-study {
+            background: #f8f9fa;
+            border-left: 4px solid #1f77b4;
+            border-radius: 0 8px 8px 0;
+            padding: 20px 24px;
+            margin: 20px 0;
+        }
+        .case-study h3 {
+            margin: 0 0 12px;
+            font-size: 1.05em;
+            color: #1a1a2e;
+        }
+        .case-study.red { border-color: #d62728; }
+        .metrics-mini {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .metric-chip {
+            background: white;
+            border: 1px solid #dde4f0;
+            border-radius: 6px;
+            padding: 10px 14px;
+            font-size: 0.88em;
+        }
+        .metric-chip strong { display: block; color: #1f77b4; margin-bottom: 3px; }
+        .metric-chip.red strong { color: #d62728; }
+        .replicate-links {
+            margin-top: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .replicate-links a {
+            color: #1f77b4;
+            font-size: 0.88em;
+            text-decoration: none;
+        }
+        .replicate-links a:hover { text-decoration: underline; }
+        .dashboard-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 28px;
+            color: white;
+            margin-bottom: 16px;
+        }
+        .dashboard-card h3 { color: white; margin: 0 0 10px; }
+        .dashboard-card p { color: rgba(255,255,255,0.9); line-height: 1.6; font-size: 0.95em; }
+        .dashboard-card ul { color: rgba(255,255,255,0.85); font-size: 0.9em; line-height: 1.8; margin: 10px 0 16px; }
+        .dashboard-card a.launch-btn {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            font-weight: 700;
+            padding: 10px 22px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.95em;
+        }
+        .dashboard-card.local {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        }
+        .dashboard-card.local a.launch-btn { color: #2c3e50; }
+        .cognition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .cognition-card {
+            background: #f0f4fb;
+            border-radius: 8px;
+            padding: 14px 16px;
+            font-size: 0.88em;
+        }
+        .cognition-card strong { display: block; margin-bottom: 4px; color: #1a1a2e; }
+        .cognition-card span { color: #555; }
+        .step-list {
+            counter-reset: steps;
+            list-style: none;
+            padding: 0;
+            margin: 16px 0;
+        }
+        .step-list li {
+            counter-increment: steps;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            margin-bottom: 14px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+        .step-list li::before {
+            content: counter(steps);
+            background: #1f77b4;
+            color: white;
+            font-weight: 700;
+            font-size: 0.85em;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">Neural Nations</a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="cams.html" class="nav-link">CAMS Dashboard</a>
+            <a href="research-diary.html" class="nav-link active">Research Diary</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <a href="newsletter.html" class="nav-link">Newsletter</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="hero-section">
+        <h1>Explore CAMS in Action</h1>
+        <p class="hero-subtitle">Live Applications &amp; Dashboards</p>
+    </div>
+
+    <div class="card">
+        <p style="font-size: 1.1em; line-height: 1.7;">
+            See the numbers in action — interactive phase-space maps, early-warning regime detection, and real-time societal stress trajectories. The CAMS framework isn't theory — it's a working tool.
+        </p>
+        <p style="line-height: 1.7; margin-top: 14px; color: #444;">
+            Upload a dataset, select a society and time window, and watch the coordination phase space unfold. Mythic–Material decoupling (Λ(t) falling below ~0.45) often signals crisis <em>years</em> ahead.
+        </p>
+    </div>
+
+    <!-- CASE STUDIES -->
+    <div class="card">
+        <p class="section-label">Case Studies</p>
+
+        <div class="case-study">
+            <h3>Case Study 1 — The 1861 Telescope: US Civil War Onset</h3>
+            <p style="color: #555; font-size: 0.95em; line-height: 1.7;">A classic "telescope" benchmark: nodes blind-scored from ~1850–1865 show Helm coherence collapsing while Shield capacity surges — the classic stress-discharge pattern.</p>
+
+            <div class="metrics-mini">
+                <div class="metric-chip">
+                    <strong>V̄ (mean societal value)</strong>
+                    Drops sharply ~1858–1860
+                </div>
+                <div class="metric-chip">
+                    <strong>σ_V (dispersion)</strong>
+                    Spikes → internal tension rising
+                </div>
+                <div class="metric-chip">
+                    <strong>Λ(t)</strong>
+                    Crosses critical threshold ~1859, predicting fragmentation
+                </div>
+            </div>
+
+            <p style="font-size: 0.9em; color: #555; margin: 12px 0 6px;"><strong>Ensemble scoring walkthrough:</strong></p>
+            <ul style="font-size: 0.9em; color: #555; line-height: 1.8; margin: 0 0 10px 18px;">
+                <li>Helm: low Coherence (~3–4), high Stress (~7+)</li>
+                <li>Shield: elevated Capacity, acting as pressure valve</li>
+                <li>Cross-layer bonds weaken dramatically in the pre-war window</li>
+            </ul>
+
+            <div class="replicate-links">
+                <a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/USA_Master_cleaned.csv" target="_blank">→ Download USA_Master_cleaned.csv (validated)</a>
+                <a href="https://github.com/KaliBond/wintermute/blob/main/CAMS_Validation_Formulation.md" target="_blank">→ Full validation benchmarks in CAMS_Validation_Formulation.md</a>
+                <a href="https://github.com/KaliBond/wintermute/blob/main/simple_analysis.py" target="_blank">→ simple_analysis.py — run it locally</a>
+            </div>
+        </div>
+
+        <div class="case-study red">
+            <h3>Case Study 2 — Iran–US Coordination Failure (Recent Window)</h3>
+            <p style="color: #555; font-size: 0.95em; line-height: 1.7;">Current dynamics: low US Helm coherence with extreme internal Stress, discharging through Shield. Iran shows higher deliberative abstraction and cross-layer coupling — better "conductivity" in shared abstractions.</p>
+
+            <div class="metrics-mini">
+                <div class="metric-chip red">
+                    <strong>US</strong>
+                    Falling Λ(t), high σ_V → coordination bottleneck
+                </div>
+                <div class="metric-chip">
+                    <strong>Iran</strong>
+                    Stable Shield/Helm interaction, lower entropy buildup
+                </div>
+                <div class="metric-chip red">
+                    <strong>Key insight</strong>
+                    Shield node strength ≠ overall resilience when Helm–Mythic bonds fray
+                </div>
+            </div>
+
+            <p style="font-size: 0.88em; color: #888; margin: 10px 0 6px;">Implication: asymmetric social cognition — US operating as "meta-animal" with fragmented brain-like firing.</p>
+
+            <div class="replicate-links">
+                <a href="https://github.com/KaliBond/wintermute/blob/main/Iran_CAMS_Cleaned.csv" target="_blank">→ Iran_CAMS_Cleaned.csv</a>
+                <a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/USA_Master_cleaned.csv" target="_blank">→ USA_Master_cleaned.csv</a>
+                <a href="https://github.com/KaliBond/wintermute/blob/main/iran_phase_transition_analysis.py" target="_blank">→ iran_phase_transition_analysis.py</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIVE DASHBOARDS -->
+    <div class="card">
+        <p class="section-label">Live Dashboards &amp; Interactive Tools</p>
+
+        <div class="dashboard-card">
+            <h3>CAMS Advanced Analysis Dashboard</h3>
+            <p>The primary hosted tool — no login, no install. Upload any cleaned CSV or use the 32+ pre-loaded societies.</p>
+            <ul>
+                <li>3D phase-space trajectories (V̄–σ_V attractor maps)</li>
+                <li>Regime classification: Coherent-Capable vs Crisis/Transition</li>
+                <li>Mythic–Material Coupling Index Λ(t) tracker</li>
+                <li>Early-warning signals (critical phase transition detection)</li>
+                <li>Tabbed views: dDIG insights, dyad fields, density projections</li>
+            </ul>
+            <a href="https://cams-advanced-analysis.streamlit.app" target="_blank" class="launch-btn">Launch Dashboard</a>
+        </div>
+
+        <div class="dashboard-card local">
+            <h3>Local Tools (run from the repo)</h3>
+            <p>Fork or clone the repository and run any of these directly:</p>
+            <ul>
+                <li><a href="https://github.com/KaliBond/wintermute/blob/main/cld_studio.py" target="_blank" style="color: #17becf;">cld_studio.py</a> — interactive causal loop diagram visualiser</li>
+                <li><a href="https://github.com/KaliBond/wintermute/blob/main/cams_stress_dynamics_app.py" target="_blank" style="color: #17becf;">cams_stress_dynamics_app.py</a> — stress dynamics monitor</li>
+                <li><a href="https://github.com/KaliBond/wintermute/blob/main/cams_realtime_monitor.py" target="_blank" style="color: #17becf;">cams_realtime_monitor.py</a> — real-time regime validator</li>
+                <li><a href="https://github.com/KaliBond/wintermute/blob/main/cams_gtsc_integrated_monitor.py" target="_blank" style="color: #17becf;">cams_gtsc_integrated_monitor.py</a> — GTSC integrated dashboard</li>
+                <li><a href="https://github.com/KaliBond/wintermute/blob/main/simple_analysis.py" target="_blank" style="color: #17becf;">simple_analysis.py</a> — minimal entry point for new datasets</li>
+            </ul>
+            <a href="https://github.com/KaliBond/wintermute" target="_blank" class="launch-btn">Browse Repository</a>
+        </div>
+    </div>
+
+    <!-- SOCIAL COGNITION -->
+    <div class="card">
+        <p class="section-label">What Is Social Cognition?</p>
+        <p style="line-height: 1.7; color: #444;">Humans aren't isolated agents — we're neurons in a meta-animal brain. Societies coordinate through <strong>shared abstraction</strong>: high Abstraction scores enable long-range planning and alignment across layers.</p>
+
+        <div class="cognition-grid">
+            <div class="cognition-card">
+                <strong>Conductivity</strong>
+                <span>Strength of bonds between nodes (Bᵢⱼ) — how well coordination signals travel cross-layer.</span>
+            </div>
+            <div class="cognition-card">
+                <strong>Desynchronisation</strong>
+                <span>When abstraction mismatches (elite vs base layers), firing patterns decouple → low Coherence, high Stress.</span>
+            </div>
+            <div class="cognition-card">
+                <strong>Order parameter</strong>
+                <span>Λ(t) = global synchrony index. Below ~0.45, the meta-animal begins acting incoherently.</span>
+            </div>
+            <div class="cognition-card">
+                <strong>Node analogues</strong>
+                <span>Helm ≈ prefrontal cortex · Lore ≈ cultural hippocampus · Shield ≈ amygdala. Decoupling = irrational systemic behaviour.</span>
+            </div>
+        </div>
+
+        <p style="font-size: 0.9em; color: #666; margin-top: 8px; line-height: 1.7;">Collapse isn't random — it's the loss of meta-animal mind coherence. CAMS quantifies this in reproducible numbers.</p>
+    </div>
+
+    <!-- TRY IT YOURSELF -->
+    <div class="card">
+        <p class="section-label">Try It Yourself</p>
+        <p style="color: #555; margin-bottom: 16px; line-height: 1.7;">Score your own company, department, team, or community — the model is scale-invariant. Same 8 nodes, same formulas.</p>
+
+        <ol class="step-list">
+            <li>
+                Download the template:
+                <a href="https://github.com/KaliBond/wintermute/blob/main/cams_resilience_network_template.json" target="_blank" style="color: #1f77b4; display: block; margin-top: 4px;">→ cams_resilience_network_template.json</a>
+                <a href="datasets.html" style="color: #1f77b4; display: block;">→ or use a blank CSV from the datasets page</a>
+            </li>
+            <li>
+                Blind-score the 8 nodes 1–10 on Coherence, Capacity, Stress, and Abstraction. Use an ensemble of AIs (GPT + Grok + Gemini) for reproducibility — that is exactly how the published datasets were produced.
+            </li>
+            <li>
+                Plug into the dashboard or run <a href="https://github.com/KaliBond/wintermute/blob/main/simple_analysis.py" target="_blank" style="color: #1f77b4;">simple_analysis.py</a> locally.
+                See the <a href="model.html" style="color: #1f77b4;">model page</a> for the formulas.
+            </li>
+        </ol>
+
+        <p style="font-size: 0.88em; color: #666; margin-top: 8px;">Fork the repo, add your dataset, submit a PR — open science accelerates discovery.</p>
+
+        <div style="margin-top: 28px; padding-top: 20px; border-top: 1px solid #eee; display: flex; gap: 16px; flex-wrap: wrap;">
+            <a href="research-diary.html" style="color: #1f77b4; font-size: 0.95em;">← Research Diary</a>
+            <a href="datasets.html" style="color: #1f77b4; font-size: 0.95em;">Public Datasets →</a>
+            <a href="model.html" style="color: #1f77b4; font-size: 0.95em;">The CAMS Model →</a>
+            <a href="cams.html" style="color: #1f77b4; font-size: 0.95em;">Live Dashboard →</a>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Open Science — Common Property.</p>
+</footer>
+</body>
+</html>
