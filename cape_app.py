@@ -72,8 +72,8 @@ def load_dataset(path_or_buffer, entity_name=None):
     df = df[df["node"].isin(CAMS_NODES)]
     df[["C", "K", "S", "A"]] = df[["C", "K", "S", "A"]].astype(float)
 
-    if entity_name and "entity" not in df.columns:
-        df["entity"] = entity_name
+    if "entity" not in df.columns:
+        df["entity"] = entity_name if entity_name else "Unknown"
 
     return df[["entity", "Year", "node", "C", "K", "S", "A"]]
 
@@ -264,9 +264,8 @@ if source == "Repo cleaned_datasets/":
         for fname in selected_files:
             path = os.path.join(DATASETS_DIR, fname)
             try:
-                df = load_dataset(path)
-                if "entity" not in df.columns or df["entity"].isna().all():
-                    df["entity"] = fname.replace(".csv", "")
+                entity_name = fname.replace(".csv", "")
+                df = load_dataset(path, entity_name=entity_name)
                 frames.append(df)
             except Exception as e:
                 st.sidebar.warning(f"{fname}: {e}")
