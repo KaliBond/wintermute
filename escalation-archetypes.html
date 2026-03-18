@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMS Escalation Archetypes — Neural Nations</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>
+        body { overflow: hidden; }
+
+        .page-shell {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        #viz-main {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        #network {
+            flex: 1;
+            background: #0f1117;
+        }
+
+        #sidebar {
+            width: 320px;
+            background: #1a1d27;
+            border-left: 1px solid #2a2d3a;
+            overflow-y: auto;
+            padding: 16px;
+            font-size: 0.86rem;
+            color: #cdd;
+        }
+
+        #sidebar h2 {
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #1f77b4;
+            border-bottom: 1px solid #2a2d3a;
+            padding-bottom: 6px;
+            margin: 18px 0 10px;
+        }
+
+        #sidebar h2:first-of-type { margin-top: 0; }
+
+        .ctrl-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+
+        .ctrl-btn {
+            background: #1f77b4;
+            color: #fff;
+            border: none;
+            padding: 5px 11px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .ctrl-btn:hover { background: #155e96; }
+        .ctrl-btn.sec { background: #2a2d3a; }
+        .ctrl-btn.sec:hover { background: #3a3d4a; }
+
+        .loop-card {
+            background: #22263a;
+            border-left: 3px solid #e74c3c;
+            border-radius: 5px;
+            padding: 8px 10px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .loop-card:hover { border-left-color: #ff6b6b; }
+
+        .loop-title {
+            font-weight: 700;
+            color: #f39c12;
+            font-size: 0.84rem;
+            margin-bottom: 3px;
+        }
+
+        .loop-desc {
+            color: #99a;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .arch-card {
+            background: #22263a;
+            border-left: 3px solid #9b59b6;
+            border-radius: 5px;
+            padding: 8px 10px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .arch-card:hover { border-left-color: #c39bd3; }
+
+        .arch-title {
+            font-weight: 700;
+            color: #c39bd3;
+            font-size: 0.84rem;
+            margin-bottom: 3px;
+        }
+
+        #detail-panel {
+            background: #22263a;
+            border-radius: 6px;
+            padding: 10px 12px;
+            line-height: 1.6;
+            color: #dde;
+            font-size: 0.83rem;
+            min-height: 60px;
+        }
+
+        #detail-panel .detail-label {
+            font-weight: 700;
+            color: #1f77b4;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .legend-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            font-size: 0.82rem;
+        }
+
+        .leg-box {
+            width: 28px;
+            height: 16px;
+            border-radius: 3px;
+            border: 1px solid #555;
+            flex-shrink: 0;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1a1d27; }
+        ::-webkit-scrollbar-thumb { background: #2a2d3a; border-radius: 3px; }
+    </style>
+</head>
+<body>
+<div class="page-shell">
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Neural Nations</a>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="model.html" class="nav-link active">Model</a>
+                <a href="datasets.html" class="nav-link">Datasets</a>
+                <a href="explore.html" class="nav-link">Explore</a>
+                <a href="research-diary.html" class="nav-link">Research Diary</a>
+                <a href="https://github.com/KaliBond/wintermute" class="nav-link" target="_blank">GitHub</a>
+                <a href="newsletter.html" class="nav-link">Newsletter</a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="viz-main">
+        <div id="network"></div>
+        <div id="sidebar">
+            <div class="ctrl-row">
+                <button class="ctrl-btn" onclick="fitView()">Fit</button>
+                <button class="ctrl-btn sec" onclick="resetLayout()">Reset</button>
+                <button class="ctrl-btn sec" onclick="exportPNG()">PNG</button>
+            </div>
+
+            <h2>Selected</h2>
+            <div id="detail-panel"><span style="color:#556">Click a node or edge to see details.</span></div>
+
+            <h2>Legend</h2>
+            <div class="legend-row"><div class="leg-box" style="background:#CCFBF1;border-color:#14B8A6;"></div><span>Stock node (box)</span></div>
+            <div class="legend-row"><div class="leg-box" style="background:#DBEAFE;border-color:#3B82F6;border-radius:50%;"></div><span>Auxiliary node (ellipse)</span></div>
+            <div class="legend-row"><div class="leg-box" style="background:#1E40AF;"></div><span>Positive edge</span></div>
+            <div class="legend-row"><div class="leg-box" style="background:#991B1B;"></div><span>Negative edge</span></div>
+
+            <h2>Feedback Loops</h2>
+            <div id="loops-panel"></div>
+
+            <h2>Archetypes</h2>
+            <div id="arch-panel"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+const MODEL = {"metadata":{"topic":"CAMS Escalation Archetypes — Integrated System"},"nodes":[{"id":"n1","label":"Flow Stress","shape":"box","color":{"background":"#CCFBF1","border":"#14B8A6"},"borderWidth":1,"x":-400,"y":0,"description":"Aggregate metabolic load arising from energy, trade, and logistical strain. This is the primary driver of systemic pressure and initiates escalation sequences when it exceeds buffering capacity. [n1]"},{"id":"n2","label":"Elite Coordination Breakdown","shape":"box","color":{"background":"#CCFBF1","border":"#14B8A6"},"borderWidth":1,"x":-200,"y":120,"description":"Loss of coherence between Helm and Stewards, reflected in political fragmentation and fiscal conflict. This reduces the system's ability to process stress internally. [n2]"},{"id":"n3","label":"Bond Strength","shape":"box","color":{"background":"#CCFBF1","border":"#14B8A6"},"borderWidth":1,"x":-200,"y":-120,"description":"System-wide coupling capacity that enables stress redistribution across nodes. Declining bond strength precedes visible crisis and determines whether stress is absorbed or exported. [n3]"},{"id":"n4","label":"Lore Threat Framing","shape":"ellipse","color":{"background":"#DBEAFE","border":"#3B82F6"},"borderWidth":1,"x":0,"y":150,"description":"Narrative reframing of internal stress into external threat perception. This compresses decision horizons and aligns actors under simplified threat models. [n4]"},{"id":"n5","label":"Shield Activation","shape":"ellipse","color":{"background":"#DBEAFE","border":"#3B82F6"},"borderWidth":1,"x":200,"y":0,"description":"Mobilisation of coercive capacity including military action, sanctions, and proxies. This acts as the fastest available channel for stress discharge under coordination failure. [n5]"},{"id":"n6","label":"External Stress Export","shape":"ellipse","color":{"background":"#DBEAFE","border":"#3B82F6"},"borderWidth":1,"x":400,"y":120,"description":"Transfer of internal strain into external systems via conflict, sanctions, or coercion. This can temporarily relieve domestic pressure while propagating instability outward. [n6]"},{"id":"n7","label":"Regional / Systemic Stress Feedback","shape":"box","color":{"background":"#CCFBF1","border":"#14B8A6"},"borderWidth":1,"x":400,"y":-120,"description":"Accumulated stress returning from external systems through trade disruption, retaliation, or proxy interaction. This converts exported stress into renewed internal load. [n7]"},{"id":"n8","label":"Internal Coercion","shape":"ellipse","color":{"background":"#DBEAFE","border":"#3B82F6"},"borderWidth":1,"x":200,"y":-180,"description":"Use of coercive force within the system to maintain order when coordination fails. This substitutes for governance but accelerates long-term degradation. [n8]"},{"id":"n9","label":"Capacity Degradation","shape":"box","color":{"background":"#CCFBF1","border":"#14B8A6"},"borderWidth":1,"x":0,"y":-250,"description":"Loss of functional throughput across economic and institutional systems. Capacity degradation increases stress concentration and reduces recovery potential. [n9]"},{"id":"n10","label":"Rate Dispersion","shape":"ellipse","color":{"background":"#DBEAFE","border":"#3B82F6"},"borderWidth":1,"x":-50,"y":0,"description":"Divergence in response speeds across institutional nodes, indicating desynchronisation. High dispersion shifts the system into reactive mode dominated by fast nodes. [n10]"}],"edges":[{"id":"e1","from":"n1","to":"n2","width":5,"lag":1,"color":{"color":"#1E40AF"},"label":"Stress drives elite conflict\n+\nLag: Months","description":"Rising Flow stress increases distributional tension among elites, degrading coordination. This is a short-lag process driven by immediate economic pressure. [e1]"},{"id":"e2","from":"n2","to":"n3","width":5,"lag":2,"color":{"color":"#991B1B"},"label":"Breakdown weakens bonds\n-\nLag: Months","description":"Elite fragmentation reduces trust and alignment across institutions, lowering bond strength. This weakens system-wide coupling capacity. [e2]"},{"id":"e3","from":"n3","to":"n1","width":5,"lag":2,"color":{"color":"#991B1B"},"label":"Weak coupling amplifies stress\n-\nLag: Months","description":"Lower bond strength reduces redistribution capacity, causing stress to concentrate in Flow. This increases effective system load. [e3]"},{"id":"e4","from":"n2","to":"n4","width":4,"lag":1,"color":{"color":"#1E40AF"},"label":"Crisis triggers narrative framing\n+\nLag: Weeks","description":"Coordination breakdown increases demand for explanatory narratives, activating threat framing. This aligns actors cognitively under stress. [e4]"},{"id":"e5","from":"n4","to":"n5","width":6,"lag":0,"color":{"color":"#1E40AF"},"label":"Narrative enables action\n+\nLag: Immediate","description":"Threat framing legitimises rapid Shield activation by reducing deliberation constraints. This is effectively instantaneous once narratives stabilise. [e5]"},{"id":"e6","from":"n5","to":"n6","width":6,"lag":0,"color":{"color":"#1E40AF"},"label":"Coercion exports stress\n+\nLag: Immediate","description":"Shield activation directly transfers stress outward through military or economic means. This is the primary export channel. [e6]"},{"id":"e7","from":"n6","to":"n1","width":5,"lag":3,"color":{"color":"#1E40AF"},"label":"Feedback returns stress\n+\nLag: Months","description":"External stress export feeds back via trade disruption, retaliation, or systemic instability. This increases domestic Flow stress after a delay. [e7]"},{"id":"e8","from":"n5","to":"n8","width":5,"lag":1,"color":{"color":"#1E40AF"},"label":"Shield turns inward\n+\nLag: Months","description":"Sustained external activation increases reliance on internal coercion. This reflects substitution of governance with force. [e8]"},{"id":"e9","from":"n8","to":"n9","width":5,"lag":2,"color":{"color":"#1E40AF"},"label":"Coercion degrades capacity\n+\nLag: Months","description":"Internal coercion disrupts economic and social systems, accelerating capacity loss. This weakens the system's ability to recover. [e9]"},{"id":"e10","from":"n9","to":"n1","width":6,"lag":1,"color":{"color":"#1E40AF"},"label":"Capacity loss increases stress\n+\nLag: Short","description":"Reduced capacity increases effective Flow stress by lowering throughput and resilience. This reinforces systemic load. [e10]"},{"id":"e11","from":"n1","to":"n10","width":4,"lag":1,"color":{"color":"#1E40AF"},"label":"Stress increases dispersion\n+\nLag: Short","description":"Higher stress produces uneven node responses, increasing rate dispersion. This shifts the system toward reactive dynamics. [e11]"},{"id":"e12","from":"n10","to":"n5","width":5,"lag":0,"color":{"color":"#1E40AF"},"label":"Fast nodes dominate\n+\nLag: Immediate","description":"High rate dispersion allows fast-response nodes like Shield to dominate system behaviour. This accelerates escalation. [e12]"}],"loops":[{"id":"R1","name":"Imperial Export Loop","type":"R","description":"Stress triggers externalisation via Shield, temporarily relieving pressure but creating delayed feedback that increases future stress. This loop explains outward projection cycles. [R1]","nodeIds":["n1","n2","n4","n5","n6"],"edgeIds":["e1","e4","e5","e6"]},{"id":"R2","name":"Proxy Cascade Loop","type":"R","description":"Exported stress feeds back through external systems, increasing domestic load and triggering further escalation. This loop captures distributed multi-system escalation. [R2]","nodeIds":["n1","n5","n6","n7"],"edgeIds":["e6","e7"]},{"id":"R3","name":"Terminal Shield Spiral","type":"R","description":"Internal coercion degrades capacity, which increases stress and drives further reliance on Shield. This loop produces downward spiral dynamics. [R3]","nodeIds":["n5","n8","n9","n1"],"edgeIds":["e8","e9","e10"]},{"id":"R4","name":"Bond Collapse Loop","type":"R","description":"Elite breakdown weakens bonds, reducing stress redistribution capacity and increasing stress concentration. This accelerates system desynchronisation. [R4]","nodeIds":["n1","n2","n3"],"edgeIds":["e1","e2","e3"]},{"id":"R5","name":"Reactive Acceleration Loop","type":"R","description":"Stress increases rate dispersion, allowing fast nodes to dominate and accelerate escalation. This shortens response times and reduces deliberation. [R5]","nodeIds":["n1","n10","n5"],"edgeIds":["e11","e12"]}],"archetypes":[{"id":"arch1","name":"Imperial Export Cycle","description":"A system exports internal stress outward to preserve short-term stability, but delayed feedback increases future load and erodes resilience.","nodeIds":["n1","n2","n4","n5","n6"],"edgeIds":["e1","e4","e5","e6"]},{"id":"arch2","name":"Proxy Cascade","description":"Multiple systems exchange stress through indirect interactions, producing distributed escalation without central coordination.","nodeIds":["n1","n5","n6","n7"],"edgeIds":["e6","e7"]},{"id":"arch3","name":"Terminal Shield Spiral","description":"Internal coupling collapses, coercion substitutes for governance, and the system enters a self-reinforcing downward spiral of stress and capacity loss.","nodeIds":["n5","n8","n9","n1"],"edgeIds":["e8","e9","e10"]}]};
+
+let network;
+
+function buildNetwork() {
+    const nodes = MODEL.nodes.map(n => ({
+        id: n.id,
+        label: n.label,
+        shape: n.shape,
+        color: {
+            background: n.color.background,
+            border: n.color.border,
+            highlight: { background: n.color.background, border: '#f39c12' }
+        },
+        borderWidth: n.borderWidth,
+        x: n.x,
+        y: n.y,
+        font: { color: '#1a1a2e', size: 13, face: 'Segoe UI, Arial' },
+        widthConstraint: { maximum: 140 }
+    }));
+
+    const edges = MODEL.edges.map(e => ({
+        id: e.id,
+        from: e.from,
+        to: e.to,
+        width: e.width,
+        color: { color: e.color.color, highlight: '#f39c12' },
+        label: e.label,
+        font: { color: '#ccc', size: 10, align: 'middle', multi: false },
+        arrows: { to: { enabled: true, scaleFactor: 0.7 } },
+        smooth: { type: 'curvedCW', roundness: 0.15 }
+    }));
+
+    const container = document.getElementById('network');
+    network = new vis.Network(
+        container,
+        { nodes: new vis.DataSet(nodes), edges: new vis.DataSet(edges) },
+        {
+            physics: false,
+            interaction: { hover: true, tooltipDelay: 150, zoomView: true, dragView: true },
+            nodes: { shadow: { enabled: true, color: 'rgba(0,0,0,0.25)', size: 8, x: 2, y: 2 } }
+        }
+    );
+
+    network.on('click', params => {
+        if (params.nodes.length) {
+            const node = MODEL.nodes.find(n => n.id === params.nodes[0]);
+            if (node) showDetail(node.label, node.description);
+        } else if (params.edges.length) {
+            const edge = MODEL.edges.find(e => e.id === params.edges[0]);
+            if (edge) showDetail(edge.label.replace(/\n/g, ' · '), edge.description);
+        }
+    });
+}
+
+function showDetail(label, desc) {
+    document.getElementById('detail-panel').innerHTML =
+        `<div class="detail-label">${label}</div>${desc}`;
+}
+
+function fitView() { network && network.fit({ animation: true }); }
+
+function resetLayout() {
+    if (!network) return;
+    MODEL.nodes.forEach(n => network.moveNode(n.id, n.x, n.y));
+    network.fit({ animation: true });
+}
+
+function exportPNG() {
+    if (!network) return;
+    const a = document.createElement('a');
+    a.href = network.canvas.frame.canvas.toDataURL('image/png');
+    a.download = 'cams-escalation-archetypes.png';
+    a.click();
+}
+
+function highlightGroup(nodeIds) {
+    if (!network) return;
+    network.selectNodes(nodeIds);
+    network.fit({ nodes: nodeIds, animation: true });
+}
+
+// Build sidebar panels
+function buildSidebar() {
+    const loopsEl = document.getElementById('loops-panel');
+    MODEL.loops.forEach(loop => {
+        const div = document.createElement('div');
+        div.className = 'loop-card';
+        div.innerHTML = `<div class="loop-title">↻ ${loop.id} — ${loop.name}</div><div class="loop-desc">${loop.description}</div>`;
+        div.addEventListener('click', () => {
+            highlightGroup(loop.nodeIds);
+            showDetail(loop.name, loop.description);
+        });
+        loopsEl.appendChild(div);
+    });
+
+    const archEl = document.getElementById('arch-panel');
+    MODEL.archetypes.forEach(arch => {
+        const div = document.createElement('div');
+        div.className = 'arch-card';
+        div.innerHTML = `<div class="arch-title">${arch.name}</div><div class="loop-desc">${arch.description}</div>`;
+        div.addEventListener('click', () => {
+            highlightGroup(arch.nodeIds);
+            showDetail(arch.name, arch.description);
+        });
+        archEl.appendChild(div);
+    });
+}
+
+window.addEventListener('load', () => { buildNetwork(); buildSidebar(); });
+</script>
+</body>
+</html>
