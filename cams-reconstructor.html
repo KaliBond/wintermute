@@ -109,6 +109,11 @@
         .signal-warning { background: #fff3cd; border-left: 4px solid #ffc107; color: #856404; }
         .signal-danger  { background: #f8d7da; border-left: 4px solid #dc3545; color: #842029; }
         .signal-positive{ background: #d1e7dd; border-left: 4px solid #198754; color: #0f5132; }
+        .signal-category { margin-bottom: 20px; }
+        .signal-category-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .signal-category-title { font-size: 0.92rem; font-weight: 700; color: #2c3e50; letter-spacing: 0.02em; }
+        .signal-count-badge { background: #764ba2; color: white; border-radius: 12px; padding: 2px 9px; font-size: 0.76rem; font-weight: 700; }
+        .signal-count-badge.count-zero { background: #d1e7dd; color: #0f5132; }
         .phase-badge {
             display: inline-block;
             padding: 6px 16px;
@@ -783,29 +788,163 @@ function renderReconstruction() {
     const sorted = [...r.ops].map((o,i)=>({name:NODE_NAMES[i],...o})).sort((a,b)=>b.Vi-a.Vi);
     const strongest = sorted[0], weakest = sorted[sorted.length-1];
 
-    // Signals
-    const signals = [];
-    if (r.ops[1].Vi > r.ops[0].Vi + 4)
-        signals.push({type:'danger', text:'Praetorian Creep — Shield dominates Helm by >'+(r.ops[1].Vi-r.ops[0].Vi).toFixed(1)+' vitality points. Military autonomy risk.'});
-    if (r.ops[6].Vi < 3)
-        signals.push({type:'danger', text:'Institutional Amnesia — Archive V_i='+r.ops[6].Vi.toFixed(2)+'. Knowledge infrastructure critically degraded.'});
-    if (r.Gbar > 3)
-        signals.push({type:'warning', text:'Abstraction Drift — Γ̄='+r.Gbar.toFixed(2)+'. System operating above coherence-grounded abstraction threshold.'});
+    // ── Categorised signals — CAMS 3.0 Master Threshold Table ──────────────────
+    const NODE_ROLES = ['Governance','Military','Knowledge','Capital','Trades / Professions','Labour','Institutions','Commerce'];
+    const cats = { social:[], power:[], elite:[], mood:[], secondary:[] };
+
+    // Aggregate pre-computations
+    const cohAvg   = r.ops.reduce((s,o)=>s+o.C,0)/8;
+    const stressAvg = r.ops.reduce((s,o)=>s+o.S,0)/8;
+    const gammaBar  = r.ops.reduce((s,o)=>s+o.gi,0)/8;  // mean(A×C)
+    // Node aliases
+    const H=r.ops[0], Sh=r.ops[1], Lo=r.ops[2], St=r.ops[3];
+    const Cr=r.ops[4], Ha=r.ops[5], Ar=r.ops[6], Fl=r.ops[7];
+
+    // ── Social Conditions ────────────────────────────────────────────────────
+    // SC-1: Hands disengagement (civic + material)
+    if (Ha.C < 4 && Ha.S > 6)
+        cats.social.push({type:'danger', text:'Hands (mass labour) are disengaged from civic life — subsistence anxiety, labour unrest, and precarity dominate popular experience.'});
+    // SC-2: Archive degradation (OR logic)
+    if (Ar.C < 4 || Ar.K < 4)
+        cats.social.push({type:'warning', text:'Archive degradation — institutional knowledge infrastructure is eroding: '+(Ar.C<4?'misalignment (C='+Ar.C.toFixed(1)+')':'')+(Ar.C<4&&Ar.K<4?' and ':'')+(Ar.K<4?'under-resourcing (K='+Ar.K.toFixed(1)+')':'')+'.'});
+    // SC-3: Lore stagnation
+    if (Lo.A < 4)
+        cats.social.push({type:'warning', text:'Lore stagnation — the knowledge sector has stopped generating new frameworks (Lore.A = '+Lo.A.toFixed(1)+'). Ideological closure and cultural reproduction replace innovation.'});
+    // SC-4: Craft deskilling
+    if (Cr.K < 4)
+        cats.social.push({type:'warning', text:'Craft shows deskilling, capital flight, or institutional neglect — operational capacity of the skilled class is depleted (Craft.K = '+Cr.K.toFixed(1)+').'});
+    // SC-5: Flow commercial contraction
+    if (Fl.S > 7)
+        cats.social.push({type:'danger', text:'Flow (commercial networks) is under severe strain (Flow.S = '+Fl.S.toFixed(1)+'): trade disruption, currency instability, or regulatory predation is contracting mercantile activity.'});
+    // SC-6: Soul-cognition generative state
+    if (gammaBar > 25)
+        cats.social.push({type:'positive', text:'Soul-cognition generative state — γ̄ = '+gammaBar.toFixed(2)+': abstraction amplified by coherence system-wide. Conditions for civilisational creativity and knowledge synthesis.'});
+
+    // ── Power Dynamics ───────────────────────────────────────────────────────
+    // PD-1: Helm fragmented (both C and K fail)
+    if (H.C < 4 && H.K < 4)
+        cats.power.push({type:'danger', text:'Helm is fragmented and contested — legitimacy (C='+H.C.toFixed(1)+') and operational capacity (K='+H.K.toFixed(1)+') have both collapsed. Centre is paralysed.'});
+    // PD-2: Praetorian divergence (crossed: Shield coherent, Helm fragments)
+    if (Sh.C >= 7 && H.C < 4)
+        cats.power.push({type:'danger', text:'Praetorian divergence: Shield is internally coherent (C='+Sh.C.toFixed(1)+') while executive fragments (Helm.C='+H.C.toFixed(1)+') — structural conditions for coup or military takeover.'});
+    // PD-3: Stewards capital flight
+    if (St.S > 7)
+        cats.power.push({type:'danger', text:'Stewards face systemic threat (S='+St.S.toFixed(1)+') — perceived existential risk to property elites drives capital hoarding or flight.'});
+    // PD-4: Cross-node coherence collapse
+    if (cohAvg < 4)
+        cats.power.push({type:'danger', text:'Cross-node coherence collapse (avgC = '+cohAvg.toFixed(2)+'): no integrating principle holds across the system — polycentric fragmentation and power struggle.'});
+    // PD-5: Brittle network (high synchronisability, weak bonds)
+    if (isFinite(r.Rt) && r.Rt > 8 && r.Bt < 0.4)
+        cats.power.push({type:'warning', text:'Brittle network — R(t)='+r.Rt.toFixed(2)+' with B='+r.Bt.toFixed(3)+': high synchronisability with weak average bonds. System is cascade-vulnerable.'});
+    // PD-6: Near-disconnection
+    if (r.lam2 < 0.1)
+        cats.power.push({type:'danger', text:'Near-disconnection — λ₂='+fmt(r.lam2)+': Fiedler value near zero. Network partition risk is acute — integration can be severed by small perturbations.'});
+
+    // ── Elite Behaviour ──────────────────────────────────────────────────────
+    // EB-1: Elite survival / rent extraction (Helm.S > 7 OR Vbar < 3.5)
+    if (H.S > 7 || r.Vbar < 3.5)
+        cats.elite.push({type:'danger', text:'Elite survival strategies predominate: ruling-class behaviour shifts toward asset protection, factional entrenchment, and short-horizon rent extraction.'+(H.S>7?' Executive under acute stress (Helm.S='+H.S.toFixed(1)+').':'')+(r.Vbar<3.5?' System vitality critically low (V̄='+r.Vbar.toFixed(2)+').':'')});
+    // EB-2: Stewards extracting from stressed Helm (crossed)
+    if (St.K >= 7 && H.S > 5)
+        cats.elite.push({type:'warning', text:'Capital capture opportunity: high Steward capacity (K='+St.K.toFixed(1)+') meets executive stress (Helm.S='+H.S.toFixed(1)+') — propertied elites positioned to impose conditions on governance.'});
+    // EB-3: Archive manipulation (crossed: degraded Archive, coherent Helm)
+    if (Ar.C < 4 && H.C >= 6)
+        cats.elite.push({type:'warning', text:'Archive manipulation risk: degraded institutional memory (Archive.C='+Ar.C.toFixed(1)+') with coherent executive (Helm.C='+H.C.toFixed(1)+') — conditions for narrative manipulation and precedent erasure.'});
+    // EB-4: Shield autonomy / kingmaker
+    if (Sh.C >= 7 && H.C < 5)
+        cats.elite.push({type:'danger', text:'Shield autonomy — security sector coherent (C='+Sh.C.toFixed(1)+') while executive weakens (Helm.C='+H.C.toFixed(1)+'). Military kingmaker dynamic emerging.'});
+    // EB-5a: Lore marginalised (weak Lore, strong Helm)
+    if (Lo.C < 4 && H.C >= 6)
+        cats.elite.push({type:'warning', text:'Lore co-opted or marginalised: weak knowledge class (Lore.C='+Lo.C.toFixed(1)+') absorbed by coherent executive (Helm.C='+H.C.toFixed(1)+') — intellectual life subordinated to power.'});
+    // EB-5b: Lore oppositional (strong Lore, weak Helm)
+    if (Lo.C >= 7 && H.C < 5)
+        cats.elite.push({type:'positive', text:'Lore oppositional: strong knowledge class (Lore.C='+Lo.C.toFixed(1)+') operating counter-hegemonically against weak executive (Helm.C='+H.C.toFixed(1)+') — intellectual resistance or reform movement forming.'});
+    // EB-6: Flow-Stewards elite coordination
+    if (Fl.K >= 7 && St.K >= 7)
+        cats.elite.push({type:'warning', text:'Flow-Stewards elite coordination: both commercial (Flow.K='+Fl.K.toFixed(1)+') and propertied (Stewards.K='+St.K.toFixed(1)+') elites at high capacity — conditions for consolidated elite bloc formation.'});
+    // EB-7: Abstraction-dominance
+    if (r.Gbar > 1.5)
+        cats.elite.push({type:'warning', text:'Abstraction-dominance — Γ̄='+r.Gbar.toFixed(2)+': abstraction outpaces coherence system-wide. Speculative, ideologically-driven, or technocratic elite behaviour.'});
+    // EB-8: Sisu activation
     const sisuNodes = r.ops.map((o,i)=>({n:NODE_NAMES[i],s:o.Si})).filter(x=>x.s>0);
     if (sisuNodes.length > 0)
-        signals.push({type:'positive', text:'Sisu Activation in: '+sisuNodes.map(x=>x.n+' ('+x.s.toFixed(2)+')').join(', ')+'. Antifragile response under extreme stress.'});
-    if (r.lam2 < 0.5)
-        signals.push({type:'warning', text:'Network Fragility — λ₂='+fmt(r.lam2)+'. Near-disconnected network; small perturbations can fragment the system.'});
-    if (isFinite(r.Rt) && r.Rt > 8)
-        signals.push({type:'warning', text:'Fast-Node Dominance — R(t)='+fmt(r.Rt)+'. High spectral gap; one or more nodes set pace far faster than rest.'});
-    if (r.dB > 0.15)
-        signals.push({type:'warning', text:'Bond Dispersion — δ_B='+r.dB.toFixed(3)+'. Uneven coupling; network has isolated and hyper-connected nodes.'});
-    if (r.abar < -1)
-        signals.push({type:'danger', text:'Affect Deficit — ᾱ='+r.abar.toFixed(2)+'. System-wide negative affect; stress structurally exceeds capacity.'});
+        cats.elite.push({type:'positive', text:'Sisu Activation in: '+sisuNodes.map(x=>x.n+' (Σ='+x.s.toFixed(2)+')').join(', ')+'. High abstraction under extreme stress — antifragile breakthrough potential.'});
 
-    const signalsHtml = signals.length
-        ? signals.map(s=>`<div class="signal-box signal-${s.type}">${s.text}</div>`).join('')
-        : '<div class="signal-box signal-positive">No critical signals detected at current parameter values.</div>';
+    // ── Social Mood ──────────────────────────────────────────────────────────
+    // SM-1/SM-2: Aggregate mood — tiered (SM-1 exclusive, else SM-2)
+    if (stressAvg > 7 && cohAvg < 4)
+        cats.mood.push({type:'danger', text:'Prevailing affect: acute anxiety, existential dread, systemic distrust (stressAvg='+stressAvg.toFixed(2)+', cohAvg='+cohAvg.toFixed(2)+'). Social solidarity dissolves into defensive individualism and scapegoating dynamics.'});
+    else if (stressAvg > 6 && cohAvg < 6)
+        cats.mood.push({type:'warning', text:'Tense / paranoid / fatalistic mood (stressAvg='+stressAvg.toFixed(2)+', cohAvg='+cohAvg.toFixed(2)+'): normalised precarity without acute collapse. Fatalism, conspiracy amplification, and episodic protest are prevalent.'});
+    // SM-3/SM-4: Positive mood states — tiered
+    if (stressAvg < 4 && cohAvg >= 7)
+        cats.mood.push({type:'positive', text:'Buoyant / integrative mood (stressAvg='+stressAvg.toFixed(2)+', cohAvg='+cohAvg.toFixed(2)+'): low stress and high coherence produce collective confidence and civic engagement.'});
+    else if (stressAvg < 5 && cohAvg >= 6)
+        cats.mood.push({type:'positive', text:'Stable with undercurrents / managed tension (stressAvg='+stressAvg.toFixed(2)+', cohAvg='+cohAvg.toFixed(2)+'): below critical thresholds — system managing stress within institutional capacity.'});
+    // SM-5: Negative mean affect
+    if (r.abar < -2)
+        cats.mood.push({type:'danger', text:'Negative mean affect (ᾱ='+r.abar.toFixed(2)+'): stress systematically exceeds capacity across all nodes — demoralisation and withdrawal are the rational adaptive response.'});
+    // SM-6: Hands demoralisation (affective reading of SC-1)
+    if (Ha.S > 7 && Ha.C < 4)
+        cats.mood.push({type:'danger', text:'Hands exhibit signs of acute demoralisation — declining birth rates, social withdrawal, and retreat from collective life are likely observable indicators.'});
+    // SM-7: Flow-Craft economic anxiety
+    if (Fl.S > 6 && Cr.S > 6)
+        cats.mood.push({type:'warning', text:'Flow and Craft (commercial and skilled classes) express deep economic anxiety (Flow.S='+Fl.S.toFixed(1)+', Craft.S='+Cr.S.toFixed(1)+'): planning horizons contract, discretionary spending collapses, institutional trust erodes.'});
+    // SM-8: Civilisational renewal
+    if (Lo.A >= 8 && cohAvg >= 6)
+        cats.mood.push({type:'positive', text:'Civilisational renewal potential — Lore.A='+Lo.A.toFixed(1)+' with cohAvg='+cohAvg.toFixed(2)+': high knowledge production within coherent reception conditions. New meaning-systems emerging.'});
+
+    // ── Secondary Phenomena ──────────────────────────────────────────────────
+    // SP-1: Praetorian creep
+    if (H.S > 6 && Sh.C >= 7)
+        cats.secondary.push({type:'warning', text:'Praetorian creep — executive stress (Helm.S='+H.S.toFixed(1)+') creates governance vacuum; Shield coherence ('+Sh.C.toFixed(1)+') fills it.'});
+    // SP-2: Institutional amnesia loop (strict AND)
+    if (Ar.K < 4 && Ar.C < 4)
+        cats.secondary.push({type:'danger', text:'Institutional amnesia loop: complete Archive failure on both capacity (K='+Ar.K.toFixed(1)+') and coherence (C='+Ar.C.toFixed(1)+') — self-reinforcing knowledge collapse with no accumulated learning.'});
+    // SP-3: Cross-class stress convergence / revolutionary threshold
+    if (St.S > 6 && Ha.S > 6)
+        cats.secondary.push({type:'warning', text:'Cross-class stress convergence: simultaneous high stress in Stewards (S='+St.S.toFixed(1)+') and Hands (S='+Ha.S.toFixed(1)+') approaches revolutionary threshold conditions.'});
+    // SP-4: Lore-Hands ideological disconnect
+    if (Lo.C >= 7 && Ha.C < 4)
+        cats.secondary.push({type:'warning', text:'Lore-Hands ideological disconnect: maximum gap between elite cognition (Lore.C='+Lo.C.toFixed(1)+') and mass experience (Hands.C='+Ha.C.toFixed(1)+') — vanguardism or technocratic paternalism.'});
+    // SP-5: Flow substituting for state
+    if (Fl.K >= 7 && H.C < 4)
+        cats.secondary.push({type:'warning', text:'Flow substituting for state: commercial capacity (Flow.K='+Fl.K.toFixed(1)+') fills governance vacuum (Helm.C='+H.C.toFixed(1)+') — mercantile or corporate power displacing political authority.'});
+    // SP-6: Bond dispersion / keystone fragility
+    if (r.dB > 0.15)
+        cats.secondary.push({type:'warning', text:'Bond dispersion — δ_B='+r.dB.toFixed(3)+': coupling load concentrated in few nodes. High keystone fragility; uneven integration across the network.'});
+    // SP-7: Dense uniform coupling / correlated failure
+    if (r.Bt > 0.6 && isFinite(r.Rt) && r.Rt < 3)
+        cats.secondary.push({type:'warning', text:'Dense uniform coupling — B='+r.Bt.toFixed(3)+', R(t)='+r.Rt.toFixed(2)+': tightly coupled network with low spectral gap. Shocks propagate everywhere fast — high correlated failure risk.'});
+    // SP-8: High vitality reserve
+    if (r.Vbar >= 8)
+        cats.secondary.push({type:'positive', text:'High vitality reserve — V̄='+r.Vbar.toFixed(2)+': sufficient adaptive surplus to absorb crises without systemic collapse.'});
+    // SP-9: Keystone node identification
+    const maxBiIdx = r.Bi.reduce((mi,b,i)=>b>r.Bi[mi]?i:mi, 0);
+    if (r.Bi[maxBiIdx] > 0.6)
+        cats.secondary.push({type:'warning', text:NODE_NAMES[maxBiIdx]+' ('+NODE_ROLES[maxBiIdx]+') carries the highest nodal bond strength (B_i='+r.Bi[maxBiIdx].toFixed(3)+') — keystone of systemic integration; its degradation would cascade disproportionately.'});
+
+    const catDefs = [
+        {key:'social',    title:'Social Conditions'},
+        {key:'power',     title:'Power Dynamics'},
+        {key:'elite',     title:'Elite Behaviour'},
+        {key:'mood',      title:'Social Mood'},
+        {key:'secondary', title:'Secondary Phenomena'},
+    ];
+    const signalsHtml = catDefs.map(({key,title}) => {
+        const sigs = cats[key];
+        const empty = sigs.length === 0;
+        return `<div class="signal-category">
+            <div class="signal-category-header">
+                <span class="signal-category-title">${title}</span>
+                <span class="signal-count-badge ${empty?'count-zero':''}">${empty?'✓ clear':sigs.length+' signal'+(sigs.length>1?'s':'')}</span>
+            </div>
+            ${empty
+                ? '<div class="signal-box signal-positive" style="margin-bottom:0">No signals in this category.</div>'
+                : sigs.map((s,idx)=>`<div class="signal-box signal-${s.type}"><strong>${idx+1}</strong> — ${s.text}</div>`).join('')
+            }
+        </div>`;
+    }).join('');
 
     document.getElementById('reconstruction-content').innerHTML = `
         <h2 style="font-size:1.3rem; font-weight:700; color:#2c3e50; margin-bottom:4px;">${r.society} — ${r.year}</h2>
