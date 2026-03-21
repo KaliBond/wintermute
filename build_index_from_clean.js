@@ -1,23 +1,37 @@
 /**
  * build_index_from_clean.js
- * Processes positive-S CSVs from OneDrive Desktop/clean
+ * Processes positive-S CSVs from OneDrive Desktop/clean and Downloads
  * Maps all node name variants → CAMS 3.0 standard names
  * Merges into existing cams_index.json (preserves manually calibrated data)
  */
 const fs = require('fs');
 const path = require('path');
 
-const SRC = 'C:/Users/julie/OneDrive/Desktop/clean/';
+const SRC   = 'C:/Users/julie/OneDrive/Desktop/clean/';
+const DL    = 'C:/Users/julie/Downloads/';
 const INDEX = 'C:/Users/julie/wintermute/cleaned_datasets/cams_index.json';
 
-// Files to process (positive-S only)
+// Files to process (positive-S only; row-level filter handles mixed files)
 const FILES = [
-    { file: 'Italy_CAMS_Cleaned.csv',      society: 'Italy' },
-    { file: 'Palestine_CAMS_Cleaned.csv',  society: 'Palestine' },
-    { file: 'ATHENS.CSV',                  society: 'Athens' },
-    { file: 'SPARTA.CSV',                  society: 'Sparta' },
-    { file: 'germany.csv',                 society: 'Germany' },
-    { file: 'canada.csv',                  society: 'Canada' },
+    // OneDrive/Desktop/clean — ancient & regional
+    { src: SRC, file: 'Italy_CAMS_Cleaned.csv',      society: 'Italy' },
+    { src: SRC, file: 'Palestine_CAMS_Cleaned.csv',  society: 'Palestine' },
+    { src: SRC, file: 'ATHENS.CSV',                  society: 'Athens' },
+    { src: SRC, file: 'SPARTA.CSV',                  society: 'Sparta' },
+    { src: SRC, file: 'germany.csv',                 society: 'Germany' },
+    { src: SRC, file: 'canada.csv',                  society: 'Canada' },
+    // Downloads — substitutes for flat-S nations + new nations
+    { src: DL,  file: 'Singapore_gem_d3c.csv',                        society: 'Singapore' },
+    { src: DL,  file: 'Japan 1850 2025.csv',                          society: 'Japan' },
+    { src: DL,  file: 'england.csv',                                  society: 'England' },
+    { src: DL,  file: 'Russia .csv',                                  society: 'Russia' },
+    { src: DL,  file: 'Saudi_Gem_Feb.csv',                            society: 'Saudi Arabia' },
+    { src: DL,  file: 'USA_Gem_2_Feb28.csv',                          society: 'USA' },
+    { src: DL,  file: 'China_Gem_Feb.csv',                            society: 'China' },
+    { src: DL,  file: 'Egypt_Gem_23Jan26.csv',                        society: 'Egypt' },
+    { src: DL,  file: 'phil_gem_dec.csv',                             society: 'Philippines' },
+    { src: DL,  file: 'LATIVA.CSV',                                   society: 'Latvia' },
+    { src: DL,  file: 'NORWAY_MASTER_FILE_CORRECTLY_PROCESSED.csv',   society: 'Norway' },
 ];
 
 // Node name → CAMS 3.0 standard name
@@ -87,8 +101,8 @@ const index = JSON.parse(fs.readFileSync(INDEX, 'utf8'));
 let totalAdded = 0;
 let totalSkipped = 0;
 
-for (const { file, society } of FILES) {
-    const filepath = path.join(SRC, file);
+for (const { src, file, society } of FILES) {
+    const filepath = path.join(src, file);
     if (!fs.existsSync(filepath)) {
         console.log(`SKIP (not found): ${file}`);
         continue;
