@@ -114,6 +114,10 @@
         .signal-category-title { font-size: 0.92rem; font-weight: 700; color: #2c3e50; letter-spacing: 0.02em; }
         .signal-count-badge { background: #764ba2; color: white; border-radius: 12px; padding: 2px 9px; font-size: 0.76rem; font-weight: 700; }
         .signal-count-badge.count-zero { background: #d1e7dd; color: #0f5132; }
+        .civ-type-block { display:flex; align-items:center; gap:14px; margin-bottom:14px; flex-wrap:wrap; }
+        .civ-type-badge { display:inline-flex; align-items:center; gap:8px; padding:7px 16px; border-radius:20px; color:#fff; font-weight:700; font-size:0.95rem; }
+        .civ-type-num { font-size:1.05rem; opacity:0.85; }
+        .civ-type-reason { font-size:0.82rem; color:#666; margin-bottom:16px; font-style:italic; }
         .phase-badge {
             display: inline-block;
             padding: 6px 16px;
@@ -801,12 +805,47 @@ function renderReconstruction() {
     const cats = { social:[], power:[], elite:[], mood:[], secondary:[] };
 
     // Aggregate pre-computations
-    const cohAvg   = r.ops.reduce((s,o)=>s+o.C,0)/8;
+    const cohAvg    = r.ops.reduce((s,o)=>s+o.C,0)/8;
+    const kappaAvg  = r.ops.reduce((s,o)=>s+o.K,0)/8;
     const stressAvg = r.ops.reduce((s,o)=>s+o.S,0)/8;
     const gammaBar  = r.ops.reduce((s,o)=>s+o.gi,0)/8;  // mean(A×C)
+    const cVals     = r.ops.map(o=>o.C);
+    const CA        = (Math.max(...cVals) - Math.min(...cVals)) / cohAvg; // coherence asymmetry
     // Node aliases
     const H=r.ops[0], Sh=r.ops[1], Lo=r.ops[2], St=r.ops[3];
     const Cr=r.ops[4], Ha=r.ops[5], Ar=r.ops[6], Fl=r.ops[7];
+
+    // ── Civilisation Type Classifier ─────────────────────────────────────────
+    // Our S is 1–10 positive (higher = more dysfunction).
+    // stressAvg > 6.5 maps to the framework's "positive stress" / Type IV territory.
+    function classifyCiv() {
+        const typeIV = stressAvg > 6.5 || (cohAvg < 5.0 && CA > 0.40);
+        if (typeIV) {
+            const why = stressAvg > 6.5
+                ? `stressAvg = ${stressAvg.toFixed(2)} — dysfunction active across the majority of nodes`
+                : `cohAvg = ${cohAvg.toFixed(2)}, CA = ${CA.toFixed(2)} — fragmented with high coherence asymmetry`;
+            return { type:'IV', label:'Fragile High-Stress', why, color:'#c0392b' };
+        }
+        // Type I / II disambiguation via expansion vector
+        if (cohAvg >= 7.5 && kappaAvg >= 7.5 && r.Bt >= 8.0) {
+            if (Sh.K >= 8 && Ha.A >= 6)
+                return { type:'I', label:'Expansive Adaptive',
+                    why:`cohAvg=${cohAvg.toFixed(2)}, kappaAvg=${kappaAvg.toFixed(2)}, Bt=${r.Bt.toFixed(2)} — Shield.K=${Sh.K.toFixed(1)} and Hands.A=${Ha.A.toFixed(1)} confirm mobilisation vector`,
+                    color:'#e67e22' };
+            return { type:'II', label:'Stable Core',
+                why:`High C/K without expansion vector — cohAvg=${cohAvg.toFixed(2)}, CA=${CA.toFixed(2)}, Bt=${r.Bt.toFixed(2)}`,
+                color:'#27ae60' };
+        }
+        if (cohAvg >= 6.5 && kappaAvg >= 6.5 && CA < 0.30 && r.Bt >= 7.0)
+            return { type:'II', label:'Stable Core',
+                why:`Tightly clustered nodes — cohAvg=${cohAvg.toFixed(2)}, kappaAvg=${kappaAvg.toFixed(2)}, CA=${CA.toFixed(2)}, Bt=${r.Bt.toFixed(2)}`,
+                color:'#27ae60' };
+        // Type III — distributed mid-range, no dominant pathology
+        return { type:'III', label:'Resilient Frontier',
+            why:`Mid-range distributed load — cohAvg=${cohAvg.toFixed(2)}, stressAvg=${stressAvg.toFixed(2)}, CA=${CA.toFixed(2)}`,
+            color:'#2980b9' };
+    }
+    const civ = classifyCiv();
 
     // ── Social Conditions ────────────────────────────────────────────────────
     // SC-1: Hands disengagement (civic + material)
@@ -985,7 +1024,14 @@ function renderReconstruction() {
         <p style="color:#666; margin-bottom:16px; font-size:0.92rem;">
             A CAMS 3.0 reconstruction across 8 functional nodes, assessed via spectral graph theory and node operator analysis.
         </p>
-        <span class="phase-badge ${phaseC}">${phase}</span>
+        <div class="civ-type-block">
+            <span class="phase-badge ${phaseC}">${phase}</span>
+            <span class="civ-type-badge" style="background:${civ.color}">
+                <span class="civ-type-num">Type ${civ.type}</span>
+                <span>${civ.label}</span>
+            </span>
+        </div>
+        <p class="civ-type-reason">${civ.why}</p>
         <p style="font-size:0.93rem; color:#444; margin-bottom:16px;">
             Mean system vitality <strong>V̄ = ${r.Vbar.toFixed(2)}</strong> (σ = ${r.sigV.toFixed(2)}).
             Strongest node: <strong>${strongest.name}</strong> (V_i = ${strongest.Vi.toFixed(2)});
