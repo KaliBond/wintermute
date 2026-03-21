@@ -894,6 +894,32 @@ function renderReconstruction() {
     if (Lo.A >= 8 && cohAvg >= 6)
         cats.mood.push({type:'positive', text:'Civilisational renewal potential — Lore.A='+Lo.A.toFixed(1)+' with cohAvg='+cohAvg.toFixed(2)+': high knowledge production within coherent reception conditions. New meaning-systems emerging.'});
 
+    // ── Hands-derived mood inferences (always fire, softer thresholds) ────────
+    // Net affect of Hands
+    const haAffect = Ha.K - Ha.S;
+    if (haAffect < -3)
+        cats.mood.push({type:'danger', text:'Hands carry deep capacity deficit (K='+Ha.K.toFixed(1)+', S='+Ha.S.toFixed(1)+'): the mass population is structurally exhausted. Social withdrawal, reduced reproductive investment, and collapse of voluntary participation are the expected response.'});
+    else if (haAffect < 0)
+        cats.mood.push({type:'warning', text:'Hands operate with net capacity deficit (K='+Ha.K.toFixed(1)+', S='+Ha.S.toFixed(1)+'): quiet disengagement and reduced social trust are the likely adaptive response. Compliance without enthusiasm — the population is getting by, not thriving.'});
+    else if (haAffect > 3)
+        cats.mood.push({type:'positive', text:'Hands show positive capacity surplus (K='+Ha.K.toFixed(1)+', S='+Ha.S.toFixed(1)+'): mass labour morale is strong. Social participation, family formation, and civic investment are likely buoyant.'});
+    else
+        cats.mood.push({type:'positive', text:'Hands affect is neutral (K='+Ha.K.toFixed(1)+', S='+Ha.S.toFixed(1)+'): the mass population is managing stress within capacity. No acute demoralisation signal — equilibrium with underlying tension.'});
+
+    // Hands meaning-orientation (abstraction)
+    if (Ha.A > 6)
+        cats.mood.push({type:'warning', text:'High abstraction in Hands (A='+Ha.A.toFixed(1)+'): the mass population is actively seeking meaning outside material conditions — religious intensification, ideological engagement, or escapism into parallel social worlds are likely visible.'});
+    else if (Ha.A < 3)
+        cats.mood.push({type:'warning', text:'Low Hands abstraction (A='+Ha.A.toFixed(1)+'): the mass population is in survival-mode cognition. Broader civic and political narratives are remote from daily experience — immediate material concerns dominate consciousness.'});
+
+    // Hands civic coherence (C)
+    if (Ha.C >= 7)
+        cats.mood.push({type:'positive', text:'Strong Hands coherence (C='+Ha.C.toFixed(1)+'): mass civic alignment is high — the population identifies with systemic goals. Social contract is experienced as legitimate.'});
+    else if (Ha.C < 4)
+        ; // already captured by SM-1 / SM-6
+    else
+        cats.mood.push({type:'warning', text:'Moderate Hands coherence (C='+Ha.C.toFixed(1)+'): civic participation is present but contingent — compliance culture rather than genuine civic investment. The population cooperates instrumentally, not from conviction.'});
+
     // ── Secondary Phenomena ──────────────────────────────────────────────────
     // SP-1: Praetorian creep
     if (H.S > 6 && Sh.C >= 7)
