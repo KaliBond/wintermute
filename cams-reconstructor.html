@@ -904,7 +904,9 @@ function renderReconstruction() {
     const Eproj = M_t * Bhat / (1 + Math.abs(D_t) + Omega + Rplus);
 
     // Classification — thresholds provisional (corpus quantile calibration pending)
-    const TH = { K:0.12, K2:0.08, KF:0.06, R:3.0, RF:8.0, Om:2.0, OmF:2.5, E:0.30 };
+    // Corpus-calibrated thresholds (n=3494 society-years, 32 nations)
+    // K_core: p10=0.124  R⁺: p75=1.818  Ω: p88≈1.500 / p90=1.561  E_proj: p75=1.767
+    const TH = { KF:0.124, K:0.124, K2:0.100, RF:1.818, R:1.818, OmF:1.561, Om:1.500, E:1.767 };
     let civType, civColor, civWhy;
 
     if (Kcore < TH.KF || Rplus >= TH.RF || (Omega >= TH.OmF && Aresp !== null && Aresp <= 0)) {
