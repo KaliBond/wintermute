@@ -528,12 +528,12 @@ document.getElementById('nation-select').addEventListener('change', function() {
     yearSel.innerHTML = '<option>Loading…</option>';
     yearSel.disabled = true;
     if (!file) return;
-    setStatus('Fetching ' + file + '…');
     fetchCSV(file, function(data) {
         const years = extractYears(data, currentNationKey);
         yearSel.innerHTML = years.map(y => `<option value="${y}">${y}</option>`).join('');
         yearSel.disabled = false;
-        setStatus('Loaded ' + data.length + ' rows. ' + years.length + ' years found.');
+        document.getElementById('load-btn').disabled = false;
+        setStatus(years.length + ' years available.');
     });
 });
 
@@ -544,18 +544,20 @@ function setStatus(msg) {
 function fetchCSV(file, cb) {
     const path = 'cleaned_datasets/' + file;
     if (csvCache[file]) { cb(csvCache[file]); return; }
-    Papa.parse(path, {
-        download: true,
-        header: true,
-        skipEmptyLines: true,
-        complete: function(result) {
+    setStatus('Fetching ' + file + '…');
+    fetch(path)
+        .then(function(r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status + ' for ' + file);
+            return r.text();
+        })
+        .then(function(text) {
+            const result = Papa.parse(text, { header: true, skipEmptyLines: true });
             csvCache[file] = result.data;
             cb(result.data);
-        },
-        error: function(e) {
+        })
+        .catch(function(e) {
             setStatus('Error loading CSV: ' + e.message);
-        }
-    });
+        });
 }
 
 function extractYears(data, nationKey) {
@@ -563,10 +565,13 @@ function extractYears(data, nationKey) {
     data.forEach(row => {
         if (rowMatchesNation(row, nationKey)) {
             const y = getCol(row, ['Year','year','DATE','date','Period','period']);
-            if (y) years.add(y.toString().trim());
+            if (y !== null && y !== undefined && y !== '') {
+                const n = parseFloat(y.toString().trim());
+                if (!isNaN(n)) years.add(Math.round(n));
+            }
         }
     });
-    return Array.from(years).sort();
+    return Array.from(years).sort((a, b) => a - b);
 }
 
 function rowMatchesNation(row, nationKey) {
@@ -599,11 +604,11 @@ function loadDataset() {
 
 function fillSlidersFromData(data, nationKey, year) {
     // Filter rows matching nation + year
-    const yearStr = year.toString().trim();
+    const yearInt = Math.round(parseFloat(year));
     const rows = data.filter(row => {
         if (!rowMatchesNation(row, nationKey)) return false;
         const y = getCol(row, ['Year','year','DATE','date','Period','period']);
-        return y && y.toString().trim() === yearStr;
+        return y !== null && y !== undefined && Math.round(parseFloat(y.toString().trim())) === yearInt;
     });
     if (!rows.length) { setStatus('No rows found for ' + nationKey + ' / ' + year); return; }
 
