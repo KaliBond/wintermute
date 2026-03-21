@@ -1,7 +1,8 @@
 /**
  * build_index_from_clean.js
- * Processes positive-S CSVs from OneDrive Desktop/clean and Downloads
+ * Processes positive-S CSVs from OneDrive Desktop/clean, Downloads, and Downloads/csv
  * Maps all node name variants → CAMS 3.0 standard names
+ * Supports multiple datasets per nation via tagged society keys e.g. "China [Grok]"
  * Merges into existing cams_index.json (preserves manually calibrated data)
  */
 const fs = require('fs');
@@ -9,29 +10,48 @@ const path = require('path');
 
 const SRC   = 'C:/Users/julie/OneDrive/Desktop/clean/';
 const DL    = 'C:/Users/julie/Downloads/';
+const CSV   = 'C:/Users/julie/Downloads/csv/';
 const INDEX = 'C:/Users/julie/wintermute/cleaned_datasets/cams_index.json';
 
 // Files to process (positive-S only; row-level filter handles mixed files)
 const FILES = [
-    // OneDrive/Desktop/clean — ancient & regional
+    // ── OneDrive/Desktop/clean — ancient & regional ───────────────────────
     { src: SRC, file: 'Italy_CAMS_Cleaned.csv',      society: 'Italy' },
     { src: SRC, file: 'Palestine_CAMS_Cleaned.csv',  society: 'Palestine' },
     { src: SRC, file: 'ATHENS.CSV',                  society: 'Athens' },
     { src: SRC, file: 'SPARTA.CSV',                  society: 'Sparta' },
     { src: SRC, file: 'germany.csv',                 society: 'Germany' },
     { src: SRC, file: 'canada.csv',                  society: 'Canada' },
-    // Downloads — substitutes for flat-S nations + new nations
-    { src: DL,  file: 'Singapore_gem_d3c.csv',                        society: 'Singapore' },
-    { src: DL,  file: 'Japan 1850 2025.csv',                          society: 'Japan' },
-    { src: DL,  file: 'england.csv',                                  society: 'England' },
-    { src: DL,  file: 'Russia .csv',                                  society: 'Russia' },
-    { src: DL,  file: 'Saudi_Gem_Feb.csv',                            society: 'Saudi Arabia' },
-    { src: DL,  file: 'USA_Gem_2_Feb28.csv',                          society: 'USA' },
-    { src: DL,  file: 'China_Gem_Feb.csv',                            society: 'China' },
-    { src: DL,  file: 'Egypt_Gem_23Jan26.csv',                        society: 'Egypt' },
-    { src: DL,  file: 'phil_gem_dec.csv',                             society: 'Philippines' },
-    { src: DL,  file: 'LATIVA.CSV',                                   society: 'Latvia' },
-    { src: DL,  file: 'norway_gem_jan.csv',                            society: 'Norway' },
+
+    // ── Downloads — primary sources ───────────────────────────────────────
+    { src: DL,  file: 'Singapore_gem_d3c.csv',       society: 'Singapore' },
+    { src: DL,  file: 'Japan 1850 2025.csv',         society: 'Japan' },
+    { src: DL,  file: 'england.csv',                 society: 'England' },
+    { src: DL,  file: 'Russia .csv',                 society: 'Russia' },
+    { src: DL,  file: 'Saudi_Gem_Feb.csv',           society: 'Saudi Arabia' },
+    { src: DL,  file: 'USA_Gem_2_Feb28.csv',         society: 'USA' },
+    { src: DL,  file: 'China_Gem_Feb.csv',           society: 'China' },
+    { src: DL,  file: 'Egypt_Gem_23Jan26.csv',       society: 'Egypt' },
+    { src: DL,  file: 'phil_gem_dec.csv',            society: 'Philippines' },
+    { src: DL,  file: 'LATIVA.CSV',                  society: 'Latvia' },
+    { src: DL,  file: 'norway_gem_jan.csv',          society: 'Norway' },
+
+    // ── Downloads/csv — primary (new nations + better sources) ───────────
+    { src: CSV, file: 'Australian_Gem_Jan30.csv',                      society: 'Australia' },
+    { src: CSV, file: 'Germany_gem_jan.csv',                           society: 'Germany' },
+    { src: CSV, file: 'Iran 1900 -2025 Grok 12-1.csv',                 society: 'Iran' },
+    { src: CSV, file: 'sweden_gem_jan26.csv',                          society: 'Sweden' },
+    { src: CSV, file: 'Finland_Gem_21Jan.csv',                         society: 'Finland' },
+    { src: CSV, file: 'Ukraine_gem_1930_Jan26_CLEAN (1).csv',          society: 'Ukraine' },
+    { src: CSV, file: 'Venezuela_gem_dec1970_2025 (1).csv',            society: 'Venezuela' },
+    { src: CSV, file: 'southafrica_nov (1) (1).csv',                   society: 'South Africa' },
+    { src: CSV, file: 'ROME_new_gem_nov_CLEANED_RENAMED_FILLED (1).csv', society: 'Rome' },
+
+    // ── Downloads/csv — alternative sources (tagged for comparison) ───────
+    { src: CSV, file: 'australia_grok_feb (1).csv',                    society: 'Australia [Grok]' },
+    { src: CSV, file: 'china_nov_new_gem_cleaned (1).csv',             society: 'China [Gem alt]' },
+    { src: CSV, file: 'russia_gem_december (1).csv',                   society: 'Russia [Gem]' },
+    { src: CSV, file: 'saudi_grok_february_cleaned (1).csv',           society: 'Saudi Arabia [Grok]' },
 ];
 
 // Node name → CAMS 3.0 standard name
