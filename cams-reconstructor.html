@@ -6,7 +6,6 @@
     <title>CAMS 3.0 Reconstructor — Neural Nations</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
     <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
     <style>
         .recon-grid {
@@ -445,18 +444,6 @@ const NODE_COLORS = {
     Flow:     '#f39c12'
 };
 
-// Node name mapping: CSV legacy name → CAMS 3.0
-const NODE_MAP = {
-    'executive':     'Helm',   'governance': 'Helm',   'helm': 'Helm',
-    'army':          'Shield', 'military':   'Shield', 'security': 'Shield', 'shield': 'Shield',
-    'priests':       'Lore',   'priesthood': 'Lore',   'knowledge': 'Lore',
-    'lore':          'Lore',   'clergy':     'Lore',
-    'property':      'Stewards','stewards':  'Stewards',
-    'trades':        'Craft',  'professions':'Craft',   'craft': 'Craft',
-    'proletariat':   'Hands',  'hands':      'Hands',   'labour': 'Hands', 'labor': 'Hands',
-    'statememory':   'Archive','state memory':'Archive','archive':'Archive','bureaucracy':'Archive',
-    'shopkeepers':   'Flow',   'merchants':  'Flow',    'flow': 'Flow'
-};
 
 // ── Slider table build ─────────────────────────────────────────────────────────
 function buildNodeTable() {
@@ -516,139 +503,52 @@ function viColorClass(v) {
     return 'vi-red';
 }
 
-// ── CSV Dataset Loader ─────────────────────────────────────────────────────────
-let csvCache = {}; // file → parsed data
-let currentNationKey = '';
-
-document.getElementById('nation-select').addEventListener('change', function() {
-    const opt = this.options[this.selectedIndex];
-    const file = opt.dataset.file;
-    currentNationKey = opt.value;
-    const yearSel = document.getElementById('year-select');
-    yearSel.innerHTML = '<option>Loading…</option>';
-    yearSel.disabled = true;
-    if (!file) return;
-    fetchCSV(file, function(data) {
-        const years = extractYears(data, currentNationKey);
-        yearSel.innerHTML = years.map(y => `<option value="${y}">${y}</option>`).join('');
-        yearSel.disabled = false;
-        document.getElementById('load-btn').disabled = false;
-        setStatus(years.length + ' years available.');
-    });
-});
+// ── Dataset Loader (JSON index) ────────────────────────────────────────────────
+let CAMS_DATA = null;
 
 function setStatus(msg) {
     document.getElementById('loader-status').textContent = msg;
 }
 
-function fetchCSV(file, cb) {
-    const path = 'cleaned_datasets/' + file;
-    if (csvCache[file]) { cb(csvCache[file]); return; }
-    setStatus('Fetching ' + file + '…');
-    fetch(path)
-        .then(function(r) {
-            if (!r.ok) throw new Error('HTTP ' + r.status + ' for ' + file);
-            return r.text();
-        })
-        .then(function(text) {
-            const result = Papa.parse(text, { header: true, skipEmptyLines: true });
-            csvCache[file] = result.data;
-            cb(result.data);
-        })
-        .catch(function(e) {
-            setStatus('Error loading CSV: ' + e.message);
-        });
-}
+// Load the pre-built index once
+fetch('cleaned_datasets/cams_index.json')
+    .then(r => r.json())
+    .then(data => {
+        CAMS_DATA = data;
+        setStatus('Dataset index ready — ' + Object.keys(data).length + ' nations loaded.');
+    })
+    .catch(e => setStatus('Index load error: ' + e.message));
 
-function extractYears(data, nationKey) {
-    const years = new Set();
-    data.forEach(row => {
-        if (rowMatchesNation(row, nationKey)) {
-            const y = getCol(row, ['Year','year','DATE','date','Period','period']);
-            if (y !== null && y !== undefined && y !== '') {
-                const n = parseFloat(y.toString().trim());
-                if (!isNaN(n)) years.add(Math.round(n));
-            }
-        }
-    });
-    return Array.from(years).sort((a, b) => a - b);
-}
-
-function rowMatchesNation(row, nationKey) {
-    const lk = nationKey.toLowerCase();
-    for (const v of Object.values(row)) {
-        if (typeof v === 'string' && v.toLowerCase().includes(lk)) return true;
-    }
-    return false;
-}
-
-function getCol(row, candidates) {
-    for (const k of Object.keys(row)) {
-        const kl = k.trim().toLowerCase();
-        for (const c of candidates) {
-            if (kl === c.toLowerCase() || kl.includes(c.toLowerCase())) return row[k];
-        }
-    }
-    return null;
-}
+document.getElementById('nation-select').addEventListener('change', function() {
+    const nation = this.value;
+    const yearSel = document.getElementById('year-select');
+    yearSel.innerHTML = '<option value="">— select year —</option>';
+    yearSel.disabled = true;
+    document.getElementById('load-btn').disabled = true;
+    if (!nation || !CAMS_DATA || !CAMS_DATA[nation]) return;
+    const years = Object.keys(CAMS_DATA[nation]).map(Number).sort((a,b) => a-b);
+    yearSel.innerHTML = years.map(y => `<option value="${y}">${y}</option>`).join('');
+    yearSel.disabled = false;
+    document.getElementById('load-btn').disabled = false;
+    setStatus(years.length + ' years available for ' + nation + '.');
+});
 
 function loadDataset() {
-    const opt = document.getElementById('nation-select').options[document.getElementById('nation-select').selectedIndex];
-    const file = opt.dataset.file;
-    const year = document.getElementById('year-select').value;
-    if (!file || !year) { setStatus('Select a nation and year first.'); return; }
-    fetchCSV(file, function(data) {
-        fillSlidersFromData(data, opt.value, year);
-    });
-}
-
-function fillSlidersFromData(data, nationKey, year) {
-    // Filter rows matching nation + year
-    const yearInt = Math.round(parseFloat(year));
-    const rows = data.filter(row => {
-        if (!rowMatchesNation(row, nationKey)) return false;
-        const y = getCol(row, ['Year','year','DATE','date','Period','period']);
-        return y !== null && y !== undefined && Math.round(parseFloat(y.toString().trim())) === yearInt;
-    });
-    if (!rows.length) { setStatus('No rows found for ' + nationKey + ' / ' + year); return; }
-
-    // Build a map: CAMS node name → row
-    const nodeRows = {};
-    rows.forEach(row => {
-        const rawNode = getCol(row, ['Node','node','ROLE','Role']) || '';
-        const mapped = mapNodeName(rawNode.trim());
-        if (mapped) nodeRows[mapped] = row;
-    });
-
-    // Fill sliders
+    const nation = document.getElementById('nation-select').value;
+    const year   = document.getElementById('year-select').value;
+    if (!nation || !year || !CAMS_DATA) { setStatus('Select a nation and year first.'); return; }
+    const yearData = CAMS_DATA[nation][year];
+    if (!yearData) { setStatus('No data for ' + nation + ' ' + year); return; }
     NODE_NAMES.forEach((name, i) => {
-        const row = nodeRows[name];
-        if (!row) return;
-        let C = parseFloat(getCol(row, ['Coherence','coherence','C']) || 5);
-        let K = parseFloat(getCol(row, ['Capacity','capacity','K']) || 5);
-        let S = Math.abs(parseFloat(getCol(row, ['Stress','stress','S']) || 5));
-        let A = parseFloat(getCol(row, ['Abstraction','abstraction','A']) || 5);
-        if (isNaN(C)) C=5; if (isNaN(K)) K=5; if (isNaN(S)) S=5; if (isNaN(A)) A=5;
-        setSlider(i,'C',C); setSlider(i,'K',K); setSlider(i,'S',S); setSlider(i,'A',A);
+        const vals = yearData[name] || [5, 5, 5, 5];
+        setSlider(i,'C', vals[0]);
+        setSlider(i,'K', vals[1]);
+        setSlider(i,'S', vals[2]);
+        setSlider(i,'A', vals[3]);
     });
-
-    document.getElementById('society-name').value = nationKey;
+    document.getElementById('society-name').value = nation;
     document.getElementById('society-year').value = year;
-    setStatus('Sliders filled from data: ' + Object.keys(nodeRows).join(', '));
-}
-
-function mapNodeName(raw) {
-    const key = raw.toLowerCase().replace(/\s+/g, '').replace(/_/g,'');
-    // direct lookup
-    for (const [k, v] of Object.entries(NODE_MAP)) {
-        const mk = k.replace(/\s+/g,'').replace(/_/g,'');
-        if (key === mk || key.startsWith(mk) || mk.startsWith(key)) return v;
-    }
-    // partial
-    for (const [k, v] of Object.entries(NODE_MAP)) {
-        if (key.includes(k.replace(/\s+/g,'').replace(/_/g,''))) return v;
-    }
-    return null;
+    setStatus('Loaded: ' + nation + ' ' + year + '.');
 }
 
 // ── CAMS 3.0 Math ─────────────────────────────────────────────────────────────
