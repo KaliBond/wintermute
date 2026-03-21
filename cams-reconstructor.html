@@ -815,37 +815,116 @@ function renderReconstruction() {
     const H=r.ops[0], Sh=r.ops[1], Lo=r.ops[2], St=r.ops[3];
     const Cr=r.ops[4], Ha=r.ops[5], Ar=r.ops[6], Fl=r.ops[7];
 
-    // ── Civilisation Type Classifier ─────────────────────────────────────────
-    // Our S is 1–10 positive (higher = more dysfunction).
-    // stressAvg > 6.5 maps to the framework's "positive stress" / Type IV territory.
-    function classifyCiv() {
-        const typeIV = stressAvg > 6.5 || (cohAvg < 5.0 && CA > 0.40);
-        if (typeIV) {
-            const why = stressAvg > 6.5
-                ? `stressAvg = ${stressAvg.toFixed(2)} — dysfunction active across the majority of nodes`
-                : `cohAvg = ${cohAvg.toFixed(2)}, CA = ${CA.toFixed(2)} — fragmented with high coherence asymmetry`;
-            return { type:'IV', label:'Fragile High-Stress', why, color:'#c0392b' };
-        }
-        // Type I / II disambiguation via expansion vector
-        if (cohAvg >= 7.5 && kappaAvg >= 7.5 && r.Bt >= 8.0) {
-            if (Sh.K >= 8 && Ha.A >= 6)
-                return { type:'I', label:'Expansive Adaptive',
-                    why:`cohAvg=${cohAvg.toFixed(2)}, kappaAvg=${kappaAvg.toFixed(2)}, Bt=${r.Bt.toFixed(2)} — Shield.K=${Sh.K.toFixed(1)} and Hands.A=${Ha.A.toFixed(1)} confirm mobilisation vector`,
-                    color:'#e67e22' };
-            return { type:'II', label:'Stable Core',
-                why:`High C/K without expansion vector — cohAvg=${cohAvg.toFixed(2)}, CA=${CA.toFixed(2)}, Bt=${r.Bt.toFixed(2)}`,
-                color:'#27ae60' };
-        }
-        if (cohAvg >= 6.5 && kappaAvg >= 6.5 && CA < 0.30 && r.Bt >= 7.0)
-            return { type:'II', label:'Stable Core',
-                why:`Tightly clustered nodes — cohAvg=${cohAvg.toFixed(2)}, kappaAvg=${kappaAvg.toFixed(2)}, CA=${CA.toFixed(2)}, Bt=${r.Bt.toFixed(2)}`,
-                color:'#27ae60' };
-        // Type III — distributed mid-range, no dominant pathology
-        return { type:'III', label:'Resilient Frontier',
-            why:`Mid-range distributed load — cohAvg=${cohAvg.toFixed(2)}, stressAvg=${stressAvg.toFixed(2)}, CA=${CA.toFixed(2)}`,
-            color:'#2980b9' };
+    // ── CAPE Archetype (phase-space structural posture) ───────────────────────
+    // c_n = (C_n × A_n) / (1 + S_n)  — node cognition weight
+    const cn = r.ops.map(o => (o.C * o.A) / (1 + o.S));
+    // X = material/exchange axis; Y = governance/productive-base axis
+    const archX = (cn[7] + cn[3]) - (cn[2] + cn[6]);  // Flow+Stewards − Lore−Archive
+    const archY = (cn[0] + cn[1]) - (cn[5] + cn[4]);  // Helm+Shield − Hands−Craft
+    let archetype, archColor;
+    if      (archX >= 0 && archY >= 0) { archetype = 'Marketplace'; archColor = '#e67e22'; }
+    else if (archX <  0 && archY >= 0) { archetype = 'Temple';      archColor = '#8e44ad'; }
+    else if (archX <  0 && archY <  0) { archetype = 'Commons';     archColor = '#27ae60'; }
+    else                               { archetype = 'Workshop';     archColor = '#2980b9'; }
+
+    // ── Civilisation Type (January 2026 dyadic state-variable formulation) ────
+    // Parameters — provisional; corpus quantile calibration pending
+    const al=0.5, be=0.5, gm=0.3, de=1.0, ep=0.1, lm=0.05, mu_=1.0, nu_=0.1;
+
+    function nodeOpsFromEntry(entry) {
+        return ['Helm','Shield','Lore','Stewards','Craft','Hands','Archive','Flow'].map(n => {
+            const [C,K,S,A] = entry[n] || [5,5,5,5];
+            return { C, K, S, A };
+        });
     }
-    const civ = classifyCiv();
+    function computeM_fn(ops, dK=[0,0,0]) {
+        // Material load: Hands[5], Flow[7], Shield[1]
+        return (ops[5].S + al*dK[0] + ops[7].S + al*dK[1] + ops[1].S + al*dK[2]) / 3;
+    }
+    function computeY_fn(ops) {
+        // Symbolic bandwidth: Lore[2], Stewards[3], Archive[6]
+        return ([2,3,6].reduce((s,i) => s + be*ops[i].C + (1-be)*ops[i].A - gm*ops[i].S, 0)) / 3;
+    }
+    function computeOmega_fn(ops) {
+        const sv = ops.map(o=>o.S), sm = sv.reduce((a,b)=>a+b,0)/8;
+        return Math.sqrt(sv.map(s=>(s-sm)**2).reduce((a,b)=>a+b,0)/8);
+    }
+
+    const societyData = (CAMS_DATA && CAMS_DATA[r.society]) || {};
+    const yr = parseInt(r.year);
+    const prevEntry  = societyData[yr-1];
+    const prev5Entry = societyData[yr-5];
+
+    // ΔK for material nodes if year-1 exists
+    let dK_mat = [0,0,0];
+    if (prevEntry) {
+        const p = nodeOpsFromEntry(prevEntry);
+        dK_mat = [Ha.K - p[5].K, Fl.K - p[7].K, Sh.K - p[1].K];
+    }
+
+    const M_t   = computeM_fn(r.ops, dK_mat);
+    const Y_t   = computeY_fn(r.ops);
+    const D_t   = M_t - de * Y_t;
+    const Bhat  = r.Bt;
+    const Rplus = Math.max(D_t / (ep + Bhat), 0);
+    const Omega = computeOmega_fn(r.ops);
+
+    // τ* — optimal lag maximising Corr(Y(t), M(t−τ)), τ ∈ [0,5]
+    let tauStar = 0;
+    const allYrs = Object.keys(societyData).map(Number).sort((a,b)=>a-b);
+    if (allYrs.length >= 6) {
+        const tsM = allYrs.map(y => { const e=societyData[y]; return e ? { y, v:computeM_fn(nodeOpsFromEntry(e)) } : null; }).filter(Boolean);
+        const tsY = allYrs.map(y => { const e=societyData[y]; return e ? { y, v:computeY_fn(nodeOpsFromEntry(e)) } : null; }).filter(Boolean);
+        let bestCorr = -Infinity;
+        for (let tau = 0; tau <= 5; tau++) {
+            const pairs = tsY.map(sy => { const sm=tsM.find(m=>m.y===sy.y-tau); return sm?[sy.v,sm.v]:null; }).filter(Boolean);
+            if (pairs.length < 4) continue;
+            const mY=pairs.reduce((s,p)=>s+p[0],0)/pairs.length, mM=pairs.reduce((s,p)=>s+p[1],0)/pairs.length;
+            const num=pairs.reduce((s,p)=>s+(p[0]-mY)*(p[1]-mM),0);
+            const den=Math.sqrt(pairs.reduce((s,p)=>s+(p[0]-mY)**2,0)*pairs.reduce((s,p)=>s+(p[1]-mM)**2,0));
+            const corr=den<1e-9?0:num/den;
+            if (corr>bestCorr) { bestCorr=corr; tauStar=tau; }
+        }
+    }
+
+    // K_core: core integrity
+    const Kcore = Bhat / (1 + Math.abs(D_t) + Omega + lm*tauStar);
+
+    // A_resp^(w=5): adaptive response — positive means resynchronising
+    let Aresp = null;
+    if (prev5Entry) {
+        const p5 = nodeOpsFromEntry(prev5Entry);
+        const D_p5 = computeM_fn(p5) - de * computeY_fn(p5);
+        const sv5  = p5.map(o=>o.S), sm5=sv5.reduce((a,b)=>a+b,0)/8;
+        const Bhat_p5 = Math.max(0.05, 1 - Math.sqrt(sv5.map(s=>(s-sm5)**2).reduce((a,b)=>a+b,0)/8) / 10);
+        Aresp = -(Math.abs(D_t) - Math.abs(D_p5)) + mu_*(Bhat - Bhat_p5);
+    }
+
+    // E_proj: projective surplus
+    const Eproj = M_t * Bhat / (1 + Math.abs(D_t) + Omega + Rplus);
+
+    // Classification — thresholds provisional (corpus quantile calibration pending)
+    const TH = { K:0.12, K2:0.08, KF:0.06, R:3.0, RF:8.0, Om:2.0, OmF:2.5, E:0.30 };
+    let civType, civColor, civWhy;
+
+    if (Kcore < TH.KF || Rplus >= TH.RF || (Omega >= TH.OmF && Aresp !== null && Aresp <= 0)) {
+        civType='Fragile High-Stress'; civColor='#c0392b';
+        civWhy = Kcore < TH.KF         ? `K_core=${Kcore.toFixed(3)} below integrity floor`
+               : Rplus >= TH.RF        ? `R⁺=${Rplus.toFixed(2)} — mismatch overwhelms coupling`
+               : `Ω=${Omega.toFixed(2)} with negative adaptive response (${Aresp.toFixed(3)})`;
+    } else if (Kcore >= TH.K2 && (Aresp===null||Aresp>=0) && Eproj >= TH.E) {
+        civType='Expansive'; civColor='#e07b39';
+        civWhy = `K_core=${Kcore.toFixed(3)}, E_proj=${Eproj.toFixed(3)} — coherent surplus available for outward projection`;
+    } else if (Kcore >= TH.K2 && Aresp!==null && Aresp>0 && Rplus<TH.R) {
+        civType='Adaptive'; civColor='#d4a017';
+        civWhy = `K_core=${Kcore.toFixed(3)}, A_resp=+${Aresp.toFixed(3)} — mismatch shrinking, coupling improving`;
+    } else if (Kcore >= TH.K && Rplus < TH.R && Omega < TH.Om) {
+        civType='Stable Core'; civColor='#27ae60';
+        civWhy = `K_core=${Kcore.toFixed(3)}, R⁺=${Rplus.toFixed(2)}, Ω=${Omega.toFixed(2)} — bonds hold under contained mismatch`;
+    } else {
+        civType='Fragile High-Stress'; civColor='#c0392b';
+        civWhy = `K_core=${Kcore.toFixed(3)}, R⁺=${Rplus.toFixed(2)}, Ω=${Omega.toFixed(2)} — coupling insufficient`;
+    }
 
     // ── Social Conditions ────────────────────────────────────────────────────
     // SC-1: Hands disengagement (civic + material)
@@ -1026,12 +1105,23 @@ function renderReconstruction() {
         </p>
         <div class="civ-type-block">
             <span class="phase-badge ${phaseC}">${phase}</span>
-            <span class="civ-type-badge" style="background:${civ.color}">
-                <span class="civ-type-num">Type ${civ.type}</span>
-                <span>${civ.label}</span>
-            </span>
+            <span class="civ-type-badge" style="background:${archColor}">Archetype: ${archetype}</span>
+            <span class="civ-type-badge" style="background:${civColor}">${civType}</span>
         </div>
-        <p class="civ-type-reason">${civ.why}</p>
+        <p class="civ-type-reason">${civWhy}</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;font-size:0.8rem;color:#555;">
+            <span title="Material load">M=${M_t.toFixed(2)}</span>
+            <span title="Symbolic bandwidth">Y=${Y_t.toFixed(2)}</span>
+            <span title="Mismatch D=M−δY">D=${D_t.toFixed(2)}</span>
+            <span title="Core integrity">K_core=${Kcore.toFixed(3)}</span>
+            <span title="Overheating risk">R⁺=${Rplus.toFixed(2)}</span>
+            <span title="Rate dispersion">Ω=${Omega.toFixed(2)}</span>
+            <span title="Optimal lag">τ*=${tauStar}</span>
+            ${Aresp!==null?`<span title="Adaptive response (5yr)">A_resp=${Aresp.toFixed(3)}</span>`:'<span style="color:#bbb">A_resp=n/a</span>'}
+            <span title="Projective surplus">E_proj=${Eproj.toFixed(3)}</span>
+            <span title="CAPE X axis (material vs symbolic)">X=${archX.toFixed(2)}</span>
+            <span title="CAPE Y axis (governance vs productive base)">Y_arch=${archY.toFixed(2)}</span>
+        </div>
         <p style="font-size:0.93rem; color:#444; margin-bottom:16px;">
             Mean system vitality <strong>V̄ = ${r.Vbar.toFixed(2)}</strong> (σ = ${r.sigV.toFixed(2)}).
             Strongest node: <strong>${strongest.name}</strong> (V_i = ${strongest.Vi.toFixed(2)});
