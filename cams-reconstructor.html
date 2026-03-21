@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMS 3.0 Reconstructor — Neural Nations</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>
+        .recon-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        @media (max-width: 768px) { .recon-grid { grid-template-columns: 1fr; } }
+
+        .loader-row {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+        .loader-row label { font-size: 0.85rem; font-weight: 600; color: #555; display: block; margin-bottom: 4px; }
+        .loader-row select, .loader-row button {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 0.9rem;
+        }
+        .loader-row button {
+            background: #764ba2;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .loader-row button:hover { background: #5a3580; }
+        .loader-status { font-size: 0.82rem; color: #888; margin-top: 4px; }
+
+        .input-meta { display: flex; gap: 12px; margin-bottom: 16px; }
+        .input-meta input {
+            flex: 1;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 0.95rem;
+        }
+        .input-meta label { font-size: 0.82rem; color: #666; display: block; margin-bottom: 3px; }
+
+        .node-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        .node-table th { background: #f0eaf7; color: #5a3580; font-weight: 700; padding: 8px 6px; text-align: center; border-bottom: 2px solid #d0c0e8; }
+        .node-table td { padding: 6px 5px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+        .node-table tr:hover td { background: #faf8ff; }
+        .node-name-cell { font-weight: 700; font-size: 0.88rem; }
+
+        .slider-wrap { display: flex; align-items: center; gap: 5px; }
+        .slider-wrap input[type=range] { width: 90px; accent-color: #764ba2; }
+        .slider-val { min-width: 28px; font-size: 0.82rem; font-weight: 600; text-align: right; color: #444; }
+
+        .vi-cell { font-weight: 700; font-size: 0.95rem; text-align: center; min-width: 44px; }
+        .vi-green { color: #27ae60; }
+        .vi-blue  { color: #2980b9; }
+        .vi-amber { color: #e67e22; }
+        .vi-red   { color: #c0392b; }
+
+        .analyse-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            color: white;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 14px;
+        }
+        .analyse-btn:hover { opacity: 0.9; }
+
+        /* Tabs */
+        .tab-bar { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1.5px solid #d0c0e8;
+            background: white;
+            color: #764ba2;
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #764ba2; color: white; border-color: #764ba2; }
+        .tab-btn:hover:not(.active) { background: #f3ecfa; }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        /* Results — Reconstruction tab */
+        .signal-box {
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        .signal-warning { background: #fff3cd; border-left: 4px solid #ffc107; color: #856404; }
+        .signal-danger  { background: #f8d7da; border-left: 4px solid #dc3545; color: #842029; }
+        .signal-positive{ background: #d1e7dd; border-left: 4px solid #198754; color: #0f5132; }
+        .phase-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.92rem;
+            margin-bottom: 12px;
+        }
+        .phase-cc   { background: #d1e7dd; color: #0f5132; }
+        .phase-fi   { background: #cff4fc; color: #055160; }
+        .phase-ss   { background: #fff3cd; color: #664d03; }
+        .phase-cd   { background: #ffe5d0; color: #7d3500; }
+        .phase-ti   { background: #f8d7da; color: #842029; }
+        .net-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .net-stat-card {
+            background: #f8f5ff;
+            border-radius: 8px;
+            padding: 10px 12px;
+            text-align: center;
+        }
+        .net-stat-card .ns-label { font-size: 0.75rem; color: #888; font-weight: 600; text-transform: uppercase; }
+        .net-stat-card .ns-value { font-size: 1.3rem; font-weight: 700; color: #5a3580; }
+
+        /* Spectral tab */
+        .stat-cards-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: #f8f5ff;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+        }
+        .stat-card .sc-label { font-size: 0.72rem; color: #888; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+        .stat-card .sc-value { font-size: 1.25rem; font-weight: 700; color: #5a3580; }
+
+        .chart-wrap { position: relative; margin-bottom: 24px; }
+        .chart-wrap canvas { max-height: 280px; }
+
+        .op-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; margin-top: 12px; }
+        .op-table th { background: #f0eaf7; color: #5a3580; padding: 7px 8px; text-align: center; border-bottom: 2px solid #d0c0e8; }
+        .op-table td { padding: 6px 8px; border-bottom: 1px solid #f0f0f0; text-align: center; }
+        .op-table td:first-child { font-weight: 700; text-align: left; }
+        .op-table tr:hover td { background: #faf8ff; }
+
+        /* Operators tab */
+        .op-glossary { margin-top: 24px; }
+        .op-entry { display: flex; gap: 14px; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+        .op-sym { font-size: 1.1rem; font-weight: 700; color: #764ba2; min-width: 40px; }
+        .op-formula { font-family: 'Courier New', monospace; font-size: 0.85rem; color: #555; }
+        .op-desc { font-size: 0.88rem; color: #444; margin-top: 2px; }
+
+        /* Bond Network tab */
+        #bond-network-container {
+            width: 100%;
+            height: 420px;
+            border-radius: 12px;
+            border: 1px solid #e0d8f0;
+            background: #faf8ff;
+            margin-bottom: 20px;
+        }
+        .bond-pair-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 0;
+            border-bottom: 1px solid #f5f0ff;
+            font-size: 0.87rem;
+        }
+        .bond-pair-label { min-width: 160px; font-weight: 600; }
+        .bond-bar-bg { flex: 1; height: 10px; background: #ede8fa; border-radius: 5px; overflow: hidden; }
+        .bond-bar-fill { height: 100%; background: linear-gradient(90deg, #764ba2, #667eea); border-radius: 5px; }
+        .bond-pair-val { min-width: 40px; text-align: right; font-weight: 700; color: #5a3580; font-size: 0.85rem; }
+
+        .spectral-panel { background: #f8f5ff; border-radius: 10px; padding: 16px; margin-top: 16px; }
+        .spectral-panel h4 { margin: 0 0 10px 0; color: #5a3580; }
+
+        /* Node Detail tab */
+        .node-detail-select { padding: 8px 14px; border-radius: 8px; border: 1px solid #ddd; font-size: 0.95rem; margin-bottom: 16px; }
+        .detail-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+        .detail-card {
+            background: #f8f5ff;
+            border-radius: 10px;
+            padding: 14px;
+            text-align: center;
+        }
+        .detail-card .dc-op { font-size: 0.78rem; color: #888; font-weight: 700; text-transform: uppercase; }
+        .detail-card .dc-val { font-size: 1.6rem; font-weight: 700; color: #5a3580; }
+        .detail-card .dc-desc { font-size: 0.78rem; color: #666; margin-top: 4px; }
+        .input-vals-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 16px;
+            margin-bottom: 20px;
+        }
+        .iv-card { background: #fff3e0; border-radius: 8px; padding: 10px; text-align: center; }
+        .iv-card .iv-label { font-size: 0.78rem; color: #999; font-weight: 700; }
+        .iv-card .iv-val { font-size: 1.4rem; font-weight: 700; color: #e67e22; }
+
+        .results-section { margin-top: 20px; }
+
+        h3.section-title { font-size: 1rem; font-weight: 700; color: #5a3580; margin: 20px 0 10px 0; border-bottom: 1px solid #e8e0f0; padding-bottom: 6px; }
+
+        .node-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">Neural Nations</a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="model.html" class="nav-link active">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="https://github.com/KaliBond/wintermute" class="nav-link" target="_blank">GitHub</a>
+            <a href="newsletter.html" class="nav-link">Newsletter</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="hero-section" style="text-align:center; padding: 30px 0 10px 0;">
+        <h1 style="color:white; font-size:2.1rem; margin-bottom:6px;">CAMS 3.0 Social Conditions Reconstructor</h1>
+        <p style="color:rgba(255,255,255,0.85); font-size:1rem; margin:0;">Load from 24 national datasets or enter values manually — full spectral analysis in browser</p>
+    </div>
+
+    <!-- Dataset Loader -->
+    <div class="card">
+        <h3 class="section-title" style="margin-top:0;">Dataset Loader</h3>
+        <div class="loader-row">
+            <div>
+                <label>Nation</label>
+                <select id="nation-select">
+                    <option value="">— select nation —</option>
+                    <option value="Australia" data-file="Australia_cleaned.csv">Australia</option>
+                    <option value="Canada" data-file="Canada_cleaned.csv">Canada</option>
+                    <option value="Denmark" data-file="Denmark_cleaned.csv">Denmark</option>
+                    <option value="England" data-file="England_cleaned.csv">England</option>
+                    <option value="France" data-file="France_cleaned.csv">France</option>
+                    <option value="Germany" data-file="Germany_cleaned.csv">Germany</option>
+                    <option value="Hong Kong" data-file="Hong_Kong_cleaned.csv">Hong Kong</option>
+                    <option value="India" data-file="India_cleaned.csv">India</option>
+                    <option value="Indonesia" data-file="Indonesia_cleaned.csv">Indonesia</option>
+                    <option value="Iran" data-file="Iran_cleaned.csv">Iran</option>
+                    <option value="Iraq" data-file="Iraq_cleaned.csv">Iraq</option>
+                    <option value="Israel" data-file="Israel_cleaned.csv">Israel</option>
+                    <option value="Italy" data-file="Italy_cleaned.csv">Italy</option>
+                    <option value="Japan" data-file="Japan_cleaned.csv">Japan</option>
+                    <option value="Lebanon" data-file="Lebanon_cleaned.csv">Lebanon</option>
+                    <option value="Netherlands" data-file="Netherlands_cleaned.csv">Netherlands</option>
+                    <option value="Pakistan" data-file="Pakistan_cleaned.csv">Pakistan</option>
+                    <option value="Roman Empire" data-file="New_Rome_Ad_5Y_Rome_0_Bce_5Ad_10Ad_15Ad_20_Ad_cleaned.csv">Roman Empire</option>
+                    <option value="Russia" data-file="Russia_cleaned.csv">Russia</option>
+                    <option value="Saudi Arabia" data-file="Saudi_Arabia_cleaned.csv">Saudi Arabia</option>
+                    <option value="Singapore" data-file="Singapore_cleaned.csv">Singapore</option>
+                    <option value="Syria" data-file="Syria_cleaned.csv">Syria</option>
+                    <option value="Thailand" data-file="Thailand_1850_2025_Thailand_1850_2025_cleaned.csv">Thailand</option>
+                    <option value="USA" data-file="USA_Reconstructed_cleaned.csv">USA</option>
+                </select>
+            </div>
+            <div>
+                <label>Year</label>
+                <select id="year-select" disabled>
+                    <option value="">— load nation first —</option>
+                </select>
+            </div>
+            <div>
+                <button id="load-btn" onclick="loadDataset()">Load</button>
+            </div>
+        </div>
+        <div class="loader-status" id="loader-status"></div>
+    </div>
+
+    <!-- Input Matrix -->
+    <div class="card">
+        <h3 class="section-title" style="margin-top:0;">Input Matrix</h3>
+        <div class="input-meta">
+            <div style="flex:2">
+                <label>Society Name</label>
+                <input type="text" id="society-name" placeholder="e.g. Roman Empire" value="Roman Empire">
+            </div>
+            <div style="flex:1">
+                <label>Year / Period</label>
+                <input type="text" id="society-year" placeholder="e.g. 180 CE" value="180 CE">
+            </div>
+        </div>
+
+        <div style="overflow-x:auto;">
+            <table class="node-table" id="node-table">
+                <thead>
+                    <tr>
+                        <th style="text-align:left; min-width:80px;">Node</th>
+                        <th>C (Coherence)</th>
+                        <th>K (Capacity)</th>
+                        <th>S (Stress)</th>
+                        <th>A (Abstraction)</th>
+                        <th>V_i</th>
+                    </tr>
+                </thead>
+                <tbody id="node-tbody"></tbody>
+            </table>
+        </div>
+
+        <button class="analyse-btn" onclick="runAnalysis()">Analyse</button>
+    </div>
+
+    <!-- Results -->
+    <div class="card" id="results-card" style="display:none;">
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab('reconstruction', this)">Reconstruction</button>
+            <button class="tab-btn" onclick="switchTab('spectral', this)">Spectral</button>
+            <button class="tab-btn" onclick="switchTab('operators', this)">Operators</button>
+            <button class="tab-btn" onclick="switchTab('bond-network', this)">Bond Network</button>
+            <button class="tab-btn" onclick="switchTab('node-detail', this)">Node Detail</button>
+        </div>
+
+        <!-- Tab 1: Reconstruction -->
+        <div class="tab-panel active" id="tab-reconstruction">
+            <div id="reconstruction-content"></div>
+        </div>
+
+        <!-- Tab 2: Spectral -->
+        <div class="tab-panel" id="tab-spectral">
+            <div id="stat-cards-row" class="stat-cards-row"></div>
+            <h3 class="section-title">Node Vitality (V_i)</h3>
+            <div class="chart-wrap"><canvas id="chart-vi"></canvas></div>
+            <h3 class="section-title">Mean C / K / S / A Profile (Radar)</h3>
+            <div class="chart-wrap" style="max-width:380px;"><canvas id="chart-radar"></canvas></div>
+            <h3 class="section-title">Bond Strength per Node (B_i)</h3>
+            <div class="chart-wrap"><canvas id="chart-bi"></canvas></div>
+            <h3 class="section-title">Affect per Node (α_i)</h3>
+            <div class="chart-wrap"><canvas id="chart-alpha"></canvas></div>
+            <h3 class="section-title">Full Operator Table</h3>
+            <div id="op-table-container"></div>
+        </div>
+
+        <!-- Tab 3: Operators -->
+        <div class="tab-panel" id="tab-operators">
+            <h3 class="section-title">γ_i, Γ_i, Σ_i per Node</h3>
+            <div class="chart-wrap"><canvas id="chart-ops"></canvas></div>
+            <div class="op-glossary">
+                <h3 class="section-title">Operator Glossary</h3>
+                <div class="op-entry">
+                    <div class="op-sym">V_i</div>
+                    <div><div class="op-formula">C + K − S + 0.5×A</div><div class="op-desc">Node vitality: the net health of a node, balancing capacities against stress, with abstraction providing a fractional boost.</div></div>
+                </div>
+                <div class="op-entry">
+                    <div class="op-sym">α_i</div>
+                    <div><div class="op-formula">K − S</div><div class="op-desc">Affect: net emotional or institutional tone. Positive = adaptive momentum; negative = stress overwhelms capacity.</div></div>
+                </div>
+                <div class="op-entry">
+                    <div class="op-sym">μ_i</div>
+                    <div><div class="op-formula">(C + A) / 2</div><div class="op-desc">Structural mean: average of coherence and abstraction — measures the node's integrative quality.</div></div>
+                </div>
+                <div class="op-entry">
+                    <div class="op-sym">γ_i</div>
+                    <div><div class="op-formula">A × C</div><div class="op-desc">Interaction product: joint signal from abstraction and coherence. High values indicate a well-organised, conceptually rich node.</div></div>
+                </div>
+                <div class="op-entry">
+                    <div class="op-sym">Γ_i</div>
+                    <div><div class="op-formula">A / (C + 0.001)</div><div class="op-desc">Abstraction drift ratio: how abstracted the node is relative to its coherence. Values &gt;3 signal drift from functional grounding.</div></div>
+                </div>
+                <div class="op-entry">
+                    <div class="op-sym">Σ_i</div>
+                    <div><div class="op-formula">max(A−7, 0) × max(S−6, 0)</div><div class="op-desc">Sisu (resilient activation): non-zero only when both abstraction and stress exceed high thresholds — a signature of antifragile response under extreme pressure.</div></div>
+                </div>
+                <div class="op-entry">
+                    <div class="op-sym">B_i</div>
+                    <div><div class="op-formula">mean of row i of W (Gaussian RBF)</div><div class="op-desc">Bond strength: how coupled node i is to all others via Gaussian RBF similarity in CKSA feature space.</div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 4: Bond Network -->
+        <div class="tab-panel" id="tab-bond-network">
+            <div id="bond-network-container"></div>
+            <div class="recon-grid">
+                <div>
+                    <h3 class="section-title">Top Bond Pairs</h3>
+                    <div id="bond-pairs-list"></div>
+                </div>
+                <div class="spectral-panel">
+                    <h4>Spectral Analysis</h4>
+                    <div id="spectral-panel-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 5: Node Detail -->
+        <div class="tab-panel" id="tab-node-detail">
+            <label style="font-weight:600; color:#555; font-size:0.85rem;">Select Node</label>
+            <select class="node-detail-select" id="node-detail-select" onchange="renderNodeDetail()">
+                <option value="0">Helm</option>
+                <option value="1">Shield</option>
+                <option value="2">Lore</option>
+                <option value="3">Stewards</option>
+                <option value="4">Craft</option>
+                <option value="5">Hands</option>
+                <option value="6">Archive</option>
+                <option value="7">Flow</option>
+            </select>
+            <div id="node-detail-content"></div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+
+<script>
+// ── Constants ──────────────────────────────────────────────────────────────────
+const NODE_NAMES = ['Helm','Shield','Lore','Stewards','Craft','Hands','Archive','Flow'];
+const NODE_COLORS = {
+    Helm:     '#e74c3c',
+    Shield:   '#c0392b',
+    Lore:     '#9b59b6',
+    Stewards: '#e67e22',
+    Craft:    '#1abc9c',
+    Hands:    '#7f8c8d',
+    Archive:  '#3498db',
+    Flow:     '#f39c12'
+};
+
+// Node name mapping: CSV legacy name → CAMS 3.0
+const NODE_MAP = {
+    'executive':     'Helm',   'governance': 'Helm',   'helm': 'Helm',
+    'army':          'Shield', 'military':   'Shield', 'security': 'Shield', 'shield': 'Shield',
+    'priests':       'Lore',   'priesthood': 'Lore',   'knowledge': 'Lore',
+    'lore':          'Lore',   'clergy':     'Lore',
+    'property':      'Stewards','stewards':  'Stewards',
+    'trades':        'Craft',  'professions':'Craft',   'craft': 'Craft',
+    'proletariat':   'Hands',  'hands':      'Hands',   'labour': 'Hands', 'labor': 'Hands',
+    'statememory':   'Archive','state memory':'Archive','archive':'Archive','bureaucracy':'Archive',
+    'shopkeepers':   'Flow',   'merchants':  'Flow',    'flow': 'Flow'
+};
+
+// ── Slider table build ─────────────────────────────────────────────────────────
+function buildNodeTable() {
+    const tbody = document.getElementById('node-tbody');
+    tbody.innerHTML = '';
+    NODE_NAMES.forEach((name, i) => {
+        const color = NODE_COLORS[name];
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="node-name-cell">
+                <span class="node-dot" style="background:${color}"></span>${name}
+            </td>
+            ${['C','K','S','A'].map(dim => `
+            <td>
+                <div class="slider-wrap">
+                    <input type="range" min="1" max="10" step="0.5" value="5"
+                        id="s${i}${dim}" oninput="updateSlider(${i},'${dim}',this.value)">
+                    <span class="slider-val" id="v${i}${dim}">5.0</span>
+                </div>
+            </td>`).join('')}
+            <td class="vi-cell" id="vi${i}">5.5</td>
+        `;
+        tbody.appendChild(tr);
+        updateVi(i);
+    });
+}
+
+function updateSlider(i, dim, val) {
+    document.getElementById(`v${i}${dim}`).textContent = parseFloat(val).toFixed(1);
+    updateVi(i);
+}
+
+function getSlider(i, dim) {
+    return parseFloat(document.getElementById(`s${i}${dim}`).value);
+}
+
+function setSlider(i, dim, val) {
+    const clamped = Math.max(1, Math.min(10, parseFloat(val)));
+    document.getElementById(`s${i}${dim}`).value = clamped;
+    document.getElementById(`v${i}${dim}`).textContent = clamped.toFixed(1);
+    updateVi(i);
+}
+
+function updateVi(i) {
+    const C = getSlider(i,'C'), K = getSlider(i,'K');
+    const S = getSlider(i,'S'), A = getSlider(i,'A');
+    const vi = C + K - S + 0.5 * A;
+    const el = document.getElementById(`vi${i}`);
+    el.textContent = vi.toFixed(2);
+    el.className = 'vi-cell ' + viColorClass(vi);
+}
+
+function viColorClass(v) {
+    if (v >= 8) return 'vi-green';
+    if (v >= 5) return 'vi-blue';
+    if (v >= 2) return 'vi-amber';
+    return 'vi-red';
+}
+
+// ── CSV Dataset Loader ─────────────────────────────────────────────────────────
+let csvCache = {}; // file → parsed data
+let currentNationKey = '';
+
+document.getElementById('nation-select').addEventListener('change', function() {
+    const opt = this.options[this.selectedIndex];
+    const file = opt.dataset.file;
+    currentNationKey = opt.value;
+    const yearSel = document.getElementById('year-select');
+    yearSel.innerHTML = '<option>Loading…</option>';
+    yearSel.disabled = true;
+    if (!file) return;
+    setStatus('Fetching ' + file + '…');
+    fetchCSV(file, function(data) {
+        const years = extractYears(data, currentNationKey);
+        yearSel.innerHTML = years.map(y => `<option value="${y}">${y}</option>`).join('');
+        yearSel.disabled = false;
+        setStatus('Loaded ' + data.length + ' rows. ' + years.length + ' years found.');
+    });
+});
+
+function setStatus(msg) {
+    document.getElementById('loader-status').textContent = msg;
+}
+
+function fetchCSV(file, cb) {
+    const path = 'cleaned_datasets/' + file;
+    if (csvCache[file]) { cb(csvCache[file]); return; }
+    Papa.parse(path, {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: function(result) {
+            csvCache[file] = result.data;
+            cb(result.data);
+        },
+        error: function(e) {
+            setStatus('Error loading CSV: ' + e.message);
+        }
+    });
+}
+
+function extractYears(data, nationKey) {
+    const years = new Set();
+    data.forEach(row => {
+        if (rowMatchesNation(row, nationKey)) {
+            const y = getCol(row, ['Year','year','DATE','date','Period','period']);
+            if (y) years.add(y.toString().trim());
+        }
+    });
+    return Array.from(years).sort();
+}
+
+function rowMatchesNation(row, nationKey) {
+    const lk = nationKey.toLowerCase();
+    for (const v of Object.values(row)) {
+        if (typeof v === 'string' && v.toLowerCase().includes(lk)) return true;
+    }
+    return false;
+}
+
+function getCol(row, candidates) {
+    for (const k of Object.keys(row)) {
+        const kl = k.trim().toLowerCase();
+        for (const c of candidates) {
+            if (kl === c.toLowerCase() || kl.includes(c.toLowerCase())) return row[k];
+        }
+    }
+    return null;
+}
+
+function loadDataset() {
+    const opt = document.getElementById('nation-select').options[document.getElementById('nation-select').selectedIndex];
+    const file = opt.dataset.file;
+    const year = document.getElementById('year-select').value;
+    if (!file || !year) { setStatus('Select a nation and year first.'); return; }
+    fetchCSV(file, function(data) {
+        fillSlidersFromData(data, opt.value, year);
+    });
+}
+
+function fillSlidersFromData(data, nationKey, year) {
+    // Filter rows matching nation + year
+    const yearStr = year.toString().trim();
+    const rows = data.filter(row => {
+        if (!rowMatchesNation(row, nationKey)) return false;
+        const y = getCol(row, ['Year','year','DATE','date','Period','period']);
+        return y && y.toString().trim() === yearStr;
+    });
+    if (!rows.length) { setStatus('No rows found for ' + nationKey + ' / ' + year); return; }
+
+    // Build a map: CAMS node name → row
+    const nodeRows = {};
+    rows.forEach(row => {
+        const rawNode = getCol(row, ['Node','node','ROLE','Role']) || '';
+        const mapped = mapNodeName(rawNode.trim());
+        if (mapped) nodeRows[mapped] = row;
+    });
+
+    // Fill sliders
+    NODE_NAMES.forEach((name, i) => {
+        const row = nodeRows[name];
+        if (!row) return;
+        let C = parseFloat(getCol(row, ['Coherence','coherence','C']) || 5);
+        let K = parseFloat(getCol(row, ['Capacity','capacity','K']) || 5);
+        let S = Math.abs(parseFloat(getCol(row, ['Stress','stress','S']) || 5));
+        let A = parseFloat(getCol(row, ['Abstraction','abstraction','A']) || 5);
+        if (isNaN(C)) C=5; if (isNaN(K)) K=5; if (isNaN(S)) S=5; if (isNaN(A)) A=5;
+        setSlider(i,'C',C); setSlider(i,'K',K); setSlider(i,'S',S); setSlider(i,'A',A);
+    });
+
+    document.getElementById('society-name').value = nationKey;
+    document.getElementById('society-year').value = year;
+    setStatus('Sliders filled from data: ' + Object.keys(nodeRows).join(', '));
+}
+
+function mapNodeName(raw) {
+    const key = raw.toLowerCase().replace(/\s+/g, '').replace(/_/g,'');
+    // direct lookup
+    for (const [k, v] of Object.entries(NODE_MAP)) {
+        const mk = k.replace(/\s+/g,'').replace(/_/g,'');
+        if (key === mk || key.startsWith(mk) || mk.startsWith(key)) return v;
+    }
+    // partial
+    for (const [k, v] of Object.entries(NODE_MAP)) {
+        if (key.includes(k.replace(/\s+/g,'').replace(/_/g,''))) return v;
+    }
+    return null;
+}
+
+// ── CAMS 3.0 Math ─────────────────────────────────────────────────────────────
+function computeNodeOperators(nodes) {
+    return nodes.map(({C,K,S,A}) => {
+        const Vi   = C + K - S + 0.5 * A;
+        const ai   = K - S;
+        const mui  = (C + A) / 2;
+        const gi   = A * C;
+        const Gi   = A / (C + 0.001);
+        const Si   = Math.max(A - 7, 0) * Math.max(S - 6, 0);
+        return { C, K, S, A, Vi, ai, mui, gi, Gi, Si };
+    });
+}
+
+function zscoreMatrix(mat) {
+    // mat: n×m, returns z-scored by column
+    const n = mat.length, m = mat[0].length;
+    const out = mat.map(r => [...r]);
+    for (let j = 0; j < m; j++) {
+        const col = mat.map(r => r[j]);
+        const mean = col.reduce((a,b)=>a+b,0)/n;
+        const std  = Math.sqrt(col.map(v=>(v-mean)**2).reduce((a,b)=>a+b,0)/n);
+        for (let i = 0; i < n; i++) out[i][j] = std < 1e-9 ? 0 : (mat[i][j] - mean)/std;
+    }
+    return out;
+}
+
+function euclidean(a, b) {
+    return Math.sqrt(a.reduce((s,v,i)=>s+(v-b[i])**2, 0));
+}
+
+function median(arr) {
+    const s = [...arr].sort((a,b)=>a-b);
+    const m = Math.floor(s.length/2);
+    return s.length%2 ? s[m] : (s[m-1]+s[m])/2;
+}
+
+function computeCoupling(ops) {
+    const n = ops.length;
+    const feats = ops.map(o => [o.C, o.K, o.S, o.A]);
+    const Z = zscoreMatrix(feats);
+
+    // pairwise distances
+    const D = Array.from({length:n}, ()=>new Array(n).fill(0));
+    const offDiag = [];
+    for (let i = 0; i < n; i++)
+        for (let j = 0; j < n; j++) {
+            if (i===j) continue;
+            D[i][j] = euclidean(Z[i], Z[j]);
+            if (i < j) offDiag.push(D[i][j]);
+        }
+    const sig = median(offDiag);
+    const sig2 = sig * sig;
+
+    // W matrix
+    const W = Array.from({length:n}, ()=>new Array(n).fill(0));
+    for (let i = 0; i < n; i++)
+        for (let j = 0; j < n; j++) {
+            if (i===j) { W[i][j]=0; continue; }
+            W[i][j] = sig2 < 1e-12 ? 0 : Math.exp(-D[i][j]**2 / (2*sig2));
+        }
+
+    // Bi per node
+    const Bi = W.map(row => row.reduce((a,b)=>a+b,0) / (n-1));
+    const sumB = Bi.reduce((a,b)=>a+b,0);
+    const beta = Bi.map(b => sumB < 1e-12 ? 1/n : b/sumB);
+
+    // B(t) = mean of upper triangle
+    let triSum = 0, triCount = 0;
+    for (let i = 0; i < n; i++)
+        for (let j = i+1; j < n; j++) { triSum += W[i][j]; triCount++; }
+    const Bt = triCount ? triSum / triCount : 0;
+
+    // delta_B = std of Bi
+    const meanB = Bi.reduce((a,b)=>a+b,0)/n;
+    const dB = Math.sqrt(Bi.map(b=>(b-meanB)**2).reduce((a,b)=>a+b,0)/n);
+
+    return { W, Bi, beta, Bt, dB };
+}
+
+// Jacobi eigenvalue decomposition for real symmetric matrix
+function jacobiEigen(A) {
+    const n = A.length;
+    let a = A.map(r=>[...r]);
+    // eigenvectors (identity)
+    let V = Array.from({length:n}, (_,i)=>Array.from({length:n},(_,j)=>i===j?1:0));
+    const maxIter = 200 * n * n;
+
+    function offNorm() {
+        let s = 0;
+        for (let i=0;i<n;i++) for(let j=i+1;j<n;j++) s+=a[i][j]**2;
+        return Math.sqrt(2*s);
+    }
+
+    for (let iter = 0; iter < maxIter; iter++) {
+        if (offNorm() < 1e-12) break;
+        // find max off-diagonal
+        let p=0, q=1, max=0;
+        for (let i=0;i<n;i++) for(let j=i+1;j<n;j++) {
+            const v = Math.abs(a[i][j]);
+            if (v > max) { max=v; p=i; q=j; }
+        }
+        if (max < 1e-12) break;
+        // Jacobi rotation
+        const tau = (a[q][q]-a[p][p])/(2*a[p][q]);
+        const t = tau >= 0 ? 1/(tau+Math.sqrt(1+tau**2)) : 1/(tau-Math.sqrt(1+tau**2));
+        const c = 1/Math.sqrt(1+t**2);
+        const s = t*c;
+
+        // update a
+        const app = a[p][p], aqq = a[q][q], apq = a[p][q];
+        a[p][p] = app - t*apq;
+        a[q][q] = aqq + t*apq;
+        a[p][q] = 0; a[q][p] = 0;
+        for (let r=0;r<n;r++) {
+            if (r===p||r===q) continue;
+            const arp=a[r][p], arq=a[r][q];
+            a[r][p] = c*arp - s*arq;
+            a[p][r] = a[r][p];
+            a[r][q] = s*arp + c*arq;
+            a[q][r] = a[r][q];
+        }
+        // update eigenvectors
+        for (let r=0;r<n;r++) {
+            const vp=V[r][p], vq=V[r][q];
+            V[r][p] = c*vp - s*vq;
+            V[r][q] = s*vp + c*vq;
+        }
+    }
+    const eigenvalues = a.map((_,i)=>a[i][i]);
+    const idx = eigenvalues.map((_,i)=>i).sort((a,b)=>eigenvalues[a]-eigenvalues[b]);
+    return idx.map(i=>eigenvalues[i]);
+}
+
+function computeSpectral(W) {
+    const n = W.length;
+    // degree matrix diag
+    const deg = W.map(row=>row.reduce((a,b)=>a+b,0));
+    // Laplacian L = D - W
+    const L = Array.from({length:n},(_,i)=>Array.from({length:n},(_,j)=>i===j?deg[i]:-W[i][j]));
+    const eigs = jacobiEigen(L);
+    const lam2   = eigs[1];
+    const lamMax = eigs[n-1];
+    const Rt = lam2 > 0.0001 ? lamMax / lam2 : Infinity;
+    return { eigs, lam2, lamMax, Rt };
+}
+
+function aggregate(ops, key) {
+    return ops.reduce((s,o)=>s+o[key],0)/ops.length;
+}
+function stdDev(arr) {
+    const m = arr.reduce((a,b)=>a+b,0)/arr.length;
+    return Math.sqrt(arr.map(v=>(v-m)**2).reduce((a,b)=>a+b,0)/arr.length);
+}
+
+// ── Global state ───────────────────────────────────────────────────────────────
+let lastResults = null;
+let charts = {};
+let bondNet = null;
+
+// ── Main analysis ──────────────────────────────────────────────────────────────
+function runAnalysis() {
+    const society = document.getElementById('society-name').value || 'Unknown';
+    const year    = document.getElementById('society-year').value  || '?';
+
+    const nodes = NODE_NAMES.map((_, i) => ({
+        C: getSlider(i,'C'), K: getSlider(i,'K'),
+        S: getSlider(i,'S'), A: getSlider(i,'A')
+    }));
+
+    const ops = computeNodeOperators(nodes);
+    const { W, Bi, beta, Bt, dB } = computeCoupling(ops);
+    const { eigs, lam2, lamMax, Rt } = computeSpectral(W);
+
+    // Augment ops with Bi
+    ops.forEach((o,i) => o.Bi = Bi[i]);
+
+    // Aggregate stats
+    const Vis = ops.map(o=>o.Vi);
+    const Vbar  = aggregate(ops,'Vi');
+    const sigV  = stdDev(Vis);
+    const abar  = aggregate(ops,'ai');
+    const mubar = aggregate(ops,'mui');
+    const gbar  = aggregate(ops,'gi');
+    const Gbar  = aggregate(ops,'Gi');
+    const Sbar  = aggregate(ops,'Si');
+
+    // Coupling-weighted
+    const Vtilde = ops.reduce((s,o,i)=>s+beta[i]*o.Vi, 0);
+    const Dtilde = ops.reduce((s,o,i)=>s+beta[i]*o.S, 0);
+
+    lastResults = { society, year, nodes, ops, W, Bi, beta, Bt, dB, eigs, lam2, lamMax, Rt,
+                    Vbar, sigV, abar, mubar, gbar, Gbar, Sbar, Vtilde, Dtilde };
+
+    document.getElementById('results-card').style.display = 'block';
+    document.getElementById('results-card').scrollIntoView({behavior:'smooth', block:'start'});
+
+    // Render active tab (reconstruction)
+    renderReconstruction();
+    // Pre-populate node detail select
+    renderNodeDetail();
+}
+
+// ── Tab switching ──────────────────────────────────────────────────────────────
+function switchTab(tabId, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-'+tabId).classList.add('active');
+    if (!lastResults) return;
+    if (tabId==='spectral')     renderSpectral();
+    if (tabId==='operators')    renderOperators();
+    if (tabId==='bond-network') renderBondNetwork();
+    if (tabId==='node-detail')  renderNodeDetail();
+}
+
+// ── Tab 1: Reconstruction ─────────────────────────────────────────────────────
+function phaseClass(Vbar, sigV) {
+    if (Vbar>12 && sigV<3) return ['Coherent-Capable','phase-cc'];
+    if (Vbar>8  && sigV<4) return ['Functional Integration','phase-fi'];
+    if (Vbar>4  && sigV<5) return ['Stressed Stability','phase-ss'];
+    if (Vbar>0)            return ['Crisis Dynamics','phase-cd'];
+    return ['Terminal Incoherence','phase-ti'];
+}
+
+function fmt(v) { return typeof v==='number' ? (isFinite(v)?v.toFixed(3):'∞') : v; }
+
+function renderReconstruction() {
+    const r = lastResults;
+    const [phase, phaseC] = phaseClass(r.Vbar, r.sigV);
+    const sorted = [...r.ops].map((o,i)=>({name:NODE_NAMES[i],...o})).sort((a,b)=>b.Vi-a.Vi);
+    const strongest = sorted[0], weakest = sorted[sorted.length-1];
+
+    // Signals
+    const signals = [];
+    if (r.ops[1].Vi > r.ops[0].Vi + 4)
+        signals.push({type:'danger', text:'Praetorian Creep — Shield dominates Helm by >'+(r.ops[1].Vi-r.ops[0].Vi).toFixed(1)+' vitality points. Military autonomy risk.'});
+    if (r.ops[6].Vi < 3)
+        signals.push({type:'danger', text:'Institutional Amnesia — Archive V_i='+r.ops[6].Vi.toFixed(2)+'. Knowledge infrastructure critically degraded.'});
+    if (r.Gbar > 3)
+        signals.push({type:'warning', text:'Abstraction Drift — Γ̄='+r.Gbar.toFixed(2)+'. System operating above coherence-grounded abstraction threshold.'});
+    const sisuNodes = r.ops.map((o,i)=>({n:NODE_NAMES[i],s:o.Si})).filter(x=>x.s>0);
+    if (sisuNodes.length > 0)
+        signals.push({type:'positive', text:'Sisu Activation in: '+sisuNodes.map(x=>x.n+' ('+x.s.toFixed(2)+')').join(', ')+'. Antifragile response under extreme stress.'});
+    if (r.lam2 < 0.5)
+        signals.push({type:'warning', text:'Network Fragility — λ₂='+fmt(r.lam2)+'. Near-disconnected network; small perturbations can fragment the system.'});
+    if (isFinite(r.Rt) && r.Rt > 8)
+        signals.push({type:'warning', text:'Fast-Node Dominance — R(t)='+fmt(r.Rt)+'. High spectral gap; one or more nodes set pace far faster than rest.'});
+    if (r.dB > 0.15)
+        signals.push({type:'warning', text:'Bond Dispersion — δ_B='+r.dB.toFixed(3)+'. Uneven coupling; network has isolated and hyper-connected nodes.'});
+    if (r.abar < -1)
+        signals.push({type:'danger', text:'Affect Deficit — ᾱ='+r.abar.toFixed(2)+'. System-wide negative affect; stress structurally exceeds capacity.'});
+
+    const signalsHtml = signals.length
+        ? signals.map(s=>`<div class="signal-box signal-${s.type}">${s.text}</div>`).join('')
+        : '<div class="signal-box signal-positive">No critical signals detected at current parameter values.</div>';
+
+    document.getElementById('reconstruction-content').innerHTML = `
+        <h2 style="font-size:1.3rem; font-weight:700; color:#2c3e50; margin-bottom:4px;">${r.society} — ${r.year}</h2>
+        <p style="color:#666; margin-bottom:16px; font-size:0.92rem;">
+            A CAMS 3.0 reconstruction across 8 functional nodes, assessed via spectral graph theory and node operator analysis.
+        </p>
+        <span class="phase-badge ${phaseC}">${phase}</span>
+        <p style="font-size:0.93rem; color:#444; margin-bottom:16px;">
+            Mean system vitality <strong>V̄ = ${r.Vbar.toFixed(2)}</strong> (σ = ${r.sigV.toFixed(2)}).
+            Strongest node: <strong>${strongest.name}</strong> (V_i = ${strongest.Vi.toFixed(2)});
+            weakest: <strong>${weakest.name}</strong> (V_i = ${weakest.Vi.toFixed(2)}).
+        </p>
+
+        <h3 class="section-title">Signals</h3>
+        ${signalsHtml}
+
+        <h3 class="section-title">Network Statistics</h3>
+        <div class="net-stats-grid">
+            <div class="net-stat-card"><div class="ns-label">B(t)</div><div class="ns-value">${fmt(r.Bt)}</div></div>
+            <div class="net-stat-card"><div class="ns-label">δ_B</div><div class="ns-value">${fmt(r.dB)}</div></div>
+            <div class="net-stat-card"><div class="ns-label">Ṽ</div><div class="ns-value">${fmt(r.Vtilde)}</div></div>
+            <div class="net-stat-card"><div class="ns-label">D̃</div><div class="ns-value">${fmt(r.Dtilde)}</div></div>
+            <div class="net-stat-card"><div class="ns-label">λ₂</div><div class="ns-value">${fmt(r.lam2)}</div></div>
+            <div class="net-stat-card"><div class="ns-label">R(t)</div><div class="ns-value">${isFinite(r.Rt)?r.Rt.toFixed(2):'∞'}</div></div>
+        </div>
+
+        <h3 class="section-title" style="margin-top:20px;">Node Summary</h3>
+        ${sorted.map(o=>`
+        <div style="display:flex; align-items:center; gap:10px; padding:5px 0; border-bottom:1px solid #f0f0f0;">
+            <span class="node-dot" style="background:${NODE_COLORS[o.name]}"></span>
+            <span style="min-width:70px; font-weight:700; font-size:0.88rem;">${o.name}</span>
+            <div style="flex:1; height:10px; background:#ede8fa; border-radius:5px; overflow:hidden;">
+                <div style="width:${Math.max(0,Math.min(100,(o.Vi/15)*100))}%; height:100%; background:${NODE_COLORS[o.name]}; border-radius:5px;"></div>
+            </div>
+            <span class="${viColorClass(o.Vi)}" style="min-width:44px; font-weight:700; font-size:0.9rem;">${o.Vi.toFixed(2)}</span>
+        </div>`).join('')}
+    `;
+}
+
+// ── Tab 2: Spectral ───────────────────────────────────────────────────────────
+function destroyChart(id) {
+    if (charts[id]) { charts[id].destroy(); delete charts[id]; }
+}
+
+function renderSpectral() {
+    if (!lastResults) return;
+    const r = lastResults;
+
+    // Stat cards
+    document.getElementById('stat-cards-row').innerHTML = [
+        ['V̄',    r.Vbar.toFixed(2)],
+        ['σ_V',  r.sigV.toFixed(2)],
+        ['B(t)', r.Bt.toFixed(3)],
+        ['λ₂',   fmt(r.lam2)],
+        ['R(t)', isFinite(r.Rt)?r.Rt.toFixed(2):'∞'],
+        ['δ_B',  r.dB.toFixed(3)],
+        ['Ṽ',    r.Vtilde.toFixed(2)],
+        ['D̃',    r.Dtilde.toFixed(2)],
+    ].map(([l,v])=>`<div class="stat-card"><div class="sc-label">${l}</div><div class="sc-value">${v}</div></div>`).join('');
+
+    // V_i bar chart
+    destroyChart('vi');
+    charts['vi'] = new Chart(document.getElementById('chart-vi'), {
+        type: 'bar',
+        data: {
+            labels: NODE_NAMES,
+            datasets: [{
+                label: 'V_i',
+                data: r.ops.map(o=>o.Vi),
+                backgroundColor: NODE_NAMES.map(n=>NODE_COLORS[n]),
+                borderRadius: 6,
+            }]
+        },
+        options: { plugins:{legend:{display:false}}, scales:{y:{min:0,title:{display:true,text:'V_i'}}}, responsive:true }
+    });
+
+    // Radar
+    destroyChart('radar');
+    const meanC = r.ops.reduce((s,o)=>s+o.C,0)/8;
+    const meanK = r.ops.reduce((s,o)=>s+o.K,0)/8;
+    const meanS = r.ops.reduce((s,o)=>s+o.S,0)/8;
+    const meanA = r.ops.reduce((s,o)=>s+o.A,0)/8;
+    charts['radar'] = new Chart(document.getElementById('chart-radar'), {
+        type: 'radar',
+        data: {
+            labels: ['Coherence','Capacity','Stress','Abstraction'],
+            datasets: [{
+                label: 'Mean',
+                data: [meanC, meanK, meanS, meanA],
+                backgroundColor: 'rgba(118,75,162,0.15)',
+                borderColor: '#764ba2',
+                pointBackgroundColor: '#764ba2',
+                borderWidth: 2,
+            }]
+        },
+        options: { scales:{r:{min:0,max:10,ticks:{stepSize:2}}}, plugins:{legend:{display:false}}, responsive:true }
+    });
+
+    // B_i bar
+    destroyChart('bi');
+    charts['bi'] = new Chart(document.getElementById('chart-bi'), {
+        type: 'bar',
+        data: {
+            labels: NODE_NAMES,
+            datasets: [{
+                label: 'B_i',
+                data: r.Bi,
+                backgroundColor: NODE_NAMES.map(n=>NODE_COLORS[n]),
+                borderRadius: 6,
+            }]
+        },
+        options: { plugins:{legend:{display:false}}, scales:{y:{title:{display:true,text:'Bond Strength'}}}, responsive:true }
+    });
+
+    // Alpha bar
+    destroyChart('alpha');
+    charts['alpha'] = new Chart(document.getElementById('chart-alpha'), {
+        type: 'bar',
+        data: {
+            labels: NODE_NAMES,
+            datasets: [{
+                label: 'α_i',
+                data: r.ops.map(o=>o.ai),
+                backgroundColor: r.ops.map(o=>o.ai>=0?'rgba(39,174,96,0.7)':'rgba(192,57,43,0.7)'),
+                borderRadius: 6,
+            }]
+        },
+        options: {
+            plugins:{legend:{display:false}},
+            scales:{y:{title:{display:true,text:'α_i (affect)'}}},
+            responsive:true
+        }
+    });
+
+    // Full operator table
+    const rows = NODE_NAMES.map((n,i)=>{
+        const o = r.ops[i];
+        return `<tr>
+            <td><span class="node-dot" style="background:${NODE_COLORS[n]}"></span>${n}</td>
+            <td class="${viColorClass(o.Vi)}">${o.Vi.toFixed(2)}</td>
+            <td>${o.ai.toFixed(2)}</td>
+            <td>${o.mui.toFixed(2)}</td>
+            <td>${o.gi.toFixed(2)}</td>
+            <td>${o.Gi.toFixed(2)}</td>
+            <td>${o.Si.toFixed(2)}</td>
+            <td>${o.Bi.toFixed(3)}</td>
+        </tr>`;
+    }).join('');
+    document.getElementById('op-table-container').innerHTML = `
+        <table class="op-table">
+            <thead><tr>
+                <th style="text-align:left;">Node</th>
+                <th>V_i</th><th>α_i</th><th>μ_i</th>
+                <th>γ_i</th><th>Γ_i</th><th>Σ_i</th><th>B_i</th>
+            </tr></thead>
+            <tbody>${rows}</tbody>
+        </table>`;
+}
+
+// ── Tab 3: Operators ──────────────────────────────────────────────────────────
+function renderOperators() {
+    if (!lastResults) return;
+    const r = lastResults;
+    destroyChart('ops');
+    charts['ops'] = new Chart(document.getElementById('chart-ops'), {
+        type: 'bar',
+        data: {
+            labels: NODE_NAMES,
+            datasets: [
+                { label: 'γ_i', data: r.ops.map(o=>o.gi), backgroundColor: 'rgba(118,75,162,0.7)', borderRadius:4 },
+                { label: 'Γ_i', data: r.ops.map(o=>o.Gi), backgroundColor: 'rgba(102,126,234,0.7)', borderRadius:4 },
+                { label: 'Σ_i', data: r.ops.map(o=>o.Si), backgroundColor: 'rgba(231,76,60,0.7)', borderRadius:4 },
+            ]
+        },
+        options: { plugins:{legend:{display:true}}, scales:{y:{title:{display:true,text:'Value'}}}, responsive:true }
+    });
+}
+
+// ── Tab 4: Bond Network ───────────────────────────────────────────────────────
+function renderBondNetwork() {
+    if (!lastResults) return;
+    const r = lastResults;
+    const n = 8;
+
+    // Build vis-network nodes in a circle
+    const visNodes = new vis.DataSet(NODE_NAMES.map((name, i) => {
+        const angle = (2*Math.PI*i/n) - Math.PI/2;
+        const rad = 180;
+        const Vi = r.ops[i].Vi;
+        const col = NODE_COLORS[name];
+        return {
+            id: i, label: name, x: rad*Math.cos(angle), y: rad*Math.sin(angle),
+            color: { background: col, border: col, highlight:{background:col,border:'#fff'} },
+            font: { color:'#fff', size:13, bold:true },
+            shape: 'dot', size: 18 + Vi * 1.2,
+            fixed: true
+        };
+    }));
+
+    const visEdges = new vis.DataSet();
+    for (let i=0;i<n;i++) for(let j=i+1;j<n;j++) {
+        const w = r.W[i][j];
+        if (w > 0.2) {
+            visEdges.add({
+                from:i, to:j,
+                width: w*6, color:{color:`rgba(118,75,162,${(w*0.8).toFixed(2)})`},
+                smooth:false, hoverWidth:0
+            });
+        }
+    }
+
+    const container = document.getElementById('bond-network-container');
+    if (bondNet) { bondNet.destroy(); bondNet = null; }
+    bondNet = new vis.Network(container, {nodes:visNodes, edges:visEdges}, {
+        physics:false,
+        interaction:{hover:true, tooltipDelay:200},
+        edges:{smooth:{type:'continuous'}},
+    });
+
+    // Top 10 pairs
+    const pairs = [];
+    for(let i=0;i<n;i++) for(let j=i+1;j<n;j++) pairs.push({i,j,w:r.W[i][j]});
+    pairs.sort((a,b)=>b.w-a.w);
+    const top10 = pairs.slice(0,10);
+    document.getElementById('bond-pairs-list').innerHTML = top10.map(p=>`
+        <div class="bond-pair-row">
+            <span class="bond-pair-label">
+                <span class="node-dot" style="background:${NODE_COLORS[NODE_NAMES[p.i]]}"></span>${NODE_NAMES[p.i]}
+                &nbsp;↔&nbsp;
+                <span class="node-dot" style="background:${NODE_COLORS[NODE_NAMES[p.j]]}"></span>${NODE_NAMES[p.j]}
+            </span>
+            <div class="bond-bar-bg"><div class="bond-bar-fill" style="width:${(p.w*100).toFixed(1)}%"></div></div>
+            <span class="bond-pair-val">${p.w.toFixed(3)}</span>
+        </div>`).join('');
+
+    // Spectral panel
+    const fragility = r.lam2 < 0.5 ? 'Network near-disconnected. Structural fragility is high.' :
+                      r.lam2 < 1.5 ? 'Moderate algebraic connectivity. Some coupling risk under stress.' :
+                                     'Robust algebraic connectivity. System well-coupled.';
+    const speedRatio = isFinite(r.Rt) ? (r.Rt > 8 ? 'Extreme fast-node dominance — single node sets system tempo.' :
+                                          r.Rt > 4 ? 'Moderate spectral gap. Some rate separation.' :
+                                                     'Well-balanced node dynamics.') : 'Degenerate spectrum (λ₂ ≈ 0).';
+
+    document.getElementById('spectral-panel-content').innerHTML = `
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+            <div style="text-align:center;"><div style="font-size:0.75rem;color:#888;font-weight:700;">λ₂</div><div style="font-size:1.4rem;font-weight:700;color:#764ba2;">${fmt(r.lam2)}</div></div>
+            <div style="text-align:center;"><div style="font-size:0.75rem;color:#888;font-weight:700;">λ_max</div><div style="font-size:1.4rem;font-weight:700;color:#764ba2;">${fmt(r.lamMax)}</div></div>
+            <div style="text-align:center;"><div style="font-size:0.75rem;color:#888;font-weight:700;">R(t)</div><div style="font-size:1.4rem;font-weight:700;color:#764ba2;">${isFinite(r.Rt)?r.Rt.toFixed(2):'∞'}</div></div>
+        </div>
+        <p style="font-size:0.85rem; color:#555; margin-bottom:6px;"><strong>Connectivity:</strong> ${fragility}</p>
+        <p style="font-size:0.85rem; color:#555; margin:0;"><strong>Speed ratio:</strong> ${speedRatio}</p>
+    `;
+}
+
+// ── Tab 5: Node Detail ────────────────────────────────────────────────────────
+function renderNodeDetail() {
+    if (!lastResults) return;
+    const r = lastResults;
+    const i = parseInt(document.getElementById('node-detail-select').value);
+    const name = NODE_NAMES[i];
+    const o = r.ops[i];
+    const col = NODE_COLORS[name];
+
+    const opDefs = [
+        ['V_i', o.Vi, 'C + K − S + 0.5A', 'Net node vitality'],
+        ['α_i', o.ai, 'K − S', 'Affect: capacity minus stress'],
+        ['μ_i', o.mui, '(C + A) / 2', 'Structural integration quality'],
+        ['γ_i', o.gi, 'A × C', 'Coherence-abstraction interaction'],
+        ['Γ_i', o.Gi, 'A / (C + ε)', 'Abstraction drift ratio'],
+        ['Σ_i', o.Si, 'max(A−7,0)×max(S−6,0)', 'Sisu — antifragile activation'],
+        ['B_i', o.Bi, 'mean row i of W', 'Network bond strength'],
+    ];
+
+    document.getElementById('node-detail-content').innerHTML = `
+        <h3 style="color:${col}; font-size:1.2rem; font-weight:700; margin-bottom:12px;">
+            <span class="node-dot" style="background:${col}; width:14px; height:14px;"></span> ${name}
+        </h3>
+        <div class="input-vals-grid">
+            ${[['C','Coherence',o.C],['K','Capacity',o.K],['S','Stress',o.S],['A','Abstraction',o.A]].map(([s,l,v])=>`
+            <div class="iv-card">
+                <div class="iv-label">${s} — ${l}</div>
+                <div class="iv-val">${v.toFixed(1)}</div>
+            </div>`).join('')}
+        </div>
+        <div class="detail-cards">
+            ${opDefs.map(([sym,val,formula,desc])=>`
+            <div class="detail-card">
+                <div class="dc-op">${sym}</div>
+                <div class="dc-val ${sym==='V_i'?viColorClass(val):''}">${typeof val==='number'?val.toFixed(3):val}</div>
+                <div class="dc-desc"><code style="font-size:0.78rem;">${formula}</code></div>
+                <div class="dc-desc">${desc}</div>
+            </div>`).join('')}
+        </div>
+    `;
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────────
+buildNodeTable();
+</script>
+</body>
+</html>
