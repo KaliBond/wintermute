@@ -31,7 +31,7 @@ const FILES = [
     { src: DL,  file: 'Egypt_Gem_23Jan26.csv',                        society: 'Egypt' },
     { src: DL,  file: 'phil_gem_dec.csv',                             society: 'Philippines' },
     { src: DL,  file: 'LATIVA.CSV',                                   society: 'Latvia' },
-    { src: DL,  file: 'NORWAY_MASTER_FILE_CORRECTLY_PROCESSED.csv',   society: 'Norway' },
+    { src: DL,  file: 'norway_gem_jan.csv',                            society: 'Norway' },
 ];
 
 // Node name → CAMS 3.0 standard name
