@@ -565,8 +565,7 @@ function loadDataset() {
     });
     document.getElementById('society-name').value = nation;
     document.getElementById('society-year').value = year;
-    setStatus('Loaded: ' + nation + ' ' + year + '.');
-    runAnalysis();
+    setStatus('Loaded: ' + nation + ' ' + year + '. Adjust sliders if needed, then click Analyse.');
 }
 
 // ── CAMS 3.0 Math ─────────────────────────────────────────────────────────────
@@ -1071,7 +1070,7 @@ function destroyChart(id) {
 }
 
 function renderSpectral() {
-    if (!lastResults) return;
+    if (!lastResults) { document.getElementById('stat-cards-row').innerHTML = '<p style="color:#888;font-size:0.9rem;padding:12px 0">Click <strong>Analyse</strong> to generate charts.</p>'; return; }
     const r = lastResults;
 
     // Stat cards
