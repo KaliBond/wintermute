@@ -131,7 +131,7 @@
 
         <p style="margin-top: 16px; font-size: 0.95em;">
             New to CAMS? Start with the model overview: <a href="model.html" style="color: #1f77b4; font-weight: 600;">The CAMS Model — 8 nodes, 4 metrics, key formulas →</a><br>
-            Open datasets: <a href="datasets.html" style="color: #1f77b4; font-weight: 600;">32+ societies, 30,856 records, free download →</a><br>
+            Open datasets: <a href="datasets.html" style="color: #1f77b4; font-weight: 600;">38 societies, 30,856 records, free download →</a><br>
             Live tools &amp; case studies: <a href="applications.html" style="color: #1f77b4; font-weight: 600;">Explore CAMS in Action →</a>
         </p>
         
@@ -149,6 +149,43 @@
 
     <!-- Research Diary Entries -->
     <div id="diary-entries">
+
+        <div class="diary-entry validation">
+            <div class="entry-header">
+                <h3>Site Review: What the Validation Infrastructure Does and Doesn't Yet Resolve</h3>
+                <div>
+                    <span class="entry-type">Validation</span>
+                    <span class="entry-date">2026-03-28</span>
+                </div>
+            </div>
+            <div class="entry-content">
+                <p>A reflective note on the current epistemic state of the public-facing material — what's working, where the gaps are, and what a sceptical scholar would still find missing.</p>
+
+                <h3>What the Site Now Does Well</h3>
+
+                <p>The validation gap is substantially addressed. The book's biggest vulnerability was that the 30,856-record claim was pointing to GitHub without showing the reader the methodology. The <a href="datasets.html" style="color: #2980b9;">datasets page</a> does exactly what the book needs: it names the triple-AI ensemble (GPT-4, Grok, Gemini), specifies the blinding protocol (scorers don't know terminal outcomes), states the inter-rater reliability measure (r&nbsp;&gt;&nbsp;0.7), and links the validation documentation directly. That's the empirical core made visible and verifiable. A sceptical scholar can actually go check it.</p>
+
+                <p>The methodology statement on blinding is the most important sentence on the site: <em>"Each historical node is scored without reference to outcome — scorers do not know the terminal state of the society."</em> That's the key falsifiability claim, and it's front and centre. If that blinding protocol holds, it addresses the circularity objection — that the scores were calibrated to fit known outcomes — more directly than anything in the book.</p>
+
+                <p>The CSV schema is a genuine open-science gesture. Showing the exact column structure (node, year, the four metrics, derived values) means any researcher can download, replicate, and challenge the analysis without needing to ask for data. That's real.</p>
+
+                <p>The scale-invariance demonstration is persuasive. Having Qantas, Nexperia, and Sydney City Council alongside nation-states isn't just interesting — it's doing scientific work. It shows the 8-node structure holds across very different kinds of institutions, which is a strong argument for the framework's universality.</p>
+
+                <h3>What the Site Doesn't Yet Resolve</h3>
+
+                <p><strong>The Keplerian disclosure is still absent from the public-facing material.</strong> The <a href="model.html" style="color: #2980b9;">model page</a> presents the formulas — node value, bond strength, the dynamics update equation — without stating clearly whether these are empirically calibrated or derived from first principles. A visiting academic will see Ising/spin-glass language and thermodynamic analogies and may assume a stronger theoretical foundation than currently exists. The book acknowledges this honestly in Chapter 10; the website should carry at least a one-sentence version of the same disclosure on the model page. Something like: <em>"The equations are empirically calibrated against historical data; formal derivation from thermodynamic first principles is ongoing."</em></p>
+
+                <p><strong>The "ensemble r &gt; 0.7" claim needs more visibility.</strong> It appears in the datasets page methodology box but isn't linked to the underlying validation documents in a way that makes it easy to find. The DATASET_VALIDATION_SUMMARY.md link is there, but the average visitor won't click it. A brief results table — showing r values across the three scorers for a few representative societies — on the model page itself would make this much more persuasive.</p>
+
+                <p><strong>The research diary needs to be the most actively maintained part of the site.</strong> This is the place to document reasoning as it develops, record where predictions matched and where they didn't, and build the kind of longitudinal record that distinguishes a live research programme from a finished assertion. That work is ongoing.</p>
+
+                <h3>Overall Assessment</h3>
+
+                <p>The site does the most important thing: it makes the data actually available, not just promised. That changes the epistemic status of CAMS significantly for anyone willing to look. A critic can no longer say the evidence is hidden or unfalsifiable — they have to engage with the data directly.</p>
+
+                <p>The remaining gap is documentation of the Keplerian position — not because it weakens CAMS, but because naming it explicitly on the model page would strengthen credibility with the scholars most likely to engage seriously. The ones who will read the methodology box are exactly the ones who will notice the analogy/derivation distinction. Better to foreground it than let them find it themselves and wonder if you'd noticed.</p>
+            </div>
+        </div>
 
         <div class="diary-entry research-milestone">
             <div class="entry-header">
