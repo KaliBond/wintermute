@@ -258,6 +258,12 @@ function showTab(name, btn) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('tab-' + name).classList.add('active');
     btn.classList.add('active');
+    // Force Plotly to re-measure now the container is visible
+    setTimeout(() => {
+        document.getElementById('tab-' + name).querySelectorAll('.js-plotly-plot').forEach(el => {
+            Plotly.Plots.resize(el);
+        });
+    }, 50);
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -313,13 +319,23 @@ function loadFromCSV(event) {
     const file = event.target.files[0];
     if (!file) return;
     setStatus('Parsing CSV…');
+    if (typeof Papa === 'undefined') {
+        setStatus('PapaParse library failed to load — try refreshing the page.', true);
+        return;
+    }
     Papa.parse(file, {
         header: true, skipEmptyLines: true,
         complete: res => {
             try {
+                if (!res.data || res.data.length === 0) {
+                    setStatus('CSV appears empty or could not be parsed.', true); return;
+                }
                 DS = csvRowsToDataset(res.data, file.name.replace(/\.csv$/i, ''));
-                onDataLoaded();
-            } catch (e) { setStatus('CSV error: ' + e.message, true); }
+                if (!DS.years.length) {
+                    setStatus('No valid rows found — check Year and Node columns exist.', true); return;
+                }
+                onDataLoaded('dyad');  // switch straight to Dyad tab so charts are visible
+            } catch (e) { setStatus('CSV error: ' + e.message, true); console.error(e); }
         },
         error: e => setStatus('CSV error: ' + e.message, true)
     });
@@ -376,10 +392,13 @@ function csvRowsToDataset(rows, name) {
     return { years, nodes, wide, hasBond, societyName: name };
 }
 
-function onDataLoaded() {
+function onDataLoaded(autoTab = 'dyad') {
     const { years, nodes, societyName } = DS;
     setStatus(`Loaded: ${societyName} — ${years.length} years (${years[0]}–${years[years.length-1]}), ${nodes.length} nodes: ${nodes.join(', ')}`);
     document.getElementById('analysis-section').style.display = '';
+    // Switch to the requested tab before rendering so Plotly gets real dimensions
+    const btn = [...document.querySelectorAll('.tab-btn')].find(b => b.getAttribute('onclick')?.includes("'"+autoTab+"'"));
+    if (btn) showTab(autoTab, btn);
     renderDyad();
     renderAttractor();
 }
