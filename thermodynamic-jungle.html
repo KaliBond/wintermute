@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thermodynamic Jungle — Neural Nations</title>
+    <link rel="stylesheet" href="style.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body { background: #0d1117; }
+
+        .jungle-wrap {
+            background: #0d1117;
+            border-radius: 14px;
+            overflow: hidden;
+            margin: 0 0 24px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+        }
+
+        .jungle-header {
+            padding: 24px 28px 0;
+        }
+
+        .jungle-title {
+            font-size: 1.6em;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            color: #c8e8c8;
+            margin: 0 0 4px;
+        }
+
+        .jungle-sub {
+            font-size: 0.82em;
+            color: #446644;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin: 0 0 20px;
+            font-family: monospace;
+        }
+
+        .jungle-controls {
+            padding: 0 28px 18px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .play-btn {
+            background: #1a3a1a;
+            border: 1px solid #2a6a2a;
+            border-radius: 50%;
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            color: #00ff88;
+            font-size: 14px;
+            flex-shrink: 0;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        .play-btn:hover { background: #2a5a2a; box-shadow: 0 0 12px rgba(0,255,136,0.3); }
+
+        .year-track {
+            display: flex; align-items: center; gap: 10px; flex: 1; min-width: 200px;
+        }
+
+        #year-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 3px;
+            border-radius: 2px;
+            background: #1a3a1a;
+            outline: none;
+        }
+        #year-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            background: #00ff88;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(0,255,136,0.5);
+        }
+
+        #year-display {
+            color: #00ff88;
+            font-family: monospace;
+            font-size: 1.3em;
+            font-weight: 700;
+            min-width: 52px;
+            text-shadow: 0 0 12px rgba(0,255,136,0.5);
+        }
+
+        #count-display {
+            color: #2a5a2a;
+            font-family: monospace;
+            font-size: 0.78em;
+            min-width: 80px;
+        }
+
+        #jungle-svg { width: 100%; display: block; }
+
+        /* Tooltip */
+        .j-tooltip {
+            position: fixed;
+            background: rgba(5, 12, 5, 0.97);
+            border: 1px solid;
+            border-radius: 10px;
+            padding: 14px 18px;
+            pointer-events: none;
+            max-width: 230px;
+            z-index: 999;
+            line-height: 1.65;
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+        .j-tooltip.visible { opacity: 1; }
+        .jt-name { font-size: 1.05em; font-weight: 800; color: #e0f0e0; margin-bottom: 4px; }
+        .jt-quad { font-size: 0.82em; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+        .jt-desc { font-size: 0.82em; color: #88a888; }
+
+        /* Legend */
+        .jungle-legend {
+            padding: 14px 28px;
+            border-top: 1px solid #1a2a1a;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 20px;
+        }
+        .leg { display: flex; align-items: center; gap: 7px; font-size: 0.78em; color: #446644; }
+        .leg-dot { width: 9px; height: 9px; border-radius: 50%; }
+
+        /* Axis text color overrides */
+        .tick text { fill: #2a5a2a !important; font-size: 11px; }
+        .domain { stroke: #1a3a1a !important; }
+        .tick line { stroke: #162816 !important; }
+
+        /* Card text overrides for dark bg */
+        .card h1 { color: #1a1a1a; }
+
+        /* Quadrant corner text */
+        .q-corner {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            opacity: 0.22;
+            pointer-events: none;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">Neural Nations</a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="cams-advanced-analysis.html" class="nav-link">Advanced Analysis</a>
+            <a href="https://github.com/KaliBond/wintermute" class="nav-link" target="_blank">GitHub</a>
+            <a href="newsletter.html" class="nav-link">Newsletter</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="jungle-wrap">
+        <div class="jungle-header">
+            <div class="jungle-title">The Thermodynamic Jungle</div>
+            <div class="jungle-sub">Societal Phase Space — CAMS Corpus</div>
+        </div>
+        <div class="jungle-controls">
+            <button class="play-btn" id="play-btn" title="Play / Pause">▶</button>
+            <div class="year-track">
+                <input type="range" id="year-slider" min="0" max="0" value="0">
+                <span id="year-display">—</span>
+            </div>
+            <span id="count-display"></span>
+        </div>
+        <svg id="jungle-svg"></svg>
+        <div class="jungle-legend">
+            <span class="leg"><span class="leg-dot" style="background:#00ff88;box-shadow:0 0 6px #00ff88;"></span>Generative</span>
+            <span class="leg"><span class="leg-dot" style="background:#ffaa00;box-shadow:0 0 6px #ffaa00;"></span>Dissociative</span>
+            <span class="leg"><span class="leg-dot" style="background:#ff3355;box-shadow:0 0 6px #ff3355;"></span>Terminal</span>
+            <span class="leg"><span class="leg-dot" style="background:#44aaff;box-shadow:0 0 6px #44aaff;"></span>Incipient</span>
+            <span class="leg" style="margin-left:auto; color:#1a4a1a;">X = mean(A×C) &nbsp;·&nbsp; Y = mean(K−S) &nbsp;·&nbsp; hover to identify</span>
+        </div>
+    </div>
+
+</div>
+
+<div class="j-tooltip" id="tooltip"></div>
+
+<footer class="footer" style="background:#0d1117; border-top:1px solid #1a2a1a;">
+    <p style="color:#2a4a2a;">&copy; 2026 Kari McKern — Neural Nations CAMS Research · <a href="https://github.com/KaliBond/wintermute" target="_blank" style="color:#446644;">KaliBond/wintermute</a></p>
+</footer>
+
+<script>
+// ── Config ───────────────────────────────────────────────────────────────────
+
+const Q = {
+    generative:   { stroke:'#00ff88', fill:'rgba(0,40,15,0.7)',    label:'Generative',          desc:'Sophisticated and materially sustained. The society can afford its own complexity.' },
+    dissociative: { stroke:'#ffaa00', fill:'rgba(40,25,0,0.7)',    label:'Dissociative / Tantrum', desc:'High abstraction, crumbling material base. The mind writes cheques the body cannot cash.' },
+    terminal:     { stroke:'#ff3355', fill:'rgba(40,0,10,0.7)',    label:'Terminal / Collapse',  desc:'Systemic breakdown. Neither institutions nor resources can sustain function.' },
+    incipient:    { stroke:'#44aaff', fill:'rgba(0,20,45,0.7)',    label:'Incipient',            desc:'Strong material capacity, low abstraction. Developing, recovering, or pre-modern.' },
+};
+
+function getQuad(cog, mood) {
+    if (cog >= 50 && mood >= 0) return 'generative';
+    if (cog >= 50 && mood <  0) return 'dissociative';
+    if (cog <  50 && mood <  0) return 'terminal';
+    return 'incipient';
+}
+
+// ── Data ─────────────────────────────────────────────────────────────────────
+
+let allData   = {};   // { year: [{society, cog, mood, quad}] }
+let sortedYrs = [];
+let svgState  = null;
+
+async function init() {
+    const raw = await fetch('cleaned_datasets/cams_index.json').then(r => r.json());
+
+    for (const [soc, years] of Object.entries(raw)) {
+        for (const [yr, nodes] of Object.entries(years)) {
+            const vals = Object.values(nodes);
+            if (vals.length < 8) continue;
+            let cog = 0, mood = 0;
+            for (const [C, K, S, A] of vals) { cog += A * C; mood += K - S; }
+            cog  /= vals.length;
+            mood /= vals.length;
+            const y = +yr;
+            if (!allData[y]) allData[y] = [];
+            allData[y].push({ society: soc, cog, mood, quad: getQuad(cog, mood) });
+        }
+    }
+
+    sortedYrs = Object.keys(allData).map(Number).sort((a,b) => a-b);
+
+    setupSlider();
+    buildSVG();
+
+    // Default: year with most societies in modern era
+    const defaultYr = sortedYrs.filter(y => y >= 2000).reduce(
+        (best, y) => allData[y].length > (allData[best]?.length || 0) ? y : best,
+        sortedYrs[sortedYrs.length - 1]
+    );
+    const idx = sortedYrs.indexOf(defaultYr);
+    document.getElementById('year-slider').value = idx;
+    renderYear(defaultYr);
+}
+
+// ── Slider & Play ─────────────────────────────────────────────────────────────
+
+let playTimer = null;
+
+function setupSlider() {
+    const sl = document.getElementById('year-slider');
+    sl.min = 0; sl.max = sortedYrs.length - 1;
+    sl.addEventListener('input', () => renderYear(sortedYrs[+sl.value]));
+
+    document.getElementById('play-btn').addEventListener('click', () => {
+        if (playTimer) {
+            clearInterval(playTimer);
+            playTimer = null;
+            document.getElementById('play-btn').textContent = '▶';
+        } else {
+            document.getElementById('play-btn').textContent = '⏸';
+            playTimer = setInterval(() => {
+                const sl = document.getElementById('year-slider');
+                let v = +sl.value + 1;
+                if (v >= sortedYrs.length) { v = 0; }
+                sl.value = v;
+                renderYear(sortedYrs[v]);
+            }, 180);
+        }
+    });
+}
+
+// ── SVG ───────────────────────────────────────────────────────────────────────
+
+const M = { top: 36, right: 32, bottom: 52, left: 56 };
+
+function buildSVG() {
+    const container = document.getElementById('jungle-svg').parentElement;
+    const W = container.clientWidth || 860;
+    const H = Math.min(500, Math.round(W * 0.55));
+    const iw = W - M.left - M.right;
+    const ih = H - M.top - M.bottom;
+
+    const svgEl = d3.select('#jungle-svg')
+        .attr('viewBox', `0 0 ${W} ${H}`)
+        .attr('preserveAspectRatio', 'xMidYMid meet');
+    svgEl.selectAll('*').remove();
+
+    // Glow filter
+    const defs = svgEl.append('defs');
+    ['green','amber','red','blue'].forEach((n,i) => {
+        const colors = ['0,255,136','255,170,0','255,51,85','68,170,255'];
+        const f = defs.append('filter').attr('id','glow-'+n).attr('x','-50%').attr('y','-50%').attr('width','200%').attr('height','200%');
+        f.append('feGaussianBlur').attr('stdDeviation','4').attr('result','blur');
+        f.append('feFlood').attr('flood-color',`rgb(${colors[i]})`).attr('flood-opacity','0.5').attr('result','color');
+        f.append('feComposite').attr('in','color').attr('in2','blur').attr('operator','in').attr('result','colorBlur');
+        const m = f.append('feMerge');
+        m.append('feMergeNode').attr('in','colorBlur');
+        m.append('feMergeNode').attr('in','SourceGraphic');
+    });
+
+    const xSc = d3.scaleLinear().domain([0,100]).range([0,iw]);
+    const ySc = d3.scaleLinear().domain([-10,10]).range([ih,0]);
+
+    const g = svgEl.append('g').attr('transform', `translate(${M.left},${M.top})`);
+
+    // Quadrant backgrounds
+    [
+        { q:'incipient',    x:0,  y:0,   w:50, h:10 },
+        { q:'generative',   x:50, y:0,   w:50, h:10 },
+        { q:'terminal',     x:0,  y:-10, w:50, h:10 },
+        { q:'dissociative', x:50, y:-10, w:50, h:10 },
+    ].forEach(({q,x,y,w,h}) => {
+        g.append('rect')
+            .attr('x', xSc(x)).attr('y', ySc(y + h))
+            .attr('width', xSc(x+w) - xSc(x))
+            .attr('height', ySc(y) - ySc(y+h))
+            .attr('fill', Q[q].fill);
+    });
+
+    // Grid lines
+    [10,20,30,40,60,70,80,90].forEach(v => {
+        g.append('line').attr('x1',xSc(v)).attr('x2',xSc(v)).attr('y1',0).attr('y2',ih)
+            .attr('stroke','#0f1f0f').attr('stroke-width',1);
+    });
+    [-8,-6,-4,-2,2,4,6,8].forEach(v => {
+        g.append('line').attr('x1',0).attr('x2',iw).attr('y1',ySc(v)).attr('y2',ySc(v))
+            .attr('stroke','#0f1f0f').attr('stroke-width',1);
+    });
+
+    // Midpoint axes
+    g.append('line').attr('x1',xSc(50)).attr('x2',xSc(50)).attr('y1',0).attr('y2',ih)
+        .attr('stroke','#1a3a1a').attr('stroke-width',1).attr('stroke-dasharray','5,5');
+    g.append('line').attr('x1',0).attr('x2',iw).attr('y1',ySc(0)).attr('y2',ySc(0))
+        .attr('stroke','#1a3a1a').attr('stroke-width',1).attr('stroke-dasharray','5,5');
+
+    // Quadrant corner labels
+    const corners = [
+        { q:'generative',   tx:xSc(76), ty:ySc(8.8), anchor:'middle' },
+        { q:'dissociative', tx:xSc(76), ty:ySc(-8.2), anchor:'middle' },
+        { q:'terminal',     tx:xSc(24), ty:ySc(-8.2), anchor:'middle' },
+        { q:'incipient',    tx:xSc(24), ty:ySc(8.8),  anchor:'middle' },
+    ];
+    corners.forEach(({q,tx,ty,anchor}) => {
+        g.append('text').attr('class','q-corner')
+            .attr('x',tx).attr('y',ty).attr('text-anchor',anchor)
+            .attr('fill',Q[q].stroke).text(Q[q].label.toUpperCase());
+    });
+
+    // Axes
+    g.append('g').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(xSc).ticks(10).tickSize(4));
+    g.append('g').call(d3.axisLeft(ySc).ticks(8).tickSize(4));
+
+    // Axis labels
+    g.append('text').attr('x',iw/2).attr('y',ih+44)
+        .attr('text-anchor','middle').attr('fill','#2a5a2a').attr('font-size','11px')
+        .text('Cognition  (mean A × C)');
+    g.append('text').attr('transform','rotate(-90)').attr('x',-ih/2).attr('y',-44)
+        .attr('text-anchor','middle').attr('fill','#2a5a2a').attr('font-size','11px')
+        .text('Stress Buffer  (mean K − S)');
+
+    // Dots group
+    g.append('g').attr('id','dots');
+
+    svgState = { g, xSc, ySc };
+}
+
+// ── Render ────────────────────────────────────────────────────────────────────
+
+const tip = document.getElementById('tooltip');
+const GLOW_MAP = { generative:'green', dissociative:'amber', terminal:'red', incipient:'blue' };
+
+function renderYear(yr) {
+    document.getElementById('year-display').textContent = yr;
+    const data = allData[yr] || [];
+    document.getElementById('count-display').textContent = `${data.length} societ${data.length!==1?'ies':'y'}`;
+
+    const { g, xSc, ySc } = svgState;
+
+    const circles = g.select('#dots').selectAll('circle')
+        .data(data, d => d.society);
+
+    circles.enter().append('circle')
+        .attr('cx', d => xSc(d.cog))
+        .attr('cy', d => ySc(d.mood))
+        .attr('r', 0)
+        .attr('fill', d => Q[d.quad].stroke)
+        .attr('fill-opacity', 0.8)
+        .attr('stroke', d => Q[d.quad].stroke)
+        .attr('stroke-width', 1.5)
+        .attr('filter', d => `url(#glow-${GLOW_MAP[d.quad]})`)
+        .attr('cursor','crosshair')
+        .on('mouseenter', (ev, d) => {
+            const q = Q[d.quad];
+            tip.style.borderColor = q.stroke;
+            tip.innerHTML = `<div class="jt-name">${d.society}</div><div class="jt-quad" style="color:${q.stroke};">${q.label}</div><div class="jt-desc">${q.desc}</div>`;
+            tip.classList.add('visible');
+            positionTip(ev);
+        })
+        .on('mousemove', positionTip)
+        .on('mouseleave', () => tip.classList.remove('visible'))
+        .transition().duration(700).ease(d3.easeBounceOut).attr('r', 9);
+
+    circles.transition().duration(500)
+        .attr('cx', d => xSc(d.cog))
+        .attr('cy', d => ySc(d.mood))
+        .attr('fill', d => Q[d.quad].stroke)
+        .attr('stroke', d => Q[d.quad].stroke)
+        .attr('filter', d => `url(#glow-${GLOW_MAP[d.quad]})`)
+        .attr('r', 9);
+
+    circles.exit().transition().duration(300).attr('r',0).remove();
+}
+
+function positionTip(ev) {
+    const x = ev.clientX + 16;
+    const y = ev.clientY - 12;
+    const tw = 230, th = 120;
+    tip.style.left = (x + tw > window.innerWidth ? x - tw - 32 : x) + 'px';
+    tip.style.top  = (y + th > window.innerHeight ? y - th : y) + 'px';
+}
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+
+init().catch(console.error);
+window.addEventListener('resize', () => { buildSVG(); const sl = document.getElementById('year-slider'); renderYear(sortedYrs[+sl.value]); });
+</script>
+</body>
+</html>
