@@ -241,6 +241,7 @@ async function init() {
             cog  /= vals.length;
             mood /= vals.length;
             const y = +yr;
+            if (y < 1900) continue;
             if (!allData[y]) allData[y] = [];
             allData[y].push({ society: soc, cog, mood, quad: getQuad(cog, mood) });
         }
