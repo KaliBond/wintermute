@@ -183,7 +183,7 @@
     <div class="card">
         <h2>Download Blinded Datasets</h2>
         <p style="font-size:0.9em; color:#555; margin-bottom:4px;">
-            Five CSV files · 1900 onwards · 35 columns each · identity stripped
+            Five CSV files · 1900 onwards · 9 columns · identity replaced with MarkerXXX
         </p>
 
         <div class="blind-grid">
@@ -250,27 +250,27 @@
                 <tr><th>Column</th><th>Description</th><th>Range</th></tr>
             </thead>
             <tbody>
+                <tr><td class="mono">Society</td><td>Blinded entity label — MarkerXXX, not the real name</td><td>Marker001–005</td></tr>
                 <tr><td class="mono">Year</td><td>Calendar year, jittered ±1 from original</td><td>integer</td></tr>
                 <tr><td class="mono">Node</td><td>One of eight institutional nodes</td><td>Archive · Craft · Flow · Hands · Helm · Lore · Shield · Stewards</td></tr>
-                <tr><td class="mono">C</td><td>Coherence — internal alignment of the node</td><td>1–10</td></tr>
-                <tr><td class="mono">K</td><td>Capacity — material and organisational resources</td><td>1–10</td></tr>
-                <tr><td class="mono">S</td><td>Stress — load and entropy pressure on the node</td><td>1–10</td></tr>
-                <tr><td class="mono">A</td><td>Abstraction — symbolic / cognitive complexity</td><td>1–10</td></tr>
-                <tr><td class="mono">Vi</td><td>Node Value: C + K + (A/2) − S</td><td>≈ −7 to +24</td></tr>
-                <tr><td class="mono">B_X_Y</td><td>Bond Strength between nodes X and Y (28 columns, upper triangle)</td><td>0–1</td></tr>
+                <tr><td class="mono">Coherence</td><td>Internal alignment and cohesion of the node</td><td>1–10</td></tr>
+                <tr><td class="mono">Capacity</td><td>Material and organisational resources</td><td>1–10</td></tr>
+                <tr><td class="mono">Stress</td><td>Load and entropy pressure on the node</td><td>1–10</td></tr>
+                <tr><td class="mono">Abstraction</td><td>Symbolic and cognitive complexity</td><td>1–10</td></tr>
+                <tr><td class="mono">Node Value</td><td>Coherence + Capacity + (Abstraction/2) − Stress</td><td>≈ −7 to +24</td></tr>
+                <tr><td class="mono">Bond Strength</td><td>Mean pairwise coupling for this node across all 7 partners</td><td>≈ 0.5–4.5</td></tr>
             </tbody>
         </table>
 
         <div class="formula">
-V<sub>i</sub>  =  C<sub>i</sub>  +  K<sub>i</sub>  +  A<sub>i</sub>/2  −  S<sub>i</sub>
-B<sub>ij</sub>  =  √( max(V<sub>i</sub> + 8, 0) · max(V<sub>j</sub> + 8, 0) ) / 32
+Node Value  =  C  +  K  +  A/2  −  S
+Bond Strength<sub>i</sub>  =  mean<sub>j≠i</sub>  √( max(V<sub>i</sub>+8, 0) · max(V<sub>j</sub>+8, 0) ) / 8
         </div>
 
         <p style="font-size:0.85em; color:#666; line-height:1.7;">
-            Each row represents one node for one year (8 rows per year-step).
-            Bond Strength columns are identical across all 8 rows for the same year —
-            they are timestep-level values repeated for convenience.
-            Noise was applied to raw metrics only; Vi and Bij were recomputed from the noisy values.
+            Each row represents one institutional node for one year — 8 rows per year-step.
+            Gaussian noise (σ = 0.3) was applied to the four raw metrics; Node Value and
+            Bond Strength were recomputed from the noisy values.
         </p>
     </div>
 
