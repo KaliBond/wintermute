@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Scale Invariance Experiment — Neural Nations</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+    <style>
+        .blind-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 14px;
+            margin: 24px 0;
+        }
+        .blind-card {
+            background: #fff;
+            border: 1px solid #dde4f0;
+            border-radius: 10px;
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .blind-card:hover {
+            border-color: #1f77b4;
+            box-shadow: 0 2px 10px rgba(31,119,180,0.1);
+        }
+        .blind-id {
+            font-size: 0.72em;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #aaa;
+        }
+        .blind-filename {
+            font-size: 1.05em;
+            font-weight: 700;
+            color: #1a1a1a;
+            font-family: monospace;
+        }
+        .blind-meta {
+            font-size: 0.82em;
+            color: #666;
+            line-height: 1.6;
+        }
+        .blind-meta span {
+            display: inline-block;
+            background: #f0f4fb;
+            border-radius: 4px;
+            padding: 2px 8px;
+            margin: 2px 2px 2px 0;
+            font-family: monospace;
+            font-size: 0.9em;
+            color: #444;
+        }
+        .dl-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 4px;
+            padding: 8px 16px;
+            background: #1f77b4;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85em;
+            font-weight: 600;
+            align-self: flex-start;
+            transition: background 0.2s;
+        }
+        .dl-btn:hover { background: #155d92; }
+
+        .col-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88em;
+            margin: 16px 0;
+        }
+        .col-table th {
+            background: #f0f4fb;
+            padding: 8px 12px;
+            text-align: left;
+            font-weight: 700;
+            color: #333;
+            border-bottom: 2px solid #dde4f0;
+        }
+        .col-table td {
+            padding: 7px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #444;
+            vertical-align: top;
+        }
+        .col-table tr:last-child td { border-bottom: none; }
+        .mono { font-family: monospace; color: #1f77b4; }
+
+        .method-box {
+            background: #f0f4fb;
+            border-left: 3px solid #1f77b4;
+            border-radius: 0 8px 8px 0;
+            padding: 18px 22px;
+            margin: 20px 0;
+            font-size: 0.93em;
+            line-height: 1.8;
+        }
+
+        .warning-box {
+            background: #fff8e6;
+            border-left: 3px solid #e6a817;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 20px;
+            margin: 20px 0;
+            font-size: 0.88em;
+            line-height: 1.7;
+            color: #555;
+        }
+
+        .formula {
+            background: #1a1a2e;
+            color: #a8d8a8;
+            font-family: monospace;
+            font-size: 0.9em;
+            padding: 14px 20px;
+            border-radius: 8px;
+            margin: 12px 0;
+            line-height: 2;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">Neural Nations</a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="cams-advanced-analysis.html" class="nav-link">Advanced Analysis</a>
+            <a href="https://github.com/KaliBond/wintermute" class="nav-link" target="_blank">GitHub</a>
+            <a href="newsletter.html" class="nav-link">Newsletter</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card">
+        <h1>The Scale Invariance Experiment</h1>
+        <p class="subtitle">Blind Inference from CAMS Time-Series — §5.1 Supplementary Data</p>
+
+        <p style="font-size:1.0em; line-height:1.8; margin: 0 0 20px;">
+            If the Complex Adaptive Model of Societies captures something real about how civilisations are structured,
+            then an AI system given only anonymous numerical time-series — no names, no geography, no context —
+            should still be able to recover the structural archetype of each entity.
+            This is the scale invariance test: the pattern speaks for itself.
+        </p>
+
+        <div class="method-box">
+            <strong>Protocol.</strong> Five societies were selected for structural diversity: one post-war reconstruction arc,
+            one developmental state, one long imperial–republican transition, one settler-colonial democracy,
+            and one city-state. Their identities are blinded. Each dataset has had its entity label stripped,
+            its year axis jittered by ±1, and Gaussian noise (σ = 0.3) added to the four raw metrics.
+            Node Values and Bond Strengths are recomputed from the noisy metrics.
+            The challenge: identify the structural archetype — and if possible, the entity — from the numbers alone.
+        </div>
+
+        <div class="warning-box">
+            <strong>Blinding note.</strong> The mapping between file numbers and societies is held separately and
+            not published alongside these files. If you are participating in the inference challenge,
+            do not look at the <a href="https://github.com/KaliBond/wintermute/blob/main/scripts/generate_blinded.js" target="_blank">generation script</a>
+            until after you have submitted your identification.
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Download Blinded Datasets</h2>
+        <p style="font-size:0.9em; color:#555; margin-bottom:4px;">
+            Five CSV files · 1900 onwards · 35 columns each · identity stripped
+        </p>
+
+        <div class="blind-grid">
+
+            <div class="blind-card">
+                <div class="blind-id">Dataset 001</div>
+                <div class="blind-filename">blinded_001.csv</div>
+                <div class="blind-meta">
+                    <span>126 years</span><span>1,008 rows</span><span>1900–2025</span>
+                </div>
+                <a class="dl-btn" href="blinded/blinded_001.csv" download>↓ Download CSV</a>
+            </div>
+
+            <div class="blind-card">
+                <div class="blind-id">Dataset 002</div>
+                <div class="blind-filename">blinded_002.csv</div>
+                <div class="blind-meta">
+                    <span>111 years</span><span>888 rows</span><span>1900–2025</span>
+                </div>
+                <a class="dl-btn" href="blinded/blinded_002.csv" download>↓ Download CSV</a>
+            </div>
+
+            <div class="blind-card">
+                <div class="blind-id">Dataset 003</div>
+                <div class="blind-filename">blinded_003.csv</div>
+                <div class="blind-meta">
+                    <span>124 years</span><span>992 rows</span><span>1900–2024</span>
+                </div>
+                <a class="dl-btn" href="blinded/blinded_003.csv" download>↓ Download CSV</a>
+            </div>
+
+            <div class="blind-card">
+                <div class="blind-id">Dataset 004</div>
+                <div class="blind-filename">blinded_004.csv</div>
+                <div class="blind-meta">
+                    <span>108 years</span><span>864 rows</span><span>1900–2025</span>
+                </div>
+                <a class="dl-btn" href="blinded/blinded_004.csv" download>↓ Download CSV</a>
+            </div>
+
+            <div class="blind-card">
+                <div class="blind-id">Dataset 005</div>
+                <div class="blind-filename">blinded_005.csv</div>
+                <div class="blind-meta">
+                    <span>96 years</span><span>768 rows</span><span>1930–2025</span>
+                </div>
+                <a class="dl-btn" href="blinded/blinded_005.csv" download>↓ Download CSV</a>
+            </div>
+
+        </div>
+
+        <p style="font-size:0.82em; color:#999; margin-top:4px;">
+            All files also available in the
+            <a href="https://github.com/KaliBond/wintermute/tree/main/blinded" target="_blank">GitHub repository</a>
+            under <code>blinded/</code>.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>Column Schema</h2>
+
+        <table class="col-table">
+            <thead>
+                <tr><th>Column</th><th>Description</th><th>Range</th></tr>
+            </thead>
+            <tbody>
+                <tr><td class="mono">Year</td><td>Calendar year, jittered ±1 from original</td><td>integer</td></tr>
+                <tr><td class="mono">Node</td><td>One of eight institutional nodes</td><td>Archive · Craft · Flow · Hands · Helm · Lore · Shield · Stewards</td></tr>
+                <tr><td class="mono">C</td><td>Coherence — internal alignment of the node</td><td>1–10</td></tr>
+                <tr><td class="mono">K</td><td>Capacity — material and organisational resources</td><td>1–10</td></tr>
+                <tr><td class="mono">S</td><td>Stress — load and entropy pressure on the node</td><td>1–10</td></tr>
+                <tr><td class="mono">A</td><td>Abstraction — symbolic / cognitive complexity</td><td>1–10</td></tr>
+                <tr><td class="mono">Vi</td><td>Node Value: C + K + (A/2) − S</td><td>≈ −7 to +24</td></tr>
+                <tr><td class="mono">B_X_Y</td><td>Bond Strength between nodes X and Y (28 columns, upper triangle)</td><td>0–1</td></tr>
+            </tbody>
+        </table>
+
+        <div class="formula">
+V<sub>i</sub>  =  C<sub>i</sub>  +  K<sub>i</sub>  +  A<sub>i</sub>/2  −  S<sub>i</sub>
+B<sub>ij</sub>  =  √( max(V<sub>i</sub> + 8, 0) · max(V<sub>j</sub> + 8, 0) ) / 32
+        </div>
+
+        <p style="font-size:0.85em; color:#666; line-height:1.7;">
+            Each row represents one node for one year (8 rows per year-step).
+            Bond Strength columns are identical across all 8 rows for the same year —
+            they are timestep-level values repeated for convenience.
+            Noise was applied to raw metrics only; Vi and Bij were recomputed from the noisy values.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>The Inference Challenge</h2>
+        <p style="font-size:0.93em; line-height:1.8; color:#444;">
+            Feed one or more of these files to any capable LLM or statistical classifier.
+            Provide only the CSV — no hints. Ask it to characterise the structural archetype of the entity:
+            its dominant institutional regime type, probable historical period, trajectory shape,
+            and if the signal is strong enough, a candidate identification.
+        </p>
+        <p style="font-size:0.93em; line-height:1.8; color:#444;">
+            A valid recovery requires: (1) correct quadrant assignment in phase space,
+            (2) identification of at least two major structural transitions visible in the data,
+            and (3) a structural archetype label consistent with the CAMS typology.
+            Naming the actual entity is the strong claim — the experiment does not require it.
+        </p>
+        <p style="font-size:0.93em; line-height:1.8; color:#444;">
+            Submit findings to <a href="mailto:kari.freyr.4@gmail.com">kari.freyr.4@gmail.com</a>
+            with subject line <em>Scale Invariance Submission</em>.
+            Results will be published in the research diary once the blind is broken.
+        </p>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Open science — <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+</body>
+</html>
