@@ -102,6 +102,10 @@ Thumbs.db
 *.png
 *.jpg
 *.pdf
+!CAMS_Scale_Invariance*.pdf
+
+# Blinding key — contains unblinding mapping, not for release
+blinded/BLINDING_KEY.json
 
 # Logs
 *.log
