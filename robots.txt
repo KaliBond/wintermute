@@ -1,7 +1,33 @@
 User-agent: *
 Allow: /
 
+# Search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# AI assistants & LLM crawlers
 User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: ChatGPT-User
@@ -19,13 +45,26 @@ Allow: /
 User-agent: PerplexityBot
 Allow: /
 
-User-agent: Googlebot
-Allow: /
-
-User-agent: GoogleOther
-Allow: /
-
 User-agent: cohere-ai
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+# Archival
+User-agent: ia_archiver
 Allow: /
 
 User-agent: CCBot
