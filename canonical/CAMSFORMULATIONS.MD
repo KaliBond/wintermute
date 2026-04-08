@@ -26,6 +26,15 @@ Where formulations conflict across versions, conflicts are explicitly flagged. N
 | First public appearance | *Pearls and Irritations*, October 2024 |
 | Predictive accuracy (validated) | 78% overall; 87% for collapse within 25-year window |
 | Framework class | Complex adaptive systems analysis; civilisational diagnostics |
+| Epistemological character | *Keplerian, not Newtonian*: empirically calibrated rather than derived from first principles |
+| Intellectual ancestry | Comte's positivism; cliodynamics; complexity science; Socratic realism |
+| Positioning | Third major unification attempt in social science, after Comte and cliodynamics |
+
+### Origin Context
+
+CAMS originated in mid-2024 through collaboration with AI as a forcing function for logical rigour, emerging from epistemological frustration with the fact-value distinction in social science. The framework was conceived as a Keplerian enterprise: start from empirical observation of what societies do, build metrics that describe those behaviours, and only then derive laws from the patterns — not from first principles assumed in advance.
+
+Key publications positioning CAMS appeared in *Pearls and Irritations* (October 2024 – March 2024), with geopolitical prescience validation drawn from the author's 2022–2024 essay series.
 
 ---
 
@@ -33,7 +42,7 @@ Where formulations conflict across versions, conflicts are explicitly flagged. N
 
 Societies are complex adaptive systems (CAS). CAMS operationalises them as distributed networks in which institutional nodes perform specialised functions, interact through measurable bonds, accumulate or shed adaptive capacity over time, and undergo phase transitions when stress exceeds systemic resilience.
 
-The **Symbon Hypothesis** is the theoretical core: a Symbon is a collective intelligence greater than the sum of its parts, emerging from interactions among individuals, institutions, and cultural forces. CAMS-CAN treats societal nodes as the organs of this emergent entity.
+The **Sybond Hypothesis** is the theoretical core: a Sybond is a collective intelligence greater than the sum of its parts, emerging from interactions among individuals, institutions, and cultural forces. The Sybond is not a metaphor — it is a claim about what societies actually are: entities that can be healthy or sick, adaptive or brittle, and that undergo genuine phase transitions, not merely surface-level changes, when they reach critical thresholds. CAMS-CAN treats societal nodes as the organs of this emergent entity.
 
 The full state description of any society at any time is **32-dimensional**: 8 nodes × 4 metrics = 32 independent measurements per time-slice.
 
@@ -84,7 +93,13 @@ Also attested in variant forms:
 
 ---
 
-### 1.3 Canonical classical set (2025, pre-renaming)
+### 1.3 Ten-node variant (superseded July 2025)
+
+An earlier development phase used a ten-node model. This was formally superseded in July 2025 (RD-002) in favour of the eight-node canonical model on grounds of parsimony and functional completeness across 32+ societies. The ten-node variant's exact composition is not fully recovered from accessible source files.
+
+---
+
+### 1.4 Canonical classical set (2025, pre-renaming)
 
 | # | Canonical name | Functional role |
 |---|---|---|
@@ -96,6 +111,23 @@ Also attested in variant forms:
 | 6 | Proletariat | Mass labour, productive base |
 | 7 | State Memory | Laws, institutions, archives, continuity mechanisms |
 | 8 | Merchants / Shopkeepers | Commerce, trade, wealth circulation |
+
+### 1.4a Gemini variant node names (CAMS-CAN-GEMINI.md, Apr 2026)
+
+A parallel canonical reference produced in the Gemini environment uses shortened functional labels as primary names, with the archetypal names as aliases:
+
+| # | Gemini canonical name | Historical / Analogous labels |
+|---|---|---|
+| 1 | Executive | Helm, Government, Leadership, Monarchy, Oligarchy |
+| 2 | Army | Shield, Military, Defense, Warriors, Armed Forces |
+| 3 | Knowledge | Lore, Priests, Clergy, Academy, Knowledge Class |
+| 4 | Property | Stewards, Landlords, Merchant-princes, Owners |
+| 5 | Trades | Craft, Professions, Guild, Factory Workers, Producers |
+| 6 | Labor | Hands, Workers, Servants, Labourers, Commons |
+| 7 | Memory | Archive, State Memory, Keepers, Historians, Traditions |
+| 8 | Commerce | Flow, Merchants, Banking, Markets |
+
+**Note:** This variant diverges from CAMS-CANONICAL.md primarily in preferring shorter functional labels (Knowledge, Labor, Commerce) over the compound classical forms (Priests/Knowledge, Proletariat, Merchants/Shopkeepers). The archetypal names (Helm, Shield, Lore, etc.) are treated as aliases rather than primary labels in this variant.
 
 ---
 
@@ -136,7 +168,7 @@ Culturally neutral, archetypal terminology introduced for essays, reports, and v
 
 **Metric set:** Coherence, Capacity, Stress, **Impact**
 
-This was the original fourth metric. Impact was later replaced by Abstraction. The transition is documented in project memory but no exact date is confirmed.
+This was the original fourth metric. Impact was later replaced by Abstraction. The transition is documented in project memory but no exact date is confirmed. The reason for the change: Impact measured reach or effect — what a node produced externally — whereas Abstraction captures the depth of strategic and symbolic thinking within the node itself. The shift reflected a recognition that what most distinguished adaptive, resilient societies was not simply their reach but their internal sophistication.
 
 **Confidence:** MEDIUM for exact timing; HIGH for the existence of this variant.
 
@@ -162,9 +194,9 @@ Scale: `min=1, max=10`
 
 ### 2.3 Stress convention history
 
-Stress has been expressed three ways across CAMS versions. This is one of the most persistent sources of conflict in the record.
+Stress has been expressed three ways across CAMS versions. This is one of the most persistent sources of conflict in the record, but it now has a formal resolved decision.
 
-**Convention A — Negative scale (Feb 2025 canonical scoring):**
+**Convention A — Negative scale (Feb 2025, early canonical scoring):**
 Range: −10 to 0. Zero = no stress; more negative = greater demonstrated resilience under pressure.
 Source: `instructions.txt`, `CAMS_NodeValue_BondStrength.py`, CAMS-CANONICAL.md.
 
@@ -176,9 +208,21 @@ Source: visible shared project history; cams-scorer.tsx context.
 Coherence and Capacity on [−10, +10]; Abstraction on [0, 10].
 Source: `Give me a mathematical formalisation..md` (2025-03-26).
 
-**Resolution (CAMS-CANONICAL.md):** Convention A is canonical. Negative values on [−10, 0]. Negative stress values are subtracted in the Node Value formula, meaning resilient-under-stress nodes receive higher NV. Unstressed nodes default to 0.
+---
 
-**⚠ CONFLICT FLAG:** The same 2025 upload that states "Stress: −10 to 0" also contains prose about "positive stress (conflict) penalises functionality." This internal contradiction was not resolved by a documented revision.
+**✅ FORMALLY RESOLVED — RD-001 (November 2025):**
+
+> Stress is **always positive** (scale 1–10). Resilience under pressure is captured through system-level dynamics (bond strength, abstraction evolution), **not** via negative stress encoding. This eliminates the thermodynamic inconsistency identified in the October 2025 review and aligns with the physical interpretation of stress as load/pressure.
+>
+> *All scoring post-November 2025 uses positive Stress only.*
+
+**Implementation:** Scale 1–10 (integer, always positive).
+- 1: Minimal — no appreciable pressure or constraint
+- 4–6: Elevated — sustained pressure, resources strained but not yet critical
+- 7–8: High — severe pressure, crisis conditions, resource exhaustion imminent
+- 9–10: Extreme — existential threat, organisational collapse risk
+
+**⚠ RESIDUAL CONFLICT:** CAMS-CANONICAL.md (v1.0-RC1, April 2026) still formally states Stress as scale −10 to 0 (Convention A). This creates a direct conflict between CAMS-CANONICAL.md and the resolved decision RD-001 documented in CAMS-CAN-GEMINI.md. Until CAMS-CANONICAL.md is updated to reflect the positive convention, all scoring must explicitly document which convention is in use. The Gemini file's positive convention is the operationally implemented form as of November 2025.
 
 ---
 
@@ -268,7 +312,14 @@ def calculate_node_value(coherence, capacity, stress, abstraction):
 | 4 | 5 | 0 | 4 | 4 + 5 − 0 + (0.5 × 4) = **11.0** |
 | 9 | 8 | −7 | 8 | 9 + 8 − (−7) + (0.5 × 8) = **28.0** |
 
-**Rationale:** Coherence and Capacity contribute directly; Abstraction contributes at half weight, reflecting its moderating rather than primary metabolic role; Stress subtracts (negative S values thus add to NV, rewarding demonstrated resilience).
+**Rationale:** Coherence and Capacity contribute directly; Abstraction contributes at half weight, reflecting its moderating rather than primary metabolic role; Stress is subtracted (under the positive-stress convention, higher S reduces NV; under the negative-stress convention, negative S values thus add to NV).
+
+**Confirmed range (positive stress convention, 32+ datasets):**
+- Theoretical floor: 1 + 1 − 10 + (0.5 × 1) = **−7.5**
+- Theoretical ceiling: 10 + 10 − 1 + (0.5 × 10) = **28.5**
+- Observed empirical range: **3 to 21**
+- Typical operating range: **8 to 18**
+- Crisis signal: NV drops 2–4 points during Phase 3 transition
 
 **Interpretive note (Mar 2026):** "Abstraction as performance modifier, not equal metabolic addend."
 
@@ -394,7 +445,53 @@ Bond Strength = node degree D_ii from the yearly CAMS coupling matrix
 
 ---
 
-### 4.5 Bond Strength range conflict
+### 4.5 Bond Strength — exponential stress penalty variant (CAMS-CAN-GEMINI.md, v1.0-RC1)
+
+This is the provisional canonical form as of April 2026 in the Gemini reference:
+
+```
+B_ij = [0.6 × (C_i × C_j) + 0.4 × (A_i × A_j)] × stress_penalty
+
+stress_penalty = exp(−λ × (S_i + S_j) / 20)
+where λ ≈ 1.0 (calibrated, provisional)
+```
+
+**Observed range:** [1.6, 4.3] across datasets.
+
+**Rationale:** The exponential penalty replaces the denominator-based stress adjustment. As combined stress increases, the penalty decays smoothly toward zero rather than producing a hard division. This is the form consistent with the positive-stress convention.
+
+**⚠ CONFLICT:** This differs from the CAMS-CANONICAL.md product form:
+`BS(A,B) = (C_A × C_B × 0.6) + (A_A × A_B × 0.4) / (1 + S̄_{A,B})`
+The denominator form and the exponential penalty form are not algebraically equivalent and will produce different numerical outputs.
+
+### 4.5a System Bond Density (B̄)
+
+Introduced in CAMS-CAN-GEMINI.md as a formal system-level aggregate:
+
+```
+B̄ = (1/28) × Σ B_ij  for all i ≠ j
+```
+
+(28 = number of unique pairs in an 8-node system)
+
+**Per-node aggregate:**
+```
+B_i = (1/7) × Σ B_ij  for all j ≠ i
+```
+
+**Phase-linked ranges (observed):**
+- Phase 1: B_i > 3.5 for most nodes
+- Phase 2: B_i ∈ [2.5, 3.5]
+- Phase 3: B_i ∈ [1.5, 2.5]
+- Phase 4: B_i < 1.8
+
+**Integrity thresholds (B̄ relative to baseline B̄₀):**
+- B̄/B̄₀ > 0.95: Full network integrity
+- 0.60–0.95: Network thinning; isolated subsystems emerging
+- < 0.70: Severe fragmentation; near-complete network collapse
+- Bond loss > 40%: Irreversibility threshold (see Section 6.5)
+
+### 4.6 Bond Strength range conflict
 
 **Architecture document (Book, Mar 27 2026):** States B_ij lies "between zero and one."
 **Datasets and v3.0 trigger rules:** Use Bond Strength values of 1.2, 1.4, 1.5, 2+, 3+.
@@ -535,7 +632,7 @@ Where C̄, K̄, S̄ = mean Coherence, Capacity, Stress across all 8 nodes; A_sys
 | 2.3–2.5 | Reorganisation threshold; high collapse risk |
 | < 2.3 | Basin transition imminent; critical vulnerability |
 
-**The Abstraction–Resilience Paradox:** The denominator encodes the finding that rising systemic Abstraction amplifies effective stress even as it expands capability. Sophisticated societies are more fragile as well as more capable.
+**The Abstraction–Resilience Paradox:** The denominator encodes the finding that rising institutional sophistication amplifies effective stress even as it expands capability. The most sophisticated societies are simultaneously the most capable and the most fragile.
 
 ---
 
@@ -748,6 +845,228 @@ This detects the condition where high Abstraction coincides with high Stress —
 
 ---
 
+## SECTION 6b — THERMODYNAMIC FRAMEWORK (formalised v0.9, Jan 2026)
+
+This framework was initiated in v0.7 (Sep 2025) and completed in v0.9 (Jan 2026). It treats societies as dissipative thermodynamic systems and introduces three scalar system-level diagnostics and a unified Decay Index.
+
+---
+
+### 6b.1 Affective Tone — τ (Surplus Capacity Ratio)
+
+**Definition:** The ratio of mean system Capacity to mean Stress.
+
+```
+τ = mean(K) / mean(S)
+```
+
+**Interpretation:**
+- τ > 1.5: Healthy surplus; system can absorb perturbations
+- 1.2–1.5: Strained but viable; reserves being drawn
+- τ ≈ 1.0: Critical stress; minimal reserves
+- τ < 0.7: Catastrophic; system at metabolic minimum
+- τ < 0.6: Historical collapse point (observed: Rome, France 1789)
+
+**Physics:** As τ declines, the system loses capacity to respond to shocks.
+
+---
+
+### 6b.2 Cognitive Style Ratio — ε (Abstraction-to-Reality Coupling)
+
+**Definition:** The ratio of mean system Abstraction to Affective Tone.
+
+```
+ε = mean(A) / τ
+```
+
+**Interpretation:**
+- 0.9–1.1: Balanced cognition; abstraction matched to material capacity
+- ε > 1.15: Cognitive overreach; abstractions exceed material grounding
+- ε > 1.3: Critical overreach; "brittle sophistication" developing
+- ε > 1.4 or ε < 1.0: Hollow or collapsed cognition
+
+**Physics:** When τ declines but Abstraction continues to rise, the system develops brittle sophistication — elaborate institutions that fail under stress. High A + Low C = "Brittle Sophistication" signature (Phase 2 warning).
+
+---
+
+### 6b.3 Mode Ratio — R (Deliberative vs. Reactive Balance)
+
+**Definition:** The ratio of reactive to deliberative modes in system operation.
+
+```
+R = reactive_mode / deliberative_mode
+```
+
+**Interpretation:**
+- R < 1: Deliberative dominant; system planning ahead
+- 1–3: Mixed modes; planning maintained under some crisis response
+- R > 3–4: Reactive dominant; long-horizon planning capacity lost
+- R > 5: Nearly pure reaction; bifurcation imminent
+
+**Physics:** High Stress and declining Capacity force reactive mode. Once R > 3, bifurcation approaches.
+
+---
+
+### 6b.4 Decay Index — D(t)
+
+**Definition:** Unified measure of system decay and fragmentation risk.
+
+```
+D(t) = w₁·O + w₂·T + w₃·L + w₄·max(0, R − 1)
+```
+
+**Components:**
+
+```
+[O] Overreach Penalty:
+    O = max(0, ε − 1)
+    Interpretation: Cognitive gap severity
+
+[T] Strain Penalty:
+    T = 1 − τ = 1 − (mean(K) / mean(S))
+    Interpretation: Metabolic deficit severity
+
+[L] Connectivity Loss:
+    L = 1 − (B̄ / B̄₀)
+    where B̄₀ = baseline bond density (reference period)
+    Interpretation: Network fragmentation (0 = full integrity; 1 = total collapse)
+
+[Mode Imbalance]:
+    max(0, R − 1) = penalty for reactive overweight
+```
+
+**Provisional weights (calibration ongoing):**
+```
+w₁ = 1.0 (Overreach)
+w₂ = 1.0 (Strain)
+w₃ = 1.0 (Connectivity loss)
+w₄ = 0.5 (Mode imbalance)
+```
+
+**Normalised output:** D(t) ∈ [0, 10]
+
+**Phase thresholds:**
+- D ≤ 1: Healthy integration (Phase 1)
+- 2 < D < 4: Brittle sophistication (Phase 2)
+- 4 ≤ D ≤ 6: Critical slowing; bifurcation onset (Phase 3)
+- D ≥ 6: **Bifurcation threshold crossed; reversibility questionable**
+- D > 7: Fragmentation imminent (Phase 4)
+
+---
+
+### 6b.5 Dynamical Evolution Equations
+
+#### ε evolution (Abstraction growth under strain):
+
+```
+ε_{t+1} = ε_t + a·(1 − τ_t)·(1 − B̄_t)
+```
+
+Parameters: a = learning/adaptation rate (typically 0.01–0.1; not yet calibrated)
+
+**Physics:** When material capacity declines (τ↓) and nodes are isolated (B̄↓), nodes adopt more abstract internal solutions. This increases ε as a compensatory strategy, ultimately making the system more brittle.
+
+#### τ evolution (Surplus capacity decay):
+
+```
+τ_{t+1} = τ_t · [1 − ξ·(ε_t − 1)]
+```
+
+Parameters: ξ = erosion rate (typically 0.01–0.1; not yet calibrated)
+
+**Physics:** Cognitive overreach erodes capacity. The more the system over-abstracts relative to material grounding, the faster it depletes reserves through maladapted strategies.
+
+**Nonlinear feedback loop:** As τ declines → ε rises (via ε equation) → τ declines faster (via τ equation). This is the mathematical form of the Abstraction–Resilience Paradox.
+
+---
+
+### 6b.6 Causal Pathways to Collapse
+
+**Path 1 — Stress → Surplus Depletion → Decay:**
+```
+S ↑ → τ ↓ → D ↑ → R ↑ (reactive mode)
+```
+Rising stress exhausts capacity. As reserves deplete, deliberative mode is lost and decay accelerates.
+
+**Path 2 — Isolation → Cognitive Overreach → Decay:**
+```
+B̄ ↓ → ε ↑ → τ ↓ (via overreach erosion) → D ↑
+```
+Network fragmentation forces nodes into isolation. Isolated nodes develop internal abstract solutions that erode actual capacity.
+
+**Path 3 — Network Collapse Feedback (Nonlinear Amplification):**
+```
+D ↑ → (ε_{t+1}, τ_{t+1} feedback) → D ↑↑
+```
+Once thresholds are crossed, decay self-amplifies. Small shocks produce large responses.
+
+---
+
+### 6b.7 Recovery Impossibility Boundary
+
+**Irreversibility threshold:**
+```
+IF: (τ < 0.6) AND (Bond loss > 40%)
+THEN: D > 6 — recovery probability → 0 even with energy influx
+```
+
+**Historical validations:**
+- Rome (late 4th century): τ < 0.6; >40% bond loss
+- France (1789): τ ≈ 0.55; structural fragmentation
+- XXU (terminal phase): τ < 0.5; complete network dissolution
+
+---
+
+## SECTION 6c — PHASE SPACE (formalised v0.9, Jan 2026)
+
+Four phases describe the complete lifecycle of a society's systemic health. Phase assignment is determined primarily by D and confirmed by τ, ε, and B̄/B̄₀.
+
+### Phase 1: High Integration (Stable Equilibrium)
+
+```
+Conditions: ε ∈ [0.9, 1.1] AND τ > 1.4 AND B̄/B̄₀ > 0.95
+D ≤ 1
+```
+
+Characteristics: Coherent planning; strong surplus capacity; intact network integration; low bifurcation risk; system absorbs perturbations without phase change.
+
+### Phase 2: Brittle Sophistication (Unstable Equilibrium)
+
+```
+Conditions: ε > 1.15 (rising) AND τ ∈ [1.2, 1.4] (declining) AND B̄: −5% to −15% loss
+2 < D < 4
+```
+
+Characteristics: Cognitive overreach begins; institutional elaboration increases; surplus capacity declining but still present; network beginning to thin.
+**Early warning signature:** D > 2.
+
+**Risk profile:** Stable but fragile. Margin for error shrinks.
+
+### Phase 3: Critical Slowing (Bifurcation Onset)
+
+```
+Conditions: ε > 1.3 (peak) AND τ ≈ 1.0 AND R rising sharply AND recovery time variance increasing
+4 < D < 6
+```
+
+Characteristics: Approaching metabolic minimum; cognitive overreach at peak; recovery from shocks takes longer; reactive mode dominant.
+**Bifurcation point:** D ≥ 6 (reversibility lost).
+
+**Risk profile:** Critical slowing — shocks produce disproportionate responses. Recovery trajectory unpredictable.
+
+### Phase 4: Fragmentation / Dissociative Equilibrium (Breakdown)
+
+```
+Conditions: [ε > 1.4 (hollow) OR ε < 1.0 (collapsed)] AND τ < 0.7 AND B̄/B̄₀ < 0.7
+D > 7
+```
+
+Characteristics: Network disintegration; nodes operate independently; abstraction either hollow or collapsed; severe metabolic constraint.
+**Irreversibility:** >40% bond loss means recovery is not possible.
+
+**Historical signatures:** Rome (late 4th century), France (1789–1795), XXU (terminal phase).
+
+---
+
 ## SECTION 7 — TIMESCALE PARTITIONS
 
 ### 7.1 v3.0 partition (Mar 13 2026)
@@ -864,12 +1183,12 @@ This section aggregates all explicitly flagged conflicts from across the record.
 | # | Conflict | Source A | Source B | Resolution |
 |---|---|---|---|---|
 | 1 | Bond Strength worked example | Written result: 10.8 | Formula + code implies: ~3.26 | **Unresolved — 10.8 appears erroneous** |
-| 2 | Stress scale convention | −10 to 0 (negative) | Positive-up convention | **CAMS-CANONICAL.md resolves: −10 to 0** |
-| 3 | Stress prose vs scale | "Positive stress penalises" | Scale is −10 to 0 | **Internal inconsistency; canonical scale governs** |
+| 2 | Stress scale convention | −10 to 0 (CAMS-CANONICAL.md) | 1–10 positive (CAMS-CAN-GEMINI.md RD-001) | **⚠ LIVE CONFLICT: RD-001 formally resolves to positive 1–10 (Nov 2025), but CAMS-CANONICAL.md still states −10 to 0. Positive convention is operationally implemented; CAMS-CANONICAL.md requires update.** |
+| 3 | Stress prose vs scale | "Positive stress penalises" | Scale was −10 to 0 | **Resolved by RD-001: positive convention adopted Nov 2025** |
 | 4 | Fourth metric name | "Impact" (early) | "Abstraction" (standard) | **Abstraction is canonical** |
 | 5 | Node Value form | Multiplicative (Feb 2025 formal) | Additive (all subsequent) | **Additive is canonical** |
 | 6 | Node Value Abstraction weight | Generic w | Fixed 0.5 | **0.5 is canonical** |
-| 7 | Bond Strength formula family | Weighted sum / Coherence+Abstraction | Product / exponential / distance forms | **Canonical: product form in CAMS-CANONICAL.md** |
+| 7 | Bond Strength formula family | Weighted sum / product form (CAMS-CANONICAL.md) | Exponential stress penalty (CAMS-CAN-GEMINI.md) | **⚠ LIVE CONFLICT: Two current canonical documents use different Bond Strength families. Not yet resolved.** |
 | 8 | Bond Strength range | B_ij ∈ [0,1] (architecture doc) | Values > 1 in datasets and trigger rules | **[0,1] applies only to normalised variants** |
 | 9 | System Health form | ≥ 5 distinct H(t) formulas | — | **CAMS-CANONICAL.md ratio-form governs** |
 | 10 | Cognition operator | A/C | A×C | (C×A)/(1+S) | **Context-dependent; soul-reading uses A×C** |
@@ -945,13 +1264,69 @@ Risk(t) = CA(t) × (1 / H(t))
 
 ---
 
-## SECTION 12 — OPEN DECISIONS (from CAMS-CANONICAL.md)
+## SECTION 12 — DECISION REGISTER
 
-1. Final Bond Strength denominator convention (signed vs absolute values)
-2. Whether External Environment remains annotation-only permanently
-3. Whether confidence scores become mandatory in all scored records
-4. Whether ontology mappings should be standardised in a separate companion file
-5. Resolution of κ(t) direction conflict (B/ω vs ω/B) in the Kuramoto bridge
+### Open Decisions
+
+**OD-001: Final Bond Strength Equation**
+Status: Under final confirmation. Options: (1) Finalise exponential form `B_ij = [0.6×(C_i×C_j) + 0.4×(A_i×A_j)] × exp(−λ·(S_i+S_j)/20)`; (2) Retain denominator form from CAMS-CANONICAL.md; (3) Explore Dirichlet or other normalisation forms. Decision required before v1.0-final. Owner: Kari McKern.
+
+**OD-002: External Environment Node Status**
+Status: Currently "contextual only." Options: (1) Keep as exogenous context layer; (2) Elevate to Node 9 in v1.1 (requires formula extensions); (3) Create separate Environment Metrics subsystem. Decision required before v1.1 planning. Owner: Kari McKern.
+
+**OD-003: Confidence Score Requirement**
+Status: Recommended but optional. Options: (1) Mandatory in all records from v1.0-final; (2) Keep optional; (3) Create tiered framework (High / Medium / Low / Very Low). Decision required before v1.0-final. Owner: Kari McKern.
+
+**OD-004: Ontology Standardisation**
+Status: Not yet formalised. Options: (1) Create separate CAMS-Ontology.md with node mapping examples for 50+ societies; (2) Embed in main reference; (3) Maintain separate examples folder. Decision required before v1.0-final. Owner: Kari McKern.
+
+**OD-005: κ(t) direction conflict**
+Status: Unresolved. v3.1 contains both B/ω and ω/B as definitions of the same operator. Requires explicit selection and deletion of incorrect form.
+
+**OD-006: CAMS-CANONICAL.md Stress convention update**
+Status: Urgent. CAMS-CANONICAL.md still states Stress scale as −10 to 0, conflicting with the formally resolved positive convention (RD-001, Nov 2025). CAMS-CANONICAL.md requires updating to reflect the resolved decision.
+
+### Resolved Decisions
+
+**RD-001: Stress Metric Sign Convention (November 2025)**
+Decision: Stress is always positive (1–10 range). Resilience is captured through system-level dynamics (bond strength, abstraction evolution), not via negative encoding. Rationale: eliminates thermodynamic inconsistency; aligns with physical interpretation of stress as load/pressure. Implementation: all scoring post-November 2025 uses positive Stress only.
+
+**RD-002: Eight-Node Canonical Model (July 2025)**
+Decision: Adopt eight functional nodes as canonical, superseding the earlier ten-node variant. Nodes: Executive, Army, Knowledge, Property, Trades, Labor, Memory, Commerce. Rationale: parsimony and functional completeness across 32+ societies.
+
+---
+
+## SECTION 13 — VERSION HISTORY
+
+This section records the formal version history as documented in CAMS-CAN-GEMINI.md. It supersedes the informal dating in the Appendix lineage table where they conflict.
+
+**v0.1-draft — September 2024**
+Framework origin; foundational definitions established. Node architecture proposed (eight primary nodes). Four canonical metrics defined. Node Value formula introduced. Initial scoring on 8 test societies.
+
+**v0.5 — July 2025**
+State space formalisation begun. Eight-node canonical architecture confirmed (RD-002, superseding earlier ten-node variant).
+
+**v0.6 — August 2025**
+CAMS-CAN applications developed for corporate foresight: Boeing (supply chain fragmentation), GM (labour ecosystem stress modelling), BYD (capacity planning under geopolitical constraint), Tesla (supply chain and labour cohesion analysis).
+
+**v0.7 — September 2025**
+Thermodynamic formalisation initiated. τ (Affective Tone), ε (Cognitive Style Ratio), and R (Mode Ratio) introduced. CAMS-CAN terminology standardised (eliminated inconsistencies between "Helm/Executive" dual naming, etc.).
+
+**v0.8 — November 2025**
+Critical correction: Stress metric sign convention clarified (RD-001). Stress is always positive (1–10). Resilience captured in system dynamics, not negative stress encoding. Fixes thermodynamic inconsistency identified in October 2025 review.
+
+**v0.9 — January 2026**
+Thermodynamic formalisation completed. Critical Slowing and Bifurcation thresholds documented. 32+ society validation dataset completed. Michael Hudson debt-militarisation analysis completed.
+
+**v1.0-RC1 — 8 April 2026**
+Final refinement before v1.0 release. Confirmed eight-node canonical architecture. Confirmed NV = C + K − S + 0.5A. Finalised thermodynamic formalisation (τ, ε, R). Finalised Decay Index (D) with phase thresholds. Confirmed dynamical equations for τ and ε evolution. Marked Bond Strength algebra for final confirmation (denominator pending). Established irreversibility boundary: D ≥ 6, Bond Loss > 40%. Documented all observed numerical thresholds from 32+ dataset validation.
+
+**Pending before v1.0-final:**
+- Final confirmation of Bond Strength equation
+- Empirical recalibration of Decay Index weights
+- Decision on External Environment node status
+- Finalisation of confidence score requirements
+- Update CAMS-CANONICAL.md to reflect positive Stress convention (RD-001)
 
 ---
 
@@ -981,6 +1356,7 @@ Risk(t) = CA(t) × (1 / H(t))
 | Mar 2026 | MARKER001 audit | Code confirms NV; graph-based BS | Corroborative |
 | Mar 2026 | Pasted text / fluid bridge | Reynolds analogue; ξ conflict | Research branch |
 | Apr 2026 | CAMS-CANONICAL.md v1.0-RC1 | Full canonical specification | **CURRENT CANONICAL** |
+| Apr 2026 | CAMS-CAN-GEMINI.md v1.0-RC1 | Parallel canonical reference; positive Stress convention; thermodynamic τ/ε/R/D framework; phase space; exponential Bond Strength penalty | **Operationally implemented; conflicts with CAMS-CANONICAL.md on Stress convention and Bond Strength form** |
 
 ---
 
