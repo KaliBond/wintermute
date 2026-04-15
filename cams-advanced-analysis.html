@@ -120,6 +120,7 @@
             <button class="tab-btn active" onclick="showTab('dig',this)">📊 dDIG Analysis</button>
             <button class="tab-btn" onclick="showTab('dyad',this)">🌀 Dyad Fields</button>
             <button class="tab-btn" onclick="showTab('attractor',this)">🌌 Phase Attractor</button>
+            <button class="tab-btn" onclick="showTab('subbrain',this)">🧠 Subbrain Activation</button>
         </div>
 
         <!-- ── dDIG tab ── -->
@@ -217,6 +218,16 @@
             <div id="plot-density" style="height:460px;"></div>
             <h3 class="section-title">Phase Velocity</h3>
             <div id="plot-velocity" style="height:300px;"></div>
+        </div>
+
+        <!-- ── Subbrain Activation tab ── -->
+        <div id="tab-subbrain" class="tab-panel">
+            <div class="notice">
+                <strong>Subbrain Node Activation</strong> shows per-node activation (Capacity − Stress) over the
+                last 25 years. Bubble <em>size</em> = activation magnitude · bubble <em>colour</em> = Coherence ·
+                bubble <em>opacity</em> = relative Coherence. Use Play / Pause and the year slider to animate.
+            </div>
+            <div id="plot-subbrain" style="height:560px;"></div>
         </div>
     </div>
 </div>
@@ -396,6 +407,7 @@ function onDataLoaded(autoTab = 'dyad') {
     if (btn) showTab(autoTab, btn);
     renderDyad();
     renderAttractor();
+    renderSubbrain();
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -905,6 +917,132 @@ function renderAttractor() {
             paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'#f8f5ff', height:280,
         }, { responsive:true });
     }
+}
+
+// ══════════════════════════════════════════════════════════════
+// RENDER — Subbrain Activation (animated bubble chart, last 25 years)
+// ══════════════════════════════════════════════════════════════
+function renderSubbrain() {
+    if (!DS) return;
+
+    const SIZE_SCALE = 25, SIZE_BASE = 22;
+    const MIN_OPACITY = 0.6, MAX_OPACITY = 1.0;
+
+    // Last 25 years
+    const years = DS.years.slice(-25);
+    const nodes = DS.nodes;
+
+    // Flatten into rows
+    const rows = [];
+    for (const yr of years) {
+        for (const node of nodes) {
+            const coherence  = DS.wide[yr]?.[`Coherence_${node}`];
+            const capacity   = DS.wide[yr]?.[`Capacity_${node}`];
+            const stress     = DS.wide[yr]?.[`Stress_${node}`];
+            if (coherence == null || capacity == null || stress == null) continue;
+            if (isNaN(coherence) || isNaN(capacity) || isNaN(stress)) continue;
+            rows.push({ Year: yr, Node: node, Coherence: coherence,
+                        Capacity: capacity, Stress: stress,
+                        Activation: capacity - stress });
+        }
+    }
+
+    if (!rows.length) {
+        document.getElementById('plot-subbrain').innerHTML =
+            '<div class="warning-box" style="margin:30px;">No valid node data found for subbrain chart.</div>';
+        return;
+    }
+
+    const cMin = Math.min(...rows.map(r => r.Coherence));
+    const cMax = Math.max(...rows.map(r => r.Coherence));
+
+    function nodeSize(act)  { return Math.max(0, act) * SIZE_SCALE + SIZE_BASE; }
+    function nodeOpacity(c) {
+        const n = cMax === cMin ? 1 : (c - cMin) / (cMax - cMin);
+        return MIN_OPACITY + (MAX_OPACITY - MIN_OPACITY) * n;
+    }
+
+    function makeTrace(yr) {
+        const fr = nodes.map(nd => rows.find(r => r.Year === yr && r.Node === nd)).filter(Boolean);
+        const maxSz = Math.max(...fr.map(r => nodeSize(r.Activation)), SIZE_BASE);
+        return {
+            type: 'scatter', mode: 'markers',
+            x: fr.map(r => r.Year),
+            y: fr.map(r => r.Node),
+            text: fr.map(r =>
+                `<b>${r.Node}</b><br>Year: ${r.Year}<br>` +
+                `Coherence: ${r.Coherence.toFixed(2)}<br>` +
+                `Capacity: ${r.Capacity.toFixed(2)}<br>` +
+                `Stress: ${r.Stress.toFixed(2)}<br>` +
+                `Activation: ${r.Activation.toFixed(2)}`),
+            hoverinfo: 'text',
+            marker: {
+                size: fr.map(r => nodeSize(r.Activation)),
+                sizemode: 'diameter',
+                sizeref: (2.0 * maxSz) / (85 ** 2),
+                color: fr.map(r => r.Coherence),
+                cmin: cMin, cmax: cMax,
+                colorscale: 'YlOrRd', reversescale: true,
+                opacity: fr.map(r => nodeOpacity(r.Coherence)),
+                line: { width: 1.8, color: 'black' },
+                colorbar: { title: { text: 'Coherence' } }
+            }
+        };
+    }
+
+    const frames = years.map(yr => ({ name: String(yr), data: [makeTrace(yr)] }));
+
+    const layout = {
+        title: {
+            text: `${DS.societyName} — Subbrain Node Activation<br>` +
+                  `<span style="font-size:12px">Size = Capacity − Stress &nbsp;|&nbsp; Colour = Coherence &nbsp;|&nbsp; Opacity = relative Coherence</span>`
+        },
+        paper_bgcolor: '#faf7f2', plot_bgcolor: '#fffdf9',
+        font: { color: '#111' },
+        height: 540,
+        margin: { l: 90, r: 40, t: 70, b: 100 },
+        xaxis: {
+            title: 'Year',
+            range: [years[0] - 0.5, years[years.length - 1] + 0.5],
+            tickmode: 'linear', dtick: 1,
+            gridcolor: 'rgba(0,0,0,0.08)'
+        },
+        yaxis: {
+            title: 'Node',
+            categoryorder: 'array',
+            categoryarray: [...nodes].reverse(),
+            gridcolor: 'rgba(0,0,0,0.06)'
+        },
+        updatemenus: [{
+            type: 'buttons', direction: 'left',
+            x: 0.1, y: -0.2, xanchor: 'left', yanchor: 'top',
+            showactive: false,
+            buttons: [
+                { label: 'Play',  method: 'animate',
+                  args: [null, { fromcurrent: true,
+                                 frame: { duration: 700, redraw: true },
+                                 transition: { duration: 250 }, mode: 'immediate' }] },
+                { label: 'Pause', method: 'animate',
+                  args: [[null], { mode: 'immediate',
+                                   frame: { duration: 0, redraw: false },
+                                   transition: { duration: 0 } }] }
+            ]
+        }],
+        sliders: [{
+            active: 0, x: 0.1, y: -0.12, len: 0.82,
+            pad: { t: 10, b: 10 },
+            currentvalue: { prefix: 'Year: ', font: { size: 14 } },
+            steps: years.map(yr => ({
+                label: String(yr), method: 'animate',
+                args: [[String(yr)], { mode: 'immediate',
+                                       frame: { duration: 0, redraw: true },
+                                       transition: { duration: 0 } }]
+            }))
+        }]
+    };
+
+    Plotly.newPlot('plot-subbrain', [makeTrace(years[0])], layout, { responsive: true })
+        .then(() => Plotly.addFrames('plot-subbrain', frames));
 }
 </script>
 </body>
