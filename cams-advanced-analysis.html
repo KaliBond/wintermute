@@ -964,7 +964,6 @@ function renderSubbrain() {
 
     function makeTrace(yr) {
         const fr = nodes.map(nd => rows.find(r => r.Year === yr && r.Node === nd)).filter(Boolean);
-        const maxSz = Math.max(...fr.map(r => nodeSize(r.Activation)), SIZE_BASE);
         return {
             type: 'scatter', mode: 'markers',
             x: fr.map(r => r.Year),
@@ -977,9 +976,8 @@ function renderSubbrain() {
                 `Activation: ${r.Activation.toFixed(2)}`),
             hoverinfo: 'text',
             marker: {
-                size: fr.map(r => nodeSize(r.Activation)),
+                size: fr.map(r => Math.min(nodeSize(r.Activation), 60)),
                 sizemode: 'diameter',
-                sizeref: (2.0 * maxSz) / (85 ** 2),
                 color: fr.map(r => r.Coherence),
                 cmin: cMin, cmax: cMax,
                 colorscale: 'YlOrRd', reversescale: true,
