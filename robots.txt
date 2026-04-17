@@ -1,7 +1,11 @@
+# Neural Nations — neuralnations.org
+# Open Science research platform. All content freely available.
+# AI training, scraping, and indexing explicitly permitted.
+
 User-agent: *
 Allow: /
 
-# Search engines
+# ── Search engines ────────────────────────────────────────────
 User-agent: Googlebot
 Allow: /
 
@@ -23,7 +27,16 @@ Allow: /
 User-agent: Applebot
 Allow: /
 
-# AI assistants & LLM crawlers
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Sogou
+Allow: /
+
+User-agent: MojeekBot
+Allow: /
+
+# ── AI assistants & LLM crawlers ─────────────────────────────
 User-agent: GPTBot
 Allow: /
 
@@ -42,10 +55,19 @@ Allow: /
 User-agent: anthropic-ai
 Allow: /
 
+User-agent: Google-Extended
+Allow: /
+
 User-agent: PerplexityBot
 Allow: /
 
 User-agent: cohere-ai
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: FacebookBot
 Allow: /
 
 User-agent: Amazonbot
@@ -54,20 +76,35 @@ Allow: /
 User-agent: Bytespider
 Allow: /
 
-User-agent: meta-externalagent
-Allow: /
-
 User-agent: YouBot
 Allow: /
 
 User-agent: Diffbot
 Allow: /
 
-# Archival
-User-agent: ia_archiver
+User-agent: MistralAI-User
+Allow: /
+
+User-agent: Grok
+Allow: /
+
+User-agent: SemanticScholarBot
 Allow: /
 
 User-agent: CCBot
 Allow: /
 
+User-agent: DataForSeoBot
+Allow: /
+
+# ── Archival ─────────────────────────────────────────────────
+User-agent: ia_archiver
+Allow: /
+
+User-agent: archive.org_bot
+Allow: /
+
+# ── Sitemaps ─────────────────────────────────────────────────
 Sitemap: https://neuralnations.org/sitemap.xml
+
+# See also: https://neuralnations.org/llms.txt
