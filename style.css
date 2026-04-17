@@ -96,7 +96,7 @@ body {
 .nav-dropdown-menu {
     display: none;
     position: absolute;
-    top: calc(100% + 10px);
+    top: calc(100% + 4px);
     left: 50%;
     transform: translateX(-50%);
     background: white;
@@ -107,11 +107,20 @@ body {
     z-index: 2000;
     animation: navDropIn 0.18s cubic-bezier(0.4,0,0.2,1) forwards;
 }
+/* Invisible bridge fills the gap so the mouse doesn't lose hover */
+.nav-dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 0;
+    right: 0;
+    height: 12px;
+}
 @keyframes navDropIn {
-    from { opacity:0; transform: translateX(-50%) translateY(-8px); }
+    from { opacity:0; transform: translateX(-50%) translateY(-6px); }
     to   { opacity:1; transform: translateX(-50%) translateY(0); }
 }
-.nav-dropdown:hover .nav-dropdown-menu { display: block; }
+.nav-dropdown.open .nav-dropdown-menu { display: block; }
 .nav-dropdown-menu a {
     display: block; padding: 9px 14px; color: #374151;
     text-decoration: none; font-size: 0.875em; font-weight: 500;
