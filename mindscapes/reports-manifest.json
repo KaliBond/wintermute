@@ -1,0 +1,70 @@
+{
+  "generated": "2026-04-17",
+  "version": "3.2-R.2-VA",
+  "reports": [
+    {
+      "id": "france-2026",
+      "country": "France",
+      "flag": "🇫🇷",
+      "period": "2024–2026",
+      "generated": "2026-04-17",
+      "dataset": "France_1900_2026_cleaned.csv",
+      "classification": "Paralyzed Sophist",
+      "classification_tier": "strained",
+      "exec_phrase": "The Library remembers perfectly; the Temple has lost its congregation; the King cannot be heard.",
+      "file": "mindscapes/France_2026_CAMS_Report.html",
+      "metrics": {
+        "M": 7.67,
+        "Y": 57.92,
+        "headroom": -0.04,
+        "sys_sigma": -2.39,
+        "theta": 2.8,
+        "lambda": 3.13
+      },
+      "node_sigmas": {
+        "Helm": -99.0,
+        "Shield": -21.0,
+        "Archive": 297.0,
+        "Lore": -62.2,
+        "Stewards": 21.0,
+        "Craft": 72.0,
+        "Hands": -37.3,
+        "Flow": 51.1
+      },
+      "strongest": ["Archive", "Craft", "Flow"],
+      "weakest": ["Helm", "Lore"]
+    },
+    {
+      "id": "norway-2026",
+      "country": "Norway",
+      "flag": "🇳🇴",
+      "period": "2023–2025",
+      "generated": "2026-04-17",
+      "dataset": "norway_gem_jan.csv",
+      "classification": "Institutionally Excellent, Civilisationally Complacent",
+      "classification_tier": "stable",
+      "exec_phrase": "The Library, Workshop, and Agora are luminous; the King is silent; the Temple whispers to itself.",
+      "file": "mindscapes/Norway_2026_CAMS_Report.html",
+      "metrics": {
+        "M": 5.42,
+        "Y": 73.05,
+        "headroom": 3.71,
+        "sys_sigma": 270.88,
+        "theta": 1.2,
+        "lambda": 2.81
+      },
+      "node_sigmas": {
+        "Helm": -56.0,
+        "Shield": 63.0,
+        "Archive": 540.0,
+        "Lore": -18.7,
+        "Stewards": 98.0,
+        "Craft": 540.0,
+        "Hands": 18.7,
+        "Flow": 700.0
+      },
+      "strongest": ["Flow", "Archive", "Craft"],
+      "weakest": ["Helm", "Lore"]
+    }
+  ]
+}

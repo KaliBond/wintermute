@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindscapes — CAMS National Mood Reports · Neural Nations</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { overflow-x: hidden; }
+
+        /* ── Page shell ── */
+        .page-shell { display: flex; flex-direction: column; min-height: 100vh; }
+
+        /* ── Hero ── */
+        .ms-hero {
+            text-align: center;
+            padding: 52px 20px 36px;
+            color: white;
+        }
+        .ms-hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3em;
+            font-weight: 600;
+            margin: 0 0 10px;
+            color: white;
+            text-align: center;
+            letter-spacing: -.02em;
+        }
+        .ms-hero p {
+            font-size: 1.05em;
+            color: rgba(255,255,255,0.8);
+            max-width: 580px;
+            margin: 0 auto 28px;
+            line-height: 1.7;
+        }
+
+        /* ── Filter bar ── */
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 36px;
+        }
+        .filter-btn {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78em;
+            font-weight: 600;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            padding: 7px 18px;
+            border: 1.5px solid rgba(255,255,255,0.35);
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.85);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all .2s;
+        }
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: rgba(255,255,255,0.22);
+            border-color: rgba(255,255,255,0.7);
+            color: white;
+        }
+
+        /* ── Main content area ── */
+        .ms-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px 60px;
+            width: 100%;
+        }
+
+        /* ── Report cards grid ── */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 22px;
+        }
+
+        .report-card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 14px;
+            padding: 24px 26px;
+            box-shadow: 0 6px 28px rgba(0,0,0,0.18);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            transition: transform .18s, box-shadow .18s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        .report-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 36px rgba(0,0,0,0.22);
+        }
+        .report-card[data-hidden="true"] { display: none; }
+
+        /* Card header */
+        .card-head {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .card-flag { font-size: 2.2em; line-height: 1; flex-shrink: 0; }
+        .card-title { flex: 1; min-width: 0; }
+        .card-title h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6em;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin: 0 0 2px;
+        }
+        .card-period {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.74em;
+            color: #999;
+            font-weight: 500;
+            letter-spacing: .04em;
+        }
+        .badge {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.68em;
+            font-weight: 700;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 12px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            align-self: flex-start;
+            margin-top: 2px;
+        }
+        .badge-resilient  { background: #d1fae5; color: #065f46; }
+        .badge-stable     { background: #dbeafe; color: #1e40af; }
+        .badge-functional { background: #e0f2fe; color: #0369a1; }
+        .badge-strained   { background: #fef3c7; color: #92400e; }
+        .badge-critical   { background: #fee2e2; color: #991b1b; }
+
+        /* Exec phrase */
+        .exec-phrase {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 0.97em;
+            color: #374151;
+            border-left: 3px solid #764ba2;
+            padding: 8px 12px;
+            background: #faf7ff;
+            border-radius: 0 6px 6px 0;
+            line-height: 1.55;
+        }
+
+        /* Sigma bars */
+        .sigma-section { }
+        .sigma-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.68em;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: #aaa;
+            margin-bottom: 7px;
+        }
+        .sigma-bars {
+            display: flex;
+            gap: 3px;
+            align-items: flex-end;
+            height: 40px;
+        }
+        .sigma-bar-wrap {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            height: 100%;
+            justify-content: flex-end;
+        }
+        .sigma-bar {
+            width: 100%;
+            border-radius: 2px 2px 0 0;
+            min-height: 2px;
+        }
+        .sigma-bar.pos { background: #059669; }
+        .sigma-bar.neg { background: #dc2626; border-radius: 0 0 2px 2px; }
+        .sigma-node-lbl {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6em;
+            color: #bbb;
+            white-space: nowrap;
+            margin-top: 3px;
+        }
+
+        /* Metrics strip */
+        .metrics-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        .metric-cell {
+            text-align: center;
+            background: #f9fafb;
+            border-radius: 7px;
+            padding: 7px 4px;
+        }
+        .metric-cell .m-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.62em;
+            font-weight: 600;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            color: #aaa;
+            display: block;
+        }
+        .metric-cell .m-val {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95em;
+            font-weight: 700;
+            color: #1a1a2e;
+            display: block;
+            margin-top: 2px;
+        }
+        .metric-cell .m-val.pos { color: #059669; }
+        .metric-cell .m-val.neg { color: #dc2626; }
+
+        /* View button */
+        .view-btn {
+            display: block;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82em;
+            font-weight: 600;
+            transition: opacity .15s;
+            margin-top: auto;
+        }
+        .view-btn:hover { opacity: .88; }
+
+        /* ── Generate CTA card ── */
+        .generate-card {
+            background: rgba(255,255,255,0.12);
+            border: 2px dashed rgba(255,255,255,0.3);
+            border-radius: 14px;
+            padding: 24px 26px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 12px;
+            color: white;
+            min-height: 200px;
+        }
+        .generate-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4em;
+            color: white;
+            margin: 0;
+        }
+        .generate-card p {
+            font-size: 0.82em;
+            color: rgba(255,255,255,0.7);
+            margin: 0;
+            max-width: 240px;
+            line-height: 1.6;
+        }
+        .generate-card code {
+            font-size: 0.75em;
+            background: rgba(0,0,0,0.25);
+            padding: 6px 12px;
+            border-radius: 6px;
+            color: rgba(255,255,255,0.9);
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            text-align: left;
+        }
+
+        /* ── Empty state ── */
+        #empty-state {
+            display: none;
+            text-align: center;
+            color: rgba(255,255,255,0.6);
+            padding: 60px 20px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2em;
+            font-style: italic;
+        }
+
+        /* ── Loading ── */
+        #loading-msg {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            padding: 40px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+<div class="page-shell">
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">Neural Nations</a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Research &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="research-diary.html">Research Diary</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <hr class="menu-divider">
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                </div>
+            </div>
+            <a href="mindscapes.html" class="nav-link active">Mindscapes</a>
+            <a href="https://github.com/KaliBond/wintermute" class="nav-link" target="_blank">GitHub</a>
+            <a href="newsletter.html" class="nav-link">Newsletter</a>
+        </div>
+    </div>
+</nav>
+
+<div class="ms-hero">
+    <h1>Mindscapes</h1>
+    <p>CAMS National Mood, Vision&ndash;Affect, and Mythic Attractor Reports &mdash; each one a structural portrait of a living civilisation, generated from the node data and grounded in the metrics.</p>
+
+    <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterCards('all', this)">All</button>
+        <button class="filter-btn" onclick="filterCards('resilient', this)">Resilient</button>
+        <button class="filter-btn" onclick="filterCards('stable', this)">Stable</button>
+        <button class="filter-btn" onclick="filterCards('strained', this)">Strained</button>
+        <button class="filter-btn" onclick="filterCards('critical', this)">Critical</button>
+    </div>
+</div>
+
+<div class="ms-main">
+    <div id="loading-msg">Loading reports&hellip;</div>
+    <div class="cards-grid" id="cards-grid" style="display:none;"></div>
+    <div id="empty-state">No reports match the current filter.</div>
+</div>
+
+</div><!-- /.page-shell -->
+
+<script>
+// ── Sigma bar mini-chart ──────────────────────────────────────────────────────
+const NODE_ABBR = { Helm:'Hm', Shield:'Sh', Archive:'Ar', Lore:'Lo', Stewards:'St', Craft:'Cr', Hands:'Ha', Flow:'Fl' };
+const NODE_ORDER = ['Helm','Shield','Archive','Lore','Stewards','Craft','Hands','Flow'];
+
+function sigmaBars(sigmas) {
+    if (!sigmas) return '';
+    const vals = NODE_ORDER.map(n => sigmas[n] ?? 0);
+    const maxAbs = Math.max(...vals.map(Math.abs), 1);
+    const MAX_PX = 32;
+
+    return `<div class="sigma-section">
+        <div class="sigma-label">Node Sigma (&sigma;) — affective activation</div>
+        <div class="sigma-bars">
+        ${NODE_ORDER.map((n, i) => {
+            const v = vals[i];
+            const h = Math.round(Math.abs(v) / maxAbs * MAX_PX);
+            const cls = v >= 0 ? 'pos' : 'neg';
+            return `<div class="sigma-bar-wrap">
+                <div class="sigma-bar ${cls}" style="height:${Math.max(h,2)}px" title="${n}: σ=${v.toFixed(1)}"></div>
+                <span class="sigma-node-lbl">${NODE_ABBR[n]}</span>
+            </div>`;
+        }).join('')}
+        </div>
+    </div>`;
+}
+
+// ── Badge helper ──────────────────────────────────────────────────────────────
+function badge(tier, label) {
+    const cls = {
+        resilient: 'badge-resilient', stable: 'badge-stable',
+        functional: 'badge-functional', strained: 'badge-strained',
+        critical: 'badge-critical',
+    }[tier] || 'badge-strained';
+    // Truncate long labels
+    const short = label.length > 28 ? label.slice(0, 26) + '…' : label;
+    return `<span class="badge ${cls}" title="${label}">${short}</span>`;
+}
+
+// ── Metric cell ───────────────────────────────────────────────────────────────
+function metricCell(label, val, isSignal = false) {
+    const num = typeof val === 'number' ? val : parseFloat(val);
+    const cls = isSignal ? (num >= 0 ? 'pos' : 'neg') : '';
+    const display = isNaN(num) ? '—' : num.toFixed(2);
+    return `<div class="metric-cell">
+        <span class="m-label">${label}</span>
+        <span class="m-val ${cls}">${display}</span>
+    </div>`;
+}
+
+// ── Build one card ────────────────────────────────────────────────────────────
+function buildCard(r) {
+    const m = r.metrics || {};
+    return `<a class="report-card" href="${r.file}" data-tier="${r.classification_tier || 'strained'}">
+        <div class="card-head">
+            <span class="card-flag">${r.flag || '🌐'}</span>
+            <div class="card-title">
+                <h3>${r.country}</h3>
+                <span class="card-period">${r.period} &nbsp;·&nbsp; ${r.generated}</span>
+            </div>
+            ${badge(r.classification_tier, r.classification)}
+        </div>
+        <div class="exec-phrase">&ldquo;${r.exec_phrase}&rdquo;</div>
+        ${sigmaBars(r.node_sigmas)}
+        <div class="metrics-strip">
+            ${metricCell('M(t)', m.M)}
+            ${metricCell('Y(t)', m.Y)}
+            ${metricCell('Headroom', m.headroom, true)}
+            ${metricCell('Σ sigma', m.sys_sigma, true)}
+        </div>
+        <span class="view-btn">Read Report &rarr;</span>
+    </a>`;
+}
+
+// ── Generate CTA card ─────────────────────────────────────────────────────────
+function generateCard() {
+    return `<div class="generate-card">
+        <div style="font-size:2em;">⊕</div>
+        <h3>Generate a Report</h3>
+        <p>Run the pipeline on any CAMS dataset to produce a new Mindscapes report.</p>
+        <code>python mindscapes/generate_report.py &lt;csv&gt;</code>
+        <a href="https://github.com/KaliBond/wintermute/blob/main/mindscapes/generate_report.py"
+           target="_blank" style="color:rgba(255,255,255,0.7);font-size:0.75em;font-family:Inter,sans-serif;">
+           View pipeline on GitHub &rarr;
+        </a>
+    </div>`;
+}
+
+// ── Filter ────────────────────────────────────────────────────────────────────
+let currentFilter = 'all';
+
+function filterCards(tier, btn) {
+    currentFilter = tier;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const cards = document.querySelectorAll('.report-card');
+    let visible = 0;
+    cards.forEach(c => {
+        const show = tier === 'all' || c.dataset.tier === tier;
+        c.dataset.hidden = show ? 'false' : 'true';
+        if (show) visible++;
+    });
+    document.getElementById('empty-state').style.display = visible === 0 ? 'block' : 'none';
+}
+
+// ── Load manifest & render ────────────────────────────────────────────────────
+async function loadReports() {
+    const grid    = document.getElementById('cards-grid');
+    const loading = document.getElementById('loading-msg');
+
+    try {
+        const res  = await fetch('mindscapes/reports-manifest.json', { cache: 'no-store' });
+        const data = await res.json();
+        loading.style.display = 'none';
+        grid.style.display    = 'grid';
+
+        const html = (data.reports || []).map(buildCard).join('') + generateCard();
+        grid.innerHTML = html;
+    } catch (err) {
+        console.error('Failed to load manifest:', err);
+        loading.innerHTML = `
+            <p style="color:rgba(255,255,255,0.6)">Could not load reports manifest.</p>
+            <p style="font-size:.8em;color:rgba(255,255,255,0.4)">Run <code>generate_report.py</code> to create the first report.</p>`;
+    }
+}
+
+loadReports();
+</script>
+</body>
+</html>
