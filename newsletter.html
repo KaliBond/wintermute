@@ -3,95 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complex Adaptive Humans - Neural Nations</title>
+    <title>Complex Adaptive Humans — Newsletter · Neural Nations</title>
+    <meta name="description" content="Complex Adaptive Humans — a LinkedIn newsletter by Kari McKern on CAMS, complexity science, and civilisational analysis. 108 subscribers.">
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .newsletter-header {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 30px;
+        .nl-shell {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+
+        /* Hero */
+        .nl-hero {
+            background: rgba(255,255,255,0.96);
+            border-radius: 12px;
+            padding: 48px 56px 40px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+            margin-bottom: 28px;
             text-align: center;
         }
-        .newsletter-issue {
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid #3498db;
+        .nl-series {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72em;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #7c3aed;
+            margin-bottom: 12px;
         }
-        .issue-header {
-            display: flex;
-            justify-content: space-between;
+        .nl-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8em;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin: 0 0 10px;
+            letter-spacing: -0.02em;
+        }
+        .nl-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.15em;
+            color: #666;
+            margin: 0 0 22px;
+        }
+        .nl-meta {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8em;
+            color: #aaa;
+            margin-bottom: 24px;
+        }
+        .nl-meta strong { color: #555; }
+        .li-subscribe {
+            display: inline-flex;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid rgba(52, 152, 219, 0.2);
-        }
-        .issue-number {
-            background: #3498db;
+            gap: 8px;
+            background: #0a66c2;
             color: white;
-            padding: 8px 16px;
+            padding: 10px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: background 0.15s;
+        }
+        .li-subscribe:hover { background: #004182; }
+
+        /* Issue cards */
+        .issues-heading {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72em;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.55);
+            margin: 0 0 14px;
+        }
+
+        .issue-card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 10px;
+            padding: 28px 32px;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.13);
+            display: flex;
+            align-items: flex-start;
+            gap: 22px;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .issue-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+        }
+
+        .issue-num {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72em;
+            font-weight: 700;
+            background: #ede9fe;
+            color: #5b21b6;
+            padding: 4px 11px;
             border-radius: 20px;
-            font-weight: bold;
+            white-space: nowrap;
+            flex-shrink: 0;
+            margin-top: 3px;
         }
+
+        .issue-body { flex: 1; min-width: 0; }
         .issue-date {
-            color: #7f8c8d;
-            font-weight: bold;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75em;
+            color: #bbb;
+            margin-bottom: 5px;
         }
-        .article {
-            margin-bottom: 25px;
-            padding: 20px;
-            background: rgba(52, 152, 219, 0.05);
-            border-radius: 10px;
+        .issue-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin: 0 0 7px;
+            line-height: 1.25;
         }
-        .article h3 {
-            color: #2980b9;
-            margin-bottom: 10px;
+        .issue-excerpt {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.96em;
+            color: #666;
+            line-height: 1.6;
+            margin: 0;
         }
-        .article h4 {
-            color: #34495e;
-            margin-top: 15px;
-            margin-bottom: 8px;
+        .issue-arrow {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82em;
+            color: #5b21b6;
+            flex-shrink: 0;
+            align-self: center;
         }
-        .highlight-box {
-            background: rgba(243, 156, 18, 0.1);
-            border-left: 4px solid #f39c12;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 0 10px 10px 0;
-        }
-        .metrics-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-        }
-        .metrics-table th,
-        .metrics-table td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid rgba(52, 152, 219, 0.2);
-        }
-        .metrics-table th {
-            background: rgba(52, 152, 219, 0.1);
-            font-weight: bold;
-        }
-        .newsletter-footer {
-            text-align: center;
-            padding: 20px;
-            background: rgba(52, 73, 94, 0.1);
-            border-radius: 10px;
-            margin-top: 30px;
-        }
-        .subscription-box {
-            background: rgba(39, 174, 96, 0.1);
-            border: 2px solid #27ae60;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            text-align: center;
+
+        @media (max-width: 600px) {
+            .nl-hero { padding: 32px 24px; }
+            .nl-title { font-size: 2em; }
+            .issue-card { padding: 20px; gap: 14px; }
+            .issue-arrow { display: none; }
         }
     </style>
 </head>
@@ -123,7 +178,7 @@
             <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
                 <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
             </a>
-            <a href="newsletter.html" class="nav-btn-newsletter">
+            <a href="newsletter.html" class="nav-btn-newsletter active">
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
             </a>
             <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
@@ -147,139 +202,56 @@
     </div>
 </nav>
 
-<div class="container">
-    <div class="newsletter-header">
-        <h1>📰 Complex Adaptive Humans</h1>
-        <p style="font-size: 1.2em; margin-bottom: 0;">Insights from the Event Horizon of Complex Systems Research</p>
-        <p style="font-style: italic; margin-top: 10px; opacity: 0.9;">"Patrolling the event horizon between the known and the unknown"</p>
-        <div style="margin-top: 20px;">
-            <a href="https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/" target="_blank" style="display: inline-block; background: #0077b5; color: white; padding: 12px 28px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 1em;">Subscribe on LinkedIn</a>
-        </div>
+<div class="nl-shell">
+
+    <div class="nl-hero">
+        <div class="nl-series">Neural Nations</div>
+        <h1 class="nl-title">Complex Adaptive Humans</h1>
+        <p class="nl-tagline">"Patrolling the event horizon between the known and the unknown"</p>
+        <p class="nl-meta">
+            By <strong>Kari McKern</strong> &nbsp;&middot;&nbsp; 108 subscribers &nbsp;&middot;&nbsp; Published on LinkedIn
+        </p>
+        <a href="https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/"
+           target="_blank" class="li-subscribe">
+            <svg fill="currentColor" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            Subscribe on LinkedIn
+        </a>
     </div>
 
-    <!-- Newsletter Issue #1 -->
-    <div class="newsletter-issue">
-        <div class="issue-header">
-            <div class="issue-number">Issue #1</div>
-            <div class="issue-date">March 9, 2025</div>
+    <p class="issues-heading">All Issues</p>
+
+    <a href="complex-adaptive-humans-3.html" class="issue-card">
+        <span class="issue-num">#3</span>
+        <div class="issue-body">
+            <div class="issue-date">September 19, 2025</div>
+            <div class="issue-title">A Physics-Based Social Science</div>
+            <p class="issue-excerpt">In the spirit of Einstein's relativity, CAMS offers quantitative tools for understanding the entropy-coordination tug-of-war at the heart of every civilisation.</p>
         </div>
+        <span class="issue-arrow">Read →</span>
+    </a>
 
-        <div class="article">
-            <h3>The Thermodynamic Pivot: From Neural Networks to Phase Transitions</h3>
-            <p><strong>Lead Story:</strong> Early CAMS research tested whether societies behave like neural networks — and the answer was illuminating precisely because the hypothesis did not hold in its original form. The neural network metaphor captured something real about institutional interaction, but the deeper mechanism turned out to be thermodynamic: societies are dissipative physical systems governed by energy surplus, entropy flows, and phase transitions.</p>
-
-            <div class="highlight-box">
-                <p>The falsification of the neural network hypothesis was the breakthrough. It forced a more rigorous foundation: CAMS v2.3 now treats societal dynamics as far-from-equilibrium thermodynamic processes, with institutional nodes as metabolic actors and collapse as a physical phase transition — not a political choice.</p>
-            </div>
-
-            <h4>What changed</h4>
-            <ul>
-                <li><strong>From:</strong> Societies as neural networks with inhibitory/excitatory node dynamics</li>
-                <li><strong>To:</strong> Societies as dissipative systems with EROEI-bounded coordination capacity</li>
-                <li><strong>Retained:</strong> 8-node network structure, bond strength, coupling index Λ, stress propagation</li>
-                <li><strong>Added:</strong> R ratio (Φ/Ψ), coordination phase space, three ontological layers (Mythic / Interface / Material)</li>
-            </ul>
-
-            <h4>Why it matters</h4>
-            <p>Grounding CAMS in thermodynamics rather than neuroscience makes the model falsifiable against physical data — energy return ratios, entropy export, free energy budgets — rather than behavioural analogy. This is what allows it to make quantitative predictions about war, revolution, and institutional collapse as phase transitions with measurable preconditions.</p>
+    <a href="complex-adaptive-humans-2.html" class="issue-card">
+        <span class="issue-num">#2</span>
+        <div class="issue-body">
+            <div class="issue-date">September 11, 2025</div>
+            <div class="issue-title">Another Demotion</div>
+            <p class="issue-excerpt">The history of science is a series of humiliations. Copernicus, Darwin, Galileo — each stripped us of centrality. The next demotion recognises that our societies are measurable systems, not sacred exceptions.</p>
         </div>
+        <span class="issue-arrow">Read →</span>
+    </a>
 
-        <div class="article">
-            <h3>📚 Introducing the Great Library Test</h3>
-            <p>We've developed a powerful new diagnostic: the <strong>Public Commitment Index (PCI)</strong> - a universal measure of civilizational health through information commons analysis.</p>
-
-            <h4>🔬 The Formula</h4>
-            <p><code style="background: rgba(52, 152, 219, 0.1); padding: 5px 10px; border-radius: 5px;">PCI = (Priests_Coherence + Priests_Capacity + StateMemory_Coherence + StateMemory_Capacity) / 4</code></p>
-
-            <h4>📊 Health Classifications</h4>
-            <ul>
-                <li><strong>PCI > 6.0:</strong> 🟢 HEALTHY - Strong public knowledge infrastructure</li>
-                <li><strong>PCI 5.0-6.0:</strong> 🟡 STRESSED - Mixed public/private access</li>
-                <li><strong>PCI 4.0-5.0:</strong> 🟠 DECLINING - Significant privatization</li>
-                <li><strong>PCI < 4.0:</strong> 🔴 CRISIS - Information apartheid</li>
-            </ul>
-
-            <p>This test reveals how societies treat knowledge as a public good versus private commodity - a critical indicator of long-term civilizational viability.</p>
+    <a href="complex-adaptive-humans-1.html" class="issue-card">
+        <span class="issue-num">#1</span>
+        <div class="issue-body">
+            <div class="issue-date">September 3, 2025</div>
+            <div class="issue-title">History as System: The Origin of CAMS</div>
+            <p class="issue-excerpt">History is a palimpsest of forgotten warnings. What if we treated societies not as metaphors for living things, but as living systems themselves?</p>
         </div>
+        <span class="issue-arrow">Read →</span>
+    </a>
 
-        <div class="article">
-            <h3>🔍 Complex Adaptive Humans: The Individual Scale</h3>
-            <p>A profound realization: if societies are neural networks, then <strong>individual humans are also complex adaptive neural networks</strong> at the cognitive level. This creates a nested hierarchy:</p>
-
-            <div style="background: rgba(155, 89, 182, 0.1); padding: 15px; border-radius: 10px; margin: 15px 0;">
-                <h4>Multi-Scale Neural Architecture</h4>
-                <ol>
-                    <li><strong>Biological neurons</strong> (millisecond timescales)</li>
-                    <li><strong>Brain networks</strong> (second timescales)</li>
-                    <li><strong>Individual behavior</strong> (minute/hour timescales)</li>
-                    <li><strong>Social role performance</strong> (day/week timescales)</li>
-                    <li><strong>Institutional dynamics</strong> (month/year timescales)</li>
-                    <li><strong>Civilizational networks</strong> (decade/century timescales)</li>
-                </ol>
-            </div>
-
-            <p>This insight opens revolutionary possibilities: Can we apply CAMS principles to personal development? Do individual "coherence," "capacity," "stress," and "abstraction" levels predict institutional effectiveness? The framework may extend from civilizational analysis to therapeutic interventions.</p>
-        </div>
-
-        <div class="article">
-            <h3>🌍 Geopolitical Implications</h3>
-            <p>Our 2025 analysis reveals concerning trends:</p>
-            <ul>
-                <li><strong>Information Commons Crisis:</strong> Many developed nations showing PCI decline due to paywall proliferation</li>
-                <li><strong>Stress Cascade Risks:</strong> Global economic uncertainty elevating institutional stress levels</li>
-                <li><strong>Adaptation Opportunities:</strong> Nations maintaining high public commitment to knowledge infrastructure show greater resilience</li>
-            </ul>
-
-            <div class="highlight-box">
-                <p><strong>Real-Time Monitoring:</strong> We're now tracking NS (Network Synchronization) and API (Adaptive Plasticity Index) across multiple nations. Early indicators suggest borderline CTD risks for some vulnerable societies in 2025.</p>
-            </div>
-        </div>
-
-        <div class="article">
-            <h3>🔬 What's Next?</h3>
-            <h4>Research Expansion</h4>
-            <ul>
-                <li>Expanding validation to 15+ diverse civilizations</li>
-                <li>Real-time monitoring of 2025-2030 predictions</li>
-                <li>Individual-level CAMS modeling pilot studies</li>
-                <li>Integration with economic and environmental data</li>
-            </ul>
-
-            <h4>Platform Development</h4>
-            <ul>
-                <li>Interactive visualisation tools — <a href="/attractors">Attractor Space</a>, <a href="/cams-coordination">Coordination Diagram</a></li>
-                <li>Public CAMS dashboard — <a href="https://cams-advanced-analysis.streamlit.app/" target="_blank">cams-advanced-analysis.streamlit.app</a></li>
-                <li>Research diary documenting ongoing discoveries</li>
-                <li>Academic publication preparation</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="newsletter-footer">
-        <h3>📧 About Complex Adaptive Humans</h3>
-        <p>Complex Adaptive Humans is published by Kari McKern on LinkedIn, exploring the intersection of complexity science, geopolitics, and technology policy. Each issue delivers insights from the "event horizon between the known and the unknown."</p>
-        <p><a href="https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/" target="_blank" style="color: #0077b5; font-weight: bold;">Subscribe on LinkedIn →</a></p>
-        
-        <p><strong>Kari McKern</strong><br>
-        Retired Career Public Servant | Librarian & IT Specialist | Geopolitical Analyst<br>
-        Former ILANET Network Services | Sydney, Australia<br>
-        Specializing in: Asian Affairs • Geopolitics • Technology Policy • Complex Systems</p>
-        
-        <div style="margin-top: 20px;">
-            <a href="mailto:kari.freyr.4@gmail.com" class="btn">Contact</a>
-            <a href="https://github.com/KaliBond/wintermute" class="btn btn-secondary">Research Repository</a>
-        </div>
-    </div>
-
-    <div style="text-align: center; margin: 2rem;">
-        <a href="index.html" class="btn-primary">Back to Home</a>
-        <a href="research.html" class="btn-secondary">Research Details</a>
-    </div>
 </div>
 
-<footer class="footer">
-    <p>&copy; 2025 Kari McKern - Neural Nations CAMS Research</p>
-</footer>
 <script src="nav.js"></script>
 </body>
 </html>
