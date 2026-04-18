@@ -140,22 +140,6 @@
         <div id="failureModes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
     </section>
 
-    <!-- MACRO TRENDS -->
-    <section>
-        <h2 class="text-lg font-serif font-bold mb-1 text-ink">Macro-Historical Trends</h2>
-        <p class="text-sm text-gray-400 mb-4">Long-run evolution of systemic value, stress, and bond strength.</p>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="bg-white p-5 rounded-3xl border border-gray-200 shadow-sm">
-                <div class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">System Value vs. Stress</div>
-                <div style="position:relative; height:260px;"><canvas id="trendChart"></canvas></div>
-            </div>
-            <div class="bg-white p-5 rounded-3xl border border-gray-200 shadow-sm">
-                <div class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">Bond Strength (Cohesion)</div>
-                <div style="position:relative; height:260px;"><canvas id="bondChart"></canvas></div>
-            </div>
-        </div>
-    </section>
-
     <!-- SYSTEM ARCHITECTURE -->
     <section>
         <h2 class="text-lg font-serif font-bold mb-1 text-ink">System Architecture <span id="archYear" class="font-mono text-gray-400 font-normal text-base">(2000)</span></h2>
@@ -168,6 +152,22 @@
             <div class="lg:col-span-2 bg-white p-5 rounded-3xl border border-gray-200 shadow-sm">
                 <div class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">Coherence vs. Stress per Node</div>
                 <div style="position:relative; height:280px;"><canvas id="barChart"></canvas></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MACRO TRENDS -->
+    <section>
+        <h2 class="text-lg font-serif font-bold mb-1 text-ink">Macro-Historical Trends</h2>
+        <p class="text-sm text-gray-400 mb-4">Long-run evolution of systemic value, stress, and bond strength.</p>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-white p-5 rounded-3xl border border-gray-200 shadow-sm">
+                <div class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">System Value vs. Stress</div>
+                <div style="position:relative; height:260px;"><canvas id="trendChart"></canvas></div>
+            </div>
+            <div class="bg-white p-5 rounded-3xl border border-gray-200 shadow-sm">
+                <div class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">Bond Strength (Cohesion)</div>
+                <div style="position:relative; height:260px;"><canvas id="bondChart"></canvas></div>
             </div>
         </div>
     </section>
