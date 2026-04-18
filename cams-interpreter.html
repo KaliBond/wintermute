@@ -288,7 +288,12 @@
 <div class="container">
     <div class="hero-section" style="text-align:center; padding: 30px 0 10px 0;">
         <h1 style="color:white; font-size:2.1rem; margin-bottom:6px;">CAMS Interpreter</h1>
-        <p style="color:rgba(255,255,255,0.85); font-size:1rem; margin:0 auto; max-width:780px; line-height:1.6;">A browser-based analytical engine for the Complex Adaptive Model of Societies. Load any of 38 national datasets — spanning contemporary states, historical civilisations, and key time periods — or enter values manually across CAMS's eight institutional pillars (Helm, Shield, Lore, Archive, Hands, Craft, Flow, Stewards).<br><br>The tool computes the full CAMS 3.0 operator suite in real time: node vitality, affect, abstraction drift, bond strength, and the Sisu activation signature. Results are presented across four analytical panels — reconstruction profile, spectral analysis, operator table, and bond network — with radar, bar, and coupling visualisations rendered directly in-browser.</p>
+        <p style="color:rgba(255,255,255,0.85); font-size:1rem; margin:0 auto; max-width:780px; line-height:1.6;">A browser-based analytical engine for the Complex Adaptive Model of Societies. Load any of 45 national datasets — spanning contemporary states, historical civilisations, and key time periods — or enter values manually across CAMS's eight institutional pillars (Helm, Shield, Lore, Archive, Hands, Craft, Flow, Stewards).<br><br>The tool computes the full CAMS 3.0 operator suite in real time: node vitality, affect, abstraction drift, bond strength, and the Sisu activation signature. Results are presented across five analytical panels — reconstruction profile, spectral analysis, operator table, bond network, and node detail — with radar, bar, and coupling visualisations rendered directly in-browser.</p>
+        <div style="margin-top:14px;">
+            <a href="cams-zeitgeist.html" style="display:inline-flex; align-items:center; gap:8px; padding:8px 20px; background:rgba(0,0,0,0.35); border:1px solid rgba(255,255,255,0.25); border-radius:20px; color:rgba(255,255,255,0.9); font-size:0.88rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseover="this.style.background='rgba(0,0,0,0.55)'" onmouseout="this.style.background='rgba(0,0,0,0.35)'">
+                Ξ Zeitgeist Detector →
+            </a>
+        </div>
     </div>
 
     <!-- Dataset Loader -->
@@ -298,45 +303,7 @@
             <div>
                 <label>Nation</label>
                 <select id="nation-select">
-                    <option value="">— select nation —</option>
-                    <option value="Athens">Athens</option>
-                    <option value="Australia">Australia</option>
-                    <option value="China">China</option>
-                    <option value="Denmark" data-file="Denmark_cleaned.csv">Denmark</option>
-                    <option value="Egypt">Egypt</option>
-                    <option value="England">England</option>
-                    <option value="Finland">Finland</option>
-                    <option value="France" data-file="France_cleaned.csv">France</option>
-                    <option value="Germany">Germany</option>
-                    <option value="Hong Kong" data-file="Hong_Kong_cleaned.csv">Hong Kong</option>
-                    <option value="India" data-file="India_cleaned.csv">India</option>
-                    <option value="Indonesia" data-file="Indonesia_cleaned.csv">Indonesia</option>
-                    <option value="Indigenous Australia">Indigenous Australia</option>
-                    <option value="Iran">Iran</option>
-                    <option value="Iraq" data-file="Iraq_cleaned.csv">Iraq</option>
-                    <option value="Israel" data-file="Israel_cleaned.csv">Israel</option>
-                    <option value="Italy">Italy</option>
-                    <option value="Japan">Japan</option>
-                    <option value="Latvia">Latvia</option>
-                    <option value="Lebanon" data-file="Lebanon_cleaned.csv">Lebanon</option>
-                    <option value="Netherlands" data-file="Netherlands_cleaned.csv">Netherlands</option>
-                    <option value="Norway">Norway</option>
-                    <option value="Pakistan" data-file="Pakistan_cleaned.csv">Pakistan</option>
-                    <option value="Palestine">Palestine</option>
-                    <option value="Philippines">Philippines</option>
-                    <option value="Roman Empire" data-file="New_Rome_Ad_5Y_Rome_0_Bce_5Ad_10Ad_15Ad_20_Ad_cleaned.csv">Roman Empire</option>
-                    <option value="Rome">Rome</option>
-                    <option value="Russia">Russia</option>
-                    <option value="Saudi Arabia">Saudi Arabia</option>
-                    <option value="Singapore">Singapore</option>
-                    <option value="South Africa">South Africa</option>
-                    <option value="Sparta">Sparta</option>
-                    <option value="Sweden">Sweden</option>
-                    <option value="Syria" data-file="Syria_cleaned.csv">Syria</option>
-                    <option value="Thailand" data-file="Thailand_1850_2025_Thailand_1850_2025_cleaned.csv">Thailand</option>
-                    <option value="Ukraine">Ukraine</option>
-                    <option value="USA">USA</option>
-                    <option value="Venezuela">Venezuela</option>
+                    <option value="">— loading datasets… —</option>
                 </select>
             </div>
             <div>
@@ -574,7 +541,11 @@ fetch('cleaned_datasets/cams_index.json')
     .then(r => r.json())
     .then(data => {
         CAMS_DATA = data;
-        setStatus('Dataset index ready — ' + Object.keys(data).length + ' nations loaded.');
+        const sel = document.getElementById('nation-select');
+        const nations = Object.keys(data).sort();
+        sel.innerHTML = '<option value="">— select nation —</option>' +
+            nations.map(n => `<option value="${n}">${n}</option>`).join('');
+        setStatus('Dataset index ready — ' + nations.length + ' nations loaded.');
     })
     .catch(e => setStatus('Index load error: ' + e.message));
 

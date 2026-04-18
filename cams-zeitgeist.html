@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMS Zeitgeist Detector — Neural Nations</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --neon: #00f0ff; --neon-purple: #d946ef; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #e0f0ff; margin: 0; }
+        .title-font { font-family: 'Space Grotesk', sans-serif; }
+        .neural-glow { text-shadow: 0 0 15px var(--neon); }
+        .zeitgeist-card { transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+        .zeitgeist-card:hover { transform: translateY(-3px); box-shadow: 0 0 22px -5px var(--neon); }
+        .gauge { position: relative; width: 110px; height: 110px; margin: 0 auto; }
+        .gauge-bg { width: 100%; height: 100%; border-radius: 50%; border: 3px solid #27272a; display: flex; align-items: center; justify-content: center; }
+        .gauge-value { font-size: 2rem; font-weight: bold; font-family: 'Space Grotesk', sans-serif; }
+
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
+        input[type=range]::-webkit-slider-runnable-track { height: 4px; background: #1e4a52; border-radius: 2px; }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 18px; height: 18px;
+            background: var(--neon); border-radius: 50%; margin-top: -7px;
+            box-shadow: 0 0 8px var(--neon); cursor: pointer;
+        }
+        select option { background: #111; color: #e0f0ff; }
+
+        #loadingOverlay {
+            position: fixed; inset: 0; background: #0a0a0a;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 9999; gap: 16px;
+        }
+        .spinner { width: 40px; height: 40px; border-radius: 50%; border: 2px solid rgba(0,240,255,0.2); border-top-color: var(--neon); animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .grounded  { border-left: 4px solid #10b981; background: rgba(16,185,129,0.06); }
+        .vital     { border-left: 4px solid #0bc5ea; background: rgba(11,197,234,0.06); }
+        .fragile   { border-left: 4px solid #f59e0b; background: rgba(245,158,11,0.06); }
+        .decoupled { border-left: 4px solid #ef4444; background: rgba(239,68,68,0.06); }
+        .collapse  { border-left: 4px solid #a855f7; background: rgba(168,85,247,0.06); }
+    </style>
+</head>
+<body class="min-h-screen pb-16">
+
+<div id="loadingOverlay">
+    <div class="spinner"></div>
+    <p style="font-size:0.9rem; color:#4a9fa8; font-family:'Space Grotesk',sans-serif; letter-spacing:0.05em;">LOADING ZEITGEIST ENGINE…</p>
+</div>
+
+<!-- SITE NAV -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link active">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <hr class="mobile-divider">
+        <a href="newsletter.html">Newsletter</a>
+    </div>
+</nav>
+
+<!-- TOOL HEADER -->
+<header class="border-b border-cyan-900/60 bg-black/80 backdrop-blur-lg sticky top-0 z-40">
+    <div class="max-w-screen-2xl mx-auto px-8 py-4 flex items-center justify-between flex-wrap gap-4">
+        <div class="flex items-center gap-x-4">
+            <div class="w-11 h-11 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-2xl flex items-center justify-center text-2xl font-bold text-white flex-shrink-0">Ξ</div>
+            <div>
+                <div class="title-font text-2xl tracking-tight neural-glow">Zeitgeist Detector</div>
+                <div class="text-cyan-400 text-xs tracking-widest uppercase -mt-0.5">A*·C·(K–S) Phenomenology Engine · 45 societies</div>
+            </div>
+        </div>
+        <div class="flex gap-x-5 items-center">
+            <select id="societySelect" class="bg-zinc-900 border border-cyan-800 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-cyan-400 cursor-pointer min-w-[160px]"></select>
+            <div class="flex items-center gap-x-3" style="min-width:220px;">
+                <input type="range" id="yearSlider" min="1750" max="2026" value="2000" style="width:180px;">
+                <span id="yearDisplay" class="font-mono text-3xl font-semibold text-cyan-300 w-20 text-right flex-shrink-0">2000</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="max-w-screen-2xl mx-auto px-8 py-8 space-y-8">
+
+    <!-- CORE METRICS -->
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-5 zeitgeist-card">
+            <div class="text-[10px] uppercase font-bold text-zinc-500 mb-3 tracking-widest">A* Mythic Abstraction</div>
+            <div class="gauge"><div class="gauge-bg" id="gaugeA"><span id="valueA" class="gauge-value text-purple-400">—</span></div></div>
+            <div class="text-[10px] text-zinc-500 mt-3 text-center">Mean Abstraction<br>Lore + Archive</div>
+        </div>
+        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-5 zeitgeist-card">
+            <div class="text-[10px] uppercase font-bold text-zinc-500 mb-3 tracking-widest">C System Coherence</div>
+            <div class="gauge"><div class="gauge-bg" id="gaugeC"><span id="valueC" class="gauge-value text-blue-400">—</span></div></div>
+            <div class="text-[10px] text-zinc-500 mt-3 text-center">Alignment Across<br>All Nodes</div>
+        </div>
+        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-5 zeitgeist-card">
+            <div class="text-[10px] uppercase font-bold text-zinc-500 mb-3 tracking-widest">K–S Thermodynamic Surplus</div>
+            <div class="gauge"><div class="gauge-bg" id="gaugeKS"><span id="valueKS" class="gauge-value text-emerald-400">—</span></div></div>
+            <div class="text-[10px] text-zinc-500 mt-3 text-center">Capacity Minus Stress<br>Free Energy</div>
+        </div>
+        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-5 zeitgeist-card">
+            <div class="text-[10px] uppercase font-bold text-zinc-500 mb-3 tracking-widest">Λ(t) Layer Coherence</div>
+            <div class="gauge"><div class="gauge-bg" id="gaugeLambda"><span id="valueLambda" class="gauge-value text-cyan-400">—</span></div></div>
+            <div class="text-[10px] text-zinc-500 mt-3 text-center">Mythic↔Material<br>Grounding</div>
+        </div>
+        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-5 zeitgeist-card">
+            <div class="text-[10px] uppercase font-bold text-zinc-500 mb-3 tracking-widest">Z Zeitgeist Index</div>
+            <div class="gauge"><div class="gauge-bg" id="gaugeZ"><span id="valueZ" class="gauge-value text-fuchsia-400">—</span></div></div>
+            <div class="text-[10px] text-zinc-500 mt-3 text-center">A*·C·(K–S)<br>Cultural Vitality</div>
+        </div>
+    </div>
+
+    <!-- PHENOMENOLOGY + GROUNDING -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-6">
+            <h2 class="text-base font-semibold mb-4 flex items-center gap-2 text-zinc-100">🌍 Phenomenological Texture</h2>
+            <div id="phenomenologyClass" class="mb-4 rounded-xl p-4"></div>
+            <div id="phenomenologyNarrative" class="text-sm leading-relaxed text-cyan-200/80 space-y-2"></div>
+        </div>
+        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-6">
+            <h2 class="text-base font-semibold mb-4 flex items-center gap-2 text-zinc-100">⚖️ Mythic-Material Grounding</h2>
+            <div class="space-y-4">
+                <div>
+                    <div class="text-[10px] uppercase font-bold text-zinc-500 mb-2 tracking-widest">Mythic Layer (Lore + Archive)</div>
+                    <div class="flex items-center gap-3">
+                        <div class="flex-1 bg-zinc-900 rounded-full h-2.5 overflow-hidden">
+                            <div id="mythicBar" class="bg-purple-500 h-full transition-all duration-500" style="width:0%"></div>
+                        </div>
+                        <span id="mythicValue" class="font-mono text-sm text-purple-400 w-10 text-right">—</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="text-[10px] uppercase font-bold text-zinc-500 mb-2 tracking-widest">Material Layer (Hands + Craft)</div>
+                    <div class="flex items-center gap-3">
+                        <div class="flex-1 bg-zinc-900 rounded-full h-2.5 overflow-hidden">
+                            <div id="materialBar" class="bg-emerald-500 h-full transition-all duration-500" style="width:0%"></div>
+                        </div>
+                        <span id="materialValue" class="font-mono text-sm text-emerald-400 w-10 text-right">—</span>
+                    </div>
+                </div>
+                <div class="pt-4 border-t border-zinc-800">
+                    <div class="text-[10px] uppercase font-bold text-zinc-500 mb-1 tracking-widest">Decoupling Risk</div>
+                    <div id="decouplingRisk" class="font-mono font-bold text-sm"></div>
+                    <div id="decouplingNarrative" class="text-xs text-zinc-500 mt-1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TRAJECTORY CHARTS -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-6">
+            <h2 class="text-base font-semibold mb-4 text-zinc-100">Zeitgeist Evolution Z(t) — A*·C·(K–S)</h2>
+            <div style="position:relative; height:280px;"><canvas id="zeitgeistChart"></canvas></div>
+        </div>
+        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-6">
+            <h2 class="text-base font-semibold mb-4 text-zinc-100">Grounding Coherence Λ(t)</h2>
+            <div style="position:relative; height:280px;"><canvas id="groundingChart"></canvas></div>
+        </div>
+    </div>
+
+    <!-- PHASE SPACE -->
+    <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-6">
+        <h2 class="text-base font-semibold mb-4 text-zinc-100">Phase Space — Symbolic Richness vs. Thermodynamic Surplus</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div style="position:relative; height:300px;"><canvas id="phaseChart"></canvas></div>
+            <div class="bg-black/40 rounded-2xl p-5 border border-zinc-800 text-xs space-y-3">
+                <div class="text-[10px] uppercase font-bold text-cyan-500 tracking-widest mb-2">Regime Guide</div>
+                <div class="flex gap-2"><span class="text-emerald-400 font-bold mt-0.5 flex-shrink-0">↗</span><div><strong class="text-zinc-200">Vital &amp; Grounded:</strong> High A*C, positive K–S. Expansive, confident, integrated culture.</div></div>
+                <div class="flex gap-2"><span class="text-amber-400 font-bold mt-0.5 flex-shrink-0">⬆</span><div><strong class="text-zinc-200">Brilliant but Fragile:</strong> High A*C, negative K–S. Peak culture over eroding substrate.</div></div>
+                <div class="flex gap-2"><span class="text-red-400 font-bold mt-0.5 flex-shrink-0">↙</span><div><strong class="text-zinc-200">Decoupled &amp; Anxious:</strong> Low A*C, negative K–S. Institutional collapse, entropy spike.</div></div>
+                <div class="flex gap-2"><span class="text-purple-400 font-bold mt-0.5 flex-shrink-0">◆</span><div><strong class="text-zinc-200">Nascent or Transitional:</strong> Low A*C, positive K–S. System rebuilding or early-stage.</div></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// ── Data loading ──────────────────────────────────────────────────────────────
+let database = {};
+const state = { society: null, year: null };
+
+async function loadData() {
+    const resp = await fetch('cleaned_datasets/cams_index.json');
+    const raw  = await resp.json();
+    const db   = {};
+    for (const [soc, years] of Object.entries(raw)) {
+        db[soc] = [];
+        for (const [yr, nodes] of Object.entries(years)) {
+            const year = parseInt(yr);
+            for (const [node, m] of Object.entries(nodes)) {
+                const [c,k,s,a] = m;
+                const val  = 1.5*c + k - 1.5*s + 0.5*a;
+                const bond = (c + k) / Math.max(s, 0.1) * 0.5;
+                db[soc].push({ year, node, c, k, s, a, val: parseFloat(val.toFixed(2)), bond: parseFloat(bond.toFixed(3)) });
+            }
+        }
+        db[soc].sort((a,b) => a.year - b.year);
+    }
+    return db;
+}
+
+function avg(arr, fn) { return arr.length ? arr.reduce((a,b) => a + fn(b), 0) / arr.length : 0; }
+function getYear(soc, yr) { return database[soc]?.filter(d => d.year === yr) || []; }
+
+// ── Zeitgeist calculations ────────────────────────────────────────────────────
+function calcZeitgeist(yearData) {
+    const mythic   = yearData.filter(d => d.node === 'Lore' || d.node === 'Archive');
+    const material = yearData.filter(d => d.node === 'Hands' || d.node === 'Craft');
+
+    const aStar  = avg(mythic, d => d.a);
+    const c      = avg(yearData, d => d.c);
+    const k      = avg(yearData, d => d.k);
+    const s      = avg(yearData, d => d.s);
+    const kMinusS = k - s;
+
+    const mythicHealth   = avg(mythic, d => d.val);
+    const materialHealth = avg(material, d => d.val);
+    const lambda = (mythicHealth + materialHealth) / 2 * 0.1;
+
+    // Z normalised so typical values sit in 0–5 range
+    const z = (aStar / 10) * (c / 10) * ((kMinusS + 10) / 10);
+
+    return { aStar, c, k, s, kMinusS, lambda, z, mythicHealth, materialHealth };
+}
+
+function classifyZeitgeist({ aStar, c, kMinusS, lambda }) {
+    const sr = (aStar / 10) * (c / 10);
+    const pos = kMinusS > 0;
+    const grounded = lambda > 0.5;
+
+    if (sr > 0.4 && pos && grounded)      return { type:'VITAL & GROUNDED',       css:'grounded',  color:'#10b981', texture:'Expansive, confident, integrated', mood:'Civilisation at ease — culture flows naturally from lived experience. High output, institutional trust, technological optimism.' };
+    if (sr > 0.4 && !pos && lambda > 0.3) return { type:'BRILLIANT BUT FRAGILE',  css:'fragile',   color:'#f59e0b', texture:'Peak culture, eroding substrate',  mood:'Weimar condition — vibrant intellectual life amid material decay. Museums full, unemployment rising. Brilliant yet treacherous.' };
+    if (sr > 0.3 && !pos && !grounded)    return { type:'DECOUPLED & ANXIOUS',    css:'decoupled', color:'#ef4444', texture:'Ungrounded brilliance',             mood:'Late-collapse texture — elite culture divorces from lived conditions. Narrative breakdown, institutional paralysis. Felt as vertigo.' };
+    if (sr < 0.3 && !pos)                 return { type:'COLLAPSE ATTRACTOR',     css:'collapse',  color:'#a855f7', texture:'Reactive entropy',                 mood:'System in free fall — coherence evaporates, stress spikes. Culture becomes reactive, defensive. Felt as dread.' };
+    return                                       { type:'NASCENT / TRANSITIONAL', css:'vital',     color:'#0bc5ea', texture:'System rebuilding',                mood:'Early-stage or recovering — modest culture, genuine surplus. Felt as cautious optimism or quiet reconstruction.' };
+}
+
+// ── Gauge updater ─────────────────────────────────────────────────────────────
+function setGauge(id, value, max, color) {
+    const pct = Math.max(0, Math.min(1, value / max));
+    const deg = pct * 360;
+    document.getElementById(id).style.background =
+        `conic-gradient(from 0deg, ${color} 0deg, ${color} ${deg}deg, #27272a ${deg}deg, #27272a 360deg)`;
+}
+
+// ── UI rendering ──────────────────────────────────────────────────────────────
+function renderMetrics(m) {
+    document.getElementById('valueA').textContent = m.aStar.toFixed(1);
+    setGauge('gaugeA', m.aStar, 10, '#805AD5');
+
+    document.getElementById('valueC').textContent = m.c.toFixed(1);
+    setGauge('gaugeC', m.c, 10, '#3182CE');
+
+    const ksColor = m.kMinusS >= 0 ? '#10b981' : '#ef4444';
+    document.getElementById('valueKS').textContent = (m.kMinusS >= 0 ? '+' : '') + m.kMinusS.toFixed(1);
+    document.getElementById('valueKS').style.color = ksColor;
+    setGauge('gaugeKS', m.kMinusS + 10, 20, ksColor);
+
+    document.getElementById('valueLambda').textContent = m.lambda.toFixed(2);
+    setGauge('gaugeLambda', m.lambda, 1.2, '#0BC5EA');
+
+    document.getElementById('valueZ').textContent = m.z.toFixed(2);
+    setGauge('gaugeZ', m.z, 5, '#d946ef');
+
+    document.getElementById('mythicBar').style.width   = `${Math.min(100, (m.mythicHealth / 20) * 100)}%`;
+    document.getElementById('mythicValue').textContent = m.mythicHealth.toFixed(1);
+    document.getElementById('materialBar').style.width = `${Math.min(100, (m.materialHealth / 20) * 100)}%`;
+    document.getElementById('materialValue').textContent = m.materialHealth.toFixed(1);
+
+    const gap = Math.abs(m.mythicHealth - m.materialHealth);
+    const gapPct = Math.min(100, (gap / 15) * 100);
+    const gapColor = gapPct > 40 ? '#ef4444' : gapPct > 20 ? '#f59e0b' : '#10b981';
+    document.getElementById('decouplingRisk').innerHTML = `<span style="color:${gapColor}">${gapPct.toFixed(0)}% Decoupling</span>`;
+    document.getElementById('decouplingNarrative').textContent =
+        gapPct > 40 ? 'Mythic-material divergence acute. Risk of normative collapse.' :
+        gapPct > 20 ? 'Moderate divergence. Watch for institutional erosion.' :
+        'Mythic and material layers aligned. Healthy grounding.';
+}
+
+function renderPhenomenology(m, cl) {
+    document.getElementById('phenomenologyClass').innerHTML =
+        `<div class="${cl.css} p-4 rounded-xl">
+            <div class="text-base font-bold" style="color:${cl.color}">${cl.type}</div>
+            <div class="text-xs text-zinc-400 mt-0.5">${cl.texture}</div>
+        </div>`;
+    document.getElementById('phenomenologyNarrative').innerHTML =
+        `<div>${cl.mood}</div>
+         <div class="pt-2 text-xs text-zinc-400 border-t border-zinc-800 mt-2">
+            ${m.aStar > 5 ? 'High symbolic richness (Lore/Archive active). ' : 'Attenuated symbolism. '}
+            ${m.c > 6 ? 'Coherence stable. ' : 'Institutional fragmentation. '}
+            ${m.kMinusS > 0 ? 'Positive surplus — growth possible. ' : 'Negative surplus — contraction/crisis. '}
+            ${m.lambda > 0.5 ? 'Mythic-material grounding strong.' : 'Decoupling risk high.'}
+         </div>`;
+}
+
+// ── Charts ────────────────────────────────────────────────────────────────────
+let charts = {};
+const DARK_GRID = 'rgba(255,255,255,0.05)';
+const DARK_TICK = { color:'#52525b', font:{ size:10, family:'Inter' } };
+const darkScales = (xLabel, yLabel, yMin, yMax) => ({
+    x: { grid:{ color:DARK_GRID }, ticks:{ ...DARK_TICK, maxTicksLimit:8 }, title: xLabel ? { display:true, text:xLabel, color:'#71717a', font:{size:10} } : undefined },
+    y: { grid:{ color:DARK_GRID }, ticks:DARK_TICK, min:yMin, max:yMax, title: yLabel ? { display:true, text:yLabel, color:'#71717a', font:{size:10} } : undefined }
+});
+
+function getTrendData(soc) {
+    const byYear = {};
+    for (const d of database[soc]) { (byYear[d.year] = byYear[d.year]||[]).push(d); }
+    return Object.entries(byYear).sort((a,b)=>+a[0]-+b[0]).map(([y,recs]) => ({ year:+y, ...calcZeitgeist(recs) }));
+}
+
+function updateCharts(trend) {
+    const labels = trend.map(d => d.year);
+
+    if (charts.z) {
+        charts.z.data.labels = labels;
+        charts.z.data.datasets[0].data = trend.map(d => d.z);
+        charts.z.update('none');
+    } else {
+        charts.z = new Chart(document.getElementById('zeitgeistChart'), {
+            type:'line',
+            data:{ labels, datasets:[{ label:'Z', data:trend.map(d=>d.z), borderColor:'#d946ef', backgroundColor:'rgba(217,70,239,0.08)', fill:true, tension:0.35, pointRadius:0, borderWidth:2 }] },
+            options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:darkScales() }
+        });
+    }
+
+    if (charts.lambda) {
+        charts.lambda.data.labels = labels;
+        charts.lambda.data.datasets[0].data = trend.map(d => d.lambda);
+        charts.lambda.update('none');
+    } else {
+        charts.lambda = new Chart(document.getElementById('groundingChart'), {
+            type:'line',
+            data:{ labels, datasets:[{ label:'Λ(t)', data:trend.map(d=>d.lambda), borderColor:'#0BC5EA', backgroundColor:'rgba(11,197,234,0.08)', fill:true, tension:0.35, pointRadius:0, borderWidth:2 }] },
+            options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:darkScales(null, null, 0, null) }
+        });
+    }
+
+    const phasePoints = trend.map(d => ({ x: parseFloat(((d.aStar/10)*(d.c/10)).toFixed(3)), y: parseFloat(d.kMinusS.toFixed(2)) }));
+    if (charts.phase) {
+        charts.phase.data.datasets[0].data = phasePoints;
+        charts.phase.update('none');
+    } else {
+        charts.phase = new Chart(document.getElementById('phaseChart'), {
+            type:'scatter',
+            data:{ datasets:[{ data:phasePoints, pointBackgroundColor:'#d946ef', pointRadius:3, pointBorderWidth:0 }] },
+            options:{
+                responsive:true, maintainAspectRatio:false,
+                plugins:{ legend:{display:false} },
+                scales: darkScales('A*·C (Symbolic Richness)', 'K–S (Thermodynamic Surplus)', -8, 8)
+            }
+        });
+    }
+}
+
+// ── Dashboard update ──────────────────────────────────────────────────────────
+function updateDashboard() {
+    document.getElementById('yearDisplay').textContent = state.year;
+    const yearData = getYear(state.society, state.year);
+    if (!yearData.length) return;
+    const m  = calcZeitgeist(yearData);
+    const cl = classifyZeitgeist(m);
+    renderMetrics(m);
+    renderPhenomenology(m, cl);
+    updateCharts(getTrendData(state.society));
+}
+
+// ── Init ─────────────────────────────────────────────────────────────────────
+async function init() {
+    database = await loadData();
+    document.getElementById('loadingOverlay').style.display = 'none';
+
+    const societies = Object.keys(database).sort();
+    const sel = document.getElementById('societySelect');
+    societies.forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; sel.appendChild(o); });
+
+    function setSociety(s) {
+        state.society = s;
+        const yrs = [...new Set(database[s].map(d=>d.year))].sort((a,b)=>a-b);
+        const slider = document.getElementById('yearSlider');
+        slider.min = yrs[0]; slider.max = yrs[yrs.length-1];
+        if (!state.year || state.year < yrs[0] || state.year > yrs[yrs.length-1]) state.year = yrs[yrs.length-1];
+        slider.value = state.year;
+    }
+
+    const def = societies.includes('Australia') ? 'Australia' : societies[0];
+    sel.value = def;
+    setSociety(def);
+
+    sel.addEventListener('change', e => { setSociety(e.target.value); updateDashboard(); });
+    document.getElementById('yearSlider').addEventListener('input', e => { state.year = parseInt(e.target.value); updateDashboard(); });
+
+    updateDashboard();
+}
+
+init();
+</script>
+<script src="nav.js"></script>
+</body>
+</html>
