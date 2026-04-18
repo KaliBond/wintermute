@@ -6,6 +6,7 @@
     <title>CAMS Zeitgeist Detector — Neural Nations</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
     <style>
         /* ── Controls bar ──────────────────────────────────────────── */
         .controls-bar {
@@ -265,6 +266,12 @@
             </div>
         </div>
         <div id="loadStatus" style="font-size:0.78rem; color:#aaa; align-self:flex-end; padding-bottom:3px;"></div>
+        <div style="align-self:flex-end; padding-bottom:3px; text-align:right;">
+            <div style="font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:#888; margin-bottom:2px;">Z Rank</div>
+            <div style="font-size:1rem; font-weight:700; color:#764ba2;">
+                <span id="zRankNum">—</span><span style="color:#ccc; font-weight:400; font-size:0.85rem;"> / </span><span id="zRankOf" style="color:#aaa; font-weight:500;">—</span>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -299,6 +306,12 @@
                 <div class="gauge-sub">A*·C·(K–S)<br>Cultural Vitality</div>
             </div>
         </div>
+    </div>
+
+    <!-- Node Z-contribution -->
+    <div class="card" style="padding:20px; margin-bottom:20px;">
+        <h3 class="panel-title">Node Z-Contribution — per-node A·C·(K–S) signal</h3>
+        <div class="chart-wrap" style="height:210px;"><canvas id="nodeContribChart"></canvas></div>
     </div>
 
     <!-- Phenomenology + Grounding -->
@@ -497,30 +510,49 @@ function getTrendData(soc) {
     return Object.entries(byYear).sort((a,b)=>+a[0]-+b[0]).map(([y,recs]) => ({ year:+y, ...calcZeitgeist(recs) }));
 }
 
+const NODE_COLORS_MAP = {
+    Helm:'#e74c3c', Shield:'#c0392b', Lore:'#9b59b6', Stewards:'#e67e22',
+    Craft:'#1abc9c', Hands:'#7f8c8d', Archive:'#3498db', Flow:'#f39c12'
+};
+const NODE_ORDER = ['Helm','Shield','Lore','Stewards','Craft','Hands','Archive','Flow'];
+
+const yrLineAnnotation = () => ({
+    type: 'line', xMin: state.year, xMax: state.year,
+    borderColor: 'rgba(118,75,162,0.55)', borderWidth: 1.5, borderDash: [4, 3]
+});
+
 function updateCharts(trend) {
     const labels = trend.map(d => d.year);
 
     if (charts.z) {
         charts.z.data.labels = labels;
         charts.z.data.datasets[0].data = trend.map(d => d.z);
+        charts.z.options.plugins.annotation.annotations.yrLine.xMin = state.year;
+        charts.z.options.plugins.annotation.annotations.yrLine.xMax = state.year;
         charts.z.update('none');
     } else {
         charts.z = new Chart(document.getElementById('zeitgeistChart'), {
             type:'line',
             data:{ labels, datasets:[{ label:'Z', data:trend.map(d=>d.z), borderColor:'#d946ef', backgroundColor:'rgba(217,70,239,0.08)', fill:true, tension:0.35, pointRadius:0, borderWidth:2 }] },
-            options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:scales() }
+            options:{ responsive:true, maintainAspectRatio:false,
+                plugins:{ legend:{display:false}, annotation:{ annotations:{ yrLine: yrLineAnnotation() } } },
+                scales:scales() }
         });
     }
 
     if (charts.lambda) {
         charts.lambda.data.labels = labels;
         charts.lambda.data.datasets[0].data = trend.map(d => d.lambda);
+        charts.lambda.options.plugins.annotation.annotations.yrLine.xMin = state.year;
+        charts.lambda.options.plugins.annotation.annotations.yrLine.xMax = state.year;
         charts.lambda.update('none');
     } else {
         charts.lambda = new Chart(document.getElementById('groundingChart'), {
             type:'line',
             data:{ labels, datasets:[{ label:'Λ(t)', data:trend.map(d=>d.lambda), borderColor:'#1abc9c', backgroundColor:'rgba(26,188,156,0.08)', fill:true, tension:0.35, pointRadius:0, borderWidth:2 }] },
-            options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:scales(null, null, 0, null) }
+            options:{ responsive:true, maintainAspectRatio:false,
+                plugins:{ legend:{display:false}, annotation:{ annotations:{ yrLine: yrLineAnnotation() } } },
+                scales:scales(null, null, 0, null) }
         });
     }
 
@@ -538,6 +570,52 @@ function updateCharts(trend) {
     }
 }
 
+function renderNodeContrib(yearData) {
+    const rows = NODE_ORDER.map(name => {
+        const d = yearData.find(r => r.node === name);
+        if (!d) return { name, z: 0 };
+        return { name, z: parseFloat(((d.a/10) * (d.c/10) * ((d.k - d.s + 10)/10)).toFixed(3)) };
+    });
+    const labels = rows.map(r => r.name);
+    const data   = rows.map(r => r.z);
+    const colors = rows.map(r => NODE_COLORS_MAP[r.name]);
+
+    if (charts.nodeContrib) {
+        charts.nodeContrib.data.datasets[0].data = data;
+        charts.nodeContrib.data.datasets[0].backgroundColor = colors;
+        charts.nodeContrib.update('none');
+    } else {
+        charts.nodeContrib = new Chart(document.getElementById('nodeContribChart'), {
+            type: 'bar',
+            data: { labels, datasets: [{ data, backgroundColor: colors, borderRadius: 4, borderSkipped: false }] },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid:{ color:GRID_CLR }, ticks:tickStyle, min:0, max:1,
+                         title:{ display:true, text:'Z contribution (0–1)', color:'#888', font:{size:10} } },
+                    y: { grid:{ display:false }, ticks:{ ...tickStyle, font:{ size:11 } } }
+                }
+            }
+        });
+    }
+}
+
+function renderZRank(yearData) {
+    const currentZ = calcZeitgeist(yearData).z;
+    let rank = 1, total = 0;
+    for (const recs of Object.values(database)) {
+        const yd = recs.filter(d => d.year === state.year);
+        if (!yd.length) continue;
+        total++;
+        if (calcZeitgeist(yd).z > currentZ) rank++;
+    }
+    document.getElementById('zRankNum').textContent = rank;
+    document.getElementById('zRankOf').textContent  = total;
+}
+
 // ── Dashboard ─────────────────────────────────────────────────────────────────
 function updateDashboard() {
     document.getElementById('yearDisplay').textContent = state.year;
@@ -548,6 +626,8 @@ function updateDashboard() {
     const cl = classifyZeitgeist(m);
     renderMetrics(m);
     renderPhenomenology(m, cl);
+    renderNodeContrib(yearData);
+    renderZRank(yearData);
     updateCharts(getTrendData(state.society));
 }
 
