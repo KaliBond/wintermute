@@ -5,53 +5,190 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAMS Zeitgeist Detector — Neural Nations</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
     <style>
-        :root { --neon: #00f0ff; --neon-purple: #d946ef; }
-        * { box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #e0f0ff; margin: 0; }
-        .title-font { font-family: 'Space Grotesk', sans-serif; }
-        .neural-glow { text-shadow: 0 0 15px var(--neon); }
-        .zeitgeist-card { transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
-        .zeitgeist-card:hover { transform: translateY(-3px); box-shadow: 0 0 22px -5px var(--neon); }
-        .gauge { position: relative; width: 110px; height: 110px; margin: 0 auto; }
-        .gauge-bg { width: 100%; height: 100%; border-radius: 50%; border: 3px solid #27272a; display: flex; align-items: center; justify-content: center; }
-        .gauge-value { font-size: 2rem; font-weight: bold; font-family: 'Space Grotesk', sans-serif; }
-
-        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
-        input[type=range]::-webkit-slider-runnable-track { height: 4px; background: #1e4a52; border-radius: 2px; }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 18px; height: 18px;
-            background: var(--neon); border-radius: 50%; margin-top: -7px;
-            box-shadow: 0 0 8px var(--neon); cursor: pointer;
+        /* ── Controls bar ──────────────────────────────────────────── */
+        .controls-bar {
+            position: sticky;
+            top: 60px;
+            z-index: 900;
+            background: rgba(255,255,255,0.97);
+            border-bottom: 1px solid #e0d8f0;
+            box-shadow: 0 2px 12px rgba(118,75,162,0.10);
+            padding: 12px 0;
         }
-        select option { background: #111; color: #e0f0ff; }
-
-        #loadingOverlay {
-            position: fixed; inset: 0; background: #0a0a0a;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 9999; gap: 16px;
+        .controls-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
         }
-        .spinner { width: 40px; height: 40px; border-radius: 50%; border: 2px solid rgba(0,240,255,0.2); border-top-color: var(--neon); animation: spin 0.8s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        .controls-inner label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: #888;
+            display: block;
+            margin-bottom: 3px;
+        }
+        .controls-inner select {
+            padding: 7px 12px;
+            border-radius: 8px;
+            border: 1px solid #d0c0e8;
+            font-size: 0.9rem;
+            color: #2d3748;
+            background: white;
+            cursor: pointer;
+            min-width: 160px;
+        }
+        .controls-inner select:focus { outline: none; border-color: #764ba2; }
+        .slider-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 260px;
+        }
+        .slider-group input[type=range] {
+            flex: 1;
+            accent-color: #764ba2;
+            cursor: pointer;
+        }
+        .year-display {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #764ba2;
+            min-width: 58px;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+        .play-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid #764ba2;
+            background: white;
+            color: #764ba2;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s, color 0.15s;
+            flex-shrink: 0;
+        }
+        .play-btn:hover, .play-btn.playing { background: #764ba2; color: white; }
 
-        .grounded  { border-left: 4px solid #10b981; background: rgba(16,185,129,0.06); }
-        .vital     { border-left: 4px solid #0bc5ea; background: rgba(11,197,234,0.06); }
-        .fragile   { border-left: 4px solid #f59e0b; background: rgba(245,158,11,0.06); }
-        .decoupled { border-left: 4px solid #ef4444; background: rgba(239,68,68,0.06); }
-        .collapse  { border-left: 4px solid #a855f7; background: rgba(168,85,247,0.06); }
+        /* ── Metric gauges ─────────────────────────────────────────── */
+        .gauge-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-bottom: 0;
+        }
+        @media (max-width: 900px) { .gauge-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 560px) { .gauge-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        .gauge-card {
+            text-align: center;
+            padding: 18px 12px 14px;
+        }
+        .gauge-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #888;
+            margin-bottom: 12px;
+        }
+        .gauge {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #f0eaf7;
+            transition: background 0.4s;
+        }
+        .gauge-value {
+            font-size: 1.7rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .gauge-sub {
+            font-size: 0.72rem;
+            color: #aaa;
+            line-height: 1.4;
+        }
+
+        /* ── 2-col panels ──────────────────────────────────────────── */
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+        @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+
+        .panel-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #5a3580;
+            margin: 0 0 14px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e8e0f0;
+        }
+
+        /* ── Phenomenology ─────────────────────────────────────────── */
+        .pheno-badge {
+            padding: 10px 16px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+        .pheno-type { font-size: 1rem; font-weight: 700; }
+        .pheno-texture { font-size: 0.8rem; color: #666; margin-top: 3px; }
+        .pheno-narrative { font-size: 0.86rem; color: #444; line-height: 1.6; }
+        .pheno-tags { font-size: 0.78rem; color: #888; margin-top: 10px; padding-top: 10px; border-top: 1px solid #f0eaf7; }
+
+        .grounded  { background: #d1fae5; border-left: 4px solid #10b981; }
+        .vital     { background: #cffafe; border-left: 4px solid #0bc5ea; }
+        .fragile   { background: #fef3c7; border-left: 4px solid #f59e0b; }
+        .decoupled { background: #fee2e2; border-left: 4px solid #ef4444; }
+        .collapse  { background: #f3e8ff; border-left: 4px solid #a855f7; }
+
+        /* ── Grounding bars ────────────────────────────────────────── */
+        .ground-row { margin-bottom: 16px; }
+        .ground-row-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 5px;
+        }
+        .ground-row-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #888; }
+        .ground-row-val { font-size: 0.88rem; font-weight: 700; }
+        .bar-bg { background: #f0eaf7; border-radius: 6px; height: 10px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 6px; transition: width 0.5s ease; }
+
+        .decouple-block { padding-top: 14px; border-top: 1px solid #f0eaf7; }
+        .decouple-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #888; margin-bottom: 4px; }
+        .decouple-value { font-size: 1.1rem; font-weight: 700; }
+        .decouple-note { font-size: 0.78rem; color: #888; margin-top: 3px; }
+
+        /* ── Charts ────────────────────────────────────────────────── */
+        .chart-wrap { position: relative; height: 260px; }
+
+        /* ── Phase guide ───────────────────────────────────────────── */
+        .phase-guide { background: #faf8ff; border-radius: 10px; padding: 16px; font-size: 0.83rem; }
+        .phase-guide-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 12px; }
+        .phase-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .phase-arrow { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+        .phase-row strong { color: #2d3748; }
+        .phase-row span { color: #666; }
     </style>
 </head>
-<body class="min-h-screen pb-16">
+<body>
 
-<div id="loadingOverlay">
-    <div class="spinner"></div>
-    <p style="font-size:0.9rem; color:#4a9fa8; font-family:'Space Grotesk',sans-serif; letter-spacing:0.05em;">LOADING ZEITGEIST ENGINE…</p>
-</div>
-
-<!-- SITE NAV -->
 <nav class="navbar">
     <div class="nav-container">
         <a href="index.html" class="nav-logo">
@@ -104,141 +241,154 @@
     </div>
 </nav>
 
-<!-- TOOL HEADER -->
-<header class="border-b border-cyan-900/60 bg-black/80 backdrop-blur-lg sticky top-0 z-40">
-    <div class="max-w-screen-2xl mx-auto px-8 py-4 flex items-center justify-between flex-wrap gap-4">
-        <div class="flex items-center gap-x-4">
-            <div class="w-11 h-11 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-2xl flex items-center justify-center text-2xl font-bold text-white flex-shrink-0">Ξ</div>
-            <div>
-                <div class="title-font text-2xl tracking-tight neural-glow">Zeitgeist Detector</div>
-                <div class="text-cyan-400 text-xs tracking-widest uppercase -mt-0.5">A*·C·(K–S) Phenomenology Engine · 45 societies</div>
+<!-- Hero -->
+<div class="container">
+    <div class="hero-section" style="padding: 28px 0 6px 0;">
+        <h1 style="color:white; font-size:2.2rem; margin-bottom:6px;">Ξ Zeitgeist Detector</h1>
+        <p style="color:rgba(255,255,255,0.82); font-size:0.97rem; margin:0 auto; max-width:700px; line-height:1.6;">Mythic-material grounding across 45 societies. Tracks A*·C·(K–S) — the composite signal of symbolic richness, systemic coherence, and thermodynamic surplus — as a measure of civilisational vitality and phenomenological texture.</p>
+    </div>
+</div>
+
+<!-- Sticky controls -->
+<div class="controls-bar">
+    <div class="controls-inner">
+        <div>
+            <label>Society</label>
+            <select id="societySelect"></select>
+        </div>
+        <div style="flex:1; min-width:260px;">
+            <label>Year</label>
+            <div class="slider-group">
+                <button class="play-btn" id="playBtn" title="Play / Pause" onclick="togglePlay()">&#9654;</button>
+                <input type="range" id="yearSlider" min="1750" max="2026" value="2000">
+                <span class="year-display" id="yearDisplay">2000</span>
             </div>
         </div>
-        <div class="flex gap-x-5 items-center">
-            <select id="societySelect" class="bg-zinc-900 border border-cyan-800 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-cyan-400 cursor-pointer min-w-[160px]"></select>
-            <div class="flex items-center gap-x-3" style="min-width:220px;">
-                <input type="range" id="yearSlider" min="1750" max="2026" value="2000" style="width:180px;">
-                <span id="yearDisplay" class="font-mono text-3xl font-semibold text-cyan-300 w-20 text-right flex-shrink-0">2000</span>
+        <div id="loadStatus" style="font-size:0.78rem; color:#aaa; align-self:flex-end; padding-bottom:3px;"></div>
+    </div>
+</div>
+
+<div class="container" style="padding-top:16px;">
+
+    <!-- Metric gauges -->
+    <div class="card" style="padding:20px;">
+        <div class="gauge-grid">
+            <div class="gauge-card">
+                <div class="gauge-label">A* Mythic Abstraction</div>
+                <div class="gauge" id="gaugeA"><span id="valueA" class="gauge-value" style="color:#764ba2">—</span></div>
+                <div class="gauge-sub">Mean Abstraction<br>Lore + Archive</div>
             </div>
-        </div>
-    </div>
-</header>
-
-<div class="max-w-screen-2xl mx-auto px-8 py-8 space-y-8">
-
-    <!-- CORE METRICS -->
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-5 zeitgeist-card">
-            <div class="text-[10px] uppercase font-bold text-zinc-500 mb-3 tracking-widest">A* Mythic Abstraction</div>
-            <div class="gauge"><div class="gauge-bg" id="gaugeA"><span id="valueA" class="gauge-value text-purple-400">—</span></div></div>
-            <div class="text-[10px] text-zinc-500 mt-3 text-center">Mean Abstraction<br>Lore + Archive</div>
-        </div>
-        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-5 zeitgeist-card">
-            <div class="text-[10px] uppercase font-bold text-zinc-500 mb-3 tracking-widest">C System Coherence</div>
-            <div class="gauge"><div class="gauge-bg" id="gaugeC"><span id="valueC" class="gauge-value text-blue-400">—</span></div></div>
-            <div class="text-[10px] text-zinc-500 mt-3 text-center">Alignment Across<br>All Nodes</div>
-        </div>
-        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-5 zeitgeist-card">
-            <div class="text-[10px] uppercase font-bold text-zinc-500 mb-3 tracking-widest">K–S Thermodynamic Surplus</div>
-            <div class="gauge"><div class="gauge-bg" id="gaugeKS"><span id="valueKS" class="gauge-value text-emerald-400">—</span></div></div>
-            <div class="text-[10px] text-zinc-500 mt-3 text-center">Capacity Minus Stress<br>Free Energy</div>
-        </div>
-        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-5 zeitgeist-card">
-            <div class="text-[10px] uppercase font-bold text-zinc-500 mb-3 tracking-widest">Λ(t) Layer Coherence</div>
-            <div class="gauge"><div class="gauge-bg" id="gaugeLambda"><span id="valueLambda" class="gauge-value text-cyan-400">—</span></div></div>
-            <div class="text-[10px] text-zinc-500 mt-3 text-center">Mythic↔Material<br>Grounding</div>
-        </div>
-        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-5 zeitgeist-card">
-            <div class="text-[10px] uppercase font-bold text-zinc-500 mb-3 tracking-widest">Z Zeitgeist Index</div>
-            <div class="gauge"><div class="gauge-bg" id="gaugeZ"><span id="valueZ" class="gauge-value text-fuchsia-400">—</span></div></div>
-            <div class="text-[10px] text-zinc-500 mt-3 text-center">A*·C·(K–S)<br>Cultural Vitality</div>
-        </div>
-    </div>
-
-    <!-- PHENOMENOLOGY + GROUNDING -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-6">
-            <h2 class="text-base font-semibold mb-4 flex items-center gap-2 text-zinc-100">🌍 Phenomenological Texture</h2>
-            <div id="phenomenologyClass" class="mb-4 rounded-xl p-4"></div>
-            <div id="phenomenologyNarrative" class="text-sm leading-relaxed text-cyan-200/80 space-y-2"></div>
-        </div>
-        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-6">
-            <h2 class="text-base font-semibold mb-4 flex items-center gap-2 text-zinc-100">⚖️ Mythic-Material Grounding</h2>
-            <div class="space-y-4">
-                <div>
-                    <div class="text-[10px] uppercase font-bold text-zinc-500 mb-2 tracking-widest">Mythic Layer (Lore + Archive)</div>
-                    <div class="flex items-center gap-3">
-                        <div class="flex-1 bg-zinc-900 rounded-full h-2.5 overflow-hidden">
-                            <div id="mythicBar" class="bg-purple-500 h-full transition-all duration-500" style="width:0%"></div>
-                        </div>
-                        <span id="mythicValue" class="font-mono text-sm text-purple-400 w-10 text-right">—</span>
-                    </div>
-                </div>
-                <div>
-                    <div class="text-[10px] uppercase font-bold text-zinc-500 mb-2 tracking-widest">Material Layer (Hands + Craft)</div>
-                    <div class="flex items-center gap-3">
-                        <div class="flex-1 bg-zinc-900 rounded-full h-2.5 overflow-hidden">
-                            <div id="materialBar" class="bg-emerald-500 h-full transition-all duration-500" style="width:0%"></div>
-                        </div>
-                        <span id="materialValue" class="font-mono text-sm text-emerald-400 w-10 text-right">—</span>
-                    </div>
-                </div>
-                <div class="pt-4 border-t border-zinc-800">
-                    <div class="text-[10px] uppercase font-bold text-zinc-500 mb-1 tracking-widest">Decoupling Risk</div>
-                    <div id="decouplingRisk" class="font-mono font-bold text-sm"></div>
-                    <div id="decouplingNarrative" class="text-xs text-zinc-500 mt-1"></div>
-                </div>
+            <div class="gauge-card">
+                <div class="gauge-label">C System Coherence</div>
+                <div class="gauge" id="gaugeC"><span id="valueC" class="gauge-value" style="color:#2980b9">—</span></div>
+                <div class="gauge-sub">Alignment Across<br>All Nodes</div>
+            </div>
+            <div class="gauge-card">
+                <div class="gauge-label">K–S Thermodynamic Surplus</div>
+                <div class="gauge" id="gaugeKS"><span id="valueKS" class="gauge-value" style="color:#27ae60">—</span></div>
+                <div class="gauge-sub">Capacity Minus Stress<br>Free Energy</div>
+            </div>
+            <div class="gauge-card">
+                <div class="gauge-label">Λ(t) Layer Coherence</div>
+                <div class="gauge" id="gaugeLambda"><span id="valueLambda" class="gauge-value" style="color:#1abc9c">—</span></div>
+                <div class="gauge-sub">Mythic↔Material<br>Grounding</div>
+            </div>
+            <div class="gauge-card">
+                <div class="gauge-label">Z Zeitgeist Index</div>
+                <div class="gauge" id="gaugeZ"><span id="valueZ" class="gauge-value" style="color:#d946ef">—</span></div>
+                <div class="gauge-sub">A*·C·(K–S)<br>Cultural Vitality</div>
             </div>
         </div>
     </div>
 
-    <!-- TRAJECTORY CHARTS -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-6">
-            <h2 class="text-base font-semibold mb-4 text-zinc-100">Zeitgeist Evolution Z(t) — A*·C·(K–S)</h2>
-            <div style="position:relative; height:280px;"><canvas id="zeitgeistChart"></canvas></div>
+    <!-- Phenomenology + Grounding -->
+    <div class="two-col">
+        <div class="card" style="margin-bottom:0; padding:22px;">
+            <h3 class="panel-title">Phenomenological Texture</h3>
+            <div id="phenoBadge" class="pheno-badge"></div>
+            <div id="phenoNarrative" class="pheno-narrative"></div>
+            <div id="phenoTags" class="pheno-tags"></div>
         </div>
-        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-6">
-            <h2 class="text-base font-semibold mb-4 text-zinc-100">Grounding Coherence Λ(t)</h2>
-            <div style="position:relative; height:280px;"><canvas id="groundingChart"></canvas></div>
+        <div class="card" style="margin-bottom:0; padding:22px;">
+            <h3 class="panel-title">Mythic-Material Grounding</h3>
+            <div class="ground-row">
+                <div class="ground-row-header">
+                    <span class="ground-row-label">Mythic Layer (Lore + Archive)</span>
+                    <span id="mythicValue" class="ground-row-val" style="color:#764ba2">—</span>
+                </div>
+                <div class="bar-bg"><div id="mythicBar" class="bar-fill" style="width:0%; background:#764ba2;"></div></div>
+            </div>
+            <div class="ground-row">
+                <div class="ground-row-header">
+                    <span class="ground-row-label">Material Layer (Hands + Craft)</span>
+                    <span id="materialValue" class="ground-row-val" style="color:#27ae60">—</span>
+                </div>
+                <div class="bar-bg"><div id="materialBar" class="bar-fill" style="width:0%; background:#27ae60;"></div></div>
+            </div>
+            <div class="decouple-block">
+                <div class="decouple-label">Decoupling Risk</div>
+                <div id="decouplingRisk" class="decouple-value"></div>
+                <div id="decouplingNote" class="decouple-note"></div>
+            </div>
         </div>
     </div>
 
-    <!-- PHASE SPACE -->
-    <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-6">
-        <h2 class="text-base font-semibold mb-4 text-zinc-100">Phase Space — Symbolic Richness vs. Thermodynamic Surplus</h2>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div style="position:relative; height:300px;"><canvas id="phaseChart"></canvas></div>
-            <div class="bg-black/40 rounded-2xl p-5 border border-zinc-800 text-xs space-y-3">
-                <div class="text-[10px] uppercase font-bold text-cyan-500 tracking-widest mb-2">Regime Guide</div>
-                <div class="flex gap-2"><span class="text-emerald-400 font-bold mt-0.5 flex-shrink-0">↗</span><div><strong class="text-zinc-200">Vital &amp; Grounded:</strong> High A*C, positive K–S. Expansive, confident, integrated culture.</div></div>
-                <div class="flex gap-2"><span class="text-amber-400 font-bold mt-0.5 flex-shrink-0">⬆</span><div><strong class="text-zinc-200">Brilliant but Fragile:</strong> High A*C, negative K–S. Peak culture over eroding substrate.</div></div>
-                <div class="flex gap-2"><span class="text-red-400 font-bold mt-0.5 flex-shrink-0">↙</span><div><strong class="text-zinc-200">Decoupled &amp; Anxious:</strong> Low A*C, negative K–S. Institutional collapse, entropy spike.</div></div>
-                <div class="flex gap-2"><span class="text-purple-400 font-bold mt-0.5 flex-shrink-0">◆</span><div><strong class="text-zinc-200">Nascent or Transitional:</strong> Low A*C, positive K–S. System rebuilding or early-stage.</div></div>
+    <!-- Trajectory charts -->
+    <div class="two-col" style="margin-top:20px;">
+        <div class="card" style="margin-bottom:0; padding:22px;">
+            <h3 class="panel-title">Zeitgeist Evolution Z(t) — A*·C·(K–S)</h3>
+            <div class="chart-wrap"><canvas id="zeitgeistChart"></canvas></div>
+        </div>
+        <div class="card" style="margin-bottom:0; padding:22px;">
+            <h3 class="panel-title">Grounding Coherence Λ(t)</h3>
+            <div class="chart-wrap"><canvas id="groundingChart"></canvas></div>
+        </div>
+    </div>
+
+    <!-- Phase space -->
+    <div class="card" style="margin-top:20px; padding:22px;">
+        <h3 class="panel-title">Phase Space — Symbolic Richness vs. Thermodynamic Surplus</h3>
+        <div class="two-col" style="margin-bottom:0;">
+            <div class="chart-wrap"><canvas id="phaseChart"></canvas></div>
+            <div class="phase-guide">
+                <div class="phase-guide-title">Regime Guide</div>
+                <div class="phase-row"><span class="phase-arrow" style="color:#27ae60">↗</span><div><strong>Vital &amp; Grounded:</strong> <span>High A*C, positive K–S. Expansive, confident, integrated culture.</span></div></div>
+                <div class="phase-row"><span class="phase-arrow" style="color:#e67e22">⬆</span><div><strong>Brilliant but Fragile:</strong> <span>High A*C, negative K–S. Peak culture over eroding substrate.</span></div></div>
+                <div class="phase-row"><span class="phase-arrow" style="color:#c0392b">↙</span><div><strong>Decoupled &amp; Anxious:</strong> <span>Low A*C, negative K–S. Institutional collapse, entropy spike.</span></div></div>
+                <div class="phase-row"><span class="phase-arrow" style="color:#764ba2">◆</span><div><strong>Nascent / Transitional:</strong> <span>Low A*C, positive K–S. System rebuilding or early-stage.</span></div></div>
             </div>
         </div>
     </div>
 
 </div>
 
+<footer class="footer">
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+
 <script>
-// ── Data loading ──────────────────────────────────────────────────────────────
+// ── Data ─────────────────────────────────────────────────────────────────────
 let database = {};
-const state = { society: null, year: null };
+const state = { society: null, year: null, years: [] };
+let playInterval = null;
+
+function setStatus(msg) { document.getElementById('loadStatus').textContent = msg; }
+function avg(arr, fn) { return arr.length ? arr.reduce((a,b) => a + fn(b), 0) / arr.length : 0; }
+function getYear(soc, yr) { return database[soc]?.filter(d => d.year === yr) || []; }
 
 async function loadData() {
-    const resp = await fetch('cleaned_datasets/cams_index.json');
-    const raw  = await resp.json();
-    const db   = {};
+    setStatus('Loading…');
+    const raw = await fetch('cleaned_datasets/cams_index.json').then(r => r.json());
+    const db  = {};
     for (const [soc, years] of Object.entries(raw)) {
         db[soc] = [];
         for (const [yr, nodes] of Object.entries(years)) {
             const year = parseInt(yr);
             for (const [node, m] of Object.entries(nodes)) {
                 const [c,k,s,a] = m;
-                const val  = 1.5*c + k - 1.5*s + 0.5*a;
-                const bond = (c + k) / Math.max(s, 0.1) * 0.5;
-                db[soc].push({ year, node, c, k, s, a, val: parseFloat(val.toFixed(2)), bond: parseFloat(bond.toFixed(3)) });
+                db[soc].push({ year, node, c, k, s, a,
+                    val:  parseFloat((1.5*c + k - 1.5*s + 0.5*a).toFixed(2)),
+                    bond: parseFloat(((c+k)/Math.max(s,0.1)*0.5).toFixed(3)) });
             }
         }
         db[soc].sort((a,b) => a.year - b.year);
@@ -246,107 +396,99 @@ async function loadData() {
     return db;
 }
 
-function avg(arr, fn) { return arr.length ? arr.reduce((a,b) => a + fn(b), 0) / arr.length : 0; }
-function getYear(soc, yr) { return database[soc]?.filter(d => d.year === yr) || []; }
-
-// ── Zeitgeist calculations ────────────────────────────────────────────────────
+// ── Calculations ──────────────────────────────────────────────────────────────
 function calcZeitgeist(yearData) {
     const mythic   = yearData.filter(d => d.node === 'Lore' || d.node === 'Archive');
     const material = yearData.filter(d => d.node === 'Hands' || d.node === 'Craft');
-
-    const aStar  = avg(mythic, d => d.a);
-    const c      = avg(yearData, d => d.c);
-    const k      = avg(yearData, d => d.k);
-    const s      = avg(yearData, d => d.s);
-    const kMinusS = k - s;
-
+    const aStar    = avg(mythic, d => d.a);
+    const c        = avg(yearData, d => d.c);
+    const k        = avg(yearData, d => d.k);
+    const s        = avg(yearData, d => d.s);
+    const kMinusS  = k - s;
     const mythicHealth   = avg(mythic, d => d.val);
     const materialHealth = avg(material, d => d.val);
-    const lambda = (mythicHealth + materialHealth) / 2 * 0.1;
-
-    // Z normalised so typical values sit in 0–5 range
-    const z = (aStar / 10) * (c / 10) * ((kMinusS + 10) / 10);
-
+    const lambda   = (mythicHealth + materialHealth) / 2 * 0.1;
+    const z        = (aStar / 10) * (c / 10) * ((kMinusS + 10) / 10);
     return { aStar, c, k, s, kMinusS, lambda, z, mythicHealth, materialHealth };
 }
 
 function classifyZeitgeist({ aStar, c, kMinusS, lambda }) {
-    const sr = (aStar / 10) * (c / 10);
-    const pos = kMinusS > 0;
+    const sr      = (aStar / 10) * (c / 10);
+    const pos     = kMinusS > 0;
     const grounded = lambda > 0.5;
-
     if (sr > 0.4 && pos && grounded)      return { type:'VITAL & GROUNDED',       css:'grounded',  color:'#10b981', texture:'Expansive, confident, integrated', mood:'Civilisation at ease — culture flows naturally from lived experience. High output, institutional trust, technological optimism.' };
-    if (sr > 0.4 && !pos && lambda > 0.3) return { type:'BRILLIANT BUT FRAGILE',  css:'fragile',   color:'#f59e0b', texture:'Peak culture, eroding substrate',  mood:'Weimar condition — vibrant intellectual life amid material decay. Museums full, unemployment rising. Brilliant yet treacherous.' };
-    if (sr > 0.3 && !pos && !grounded)    return { type:'DECOUPLED & ANXIOUS',    css:'decoupled', color:'#ef4444', texture:'Ungrounded brilliance',             mood:'Late-collapse texture — elite culture divorces from lived conditions. Narrative breakdown, institutional paralysis. Felt as vertigo.' };
-    if (sr < 0.3 && !pos)                 return { type:'COLLAPSE ATTRACTOR',     css:'collapse',  color:'#a855f7', texture:'Reactive entropy',                 mood:'System in free fall — coherence evaporates, stress spikes. Culture becomes reactive, defensive. Felt as dread.' };
-    return                                       { type:'NASCENT / TRANSITIONAL', css:'vital',     color:'#0bc5ea', texture:'System rebuilding',                mood:'Early-stage or recovering — modest culture, genuine surplus. Felt as cautious optimism or quiet reconstruction.' };
+    if (sr > 0.4 && !pos && lambda > 0.3) return { type:'BRILLIANT BUT FRAGILE',  css:'fragile',   color:'#d97706', texture:'Peak culture, eroding substrate',  mood:'Weimar condition — vibrant intellectual life amid material decay. Museums full, unemployment rising. Brilliant yet treacherous.' };
+    if (sr > 0.3 && !pos && !grounded)    return { type:'DECOUPLED & ANXIOUS',    css:'decoupled', color:'#dc2626', texture:'Ungrounded brilliance',             mood:'Late-collapse texture — elite culture divorces from lived conditions. Narrative breakdown, institutional paralysis. Felt as vertigo.' };
+    if (sr < 0.3 && !pos)                 return { type:'COLLAPSE ATTRACTOR',     css:'collapse',  color:'#9333ea', texture:'Reactive entropy',                 mood:'System in free fall — coherence evaporates, stress spikes. Culture becomes reactive, defensive. Felt as dread.' };
+    return                                       { type:'NASCENT / TRANSITIONAL', css:'vital',     color:'#0891b2', texture:'System rebuilding',                mood:'Early-stage or recovering — modest culture, genuine surplus. Felt as cautious optimism or quiet reconstruction.' };
 }
 
-// ── Gauge updater ─────────────────────────────────────────────────────────────
+// ── Gauge ─────────────────────────────────────────────────────────────────────
 function setGauge(id, value, max, color) {
-    const pct = Math.max(0, Math.min(1, value / max));
-    const deg = pct * 360;
+    const deg = Math.max(0, Math.min(1, value / max)) * 360;
     document.getElementById(id).style.background =
-        `conic-gradient(from 0deg, ${color} 0deg, ${color} ${deg}deg, #27272a ${deg}deg, #27272a 360deg)`;
+        `conic-gradient(from 0deg, ${color} 0deg, ${color} ${deg}deg, #e8e0f0 ${deg}deg, #e8e0f0 360deg)`;
 }
 
-// ── UI rendering ──────────────────────────────────────────────────────────────
+// ── Render ────────────────────────────────────────────────────────────────────
 function renderMetrics(m) {
     document.getElementById('valueA').textContent = m.aStar.toFixed(1);
-    setGauge('gaugeA', m.aStar, 10, '#805AD5');
+    setGauge('gaugeA', m.aStar, 10, '#764ba2');
 
     document.getElementById('valueC').textContent = m.c.toFixed(1);
-    setGauge('gaugeC', m.c, 10, '#3182CE');
+    setGauge('gaugeC', m.c, 10, '#2980b9');
 
-    const ksColor = m.kMinusS >= 0 ? '#10b981' : '#ef4444';
-    document.getElementById('valueKS').textContent = (m.kMinusS >= 0 ? '+' : '') + m.kMinusS.toFixed(1);
-    document.getElementById('valueKS').style.color = ksColor;
+    const ksColor = m.kMinusS >= 0 ? '#27ae60' : '#c0392b';
+    const ksEl = document.getElementById('valueKS');
+    ksEl.textContent = (m.kMinusS >= 0 ? '+' : '') + m.kMinusS.toFixed(1);
+    ksEl.style.color = ksColor;
     setGauge('gaugeKS', m.kMinusS + 10, 20, ksColor);
 
     document.getElementById('valueLambda').textContent = m.lambda.toFixed(2);
-    setGauge('gaugeLambda', m.lambda, 1.2, '#0BC5EA');
+    setGauge('gaugeLambda', m.lambda, 1.2, '#1abc9c');
 
     document.getElementById('valueZ').textContent = m.z.toFixed(2);
     setGauge('gaugeZ', m.z, 5, '#d946ef');
 
-    document.getElementById('mythicBar').style.width   = `${Math.min(100, (m.mythicHealth / 20) * 100)}%`;
+    // Grounding bars
+    document.getElementById('mythicBar').style.width   = `${Math.min(100,(m.mythicHealth/20)*100)}%`;
     document.getElementById('mythicValue').textContent = m.mythicHealth.toFixed(1);
-    document.getElementById('materialBar').style.width = `${Math.min(100, (m.materialHealth / 20) * 100)}%`;
+    document.getElementById('materialBar').style.width = `${Math.min(100,(m.materialHealth/20)*100)}%`;
     document.getElementById('materialValue').textContent = m.materialHealth.toFixed(1);
 
     const gap = Math.abs(m.mythicHealth - m.materialHealth);
     const gapPct = Math.min(100, (gap / 15) * 100);
-    const gapColor = gapPct > 40 ? '#ef4444' : gapPct > 20 ? '#f59e0b' : '#10b981';
+    const gapColor = gapPct > 40 ? '#c0392b' : gapPct > 20 ? '#e67e22' : '#27ae60';
     document.getElementById('decouplingRisk').innerHTML = `<span style="color:${gapColor}">${gapPct.toFixed(0)}% Decoupling</span>`;
-    document.getElementById('decouplingNarrative').textContent =
+    document.getElementById('decouplingNote').textContent =
         gapPct > 40 ? 'Mythic-material divergence acute. Risk of normative collapse.' :
         gapPct > 20 ? 'Moderate divergence. Watch for institutional erosion.' :
         'Mythic and material layers aligned. Healthy grounding.';
 }
 
 function renderPhenomenology(m, cl) {
-    document.getElementById('phenomenologyClass').innerHTML =
-        `<div class="${cl.css} p-4 rounded-xl">
-            <div class="text-base font-bold" style="color:${cl.color}">${cl.type}</div>
-            <div class="text-xs text-zinc-400 mt-0.5">${cl.texture}</div>
-        </div>`;
-    document.getElementById('phenomenologyNarrative').innerHTML =
-        `<div>${cl.mood}</div>
-         <div class="pt-2 text-xs text-zinc-400 border-t border-zinc-800 mt-2">
-            ${m.aStar > 5 ? 'High symbolic richness (Lore/Archive active). ' : 'Attenuated symbolism. '}
-            ${m.c > 6 ? 'Coherence stable. ' : 'Institutional fragmentation. '}
-            ${m.kMinusS > 0 ? 'Positive surplus — growth possible. ' : 'Negative surplus — contraction/crisis. '}
-            ${m.lambda > 0.5 ? 'Mythic-material grounding strong.' : 'Decoupling risk high.'}
-         </div>`;
+    document.getElementById('phenoBadge').className = `pheno-badge ${cl.css}`;
+    document.getElementById('phenoBadge').innerHTML =
+        `<div class="pheno-type" style="color:${cl.color}">${cl.type}</div>
+         <div class="pheno-texture">${cl.texture}</div>`;
+    document.getElementById('phenoNarrative').textContent = cl.mood;
+    document.getElementById('phenoTags').innerHTML =
+        `${m.aStar > 5 ? '&#9679; High symbolic richness' : '&#9679; Attenuated symbolism'}&ensp;
+         ${m.c > 6 ? '&#9679; Coherence stable' : '&#9679; Institutional fragmentation'}&ensp;
+         ${m.kMinusS > 0 ? '&#9679; Positive surplus' : '&#9679; Negative surplus — contraction/crisis'}&ensp;
+         ${m.lambda > 0.5 ? '&#9679; Grounding strong' : '&#9679; Decoupling risk'}`;
 }
 
 // ── Charts ────────────────────────────────────────────────────────────────────
 let charts = {};
-const DARK_GRID = 'rgba(255,255,255,0.05)';
-const DARK_TICK = { color:'#52525b', font:{ size:10, family:'Inter' } };
-const darkScales = (xLabel, yLabel, yMin, yMax) => ({
-    x: { grid:{ color:DARK_GRID }, ticks:{ ...DARK_TICK, maxTicksLimit:8 }, title: xLabel ? { display:true, text:xLabel, color:'#71717a', font:{size:10} } : undefined },
-    y: { grid:{ color:DARK_GRID }, ticks:DARK_TICK, min:yMin, max:yMax, title: yLabel ? { display:true, text:yLabel, color:'#71717a', font:{size:10} } : undefined }
+const GRID_CLR  = 'rgba(0,0,0,0.06)';
+const TICK_CLR  = '#aaa';
+const tickStyle = { color:TICK_CLR, font:{ size:10 } };
+const scales = (xLabel, yLabel, yMin, yMax) => ({
+    x: { grid:{ color:GRID_CLR }, ticks:{ ...tickStyle, maxTicksLimit:8 },
+         title: xLabel ? { display:true, text:xLabel, color:'#888', font:{size:10} } : undefined },
+    y: { grid:{ color:GRID_CLR }, ticks:tickStyle, min:yMin, max:yMax,
+         title: yLabel ? { display:true, text:yLabel, color:'#888', font:{size:10} } : undefined }
 });
 
 function getTrendData(soc) {
@@ -366,7 +508,7 @@ function updateCharts(trend) {
         charts.z = new Chart(document.getElementById('zeitgeistChart'), {
             type:'line',
             data:{ labels, datasets:[{ label:'Z', data:trend.map(d=>d.z), borderColor:'#d946ef', backgroundColor:'rgba(217,70,239,0.08)', fill:true, tension:0.35, pointRadius:0, borderWidth:2 }] },
-            options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:darkScales() }
+            options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:scales() }
         });
     }
 
@@ -377,31 +519,29 @@ function updateCharts(trend) {
     } else {
         charts.lambda = new Chart(document.getElementById('groundingChart'), {
             type:'line',
-            data:{ labels, datasets:[{ label:'Λ(t)', data:trend.map(d=>d.lambda), borderColor:'#0BC5EA', backgroundColor:'rgba(11,197,234,0.08)', fill:true, tension:0.35, pointRadius:0, borderWidth:2 }] },
-            options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:darkScales(null, null, 0, null) }
+            data:{ labels, datasets:[{ label:'Λ(t)', data:trend.map(d=>d.lambda), borderColor:'#1abc9c', backgroundColor:'rgba(26,188,156,0.08)', fill:true, tension:0.35, pointRadius:0, borderWidth:2 }] },
+            options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:scales(null, null, 0, null) }
         });
     }
 
-    const phasePoints = trend.map(d => ({ x: parseFloat(((d.aStar/10)*(d.c/10)).toFixed(3)), y: parseFloat(d.kMinusS.toFixed(2)) }));
+    const phasePoints = trend.map(d => ({ x:parseFloat(((d.aStar/10)*(d.c/10)).toFixed(3)), y:parseFloat(d.kMinusS.toFixed(2)) }));
     if (charts.phase) {
         charts.phase.data.datasets[0].data = phasePoints;
         charts.phase.update('none');
     } else {
         charts.phase = new Chart(document.getElementById('phaseChart'), {
             type:'scatter',
-            data:{ datasets:[{ data:phasePoints, pointBackgroundColor:'#d946ef', pointRadius:3, pointBorderWidth:0 }] },
-            options:{
-                responsive:true, maintainAspectRatio:false,
-                plugins:{ legend:{display:false} },
-                scales: darkScales('A*·C (Symbolic Richness)', 'K–S (Thermodynamic Surplus)', -8, 8)
-            }
+            data:{ datasets:[{ data:phasePoints, pointBackgroundColor:'#764ba2', pointRadius:3, pointBorderWidth:0 }] },
+            options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+                scales:scales('A*·C (Symbolic Richness)', 'K–S (Thermodynamic Surplus)', -8, 8) }
         });
     }
 }
 
-// ── Dashboard update ──────────────────────────────────────────────────────────
+// ── Dashboard ─────────────────────────────────────────────────────────────────
 function updateDashboard() {
     document.getElementById('yearDisplay').textContent = state.year;
+    document.getElementById('yearSlider').value = state.year;
     const yearData = getYear(state.society, state.year);
     if (!yearData.length) return;
     const m  = calcZeitgeist(yearData);
@@ -411,32 +551,67 @@ function updateDashboard() {
     updateCharts(getTrendData(state.society));
 }
 
-// ── Init ─────────────────────────────────────────────────────────────────────
+// ── Play / Pause ──────────────────────────────────────────────────────────────
+function togglePlay() {
+    const btn = document.getElementById('playBtn');
+    if (playInterval) {
+        clearInterval(playInterval);
+        playInterval = null;
+        btn.innerHTML = '&#9654;';
+        btn.classList.remove('playing');
+    } else {
+        btn.innerHTML = '&#9646;&#9646;';
+        btn.classList.add('playing');
+        playInterval = setInterval(() => {
+            const idx = state.years.indexOf(state.year);
+            const next = state.years[idx + 1];
+            if (next === undefined) {
+                // reached end — stop
+                clearInterval(playInterval);
+                playInterval = null;
+                btn.innerHTML = '&#9654;';
+                btn.classList.remove('playing');
+                return;
+            }
+            state.year = next;
+            updateDashboard();
+        }, 350);
+    }
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
 async function init() {
     database = await loadData();
-    document.getElementById('loadingOverlay').style.display = 'none';
-
     const societies = Object.keys(database).sort();
+    setStatus(societies.length + ' societies loaded.');
+
     const sel = document.getElementById('societySelect');
     societies.forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; sel.appendChild(o); });
 
     function setSociety(s) {
+        if (playInterval) togglePlay();
         state.society = s;
-        const yrs = [...new Set(database[s].map(d=>d.year))].sort((a,b)=>a-b);
+        state.years = [...new Set(database[s].map(d=>d.year))].sort((a,b)=>a-b);
         const slider = document.getElementById('yearSlider');
-        slider.min = yrs[0]; slider.max = yrs[yrs.length-1];
-        if (!state.year || state.year < yrs[0] || state.year > yrs[yrs.length-1]) state.year = yrs[yrs.length-1];
+        slider.min = state.years[0];
+        slider.max = state.years[state.years.length - 1];
+        slider.step = state.years.length > 1 ? Math.max(1, state.years[1] - state.years[0]) : 1;
+        if (!state.year || state.year < state.years[0] || state.year > state.years[state.years.length-1]) {
+            state.year = state.years[state.years.length - 1];
+        }
         slider.value = state.year;
     }
 
     const def = societies.includes('Australia') ? 'Australia' : societies[0];
     sel.value = def;
     setSociety(def);
+    updateDashboard();
 
     sel.addEventListener('change', e => { setSociety(e.target.value); updateDashboard(); });
-    document.getElementById('yearSlider').addEventListener('input', e => { state.year = parseInt(e.target.value); updateDashboard(); });
-
-    updateDashboard();
+    document.getElementById('yearSlider').addEventListener('input', e => {
+        state.year = parseInt(e.target.value);
+        updateDashboard();
+    });
 }
 
 init();
