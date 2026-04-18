@@ -215,7 +215,7 @@
         <p class="text-sm text-gray-400 mb-4">Long-run evolution of systemic value, stress, and bond strength.</p>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div class="bg-white p-5 rounded-3xl border border-gray-200 shadow-sm">
-                <div class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">System Value vs. Stress</div>
+                <div class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">A×C vs. Stress</div>
                 <div style="position:relative; height:260px;"><canvas id="trendChart"></canvas></div>
             </div>
             <div class="bg-white p-5 rounded-3xl border border-gray-200 shadow-sm">
@@ -442,14 +442,14 @@ function updateTrendCharts(trend) {
 
     if (charts.trend) {
         charts.trend.data.labels = labels;
-        charts.trend.data.datasets[0].data = trend.map(d=>d.val);
+        charts.trend.data.datasets[0].data = trend.map(d=>d.a * d.c);
         charts.trend.data.datasets[1].data = trend.map(d=>d.s);
         charts.trend.update('none');
     } else {
         charts.trend = new Chart(document.getElementById('trendChart'), {
             type:'line',
             data:{ labels, datasets:[
-                { label:'Value',  data:trend.map(d=>d.val), borderColor:'#3182CE', backgroundColor:'rgba(49,130,206,0.07)', fill:true, tension:0.35, pointRadius:0, borderWidth:2 },
+                { label:'A×C',    data:trend.map(d=>d.a * d.c), borderColor:'#3182CE', backgroundColor:'rgba(49,130,206,0.07)', fill:true, tension:0.35, pointRadius:0, borderWidth:2 },
                 { label:'Stress', data:trend.map(d=>d.s),  borderColor:'#E53E3E', borderDash:[5,4], tension:0.35, pointRadius:0, borderWidth:1.5 }
             ]},
             options:{ responsive:true, maintainAspectRatio:false,
