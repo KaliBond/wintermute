@@ -193,21 +193,59 @@
         <div id="failureModes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
     </section>
 
-    <!-- SYSTEM ARCHITECTURE -->
-    <section>
-        <h2 class="text-lg font-serif font-bold mb-1 text-ink">System Architecture <span id="archYear" class="font-mono text-gray-400 font-normal text-base">(2000)</span></h2>
-        <p class="text-sm text-gray-400 mb-4">Node configuration and coherence/stress balance for the selected year.</p>
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="bg-white p-5 rounded-3xl border border-gray-200 shadow-sm">
-                <div class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">A × C (Abstraction × Coherence)</div>
-                <div style="position:relative; height:280px;"><canvas id="radarChart"></canvas></div>
+    <!-- SYSTEM ARCHITECTURE + LIVE METRICS -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left: System Architecture (5 cols) -->
+        <div class="lg:col-span-5 bg-white p-6 rounded-3xl border border-gray-200 shadow-sm">
+            <h2 class="text-lg font-serif font-bold mb-0.5 text-ink">System Architecture <span id="archYear" class="font-mono text-gray-400 font-normal text-base">(2000)</span></h2>
+            <p class="text-sm text-gray-400 mb-4">Node configuration and coherence/stress balance for the selected year.</p>
+            <div class="flex items-center gap-6 text-sm font-medium text-gray-600 mb-4">
+                <span>A × C <span class="text-xs text-gray-400">(Abstraction × Coherence)</span></span>
+                <span>K − S <span class="text-xs text-gray-400">(Capacity − Stress)</span></span>
             </div>
-            <div class="lg:col-span-2 bg-white p-5 rounded-3xl border border-gray-200 shadow-sm">
-                <div class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">K − S (Capacity minus Stress) per Node</div>
-                <div style="position:relative; height:280px;"><canvas id="barChart"></canvas></div>
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div style="position:relative; height:220px;"><canvas id="radarChart"></canvas></div>
+                <div style="position:relative; height:220px;"><canvas id="barChart"></canvas></div>
             </div>
+            <!-- Per-node table -->
+            <div id="nodeTable" class="overflow-x-auto"></div>
         </div>
-    </section>
+
+        <!-- Right: v3.2-R Live Metrics (7 cols) -->
+        <div class="lg:col-span-7 bg-white p-6 rounded-3xl border border-gray-200 shadow-sm flex flex-col gap-5">
+            <h2 class="text-lg font-serif font-bold text-ink">v3.2-R Canonical Metrics</h2>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-paper rounded-2xl p-4">
+                    <div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Avg Node Value</div>
+                    <div id="metricAvgV" class="font-serif text-4xl font-bold text-ink">—</div>
+                </div>
+                <div class="bg-paper rounded-2xl p-4">
+                    <div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">ESCH σ &nbsp;<span class="font-normal normal-case text-gray-400">(A×C × K−S)</span></div>
+                    <div id="metricEsch" class="font-serif text-4xl font-bold text-ink">—</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 text-center">
+                <div class="bg-paper rounded-2xl p-4">
+                    <div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">κ</div>
+                    <div id="metricKappa" class="font-serif text-3xl font-bold">—</div>
+                    <div id="kappaWarn" class="text-[10px] font-bold mt-1"></div>
+                </div>
+                <div class="bg-paper rounded-2xl p-4">
+                    <div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Headroom x<sub>min</sub></div>
+                    <div id="metricHeadroom" class="font-serif text-3xl font-bold text-ink">—</div>
+                </div>
+                <div class="bg-paper rounded-2xl p-4 flex flex-col justify-center">
+                    <div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Attractor</div>
+                    <div id="metricAttractor" class="text-base font-bold text-amber-600 leading-tight">—</div>
+                </div>
+            </div>
+
+            <div id="narrativeBox" class="bg-paper rounded-2xl p-4 text-sm text-gray-600 leading-relaxed flex-1"></div>
+        </div>
+    </div>
 
     <!-- MACRO TRENDS -->
     <section>
@@ -304,6 +342,81 @@ function getTrend(soc) {
 }
 
 function riskOf(val) { return val < 8 ? 'high' : val < 12 ? 'medium' : 'low'; }
+
+// ── v3.2-R Metrics ────────────────────────────────────────────────────────────
+function calcMetrics(yearData) {
+    const avgK    = avg(yearData, d => d.k);
+    const avgS    = avg(yearData, d => d.s);
+    const avgVal  = avg(yearData, d => d.val);
+    const esch    = avg(yearData, d => (d.a * d.c) * (d.k - d.s));
+    const kappa   = avgK / (avgK + avgS);                          // capacity fraction 0–1
+    const headroom = Math.min(...yearData.map(d => d.k - d.s));   // worst-case K−S
+
+    let attractor, attractorColor, warn;
+    if      (kappa > 0.58) { attractor = 'GROWTH';              attractorColor = '#276749'; warn = false; }
+    else if (kappa > 0.50) { attractor = 'STABLE';              attractorColor = '#2b6cb0'; warn = false; }
+    else if (kappa > 0.43) { attractor = 'BUFFERING';           attractorColor = '#c05621'; warn = false; }
+    else if (kappa > 0.35) { attractor = 'BUFFERING → FREEZE';  attractorColor = '#c05621'; warn = true;  }
+    else if (kappa > 0.25) { attractor = 'FREEZE';              attractorColor = '#c53030'; warn = true;  }
+    else                   { attractor = 'DECLINE';             attractorColor = '#822727'; warn = true;  }
+
+    return { avgVal, esch, kappa, headroom, attractor, attractorColor, warn };
+}
+
+function renderLiveMetrics(yearData, trend) {
+    const m = calcMetrics(yearData);
+
+    document.getElementById('metricAvgV').textContent     = m.avgVal.toFixed(1);
+    document.getElementById('metricEsch').textContent     = m.esch.toFixed(1);
+    document.getElementById('metricKappa').textContent    = m.kappa.toFixed(2);
+    document.getElementById('metricKappa').style.color    = m.attractorColor;
+    document.getElementById('kappaWarn').textContent      = m.warn ? 'WARNING ★' : '';
+    document.getElementById('kappaWarn').style.color      = m.warn ? '#c05621' : '';
+    document.getElementById('metricHeadroom').textContent = (m.headroom >= 0 ? '+' : '') + m.headroom.toFixed(1);
+    document.getElementById('metricAttractor').textContent = m.attractor;
+    document.getElementById('metricAttractor').style.color = m.attractorColor;
+
+    // Narrative
+    const worst  = [...yearData].sort((a,b)=>a.val-b.val)[0];
+    const best   = [...yearData].sort((a,b)=>b.val-a.val)[0];
+    const prior5 = trend.find(d => d.year === state.year - 5);
+    const dir    = prior5 ? (m.avgVal > prior5.val + 0.5 ? '↑ improving' : m.avgVal < prior5.val - 0.5 ? '↓ declining' : '→ stable') : '';
+    document.getElementById('narrativeBox').innerHTML =
+        `<strong>${state.society} · ${state.year}</strong><br>
+         Attractor state: <strong style="color:${m.attractorColor}">${m.attractor}</strong>.
+         κ = ${m.kappa.toFixed(3)} — ${m.warn ? 'capacity under pressure.' : 'capacity adequate.'}<br>
+         ESCH σ = ${m.esch.toFixed(1)}; headroom x<sub>min</sub> = ${(m.headroom>=0?'+':'')}${m.headroom.toFixed(1)}.<br>
+         Weakest node: <strong>${worst?.node}</strong> (V=${worst?.val.toFixed(1)}, S=${worst?.s}).
+         Strongest: <strong>${best?.node}</strong> (V=${best?.val.toFixed(1)}).
+         ${dir ? `<br>5-yr trend: <strong>${dir}</strong>.` : ''}`;
+}
+
+function renderNodeTable(yearData) {
+    const rows = NODE_ORDER.map(n => {
+        const d  = yearData.find(r => r.node === n) || { a:0,c:0,k:0,s:0,val:0 };
+        const ac = d.a * d.c;
+        const ks = d.k - d.s;
+        const si = ac * ks;
+        return `<tr class="border-b border-gray-100 last:border-none hover:bg-gray-50">
+            <td class="py-2 pr-3 font-medium text-xs" style="color:${NODE_META[n].color}">${n}</td>
+            <td class="text-center text-xs font-mono">${ac}</td>
+            <td class="text-center text-xs font-mono ${ks<0?'text-red-500':'text-green-600'}">${ks>=0?'+':''}${ks}</td>
+            <td class="text-center text-xs font-mono font-bold">${si.toFixed(0)}</td>
+            <td class="text-center text-xs font-mono">${d.val.toFixed(1)}</td>
+        </tr>`;
+    }).join('');
+    document.getElementById('nodeTable').innerHTML =
+        `<table class="w-full text-xs border-t border-gray-100 mt-2">
+            <thead><tr class="text-[10px] text-gray-400 uppercase tracking-wide">
+                <th class="text-left py-2 pr-3">Node</th>
+                <th class="text-center">A×C</th>
+                <th class="text-center">K−S</th>
+                <th class="text-center">σ<sub>i</sub></th>
+                <th class="text-center">V<sub>i</sub></th>
+            </tr></thead>
+            <tbody>${rows}</tbody>
+        </table>`;
+}
 
 // ── Failure Modes ─────────────────────────────────────────────────────────────
 function renderFailureModes(yearData) {
@@ -532,6 +645,8 @@ function updateDashboard() {
 
     updateStatus(yearData);
     renderFailureModes(yearData);
+    renderLiveMetrics(yearData, trend);
+    renderNodeTable(yearData);
     updateNetworkColors(yearData);
     updateTrendCharts(trend);
     updateNodeCharts(yearData);
