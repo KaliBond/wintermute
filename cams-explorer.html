@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMS Explorer — Neural Nations</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        'paper': '#f7f7f5',
+                        'ink': '#2d3748',
+                        'subtle': '#718096',
+                        'cams-helm': '#E53E3E',
+                        'cams-shield': '#3182CE',
+                        'cams-lore': '#805AD5',
+                        'cams-archive': '#4A5568',
+                        'cams-stewards': '#D69E2E',
+                        'cams-craft': '#38B2AC',
+                        'cams-flow': '#0BC5EA',
+                        'cams-hands': '#48BB78',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Override Tailwind base bg to match site */
+        body { background-color: #f7f7f5 !important; color: #2d3748; font-family: 'Inter', sans-serif; }
+
+        .explorer-main { max-width: 1280px; margin: 0 auto; padding: 24px 16px 64px; }
+
+        /* Controls bar */
+        .controls-bar {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-end;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .controls-bar label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: #a0aec0;
+            margin-bottom: 4px;
+        }
+        .controls-bar select {
+            background: #f7f8fc;
+            border: 1px solid #e2e8f0;
+            color: #2d3748;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            padding: 7px 10px;
+            min-width: 180px;
+        }
+        .year-display {
+            font-size: 1.8rem;
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            color: #2d3748;
+            line-height: 1;
+            min-width: 64px;
+        }
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 18px; width: 18px;
+            border-radius: 50%;
+            background: #4a5568;
+            cursor: pointer;
+            margin-top: -7px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%; height: 4px;
+            cursor: pointer;
+            background: #cbd5e0;
+            border-radius: 2px;
+        }
+        .play-btn {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            border: none;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            transition: background 0.15s;
+        }
+        .play-btn:hover { background: #cbd5e0; }
+
+        /* Loading overlay */
+        #loadingOverlay {
+            position: fixed; inset: 0;
+            background: rgba(247,247,245,0.92);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            z-index: 9999;
+            gap: 16px;
+        }
+        .spinner {
+            width: 40px; height: 40px;
+            border: 3px solid #e2e8f0;
+            border-top-color: #764ba2;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Status bar */
+        .status-bar {
+            border-left: 4px solid #3182CE;
+            background: #ebf8ff;
+            border-radius: 0 8px 8px 0;
+            padding: 12px 16px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            transition: border-color 0.3s, background 0.3s;
+        }
+        .status-bar.critical {
+            border-color: #E53E3E;
+            background: #fff5f5;
+        }
+        .status-metrics { display: flex; gap: 24px; }
+        .metric-block { text-align: center; }
+        .metric-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #a0aec0; }
+        .metric-value { font-size: 1.4rem; font-weight: 700; font-family: 'Merriweather', serif; color: #2d3748; line-height: 1.2; }
+
+        /* Section headings */
+        .section-heading { font-family: 'Merriweather', serif; font-size: 1.1rem; font-weight: 700; color: #2d3748; margin-bottom: 4px; }
+        .section-sub { font-size: 0.8rem; color: #718096; margin-bottom: 16px; }
+
+        /* Chart cards */
+        .chart-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .chart-card-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #4a5568;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .chart-card-title .dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #4a5568;
+            flex-shrink: 0;
+        }
+
+        /* Grid layouts */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 2fr; gap: 16px; }
+        @media (max-width: 900px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        }
+
+        /* Node legend */
+        .node-legend { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px; }
+        .node-legend span { font-size: 0.75rem; display: inline-flex; align-items: center; gap: 4px; }
+        .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+        /* Theory box */
+        .theory-box {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        /* Scatter quadrant labels */
+        .scatter-labels { display: flex; justify-content: space-between; font-size: 0.7rem; color: #a0aec0; }
+    </style>
+</head>
+<body>
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay">
+    <div class="spinner"></div>
+    <p style="font-size:0.9rem; color:#718096; font-family:'Inter',sans-serif;">Loading 45 societies…</p>
+</div>
+
+<!-- Site Nav -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link active">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile-menu" id="nav-mobile-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="model.html" class="nav-link">Model</a>
+        <a href="datasets.html" class="nav-link">Datasets</a>
+        <a href="explore.html" class="nav-link active">Explore</a>
+        <a href="cams-advanced-analysis.html" class="nav-link">Advanced Analysis</a>
+        <a href="escalation-archetypes.html" class="nav-link">Escalation Archetypes</a>
+        <a href="research-diary.html" class="nav-link">Research Diary</a>
+        <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+        <a href="newsletter.html" class="nav-link">Newsletter</a>
+    </div>
+</nav>
+
+<main class="explorer-main">
+
+    <!-- Page title -->
+    <div style="margin-bottom:20px;">
+        <h1 style="font-family:'Merriweather',serif; font-size:1.6rem; font-weight:700; color:#1a202c; margin:0 0 4px 0;">CAMS Explorer</h1>
+        <p style="font-size:0.85rem; color:#718096; margin:0;">The Thermodynamics of History — 45 societies, real data</p>
+    </div>
+
+    <!-- Controls Bar -->
+    <div class="controls-bar">
+        <div>
+            <label for="societySelect">Society</label>
+            <select id="societySelect"></select>
+        </div>
+
+        <div style="flex:1; min-width:220px; max-width:340px;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:4px;">
+                <label>Timeline</label>
+                <span id="yearDisplay" class="year-display">—</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+                <button id="playBtn" class="play-btn">
+                    <svg id="playIcon" class="w-4 h-4 fill-current" viewBox="0 0 24 24" style="width:16px;height:16px;fill:#4a5568;"><path d="M8 5v14l11-7z"/></svg>
+                    <svg id="pauseIcon" class="w-4 h-4 fill-current" viewBox="0 0 24 24" style="width:16px;height:16px;fill:#4a5568;display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                </button>
+                <input type="range" id="yearSlider" min="1750" max="2026" step="1" value="1900">
+            </div>
+        </div>
+
+        <div style="margin-left:auto;">
+            <div class="node-legend">
+                <span><span class="legend-dot" style="background:#E53E3E;"></span>Helm</span>
+                <span><span class="legend-dot" style="background:#3182CE;"></span>Shield</span>
+                <span><span class="legend-dot" style="background:#805AD5;"></span>Lore</span>
+                <span><span class="legend-dot" style="background:#4A5568;"></span>Archive</span>
+                <span><span class="legend-dot" style="background:#D69E2E;"></span>Stewards</span>
+                <span><span class="legend-dot" style="background:#38B2AC;"></span>Craft</span>
+                <span><span class="legend-dot" style="background:#0BC5EA;"></span>Flow</span>
+                <span><span class="legend-dot" style="background:#48BB78;"></span>Hands</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Theory summary -->
+    <div class="theory-box">
+        <div style="display:flex; flex-wrap:wrap; gap:24px;">
+            <div style="flex:2; min-width:220px;">
+                <h2 style="font-family:'Merriweather',serif; font-size:1rem; font-weight:700; color:#1a202c; margin:0 0 8px 0;">Complex Adaptive Model of Societies</h2>
+                <p style="font-size:0.82rem; color:#4a5568; margin:0 0 12px 0;">Societies are modelled as eight functional nodes. Four metrics — <strong>Coherence</strong>, <strong>Capacity</strong>, <strong>Stress</strong>, and <strong>Abstraction</strong> — track each node's thermodynamic state over time.</p>
+                <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px;">
+                    <div style="background:#f7f8fc; border:1px solid #e2e8f0; border-radius:8px; padding:8px; font-size:0.75rem;"><strong style="display:block; color:#1a202c;">Coherence (C)</strong>Alignment &amp; order</div>
+                    <div style="background:#f7f8fc; border:1px solid #e2e8f0; border-radius:8px; padding:8px; font-size:0.75rem;"><strong style="display:block; color:#1a202c;">Capacity (K)</strong>Energy &amp; resources</div>
+                    <div style="background:#f7f8fc; border:1px solid #e2e8f0; border-radius:8px; padding:8px; font-size:0.75rem;"><strong style="display:block; color:#1a202c;">Stress (S)</strong>Entropy &amp; friction</div>
+                    <div style="background:#f7f8fc; border:1px solid #e2e8f0; border-radius:8px; padding:8px; font-size:0.75rem;"><strong style="display:block; color:#1a202c;">Abstraction (A)</strong>Complexity &amp; info</div>
+                </div>
+            </div>
+            <div style="flex:1; min-width:180px; border-left:1px solid #e2e8f0; padding-left:24px;">
+                <div style="font-size:0.75rem; font-weight:700; color:#4a5568; margin-bottom:6px;">Node Value Formula</div>
+                <code style="display:block; background:#f7f8fc; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px; font-size:0.78rem; color:#4a5568; font-family:monospace;">
+                    V = 1.5(C) + 1.0(K)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;− 1.5(S) + 0.5(A)
+                </code>
+                <p style="font-size:0.75rem; color:#718096; margin:8px 0 0 0;">High coherence and capacity increase value; stress degrades it.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status bar -->
+    <div id="statusBar" class="status-bar" style="margin-bottom:24px;">
+        <div>
+            <div style="font-family:'Merriweather',serif; font-weight:700; font-size:1rem; color:#1a202c;" id="statusTitle">Select a society</div>
+            <div id="statusText" style="font-size:0.82rem; color:#4a5568; margin-top:2px;">Use the controls above to begin.</div>
+        </div>
+        <div class="status-metrics">
+            <div class="metric-block">
+                <div class="metric-label">Avg Stress</div>
+                <div class="metric-value" id="metricStress">—</div>
+            </div>
+            <div class="metric-block">
+                <div class="metric-label">Avg Value</div>
+                <div class="metric-value" id="metricValue">—</div>
+            </div>
+            <div class="metric-block">
+                <div class="metric-label">Avg Bond</div>
+                <div class="metric-value" id="metricBond">—</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROW 1: Macro Trends -->
+    <div style="margin-bottom:32px;">
+        <div class="section-heading">1. Macro-Historical Trends</div>
+        <div class="section-sub">Long-term evolution of systemic resilience (Bond Strength) and output (Node Value).</div>
+        <div class="grid-2">
+            <div class="chart-card">
+                <div class="chart-card-title"><span class="dot" style="background:#3182CE;"></span>System Aggregate Value vs. Stress</div>
+                <div style="position:relative; height:280px;"><canvas id="trendChart"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-card-title"><span class="dot" style="background:#805AD5;"></span>System Bond Strength (Cohesion)</div>
+                <div style="position:relative; height:280px;"><canvas id="bondChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROW 2: Node Architecture -->
+    <div style="margin-bottom:32px;">
+        <div class="section-heading">2. System Architecture (<span class="dynamic-year">—</span>)</div>
+        <div class="section-sub">Topological configuration of the 8 functional nodes for the selected year.</div>
+        <div class="grid-3">
+            <div class="chart-card">
+                <div class="chart-card-title"><span class="dot" style="background:#3182CE;"></span>Node Value Distribution</div>
+                <p style="font-size:0.75rem; color:#718096; margin:0 0 8px 0;">Shape symmetry indicates systemic balance.</p>
+                <div style="position:relative; height:280px;"><canvas id="radarChart"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-card-title"><span class="dot" style="background:#48BB78;"></span>Coherence vs. Stress per Node</div>
+                <p style="font-size:0.75rem; color:#718096; margin:0 0 8px 0;">Comparing order and entropy across the eight functional nodes.</p>
+                <div style="position:relative; height:280px;"><canvas id="barChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROW 3: Thermodynamics -->
+    <div style="margin-bottom:32px;">
+        <div class="section-heading">3. Thermodynamic Trajectories</div>
+        <div class="section-sub">Tracing the path of history through phase space. Red dot = current year. Blue tail = last 20 years.</div>
+        <div class="grid-2">
+            <div class="chart-card">
+                <div class="chart-card-title"><span class="dot" style="background:#E53E3E;"></span>The "Mood" Space (Capacity vs. Stress)</div>
+                <div class="scatter-labels"><span>← Low Energy</span><span>High Energy →</span></div>
+                <div style="position:relative; height:320px;"><canvas id="scatterMood"></canvas></div>
+                <div class="scatter-labels" style="margin-top:4px;"><span>Low Friction ↓</span><span>↑ High Friction</span></div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-card-title"><span class="dot" style="background:#805AD5;"></span>The "Idea" Space (Abstraction vs. Coherence)</div>
+                <div class="scatter-labels"><span>← Simple</span><span>Complex →</span></div>
+                <div style="position:relative; height:320px;"><canvas id="scatterIdea"></canvas></div>
+                <div class="scatter-labels" style="margin-top:4px;"><span>Chaotic ↓</span><span>↑ Ordered</span></div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<script>
+// ── Node colours ────────────────────────────────────────────────────────────
+const NODE_COLORS = {
+    Helm:     "rgba(229,62,62,0.75)",
+    Shield:   "rgba(49,130,206,0.75)",
+    Lore:     "rgba(128,90,213,0.75)",
+    Archive:  "rgba(74,85,104,0.75)",
+    Stewards: "rgba(214,158,46,0.75)",
+    Craft:    "rgba(56,178,172,0.75)",
+    Flow:     "rgba(11,197,234,0.75)",
+    Hands:    "rgba(72,187,120,0.75)",
+    Default:  "rgba(160,174,192,0.75)"
+};
+const NODE_BORDERS = {
+    Helm:"rgb(229,62,62)", Shield:"rgb(49,130,206)", Lore:"rgb(128,90,213)",
+    Archive:"rgb(74,85,104)", Stewards:"rgb(214,158,46)", Craft:"rgb(56,178,172)",
+    Flow:"rgb(11,197,234)", Hands:"rgb(72,187,120)", Default:"rgb(160,174,192)"
+};
+const NODE_ORDER = ["Helm","Shield","Lore","Archive","Stewards","Craft","Flow","Hands"];
+
+// ── State ────────────────────────────────────────────────────────────────────
+let database = {};
+const state = { society: null, year: null, isPlaying: false, timer: null, speed: 400 };
+
+// ── DOM refs ─────────────────────────────────────────────────────────────────
+const dom = {
+    select:   document.getElementById('societySelect'),
+    slider:   document.getElementById('yearSlider'),
+    yearDisp: document.getElementById('yearDisplay'),
+    playBtn:  document.getElementById('playBtn'),
+    playIcon: document.getElementById('playIcon'),
+    pauseIcon:document.getElementById('pauseIcon'),
+    statusBar:  document.getElementById('statusBar'),
+    statusTitle:document.getElementById('statusTitle'),
+    statusText: document.getElementById('statusText'),
+    metricS:    document.getElementById('metricStress'),
+    metricV:    document.getElementById('metricValue'),
+    metricB:    document.getElementById('metricBond'),
+};
+
+// ── Data loading ─────────────────────────────────────────────────────────────
+async function loadData() {
+    const resp = await fetch('cleaned_datasets/cams_index.json');
+    const raw = await resp.json();
+    const db = {};
+
+    for (const [society, years] of Object.entries(raw)) {
+        db[society] = [];
+        for (const [yearStr, nodes] of Object.entries(years)) {
+            const year = parseInt(yearStr);
+            for (const [nodeName, metrics] of Object.entries(nodes)) {
+                const [c, k, s, a] = metrics;
+                const val  = 1.5*c + 1.0*k - 1.5*s + 0.5*a;
+                const bond = (c + k) / (Math.max(s, 0.1)) * 0.5;
+                db[society].push({
+                    year, node: nodeName, c, k, s, a,
+                    val:  parseFloat(val.toFixed(2)),
+                    bond: parseFloat(bond.toFixed(3))
+                });
+            }
+        }
+        db[society].sort((a, b) => a.year - b.year);
+    }
+    return db;
+}
+
+// ── Data helpers ─────────────────────────────────────────────────────────────
+function getYearData(society, year) {
+    return database[society].filter(d => d.year === year);
+}
+
+function getTrendData(society) {
+    const byYear = {};
+    for (const d of database[society]) {
+        if (!byYear[d.year]) byYear[d.year] = [];
+        byYear[d.year].push(d);
+    }
+    return Object.entries(byYear)
+        .sort((a,b) => +a[0] - +b[0])
+        .map(([y, recs]) => {
+            const n = recs.length;
+            return {
+                year: +y,
+                s:    recs.reduce((a,b)=>a+b.s, 0) / n,
+                val:  recs.reduce((a,b)=>a+b.val, 0) / n,
+                bond: recs.reduce((a,b)=>a+b.bond, 0) / n,
+                c:    recs.reduce((a,b)=>a+b.c, 0) / n,
+                k:    recs.reduce((a,b)=>a+b.k, 0) / n,
+                a:    recs.reduce((a,b)=>a+b.a, 0) / n,
+            };
+        });
+}
+
+// ── Init ─────────────────────────────────────────────────────────────────────
+async function init() {
+    database = await loadData();
+    document.getElementById('loadingOverlay').style.display = 'none';
+
+    const societies = Object.keys(database).sort();
+    societies.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s; opt.textContent = s;
+        dom.select.appendChild(opt);
+    });
+
+    dom.select.addEventListener('change', e => {
+        state.society = e.target.value;
+        updateSliderRange();
+        updateDashboard();
+    });
+    dom.slider.addEventListener('input', e => {
+        state.year = parseInt(e.target.value);
+        updateDashboard();
+    });
+    dom.playBtn.addEventListener('click', togglePlay);
+
+    // Default to Australia for a nice starting view
+    const defaultSoc = societies.includes('Australia') ? 'Australia' : societies[0];
+    dom.select.value = defaultSoc;
+    state.society = defaultSoc;
+    updateSliderRange();
+    updateDashboard();
+}
+
+function updateSliderRange() {
+    const data = database[state.society];
+    if (!data || !data.length) return;
+    const min = data[0].year;
+    const max = data[data.length - 1].year;
+    dom.slider.min = min;
+    dom.slider.max = max;
+    if (!state.year || state.year < min || state.year > max) {
+        state.year = min;
+    }
+    dom.slider.value = state.year;
+}
+
+function togglePlay() {
+    state.isPlaying = !state.isPlaying;
+    dom.playIcon.style.display  = state.isPlaying ? 'none' : 'block';
+    dom.pauseIcon.style.display = state.isPlaying ? 'block' : 'none';
+    if (state.isPlaying) {
+        state.timer = setInterval(() => {
+            if (state.year < parseInt(dom.slider.max)) {
+                state.year++;
+                dom.slider.value = state.year;
+                updateDashboard();
+            } else {
+                togglePlay();
+            }
+        }, state.speed);
+    } else {
+        clearInterval(state.timer);
+    }
+}
+
+// ── Dashboard update ──────────────────────────────────────────────────────────
+function updateDashboard() {
+    dom.yearDisp.textContent = state.year;
+    document.querySelectorAll('.dynamic-year').forEach(el => el.textContent = state.year);
+
+    const current = getYearData(state.society, state.year);
+    const trend   = getTrendData(state.society);
+    if (!current.length) return;
+
+    const avgS    = current.reduce((a,b)=>a+b.s, 0) / current.length;
+    const avgV    = current.reduce((a,b)=>a+b.val, 0) / current.length;
+    const avgBond = current.reduce((a,b)=>a+b.bond, 0) / current.length;
+
+    dom.metricS.textContent = avgS.toFixed(1);
+    dom.metricV.textContent = avgV.toFixed(1);
+    dom.metricB.textContent = avgBond.toFixed(2);
+
+    dom.statusTitle.textContent = `${state.society} — ${state.year}`;
+    let narrative = avgS > 7 ? "CRITICAL: High systemic entropy." : avgS > 5 ? "STRAINED: System under friction." : "STABLE: Low entropy state.";
+    if (avgV > 14) narrative += " Strong systemic output.";
+    else if (avgV < 6) narrative += " Low systemic output.";
+    dom.statusText.textContent = narrative;
+
+    if (avgS > 6.5) {
+        dom.statusBar.classList.add('critical');
+    } else {
+        dom.statusBar.classList.remove('critical');
+    }
+
+    updateTrendCharts(trend);
+    updateNodeCharts(current);
+    updateScatterCharts(trend, state.year);
+}
+
+// ── Charts ───────────────────────────────────────────────────────────────────
+let charts = {};
+
+function updateTrendCharts(data) {
+    const labels = data.map(d => d.year);
+
+    if (charts.trend) {
+        charts.trend.data.labels = labels;
+        charts.trend.data.datasets[0].data = data.map(d => d.val);
+        charts.trend.data.datasets[1].data = data.map(d => d.s);
+        charts.trend.update('none');
+    } else {
+        charts.trend = new Chart(document.getElementById('trendChart'), {
+            type: 'line',
+            data: {
+                labels,
+                datasets: [
+                    { label: 'System Value', data: data.map(d=>d.val), borderColor:'#3182CE', backgroundColor:'rgba(49,130,206,0.1)', fill:true, tension:0.35, pointRadius:0, borderWidth:2 },
+                    { label: 'Avg Stress',   data: data.map(d=>d.s),   borderColor:'#E53E3E', borderDash:[5,4], tension:0.35, pointRadius:0, borderWidth:1.5 }
+                ]
+            },
+            options: {
+                responsive:true, maintainAspectRatio:false,
+                interaction:{ mode:'index', intersect:false },
+                plugins:{ legend:{ position:'top', labels:{ boxWidth:12, font:{size:11} } } },
+                scales:{ x:{ grid:{display:false}, ticks:{maxTicksLimit:8, font:{size:10}} }, y:{ grid:{color:'#f0f0f0'}, ticks:{font:{size:10}} } }
+            }
+        });
+    }
+
+    if (charts.bond) {
+        charts.bond.data.labels = labels;
+        charts.bond.data.datasets[0].data = data.map(d => d.bond);
+        charts.bond.update('none');
+    } else {
+        charts.bond = new Chart(document.getElementById('bondChart'), {
+            type: 'line',
+            data: {
+                labels,
+                datasets: [{ label:'Bond Strength', data:data.map(d=>d.bond), borderColor:'#805AD5', backgroundColor:'rgba(128,90,213,0.1)', fill:true, tension:0.35, pointRadius:0, borderWidth:2 }]
+            },
+            options: {
+                responsive:true, maintainAspectRatio:false,
+                interaction:{ mode:'index', intersect:false },
+                plugins:{ legend:{ display:false } },
+                scales:{ x:{ grid:{display:false}, ticks:{maxTicksLimit:8, font:{size:10}} }, y:{ grid:{color:'#f0f0f0'}, ticks:{font:{size:10}} } }
+            }
+        });
+    }
+}
+
+function updateNodeCharts(data) {
+    const sorted = NODE_ORDER.map(key => data.find(d => d.node === key) || { node:key, val:0, c:0, s:0 });
+    const labels  = sorted.map(d => d.node);
+    const values  = sorted.map(d => d.val);
+    const coherence = sorted.map(d => d.c);
+    const stress  = sorted.map(d => d.s);
+
+    if (charts.radar) {
+        charts.radar.data.labels = labels;
+        charts.radar.data.datasets[0].data = values;
+        charts.radar.update('none');
+    } else {
+        charts.radar = new Chart(document.getElementById('radarChart'), {
+            type: 'radar',
+            data: {
+                labels,
+                datasets: [{ label:'Node Value', data:values, backgroundColor:'rgba(49,130,206,0.15)', borderColor:'#3182CE', pointBackgroundColor:'#3182CE', pointRadius:3, borderWidth:2 }]
+            },
+            options: {
+                responsive:true, maintainAspectRatio:false,
+                scales:{ r:{ angleLines:{color:'#e2e8f0'}, grid:{color:'#e2e8f0'}, pointLabels:{font:{size:10, weight:'bold'}}, suggestedMin:0, ticks:{display:false} } },
+                plugins:{ legend:{display:false} }
+            }
+        });
+    }
+
+    if (charts.bar) {
+        charts.bar.data.labels = labels;
+        charts.bar.data.datasets[0].data = coherence;
+        charts.bar.data.datasets[1].data = stress;
+        charts.bar.update('none');
+    } else {
+        charts.bar = new Chart(document.getElementById('barChart'), {
+            type: 'bar',
+            data: {
+                labels,
+                datasets: [
+                    { label:'Coherence', data:coherence, backgroundColor:'#48BB78', borderRadius:4 },
+                    { label:'Stress',    data:stress,    backgroundColor:'#E53E3E', borderRadius:4 }
+                ]
+            },
+            options: {
+                responsive:true, maintainAspectRatio:false,
+                scales:{ y:{ beginAtZero:true, max:12, grid:{color:'#f0f0f0'}, ticks:{font:{size:10}} }, x:{ ticks:{font:{size:10}} } },
+                plugins:{ legend:{ position:'top', labels:{ boxWidth:12, font:{size:11} } } }
+            }
+        });
+    }
+}
+
+function updateScatterCharts(trendData, currentYear) {
+    const past = trendData.filter(d => d.year <= currentYear);
+
+    const pointColors = past.map(p => {
+        const age = currentYear - p.year;
+        if (age === 0) return '#E53E3E';
+        if (age < 20)  return `rgba(49,130,206,${1 - age/20})`;
+        return 'rgba(180,180,180,0.25)';
+    });
+    const pointSizes = past.map(p => (currentYear - p.year) === 0 ? 7 : 3);
+
+    const moodData = past.map(p => ({ x: p.k, y: p.s }));
+    const ideaData = past.map(p => ({ x: p.a, y: p.c }));
+
+    const scatterOpts = (xLabel, yLabel) => ({
+        responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{display:false} },
+        scales:{
+            x:{ title:{display:true, text:xLabel, font:{size:10}}, min:0, max:11, grid:{color:'#f0f0f0'}, ticks:{font:{size:10}} },
+            y:{ title:{display:true, text:yLabel, font:{size:10}}, min:0, max:11, grid:{color:'#f0f0f0'}, ticks:{font:{size:10}} }
+        }
+    });
+
+    if (charts.mood) {
+        charts.mood.data.datasets[0].data = moodData;
+        charts.mood.data.datasets[0].pointBackgroundColor = pointColors;
+        charts.mood.data.datasets[0].pointRadius = pointSizes;
+        charts.mood.update('none');
+    } else {
+        charts.mood = new Chart(document.getElementById('scatterMood'), {
+            type:'scatter',
+            data:{ datasets:[{ data:moodData, pointBackgroundColor:pointColors, pointRadius:pointSizes, pointBorderWidth:0 }] },
+            options: scatterOpts('Capacity (Energy)', 'Stress (Entropy)')
+        });
+    }
+
+    if (charts.idea) {
+        charts.idea.data.datasets[0].data = ideaData;
+        charts.idea.data.datasets[0].pointBackgroundColor = pointColors;
+        charts.idea.data.datasets[0].pointRadius = pointSizes;
+        charts.idea.update('none');
+    } else {
+        charts.idea = new Chart(document.getElementById('scatterIdea'), {
+            type:'scatter',
+            data:{ datasets:[{ data:ideaData, pointBackgroundColor:pointColors, pointRadius:pointSizes, pointBorderWidth:0 }] },
+            options: scatterOpts('Abstraction (Complexity)', 'Coherence (Order)')
+        });
+    }
+}
+
+init();
+</script>
+
+<script src="nav.js"></script>
+</body>
+</html>
