@@ -12,9 +12,9 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter','sans-serif'], serif: ['Merriweather','serif'] },
+                    fontFamily: { sans:['Inter','sans-serif'], serif:['Merriweather','serif'] },
                     colors: {
-                        paper: '#f7f7f5', ink: '#2d3748',
+                        paper:'#f7f7f5', ink:'#2d3748',
                         camsHelm:'#E53E3E', camsShield:'#3182CE', camsLore:'#805AD5',
                         camsArchive:'#4A5568', camsStewards:'#D69E2E', camsCraft:'#38B2AC',
                         camsFlow:'#0BC5EA', camsHands:'#48BB78'
@@ -24,17 +24,16 @@
         }
     </script>
     <style>
-        body { background-color:#f7f7f5; color:#2d3748; font-family:'Inter',sans-serif; }
+        body { background:#f7f7f5; color:#2d3748; font-family:'Inter',sans-serif; }
         .serif { font-family:'Merriweather',serif; }
         .chart-container { position:relative; width:100%; height:100%; }
-        .node-card { transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
-        .node-card:hover { transform:translateY(-3px); box-shadow:0 10px 15px -3px rgb(0 0 0/0.1); }
-        .society-pill { cursor:pointer; padding:8px 18px; border-radius:999px; font-size:13px; font-weight:500; border:2px solid #e2e8f0; background:#fff; color:#4a5568; transition:all 0.18s; white-space:nowrap; }
-        .society-pill.active, .society-pill:hover { background:#2d3748; color:#fff; border-color:#2d3748; }
-        .year-track { position:relative; }
-        input[type=range] { -webkit-appearance:none; appearance:none; height:6px; border-radius:3px; background:linear-gradient(to right,#2d3748 0%,#2d3748 var(--pct,100%),#e2e8f0 var(--pct,100%),#e2e8f0 100%); outline:none; }
-        input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:#2d3748; cursor:pointer; border:3px solid #fff; box-shadow:0 0 0 2px #2d3748; }
-        #network canvas { border-radius:20px; }
+        .node-card { transition:all 0.25s ease; }
+        .node-card:hover { transform:translateY(-2px); box-shadow:0 8px 16px -4px rgba(0,0,0,0.1); }
+        input[type=range] { -webkit-appearance:none; appearance:none; height:5px; border-radius:3px;
+            background:linear-gradient(to right,#2d3748 0%,#2d3748 var(--pct,100%),#e2e8f0 var(--pct,100%),#e2e8f0 100%); outline:none; cursor:pointer; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px;
+            border-radius:50%; background:#2d3748; border:3px solid #fff; box-shadow:0 0 0 2px #2d3748; cursor:pointer; }
+        select { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:32px !important; }
     </style>
 </head>
 <body class="antialiased">
@@ -42,104 +41,105 @@
 <!-- HEADER -->
 <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-4">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-5">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
 
-            <!-- Brand -->
-            <div class="flex items-center space-x-3 flex-shrink-0">
-                <div class="w-10 h-10 bg-[#2d3748] text-white flex items-center justify-center rounded-xl font-serif font-bold text-2xl">C</div>
+            <div class="flex items-center gap-3 flex-shrink-0">
+                <div class="w-10 h-10 bg-[#2d3748] text-white flex items-center justify-center rounded-xl font-bold text-xl">C</div>
                 <div>
                     <h1 class="serif text-2xl font-bold text-[#2d3748] leading-tight">CAMS Explorer</h1>
                     <p class="text-[10px] uppercase tracking-widest text-gray-400">v3.2-R · Thermodynamics of History · April 2026</p>
                 </div>
             </div>
 
-            <!-- Controls -->
-            <div class="flex flex-col sm:flex-row gap-5 w-full md:w-auto">
+            <div class="flex flex-col sm:flex-row gap-5 w-full md:w-auto items-end">
 
-                <!-- Society pills -->
-                <div>
-                    <div class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">Society</div>
-                    <div id="societyPills" class="flex gap-2 flex-wrap">
-                        <button class="society-pill active" data-society="China">China</button>
-                        <button class="society-pill" data-society="NewZealand">New Zealand</button>
-                        <button class="society-pill" data-society="Germany">Germany</button>
-                        <button class="society-pill" data-society="Rome">Rome</button>
-                    </div>
+                <!-- Society dropdown -->
+                <div class="w-full sm:w-60">
+                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Society</label>
+                    <select id="societySelect"
+                        class="w-full bg-white border border-gray-300 rounded-xl px-4 py-2.5 text-sm text-[#2d3748] font-medium focus:ring-2 focus:ring-[#2d3748] focus:border-transparent">
+                        <option value="">Loading…</option>
+                    </select>
                 </div>
 
                 <!-- Year slider -->
-                <div class="sm:min-w-[320px]">
-                    <div class="flex justify-between items-baseline mb-2">
-                        <div class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Year</div>
-                        <span id="yearDisplay" class="serif text-3xl font-bold text-[#2d3748] leading-none">2026</span>
+                <div class="w-full sm:w-80">
+                    <div class="flex justify-between items-baseline mb-1.5">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Year</label>
+                        <span id="yearDisplay" class="serif text-3xl font-bold text-[#2d3748] leading-none">—</span>
                     </div>
-                    <div class="year-track">
-                        <input type="range" id="yearSlider" min="1900" max="2026" value="2026" step="1" class="w-full cursor-pointer">
-                    </div>
-                    <div class="flex justify-between text-[10px] text-gray-400 mt-1 px-0.5">
-                        <span>1900</span><span>1950</span><span>2000</span><span>2026</span>
+                    <input type="range" id="yearSlider" min="1900" max="2026" value="2026" step="1" class="w-full">
+                    <div class="flex justify-between text-[10px] text-gray-400 mt-1">
+                        <span id="sliderMin">—</span>
+                        <span id="sliderMid">—</span>
+                        <span id="sliderMax">—</span>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
 </header>
 
-<main class="max-w-7xl mx-auto px-6 py-8 space-y-10">
+<main class="max-w-7xl mx-auto px-6 py-8 space-y-10" id="mainContent">
+    <div class="flex items-center justify-center h-64 text-gray-400 text-sm">
+        <div class="text-center">
+            <div class="text-4xl mb-3">⟳</div>
+            Loading dataset…
+        </div>
+    </div>
+</main>
 
+<!-- MAIN TEMPLATE (hidden until data loads) -->
+<template id="mainTemplate">
     <!-- FAILURE MODES -->
     <section class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8">
         <h2 class="serif text-xl font-bold mb-5 flex items-center gap-2">
-            <span class="text-red-500">⚠</span> Failure Modes Hierarchy
+            <span class="text-red-500 text-lg">⚠</span> Failure Modes Hierarchy
         </h2>
         <div id="failureHierarchy" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"></div>
     </section>
 
-    <!-- METRICS + CHARTS -->
+    <!-- METRICS + NODE CHARTS -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-        <!-- v3.2-R Metrics -->
         <div class="lg:col-span-5 bg-white rounded-3xl border border-gray-200 shadow-sm p-8">
             <h3 class="serif text-lg font-bold mb-5">v3.2-R Canonical Metrics</h3>
-
-            <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="grid grid-cols-2 gap-4 mb-5">
                 <div class="bg-[#f7f7f5] rounded-2xl p-4">
                     <div class="text-[10px] uppercase tracking-widest font-bold text-gray-400">Avg Node Value</div>
                     <div id="avgV" class="text-4xl font-bold text-[#2d3748] mt-1">—</div>
                     <div class="text-xs text-gray-500 mt-1">Crisis threshold &lt;12</div>
                 </div>
                 <div class="bg-[#f7f7f5] rounded-2xl p-4">
-                    <div class="text-[10px] uppercase tracking-widest font-bold text-gray-400">ESCH Activation (σ)</div>
-                    <div id="avgSigma" class="text-4xl font-bold text-[#2d3748] mt-1">—</div>
-                    <div class="text-xs text-gray-500 mt-1">Zero in fast-loop = freeze risk</div>
+                    <div class="text-[10px] uppercase tracking-widest font-bold text-gray-400">Λ(t) Bond Strength</div>
+                    <div id="avgLambda" class="text-4xl font-bold text-[#2d3748] mt-1">—</div>
+                    <div class="text-xs text-gray-500 mt-1">System coherence</div>
                 </div>
             </div>
-
-            <div class="grid grid-cols-3 gap-3 text-center mb-6">
+            <div class="grid grid-cols-3 gap-3 text-center mb-5">
                 <div class="bg-[#f7f7f5] rounded-xl p-3">
                     <div class="text-[10px] uppercase font-bold text-gray-400 mb-1">κ Criticality</div>
-                    <div id="kappaDisplay" class="text-3xl font-bold text-amber-500">—</div>
-                    <div id="kappaLabel" class="text-[10px] text-amber-600 mt-1">—</div>
+                    <div id="kappaDisplay" class="text-3xl font-bold">—</div>
+                    <div id="kappaLabel" class="text-[10px] mt-1">—</div>
                 </div>
                 <div class="bg-[#f7f7f5] rounded-xl p-3">
-                    <div class="text-[10px] uppercase font-bold text-gray-400 mb-1">Headroom</div>
-                    <div id="headroomDisplay" class="text-3xl font-bold text-[#2d3748]">—</div>
-                    <div class="text-[10px] text-gray-500 mt-1">x_min</div>
+                    <div class="text-[10px] uppercase font-bold text-gray-400 mb-1">Avg σ ESCH</div>
+                    <div id="avgSigma" class="text-3xl font-bold text-[#2d3748]">—</div>
+                    <div class="text-[10px] text-gray-500 mt-1">Activation</div>
                 </div>
                 <div class="bg-[#f7f7f5] rounded-xl p-3">
                     <div class="text-[10px] uppercase font-bold text-gray-400 mb-1">Attractor</div>
-                    <div id="attractorDisplay" class="text-xs font-semibold text-amber-600 mt-2 leading-tight">—</div>
+                    <div id="attractorDisplay" class="text-xs font-semibold mt-2 leading-tight">—</div>
                 </div>
             </div>
-
             <div id="narrativeBox" class="bg-[#f7f7f5] rounded-2xl p-4 text-sm leading-relaxed text-gray-700"></div>
         </div>
 
-        <!-- Radar + Bar -->
         <div class="lg:col-span-7">
             <div class="bg-white rounded-3xl border border-gray-200 shadow-sm p-6 h-full">
                 <div class="flex justify-between items-baseline mb-4">
-                    <h3 class="serif text-lg font-bold">Node Architecture · <span id="radarYear" class="font-mono text-base">2026</span></h3>
+                    <h3 class="serif text-lg font-bold">Node Architecture · <span id="radarYear" class="font-mono text-base">—</span></h3>
                     <span class="text-[10px] font-medium px-3 py-1 bg-gray-100 rounded-full text-gray-500">V_i · σ_i</span>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -161,358 +161,347 @@
 
     <!-- COORDINATION NETWORK -->
     <div class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8">
-        <div class="flex items-baseline justify-between mb-2">
-            <h3 class="serif text-lg font-bold">Coordination Network</h3>
-            <span class="text-xs text-gray-400">Stress → Abstraction → Bond loops · drag to explore</span>
-        </div>
-        <p class="text-xs text-gray-500 mb-5">
-            Pink circles = reinforcing loops (R) — amplify change.
-            Blue circles = balancing loops (B) — resist change.
-            Red arrows = destabilising; blue arrows = stabilising; grey = neutral.
+        <h3 class="serif text-lg font-bold mb-1">Coordination Network</h3>
+        <p class="text-xs text-gray-500 mb-2">Stress → Abstraction → Bond loops · drag to explore</p>
+        <p class="text-xs text-gray-400 mb-5">
+            <span class="inline-block w-2.5 h-2.5 rounded-full bg-pink-600 mr-1"></span>Pink = reinforcing loops (R) — amplify change. &nbsp;
+            <span class="inline-block w-2.5 h-2.5 rounded-full bg-blue-700 mr-1"></span>Blue = balancing loops (B) — resist change. &nbsp;
+            Red arrows = destabilising · Blue = stabilising · Grey = neutral.
         </p>
-        <div id="network" class="rounded-2xl overflow-hidden border border-gray-100" style="height:520px; background:#f7f7f5;"></div>
+        <div id="network" class="rounded-2xl border border-gray-100" style="height:500px; background:#f7f7f5;"></div>
     </div>
-
-</main>
+</template>
 
 <script>
+// ── CONSTANTS ─────────────────────────────────────────────────────────────
 const NODE_COLORS = {
     Helm:'#E53E3E', Shield:'#3182CE', Lore:'#805AD5', Archive:'#4A5568',
     Stewards:'#D69E2E', Craft:'#38B2AC', Flow:'#0BC5EA', Hands:'#48BB78'
 };
+const NODE_ORDER = ['Helm','Shield','Archive','Lore','Stewards','Craft','Hands','Flow'];
 
-const failureModes = [
-    {node:"Helm",     func:"Executive coordination", fail:"Paralysis / capture",                scale:"Years–decades",     color:"#E53E3E"},
-    {node:"Shield",   func:"Defence / order",        fail:"Atrophy or hyperactivation",         scale:"Years–decades",     color:"#3182CE"},
-    {node:"Archive",  func:"Institutional record",   fail:"Amnesia or rigidity",                scale:"Decades–centuries", color:"#4A5568"},
-    {node:"Lore",     func:"Meaning / legitimacy",   fail:"Normative collapse / capture",       scale:"Centuries",         color:"#805AD5"},
-    {node:"Stewards", func:"Asset stewardship",      fail:"Rent-seeking / decay",               scale:"Decades",           color:"#D69E2E"},
-    {node:"Craft",    func:"Technical expertise",    fail:"Skill erosion",                      scale:"Decades",           color:"#38B2AC"},
-    {node:"Hands",    func:"Labour base",            fail:"Demographic or motivational failure", scale:"Years",            color:"#48BB78"},
-    {node:"Flow",     func:"Exchange / logistics",   fail:"Mythic-material decoupling",         scale:"Months–decades",    color:"#0BC5EA"}
+const FAILURE_MODES = [
+    {node:'Helm',     func:'Executive coordination', fail:'Paralysis / capture',                 scale:'Years–decades',     color:'#E53E3E'},
+    {node:'Shield',   func:'Defence / order',        fail:'Atrophy or hyperactivation',          scale:'Years–decades',     color:'#3182CE'},
+    {node:'Archive',  func:'Institutional record',   fail:'Amnesia or rigidity',                 scale:'Decades–centuries', color:'#4A5568'},
+    {node:'Lore',     func:'Meaning / legitimacy',   fail:'Normative collapse / capture',        scale:'Centuries',         color:'#805AD5'},
+    {node:'Stewards', func:'Asset stewardship',      fail:'Rent-seeking / decay',                scale:'Decades',           color:'#D69E2E'},
+    {node:'Craft',    func:'Technical expertise',    fail:'Skill erosion',                       scale:'Decades',           color:'#38B2AC'},
+    {node:'Hands',    func:'Labour base',            fail:'Demographic / motivational failure',  scale:'Years',             color:'#48BB78'},
+    {node:'Flow',     func:'Exchange / logistics',   fail:'Mythic-material decoupling',          scale:'Months–decades',    color:'#0BC5EA'}
 ];
 
-const database = {
-    China: {
-        label: "China", range: [1900, 2026],
-        trend: { years:[1900,1950,1980,2000,2015,2026], avgV:[5.5,6.0,9.5,11.0,13.5,11.63], bond:[10,12,22,30,42,28.6] },
-        nodes: {
-            2026: [
-                {node:"Helm",     C:7,K:7,S:6,A:8, V:12.0, B:28.645, sigma:56},
-                {node:"Shield",   C:8,K:8,S:4,A:8, V:16.0, B:33.201, sigma:256},
-                {node:"Lore",     C:7,K:7,S:5,A:7, V:12.5, B:28.49,  sigma:98},
-                {node:"Stewards", C:6,K:6,S:6,A:6, V:9.0,  B:23.868, sigma:0},
-                {node:"Craft",    C:7,K:7,S:5,A:8, V:13.0, B:29.881, sigma:112},
-                {node:"Hands",    C:6,K:6,S:6,A:5, V:8.5,  B:22.395, sigma:0},
-                {node:"Archive",  C:7,K:7,S:5,A:7, V:12.5, B:28.49,  sigma:98},
-                {node:"Flow",     C:6,K:6,S:6,A:7, V:9.5,  B:25.278, sigma:0}
-            ]
-        }
-    },
-    NewZealand: {
-        label: "New Zealand", range: [1900, 2026],
-        trend: { years:[1900,1935,1960,1984,2000,2015,2026], avgV:[8,10,17,9,13,17.5,14.25], bond:[18,22,46,24,32,50,40.9] },
-        nodes: {
-            2026: [
-                {node:"Helm",     C:7,K:8,S:6,A:9,  V:13.5, B:37.457, sigma:126},
-                {node:"Shield",   C:8,K:8,S:5,A:8,  V:15.0, B:39.819, sigma:240},
-                {node:"Lore",     C:8,K:8,S:6,A:9,  V:14.5, B:39.873, sigma:144},
-                {node:"Stewards", C:8,K:8,S:6,A:9,  V:14.5, B:39.873, sigma:144},
-                {node:"Craft",    C:8,K:8,S:6,A:9,  V:14.5, B:39.873, sigma:144},
-                {node:"Hands",    C:8,K:8,S:6,A:8,  V:14.0, B:38.134, sigma:128},
-                {node:"Archive",  C:9,K:9,S:4,A:10, V:19.0, B:47.678, sigma:540},
-                {node:"Flow",     C:9,K:9,S:6,A:9,  V:16.5, B:42.195, sigma:243}
-            ]
-        }
-    },
-    Germany: {
-        label: "Germany", range: [1900, 2026],
-        trend: { years:[1900,1918,1945,1970,1989,2000,2026], avgV:[10,6,3,13,15,15,13], bond:[25,14,6,32,38,38,32] },
-        nodes: {
-            2026: [
-                {node:"Helm",     C:7,K:7,S:5,A:8,  V:13.5, B:35.0, sigma:140},
-                {node:"Shield",   C:8,K:8,S:4,A:8,  V:16.0, B:38.5, sigma:256},
-                {node:"Lore",     C:7,K:7,S:5,A:8,  V:13.5, B:35.0, sigma:140},
-                {node:"Stewards", C:7,K:7,S:5,A:7,  V:12.5, B:33.0, sigma:98},
-                {node:"Craft",    C:8,K:8,S:4,A:9,  V:16.5, B:39.5, sigma:320},
-                {node:"Hands",    C:7,K:7,S:5,A:7,  V:12.5, B:33.0, sigma:98},
-                {node:"Archive",  C:8,K:8,S:4,A:9,  V:16.5, B:39.5, sigma:320},
-                {node:"Flow",     C:7,K:7,S:5,A:8,  V:13.5, B:35.0, sigma:140}
-            ]
-        }
-    },
-    Rome: {
-        label: "Rome (CE)", range: [10, 450],
-        trend: { years:[10,100,200,300,400,450], avgV:[13,15,12,10,8,6], bond:[30,38,28,22,16,10] },
-        nodes: {
-            450: [
-                {node:"Helm",     C:4,K:5,S:8,A:5,  V:3.5,  B:12.5, sigma:-60},
-                {node:"Shield",   C:6,K:6,S:7,A:6,  V:8.0,  B:20.0, sigma:-6},
-                {node:"Lore",     C:5,K:5,S:7,A:6,  V:6.0,  B:16.5, sigma:-30},
-                {node:"Stewards", C:4,K:4,S:7,A:5,  V:3.5,  B:12.5, sigma:-45},
-                {node:"Craft",    C:5,K:5,S:6,A:6,  V:7.0,  B:18.0, sigma:-6},
-                {node:"Hands",    C:4,K:4,S:7,A:4,  V:3.0,  B:11.0, sigma:-48},
-                {node:"Archive",  C:7,K:7,S:5,A:7,  V:12.5, B:28.5, sigma:98},
-                {node:"Flow",     C:4,K:4,S:7,A:5,  V:3.5,  B:12.5, sigma:-45}
-            ]
-        }
-    }
-};
+// ── FORMULAE ──────────────────────────────────────────────────────────────
+function calcV([C,K,S,A])  { return C + K - S + A * 0.5; }
+function calcSigma([C,K,S,A]) { return A * C * (K - S); }
+function calcBond(Vi, Vj)  { return Math.sqrt(Math.max(Vi+8,0) * Math.max(Vj+8,0)) / 32; }
 
-let currentSociety = "China";
-let currentYear = 2026;
-let charts = {};
-
-function calcSigma(n) { return (n.A * n.C) * (n.K - n.S); }
-
-function getYearData(soc, yr) {
-    const db = database[soc];
-    if (!db) return [];
-    if (db.nodes[yr]) return db.nodes[yr];
-    // find nearest year
-    const keys = Object.keys(db.nodes).map(Number).sort((a,b)=>Math.abs(a-yr)-Math.abs(b-yr));
-    return db.nodes[keys[0]] || [];
+function computeYear(yearRec) {
+    // yearRec = {Helm:[C,K,S,A], Shield:[C,K,S,A], …}
+    const nodes = NODE_ORDER.map(name => {
+        const cksa = yearRec[name] || [5,5,5,5];
+        const V = calcV(cksa), sigma = calcSigma(cksa);
+        return { node:name, C:cksa[0], K:cksa[1], S:cksa[2], A:cksa[3], V, sigma };
+    });
+    // Λ(t) = mean of all 28 node pairs
+    let bondSum = 0, pairs = 0;
+    for (let i = 0; i < nodes.length; i++)
+        for (let j = i+1; j < nodes.length; j++) {
+            bondSum += calcBond(nodes[i].V, nodes[j].V);
+            pairs++;
+        }
+    const lambda = bondSum / pairs;
+    return { nodes, lambda };
 }
 
-function renderFailureHierarchy(data) {
-    document.getElementById("failureHierarchy").innerHTML = failureModes.map(m => {
-        const r = data.find(d => d.node === m.node) || {V:0};
-        const cls = r.V < 10 ? "bg-red-100 text-red-700"
-                  : r.V < 13 ? "bg-amber-100 text-amber-700"
-                  : "bg-emerald-100 text-emerald-700";
+// ── STATE ─────────────────────────────────────────────────────────────────
+let DB = null;           // full cams_index.json
+let currentSociety = '';
+let currentYear = 2026;
+let charts = {};
+let networkInit = false;
+
+// ── LOAD DATA ─────────────────────────────────────────────────────────────
+async function loadData() {
+    const r = await fetch('cleaned_datasets/cams_index.json');
+    DB = await r.json();
+
+    // Inject main template
+    const tpl = document.getElementById('mainTemplate');
+    document.getElementById('mainContent').innerHTML = '';
+    document.getElementById('mainContent').appendChild(tpl.content.cloneNode(true));
+
+    // Populate society select
+    const sel = document.getElementById('societySelect');
+    sel.innerHTML = '';
+    Object.keys(DB).sort().forEach(name => {
+        const opt = document.createElement('option');
+        opt.value = name;
+        opt.textContent = name;
+        sel.appendChild(opt);
+    });
+
+    sel.addEventListener('change', () => {
+        currentSociety = sel.value;
+        const years = sortedYears(currentSociety);
+        currentYear = years[years.length - 1];
+        resetSlider(years);
+        // destroy trend charts so they redraw
+        ['trend','bond'].forEach(k => { if(charts[k]) { charts[k].destroy(); delete charts[k]; } });
+        updateUI();
+    });
+
+    document.getElementById('yearSlider').addEventListener('input', function() {
+        currentYear = parseInt(this.value);
+        document.getElementById('yearDisplay').textContent = currentYear;
+        document.getElementById('radarYear').textContent  = currentYear;
+        updateSliderGradient(this);
+        updateUI();
+    });
+
+    // Default: New Zealand if present, else first
+    currentSociety = DB['New Zealand'] ? 'New Zealand' : Object.keys(DB).sort()[0];
+    sel.value = currentSociety;
+    const years = sortedYears(currentSociety);
+    currentYear = years[years.length - 1];
+    resetSlider(years);
+
+    initNetwork();
+    updateUI();
+}
+
+function sortedYears(soc) {
+    return Object.keys(DB[soc]).map(Number).sort((a,b) => a-b);
+}
+
+function resetSlider(years) {
+    const slider = document.getElementById('yearSlider');
+    slider.min = years[0];
+    slider.max = years[years.length - 1];
+    slider.value = currentYear;
+    document.getElementById('yearDisplay').textContent = currentYear;
+    document.getElementById('radarYear').textContent  = currentYear;
+    document.getElementById('sliderMin').textContent  = years[0];
+    document.getElementById('sliderMax').textContent  = years[years.length - 1];
+    document.getElementById('sliderMid').textContent  = years[Math.floor(years.length / 2)];
+    updateSliderGradient(slider);
+}
+
+function updateSliderGradient(slider) {
+    const pct = ((+slider.value - +slider.min) / (+slider.max - +slider.min) * 100).toFixed(1);
+    slider.style.setProperty('--pct', pct + '%');
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────
+function updateUI() {
+    const socData = DB[currentSociety];
+    const years   = sortedYears(currentSociety);
+
+    // nearest year
+    const yr = years.reduce((a,b) => Math.abs(b - currentYear) < Math.abs(a - currentYear) ? b : a);
+    const { nodes, lambda } = computeYear(socData[yr]);
+
+    // ── Failure hierarchy
+    document.getElementById('failureHierarchy').innerHTML = FAILURE_MODES.map(m => {
+        const n = nodes.find(d => d.node === m.node) || {V:0};
+        const cls = n.V < 10 ? 'bg-red-100 text-red-700'
+                  : n.V < 13 ? 'bg-amber-100 text-amber-700'
+                  : 'bg-emerald-100 text-emerald-700';
         return `<div class="node-card bg-white border border-gray-200 rounded-2xl p-4 flex gap-3 items-center">
             <div class="w-8 h-8 rounded-xl flex-shrink-0" style="background:${m.color}"></div>
             <div class="flex-1 min-w-0">
                 <div class="font-semibold text-sm">${m.node}</div>
                 <div class="text-xs text-gray-400 truncate">${m.func}</div>
-                <div class="text-[10px] mt-1.5 font-semibold ${cls} inline-block px-2 py-px rounded-full">${m.fail}</div>
+                <div class="text-[10px] mt-1.5 font-semibold ${cls} inline-block px-2 py-0.5 rounded-full">${m.fail}</div>
             </div>
             <div class="text-right flex-shrink-0">
-                <div class="text-2xl font-bold">${r.V.toFixed(1)}</div>
+                <div class="text-2xl font-bold">${n.V.toFixed(1)}</div>
                 <div class="text-[10px] text-gray-400">${m.scale}</div>
             </div>
         </div>`;
     }).join('');
-}
 
-function updateAllCharts() {
-    const data = getYearData(currentSociety, currentYear);
-    renderFailureHierarchy(data);
+    // ── Scalars
+    const avgV   = nodes.reduce((a,n) => a + n.V, 0) / nodes.length;
+    const avgSig = nodes.reduce((a,n) => a + n.sigma, 0) / nodes.length;
+    const kappa  = Math.min(0.58, lambda / 2.0);  // calibrated: lambda max ≈ 4.0 → κ max ≈ 0.58
+    const headrm = Math.max(0, lambda / 1.5 - 1.8);
 
-    if (!data.length) return;
+    document.getElementById('avgV').textContent      = avgV.toFixed(2);
+    document.getElementById('avgLambda').textContent = lambda.toFixed(3);
+    document.getElementById('avgSigma').textContent  = avgSig.toFixed(0);
 
-    const avgV    = data.reduce((a,r) => a + r.V, 0) / data.length;
-    const avgS    = data.reduce((a,r) => a + calcSigma(r), 0) / data.length;
-    const avgB    = data.reduce((a,r) => a + r.B, 0) / data.length;
-    const kappa   = Math.min(0.58, avgB / 80);
-    const headrm  = Math.max(0, avgB / 35 - 1.1);
+    const kapEl = document.getElementById('kappaDisplay');
+    kapEl.textContent = kappa.toFixed(2);
+    kapEl.className = kappa >= 0.35
+        ? 'text-3xl font-bold text-amber-500'
+        : 'text-3xl font-bold text-emerald-500';
+    const kapLbl = document.getElementById('kappaLabel');
+    kapLbl.textContent = kappa >= 0.35 ? 'WARNING ★' : 'LOW RISK ✓';
+    kapLbl.className   = kappa >= 0.35 ? 'text-[10px] text-amber-600 mt-1' : 'text-[10px] text-emerald-600 mt-1';
 
-    document.getElementById("avgV").textContent    = avgV.toFixed(2);
-    document.getElementById("avgSigma").textContent = avgS.toFixed(1);
-    document.getElementById("kappaDisplay").textContent  = kappa.toFixed(2);
-    document.getElementById("kappaDisplay").className    = kappa >= 0.35 ? "text-3xl font-bold text-amber-500" : "text-3xl font-bold text-emerald-500";
-    document.getElementById("kappaLabel").textContent    = kappa >= 0.35 ? "WARNING ★" : "LOW RISK ✓";
-    document.getElementById("kappaLabel").className      = kappa >= 0.35 ? "text-[10px] text-amber-600 mt-1" : "text-[10px] text-emerald-600 mt-1";
-    document.getElementById("headroomDisplay").textContent = (headrm >= 0 ? "+" : "") + headrm.toFixed(2);
+    let attractor = 'STABLE';
+    if (kappa >= 0.45) attractor = 'THERMODYNAMIC FREEZE';
+    else if (kappa >= 0.35) attractor = avgV < 12 ? 'BUFFERING → FREEZE' : 'BUFFERING';
+    const attEl = document.getElementById('attractorDisplay');
+    attEl.textContent = attractor;
+    attEl.className = kappa >= 0.35
+        ? 'text-xs font-semibold text-amber-600 mt-2 leading-tight'
+        : 'text-xs font-semibold text-emerald-600 mt-2 leading-tight';
 
-    let attractor = "STABLE";
-    if (kappa >= 0.35 && avgV < 12) attractor = "BUFFERING → FREEZE";
-    else if (kappa >= 0.35) attractor = "BUFFERING";
-    document.getElementById("attractorDisplay").textContent = attractor;
-    document.getElementById("attractorDisplay").className =
-        kappa >= 0.35 ? "text-xs font-semibold text-amber-600 mt-2 leading-tight"
-                      : "text-xs font-semibold text-emerald-600 mt-2 leading-tight";
+    document.getElementById('narrativeBox').innerHTML =
+        `<strong>${currentSociety} ${yr}:</strong> ` +
+        `Λ=${lambda.toFixed(3)} · avg V=${avgV.toFixed(1)} · κ=${kappa.toFixed(2)}. ` +
+        (kappa >= 0.35
+            ? `MEDIUM alarm — coordination stress visible. Fast-loop ESCH suppression detected.`
+            : `System within normal coupling range.`);
 
-    document.getElementById("narrativeBox").innerHTML =
-        `<strong>${database[currentSociety].label} ${currentYear}:</strong> `
-        + (kappa >= 0.35
-            ? `MEDIUM alarm — κ=${kappa.toFixed(2)}, avg V=${avgV.toFixed(1)}. Fast-loop ESCH suppression detected.`
-            : `LOW risk — κ=${kappa.toFixed(2)}, avg V=${avgV.toFixed(1)}. System in robust re-synchronisation range.`);
-
-    // Update slider gradient
-    const slider = document.getElementById("yearSlider");
-    const pct = ((currentYear - +slider.min) / (+slider.max - +slider.min) * 100).toFixed(1);
-    slider.style.setProperty('--pct', pct + '%');
-
-    // Radar
-    const labels = data.map(d => d.node);
-    const vals   = data.map(d => d.V);
-    const bgColors = labels.map(l => NODE_COLORS[l] + '33');
-    const bdColors = labels.map(l => NODE_COLORS[l]);
+    // ── Radar
+    const labels = NODE_ORDER;
+    const vals   = NODE_ORDER.map(name => { const n = nodes.find(d=>d.node===name); return n ? n.V : 0; });
+    const bdColors = NODE_ORDER.map(name => NODE_COLORS[name]);
     if (charts.radar) {
-        charts.radar.data.labels = labels;
         charts.radar.data.datasets[0].data = vals;
-        charts.radar.data.datasets[0].backgroundColor = 'rgba(45,55,72,0.12)';
         charts.radar.data.datasets[0].pointBackgroundColor = bdColors;
         charts.radar.update();
     } else {
-        charts.radar = new Chart(document.getElementById("radarChart"), {
+        charts.radar = new Chart(document.getElementById('radarChart'), {
             type: 'radar',
-            data: {
-                labels,
-                datasets: [{
-                    label: 'Node Value',
-                    data: vals,
-                    backgroundColor: 'rgba(45,55,72,0.12)',
-                    borderColor: '#2d3748',
-                    borderWidth: 2,
-                    pointBackgroundColor: bdColors,
-                    pointRadius: 5
-                }]
-            },
-            options: {
-                responsive: true, maintainAspectRatio: false,
-                scales: { r: { min: 0, max: 20, ticks: { stepSize: 5, font: { size: 10 } }, pointLabels: { font: { size: 11 } } } },
-                plugins: { legend: { display: false } }
-            }
+            data: { labels, datasets: [{ label:'Node Value', data:vals, backgroundColor:'rgba(45,55,72,0.12)',
+                borderColor:'#2d3748', borderWidth:2, pointBackgroundColor:bdColors, pointRadius:5 }] },
+            options: { responsive:true, maintainAspectRatio:false,
+                scales:{ r:{ min:0, max:20, ticks:{ stepSize:5, font:{size:10} }, pointLabels:{ font:{size:11} } } },
+                plugins:{ legend:{ display:false } } }
         });
     }
 
-    // Bar (σ)
-    const sigmas = data.map(d => calcSigma(d));
+    // ── Bar (sigma)
+    const sigmas   = NODE_ORDER.map(name => { const n=nodes.find(d=>d.node===name); return n ? n.sigma : 0; });
+    const bgColors = NODE_ORDER.map(name => NODE_COLORS[name]);
     if (charts.bar) {
-        charts.bar.data.labels = labels;
         charts.bar.data.datasets[0].data = sigmas;
-        charts.bar.data.datasets[0].backgroundColor = labels.map(l => NODE_COLORS[l]);
+        charts.bar.data.datasets[0].backgroundColor = bgColors;
         charts.bar.update();
     } else {
-        charts.bar = new Chart(document.getElementById("barChart"), {
-            type: 'bar',
-            data: {
-                labels,
-                datasets: [{ label: 'ESCH σ_i', data: sigmas, backgroundColor: labels.map(l => NODE_COLORS[l]), borderRadius: 6 }]
-            },
-            options: {
-                responsive: true, maintainAspectRatio: false,
-                scales: { y: { beginAtZero: true, grid: { color: '#f0f0f0' } }, x: { grid: { display: false } } },
-                plugins: { legend: { display: false } }
-            }
+        charts.bar = new Chart(document.getElementById('barChart'), {
+            type:'bar',
+            data:{ labels, datasets:[{ label:'ESCH σ_i', data:sigmas, backgroundColor:bgColors, borderRadius:5 }] },
+            options:{ responsive:true, maintainAspectRatio:false,
+                scales:{ y:{ beginAtZero:true, grid:{color:'#f0f0f0'} }, x:{ grid:{display:false}, ticks:{font:{size:10}} } },
+                plugins:{ legend:{display:false} } }
         });
     }
 
-    // Trend
-    const tr = database[currentSociety].trend;
+    // ── Trends (all years for this society)
+    const trYears = years.filter((_,i) => i % Math.max(1, Math.floor(years.length/80)) === 0); // thin if >80 pts
+    const trAvgV  = trYears.map(y => {
+        const { nodes:ns } = computeYear(socData[y]);
+        return +(ns.reduce((a,n)=>a+n.V,0)/ns.length).toFixed(2);
+    });
+    const trLambda = trYears.map(y => {
+        const { lambda:l } = computeYear(socData[y]);
+        return +l.toFixed(3);
+    });
+
     if (charts.trend) {
-        charts.trend.data.labels = tr.years;
-        charts.trend.data.datasets[0].data = tr.avgV;
+        charts.trend.data.labels = trYears;
+        charts.trend.data.datasets[0].data = trAvgV;
         charts.trend.update();
-        charts.bond.data.labels = tr.years;
-        charts.bond.data.datasets[0].data = tr.bond;
+        charts.bond.data.labels = trYears;
+        charts.bond.data.datasets[0].data = trLambda;
         charts.bond.update();
     } else {
-        charts.trend = new Chart(document.getElementById("trendChart"), {
-            type: 'line',
-            data: { labels: tr.years, datasets: [{ label: 'Avg Node Value', data: tr.avgV, borderColor:'#2d3748', backgroundColor:'rgba(45,55,72,0.08)', fill:true, tension:0.4, pointRadius:4 }] },
-            options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ labels:{ font:{ size:11 } } } }, scales:{ y:{ beginAtZero:false, grid:{ color:'#f0f0f0' } }, x:{ grid:{ display:false } } } }
+        charts.trend = new Chart(document.getElementById('trendChart'), {
+            type:'line',
+            data:{ labels:trYears, datasets:[{ label:'Avg Node Value', data:trAvgV,
+                borderColor:'#2d3748', backgroundColor:'rgba(45,55,72,0.07)', fill:true, tension:0.4,
+                pointRadius:0, pointHoverRadius:4 }] },
+            options:{ responsive:true, maintainAspectRatio:false,
+                scales:{ y:{beginAtZero:false, grid:{color:'#f0f0f0'}}, x:{grid:{display:false}, ticks:{maxTicksLimit:8}} },
+                plugins:{ legend:{ labels:{font:{size:11}} } } }
         });
-        charts.bond = new Chart(document.getElementById("bondChart"), {
-            type: 'line',
-            data: { labels: tr.years, datasets: [{ label: 'Bond Strength Λ(t)', data: tr.bond, borderColor:'#3182CE', backgroundColor:'rgba(49,130,206,0.08)', fill:true, tension:0.4, pointRadius:4 }] },
-            options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ labels:{ font:{ size:11 } } } }, scales:{ y:{ beginAtZero:false, grid:{ color:'#f0f0f0' } }, x:{ grid:{ display:false } } } }
+        charts.bond = new Chart(document.getElementById('bondChart'), {
+            type:'line',
+            data:{ labels:trYears, datasets:[{ label:'Λ(t) Mean Bond Strength', data:trLambda,
+                borderColor:'#3182CE', backgroundColor:'rgba(49,130,206,0.07)', fill:true, tension:0.4,
+                pointRadius:0, pointHoverRadius:4 }] },
+            options:{ responsive:true, maintainAspectRatio:false,
+                scales:{ y:{beginAtZero:false, grid:{color:'#f0f0f0'}}, x:{grid:{display:false}, ticks:{maxTicksLimit:8}} },
+                plugins:{ legend:{ labels:{font:{size:11}} } } }
         });
     }
 }
 
-// ── NETWORK ──────────────────────────────────────────────────────────────
+// ── COORDINATION NETWORK ──────────────────────────────────────────────────
 function initNetwork() {
-    const nodeStyle = (label, bg, border, x, y, shape) => ({
-        label, shape: shape||'box', x, y, fixed: false,
-        color: { background: bg, border, highlight: { background: bg, border } },
-        font: { size: 13, color: '#2d3748', face: 'Inter' },
-        widthConstraint: { maximum: 140 }, margin: 10,
-        shadow: { enabled: true, size: 4, color: 'rgba(0,0,0,0.06)' }
+    if (networkInit) return;
+    networkInit = true;
+
+    const box = (label, bg, border, x, y) => ({
+        label, shape:'box', x, y, fixed:false,
+        color:{ background:bg, border, highlight:{background:bg, border} },
+        font:{ size:13, color:'#2d3748', face:'Inter' },
+        widthConstraint:{ maximum:130 }, margin:10,
+        shadow:{ enabled:true, size:4, color:'rgba(0,0,0,0.06)' }
+    });
+    const loop = (id, label, color, x, y) => ({
+        id, label, shape:'circle', size:28, x, y, fixed:true,
+        color:{ background:color, border:color },
+        font:{ size:12, color:'#fff', face:'Inter', bold:true },
+        borderWidth:0
     });
 
     const nodesData = new vis.DataSet([
-        // Causal chain nodes
-        { id:1, ...nodeStyle('Stress\n[n1]',          '#fee2e2','#fca5a5', -340,   0) },
-        { id:2, ...nodeStyle('Abstraction\n[n2]',     '#d1fae5','#6ee7b7',  -80, -160) },
-        { id:3, ...nodeStyle('Threshold Effects\n[n3]','#dbeafe','#93c5fd',  200, -60) },
-        { id:4, ...nodeStyle('Bond Strength\n[n4]',   '#ede9fe','#c4b5fd',   60,  100) },
-        { id:5, ...nodeStyle('System Volatility\n[n5]','#fef3c7','#fcd34d', -200,  180) },
-        { id:6, ...nodeStyle('Reactive Mode\n[n6]',   '#fee2e2','#fca5a5', -340,  180) },
-        { id:7, ...nodeStyle('Capacity Repair\n[n7]', '#d1fae5','#6ee7b7',  340,  100) },
-
-        // Feedback loop labels
-        { id:'R1', label:'R1\nCrisis\nSpiral', shape:'circle', size:34, x:-240, y:90,
-          color:{ background:'#be185d', border:'#9d174d' },
-          font:{ size:12, color:'#fff', face:'Inter', bold: true }, fixed:true },
-        { id:'B2', label:'B2\nRepair\nLoop',   shape:'circle', size:34, x: 200, y:100,
-          color:{ background:'#1e40af', border:'#1e3a8a' },
-          font:{ size:12, color:'#fff', face:'Inter', bold: true }, fixed:true },
-        { id:'B3', label:'B3\nStabilise', shape:'circle', size:34, x:-80, y:0,
-          color:{ background:'#374151', border:'#1f2937' },
-          font:{ size:12, color:'#fff', face:'Inter', bold: true }, fixed:true }
+        { id:1, ...box('Stress\n[n1]',           '#fee2e2','#fca5a5',  -340,   0) },
+        { id:2, ...box('Abstraction\n[n2]',       '#d1fae5','#6ee7b7',   -80, -160) },
+        { id:3, ...box('Threshold Effects\n[n3]', '#dbeafe','#93c5fd',   200,  -60) },
+        { id:4, ...box('Bond Strength\n[n4]',     '#ede9fe','#c4b5fd',    60,  110) },
+        { id:5, ...box('System Volatility\n[n5]', '#fef3c7','#fcd34d',  -200,  200) },
+        { id:6, ...box('Reactive Mode\n[n6]',     '#fee2e2','#fca5a5',  -340,  200) },
+        { id:7, ...box('Capacity Repair\n[n7]',   '#d1fae5','#6ee7b7',   350,  110) },
+        loop('R1', 'R1\nCrisis\nSpiral', '#be185d', -240, 110),
+        loop('B2', 'B2\nRepair',         '#1e40af',  220, 110),
+        loop('B3', 'B3\nStabilise',      '#374151',  -80,  -30)
     ]);
 
     const edge = (from, to, label, color, dashes) => ({
-        from, to, label,
-        color: { color, highlight: color },
-        dashes: dashes || false,
-        arrows: { to: { enabled: true, scaleFactor: 0.7 } },
-        font: { size: 11, color: '#4b5563', background: 'rgba(255,255,255,0.85)', align: 'middle', strokeWidth: 0 },
-        smooth: { type: 'curvedCW', roundness: 0.2 }
+        from, to, label, dashes: dashes||false,
+        color:{ color, highlight:color },
+        arrows:{ to:{ enabled:true, scaleFactor:0.7 } },
+        font:{ size:11, color:'#4b5563', background:'rgba(255,255,255,0.85)', align:'middle', strokeWidth:0 },
+        smooth:{ type:'curvedCW', roundness:0.2 }
     });
 
     const edgesData = new vis.DataSet([
-        edge(1, 2, 'Stress drives\nabstraction',              '#2563eb'),
-        edge(2, 4, 'Grounded abstraction\nstrengthens bonds', '#2563eb'),
-        edge(3, 4, 'Threshold breach\nerodes coupling',       '#dc2626', true),
-        edge(4, 5, 'Weak bonds raise\nvolatility',            '#6b7280'),
-        edge(5, 6, 'Volatility pushes\nreactive mode',        '#6b7280'),
-        edge(6, 1, 'Reaction intensifies\nstress',            '#dc2626'),
-        edge(4, 7, 'Strong bonds\nenable repair',             '#16a34a'),
-        edge(7, 3, 'Repair lifts\nthresholds',                '#2563eb'),
-        edge(1, 3, 'Persistent stress\nhits threshold',       '#dc2626', true),
+        edge(1, 2, 'Stress drives\nabstraction',             '#2563eb'),
+        edge(2, 4, 'Grounded abstraction\nstrengthens bonds','#2563eb'),
+        edge(3, 4, 'Threshold breach\nerodes coupling',      '#dc2626', true),
+        edge(4, 5, 'Weak bonds raise\nvolatility',           '#6b7280'),
+        edge(5, 6, 'Volatility pushes\nreactive mode',       '#6b7280'),
+        edge(6, 1, 'Reaction intensifies\nstress',           '#dc2626'),
+        edge(4, 7, 'Strong bonds\nenable repair',            '#16a34a'),
+        edge(7, 3, 'Repair lifts\nthresholds',               '#2563eb'),
+        edge(1, 3, 'Persistent stress\nhits threshold',      '#dc2626', true)
     ]);
 
-    const options = {
-        physics: { enabled: true, stabilization: { iterations: 300 }, barnesHut: { springLength: 160, gravitationalConstant: -3000 } },
-        interaction: { hover: true, tooltipDelay: 100, zoomView: true, dragNodes: true },
-        nodes: { borderWidth: 2, shadow: true },
-        edges: { width: 2, smooth: { type: 'curvedCW', roundness: 0.2 } }
-    };
-
-    const net = new vis.Network(document.getElementById('network'), { nodes: nodesData, edges: edgesData }, options);
-    net.on("stabilizationIterationsDone", () => net.setOptions({ physics: false }));
+    new vis.Network(
+        document.getElementById('network'),
+        { nodes:nodesData, edges:edgesData },
+        {
+            physics:{ enabled:true, stabilization:{iterations:300},
+                barnesHut:{ springLength:160, gravitationalConstant:-3000 } },
+            interaction:{ hover:true, tooltipDelay:80, zoomView:true, dragNodes:true },
+            nodes:{ borderWidth:2, shadow:true },
+            edges:{ width:2 }
+        }
+    );
 }
 
-// ── INIT ─────────────────────────────────────────────────────────────────
-function init() {
-    // Society pills
-    document.getElementById('societyPills').addEventListener('click', e => {
-        const btn = e.target.closest('.society-pill');
-        if (!btn) return;
-        document.querySelectorAll('.society-pill').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentSociety = btn.dataset.society;
-        const db = database[currentSociety];
-        const slider = document.getElementById('yearSlider');
-        slider.min = db.range[0];
-        slider.max = db.range[1];
-        currentYear = db.range[1];
-        slider.value = currentYear;
-        document.getElementById('yearDisplay').textContent = currentYear;
-        document.getElementById('radarYear').textContent = currentYear;
-        // Reset trend charts so they redraw for new society
-        if (charts.trend) { charts.trend.destroy(); charts.bond.destroy(); delete charts.trend; delete charts.bond; }
-        updateAllCharts();
-    });
-
-    // Year slider
-    const slider = document.getElementById('yearSlider');
-    slider.addEventListener('input', function() {
-        currentYear = parseInt(this.value);
-        document.getElementById('yearDisplay').textContent = currentYear;
-        document.getElementById('radarYear').textContent = currentYear;
-        updateAllCharts();
-    });
-
-    initNetwork();
-    updateAllCharts();
-}
-
-window.onload = init;
+// ── BOOT ──────────────────────────────────────────────────────────────────
+loadData().catch(err => {
+    document.getElementById('mainContent').innerHTML =
+        `<div class="p-10 text-red-600 text-sm">Failed to load dataset: ${err.message}</div>`;
+});
 </script>
 </body>
 </html>
