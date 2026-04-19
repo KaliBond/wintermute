@@ -594,8 +594,8 @@ function renderNodeContrib(yearData) {
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    x: { grid:{ color:GRID_CLR }, ticks:tickStyle, min:0, max:1,
-                         title:{ display:true, text:'Z contribution (0–1)', color:'#888', font:{size:10} } },
+                    x: { grid:{ color:GRID_CLR }, ticks:tickStyle, suggestedMin:0,
+                         title:{ display:true, text:'Z contribution', color:'#888', font:{size:10} } },
                     y: { grid:{ display:false }, ticks:{ ...tickStyle, font:{ size:11 } } }
                 }
             }
