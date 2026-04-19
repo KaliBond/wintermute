@@ -325,24 +325,20 @@ function updateUI() {
     // ── Failure hierarchy
     document.getElementById('failureHierarchy').innerHTML = FAILURE_MODES.map(m => {
         const n = nodes.find(d => d.node === m.node) || {V:0};
-        const card  = n.V < 10 ? 'bg-red-50 border-red-300'
-                    : n.V < 13 ? 'bg-amber-50 border-amber-300'
-                    : 'bg-emerald-50 border-emerald-300';
-        const num   = n.V < 10 ? 'text-red-700'
-                    : n.V < 13 ? 'text-amber-700'
-                    : 'text-emerald-700';
-        const badge = n.V < 10 ? 'bg-red-200 text-red-800'
-                    : n.V < 13 ? 'bg-amber-200 text-amber-800'
-                    : 'bg-emerald-200 text-emerald-800';
-        return `<div class="node-card border rounded-2xl p-4 flex gap-3 items-center ${card}">
+        const cardBg     = n.V < 10 ? '#fef2f2' : n.V < 13 ? '#fffbeb' : '#f0fdf4';
+        const cardBorder = n.V < 10 ? '#fca5a5' : n.V < 13 ? '#fcd34d' : '#86efac';
+        const numColor   = n.V < 10 ? '#b91c1c'  : n.V < 13 ? '#b45309'  : '#166534';
+        const badgeBg    = n.V < 10 ? '#fecaca'  : n.V < 13 ? '#fde68a'  : '#bbf7d0';
+        const badgeColor = n.V < 10 ? '#991b1b'  : n.V < 13 ? '#92400e'  : '#14532d';
+        return `<div class="node-card rounded-2xl p-4 flex gap-3 items-center" style="background:${cardBg};border:1px solid ${cardBorder};">
             <div class="w-8 h-8 rounded-xl flex-shrink-0" style="background:${m.color}"></div>
             <div class="flex-1 min-w-0">
                 <div class="font-semibold text-sm">${m.node}</div>
                 <div class="text-xs text-gray-500 truncate">${m.func}</div>
-                <div class="text-[10px] mt-1.5 font-semibold ${badge} inline-block px-2 py-0.5 rounded-full">${m.fail}</div>
+                <div class="text-[10px] mt-1.5 font-semibold inline-block px-2 py-0.5 rounded-full" style="background:${badgeBg};color:${badgeColor};">${m.fail}</div>
             </div>
             <div class="text-right flex-shrink-0">
-                <div class="text-2xl font-bold ${num}">${n.V.toFixed(1)}</div>
+                <div class="text-2xl font-bold" style="color:${numColor};">${n.V.toFixed(1)}</div>
                 <div class="text-[10px] text-gray-400">${m.scale}</div>
             </div>
         </div>`;
