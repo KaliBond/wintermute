@@ -62,14 +62,21 @@
                     </select>
                 </div>
 
-                <!-- Year slider -->
-                <div class="w-full sm:w-80">
+                <!-- Year slider + play -->
+                <div class="w-full sm:w-96">
                     <div class="flex justify-between items-baseline mb-1.5">
                         <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Year</label>
                         <span id="yearDisplay" class="serif text-3xl font-bold text-[#2d3748] leading-none">—</span>
                     </div>
-                    <input type="range" id="yearSlider" min="1900" max="2026" value="2026" step="1" class="w-full">
-                    <div class="flex justify-between text-[10px] text-gray-400 mt-1">
+                    <div class="flex items-center gap-3">
+                        <button id="playBtn" title="Play / Pause"
+                            class="flex-shrink-0 w-9 h-9 rounded-full bg-[#2d3748] text-white flex items-center justify-center hover:bg-[#4a5568] transition-colors">
+                            <svg id="playIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 ml-0.5"><path d="M8 5v14l11-7z"/></svg>
+                            <svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 hidden"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                        </button>
+                        <input type="range" id="yearSlider" min="1900" max="2026" value="2026" step="1" class="w-full">
+                    </div>
+                    <div class="flex justify-between text-[10px] text-gray-400 mt-1 pl-12">
                         <span id="sliderMin">—</span>
                         <span id="sliderMid">—</span>
                         <span id="sliderMax">—</span>
@@ -252,11 +259,25 @@ async function loadData() {
     });
 
     document.getElementById('yearSlider').addEventListener('input', function() {
+        if (playTimer) stopPlay();
         currentYear = parseInt(this.value);
         document.getElementById('yearDisplay').textContent = currentYear;
         document.getElementById('radarYear').textContent  = currentYear;
         updateSliderGradient(this);
         updateUI();
+    });
+
+    document.getElementById('playBtn').addEventListener('click', () => {
+        if (playTimer) { stopPlay(); return; }
+        // rewind to start if already at end
+        const years = sortedYears(currentSociety);
+        if (currentYear >= years[years.length - 1]) {
+            currentYear = years[0];
+            const slider = document.getElementById('yearSlider');
+            slider.value = currentYear;
+            updateSliderGradient(slider);
+        }
+        startPlay();
     });
 
     // Default: New Zealand if present, else first
@@ -495,6 +516,39 @@ function initNetwork() {
             edges:{ width:2 }
         }
     );
+}
+
+// ── PLAYBACK ──────────────────────────────────────────────────────────────
+let playTimer = null;
+
+function setPlaying(on) {
+    document.getElementById('playIcon').classList.toggle('hidden', on);
+    document.getElementById('pauseIcon').classList.toggle('hidden', !on);
+}
+
+function startPlay() {
+    const slider = document.getElementById('yearSlider');
+    const years  = sortedYears(currentSociety);
+    setPlaying(true);
+    playTimer = setInterval(() => {
+        const idx = years.indexOf(currentYear);
+        if (idx >= years.length - 1) {
+            stopPlay();
+            return;
+        }
+        currentYear = years[idx + 1];
+        slider.value = currentYear;
+        document.getElementById('yearDisplay').textContent = currentYear;
+        document.getElementById('radarYear').textContent  = currentYear;
+        updateSliderGradient(slider);
+        updateUI();
+    }, 120);
+}
+
+function stopPlay() {
+    clearInterval(playTimer);
+    playTimer = null;
+    setPlaying(false);
 }
 
 // ── BOOT ──────────────────────────────────────────────────────────────────
