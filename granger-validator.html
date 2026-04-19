@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Granger Causality Validator — Neural Nations</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .ctrl-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .ctrl-item label {
+            font-size: 0.82em; font-weight: 600; color: #555;
+            display: block; margin-bottom: 4px;
+        }
+        .ctrl-item input[type=range] { width: 100%; accent-color: #764ba2; }
+        .ctrl-val {
+            font-size: 1.15em; font-weight: 700; color: #764ba2;
+            text-align: center; margin-top: 3px;
+        }
+        .run-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white; border: none; padding: 10px 30px;
+            border-radius: 24px; font-size: 0.95em; font-weight: 700;
+            cursor: pointer; transition: opacity 0.2s;
+        }
+        .run-btn:hover { opacity: 0.85; }
+        .run-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+        .scenario-card {
+            background: #fff;
+            border: 1px solid #dde4f0;
+            border-radius: 10px;
+            padding: 18px 20px;
+        }
+        .scenario-card .sc-title {
+            font-size: 0.75rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.08em;
+            color: #999; margin: 0 0 8px;
+        }
+        .vbadge {
+            display: inline-block; font-size: 0.82em; font-weight: 700;
+            color: white; padding: 3px 14px; border-radius: 20px;
+            margin-bottom: 8px;
+        }
+        .vbadge.pass { background: #2ca02c; }
+        .vbadge.warn { background: #d97706; }
+        .vbadge.fail { background: #e74c3c; }
+        .vbadge.pending { background: #bbb; }
+        .sc-desc { font-size: 0.81em; color: #666; line-height: 1.6; margin: 6px 0 10px; }
+        .lag-table { width: 100%; border-collapse: collapse; font-size: 0.8em; margin-top: 8px; }
+        .lag-table th {
+            background: #f5f5f8; padding: 4px 10px;
+            text-align: left; color: #777; font-weight: 600;
+        }
+        .lag-table td { padding: 4px 10px; border-bottom: 1px solid #f0f0f0; }
+        .lag-table tr.tgt td { background: #edf8ed; font-weight: 700; }
+        .lag-table tr.sig td { color: #2ca02c; }
+        .lag-table tr.nsig td { color: #aaa; }
+        .lag-table .direction-label {
+            font-size: 0.72em; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.07em;
+            color: #aaa; padding: 8px 0 3px;
+        }
+        .chart-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 14px;
+        }
+        .chart-wrap { position: relative; height: 170px; }
+        .chart-sub {
+            font-size: 0.73em; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.07em;
+            color: #bbb; margin: 0 0 5px;
+        }
+        .formula-block {
+            background: #1e2130; color: #e0e0e0;
+            padding: 13px 18px; border-radius: 8px;
+            font-family: monospace; font-size: 0.87em;
+            margin: 10px 0; overflow-x: auto; white-space: pre;
+        }
+        .section-label {
+            font-size: 0.78rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.08em;
+            color: #1f77b4; margin: 28px 0 10px;
+        }
+        .adf-line {
+            font-family: monospace; font-size: 0.83em;
+            margin: 3px 0; color: #444;
+        }
+        .adf-line .pass { color: #2ca02c; font-weight: 700; }
+        .adf-line .fail { color: #e74c3c; font-weight: 700; }
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+            gap: 12px; margin-top: 10px;
+        }
+        .why-box {
+            padding: 13px 15px;
+            border-left: 3px solid;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.86em;
+            line-height: 1.6;
+        }
+        .status-msg { font-size: 0.87em; color: #764ba2; font-style: italic; margin-left: 14px; }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="hero-section">
+        <h1>Granger Causality Validator</h1>
+        <p class="hero-subtitle">Synthetic validation for CAMS × Seshat Granger causality — three-scenario stress test</p>
+    </div>
+
+    <!-- ── Controls ─────────────────────────────────────────────────────────── -->
+    <div class="card">
+        <p style="font-size:0.9em; color:#555; line-height:1.75; margin-bottom:20px;">
+            Before applying Granger causality to real CAMS + Seshat data, we validate the implementation against synthetic series
+            with known ground truth. Three scenarios: <strong>A</strong> — true signal detection,
+            <strong>B</strong> — null rejection (no false positives), <strong>C</strong> — noise stress test.
+            Matches <code>granger_synthetic_validator.py</code> in the repo.
+        </p>
+        <div class="ctrl-row">
+            <div class="ctrl-item">
+                <label>Observations (n)</label>
+                <input type="range" id="ctrl-n" min="40" max="200" step="10" value="80"
+                       oninput="document.getElementById('lbl-n').textContent=this.value">
+                <div class="ctrl-val" id="lbl-n">80</div>
+            </div>
+            <div class="ctrl-item">
+                <label>True lag (injected)</label>
+                <input type="range" id="ctrl-lag" min="1" max="5" step="1" value="2"
+                       oninput="document.getElementById('lbl-lag').textContent=this.value">
+                <div class="ctrl-val" id="lbl-lag">2</div>
+            </div>
+            <div class="ctrl-item">
+                <label>Max lag tested</label>
+                <input type="range" id="ctrl-maxlag" min="2" max="8" step="1" value="5"
+                       oninput="document.getElementById('lbl-maxlag').textContent=this.value">
+                <div class="ctrl-val" id="lbl-maxlag">5</div>
+            </div>
+            <div class="ctrl-item">
+                <label>Noise ratio (Scenario A)</label>
+                <input type="range" id="ctrl-noise" min="0.1" max="1.5" step="0.1" value="0.5"
+                       oninput="document.getElementById('lbl-noise').textContent=this.value">
+                <div class="ctrl-val" id="lbl-noise">0.5</div>
+            </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:0;">
+            <button class="run-btn" id="runBtn" onclick="runValidator()">&#9654; Run Validator</button>
+            <span class="status-msg" id="runStatus"></span>
+        </div>
+    </div>
+
+    <!-- ── Results (hidden until first run) ─────────────────────────────────── -->
+    <div id="resultsArea" style="display:none;">
+
+        <!-- Three scenario cards -->
+        <div class="scenario-grid">
+            <div class="scenario-card">
+                <p class="sc-title">Scenario A — True Signal</p>
+                <div id="vA"><span class="vbadge pending">—</span></div>
+                <p class="sc-desc" id="descA"></p>
+                <div id="tableA"></div>
+            </div>
+            <div class="scenario-card">
+                <p class="sc-title">Scenario B — Null (Independent)</p>
+                <div id="vB"><span class="vbadge pending">—</span></div>
+                <p class="sc-desc" id="descB"></p>
+                <div id="tableB"></div>
+            </div>
+            <div class="scenario-card">
+                <p class="sc-title">Scenario C — High Noise (ratio=2.0)</p>
+                <div id="vC"><span class="vbadge pending">—</span></div>
+                <p class="sc-desc" id="descC"></p>
+                <div id="tableC"></div>
+            </div>
+        </div>
+
+        <!-- ADF checks -->
+        <div class="card">
+            <p class="section-label" style="margin-top:0;">ADF Stationarity Checks — Synthetic Series</p>
+            <p style="font-size:0.83em; color:#666; margin-bottom:10px;">
+                AR(1) processes with |φ| &lt; 1 are stationary by construction — all three should pass.
+                This mirrors the pre-flight check in <code>granger_stationary_safe()</code> before real CAMS data runs.
+            </p>
+            <div id="adfOut"></div>
+        </div>
+
+        <!-- Charts -->
+        <div class="card">
+            <p class="section-label" style="margin-top:0;">Time Series — Three Scenarios</p>
+            <div class="chart-panel">
+                <div>
+                    <p class="chart-sub">A — cause → effect (lag <span id="lagLabel">2</span>)</p>
+                    <div class="chart-wrap"><canvas id="chartA"></canvas></div>
+                </div>
+                <div>
+                    <p class="chart-sub">B — independent series</p>
+                    <div class="chart-wrap"><canvas id="chartB"></canvas></div>
+                </div>
+                <div>
+                    <p class="chart-sub">C — high noise (σ=2.0)</p>
+                    <div class="chart-wrap"><canvas id="chartC"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Methodology ───────────────────────────────────────────────────────── -->
+    <div class="card">
+        <p class="section-label" style="margin-top:0;">What Is Granger Causality?</p>
+        <p style="line-height:1.75; font-size:0.93em; color:#444;">
+            X "Granger-causes" Y if past values of X improve predictions of Y beyond what Y's own history provides.
+            For CAMS research, we test whether Seshat social complexity indices predict CAMS cross-layer coupling Λ(t),
+            and whether the causal direction is Seshat→Λ, Λ→Seshat, or bidirectional.
+            The synthetic validator confirms the implementation is correct before applying it to real data.
+        </p>
+
+        <p class="section-label">The F-Test (per lag L)</p>
+        <div class="formula-block">Restricted (H₀):   Y[t] = α + Σᵢ₌₁ᴸ aᵢ·Y[t−i]                   + ε
+Unrestricted (H₁): Y[t] = α + Σᵢ₌₁ᴸ aᵢ·Y[t−i] + Σᵢ₌₁ᴸ bᵢ·X[t−i] + ε
+
+F = ( (RSS_r − RSS_u) / L ) / ( RSS_u / (T − 2L − 1) )
+
+p-value from F(L, T−2L−1)    where T = n − L</div>
+
+        <p class="section-label">Why Three Scenarios?</p>
+        <div class="why-grid">
+            <div class="why-box" style="background:#edf8ed; border-color:#2ca02c;">
+                <strong style="color:#2ca02c;">A — True Signal</strong><br>
+                Validates <em>sensitivity</em>. Cause→effect injected at known lag — the test must recover it.
+                If this fails, the implementation is underpowered or the series are too short.
+            </div>
+            <div class="why-box" style="background:#f5f0ff; border-color:#764ba2;">
+                <strong style="color:#764ba2;">B — Null</strong><br>
+                Validates <em>specificity</em>. Independent series — the test must not fire.
+                With L lags × α=0.05, ≈0.25 false positives expected by chance across 5 lags.
+            </div>
+            <div class="why-box" style="background:#fff8e8; border-color:#d97706;">
+                <strong style="color:#d97706;">C — High Noise</strong><br>
+                Stress test at noise_ratio=2.0. Signal may not survive — WARN is acceptable and documents
+                the power limit at this sample size.
+            </div>
+        </div>
+
+        <p class="section-label">Stationarity Requirement</p>
+        <p style="font-size:0.88em; color:#555; line-height:1.75;">
+            The F-test assumes both series are stationary. CAMS Λ(t) and Seshat complexity indices are likely
+            non-stationary (I(1) — unit roots are common in social time series).
+            Use <code>granger_stationary_safe()</code> on real data: it ADF-gates and auto-differences until
+            both series pass, then passes them to the Granger test.
+            Results on ∆-series interpret causality at <em>rates of change</em>, not levels — document which
+            in any publication.
+        </p>
+        <div class="formula-block">granger_stationary_safe(df, var='seshat_var', max_lag=5)
+→ applies diff() up to 2× until ADF passes
+→ records _diffs_applied in returned dict
+→ if diffs=1: interpret as "change in X predicts change in Y"</div>
+
+        <p style="margin-top:20px; font-size:0.85em; color:#888;">
+            Python source: <code>granger_synthetic_validator.py</code> in
+            <a href="https://github.com/KaliBond/wintermute" target="_blank" style="color:#1f77b4;">KaliBond/wintermute</a>.
+            Depends on <code>statsmodels</code>, <code>pandas</code>, <code>numpy</code>.
+            This in-browser implementation uses vanilla JS OLS + jStat F-distribution.
+        </p>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at
+        <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.6/jstat.min.js"></script>
+<script>
+'use strict';
+
+// ── Seeded PRNG (mulberry32) ──────────────────────────────────────────────────
+function mulberry32(seed) {
+    return function () {
+        seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+        let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+        t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+}
+function stdNormal(prng) {
+    const u1 = Math.max(prng(), 1e-10), u2 = prng();
+    return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+}
+
+// ── Series generators ─────────────────────────────────────────────────────────
+function makeAR1(n, phi, seed) {
+    const rng = mulberry32(seed);
+    const x = new Array(n).fill(0);
+    for (let t = 1; t < n; t++) x[t] = phi * x[t - 1] + stdNormal(rng);
+    return x;
+}
+
+function injectLag(cause, lag, noiseRatio, seed) {
+    const rng = mulberry32(seed);
+    const n = cause.length;
+    const eff = new Array(n).fill(0);
+    for (let t = lag; t < n; t++) eff[t] = cause[t - lag] + noiseRatio * stdNormal(rng);
+    return eff;
+}
+
+// ── Linear algebra ────────────────────────────────────────────────────────────
+function solveLinear(A, b) {
+    const n = b.length;
+    const M = A.map((row, i) => [...row, b[i]]);
+    for (let col = 0; col < n; col++) {
+        let max = col;
+        for (let r = col + 1; r < n; r++)
+            if (Math.abs(M[r][col]) > Math.abs(M[max][col])) max = r;
+        [M[col], M[max]] = [M[max], M[col]];
+        if (Math.abs(M[col][col]) < 1e-14) continue;
+        for (let r = col + 1; r < n; r++) {
+            const f = M[r][col] / M[col][col];
+            for (let k = col; k <= n; k++) M[r][k] -= f * M[col][k];
+        }
+    }
+    const x = new Array(n).fill(0);
+    for (let i = n - 1; i >= 0; i--) {
+        if (Math.abs(M[i][i]) < 1e-14) continue;
+        x[i] = M[i][n] / M[i][i];
+        for (let k = i - 1; k >= 0; k--) M[k][n] -= M[k][i] * x[i];
+    }
+    return x;
+}
+
+function gaussJordanInvert(A) {
+    const n = A.length;
+    const M = A.map((row, i) => {
+        const aug = [...row];
+        for (let j = 0; j < n; j++) aug.push(i === j ? 1 : 0);
+        return aug;
+    });
+    for (let col = 0; col < n; col++) {
+        let max = col;
+        for (let r = col + 1; r < n; r++)
+            if (Math.abs(M[r][col]) > Math.abs(M[max][col])) max = r;
+        [M[col], M[max]] = [M[max], M[col]];
+        const piv = M[col][col];
+        if (Math.abs(piv) < 1e-14) throw new Error('singular matrix');
+        for (let k = 0; k < 2 * n; k++) M[col][k] /= piv;
+        for (let r = 0; r < n; r++) {
+            if (r === col) continue;
+            const f = M[r][col];
+            for (let k = 0; k < 2 * n; k++) M[r][k] -= f * M[col][k];
+        }
+    }
+    return M.map(row => row.slice(n));
+}
+
+function ols(X, y) {
+    const n = X.length, p = X[0].length;
+    const XtX = Array.from({ length: p }, (_, i) =>
+        Array.from({ length: p }, (_, j) =>
+            X.reduce((s, row) => s + row[i] * row[j], 0)));
+    const Xty = Array.from({ length: p }, (_, i) =>
+        X.reduce((s, row, k) => s + row[i] * y[k], 0));
+    const beta = solveLinear(XtX, Xty);
+    const rss = X.reduce((s, row, k) => {
+        const fit = row.reduce((r, v, i) => r + v * beta[i], 0);
+        return s + (y[k] - fit) ** 2;
+    }, 0);
+    return { beta, rss, XtX };
+}
+
+// ── ADF test (constant + 1 augmentation lag) ──────────────────────────────────
+function adfTest(series) {
+    const n = series.length;
+    if (n < 8) return { t: NaN, p: 0.5, stat: 'n/a' };
+    const dy = series.slice(1).map((v, i) => v - series[i]);
+    const X = [], y = [];
+    for (let t = 2; t < n; t++) {
+        X.push([1, series[t - 1], dy[t - 1]]);
+        y.push(dy[t]);
+    }
+    const { beta, rss, XtX } = ols(X, y);
+    const T = y.length, p = 3;
+    const sigma2 = rss / (T - p);
+    try {
+        const inv = gaussJordanInvert(XtX);
+        const se = Math.sqrt(Math.max(sigma2 * inv[1][1], 0));
+        const tStat = se > 0 ? beta[1] / se : -Infinity;
+        // MacKinnon critical values (constant, ~n=100): 1%=-3.43, 5%=-2.86, 10%=-2.57
+        const pApprox = tStat < -3.43 ? 0.01 : tStat < -2.86 ? 0.05 : tStat < -2.57 ? 0.10 : 0.20;
+        const stat = tStat < -2.86 ? '✓ stationary' : '⚠ non-stationary';
+        return { t: tStat, p: pApprox, stat };
+    } catch (e) {
+        return { t: NaN, p: 0.5, stat: 'error' };
+    }
+}
+
+// ── Granger causality test ────────────────────────────────────────────────────
+function grangerTest(cause, effect, maxLag) {
+    const n = cause.length;
+    const result = {};
+    for (let L = 1; L <= maxLag; L++) {
+        const Xr = [], Xu = [], y = [];
+        for (let t = L; t < n; t++) {
+            const rowR = [1], rowU = [1];
+            for (let k = 1; k <= L; k++) { rowR.push(effect[t - k]); rowU.push(effect[t - k]); }
+            for (let k = 1; k <= L; k++) rowU.push(cause[t - k]);
+            Xr.push(rowR); Xu.push(rowU); y.push(effect[t]);
+        }
+        const T = y.length;
+        const df2 = T - 2 * L - 1;
+        if (df2 <= 2) { result[L] = { F: NaN, p: NaN }; continue; }
+        const { rss: rssr } = ols(Xr, y);
+        const { rss: rssu } = ols(Xu, y);
+        const F = Math.max(0, ((rssr - rssu) / L) / (rssu / df2));
+        const p = isNaN(F) ? 1.0 : 1 - jStat.centralF.cdf(F, L, df2);
+        result[L] = { F, p };
+    }
+    return result;
+}
+
+// ── Chart helpers ─────────────────────────────────────────────────────────────
+const _charts = {};
+function drawChart(id, s1, s2, lbl1, lbl2, c1, c2) {
+    if (_charts[id]) _charts[id].destroy();
+    const ctx = document.getElementById(id).getContext('2d');
+    _charts[id] = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: s1.map((_, i) => i),
+            datasets: [
+                { label: lbl1, data: s1, borderColor: c1, borderWidth: 1.5, pointRadius: 0, tension: 0.25 },
+                { label: lbl2, data: s2, borderColor: c2, borderWidth: 1.5, pointRadius: 0, tension: 0.25 }
+            ]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false, animation: false,
+            plugins: { legend: { labels: { font: { size: 10 }, boxWidth: 14, padding: 8 } } },
+            scales: {
+                x: { ticks: { maxTicksLimit: 6, font: { size: 9 }, color: '#aaa' }, grid: { color: '#f0f0f0' } },
+                y: { ticks: { maxTicksLimit: 4, font: { size: 9 }, color: '#aaa' }, grid: { color: '#f0f0f0' } }
+            }
+        }
+    });
+}
+
+// ── Result rendering ──────────────────────────────────────────────────────────
+function setVerdict(id, state, text) {
+    document.getElementById(id).innerHTML =
+        `<span class="vbadge ${state}">${text}</span>`;
+}
+
+function lagTableHTML(grResults, trueLag, direction) {
+    let h = `<div class="direction-label">${direction}</div>`;
+    h += `<table class="lag-table"><thead><tr><th>Lag</th><th>F</th><th>p</th><th></th></tr></thead><tbody>`;
+    for (const [lStr, { F, p }] of Object.entries(grResults)) {
+        const lNum = parseInt(lStr);
+        const sig = !isNaN(p) && p < 0.05;
+        const isTgt = trueLag !== null && lNum === trueLag;
+        const rowCls = isTgt ? 'tgt' : sig ? 'sig' : 'nsig';
+        const note = isTgt && sig ? '&#10003; target' : isTgt && !sig ? '&#10007; missed' : sig ? '&#9888; sig' : '';
+        const Fstr = isNaN(F) ? '—' : F.toFixed(3);
+        const pstr = isNaN(p) ? '—' : p.toFixed(4);
+        h += `<tr class="${rowCls}"><td>${lNum}</td><td>${Fstr}</td><td>${pstr}</td><td style="font-size:0.78em;color:#777;">${note}</td></tr>`;
+    }
+    h += `</tbody></table>`;
+    return h;
+}
+
+// ── Main validator ────────────────────────────────────────────────────────────
+function runValidator() {
+    const nObs    = parseInt(document.getElementById('ctrl-n').value);
+    const trueLag = parseInt(document.getElementById('ctrl-lag').value);
+    const maxLag  = parseInt(document.getElementById('ctrl-maxlag').value);
+    const noise   = parseFloat(document.getElementById('ctrl-noise').value);
+
+    const btn = document.getElementById('runBtn');
+    const status = document.getElementById('runStatus');
+    btn.disabled = true;
+    status.textContent = 'Running…';
+    document.getElementById('resultsArea').style.display = 'none';
+
+    setTimeout(() => {
+        try {
+            // ── Generate series ───────────────────────────────────────────
+            const cause  = makeAR1(nObs, 0.4, 42);
+            const effect = injectLag(cause, trueLag, noise, 99);
+            const nullY  = makeAR1(nObs, 0.3, 7);
+            const noisy  = injectLag(cause, trueLag, 2.0, 13);
+
+            // ── ADF ───────────────────────────────────────────────────────
+            const adfC = adfTest(cause);
+            const adfE = adfTest(effect);
+            const adfN = adfTest(nullY);
+            const adfRow = (name, r) => {
+                const cls = r.t < -2.86 ? 'pass' : 'fail';
+                const tStr = isNaN(r.t) ? 'n/a' : r.t.toFixed(3);
+                return `<div class="adf-line">${name.padEnd(14)} t=${tStr.padStart(8)}  p≈${r.p.toFixed(2)}  <span class="${cls}">${r.stat}</span></div>`;
+            };
+            document.getElementById('adfOut').innerHTML =
+                adfRow('cause', adfC) + adfRow('effect', adfE) + adfRow('null_y', adfN);
+
+            // ── Granger tests ─────────────────────────────────────────────
+            const grA = grangerTest(cause, effect, maxLag);
+            const grB = grangerTest(cause, nullY,  maxLag);
+            const grC = grangerTest(cause, noisy,  maxLag);
+            const grAr = grangerTest(effect, cause, maxLag); // reverse direction for A
+
+            // Scenario A
+            const rA = grA[trueLag];
+            const passA = rA && !isNaN(rA.p) && rA.p < 0.05;
+            setVerdict('vA', passA ? 'pass' : 'warn',
+                passA ? 'PASS ✓' : `WARN — lag ${trueLag} not recovered`);
+            document.getElementById('descA').textContent =
+                `Expect cause→effect to fire at lag ${trueLag}. ` +
+                (passA
+                    ? `Confirmed: p=${rA.p.toFixed(4)}, F=${rA.F.toFixed(3)}.`
+                    : `p=${rA ? rA.p.toFixed(4) : 'n/a'} ≥ 0.05. Try increasing n or reducing noise.`);
+            document.getElementById('tableA').innerHTML =
+                lagTableHTML(grA, trueLag, 'Seshat → Λ (cause → effect)') +
+                lagTableHTML(grAr, null, 'Λ → Seshat (expect weak)');
+
+            // Scenario B
+            const fpB = Object.entries(grB).filter(([, { p }]) => !isNaN(p) && p < 0.05);
+            const passB = fpB.length === 0;
+            setVerdict('vB', passB ? 'pass' : 'warn',
+                passB ? 'PASS ✓' : `WARN — ${fpB.length} FP`);
+            const expFP = (maxLag * 0.05).toFixed(1);
+            document.getElementById('descB').textContent =
+                `${maxLag} lags tested; ≈${expFP} false positives expected by chance. ` +
+                (passB
+                    ? 'None found.'
+                    : `FP at: ${fpB.map(([l, { p }]) => `lag ${l} (p=${p.toFixed(3)})`).join(', ')}.`);
+            document.getElementById('tableB').innerHTML =
+                lagTableHTML(grB, null, 'Null: cause → null_y (independent)');
+
+            // Scenario C
+            const best = Object.entries(grC).reduce((b, [l, { F, p }]) =>
+                (!b || (!isNaN(p) && p < b.p)) ? { lag: parseInt(l), F, p } : b, null);
+            const recC = best && !isNaN(best.p) && best.lag === trueLag && best.p < 0.05;
+            const sigC = best && !isNaN(best.p) && best.p < 0.05;
+            setVerdict('vC', recC ? 'pass' : 'warn',
+                recC ? `PASS ✓ (lag ${best.lag})`
+                     : sigC ? `WARN — sig at lag ${best.lag}, not ${trueLag}`
+                             : `WARN — signal lost (noise=2.0)`);
+            document.getElementById('descC').textContent =
+                `Same injected structure as A, noise_ratio=2.0. ` +
+                `Best: lag ${best ? best.lag : '?'}, p=${best && !isNaN(best.p) ? best.p.toFixed(4) : 'n/a'}. ` +
+                `WARN acceptable — documents power limit at n=${nObs}.`;
+            document.getElementById('tableC').innerHTML =
+                lagTableHTML(grC, trueLag, 'High noise: cause → noisy_effect');
+
+            // ── Charts ────────────────────────────────────────────────────
+            document.getElementById('lagLabel').textContent = trueLag;
+            drawChart('chartA', cause, effect, 'cause', `effect (lag ${trueLag})`, '#1f77b4', '#e74c3c');
+            drawChart('chartB', cause, nullY,  'cause', 'null (independent)',      '#1f77b4', '#2ca02c');
+            drawChart('chartC', cause, noisy,  'cause', 'noisy effect',            '#1f77b4', '#d97706');
+
+            document.getElementById('resultsArea').style.display = '';
+            status.textContent = '✓ Complete';
+
+        } catch (err) {
+            status.textContent = `Error: ${err.message}`;
+            console.error(err);
+        } finally {
+            btn.disabled = false;
+        }
+    }, 25);
+}
+</script>
+<script src="nav.js"></script>
+</body>
+</html>
