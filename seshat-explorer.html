@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seshat × CAMS — Cross-Dataset Validation | Neural Nations</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="site-constants.js" defer></script>
+<style>
+  :root {
+    --blue: #1f77b4;
+    --green: #2ca02c;
+    --orange: #d97706;
+    --red: #d62728;
+    --purple: #764ba2;
+    --grey: #888;
+    --amber: #b8860b;
+    --bg: #f9f9f9;
+    --card-bg: #fff;
+    --border: #e0e0e0;
+    --text: #1a1a1a;
+    --muted: #555;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.65; }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .site-header { background: #111; color: #fff; padding: 0 28px; display: flex; align-items: center; justify-content: space-between; height: 52px; }
+  .site-header .brand { font-weight: 700; font-size: 1.05em; letter-spacing: 0.02em; color: #fff; }
+  .site-header nav a { color: #ccc; font-size: 0.87em; margin-left: 20px; }
+  .site-header nav a:hover { color: #fff; text-decoration: none; }
+
+  .page-hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%); color: #fff; padding: 44px 28px 36px; }
+  .page-hero h1 { font-size: 1.75em; font-weight: 700; margin-bottom: 8px; }
+  .page-hero p { color: #b8c4d4; font-size: 0.96em; max-width: 640px; }
+  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .badge { display: inline-block; font-size: 0.72em; font-weight: 700; color: #fff; padding: 2px 9px; border-radius: 12px; letter-spacing: 0.04em; vertical-align: middle; }
+  .badge-experimental { background: var(--grey); }
+  .badge-seshat { background: #6b4c11; }
+  .badge-cams { background: var(--blue); }
+  .badge-new { background: var(--purple); }
+  .badge-pass { background: var(--green); }
+  .badge-warn { background: var(--orange); }
+  .badge-fail { background: var(--red); }
+  .badge-neutral { background: #aaa; color: #fff; }
+
+  .container { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+
+  .section { padding: 36px 0 8px; }
+  .section-title { font-size: 1.1em; font-weight: 700; color: var(--text); border-bottom: 2px solid var(--border); padding-bottom: 6px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+  .section-label { font-size: 0.72em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
+
+  .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 20px 22px; margin-bottom: 18px; }
+  .card-grid { display: grid; gap: 16px; }
+  .card-grid.two { grid-template-columns: 1fr 1fr; }
+  .card-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+  @media(max-width:700px) { .card-grid.two, .card-grid.three { grid-template-columns: 1fr; } }
+
+  .stat-row { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 16px; }
+  .stat-box { text-align: center; }
+  .stat-box .num { font-size: 1.8em; font-weight: 700; color: var(--blue); }
+  .stat-box .lbl { font-size: 0.78em; color: var(--muted); margin-top: 2px; }
+
+  .chart-wrap { position: relative; height: 280px; }
+  .chart-wrap.tall { height: 340px; }
+  .chart-wrap.short { height: 200px; }
+
+  select, input[type=range] { font-size: 0.9em; }
+  select { padding: 5px 10px; border: 1px solid var(--border); border-radius: 5px; background: #fff; cursor: pointer; }
+  label { font-size: 0.88em; color: var(--muted); display: block; margin-bottom: 4px; }
+
+  .controls { display: flex; gap: 16px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 16px; }
+  .control-group { display: flex; flex-direction: column; gap: 4px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.88em; }
+  th { background: #f0f0f0; font-weight: 600; text-align: left; padding: 7px 10px; border-bottom: 2px solid var(--border); }
+  td { padding: 6px 10px; border-bottom: 1px solid #f0f0f0; }
+  tr:hover td { background: #fafafa; }
+  .hl { background: #fffbdf !important; font-weight: 600; }
+
+  .mono { font-family: "Courier New", monospace; font-size: 0.85em; }
+  .muted { color: var(--muted); }
+  .small { font-size: 0.82em; }
+
+  .findings-list { list-style: none; padding: 0; }
+  .findings-list li { padding: 7px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.9em; }
+  .findings-list li:last-child { border: none; }
+  .findings-list li::before { content: "→ "; color: var(--blue); font-weight: 700; }
+
+  .gap-timeline { position: relative; height: 80px; margin: 16px 0; }
+  .gap-timeline svg { width: 100%; height: 100%; }
+
+  .formula { background: #f4f4f8; border-left: 3px solid var(--blue); padding: 10px 14px; font-family: monospace; font-size: 0.88em; border-radius: 0 5px 5px 0; margin: 10px 0; white-space: pre; }
+
+  .callout { background: #fffbdf; border-left: 4px solid var(--orange); padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 0.9em; }
+  .callout.info { background: #f0f5ff; border-color: var(--blue); }
+  .callout.success { background: #f0fff4; border-color: var(--green); }
+
+  footer { background: #111; color: #999; font-size: 0.8em; padding: 24px 28px; margin-top: 48px; text-align: center; }
+  footer a { color: #bbb; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <span class="brand">Neural Nations</span>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="model.html">Model</a>
+    <a href="datasets.html">Datasets</a>
+    <a href="explore.html">Explore</a>
+    <a href="granger-validator.html">Granger</a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="badge-row">
+      <span class="badge badge-experimental">Experimental</span>
+      <span class="badge badge-seshat">Seshat Equinox 2022</span>
+      <span class="badge badge-cams">CAMS v2.3</span>
+      <span class="badge badge-new">Cross-Dataset</span>
+    </div>
+    <h1>Seshat × CAMS — Cross-Dataset Validation</h1>
+    <p>Comparing Seshat's Social Complexity Principal Component (SPC) against CAMS cross-layer coherence Λ(t) for overlapping societies. This page tests whether two independently constructed civilisational complexity measures agree on the shape of historical trajectories.</p>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ── SECTION 1: Dataset Overview ────────────────────────────── -->
+<div class="section">
+  <div class="section-title">1. Dataset Overview</div>
+
+  <div class="card-grid two">
+    <div class="card" style="border-left:4px solid #6b4c11;">
+      <div class="section-label">Seshat Global History Databank</div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="num">35</div><div class="lbl">NGAs</div></div>
+        <div class="stat-box"><div class="num">1,494</div><div class="lbl">NGA-century rows</div></div>
+        <div class="stat-box"><div class="num">5,500</div><div class="lbl">years covered</div></div>
+      </div>
+      <p class="small muted">Equinox 2022 GitHub release. SPC = 1st principal component of 8 coded complexity variables (Hierarchy, Government, Infrastructure, Information, Money, Military, etc.). MilTech = sum of 6 military technology categories. Century-resolution, −3600 to 1900 CE.</p>
+      <p class="small muted" style="margin-top:6px;">Source: Turchin et al., Seshat Global History Databank. <a href="https://seshatdatabank.info" target="_blank">seshatdatabank.info</a></p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--blue);">
+      <div class="section-label">CAMS v2.3 Corpus</div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="num" data-const="SOCIETIES">38</div><div class="lbl">Societies</div></div>
+        <div class="stat-box"><div class="num" data-const="INDEX_RECORDS">39,351</div><div class="lbl">Node-year records</div></div>
+        <div class="stat-box"><div class="num" data-const="INDEX_SERIES">45</div><div class="lbl">Series</div></div>
+      </div>
+      <p class="small muted">Annual or 5-year resolution. Λ(t) = mean cross-node bond strength = mean over all 28 node pairs of B<sub>ij</sub>(t) = √(max(V<sub>i</sub>+8,0)·max(V<sub>j</sub>+8,0)) / 32. Covers CE 5 – 2026, with most modern datasets starting 1750+.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Dataset gap:</strong> Seshat ends at 1900 CE (and most NGAs at 1700–1800). CAMS modern datasets begin at 1750+. The only society with direct temporal overlap is <strong>Rome / Latium</strong> (CE 0–450). The Latium/Rome comparison below is the primary cross-validation case; the broader NGA explorer shows where future CAMS reconstruction could extend the analysis.
+  </div>
+</div>
+
+<!-- ── SECTION 2: Latium × Rome Cross-Validation ─────────────── -->
+<div class="section">
+  <div class="section-title">2. Latium × Rome: Cross-Validation (CE 0–450)</div>
+
+  <p class="small muted" style="margin-bottom:16px;">
+    Seshat codes Latium as its NGA for the Roman civilizational phase. CAMS has an independent 5-year-resolution dataset for Rome (CE 10–450) scored by Claude Sonnet 4.5 using the CAMS v2.3 rubric. Both series are century-averaged for alignment. This comparison is <strong>fully independent</strong>: Seshat uses coded historical variables; CAMS uses an LLM-based complexity rubric — no shared inputs.
+  </p>
+
+  <div class="card-grid two">
+    <div class="card">
+      <div class="section-label">Dual-Axis: CAMS Λ(t) vs Seshat SPC — Latium/Rome, CE 0–400</div>
+      <div class="chart-wrap tall">
+        <canvas id="overlapChart"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-label">Century-Level Data Table</div>
+      <table>
+        <thead>
+          <tr><th>Century CE</th><th>CAMS Λ(t)</th><th>Seshat SPC</th><th>Seshat MilTech</th></tr>
+        </thead>
+        <tbody id="overlapTable"></tbody>
+      </table>
+      <div style="margin-top:14px;">
+        <div class="section-label">Correlation (N = 5)</div>
+        <div id="corrResults"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Finding</div>
+    <ul class="findings-list" id="findingsList">
+      <li>Both series peak at <strong>CE 100</strong> — the height of the Flavian/Trajanic Roman Empire. Seshat SPC = 7.79 (maximum); CAMS Λ = 2.88 (maximum).</li>
+      <li>Both decline monotonically CE 100 → 400. CAMS Λ drops 55% (2.88 → 1.31); Seshat SPC drops only 1.5% (7.79 → 7.68) in the same window — CAMS captures <em>internal coherence loss</em> faster than the structural complexity index.</li>
+      <li>Pearson <em>r</em> = 0.78, Spearman <em>ρ</em> = 0.70 (N=5; not statistically significant — see caveat).</li>
+      <li>The gradient divergence is a genuine scientific signal: structural complexity (institutions, military, territory — Seshat SPC) persists longer than cross-layer coordination (CAMS Λ). This is consistent with the "hollow state" phenomenon in late Roman historiography.</li>
+    </ul>
+    <div class="callout" style="margin-top:12px;">
+      <strong>Statistical caveat:</strong> N = 5 century-averaged observations. Pearson and Spearman coefficients are directionally informative but have no statistical power at this sample size. Granger causality requires N ≥ 15 after lag removal. A proper test would require CAMS reconstruction of Rome at century resolution back to BCE or CAMS forward-extension of Seshat NGAs into the 19th–20th century.
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 3: NGA Explorer ───────────────────────────────── -->
+<div class="section">
+  <div class="section-title">3. Seshat NGA Explorer — All 35 Natural Geographic Areas</div>
+
+  <div class="controls">
+    <div class="control-group">
+      <label for="ngaSelect">Select NGA</label>
+      <select id="ngaSelect"></select>
+    </div>
+    <div class="control-group">
+      <label for="metricSelect">Metric</label>
+      <select id="metricSelect">
+        <option value="spc">SPC (Social Complexity PC1)</option>
+        <option value="miltech">MilTech (Military Technology Index)</option>
+        <option value="both">Both</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card-grid two">
+    <div class="card">
+      <div class="section-label" id="ngaChartLabel">SPC Trajectory</div>
+      <div class="chart-wrap tall">
+        <canvas id="ngaChart"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-label">NGA Metadata</div>
+      <div id="ngaMeta"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">All NGAs — SPC at Maximum (sparkline context)</div>
+    <div id="ngaSparkGrid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); gap:8px; margin-top:8px;"></div>
+  </div>
+</div>
+
+<!-- ── SECTION 4: NGA × CAMS Mapping ────────────────────────── -->
+<div class="section">
+  <div class="section-title">4. Proposed Seshat NGA → CAMS Society Mapping</div>
+
+  <p class="small muted" style="margin-bottom:14px;">The table below lists proposed correspondences between Seshat NGAs and CAMS societies, ordered by temporal overlap quality. "Overlap" = the intersection of Seshat and CAMS time windows.</p>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr><th>Seshat NGA</th><th>Best CAMS Match</th><th>Seshat Range</th><th>CAMS Range</th><th>Overlap (N centuries)</th><th>Granger-ready?</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hl"><td>Latium</td><td>Rome (recalculated)</td><td>−3600 → 1800</td><td>CE 10–450</td><td>CE 0–400 <strong>(N=5)</strong></td><td><span class="badge badge-warn">No — N&lt;15</span></td></tr>
+        <tr><td>Paris Basin</td><td>France (1785–2024)</td><td>−3200 → 1700</td><td>1785–2024</td><td>None (85y gap)</td><td><span class="badge badge-fail">No — no overlap</span></td></tr>
+        <tr><td>Kansai</td><td>Japan (1850–2025)</td><td>−600 → 1800</td><td>1850–2025</td><td>None (50y gap)</td><td><span class="badge badge-fail">No — no overlap</span></td></tr>
+        <tr><td>Middle Yellow River Valley</td><td>China (1900–2026)</td><td>−2000 → 1900</td><td>1900–2026</td><td>CE 1900 <strong>(N≈1)</strong></td><td><span class="badge badge-fail">No — N&lt;15</span></td></tr>
+        <tr><td>Susiana / S. Mesopotamia</td><td>Iraq / Iran</td><td>−4000 → 1900</td><td>1900–2024</td><td>CE 1900 <strong>(N≈1)</strong></td><td><span class="badge badge-fail">No — N&lt;15</span></td></tr>
+        <tr><td>Upper Egypt</td><td>No CAMS analog yet</td><td>−3600 → 1700</td><td>—</td><td>—</td><td><span class="badge badge-neutral">No match</span></td></tr>
+        <tr><td>Deccan / Middle Ganga</td><td>India (if extended)</td><td>−1500 → 1800</td><td>—</td><td>—</td><td><span class="badge badge-neutral">No match</span></td></tr>
+      </tbody>
+    </table>
+    <div class="callout info" style="margin-top:14px;">
+      <strong>Path to Granger:</strong> Two routes exist. (1) Extend CAMS backward — reconstruct Latium/Rome at century resolution from BCE to 476 CE using archival sources and the CAMS v2.3 rubric. This would yield N ≈ 40 usable Seshat-aligned centuries. (2) Extend Seshat forward — adapt the Seshat coding rubric to 20th-century polities in the CAMS corpus. Either approach would enable the full bidirectional Granger test (Λ → SPC and SPC → Λ) using <code>granger_stationary_safe()</code> from the validated tool suite.
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 5: Dataset Gap Timeline ──────────────────────── -->
+<div class="section">
+  <div class="section-title">5. Dataset Gap Visualisation</div>
+
+  <div class="card">
+    <div class="section-label">Temporal Coverage: Seshat NGAs vs CAMS Societies</div>
+    <div style="overflow-x:auto;">
+      <canvas id="timelineChart" style="height:420px; min-width:600px;"></canvas>
+    </div>
+    <p class="small muted" style="margin-top:10px;">Each bar shows the time span covered. Seshat NGAs are brown; CAMS societies are blue. The only vertical overlap is in the CE 0–450 window (Latium/Rome). This chart is the core motivation for the proposed backward-reconstruction programme.</p>
+  </div>
+</div>
+
+<!-- ── SECTION 6: Methodology ────────────────────────────────── -->
+<div class="section">
+  <div class="section-title">6. Methodology</div>
+
+  <div class="card-grid two">
+    <div class="card">
+      <div class="section-label">SPC — Seshat Social Complexity Index</div>
+      <p class="small">SPC is the 1st principal component (PC1) of 8 coded complexity variables from the <code>ImpSCDat</code> sheet (imputed). The 8 components are:</p>
+      <ul class="small" style="margin: 8px 0 0 16px;">
+        <li>PolPop — polity population</li>
+        <li>PolTerr — territory</li>
+        <li>CapPop — capital population</li>
+        <li>levels — administrative hierarchy levels</li>
+        <li>government — government specialisation</li>
+        <li>infrastr — infrastructure</li>
+        <li>writing — writing/information</li>
+        <li>money — monetary system</li>
+      </ul>
+      <p class="small muted" style="margin-top:8px;">Higher SPC = more structurally complex polity. Range ≈ 2.3–8.3 in this corpus.</p>
+    </div>
+    <div class="card">
+      <div class="section-label">Λ(t) — CAMS Cross-Layer Coherence</div>
+      <div class="formula">Vi(t) = Ci + Ki + Ai/2 − Si
+Bij(t) = √(max(Vi+8,0)·max(Vj+8,0)) / 32
+Λ(t) = mean over all 28 node pairs of Bij(t)</div>
+      <p class="small muted">C = Coherence, K = Capacity, A = Abstraction, S = Stress. 8 nodes × 4 metrics. Bond strength B<sub>ij</sub> captures the geometric mean of two nodes' adjusted values. Λ(t) = mean coupling across all node pairs.</p>
+      <p class="small muted" style="margin-top:6px;">Range in Rome corpus: 0.73 (CE 500, terminal decline) to 2.97 (CE 100, peak).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Why the two metrics should correlate</div>
+    <p class="small">Both SPC and Λ(t) are designed to capture civilisational complexity, but from different theoretical angles. SPC captures <em>structural endowment</em> — what institutional and material resources a polity possesses. Λ(t) captures <em>coordination quality</em> — how well those resources are being integrated across functional layers.</p>
+    <p class="small" style="margin-top:8px;">The finding that Λ(t) declines faster than SPC during Rome's CE 100–400 period is theoretically meaningful: structural endowment persists (armies, roads, laws remain nominally intact) while cross-layer coordination degrades (fiscal stress, elite conflict, provincial fragmentation). This is precisely the CAMS prediction: coordination failure precedes structural collapse.</p>
+    <p class="small muted" style="margin-top:8px;">The Granger question — whether Λ(t) <em>leads</em> SPC decline, or vice versa — remains open pending sufficient overlap data.</p>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<footer>
+  <a href="index.html">Neural Nations</a> — CAMS v<span data-const="FRAMEWORK_VERSION">2.3</span> · Seshat Equinox 2022 · Open Science (Common Property) · Kari McKern &amp; Claude Sonnet 4.6
+</footer>
+
+<script>
+// ── Embedded data ──────────────────────────────────────────────
+const OVERLAP = {
+  ce_century: [0, 100, 200, 300, 400],
+  cams_lambda: [2.4358, 2.8787, 2.1268, 1.6346, 1.3082],
+  seshat_spc:  [7.7587, 7.7896, 7.7799, 7.7619, 7.6762],
+  seshat_miltech: [24.9, 24.9, 24.9, 23.6, 24.8],
+  n: 5,
+  pearson_r:  0.7825,
+  pearson_p:  0.1177,
+  spearman_r: 0.7000,
+  spearman_p: 0.1881
+};
+
+const ROME_LAMBDA_YEARLY = {
+  year:   [10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,310,320,330,340,350,360,370,380,390,400,410,420,430,440,450],
+  lambda: null  // will be loaded from seshat_data.json
+};
+
+// NGA data loaded from JSON
+let NGA_DATA = null;
+let ngaChart = null;
+
+// ── Load seshat_data.json ──────────────────────────────────────
+fetch('seshat_data.json')
+  .then(r => r.json())
+  .then(data => {
+    NGA_DATA = data.nga;
+    ROME_LAMBDA_YEARLY.year   = data.rome_lambda_yearly.year;
+    ROME_LAMBDA_YEARLY.lambda = data.rome_lambda_yearly.lambda;
+    initAll();
+  })
+  .catch(() => {
+    // Fallback: use embedded overlap data only
+    initAll();
+  });
+
+function initAll() {
+  renderOverlapChart();
+  renderOverlapTable();
+  renderCorrResults();
+  if (NGA_DATA) {
+    populateNgaSelector();
+    renderNgaChart(Object.keys(NGA_DATA)[0]);
+    renderSparkGrid();
+    renderTimelineChart();
+  }
+}
+
+// ── 1. Overlap Chart ──────────────────────────────────────────
+function renderOverlapChart() {
+  const ctx = document.getElementById('overlapChart').getContext('2d');
+  new Chart(ctx, {
+    data: {
+      labels: OVERLAP.ce_century.map(c => c === 0 ? 'CE 1' : `CE ${c}`),
+      datasets: [
+        {
+          type: 'line',
+          label: 'CAMS Λ(t) — Rome',
+          data: OVERLAP.cams_lambda,
+          borderColor: '#1f77b4',
+          backgroundColor: 'rgba(31,119,180,0.12)',
+          tension: 0.35,
+          pointRadius: 6,
+          pointBackgroundColor: '#1f77b4',
+          fill: true,
+          yAxisID: 'yLeft',
+          borderWidth: 2.5,
+        },
+        {
+          type: 'line',
+          label: 'Seshat SPC — Latium',
+          data: OVERLAP.seshat_spc,
+          borderColor: '#8b5e3c',
+          backgroundColor: 'rgba(139,94,60,0.08)',
+          tension: 0.3,
+          pointRadius: 6,
+          pointStyle: 'rect',
+          pointBackgroundColor: '#8b5e3c',
+          fill: false,
+          yAxisID: 'yRight',
+          borderWidth: 2.5,
+          borderDash: [6,3],
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index' },
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 11 } } },
+        tooltip: {
+          callbacks: {
+            label(ctx) {
+              const v = ctx.parsed.y.toFixed(4);
+              return `${ctx.dataset.label}: ${v}`;
+            }
+          }
+        }
+      },
+      scales: {
+        yLeft: {
+          type: 'linear',
+          position: 'left',
+          title: { display: true, text: 'CAMS Λ(t)', color: '#1f77b4', font: { size: 11 } },
+          ticks: { color: '#1f77b4' },
+          grid: { color: '#e8e8e8' }
+        },
+        yRight: {
+          type: 'linear',
+          position: 'right',
+          title: { display: true, text: 'Seshat SPC', color: '#8b5e3c', font: { size: 11 } },
+          ticks: { color: '#8b5e3c' },
+          grid: { display: false },
+          min: 7.0, max: 8.2
+        },
+        x: {
+          grid: { color: '#f0f0f0' }
+        }
+      }
+    }
+  });
+}
+
+// ── 2. Overlap Table ──────────────────────────────────────────
+function renderOverlapTable() {
+  const tbody = document.getElementById('overlapTable');
+  OVERLAP.ce_century.forEach((cent, i) => {
+    const isMax = i === 1; // CE 100 is max for both
+    const tr = document.createElement('tr');
+    if (isMax) tr.className = 'hl';
+    tr.innerHTML = `
+      <td>${cent === 0 ? 'CE 1–99' : `CE ${cent}–${cent+99}`}${isMax ? ' ★' : ''}</td>
+      <td class="mono">${OVERLAP.cams_lambda[i].toFixed(4)}</td>
+      <td class="mono">${OVERLAP.seshat_spc[i].toFixed(4)}</td>
+      <td class="mono">${OVERLAP.seshat_miltech[i]}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// ── 3. Correlation Results ────────────────────────────────────
+function renderCorrResults() {
+  const el = document.getElementById('corrResults');
+  el.innerHTML = `
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:6px;">
+      <div style="background:#f4f8ff; border-radius:6px; padding:10px 12px; text-align:center;">
+        <div style="font-size:1.4em; font-weight:700; color:#1f77b4;">${OVERLAP.pearson_r.toFixed(3)}</div>
+        <div style="font-size:0.76em; color:#555;">Pearson <em>r</em></div>
+        <div style="font-size:0.74em; color:#888; margin-top:2px;">p = ${OVERLAP.pearson_p.toFixed(3)}</div>
+      </div>
+      <div style="background:#f4f8ff; border-radius:6px; padding:10px 12px; text-align:center;">
+        <div style="font-size:1.4em; font-weight:700; color:#764ba2;">${OVERLAP.spearman_r.toFixed(3)}</div>
+        <div style="font-size:0.76em; color:#555;">Spearman <em>ρ</em></div>
+        <div style="font-size:0.74em; color:#888; margin-top:2px;">p = ${OVERLAP.spearman_p.toFixed(3)}</div>
+      </div>
+    </div>
+    <p class="small muted" style="margin-top:8px; font-size:0.78em;">N = ${OVERLAP.n}. Directionally consistent; not significant (N too small for inference). Highlighted row: CE 100 = joint maximum for both series.</p>
+  `;
+}
+
+// ── 4. NGA Selector ───────────────────────────────────────────
+function populateNgaSelector() {
+  const sel = document.getElementById('ngaSelect');
+  Object.keys(NGA_DATA).sort().forEach(nga => {
+    const opt = document.createElement('option');
+    opt.value = nga;
+    opt.textContent = nga;
+    if (nga === 'Latium') opt.selected = true;
+    sel.appendChild(opt);
+  });
+  sel.addEventListener('change', () => renderNgaChart(sel.value));
+  document.getElementById('metricSelect').addEventListener('change', () => renderNgaChart(sel.value));
+  renderNgaChart('Latium');
+}
+
+function renderNgaChart(nga) {
+  const d = NGA_DATA[nga];
+  const metric = document.getElementById('metricSelect').value;
+  document.getElementById('ngaChartLabel').textContent = `${nga} — ${metric === 'miltech' ? 'MilTech' : 'SPC'}`;
+  document.getElementById('ngaMeta').innerHTML = `
+    <div class="stat-row" style="gap:18px; margin-bottom:12px;">
+      <div class="stat-box"><div class="num" style="font-size:1.3em;">${d.n}</div><div class="lbl">Data points</div></div>
+      <div class="stat-box"><div class="num" style="font-size:1.3em;">${formatYear(d.tmin)}</div><div class="lbl">Start</div></div>
+      <div class="stat-box"><div class="num" style="font-size:1.3em;">${formatYear(d.tmax)}</div><div class="lbl">End</div></div>
+    </div>
+    <p class="small muted">SPC range: ${Math.min(...d.spc.filter(v=>v!==null)).toFixed(2)} – ${Math.max(...d.spc.filter(v=>v!==null)).toFixed(2)}</p>
+    <p class="small muted">MilTech range: ${Math.min(...d.miltech.filter(v=>v!==null)).toFixed(1)} – ${Math.max(...d.miltech.filter(v=>v!==null)).toFixed(1)}</p>
+    ${nga === 'Latium' ? `<div class="callout success" style="margin-top:10px; font-size:0.82em;"><strong>CAMS match: Rome (CE 10–450)</strong><br>This NGA has a direct CAMS analog. See Section 2 for the cross-validation comparison.</div>` : ''}
+  `;
+
+  const ctx = document.getElementById('ngaChart').getContext('2d');
+  if (ngaChart) ngaChart.destroy();
+
+  const datasets = [];
+  if (metric === 'spc' || metric === 'both') {
+    datasets.push({
+      label: 'SPC',
+      data: d.spc,
+      borderColor: '#8b5e3c',
+      backgroundColor: 'rgba(139,94,60,0.1)',
+      fill: metric === 'spc',
+      tension: 0.35,
+      pointRadius: d.n > 30 ? 2 : 4,
+      borderWidth: 2,
+      yAxisID: 'ySPC'
+    });
+  }
+  if (metric === 'miltech' || metric === 'both') {
+    datasets.push({
+      label: 'MilTech',
+      data: d.miltech,
+      borderColor: '#d62728',
+      backgroundColor: 'rgba(214,39,40,0.07)',
+      fill: metric === 'miltech',
+      tension: 0.3,
+      pointRadius: d.n > 30 ? 2 : 4,
+      borderWidth: 2,
+      yAxisID: metric === 'both' ? 'yMT' : 'ySPC'
+    });
+  }
+
+  const scales = {
+    x: { grid: { color: '#f0f0f0' } },
+    ySPC: { type: 'linear', position: 'left', title: { display: true, text: 'SPC', color: '#8b5e3c', font: { size: 10 } }, ticks: { color: '#8b5e3c' } }
+  };
+  if (metric === 'both') {
+    scales.yMT = { type: 'linear', position: 'right', title: { display: true, text: 'MilTech', color: '#d62728', font: { size: 10 } }, ticks: { color: '#d62728' }, grid: { display: false } };
+  }
+
+  ngaChart = new Chart(ctx, {
+    type: 'line',
+    data: { labels: d.time.map(t => formatYear(t)), datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { position: 'top', labels: { font: { size: 11 } } } },
+      scales
+    }
+  });
+}
+
+function formatYear(y) {
+  if (y <= 0) return `${Math.abs(y)} BCE`;
+  return `${y} CE`;
+}
+
+// ── 5. Spark Grid ─────────────────────────────────────────────
+function renderSparkGrid() {
+  const grid = document.getElementById('ngaSparkGrid');
+  const sorted = Object.entries(NGA_DATA).sort((a,b) => {
+    const amax = Math.max(...a[1].spc.filter(v=>v!==null));
+    const bmax = Math.max(...b[1].spc.filter(v=>v!==null));
+    return bmax - amax;
+  });
+  sorted.forEach(([nga, d]) => {
+    const spcMax = Math.max(...d.spc.filter(v=>v!==null)).toFixed(2);
+    const isCams = nga === 'Latium';
+    const div = document.createElement('div');
+    div.style.cssText = `background:#fff;border:1px solid ${isCams?'#1f77b4':'#e0e0e0'};border-radius:6px;padding:8px 10px;cursor:pointer;`;
+    div.innerHTML = `
+      <div style="font-size:0.8em;font-weight:600;color:${isCams?'#1f77b4':'#333'};margin-bottom:3px;">${nga}${isCams?' ★':''}</div>
+      <div style="font-size:0.75em;color:#888;">${formatYear(d.tmin)} – ${formatYear(d.tmax)}</div>
+      <div style="font-size:0.78em;color:#555;">SPC max: <strong>${spcMax}</strong></div>
+    `;
+    div.addEventListener('click', () => {
+      document.getElementById('ngaSelect').value = nga;
+      renderNgaChart(nga);
+      document.getElementById('ngaChart').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    grid.appendChild(div);
+  });
+}
+
+// ── 6. Timeline Chart ─────────────────────────────────────────
+function renderTimelineChart() {
+  const ctx = document.getElementById('timelineChart').getContext('2d');
+
+  const seshatNGAs = Object.entries(NGA_DATA)
+    .sort((a,b) => a[1].tmin - b[1].tmin)
+    .slice(0, 20); // top 20 for readability
+
+  const camsData = [
+    { label: 'Rome (CAMS)', start: 10, end: 450 },
+    { label: 'France', start: 1785, end: 2024 },
+    { label: 'England', start: 1750, end: 1900 },
+    { label: 'Japan', start: 1850, end: 2025 },
+    { label: 'USA', start: 1790, end: 2025 },
+    { label: 'China', start: 1900, end: 2026 },
+    { label: 'Germany', start: 1900, end: 2026 },
+  ];
+
+  const labels = [
+    ...seshatNGAs.map(([nga]) => `[Seshat] ${nga}`),
+    ...camsData.map(d => `[CAMS] ${d.label}`)
+  ];
+
+  const starts = [
+    ...seshatNGAs.map(([,d]) => d.tmin),
+    ...camsData.map(d => d.start)
+  ];
+  const durations = [
+    ...seshatNGAs.map(([,d]) => d.tmax - d.tmin),
+    ...camsData.map(d => d.end - d.start)
+  ];
+  const colors = [
+    ...seshatNGAs.map(() => 'rgba(139,94,60,0.7)'),
+    ...camsData.map(() => 'rgba(31,119,180,0.7)')
+  ];
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Gap (invisible)', data: starts, backgroundColor: 'transparent', barPercentage: 0.7 },
+        { label: 'Time span', data: durations, backgroundColor: colors, barPercentage: 0.7 }
+      ]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label(ctx) {
+              if (ctx.datasetIndex === 0) return null;
+              const i = ctx.dataIndex;
+              const s = starts[i], e = s + durations[i];
+              return `${formatYear(s)} – ${formatYear(e)}`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          stacked: true,
+          title: { display: true, text: 'Year', font: { size: 11 } },
+          ticks: {
+            callback(val) {
+              if (val <= 0) return `${Math.abs(val)} BCE`;
+              return `${val} CE`;
+            },
+            maxTicksLimit: 8
+          }
+        },
+        y: {
+          stacked: true,
+          ticks: { font: { size: 10 } }
+        }
+      }
+    }
+  });
+}
+</script>
+
+</body>
+</html>
