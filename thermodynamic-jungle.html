@@ -3,8 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
     <title>Thermodynamic Jungle — Neural Nations</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="The thermodynamic framing of civilisational dynamics: energy, entropy, and coordination in complex adaptive societies.">
+    <meta name="keywords" content="CAMS, Neural Nations, civilisational complexity, institutional analysis, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/thermodynamic-jungle">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/thermodynamic-jungle">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="Thermodynamic Jungle — Neural Nations">
+    <meta property="og:description" content="The thermodynamic framing of civilisational dynamics: energy, entropy, and coordination in complex adaptive societies.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Thermodynamic Jungle — Neural Nations">
+    <meta name="twitter:description" content="The thermodynamic framing of civilisational dynamics: energy, entropy, and coordination in complex adaptive societies.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Neural Nations",
+          "url": "https://neuralnations.org",
+          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
+          "author": { "@id": "https://neuralnations.org/#kari" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://neuralnations.org/#kari",
+          "name": "Kari McKern",
+          "url": "https://neuralnations.org/cams-project-history",
+          "jobTitle": "Independent Researcher",
+          "description": "Creator of CAMS — the Complex Adaptive Model State. Researcher, former public servant, IT specialist, Sydney Australia.",
+          "sameAs": [
+            "https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/",
+            "https://github.com/KaliBond"
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">    <script src="https://d3js.org/d3.v7.min.js"></script>    <style>    body { background: #0d1117; }    .jungle-wrap {    background: #0d1117;    border-radius: 14px;    overflow: hidden;    margin: 0 0 24px;    box-shadow: 0 8px 40px rgba(0,0,0,0.6);    }    .jungle-header {    padding: 24px 28px 0;    }    .jungle-title {    font-size: 1.6em;    font-weight: 800;    letter-spacing: 0.04em;    color: #c8e8c8;    margin: 0 0 4px;    }    .jungle-sub {    font-size: 0.82em;    color: #446644;    letter-spacing: 0.12em;    text-transform: uppercase;    margin: 0 0 20px;    font-family: monospace;    }    .jungle-controls {    padding: 0 28px 18px;    display: flex;    align-items: center;    gap: 16px;    flex-wrap: wrap;    }    .play-btn {    background: #1a3a1a;    border: 1px solid #2a6a2a;    border-radius: 50%;    width: 36px; height: 36px;    display: flex; align-items: center; justify-content: center;    cursor: pointer;    color: #00ff88;    font-size: 14px;    flex-shrink: 0;    transition: background 0.2s, box-shadow 0.2s;    }    .play-btn:hover { background: #2a5a2a; box-shadow: 0 0 12px rgba(0,255,136,0.3); }    .year-track {    display: flex; align-items: center; gap: 10px; flex: 1; min-width: 200px;    }    #year-slider {    flex: 1;    -webkit-appearance: none;    height: 3px;    border-radius: 2px;    background: #1a3a1a;    outline: none;    }    #year-slider::-webkit-slider-thumb {    -webkit-appearance: none;    width: 14px; height: 14px;    border-radius: 50%;    background: #00ff88;    cursor: pointer;    box-shadow: 0 0 8px rgba(0,255,136,0.5);    }    #year-display {    color: #00ff88;    font-family: monospace;    font-size: 1.3em;    font-weight: 700;    min-width: 52px;    text-shadow: 0 0 12px rgba(0,255,136,0.5);    }    #count-display {    color: #2a5a2a;    font-family: monospace;    font-size: 0.78em;    min-width: 80px;    }    #jungle-svg { width: 100%; display: block; }    /* Tooltip */    .j-tooltip {    position: fixed;    background: rgba(5, 12, 5, 0.97);    border: 1px solid;    border-radius: 10px;    padding: 14px 18px;    pointer-events: none;    max-width: 230px;    z-index: 999;    line-height: 1.65;    opacity: 0;    transition: opacity 0.15s;    }    .j-tooltip.visible { opacity: 1; }    .jt-name { font-size: 1.05em; font-weight: 800; color: #e0f0e0; margin-bottom: 4px; }    .jt-quad { font-size: 0.82em; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }    .jt-desc { font-size: 0.82em; color: #88a888; }    /* Legend */    .jungle-legend {    padding: 14px 28px;    border-top: 1px solid #1a2a1a;    display: flex;    flex-wrap: wrap;    gap: 6px 20px;    }    .leg { display: flex; align-items: center; gap: 7px; font-size: 0.78em; color: #446644; }    .leg-dot { width: 9px; height: 9px; border-radius: 50%; }    /* Axis text color overrides */    .tick text { fill: #2a5a2a !important; font-size: 11px; }    .domain { stroke: #1a3a1a !important; }    .tick line { stroke: #162816 !important; }    /* Card text overrides for dark bg */    .card h1 { color: #1a1a1a; }    /* Quadrant corner text */    .q-corner {    font-size: 10px;    font-weight: 700;    letter-spacing: 0.14em;    text-transform: uppercase;    opacity: 0.22;    pointer-events: none;    user-select: none;    }    </style>
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -12,149 +63,6 @@
       gtag('js', new Date());
       gtag('config', 'G-ESZ16XVVNN');
     </script>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <style>
-        body { background: #0d1117; }
-
-        .jungle-wrap {
-            background: #0d1117;
-            border-radius: 14px;
-            overflow: hidden;
-            margin: 0 0 24px;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.6);
-        }
-
-        .jungle-header {
-            padding: 24px 28px 0;
-        }
-
-        .jungle-title {
-            font-size: 1.6em;
-            font-weight: 800;
-            letter-spacing: 0.04em;
-            color: #c8e8c8;
-            margin: 0 0 4px;
-        }
-
-        .jungle-sub {
-            font-size: 0.82em;
-            color: #446644;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            margin: 0 0 20px;
-            font-family: monospace;
-        }
-
-        .jungle-controls {
-            padding: 0 28px 18px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .play-btn {
-            background: #1a3a1a;
-            border: 1px solid #2a6a2a;
-            border-radius: 50%;
-            width: 36px; height: 36px;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer;
-            color: #00ff88;
-            font-size: 14px;
-            flex-shrink: 0;
-            transition: background 0.2s, box-shadow 0.2s;
-        }
-        .play-btn:hover { background: #2a5a2a; box-shadow: 0 0 12px rgba(0,255,136,0.3); }
-
-        .year-track {
-            display: flex; align-items: center; gap: 10px; flex: 1; min-width: 200px;
-        }
-
-        #year-slider {
-            flex: 1;
-            -webkit-appearance: none;
-            height: 3px;
-            border-radius: 2px;
-            background: #1a3a1a;
-            outline: none;
-        }
-        #year-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 14px; height: 14px;
-            border-radius: 50%;
-            background: #00ff88;
-            cursor: pointer;
-            box-shadow: 0 0 8px rgba(0,255,136,0.5);
-        }
-
-        #year-display {
-            color: #00ff88;
-            font-family: monospace;
-            font-size: 1.3em;
-            font-weight: 700;
-            min-width: 52px;
-            text-shadow: 0 0 12px rgba(0,255,136,0.5);
-        }
-
-        #count-display {
-            color: #2a5a2a;
-            font-family: monospace;
-            font-size: 0.78em;
-            min-width: 80px;
-        }
-
-        #jungle-svg { width: 100%; display: block; }
-
-        /* Tooltip */
-        .j-tooltip {
-            position: fixed;
-            background: rgba(5, 12, 5, 0.97);
-            border: 1px solid;
-            border-radius: 10px;
-            padding: 14px 18px;
-            pointer-events: none;
-            max-width: 230px;
-            z-index: 999;
-            line-height: 1.65;
-            opacity: 0;
-            transition: opacity 0.15s;
-        }
-        .j-tooltip.visible { opacity: 1; }
-        .jt-name { font-size: 1.05em; font-weight: 800; color: #e0f0e0; margin-bottom: 4px; }
-        .jt-quad { font-size: 0.82em; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
-        .jt-desc { font-size: 0.82em; color: #88a888; }
-
-        /* Legend */
-        .jungle-legend {
-            padding: 14px 28px;
-            border-top: 1px solid #1a2a1a;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px 20px;
-        }
-        .leg { display: flex; align-items: center; gap: 7px; font-size: 0.78em; color: #446644; }
-        .leg-dot { width: 9px; height: 9px; border-radius: 50%; }
-
-        /* Axis text color overrides */
-        .tick text { fill: #2a5a2a !important; font-size: 11px; }
-        .domain { stroke: #1a3a1a !important; }
-        .tick line { stroke: #162816 !important; }
-
-        /* Card text overrides for dark bg */
-        .card h1 { color: #1a1a1a; }
-
-        /* Quadrant corner text */
-        .q-corner {
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            opacity: 0.22;
-            pointer-events: none;
-            user-select: none;
-        }
-    </style>
 </head>
 <body>
 <nav class="navbar">

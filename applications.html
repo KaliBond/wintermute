@@ -3,126 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore CAMS in Action — Neural Nations</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .section-label {
-            font-size: 0.78rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #1f77b4;
-            margin: 32px 0 10px;
+
+    <!-- Primary SEO -->
+    <title>CAMS in Action — Neural Nations</title>
+    <meta name="description" content="Applied case studies: CAMS scores for historical and contemporary polities, showing how the framework detects institutional stress before it becomes visible.">
+    <meta name="keywords" content="CAMS, Neural Nations, civilisational complexity, institutional analysis, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/applications">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/applications">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="CAMS in Action — Neural Nations">
+    <meta property="og:description" content="Applied case studies: CAMS scores for historical and contemporary polities, showing how the framework detects institutional stress before it becomes visible.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CAMS in Action — Neural Nations">
+    <meta name="twitter:description" content="Applied case studies: CAMS scores for historical and contemporary polities, showing how the framework detects institutional stress before it becomes visible.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Neural Nations",
+          "url": "https://neuralnations.org",
+          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
+          "author": { "@id": "https://neuralnations.org/#kari" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://neuralnations.org/#kari",
+          "name": "Kari McKern",
+          "url": "https://neuralnations.org/cams-project-history",
+          "jobTitle": "Independent Researcher",
+          "description": "Creator of CAMS — the Complex Adaptive Model State. Researcher, former public servant, IT specialist, Sydney Australia.",
+          "sameAs": [
+            "https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/",
+            "https://github.com/KaliBond"
+          ]
         }
-        .case-study {
-            background: #f8f9fa;
-            border-left: 4px solid #1f77b4;
-            border-radius: 0 8px 8px 0;
-            padding: 20px 24px;
-            margin: 20px 0;
-        }
-        .case-study h3 {
-            margin: 0 0 12px;
-            font-size: 1.05em;
-            color: #1a1a2e;
-        }
-        .case-study.red { border-color: #d62728; }
-        .metrics-mini {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 10px;
-            margin: 14px 0;
-        }
-        .metric-chip {
-            background: white;
-            border: 1px solid #dde4f0;
-            border-radius: 6px;
-            padding: 10px 14px;
-            font-size: 0.88em;
-        }
-        .metric-chip strong { display: block; color: #1f77b4; margin-bottom: 3px; }
-        .metric-chip.red strong { color: #d62728; }
-        .replicate-links {
-            margin-top: 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .replicate-links a {
-            color: #1f77b4;
-            font-size: 0.88em;
-            text-decoration: none;
-        }
-        .replicate-links a:hover { text-decoration: underline; }
-        .dashboard-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
-            padding: 28px;
-            color: white;
-            margin-bottom: 16px;
-        }
-        .dashboard-card h3 { color: white; margin: 0 0 10px; }
-        .dashboard-card p { color: rgba(255,255,255,0.9); line-height: 1.6; font-size: 0.95em; }
-        .dashboard-card ul { color: rgba(255,255,255,0.85); font-size: 0.9em; line-height: 1.8; margin: 10px 0 16px; }
-        .dashboard-card a.launch-btn {
-            display: inline-block;
-            background: white;
-            color: #667eea;
-            font-weight: 700;
-            padding: 10px 22px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 0.95em;
-        }
-        .dashboard-card.local {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-        }
-        .dashboard-card.local a.launch-btn { color: #2c3e50; }
-        .cognition-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin: 16px 0;
-        }
-        .cognition-card {
-            background: #f0f4fb;
-            border-radius: 8px;
-            padding: 14px 16px;
-            font-size: 0.88em;
-        }
-        .cognition-card strong { display: block; margin-bottom: 4px; color: #1a1a2e; }
-        .cognition-card span { color: #555; }
-        .step-list {
-            counter-reset: steps;
-            list-style: none;
-            padding: 0;
-            margin: 16px 0;
-        }
-        .step-list li {
-            counter-increment: steps;
-            display: flex;
-            gap: 14px;
-            align-items: flex-start;
-            margin-bottom: 14px;
-            font-size: 0.95em;
-            line-height: 1.6;
-        }
-        .step-list li::before {
-            content: counter(steps);
-            background: #1f77b4;
-            color: white;
-            font-weight: 700;
-            font-size: 0.85em;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            margin-top: 1px;
-        }
-    </style>
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">    <style>    .section-label {    font-size: 0.78rem;    font-weight: 700;    text-transform: uppercase;    letter-spacing: 0.08em;    color: #1f77b4;    margin: 32px 0 10px;    }    .case-study {    background: #f8f9fa;    border-left: 4px solid #1f77b4;    border-radius: 0 8px 8px 0;    padding: 20px 24px;    margin: 20px 0;    }    .case-study h3 {    margin: 0 0 12px;    font-size: 1.05em;    color: #1a1a2e;    }    .case-study.red { border-color: #d62728; }    .metrics-mini {    display: grid;    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));    gap: 10px;    margin: 14px 0;    }    .metric-chip {    background: white;    border: 1px solid #dde4f0;    border-radius: 6px;    padding: 10px 14px;    font-size: 0.88em;    }    .metric-chip strong { display: block; color: #1f77b4; margin-bottom: 3px; }    .metric-chip.red strong { color: #d62728; }    .replicate-links {    margin-top: 14px;    display: flex;    flex-direction: column;    gap: 5px;    }    .replicate-links a {    color: #1f77b4;    font-size: 0.88em;    text-decoration: none;    }    .replicate-links a:hover { text-decoration: underline; }    .dashboard-card {    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);    border-radius: 12px;    padding: 28px;    color: white;    margin-bottom: 16px;    }    .dashboard-card h3 { color: white; margin: 0 0 10px; }    .dashboard-card p { color: rgba(255,255,255,0.9); line-height: 1.6; font-size: 0.95em; }    .dashboard-card ul { color: rgba(255,255,255,0.85); font-size: 0.9em; line-height: 1.8; margin: 10px 0 16px; }    .dashboard-card a.launch-btn {    display: inline-block;    background: white;    color: #667eea;    font-weight: 700;    padding: 10px 22px;    border-radius: 6px;    text-decoration: none;    font-size: 0.95em;    }    .dashboard-card.local {    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);    }    .dashboard-card.local a.launch-btn { color: #2c3e50; }    .cognition-grid {    display: grid;    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));    gap: 12px;    margin: 16px 0;    }    .cognition-card {    background: #f0f4fb;    border-radius: 8px;    padding: 14px 16px;    font-size: 0.88em;    }    .cognition-card strong { display: block; margin-bottom: 4px; color: #1a1a2e; }    .cognition-card span { color: #555; }    .step-list {    counter-reset: steps;    list-style: none;    padding: 0;    margin: 16px 0;    }    .step-list li {    counter-increment: steps;    display: flex;    gap: 14px;    align-items: flex-start;    margin-bottom: 14px;    font-size: 0.95em;    line-height: 1.6;    }    .step-list li::before {    content: counter(steps);    background: #1f77b4;    color: white;    font-weight: 700;    font-size: 0.85em;    border-radius: 50%;    width: 24px;    height: 24px;    display: flex;    align-items: center;    justify-content: center;    flex-shrink: 0;    margin-top: 1px;    }    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
 </head>
 <body>
 <nav class="navbar">

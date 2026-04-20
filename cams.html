@@ -3,9 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAMS Dashboard - Neural Nations</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Google tag (gtag.js) -->
+
+    <!-- Primary SEO -->
+    <title>CAMS Dashboard — Neural Nations</title>
+    <meta name="description" content="The Neural Nations CAMS dashboard — live node values, bond strengths, and system-level metrics for current and historical societies.">
+    <meta name="keywords" content="CAMS, Neural Nations, civilisational complexity, institutional analysis, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/cams">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/cams">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="CAMS Dashboard — Neural Nations">
+    <meta property="og:description" content="The Neural Nations CAMS dashboard — live node values, bond strengths, and system-level metrics for current and historical societies.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CAMS Dashboard — Neural Nations">
+    <meta name="twitter:description" content="The Neural Nations CAMS dashboard — live node values, bond strengths, and system-level metrics for current and historical societies.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Neural Nations",
+          "url": "https://neuralnations.org",
+          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
+          "author": { "@id": "https://neuralnations.org/#kari" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://neuralnations.org/#kari",
+          "name": "Kari McKern",
+          "url": "https://neuralnations.org/cams-project-history",
+          "jobTitle": "Independent Researcher",
+          "description": "Creator of CAMS — the Complex Adaptive Model State. Researcher, former public servant, IT specialist, Sydney Australia.",
+          "sameAs": [
+            "https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/",
+            "https://github.com/KaliBond"
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">    <style>    .metrics-table {    width: 100%;    border-collapse: collapse;    margin: 30px 0;    font-size: 0.95em;    background: #fff;    box-shadow: 0 2px 8px rgba(0,0,0,0.1);    }    .metrics-table thead tr {    background-color: #1f77b4;    color: #ffffff;    text-align: left;    }    .metrics-table th,    .metrics-table td {    padding: 12px 15px;    }    .metrics-table tbody tr {    border-bottom: 1px solid #dddddd;    }    .metrics-table tbody tr:nth-of-type(even) {    background-color: #f3f3f3;    }    .metrics-table tbody tr:last-of-type {    border-bottom: 2px solid #1f77b4;    }    .status-fragile {    color: #ff7f0e;    font-weight: bold;    }    .status-stable {    color: #2ca02c;    font-weight: bold;    }    .status-terminal {    color: #d62728;    font-weight: bold;    }    .status-resilient {    color: #17becf;    font-weight: bold;    }    .dashboard-btn {    display: inline-block;    padding: 15px 40px;    background: linear-gradient(135deg, #1f77b4 0%, #17becf 100%);    color: white;    text-decoration: none;    border-radius: 8px;    font-size: 1.2em;    font-weight: bold;    margin: 30px 0;    box-shadow: 0 4px 12px rgba(31, 119, 180, 0.3);    transition: all 0.3s ease;    }    .dashboard-btn:hover {    transform: translateY(-2px);    box-shadow: 0 6px 16px rgba(31, 119, 180, 0.4);    }    .hero {    text-align: center;    padding: 40px 20px;    background: linear-gradient(135deg, #0e1117 0%, #262730 100%);    color: #fafafa;    border-radius: 12px;    margin-bottom: 40px;    }    .hero h1 {    margin: 0;    font-size: 2.5em;    color: #17becf;    }    .hero .tagline {    font-size: 1.3em;    margin: 15px 0;    color: #fafafa;    }    .accuracy-stats {    display: grid;    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));    gap: 20px;    margin: 30px 0;    }    .stat-box {    background: #f8f9fa;    padding: 20px;    border-radius: 8px;    text-align: center;    border-left: 4px solid #1f77b4;    }    .stat-number {    font-size: 2.5em;    font-weight: bold;    color: #1f77b4;    }    .stat-label {    color: #666;    margin-top: 8px;    }    </style>
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -13,107 +63,6 @@
       gtag('js', new Date());
       gtag('config', 'G-ESZ16XVVNN');
     </script>
-    <style>
-        .metrics-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 30px 0;
-            font-size: 0.95em;
-            background: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .metrics-table thead tr {
-            background-color: #1f77b4;
-            color: #ffffff;
-            text-align: left;
-        }
-        .metrics-table th,
-        .metrics-table td {
-            padding: 12px 15px;
-        }
-        .metrics-table tbody tr {
-            border-bottom: 1px solid #dddddd;
-        }
-        .metrics-table tbody tr:nth-of-type(even) {
-            background-color: #f3f3f3;
-        }
-        .metrics-table tbody tr:last-of-type {
-            border-bottom: 2px solid #1f77b4;
-        }
-        .status-fragile {
-            color: #ff7f0e;
-            font-weight: bold;
-        }
-        .status-stable {
-            color: #2ca02c;
-            font-weight: bold;
-        }
-        .status-terminal {
-            color: #d62728;
-            font-weight: bold;
-        }
-        .status-resilient {
-            color: #17becf;
-            font-weight: bold;
-        }
-        .dashboard-btn {
-            display: inline-block;
-            padding: 15px 40px;
-            background: linear-gradient(135deg, #1f77b4 0%, #17becf 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 1.2em;
-            font-weight: bold;
-            margin: 30px 0;
-            box-shadow: 0 4px 12px rgba(31, 119, 180, 0.3);
-            transition: all 0.3s ease;
-        }
-        .dashboard-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(31, 119, 180, 0.4);
-        }
-        .hero {
-            text-align: center;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, #0e1117 0%, #262730 100%);
-            color: #fafafa;
-            border-radius: 12px;
-            margin-bottom: 40px;
-        }
-        .hero h1 {
-            margin: 0;
-            font-size: 2.5em;
-            color: #17becf;
-        }
-        .hero .tagline {
-            font-size: 1.3em;
-            margin: 15px 0;
-            color: #fafafa;
-        }
-        .accuracy-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-        .stat-box {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            border-left: 4px solid #1f77b4;
-        }
-        .stat-number {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #1f77b4;
-        }
-        .stat-label {
-            color: #666;
-            margin-top: 8px;
-        }
-    </style>
 </head>
 <body>
 <nav class="navbar">

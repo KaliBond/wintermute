@@ -1,60 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CAMS Civilisational Attractor Space — Neural Nations</title>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #0d0d1a;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    /* Page content */
-    h1 {
-      margin: 22px 20px 4px;
-      color: #e8e8ff;
-      font-size: 1.4rem;
-      letter-spacing: 0.04em;
-      text-align: center;
+    <!-- Primary SEO -->
+    <title>CAMS Civilisational Attractor Space — Neural Nations</title>
+    <meta name="description" content="3D Plotly visualisation of civilisational trajectories as far-from-equilibrium metabolic networks. Explore the attractor landscape of historical polities.">
+    <meta name="keywords" content="CAMS, Neural Nations, civilisational complexity, institutional analysis, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/attractors">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/attractors">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="CAMS Civilisational Attractor Space — Neural Nations">
+    <meta property="og:description" content="3D Plotly visualisation of civilisational trajectories as far-from-equilibrium metabolic networks. Explore the attractor landscape of historical polities.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CAMS Civilisational Attractor Space — Neural Nations">
+    <meta name="twitter:description" content="3D Plotly visualisation of civilisational trajectories as far-from-equilibrium metabolic networks. Explore the attractor landscape of historical polities.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Neural Nations",
+          "url": "https://neuralnations.org",
+          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
+          "author": { "@id": "https://neuralnations.org/#kari" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://neuralnations.org/#kari",
+          "name": "Kari McKern",
+          "url": "https://neuralnations.org/cams-project-history",
+          "jobTitle": "Independent Researcher",
+          "description": "Creator of CAMS — the Complex Adaptive Model State. Researcher, former public servant, IT specialist, Sydney Australia.",
+          "sameAs": [
+            "https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/",
+            "https://github.com/KaliBond"
+          ]
+        }
+      ]
     }
-    .subtitle {
-      font-size: 0.78rem;
-      color: #8888bb;
-      margin: 0 20px 4px;
-      text-align: center;
-      max-width: 800px;
-      line-height: 1.5;
-    }
-    .axis-legend {
-      display: flex;
-      gap: 28px;
-      font-size: 0.72rem;
-      color: #aaaacc;
-      margin-bottom: 6px;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 0 10px;
-    }
-    .axis-legend span { font-weight: bold; color: #ccccee; }
-    .footer {
-      font-size: 0.65rem;
-      color: #445566;
-      margin: 6px 0 10px;
-      letter-spacing: 0.05em;
-    }
-    #plot {
-      width: 95vw;
-      height: 80vh;
-    }
-  </style>
+    </script>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>    <link rel="stylesheet" href="style.css">    <style>    body {    margin: 0;    font-family: 'Segoe UI', Arial, sans-serif;    background: #0d0d1a;    color: white;    display: flex;    flex-direction: column;    align-items: center;    }    /* Page content */    h1 {    margin: 22px 20px 4px;    color: #e8e8ff;    font-size: 1.4rem;    letter-spacing: 0.04em;    text-align: center;    }    .subtitle {    font-size: 0.78rem;    color: #8888bb;    margin: 0 20px 4px;    text-align: center;    max-width: 800px;    line-height: 1.5;    }    .axis-legend {    display: flex;    gap: 28px;    font-size: 0.72rem;    color: #aaaacc;    margin-bottom: 6px;    flex-wrap: wrap;    justify-content: center;    padding: 0 10px;    }    .axis-legend span { font-weight: bold; color: #ccccee; }    .footer {    font-size: 0.65rem;    color: #445566;    margin: 6px 0 10px;    letter-spacing: 0.05em;    }    #plot {    width: 95vw;    height: 80vh;    }    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
 </head>
 <body>
 

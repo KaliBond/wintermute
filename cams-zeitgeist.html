@@ -3,190 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
     <title>CAMS Zeitgeist Detector — Neural Nations</title>
+    <meta name="description" content="Real-time CAMS analysis of current civilisational signals — tracking where contemporary polities sit in the CAMS regime space.">
+    <meta name="keywords" content="CAMS, Neural Nations, civilisational complexity, institutional analysis, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/cams-zeitgeist">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/cams-zeitgeist">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="CAMS Zeitgeist Detector — Neural Nations">
+    <meta property="og:description" content="Real-time CAMS analysis of current civilisational signals — tracking where contemporary polities sit in the CAMS regime space.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CAMS Zeitgeist Detector — Neural Nations">
+    <meta name="twitter:description" content="Real-time CAMS analysis of current civilisational signals — tracking where contemporary polities sit in the CAMS regime space.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Neural Nations",
+          "url": "https://neuralnations.org",
+          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
+          "author": { "@id": "https://neuralnations.org/#kari" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://neuralnations.org/#kari",
+          "name": "Kari McKern",
+          "url": "https://neuralnations.org/cams-project-history",
+          "jobTitle": "Independent Researcher",
+          "description": "Creator of CAMS — the Complex Adaptive Model State. Researcher, former public servant, IT specialist, Sydney Australia.",
+          "sameAs": [
+            "https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/",
+            "https://github.com/KaliBond"
+          ]
+        }
+      ]
+    }
+    </script>
+
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
     <style>
-        /* ── Controls bar ──────────────────────────────────────────── */
-        .controls-bar {
-            position: sticky;
-            top: 60px;
-            z-index: 900;
-            background: rgba(255,255,255,0.97);
-            border-bottom: 1px solid #e0d8f0;
-            box-shadow: 0 2px 12px rgba(118,75,162,0.10);
-            padding: 12px 0;
-        }
-        .controls-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .controls-inner label {
-            font-size: 0.78rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.07em;
-            color: #888;
-            display: block;
-            margin-bottom: 3px;
-        }
-        .controls-inner select {
-            padding: 7px 12px;
-            border-radius: 8px;
-            border: 1px solid #d0c0e8;
-            font-size: 0.9rem;
-            color: #2d3748;
-            background: white;
-            cursor: pointer;
-            min-width: 160px;
-        }
-        .controls-inner select:focus { outline: none; border-color: #764ba2; }
-        .slider-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex: 1;
-            min-width: 260px;
-        }
-        .slider-group input[type=range] {
-            flex: 1;
-            accent-color: #764ba2;
-            cursor: pointer;
-        }
-        .year-display {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #764ba2;
-            min-width: 58px;
-            text-align: right;
-            font-variant-numeric: tabular-nums;
-        }
-        .play-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border: 2px solid #764ba2;
-            background: white;
-            color: #764ba2;
-            font-size: 0.9rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.15s, color 0.15s;
-            flex-shrink: 0;
-        }
-        .play-btn:hover, .play-btn.playing { background: #764ba2; color: white; }
-
-        /* ── Metric gauges ─────────────────────────────────────────── */
-        .gauge-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 16px;
-            margin-bottom: 0;
-        }
-        @media (max-width: 900px) { .gauge-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 560px) { .gauge-grid { grid-template-columns: repeat(2, 1fr); } }
-
-        .gauge-card {
-            text-align: center;
-            padding: 18px 12px 14px;
-        }
-        .gauge-label {
-            font-size: 0.68rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #888;
-            margin-bottom: 12px;
-        }
-        .gauge {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin: 0 auto 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 3px solid #f0eaf7;
-            transition: background 0.4s;
-        }
-        .gauge-value {
-            font-size: 1.7rem;
-            font-weight: 700;
-            line-height: 1;
-        }
-        .gauge-sub {
-            font-size: 0.72rem;
-            color: #aaa;
-            line-height: 1.4;
-        }
-
-        /* ── 2-col panels ──────────────────────────────────────────── */
-        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-        @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
-
-        .panel-title {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: #5a3580;
-            margin: 0 0 14px 0;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #e8e0f0;
-        }
-
-        /* ── Phenomenology ─────────────────────────────────────────── */
-        .pheno-badge {
-            padding: 10px 16px;
-            border-radius: 10px;
-            margin-bottom: 12px;
-        }
-        .pheno-type { font-size: 1rem; font-weight: 700; }
-        .pheno-texture { font-size: 0.8rem; color: #666; margin-top: 3px; }
-        .pheno-narrative { font-size: 0.86rem; color: #444; line-height: 1.6; }
-        .pheno-tags { font-size: 0.78rem; color: #888; margin-top: 10px; padding-top: 10px; border-top: 1px solid #f0eaf7; }
-
-        .grounded  { background: #d1fae5; border-left: 4px solid #10b981; }
-        .vital     { background: #cffafe; border-left: 4px solid #0bc5ea; }
-        .fragile   { background: #fef3c7; border-left: 4px solid #f59e0b; }
-        .decoupled { background: #fee2e2; border-left: 4px solid #ef4444; }
-        .collapse  { background: #f3e8ff; border-left: 4px solid #a855f7; }
-
-        /* ── Grounding bars ────────────────────────────────────────── */
-        .ground-row { margin-bottom: 16px; }
-        .ground-row-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 5px;
-        }
-        .ground-row-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #888; }
-        .ground-row-val { font-size: 0.88rem; font-weight: 700; }
-        .bar-bg { background: #f0eaf7; border-radius: 6px; height: 10px; overflow: hidden; }
-        .bar-fill { height: 100%; border-radius: 6px; transition: width 0.5s ease; }
-
-        .decouple-block { padding-top: 14px; border-top: 1px solid #f0eaf7; }
-        .decouple-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #888; margin-bottom: 4px; }
-        .decouple-value { font-size: 1.1rem; font-weight: 700; }
-        .decouple-note { font-size: 0.78rem; color: #888; margin-top: 3px; }
-
-        /* ── Charts ────────────────────────────────────────────────── */
-        .chart-wrap { position: relative; height: 260px; }
-
-        /* ── Phase guide ───────────────────────────────────────────── */
-        .phase-guide { background: #faf8ff; border-radius: 10px; padding: 16px; font-size: 0.83rem; }
-        .phase-guide-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 12px; }
-        .phase-row { display: flex; gap: 10px; margin-bottom: 10px; }
-        .phase-arrow { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
-        .phase-row strong { color: #2d3748; }
-        .phase-row span { color: #666; }
+    /* ── Controls bar ──────────────────────────────────────────── */
+    .controls-bar {
+    position: sticky;
+    top: 60px;
+    z-index: 900;
+    background: rgba(255,255,255,0.97);
+    border-bottom: 1px solid #e0d8f0;
+    box-shadow: 0 2px 12px rgba(118,75,162,0.10);
+    padding: 12px 0;
+    }
+    .controls-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    }
+    .controls-inner label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #888;
+    display: block;
+    margin-bottom: 3px;
+    }
+    .controls-inner select {
+    padding: 7px 12px;
+    border-radius: 8px;
+    border: 1px solid #d0c0e8;
+    font-size: 0.9rem;
+    color: #2d3748;
+    background: white;
+    cursor: pointer;
+    min-width: 160px;
+    }
+    .controls-inner select:focus { outline: none; border-color: #764ba2; }
+    .slider-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 260px;
+    }
+    .slider-group input[type=range] {
+    flex: 1;
+    accent-color: #764ba2;
+    cursor: pointer;
+    }
+    .year-display {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #764ba2;
+    min-width: 58px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    }
+    .play-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid #764ba2;
+    background: white;
+    color: #764ba2;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s;
+    flex-shrink: 0;
+    }
+    .play-btn:hover, .play-btn.playing { background: #764ba2; color: white; }
+    /* ── Metric gauges ─────────────────────────────────────────── */
+    .gauge-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-bottom: 0;
+    }
+    @media (max-width: 900px) { .gauge-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 560px) { .gauge-grid { grid-template-columns: repeat(2, 1fr); } }
+    .gauge-card {
+    text-align: center;
+    padding: 18px 12px 14px;
+    }
+    .gauge-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #888;
+    margin-bottom: 12px;
+    }
+    .gauge {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #f0eaf7;
+    transition: background 0.4s;
+    }
+    .gauge-value {
+    font-size: 1.7rem;
+    font-weight: 700;
+    line-height: 1;
+    }
+    .gauge-sub {
+    font-size: 0.72rem;
+    color: #aaa;
+    line-height: 1.4;
+    }
+    /* ── 2-col panels ──────────────────────────────────────────── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+    @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+    .panel-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #5a3580;
+    margin: 0 0 14px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e8e0f0;
+    }
+    /* ── Phenomenology ─────────────────────────────────────────── */
+    .pheno-badge {
+    padding: 10px 16px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    }
+    .pheno-type { font-size: 1rem; font-weight: 700; }
+    .pheno-texture { font-size: 0.8rem; color: #666; margin-top: 3px; }
+    .pheno-narrative { font-size: 0.86rem; color: #444; line-height: 1.6; }
+    .pheno-tags { font-size: 0.78rem; color: #888; margin-top: 10px; padding-top: 10px; border-top: 1px solid #f0eaf7; }
+    .grounded  { background: #d1fae5; border-left: 4px solid #10b981; }
+    .vital     { background: #cffafe; border-left: 4px solid #0bc5ea; }
+    .fragile   { background: #fef3c7; border-left: 4px solid #f59e0b; }
+    .decoupled { background: #fee2e2; border-left: 4px solid #ef4444; }
+    .collapse  { background: #f3e8ff; border-left: 4px solid #a855f7; }
+    /* ── Grounding bars ────────────────────────────────────────── */
+    .ground-row { margin-bottom: 16px; }
+    .ground-row-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 5px;
+    }
+    .ground-row-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #888; }
+    .ground-row-val { font-size: 0.88rem; font-weight: 700; }
+    .bar-bg { background: #f0eaf7; border-radius: 6px; height: 10px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 6px; transition: width 0.5s ease; }
+    .decouple-block { padding-top: 14px; border-top: 1px solid #f0eaf7; }
+    .decouple-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #888; margin-bottom: 4px; }
+    .decouple-value { font-size: 1.1rem; font-weight: 700; }
+    .decouple-note { font-size: 0.78rem; color: #888; margin-top: 3px; }
+    /* ── Charts ────────────────────────────────────────────────── */
+    .chart-wrap { position: relative; height: 260px; }
+    /* ── Phase guide ───────────────────────────────────────────── */
+    .phase-guide { background: #faf8ff; border-radius: 10px; padding: 16px; font-size: 0.83rem; }
+    .phase-guide-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 12px; }
+    .phase-row { display: flex; gap: 10px; margin-bottom: 10px; }
+    .phase-arrow { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .phase-row strong { color: #2d3748; }
+    .phase-row span { color: #666; }
     </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
 </head>
 <body>
 

@@ -3,9 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
     <title>The Scale Invariance Experiment — Neural Nations</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Google tag (gtag.js) -->
+    <meta name="description" content="Testing whether CAMS Λ(t) is scale-invariant across polity sizes ranging from city-states to modern nation-states. Methodology and results.">
+    <meta name="keywords" content="CAMS, Neural Nations, civilisational complexity, institutional analysis, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/scale-invariance">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/scale-invariance">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="The Scale Invariance Experiment — Neural Nations">
+    <meta property="og:description" content="Testing whether CAMS Λ(t) is scale-invariant across polity sizes ranging from city-states to modern nation-states. Methodology and results.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Scale Invariance Experiment — Neural Nations">
+    <meta name="twitter:description" content="Testing whether CAMS Λ(t) is scale-invariant across polity sizes ranging from city-states to modern nation-states. Methodology and results.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Neural Nations",
+          "url": "https://neuralnations.org",
+          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
+          "author": { "@id": "https://neuralnations.org/#kari" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://neuralnations.org/#kari",
+          "name": "Kari McKern",
+          "url": "https://neuralnations.org/cams-project-history",
+          "jobTitle": "Independent Researcher",
+          "description": "Creator of CAMS — the Complex Adaptive Model State. Researcher, former public servant, IT specialist, Sydney Australia.",
+          "sameAs": [
+            "https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/",
+            "https://github.com/KaliBond"
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">    <style>    .blind-grid {    display: grid;    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));    gap: 14px;    margin: 24px 0;    }    .blind-card {    background: #fff;    border: 1px solid #dde4f0;    border-radius: 10px;    padding: 18px 20px;    display: flex;    flex-direction: column;    gap: 8px;    }    .blind-card:hover {    border-color: #1f77b4;    box-shadow: 0 2px 10px rgba(31,119,180,0.1);    }    .blind-id {    font-size: 0.72em;    font-weight: 700;    letter-spacing: 0.12em;    text-transform: uppercase;    color: #aaa;    }    .blind-filename {    font-size: 1.05em;    font-weight: 700;    color: #1a1a1a;    font-family: monospace;    }    .blind-meta {    font-size: 0.82em;    color: #666;    line-height: 1.6;    }    .blind-meta span {    display: inline-block;    background: #f0f4fb;    border-radius: 4px;    padding: 2px 8px;    margin: 2px 2px 2px 0;    font-family: monospace;    font-size: 0.9em;    color: #444;    }    .dl-btn {    display: inline-flex;    align-items: center;    gap: 7px;    margin-top: 4px;    padding: 8px 16px;    background: #1f77b4;    color: white;    border-radius: 6px;    text-decoration: none;    font-size: 0.85em;    font-weight: 600;    align-self: flex-start;    transition: background 0.2s;    }    .dl-btn:hover { background: #155d92; }    .col-table {    width: 100%;    border-collapse: collapse;    font-size: 0.88em;    margin: 16px 0;    }    .col-table th {    background: #f0f4fb;    padding: 8px 12px;    text-align: left;    font-weight: 700;    color: #333;    border-bottom: 2px solid #dde4f0;    }    .col-table td {    padding: 7px 12px;    border-bottom: 1px solid #f0f0f0;    color: #444;    vertical-align: top;    }    .col-table tr:last-child td { border-bottom: none; }    .mono { font-family: monospace; color: #1f77b4; }    .method-box {    background: #f0f4fb;    border-left: 3px solid #1f77b4;    border-radius: 0 8px 8px 0;    padding: 18px 22px;    margin: 20px 0;    font-size: 0.93em;    line-height: 1.8;    }    .warning-box {    background: #fff8e6;    border-left: 3px solid #e6a817;    border-radius: 0 8px 8px 0;    padding: 14px 20px;    margin: 20px 0;    font-size: 0.88em;    line-height: 1.7;    color: #555;    }    .formula {    background: #1a1a2e;    color: #a8d8a8;    font-family: monospace;    font-size: 0.9em;    padding: 14px 20px;    border-radius: 8px;    margin: 12px 0;    line-height: 2;    }    </style>
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -13,126 +63,6 @@
       gtag('js', new Date());
       gtag('config', 'G-ESZ16XVVNN');
     </script>
-    <style>
-        .blind-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 14px;
-            margin: 24px 0;
-        }
-        .blind-card {
-            background: #fff;
-            border: 1px solid #dde4f0;
-            border-radius: 10px;
-            padding: 18px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .blind-card:hover {
-            border-color: #1f77b4;
-            box-shadow: 0 2px 10px rgba(31,119,180,0.1);
-        }
-        .blind-id {
-            font-size: 0.72em;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: #aaa;
-        }
-        .blind-filename {
-            font-size: 1.05em;
-            font-weight: 700;
-            color: #1a1a1a;
-            font-family: monospace;
-        }
-        .blind-meta {
-            font-size: 0.82em;
-            color: #666;
-            line-height: 1.6;
-        }
-        .blind-meta span {
-            display: inline-block;
-            background: #f0f4fb;
-            border-radius: 4px;
-            padding: 2px 8px;
-            margin: 2px 2px 2px 0;
-            font-family: monospace;
-            font-size: 0.9em;
-            color: #444;
-        }
-        .dl-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            margin-top: 4px;
-            padding: 8px 16px;
-            background: #1f77b4;
-            color: white;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 0.85em;
-            font-weight: 600;
-            align-self: flex-start;
-            transition: background 0.2s;
-        }
-        .dl-btn:hover { background: #155d92; }
-
-        .col-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.88em;
-            margin: 16px 0;
-        }
-        .col-table th {
-            background: #f0f4fb;
-            padding: 8px 12px;
-            text-align: left;
-            font-weight: 700;
-            color: #333;
-            border-bottom: 2px solid #dde4f0;
-        }
-        .col-table td {
-            padding: 7px 12px;
-            border-bottom: 1px solid #f0f0f0;
-            color: #444;
-            vertical-align: top;
-        }
-        .col-table tr:last-child td { border-bottom: none; }
-        .mono { font-family: monospace; color: #1f77b4; }
-
-        .method-box {
-            background: #f0f4fb;
-            border-left: 3px solid #1f77b4;
-            border-radius: 0 8px 8px 0;
-            padding: 18px 22px;
-            margin: 20px 0;
-            font-size: 0.93em;
-            line-height: 1.8;
-        }
-
-        .warning-box {
-            background: #fff8e6;
-            border-left: 3px solid #e6a817;
-            border-radius: 0 8px 8px 0;
-            padding: 14px 20px;
-            margin: 20px 0;
-            font-size: 0.88em;
-            line-height: 1.7;
-            color: #555;
-        }
-
-        .formula {
-            background: #1a1a2e;
-            color: #a8d8a8;
-            font-family: monospace;
-            font-size: 0.9em;
-            padding: 14px 20px;
-            border-radius: 8px;
-            margin: 12px 0;
-            line-height: 2;
-        }
-    </style>
 </head>
 <body>
 <nav class="navbar">

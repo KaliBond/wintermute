@@ -3,115 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Public Datasets — Neural Nations</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .hero-stat-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 16px;
-            margin: 28px 0;
+
+    <!-- Primary SEO -->
+    <title>Open Datasets — Neural Nations</title>
+    <meta name="description" content="39,351 CAMS records across 38 societies and 45 historical series. Freely downloadable. Scoring methodology, validation reports, and GitHub repository.">
+    <meta name="keywords" content="CAMS, Neural Nations, civilisational complexity, institutional analysis, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/datasets">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/datasets">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="Open Datasets — Neural Nations">
+    <meta property="og:description" content="39,351 CAMS records across 38 societies and 45 historical series. Freely downloadable. Scoring methodology, validation reports, and GitHub repository.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Open Datasets — Neural Nations">
+    <meta name="twitter:description" content="39,351 CAMS records across 38 societies and 45 historical series. Freely downloadable. Scoring methodology, validation reports, and GitHub repository.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Neural Nations",
+          "url": "https://neuralnations.org",
+          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
+          "author": { "@id": "https://neuralnations.org/#kari" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://neuralnations.org/#kari",
+          "name": "Kari McKern",
+          "url": "https://neuralnations.org/cams-project-history",
+          "jobTitle": "Independent Researcher",
+          "description": "Creator of CAMS — the Complex Adaptive Model State. Researcher, former public servant, IT specialist, Sydney Australia.",
+          "sameAs": [
+            "https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/",
+            "https://github.com/KaliBond"
+          ]
         }
-        .hero-stat {
-            background: rgba(31,119,180,0.07);
-            border-radius: 8px;
-            padding: 18px 16px;
-            text-align: center;
-        }
-        .hero-stat .num {
-            font-size: 2em;
-            font-weight: 700;
-            color: #1f77b4;
-            line-height: 1.1;
-        }
-        .hero-stat .lbl {
-            font-size: 0.82em;
-            color: #555;
-            margin-top: 6px;
-        }
-        .method-box {
-            background: #f0f4fb;
-            border-left: 3px solid #1f77b4;
-            border-radius: 0 8px 8px 0;
-            padding: 18px 22px;
-            margin: 24px 0;
-            font-size: 0.95em;
-            line-height: 1.8;
-        }
-        .section-label {
-            font-size: 0.78rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #1f77b4;
-            margin: 32px 0 12px;
-        }
-        .dataset-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 12px;
-            margin-bottom: 8px;
-        }
-        .dataset-card {
-            background: #fff;
-            border: 1px solid #dde4f0;
-            border-radius: 8px;
-            padding: 14px 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .dataset-card .society {
-            font-weight: 600;
-            font-size: 0.97em;
-            color: #1a1a2e;
-        }
-        .dataset-card .meta {
-            font-size: 0.82em;
-            color: #666;
-        }
-        .dataset-card .links {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 4px;
-        }
-        .dataset-card .links a {
-            font-size: 0.8em;
-            color: #1f77b4;
-            text-decoration: none;
-            border: 1px solid #c5d8f0;
-            border-radius: 4px;
-            padding: 2px 8px;
-        }
-        .dataset-card .links a:hover { background: #eaf2ff; }
-        .dataset-card .links a.dl { color: #2ca02c; border-color: #b0d9b0; }
-        .dataset-card .links a.dl:hover { background: #edfaed; }
-        .schema-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9em;
-            margin: 12px 0;
-        }
-        .schema-table th {
-            background: #1f77b4;
-            color: white;
-            padding: 8px 12px;
-            text-align: left;
-        }
-        .schema-table td {
-            padding: 8px 12px;
-            border-bottom: 1px solid #dde4f0;
-        }
-        .schema-table tr:nth-child(even) td { background: #f8f9fa; }
-        .template-box {
-            background: linear-gradient(135deg, rgba(31,119,180,0.06) 0%, rgba(23,190,207,0.06) 100%);
-            border: 1px solid #dde4f0;
-            border-radius: 10px;
-            padding: 22px 24px;
-            margin-top: 8px;
-        }
-    </style>
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">    <style>    .hero-stat-row {    display: grid;    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));    gap: 16px;    margin: 28px 0;    }    .hero-stat {    background: rgba(31,119,180,0.07);    border-radius: 8px;    padding: 18px 16px;    text-align: center;    }    .hero-stat .num {    font-size: 2em;    font-weight: 700;    color: #1f77b4;    line-height: 1.1;    }    .hero-stat .lbl {    font-size: 0.82em;    color: #555;    margin-top: 6px;    }    .method-box {    background: #f0f4fb;    border-left: 3px solid #1f77b4;    border-radius: 0 8px 8px 0;    padding: 18px 22px;    margin: 24px 0;    font-size: 0.95em;    line-height: 1.8;    }    .section-label {    font-size: 0.78rem;    font-weight: 700;    text-transform: uppercase;    letter-spacing: 0.08em;    color: #1f77b4;    margin: 32px 0 12px;    }    .dataset-grid {    display: grid;    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));    gap: 12px;    margin-bottom: 8px;    }    .dataset-card {    background: #fff;    border: 1px solid #dde4f0;    border-radius: 8px;    padding: 14px 16px;    display: flex;    flex-direction: column;    gap: 6px;    }    .dataset-card .society {    font-weight: 600;    font-size: 0.97em;    color: #1a1a2e;    }    .dataset-card .meta {    font-size: 0.82em;    color: #666;    }    .dataset-card .links {    display: flex;    gap: 10px;    flex-wrap: wrap;    margin-top: 4px;    }    .dataset-card .links a {    font-size: 0.8em;    color: #1f77b4;    text-decoration: none;    border: 1px solid #c5d8f0;    border-radius: 4px;    padding: 2px 8px;    }    .dataset-card .links a:hover { background: #eaf2ff; }    .dataset-card .links a.dl { color: #2ca02c; border-color: #b0d9b0; }    .dataset-card .links a.dl:hover { background: #edfaed; }    .schema-table {    width: 100%;    border-collapse: collapse;    font-size: 0.9em;    margin: 12px 0;    }    .schema-table th {    background: #1f77b4;    color: white;    padding: 8px 12px;    text-align: left;    }    .schema-table td {    padding: 8px 12px;    border-bottom: 1px solid #dde4f0;    }    .schema-table tr:nth-child(even) td { background: #f8f9fa; }    .template-box {    background: linear-gradient(135deg, rgba(31,119,180,0.06) 0%, rgba(23,190,207,0.06) 100%);    border: 1px solid #dde4f0;    border-radius: 10px;    padding: 22px 24px;    margin-top: 8px;    }    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
 </head>
 <body>
 <nav class="navbar">

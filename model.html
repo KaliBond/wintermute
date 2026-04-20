@@ -3,81 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The CAMS Model - Neural Nations</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .formula-block {
-            background: #1e2130;
-            color: #e0e0e0;
-            padding: 14px 20px;
-            border-radius: 8px;
-            font-family: monospace;
-            font-size: 0.95em;
-            margin: 12px 0;
-            overflow-x: auto;
+
+    <!-- Primary SEO -->
+    <title>The CAMS Model — Neural Nations</title>
+    <meta name="description" content="CAMS models societies as 8-node × 4-metric coordination systems. Full framework documentation: node definitions, formulas, regime classification, validation reports.">
+    <meta name="keywords" content="CAMS, Neural Nations, civilisational complexity, institutional analysis, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/model">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/model">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="The CAMS Model — Neural Nations">
+    <meta property="og:description" content="CAMS models societies as 8-node × 4-metric coordination systems. Full framework documentation: node definitions, formulas, regime classification, validation reports.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The CAMS Model — Neural Nations">
+    <meta name="twitter:description" content="CAMS models societies as 8-node × 4-metric coordination systems. Full framework documentation: node definitions, formulas, regime classification, validation reports.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Neural Nations",
+          "url": "https://neuralnations.org",
+          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
+          "author": { "@id": "https://neuralnations.org/#kari" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://neuralnations.org/#kari",
+          "name": "Kari McKern",
+          "url": "https://neuralnations.org/cams-project-history",
+          "jobTitle": "Independent Researcher",
+          "description": "Creator of CAMS — the Complex Adaptive Model State. Researcher, former public servant, IT specialist, Sydney Australia.",
+          "sameAs": [
+            "https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/",
+            "https://github.com/KaliBond"
+          ]
         }
-        .node-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 12px;
-            margin: 20px 0;
-        }
-        .node-card {
-            padding: 14px 16px;
-            border-radius: 8px;
-            border-left: 4px solid;
-            background: #f8f9fa;
-        }
-        .node-card strong { display: block; margin-bottom: 4px; }
-        .node-card span { font-size: 0.88em; color: #555; }
-        .node-lore      { border-color: #9b59b6; }
-        .node-archive   { border-color: #3498db; }
-        .node-helm      { border-color: #e74c3c; }
-        .node-stewards  { border-color: #e67e22; }
-        .node-shield    { border-color: #c0392b; }
-        .node-craft     { border-color: #1abc9c; }
-        .node-hands     { border-color: #7f8c8d; }
-        .node-flow      { border-color: #f1c40f; }
-        .metric-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin: 16px 0;
-        }
-        .metric-card {
-            padding: 14px 16px;
-            background: #f0f4fb;
-            border-radius: 8px;
-            border-top: 3px solid #1f77b4;
-        }
-        .metric-card strong { display: block; margin-bottom: 4px; color: #1f77b4; }
-        .metric-card span { font-size: 0.88em; color: #555; }
-        .regime-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 16px 0;
-            font-size: 0.95em;
-        }
-        .regime-table th {
-            background: #1f77b4;
-            color: white;
-            padding: 10px 14px;
-            text-align: left;
-        }
-        .regime-table td {
-            padding: 10px 14px;
-            border-bottom: 1px solid #dde4f0;
-        }
-        .regime-table tr:nth-child(even) td { background: #f8f9fa; }
-        .section-label {
-            font-size: 0.78rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #1f77b4;
-            margin: 32px 0 8px;
-        }
-    </style>
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">    <style>    .formula-block {    background: #1e2130;    color: #e0e0e0;    padding: 14px 20px;    border-radius: 8px;    font-family: monospace;    font-size: 0.95em;    margin: 12px 0;    overflow-x: auto;    }    .node-grid {    display: grid;    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));    gap: 12px;    margin: 20px 0;    }    .node-card {    padding: 14px 16px;    border-radius: 8px;    border-left: 4px solid;    background: #f8f9fa;    }    .node-card strong { display: block; margin-bottom: 4px; }    .node-card span { font-size: 0.88em; color: #555; }    .node-lore      { border-color: #9b59b6; }    .node-archive   { border-color: #3498db; }    .node-helm      { border-color: #e74c3c; }    .node-stewards  { border-color: #e67e22; }    .node-shield    { border-color: #c0392b; }    .node-craft     { border-color: #1abc9c; }    .node-hands     { border-color: #7f8c8d; }    .node-flow      { border-color: #f1c40f; }    .metric-row {    display: grid;    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));    gap: 12px;    margin: 16px 0;    }    .metric-card {    padding: 14px 16px;    background: #f0f4fb;    border-radius: 8px;    border-top: 3px solid #1f77b4;    }    .metric-card strong { display: block; margin-bottom: 4px; color: #1f77b4; }    .metric-card span { font-size: 0.88em; color: #555; }    .regime-table {    width: 100%;    border-collapse: collapse;    margin: 16px 0;    font-size: 0.95em;    }    .regime-table th {    background: #1f77b4;    color: white;    padding: 10px 14px;    text-align: left;    }    .regime-table td {    padding: 10px 14px;    border-bottom: 1px solid #dde4f0;    }    .regime-table tr:nth-child(even) td { background: #f8f9fa; }    .section-label {    font-size: 0.78rem;    font-weight: 700;    text-transform: uppercase;    letter-spacing: 0.08em;    color: #1f77b4;    margin: 32px 0 8px;    }    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
 </head>
 <body>
 <nav class="navbar">

@@ -3,70 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Repository Access - Neural Nations</title>
+
+    <!-- Primary SEO -->
+    <title>Repository Access — Neural Nations</title>
+    <meta name="description" content="Access the Neural Nations CAMS research repository. Dataset downloads, scoring rubrics, and validation reports.">
+    <meta name="keywords" content="CAMS, Neural Nations, civilisational complexity, institutional analysis, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/repository-access">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/repository-access">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="Repository Access — Neural Nations">
+    <meta property="og:description" content="Access the Neural Nations CAMS research repository. Dataset downloads, scoring rubrics, and validation reports.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Repository Access — Neural Nations">
+    <meta name="twitter:description" content="Access the Neural Nations CAMS research repository. Dataset downloads, scoring rubrics, and validation reports.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Neural Nations",
+          "url": "https://neuralnations.org",
+          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
+          "author": { "@id": "https://neuralnations.org/#kari" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://neuralnations.org/#kari",
+          "name": "Kari McKern",
+          "url": "https://neuralnations.org/cams-project-history",
+          "jobTitle": "Independent Researcher",
+          "description": "Creator of CAMS — the Complex Adaptive Model State. Researcher, former public servant, IT specialist, Sydney Australia.",
+          "sameAs": [
+            "https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/",
+            "https://github.com/KaliBond"
+          ]
+        }
+      ]
+    }
+    </script>
+    <link rel="stylesheet" href="style.css">
+
     <!-- Force deployment refresh -->
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            margin: 0; padding: 0; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh; display: flex; align-items: center; justify-content: center;
-        }
-        .container { max-width: 600px; width: 90%; }
-        .access-card {
-            background: white; border-radius: 20px; padding: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center;
-        }
-        .header { margin-bottom: 30px; }
-        .header h1 { color: #2c3e50; font-size: 2.5em; margin: 0 0 10px 0; }
-        .header p { color: #666; font-size: 1.2em; margin: 0; }
-        .auth-section { margin: 30px 0; }
-        .auth-section h2 { color: #2c3e50; margin-bottom: 15px; }
-        .auth-section p { color: #666; line-height: 1.6; margin-bottom: 20px; }
-        .requirements {
-            background: #f8f9fa; padding: 20px; border-radius: 10px;
-            border-left: 4px solid #3498db; text-align: left; margin: 20px 0;
-        }
-        .requirements h3 { color: #2c3e50; margin: 0 0 15px 0; }
-        .requirements ul { margin: 0; padding-left: 20px; }
-        .requirements li { margin: 8px 0; color: #555; }
-        .github-btn {
-            background: #24292e; color: white; border: none;
-            padding: 15px 30px; border-radius: 10px; font-size: 1.1em;
-            font-weight: bold; cursor: pointer; display: inline-flex;
-            align-items: center; gap: 10px; text-decoration: none;
-            transition: all 0.3s ease; margin: 10px;
-        }
-        .github-btn:hover {
-            background: #1a1e23; transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-        .back-btn {
-            background: #95a5a6; color: white; border: none;
-            padding: 10px 20px; border-radius: 8px; cursor: pointer;
-            text-decoration: none; display: inline-block; margin-top: 20px;
-        }
-        .back-btn:hover { background: #7f8c8d; }
-        .user-info {
-            background: #e8f5e8; padding: 20px; border-radius: 10px;
-            border-left: 4px solid #27ae60; margin: 20px 0;
-        }
-        .user-info h3 { color: #27ae60; margin: 0 0 10px 0; }
-        .repo-link {
-            background: #27ae60; color: white; padding: 15px 30px;
-            border-radius: 10px; text-decoration: none; display: inline-block;
-            font-weight: bold; margin: 10px; transition: all 0.3s ease;
-        }
-        .repo-link:hover {
-            background: #2ecc71; transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-        .error-message {
-            background: #fee; color: #c0392b; padding: 15px;
-            border-radius: 8px; border-left: 4px solid #e74c3c; margin: 20px 0;
-        }
-        .loading { color: #3498db; font-style: italic; }
+    body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin: 0; padding: 0; 
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    }
+    .container { max-width: 600px; width: 90%; }
+    .access-card {
+    background: white; border-radius: 20px; padding: 40px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center;
+    }
+    .header { margin-bottom: 30px; }
+    .header h1 { color: #2c3e50; font-size: 2.5em; margin: 0 0 10px 0; }
+    .header p { color: #666; font-size: 1.2em; margin: 0; }
+    .auth-section { margin: 30px 0; }
+    .auth-section h2 { color: #2c3e50; margin-bottom: 15px; }
+    .auth-section p { color: #666; line-height: 1.6; margin-bottom: 20px; }
+    .requirements {
+    background: #f8f9fa; padding: 20px; border-radius: 10px;
+    border-left: 4px solid #3498db; text-align: left; margin: 20px 0;
+    }
+    .requirements h3 { color: #2c3e50; margin: 0 0 15px 0; }
+    .requirements ul { margin: 0; padding-left: 20px; }
+    .requirements li { margin: 8px 0; color: #555; }
+    .github-btn {
+    background: #24292e; color: white; border: none;
+    padding: 15px 30px; border-radius: 10px; font-size: 1.1em;
+    font-weight: bold; cursor: pointer; display: inline-flex;
+    align-items: center; gap: 10px; text-decoration: none;
+    transition: all 0.3s ease; margin: 10px;
+    }
+    .github-btn:hover {
+    background: #1a1e23; transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    .back-btn {
+    background: #95a5a6; color: white; border: none;
+    padding: 10px 20px; border-radius: 8px; cursor: pointer;
+    text-decoration: none; display: inline-block; margin-top: 20px;
+    }
+    .back-btn:hover { background: #7f8c8d; }
+    .user-info {
+    background: #e8f5e8; padding: 20px; border-radius: 10px;
+    border-left: 4px solid #27ae60; margin: 20px 0;
+    }
+    .user-info h3 { color: #27ae60; margin: 0 0 10px 0; }
+    .repo-link {
+    background: #27ae60; color: white; padding: 15px 30px;
+    border-radius: 10px; text-decoration: none; display: inline-block;
+    font-weight: bold; margin: 10px; transition: all 0.3s ease;
+    }
+    .repo-link:hover {
+    background: #2ecc71; transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    .error-message {
+    background: #fee; color: #c0392b; padding: 15px;
+    border-radius: 8px; border-left: 4px solid #e74c3c; margin: 20px 0;
+    }
+    .loading { color: #3498db; font-style: italic; }
     </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
 </head>
 <body>
     <div class="container">

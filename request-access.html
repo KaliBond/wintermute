@@ -3,92 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Request Repository Access - Neural Nations</title>
+
+    <!-- Primary SEO -->
+    <title>Request Repository Access — Neural Nations</title>
+    <meta name="description" content="Request access to the full Neural Nations CAMS research repository for academic or practitioner use.">
+    <meta name="keywords" content="CAMS, Neural Nations, civilisational complexity, institutional analysis, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/request-access">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/request-access">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="Request Repository Access — Neural Nations">
+    <meta property="og:description" content="Request access to the full Neural Nations CAMS research repository for academic or practitioner use.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Request Repository Access — Neural Nations">
+    <meta name="twitter:description" content="Request access to the full Neural Nations CAMS research repository for academic or practitioner use.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Neural Nations",
+          "url": "https://neuralnations.org",
+          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
+          "author": { "@id": "https://neuralnations.org/#kari" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://neuralnations.org/#kari",
+          "name": "Kari McKern",
+          "url": "https://neuralnations.org/cams-project-history",
+          "jobTitle": "Independent Researcher",
+          "description": "Creator of CAMS — the Complex Adaptive Model State. Researcher, former public servant, IT specialist, Sydney Australia.",
+          "sameAs": [
+            "https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/",
+            "https://github.com/KaliBond"
+          ]
+        }
+      ]
+    }
+    </script>
+    <link rel="stylesheet" href="style.css">
+
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            margin: 0; padding: 0; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh; display: flex; align-items: center; justify-content: center;
-        }
-        .container { max-width: 700px; width: 90%; }
-        .request-card {
-            background: white; border-radius: 20px; padding: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-        .header { text-align: center; margin-bottom: 30px; }
-        .header h1 { color: #2c3e50; font-size: 2.5em; margin: 0 0 10px 0; }
-        .header p { color: #666; font-size: 1.2em; margin: 0; }
-        
-        .section { margin: 30px 0; }
-        .section h2 { color: #2c3e50; margin-bottom: 15px; }
-        .section p { color: #666; line-height: 1.6; margin-bottom: 15px; }
-        
-        .info-box {
-            background: #f8f9fa; padding: 20px; border-radius: 10px;
-            border-left: 4px solid #3498db; margin: 20px 0;
-        }
-        .info-box h3 { color: #2c3e50; margin: 0 0 15px 0; }
-        .info-box ul { margin: 0; padding-left: 20px; }
-        .info-box li { margin: 8px 0; color: #555; }
-        
-        .request-form {
-            background: #f8f9fa; padding: 30px; border-radius: 15px;
-            margin: 20px 0; border: 2px solid #e9ecef;
-        }
-        .form-group { margin-bottom: 20px; }
-        .form-group label {
-            display: block; font-weight: bold; color: #2c3e50;
-            margin-bottom: 8px;
-        }
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%; padding: 12px; border: 2px solid #ddd;
-            border-radius: 8px; font-size: 1em; box-sizing: border-box;
-        }
-        .form-group textarea { height: 100px; resize: vertical; }
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-            outline: none; border-color: #3498db;
-        }
-        
-        .contact-options {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px; margin: 20px 0;
-        }
-        .contact-card {
-            background: white; padding: 25px; border-radius: 15px;
-            border: 2px solid #e9ecef; text-align: center;
-            transition: all 0.3s ease;
-        }
-        .contact-card:hover {
-            border-color: #3498db; transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        }
-        .contact-card h3 { color: #2c3e50; margin: 0 0 15px 0; }
-        .contact-card p { color: #666; margin: 10px 0; }
-        
-        .btn {
-            background: #3498db; color: white; border: none;
-            padding: 15px 30px; border-radius: 10px; font-size: 1.1em;
-            font-weight: bold; cursor: pointer; text-decoration: none;
-            display: inline-block; transition: all 0.3s ease; margin: 10px 5px;
-        }
-        .btn:hover {
-            background: #2980b9; transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-        .btn-secondary { background: #95a5a6; }
-        .btn-secondary:hover { background: #7f8c8d; }
-        .btn-success { background: #27ae60; }
-        .btn-success:hover { background: #2ecc71; }
-        
-        .back-link {
-            text-align: center; margin-top: 30px;
-        }
-        .back-link a {
-            color: #3498db; text-decoration: none; font-weight: bold;
-        }
-        .back-link a:hover { text-decoration: underline; }
+    body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin: 0; padding: 0; 
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    }
+    .container { max-width: 700px; width: 90%; }
+    .request-card {
+    background: white; border-radius: 20px; padding: 40px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .header { text-align: center; margin-bottom: 30px; }
+    .header h1 { color: #2c3e50; font-size: 2.5em; margin: 0 0 10px 0; }
+    .header p { color: #666; font-size: 1.2em; margin: 0; }
+    .section { margin: 30px 0; }
+    .section h2 { color: #2c3e50; margin-bottom: 15px; }
+    .section p { color: #666; line-height: 1.6; margin-bottom: 15px; }
+    .info-box {
+    background: #f8f9fa; padding: 20px; border-radius: 10px;
+    border-left: 4px solid #3498db; margin: 20px 0;
+    }
+    .info-box h3 { color: #2c3e50; margin: 0 0 15px 0; }
+    .info-box ul { margin: 0; padding-left: 20px; }
+    .info-box li { margin: 8px 0; color: #555; }
+    .request-form {
+    background: #f8f9fa; padding: 30px; border-radius: 15px;
+    margin: 20px 0; border: 2px solid #e9ecef;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+    display: block; font-weight: bold; color: #2c3e50;
+    margin-bottom: 8px;
+    }
+    .form-group input, .form-group textarea, .form-group select {
+    width: 100%; padding: 12px; border: 2px solid #ddd;
+    border-radius: 8px; font-size: 1em; box-sizing: border-box;
+    }
+    .form-group textarea { height: 100px; resize: vertical; }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    outline: none; border-color: #3498db;
+    }
+    .contact-options {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px; margin: 20px 0;
+    }
+    .contact-card {
+    background: white; padding: 25px; border-radius: 15px;
+    border: 2px solid #e9ecef; text-align: center;
+    transition: all 0.3s ease;
+    }
+    .contact-card:hover {
+    border-color: #3498db; transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    .contact-card h3 { color: #2c3e50; margin: 0 0 15px 0; }
+    .contact-card p { color: #666; margin: 10px 0; }
+    .btn {
+    background: #3498db; color: white; border: none;
+    padding: 15px 30px; border-radius: 10px; font-size: 1.1em;
+    font-weight: bold; cursor: pointer; text-decoration: none;
+    display: inline-block; transition: all 0.3s ease; margin: 10px 5px;
+    }
+    .btn:hover {
+    background: #2980b9; transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    .btn-secondary { background: #95a5a6; }
+    .btn-secondary:hover { background: #7f8c8d; }
+    .btn-success { background: #27ae60; }
+    .btn-success:hover { background: #2ecc71; }
+    .back-link {
+    text-align: center; margin-top: 30px;
+    }
+    .back-link a {
+    color: #3498db; text-decoration: none; font-weight: bold;
+    }
+    .back-link a:hover { text-decoration: underline; }
     </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
 </head>
 <body>
     <div class="container">

@@ -3,71 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAMS 3D Attractor Space - Neural Nations</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <style>
-        .plot-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+
+    <!-- Primary SEO -->
+    <title>CAMS 3D Attractor Space — Neural Nations</title>
+    <meta name="description" content="Three-dimensional phase-space rendering of CAMS civilisational attractors. Coherence, Stress, and Abstraction as axes of systemic state.">
+    <meta name="keywords" content="CAMS, Neural Nations, civilisational complexity, institutional analysis, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/cams-3d-attractor">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/cams-3d-attractor">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="CAMS 3D Attractor Space — Neural Nations">
+    <meta property="og:description" content="Three-dimensional phase-space rendering of CAMS civilisational attractors. Coherence, Stress, and Abstraction as axes of systemic state.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CAMS 3D Attractor Space — Neural Nations">
+    <meta name="twitter:description" content="Three-dimensional phase-space rendering of CAMS civilisational attractors. Coherence, Stress, and Abstraction as axes of systemic state.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Neural Nations",
+          "url": "https://neuralnations.org",
+          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
+          "author": { "@id": "https://neuralnations.org/#kari" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://neuralnations.org/#kari",
+          "name": "Kari McKern",
+          "url": "https://neuralnations.org/cams-project-history",
+          "jobTitle": "Independent Researcher",
+          "description": "Creator of CAMS — the Complex Adaptive Model State. Researcher, former public servant, IT specialist, Sydney Australia.",
+          "sameAs": [
+            "https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/",
+            "https://github.com/KaliBond"
+          ]
         }
-        #plot {
-            width: 100%;
-            height: 70vh;
-            min-height: 500px;
-        }
-        .controls {
-            margin: 20px 0;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .control-btn {
-            padding: 8px 16px;
-            background: #3498db;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .control-btn:hover {
-            background: #2980b9;
-        }
-        .control-btn.inactive {
-            background: #95a5a6;
-        }
-        .slider-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 10px;
-            border-radius: 20px;
-        }
-        .power-type-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-        .power-type {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid;
-        }
-        .technocratic { border-color: deepskyblue; }
-        .theocratic { border-color: indigo; }
-        .militarist { border-color: crimson; }
-        .plutocratic { border-color: gold; }
-        .democratic { border-color: lime; }
-        .kleptocratic { border-color: darkorange; }
-    </style>
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>    <style>    .plot-container {    background: rgba(255, 255, 255, 0.95);    border-radius: 15px;    padding: 20px;    margin: 20px 0;    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);    }    #plot {    width: 100%;    height: 70vh;    min-height: 500px;    }    .controls {    margin: 20px 0;    display: flex;    gap: 10px;    flex-wrap: wrap;    justify-content: center;    }    .control-btn {    padding: 8px 16px;    background: #3498db;    color: white;    border: none;    border-radius: 20px;    cursor: pointer;    transition: all 0.3s ease;    }    .control-btn:hover {    background: #2980b9;    }    .control-btn.inactive {    background: #95a5a6;    }    .slider-container {    display: flex;    align-items: center;    gap: 10px;    background: rgba(255, 255, 255, 0.1);    padding: 10px;    border-radius: 20px;    }    .power-type-info {    display: grid;    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));    gap: 15px;    margin: 20px 0;    }    .power-type {    background: rgba(255, 255, 255, 0.1);    padding: 15px;    border-radius: 10px;    border-left: 4px solid;    }    .technocratic { border-color: deepskyblue; }    .theocratic { border-color: indigo; }    .militarist { border-color: crimson; }    .plutocratic { border-color: gold; }    .democratic { border-color: lime; }    .kleptocratic { border-color: darkorange; }    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
 </head>
 <body>
 <nav class="navbar">

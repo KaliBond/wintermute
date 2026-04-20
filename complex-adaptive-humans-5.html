@@ -3,60 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
     <title>A Dual-Mode Theory of Societal Cognition — Complex Adaptive Humans #5 · Neural Nations</title>
-    <meta name="description" content="Societies think through Coherence and Abstraction. They feel through Capacity and Stress. When energy falls, deliberation collapses — and the collective mind defaults to the limbic mode.">
+    <meta name="description" content="Issue #5: Two modes of societal decision-making — fast reactive and slow deliberative — and how CAMS tracks the balance between them.">
+    <meta name="keywords" content="CAMS, Neural Nations, civilisational complexity, institutional analysis, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/complex-adaptive-humans-5">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/complex-adaptive-humans-5">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="A Dual-Mode Theory of Societal Cognition — Complex Adaptive Humans #5 · Neural Nations">
+    <meta property="og:description" content="Issue #5: Two modes of societal decision-making — fast reactive and slow deliberative — and how CAMS tracks the balance between them.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="A Dual-Mode Theory of Societal Cognition — Complex Adaptive Humans #5 · Neural Nations">
+    <meta name="twitter:description" content="Issue #5: Two modes of societal decision-making — fast reactive and slow deliberative — and how CAMS tracks the balance between them.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Neural Nations",
+          "url": "https://neuralnations.org",
+          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
+          "author": { "@id": "https://neuralnations.org/#kari" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://neuralnations.org/#kari",
+          "name": "Kari McKern",
+          "url": "https://neuralnations.org/cams-project-history",
+          "jobTitle": "Independent Researcher",
+          "description": "Creator of CAMS — the Complex Adaptive Model State. Researcher, former public servant, IT specialist, Sydney Australia.",
+          "sameAs": [
+            "https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/",
+            "https://github.com/KaliBond"
+          ]
+        }
+      ]
+    }
+    </script>
+
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .article-shell { max-width: 760px; margin: 0 auto; padding: 40px 20px 80px; }
-        .back-link { font-family:'Inter',sans-serif; font-size:.82em; color:rgba(255,255,255,.75); text-decoration:none; display:inline-flex; align-items:center; gap:5px; margin-bottom:28px; transition:color .15s; }
-        .back-link:hover { color:white; }
-        .article-card { background:white; border-radius:8px; padding:64px 72px; box-shadow:0 8px 40px rgba(0,0,0,.18); }
-        .series-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#7c3aed; margin-bottom:6px; }
-        .issue-meta { font-family:'Inter',sans-serif; font-size:.78em; color:#999; margin-bottom:28px; display:flex; align-items:center; gap:14px; }
-        .issue-badge { background:#ede9fe; color:#5b21b6; font-weight:600; padding:3px 10px; border-radius:20px; font-size:.9em; }
-        h1 { font-family:'Cormorant Garamond',serif; font-size:2.5em; font-weight:600; color:#1a1a2e; line-height:1.2; letter-spacing:-.02em; margin:0 0 10px; text-align:left; }
-        .subtitle { font-family:'Cormorant Garamond',serif; font-size:1.15em; font-style:italic; color:#555; margin:0 0 36px; text-align:left; }
-        .rule { border:none; border-top:1px solid #eee; margin:32px 0; }
-        .article-body { font-family:'Cormorant Garamond',serif; font-size:1.13em; line-height:1.92; color:#2c2c2c; }
-        .article-body p { margin:1.4em 0; }
-        .article-body p:first-of-type::first-letter { font-size:3.2em; font-weight:600; float:left; line-height:.78; margin:0 6px 0 0; color:#5b21b6; }
-        .article-body h2 { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#999; margin:44px 0 16px; border-top:1px solid #eee; padding-top:24px; text-align:left; }
-        .article-body h3 { font-family:'Inter',sans-serif; font-size:.84em; font-weight:700; color:#374151; margin:24px 0 10px; }
-        .pull-quote { font-size:1.28em; font-style:italic; color:#5b21b6; border-left:4px solid #5b21b6; padding:14px 20px; margin:28px 0; background:#faf7ff; border-radius:0 6px 6px 0; line-height:1.6; }
-        /* Timeline */
-        .timeline { position:relative; padding-left:24px; margin:24px 0; }
-        .timeline::before { content:''; position:absolute; left:7px; top:6px; bottom:6px; width:2px; background:#ede9fe; }
-        .tl-item { position:relative; margin-bottom:24px; }
-        .tl-dot { position:absolute; left:-24px; top:5px; width:16px; height:16px; border-radius:50%; background:#5b21b6; border:3px solid white; box-shadow:0 0 0 2px #5b21b6; }
-        .tl-label { font-family:'Inter',sans-serif; font-size:.75em; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#5b21b6; margin-bottom:4px; }
-        .tl-body { font-family:'Inter',sans-serif; font-size:.86em; line-height:1.7; color:#374151; }
-        .tl-body strong { color:#1a1a2e; }
-        /* Formula box */
-        .formula-box { background:#f8f7ff; border:1px solid #ede9fe; border-radius:8px; padding:18px 22px; margin:20px 0; font-family:'Inter',sans-serif; font-size:.84em; color:#374151; line-height:1.8; }
-        .formula-box code { background:#ede9fe; color:#5b21b6; padding:2px 7px; border-radius:4px; font-size:.92em; }
-        /* USA analysis */
-        .analysis-block { background:#f8f9ff; border:1px solid #dde4f0; border-radius:10px; padding:24px 28px; margin:32px 0; }
-        .analysis-header { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#1e40af; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
-        .analysis-header .label { background:#dbeafe; color:#1e40af; padding:3px 10px; border-radius:12px; }
-        .analysis-header a { color:#5b21b6; font-weight:600; font-size:.85em; margin-left:auto; text-decoration:none; }
-        .analysis-block p { font-family:'Inter',sans-serif; font-size:.86em; line-height:1.7; color:#374151; margin:.8em 0; }
-        .analysis-block p:first-of-type { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:.98em; color:#1a1a2e; }
-        .analysis-block p:first-of-type::first-letter { font-size:1em; float:none; }
-        .analysis-block ul { font-family:'Inter',sans-serif; font-size:.84em; padding-left:18px; color:#374151; }
-        .analysis-block ul li { margin:5px 0; }
-        /* Footer */
-        .article-footer { margin-top:52px; padding-top:28px; border-top:1px solid #eee; font-family:'Inter',sans-serif; font-size:.82em; color:#888; line-height:1.8; }
-        .article-footer strong { color:#374151; }
-        .li-btn { display:inline-flex; align-items:center; gap:6px; background:#0a66c2; color:white; padding:8px 18px; border-radius:6px; text-decoration:none; font-weight:600; font-size:.9em; margin-top:10px; transition:background .15s; }
-        .li-btn:hover { background:#004182; }
-        .nav-prev-next { display:flex; justify-content:space-between; margin-top:28px; font-family:'Inter',sans-serif; font-size:.82em; }
-        .nav-prev-next a { color:rgba(255,255,255,.75); text-decoration:none; transition:color .15s; }
-        .nav-prev-next a:hover { color:white; }
-        @media(max-width:640px){ .article-card{padding:36px 24px;} h1{font-size:1.9em;} }
-        @media print{ body{background:white;} .article-card{box-shadow:none;} .back-link,.nav-prev-next{display:none;} }
+    body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .article-shell { max-width: 760px; margin: 0 auto; padding: 40px 20px 80px; }
+    .back-link { font-family:'Inter',sans-serif; font-size:.82em; color:rgba(255,255,255,.75); text-decoration:none; display:inline-flex; align-items:center; gap:5px; margin-bottom:28px; transition:color .15s; }
+    .back-link:hover { color:white; }
+    .article-card { background:white; border-radius:8px; padding:64px 72px; box-shadow:0 8px 40px rgba(0,0,0,.18); }
+    .series-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#7c3aed; margin-bottom:6px; }
+    .issue-meta { font-family:'Inter',sans-serif; font-size:.78em; color:#999; margin-bottom:28px; display:flex; align-items:center; gap:14px; }
+    .issue-badge { background:#ede9fe; color:#5b21b6; font-weight:600; padding:3px 10px; border-radius:20px; font-size:.9em; }
+    h1 { font-family:'Cormorant Garamond',serif; font-size:2.5em; font-weight:600; color:#1a1a2e; line-height:1.2; letter-spacing:-.02em; margin:0 0 10px; text-align:left; }
+    .subtitle { font-family:'Cormorant Garamond',serif; font-size:1.15em; font-style:italic; color:#555; margin:0 0 36px; text-align:left; }
+    .rule { border:none; border-top:1px solid #eee; margin:32px 0; }
+    .article-body { font-family:'Cormorant Garamond',serif; font-size:1.13em; line-height:1.92; color:#2c2c2c; }
+    .article-body p { margin:1.4em 0; }
+    .article-body p:first-of-type::first-letter { font-size:3.2em; font-weight:600; float:left; line-height:.78; margin:0 6px 0 0; color:#5b21b6; }
+    .article-body h2 { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#999; margin:44px 0 16px; border-top:1px solid #eee; padding-top:24px; text-align:left; }
+    .article-body h3 { font-family:'Inter',sans-serif; font-size:.84em; font-weight:700; color:#374151; margin:24px 0 10px; }
+    .pull-quote { font-size:1.28em; font-style:italic; color:#5b21b6; border-left:4px solid #5b21b6; padding:14px 20px; margin:28px 0; background:#faf7ff; border-radius:0 6px 6px 0; line-height:1.6; }
+    /* Timeline */
+    .timeline { position:relative; padding-left:24px; margin:24px 0; }
+    .timeline::before { content:''; position:absolute; left:7px; top:6px; bottom:6px; width:2px; background:#ede9fe; }
+    .tl-item { position:relative; margin-bottom:24px; }
+    .tl-dot { position:absolute; left:-24px; top:5px; width:16px; height:16px; border-radius:50%; background:#5b21b6; border:3px solid white; box-shadow:0 0 0 2px #5b21b6; }
+    .tl-label { font-family:'Inter',sans-serif; font-size:.75em; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#5b21b6; margin-bottom:4px; }
+    .tl-body { font-family:'Inter',sans-serif; font-size:.86em; line-height:1.7; color:#374151; }
+    .tl-body strong { color:#1a1a2e; }
+    /* Formula box */
+    .formula-box { background:#f8f7ff; border:1px solid #ede9fe; border-radius:8px; padding:18px 22px; margin:20px 0; font-family:'Inter',sans-serif; font-size:.84em; color:#374151; line-height:1.8; }
+    .formula-box code { background:#ede9fe; color:#5b21b6; padding:2px 7px; border-radius:4px; font-size:.92em; }
+    /* USA analysis */
+    .analysis-block { background:#f8f9ff; border:1px solid #dde4f0; border-radius:10px; padding:24px 28px; margin:32px 0; }
+    .analysis-header { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#1e40af; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+    .analysis-header .label { background:#dbeafe; color:#1e40af; padding:3px 10px; border-radius:12px; }
+    .analysis-header a { color:#5b21b6; font-weight:600; font-size:.85em; margin-left:auto; text-decoration:none; }
+    .analysis-block p { font-family:'Inter',sans-serif; font-size:.86em; line-height:1.7; color:#374151; margin:.8em 0; }
+    .analysis-block p:first-of-type { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:.98em; color:#1a1a2e; }
+    .analysis-block p:first-of-type::first-letter { font-size:1em; float:none; }
+    .analysis-block ul { font-family:'Inter',sans-serif; font-size:.84em; padding-left:18px; color:#374151; }
+    .analysis-block ul li { margin:5px 0; }
+    /* Footer */
+    .article-footer { margin-top:52px; padding-top:28px; border-top:1px solid #eee; font-family:'Inter',sans-serif; font-size:.82em; color:#888; line-height:1.8; }
+    .article-footer strong { color:#374151; }
+    .li-btn { display:inline-flex; align-items:center; gap:6px; background:#0a66c2; color:white; padding:8px 18px; border-radius:6px; text-decoration:none; font-weight:600; font-size:.9em; margin-top:10px; transition:background .15s; }
+    .li-btn:hover { background:#004182; }
+    .nav-prev-next { display:flex; justify-content:space-between; margin-top:28px; font-family:'Inter',sans-serif; font-size:.82em; }
+    .nav-prev-next a { color:rgba(255,255,255,.75); text-decoration:none; transition:color .15s; }
+    .nav-prev-next a:hover { color:white; }
+    @media(max-width:640px){ .article-card{padding:36px 24px;} h1{font-size:1.9em;} }
+    @media print{ body{background:white;} .article-card{box-shadow:none;} .back-link,.nav-prev-next{display:none;} }
     </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
 </head>
 <body>
 <nav class="navbar">

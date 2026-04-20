@@ -3,95 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAMS Node Failure Modes — Neural Nations</title>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network/standalone/umd/vis-network.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <style type="text/css">
-        /* --- CORE STYLES --- */
-        body, html { font-family: 'Inter', sans-serif; margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #f0f2f5; }
-        .page-shell { display: flex; flex-direction: column; height: 100vh; }
-        #cldContainer { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; }
-        #cldNetwork { flex-grow: 1; border: 1px solid #d1d5db; background-color: #ffffff; width: 100%; height: 100%; }
 
-        /* UI Elements */
-        #modelTitleDisplay { position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold; color: #1F2937; background-color: rgba(255, 255, 255, 0.9); padding: 10px 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); z-index: 10; pointer-events: none; }
-        
-        .action-btn { position: absolute; bottom: 20px; z-index: 25; padding: 10px 18px; font-size: 14px; font-weight: 500; border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        
-        /* Button Positioning */
-        #saveButton { left: 20px; background-color: #2563EB; color: white; }
-        #saveButton:hover { background-color: #1D4ED8; }
-        
-        #loadNewButton { left: 140px; background-color: #fff; color: #374151; }
-        #loadNewButton:hover { background-color: #f9fafb; }
+    <!-- Primary SEO -->
+    <title>CAMS Failure Modes Map — Neural Nations</title>
+    <meta name="description" content="Interactive causal loop diagram of the four CAMS failure spirals: R1 Flow-Hands death spiral, R2 rent-seeking trap, R3 Shield capture, R4 institutional amnesia.">
+    <meta name="keywords" content="CAMS, Neural Nations, civilisational complexity, institutional analysis, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/cams-failure-modes">
 
-        /* New Button: Save Map Data (JSON) */
-        #saveDataButton { left: 285px; background-color: #10B981; color: white; }
-        #saveDataButton:hover { background-color: #059669; }
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/cams-failure-modes">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="CAMS Failure Modes Map — Neural Nations">
+    <meta property="og:description" content="Interactive causal loop diagram of the four CAMS failure spirals: R1 Flow-Hands death spiral, R2 rent-seeking trap, R3 Shield capture, R4 institutional amnesia.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
 
-        #storyButton { left: 430px; background-color: #0f766e; color: white; text-decoration: none; display: inline-flex; align-items: center; }
-        #storyButton:hover { background-color: #0d6460; }
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CAMS Failure Modes Map — Neural Nations">
+    <meta name="twitter:description" content="Interactive causal loop diagram of the four CAMS failure spirals: R1 Flow-Hands death spiral, R2 rent-seeking trap, R3 Shield capture, R4 institutional amnesia.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
 
-        /* Legends */
-        .legend-container { 
-            position: fixed; 
-            right: 20px; 
-            width: 280px; 
-            background: rgba(255,255,255,0.96); 
-            border-radius: 8px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
-            max-height: 42px; 
-            overflow: hidden; 
-            z-index: 20; 
-            transition: max-height 0.3s ease; 
-            border: 1px solid #e5e7eb; 
-            display: flex; 
-            flex-direction: column; 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Neural Nations",
+          "url": "https://neuralnations.org",
+          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
+          "author": { "@id": "https://neuralnations.org/#kari" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://neuralnations.org/#kari",
+          "name": "Kari McKern",
+          "url": "https://neuralnations.org/cams-project-history",
+          "jobTitle": "Independent Researcher",
+          "description": "Creator of CAMS — the Complex Adaptive Model State. Researcher, former public servant, IT specialist, Sydney Australia.",
+          "sameAs": [
+            "https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/",
+            "https://github.com/KaliBond"
+          ]
         }
-        
-        .legend-container.expanded { 
-            max-height: 50vh; 
-            z-index: 100; 
-        }
+      ]
+    }
+    </script>
 
-        #legend { top: 20px; }
-        #archetypeLegend { top: 75px; }
-        
-        .legend-header { padding: 12px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; background: #fff; border-bottom: 1px solid #eee; }
-        .legend-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex-grow: 1; }
-        .legend-list li { padding: 8px 12px; border-bottom: 1px solid #f3f4f6; font-size: 13px; cursor: pointer; border-left: 3px solid transparent; }
-        .legend-list li:hover { background-color: #eff6ff; }
-        
-        /* Dragging visuals */
-        .legend-list li.dragging { opacity: 0.5; background: #e5e7eb; }
-
-        /* Description Box */
-        #descPanel { position: fixed; right: 20px; bottom: 80px; width: 280px; background: #fff; padding: 16px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 30; display: none; max-height: 300px; overflow-y: auto; font-size: 14px; line-height: 1.5; border: 1px solid #ddd; }
-        #descPanel strong { display: block; margin-bottom: 6px; color: #1E40AF; font-size: 15px; }
-
-        /* Tooltips */
-        .tooltip { position: absolute; background: rgba(255,255,255,0.98); border: 1px solid #ccc; padding: 10px; border-radius: 6px; font-size: 13px; display: none; z-index: 1000; pointer-events: none; max-width: 250px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); line-height: 1.4; }
-        #canvasTooltip { background: rgba(17, 24, 39, 0.95); color: white; border: none; }
-        #helperTooltip {
-            position: absolute; bottom: 70px; left: 20px;
-            background: rgba(0,0,0,0.6); color: white;
-            padding: 8px 12px; border-radius: 20px;
-            font-size: 12px; pointer-events: none; z-index: 5;
-        }
-
-        /* MODALS */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; }
-        .modal-box { background: white; padding: 25px; border-radius: 8px; width: 600px; max-width: 90%; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        .modal-box textarea { width: 100%; height: 250px; padding: 12px; font-family: monospace; border: 1px solid #ccc; border-radius: 4px; background: #f9fafb; }
-        .modal-box button { padding: 12px 18px; background: #2563EB; color: white; border: none; font-weight: bold; cursor: pointer; font-size: 15px; border-radius: 6px; }
-        .modal-box button:hover { background: #1D4ED8; }
-        .modal-box button.secondary { background: #E5E7EB; color: #374151; }
-        .modal-box button.secondary:hover { background: #D1D5DB; }
-        
-        /* Save Modal Specifics */
-        #filenameInput { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; margin: 5px 0 15px 0; box-sizing: border-box;}
-    </style>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network/standalone/umd/vis-network.min.js"></script>    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">    <link rel="stylesheet" href="style.css">    <style type="text/css">    /* --- CORE STYLES --- */    body, html { font-family: 'Inter', sans-serif; margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #f0f2f5; }    .page-shell { display: flex; flex-direction: column; height: 100vh; }    #cldContainer { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; }    #cldNetwork { flex-grow: 1; border: 1px solid #d1d5db; background-color: #ffffff; width: 100%; height: 100%; }    /* UI Elements */    #modelTitleDisplay { position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold; color: #1F2937; background-color: rgba(255, 255, 255, 0.9); padding: 10px 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); z-index: 10; pointer-events: none; }    .action-btn { position: absolute; bottom: 20px; z-index: 25; padding: 10px 18px; font-size: 14px; font-weight: 500; border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }    /* Button Positioning */    #saveButton { left: 20px; background-color: #2563EB; color: white; }    #saveButton:hover { background-color: #1D4ED8; }    #loadNewButton { left: 140px; background-color: #fff; color: #374151; }    #loadNewButton:hover { background-color: #f9fafb; }    /* New Button: Save Map Data (JSON) */    #saveDataButton { left: 285px; background-color: #10B981; color: white; }    #saveDataButton:hover { background-color: #059669; }    #storyButton { left: 430px; background-color: #0f766e; color: white; text-decoration: none; display: inline-flex; align-items: center; }    #storyButton:hover { background-color: #0d6460; }    /* Legends */    .legend-container {     position: fixed;     right: 20px;     width: 280px;     background: rgba(255,255,255,0.96);     border-radius: 8px;     box-shadow: 0 4px 12px rgba(0,0,0,0.15);     max-height: 42px;     overflow: hidden;     z-index: 20;     transition: max-height 0.3s ease;     border: 1px solid #e5e7eb;     display: flex;     flex-direction: column;     }    .legend-container.expanded {     max-height: 50vh;     z-index: 100;     }    #legend { top: 20px; }    #archetypeLegend { top: 75px; }    .legend-header { padding: 12px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; background: #fff; border-bottom: 1px solid #eee; }    .legend-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex-grow: 1; }    .legend-list li { padding: 8px 12px; border-bottom: 1px solid #f3f4f6; font-size: 13px; cursor: pointer; border-left: 3px solid transparent; }    .legend-list li:hover { background-color: #eff6ff; }    /* Dragging visuals */    .legend-list li.dragging { opacity: 0.5; background: #e5e7eb; }    /* Description Box */    #descPanel { position: fixed; right: 20px; bottom: 80px; width: 280px; background: #fff; padding: 16px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 30; display: none; max-height: 300px; overflow-y: auto; font-size: 14px; line-height: 1.5; border: 1px solid #ddd; }    #descPanel strong { display: block; margin-bottom: 6px; color: #1E40AF; font-size: 15px; }    /* Tooltips */    .tooltip { position: absolute; background: rgba(255,255,255,0.98); border: 1px solid #ccc; padding: 10px; border-radius: 6px; font-size: 13px; display: none; z-index: 1000; pointer-events: none; max-width: 250px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); line-height: 1.4; }    #canvasTooltip { background: rgba(17, 24, 39, 0.95); color: white; border: none; }    #helperTooltip {    position: absolute; bottom: 70px; left: 20px;    background: rgba(0,0,0,0.6); color: white;    padding: 8px 12px; border-radius: 20px;    font-size: 12px; pointer-events: none; z-index: 5;    }    /* MODALS */    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; }    .modal-box { background: white; padding: 25px; border-radius: 8px; width: 600px; max-width: 90%; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }    .modal-box textarea { width: 100%; height: 250px; padding: 12px; font-family: monospace; border: 1px solid #ccc; border-radius: 4px; background: #f9fafb; }    .modal-box button { padding: 12px 18px; background: #2563EB; color: white; border: none; font-weight: bold; cursor: pointer; font-size: 15px; border-radius: 6px; }    .modal-box button:hover { background: #1D4ED8; }    .modal-box button.secondary { background: #E5E7EB; color: #374151; }    .modal-box button.secondary:hover { background: #D1D5DB; }    /* Save Modal Specifics */    #filenameInput { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; margin: 5px 0 15px 0; box-sizing: border-box;}    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
 </head>
 <body>
 <div class="page-shell">
