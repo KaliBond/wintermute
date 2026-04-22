@@ -6,6 +6,8 @@ const NAV_LINKS = [
   { label: 'Phase Space', href: '#phase-space' },
 ];
 
+const SITE_LINK = '../index.html';
+
 export function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -35,16 +37,24 @@ export function Navigation() {
     >
       <div className="content-max-width w-full flex items-center justify-between px-6 sm:px-12 lg:px-20">
         {/* Brand */}
-        <a
-          href="#"
-          className="font-sans font-medium text-[0.8rem] uppercase tracking-[0.12em] text-parchment hover:text-sage transition-colors duration-300"
-          onClick={(e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-        >
-          Neural Nations
-        </a>
+        <div className="flex items-center gap-4">
+          <a
+            href={SITE_LINK}
+            className="font-sans text-[0.68rem] uppercase tracking-[0.1em] text-steel hover:text-parchment transition-colors duration-300 border-r border-divider pr-4"
+          >
+            ← Site
+          </a>
+          <a
+            href="#"
+            className="font-sans font-medium text-[0.8rem] uppercase tracking-[0.12em] text-parchment hover:text-sage transition-colors duration-300"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          >
+            Neural Nations
+          </a>
+        </div>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
@@ -59,11 +69,10 @@ export function Navigation() {
             </a>
           ))}
           <a
-            href="#footer"
-            onClick={(e) => handleNavClick(e, '#footer')}
+            href="../model.html"
             className="font-sans font-medium text-[0.7rem] uppercase tracking-[0.1em] text-sage border border-sage px-5 py-2 rounded-[2px] hover:bg-sage hover:text-charcoal transition-all duration-300"
           >
-            Read the Paper
+            Read the Model
           </a>
         </div>
 
@@ -106,11 +115,10 @@ export function Navigation() {
               </a>
             ))}
             <a
-              href="#footer"
-              onClick={(e) => handleNavClick(e, '#footer')}
+              href="../model.html"
               className="font-sans font-medium text-[0.75rem] uppercase tracking-[0.1em] text-sage border border-sage px-5 py-3 rounded-[2px] text-center hover:bg-sage hover:text-charcoal transition-all duration-300 mt-2"
             >
-              Read the Paper
+              Read the Model
             </a>
           </div>
         </div>

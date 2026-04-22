@@ -45,9 +45,12 @@ export function Footer() {
           <p className="font-sans font-light text-steel text-[1rem] mt-4">
             The complete CAMS v3.2-R-ESCH specification with all derivations, proofs, and case studies.
           </p>
-          <button className="mt-10 font-sans font-medium text-[0.8rem] uppercase tracking-[0.12em] text-charcoal bg-sage px-9 py-3.5 rounded-[2px] hover:bg-[#6A8A7A] transition-colors duration-300 cursor-pointer">
-            Download the Paper
-          </button>
+          <a
+            href="../model.html"
+            className="inline-block mt-10 font-sans font-medium text-[0.8rem] uppercase tracking-[0.12em] text-charcoal bg-sage px-9 py-3.5 rounded-[2px] hover:bg-[#6A8A7A] transition-colors duration-300"
+          >
+            Read the Model →
+          </a>
         </div>
       </div>
 
@@ -61,16 +64,9 @@ export function Footer() {
             © 2025 Neural Nations Research. All frameworks released under open science principles.
           </span>
           <div className="flex gap-6">
-            {['GitHub', 'Contact', 'Cite'].map((link) => (
-              <a
-                key={link}
-                href="#"
-                className="footer-link font-sans text-[0.7rem] text-steel hover:text-parchment transition-colors duration-200"
-                onClick={(e) => e.preventDefault()}
-              >
-                {link}
-              </a>
-            ))}
+            <a href="https://github.com/KaliBond/wintermute" target="_blank" rel="noopener noreferrer" className="footer-link font-sans text-[0.7rem] text-steel hover:text-parchment transition-colors duration-200">GitHub</a>
+            <a href="../contact.html" className="footer-link font-sans text-[0.7rem] text-steel hover:text-parchment transition-colors duration-200">Contact</a>
+            <a href="../datasets.html" className="footer-link font-sans text-[0.7rem] text-steel hover:text-parchment transition-colors duration-200">Datasets</a>
           </div>
         </div>
       </div>
