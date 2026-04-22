@@ -101,6 +101,7 @@
       gtag('js', new Date());
       gtag('config', 'G-ESZ16XVVNN');
     </script>
+    <script src="custom-select.js"></script>
 </head>
 <body>
     <div id="cldContainer">
@@ -995,6 +996,5 @@ document.getElementById('mapSelect').addEventListener('change', function() {
         }
         window.toggleLegend = (id) => {const el = document.getElementById(id); const exp = el.classList.contains('expanded'); document.querySelectorAll('.legend-container').forEach(l => l.classList.remove('expanded')); document.getElementById('descPanel').style.display = 'none'; if(!exp) el.classList.add('expanded');}
     </script>
-<script src="custom-select.js"></script>
 </body>
 </html>
