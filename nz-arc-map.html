@@ -702,7 +702,8 @@
         const PREBUILT_MAPS = {
             nz: document.getElementById('jsonInput').value
         };
-        document.getElementById('mapSelect').addEventListener('change', function() {
+            customSelect('mapSelect');
+document.getElementById('mapSelect').addEventListener('change', function() {
             const key = this.value;
             if (!key || !PREBUILT_MAPS[key]) { this.value = ''; return; }
             const json = PREBUILT_MAPS[key];
@@ -994,5 +995,6 @@
         }
         window.toggleLegend = (id) => {const el = document.getElementById(id); const exp = el.classList.contains('expanded'); document.querySelectorAll('.legend-container').forEach(l => l.classList.remove('expanded')); document.getElementById('descPanel').style.display = 'none'; if(!exp) el.classList.add('expanded');}
     </script>
+<script src="custom-select.js"></script>
 </body>
 </html>

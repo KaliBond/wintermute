@@ -741,7 +741,8 @@ async function init() {
     setSociety(def);
     updateDashboard();
 
-    sel.addEventListener('change', e => { setSociety(e.target.value); updateDashboard(); });
+        customSelect('societySelect');
+sel.addEventListener('change', e => { setSociety(e.target.value); updateDashboard(); });
     document.getElementById('yearSlider').addEventListener('input', e => {
         state.year = parseInt(e.target.value);
         updateDashboard();
@@ -751,5 +752,6 @@ async function init() {
 init();
 </script>
 <script src="nav.js"></script>
+<script src="custom-select.js"></script>
 </body>
 </html>

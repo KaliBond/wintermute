@@ -652,7 +652,9 @@ function populateNgaSelector() {
     if (nga === 'Latium') opt.selected = true;
     sel.appendChild(opt);
   });
-  sel.addEventListener('change', () => renderNgaChart(sel.value));
+      customSelect('ngaSelect');
+    customSelect('metricSelect');
+sel.addEventListener('change', () => renderNgaChart(sel.value));
   document.getElementById('metricSelect').addEventListener('change', () => renderNgaChart(sel.value));
   renderNgaChart('Latium');
 }
@@ -839,5 +841,6 @@ function renderTimelineChart() {
 }
 </script>
 
+<script src="custom-select.js"></script>
 </body>
 </html>

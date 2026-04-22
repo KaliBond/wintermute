@@ -384,6 +384,10 @@ fetch('cleaned_datasets/cams_index.json')
     })
     .catch(e => setStatus('Index load error: ' + e.message));
 
+
+    customSelect('nation-select');
+    customSelect('year-select');
+    customSelect('node-detail-select');
 document.getElementById('nation-select').addEventListener('change', function() {
     const nation = this.value;
     const yearSel = document.getElementById('year-select');
@@ -1265,5 +1269,6 @@ function renderNodeDetail() {
 buildNodeTable();
 </script>
 <script src="nav.js"></script>
+<script src="custom-select.js"></script>
 </body>
 </html>

@@ -83,7 +83,6 @@
     background:linear-gradient(to right,#2d3748 0%,#2d3748 var(--pct,100%),#e2e8f0 var(--pct,100%),#e2e8f0 100%); outline:none; cursor:pointer; }
     input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px;
     border-radius:50%; background:#2d3748; border:3px solid #fff; box-shadow:0 0 0 2px #2d3748; cursor:pointer; }
-    select { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:32px !important; }
     </style>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
@@ -305,6 +304,8 @@ async function loadData() {
         opt.textContent = name;
         sel.appendChild(opt);
     });
+
+    customSelect('societySelect');
 
     sel.addEventListener('change', () => {
         currentSociety = sel.value;
@@ -617,5 +618,6 @@ loadData().catch(err => {
         `<div class="p-10 text-red-600 text-sm">Failed to load dataset: ${err.message}</div>`;
 });
 </script>
+<script src="custom-select.js"></script>
 </body>
 </html>

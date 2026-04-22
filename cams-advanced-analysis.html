@@ -313,7 +313,10 @@ fetch('cleaned_datasets/cams_index.json')
     .then(r => r.json())
     .then(data => {
         CAMS_INDEX = data;
-        const sel = document.getElementById('nation-select');
+        const sel = 
+    // custom dropdowns for Tesla/embedded browser compatibility
+    ['nation-select','dig-metric','dig-qx','dig-qy','dig-qshock','dig-era'].forEach(id => customSelect(id));
+document.getElementById('nation-select');
         const nations = Object.keys(data).sort();
         sel.innerHTML = '<option value="">— select nation —</option>' +
             nations.map(n => `<option value="${n}">${n}</option>`).join('');
@@ -1078,5 +1081,6 @@ function renderSubbrain() {
 }
 </script>
 <script src="nav.js"></script>
+<script src="custom-select.js"></script>
 </body>
 </html>
