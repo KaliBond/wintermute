@@ -51,7 +51,7 @@ export function HeroSection() {
           className="font-sans font-light text-steel text-[clamp(0.9rem,1.5vw,1.15rem)] mt-6 max-w-[560px] leading-[1.7] opacity-0"
           style={{ textShadow: '0 2px 20px rgba(26,29,33,0.8)' }}
         >
-          A scale-invariant mathematical framework for reading societies as living coordination systems.
+          A scale-covariant mathematical framework for reading societies as living coordination systems.
         </p>
 
         <a
