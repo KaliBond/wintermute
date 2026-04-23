@@ -314,14 +314,12 @@ fetch('cleaned_datasets/cams_index.json')
     .then(r => r.json())
     .then(data => {
         CAMS_INDEX = data;
-        const sel = 
-    // custom dropdowns for Tesla/embedded browser compatibility
-    ['nation-select','dig-metric','dig-qx','dig-qy','dig-qshock','dig-era'].forEach(id => customSelect(id));
-document.getElementById('nation-select');
+        const sel = document.getElementById('nation-select');
         const nations = Object.keys(data).sort();
         sel.innerHTML = '<option value="">— select nation —</option>' +
             nations.map(n => `<option value="${n}">${n}</option>`).join('');
         setStatus(`Index ready — ${nations.length} nations. Select a nation or upload a CSV.`);
+        ['nation-select','dig-metric','dig-qx','dig-qy','dig-qshock','dig-era'].forEach(id => customSelect(id));
     })
     .catch(e => setStatus('Index load error: ' + e.message, true));
 
