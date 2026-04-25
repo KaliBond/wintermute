@@ -21,11 +21,17 @@ table{width:100%;border-collapse:collapse;font-family:'Inter',sans-serif;font-si
 th{background:#1a1a2e;color:#fff;padding:8px 10px;text-align:left;font-weight:600;font-size:.74em;letter-spacing:.04em}
 td{padding:7px 10px;border-bottom:1px solid #eee;vertical-align:top}
 tr:nth-child(even) td{background:#fafafa}
-td.positive{color:#059669;font-weight:700}
-td.negative{color:#dc2626;font-weight:700}
+td.positive{color:#059669;font-weight:700} td.negative{color:#dc2626;font-weight:700}
+td.short-read{font-size:.82em;color:#555;font-style:italic;min-width:180px}
+tr.self-row td{background:#f0f5fa;font-weight:600}
+.operator-reading{background:#f8f5ff;border-left:3px solid #764ba2;padding:12px 18px;margin:12px 0 20px;font-size:.96em;border-radius:0 6px 6px 0}
+.divider{text-align:center;color:#bbb;font-size:1.3em;margin:34px 0}
+.myth-close{font-size:1.22em;font-style:italic;color:#1a3a52;text-align:center;padding:18px;margin:28px 0;border-top:1px solid #eee;border-bottom:1px solid #eee}
+.final-line{font-size:1.28em;font-style:italic;color:#1a1a2e;text-align:center;padding:20px;margin:28px 0;background:#f0f5fa;border-radius:6px}
+.vector{font-family:'Inter',sans-serif;font-size:.74em;color:#666;background:#f8f8f8;padding:9px 13px;border-radius:4px;margin:8px 0 18px;word-break:break-all}
 .footer{font-family:'Inter',sans-serif;font-size:.73em;color:#bbb;margin-top:48px;padding-top:18px;border-top:1px solid #eee;line-height:1.9}
 strong{color:#1a1a2e}
-@media(max-width:700px){.wrap{padding:32px 20px}}
+@media(max-width:700px){.wrap{padding:32px 20px}td.short-read{display:none}}
 @media print{body{background:#fff;padding:0}.wrap{box-shadow:none;padding:40px}.back{display:none}}
 </style>
 </head>
@@ -35,19 +41,22 @@ strong{color:#1a1a2e}
 
 <p class="series">Neural Nations CAMS Ensemble &middot; v3.2-R.3-VA &middot; 2026-04-25</p>
 <h1>New Zealand</h1>
-<p class="series">National Mood, Vision&#8209;Affect &amp; Mythic Attractor Report &mdash; 2024&ndash;2026</p>
+<p class="series">National Mood, Vision&#8209;Affect &amp; Mythic Attractor Report &mdash; 2024–2026</p>
 
-<div class="exec-phrase">&ldquo;New Zealand stands as a <strong>Strained</strong> system in the current snapshot, with notable mythic-material decoupling in its stewardship and flow nodes, yet resilient anchors in its defensive and archival functions.&rdquo;</div>
+<div class="exec-phrase">&ldquo;The Temple stands; the Manor crumbles; the blood thins.&rdquo;</div>
 
 <h2>1. Executive Summary</h2>
-<p>New Zealand in 2024&ndash;2026 presents as a <strong>Strained</strong> system.</p>
-<p>Its strongest nodes are <strong>Shield (Warrior), Archive (Library), Lore (Temple)</strong>.</p>
-<p>Its weakest or most burdened nodes are <strong>Stewards (Manor), Flow (Agora), Helm (King)</strong>.</p>
-<p>The principal anomaly is a significant negative system sigma (&minus;7.12) driven by high stress in deliberative nodes relative to reactive ones, with headroom at &minus;0.62.</p>
-<p>The system is best described as functionally coherent but affectively depleted, with mythic integration (Y&nbsp;=&nbsp;21.0) still positive but under pressure from metabolic load (M&nbsp;=&nbsp;5.25).</p>
+<p>New Zealand in 2024–2026 presents as a <strong>Strained — Mythic Anchors Intact, Stewardship in Decline</strong> system.</p>
+<p>Its strongest nodes are <strong>['Shield', 'Archive', 'Lore']</strong>.</p>
+<p>Its weakest or most burdened nodes are <strong>['Stewards', 'Flow']</strong>.</p>
+<p>The principal anomaly is <strong>Deliberative field Ψ has turned negative (-0.33) despite Archive and Lore retaining positive affect, because Stewards (Affect=-3) drags the entire deliberative average below zero — the connective tissue has failed before the memory or meaning has.</strong>.</p>
+<p>The system is best described as <strong>Negative headroom (-0.62) and deeply negative χ (-5.83) indicate a system where reactive stress massively exceeds deliberative surplus. The mythic anchors (Shield, Archive, Lore) remain coherent but are structurally unable to compensate for material collapse in Stewards and Flow.</strong>.</p>
+<p>At the level of structure, the society is New Zealand presents a rare and diagnostically important pattern: the meaning-making and memory-keeping institutions hold at positive σ while the material substrate — asset stewardship and exchange circulation — has hollowed out beneath them. Helm is decoupled (σ=-25), unable to translate intact institutional memory into effective governance of a deteriorating material base. The system retains the capacity to understand its own condition but lacks the material throughput to act on that understanding..</p>
+<p>At the level of mood, it feels like A lucid fatigue. The country knows who it is and can still name its values, but the daily experience of economic tightness, housing stress, and thinning public services produces a pervasive sense that the story no longer matches the ground. Not despair — the mythic anchors prevent that — but a growing gap between national self-image and lived material reality..</p>
+<p>At the level of myth, it is a struggle between <strong>The remembered commonwealth: egalitarian, fair, clean, small enough to know itself</strong> and <strong>The hollowing ground: rents extracted, circulation slowed, the young priced out of the story they were promised.</strong></p>
 
 <h2>2. Data Source &amp; Method Notes</h2>
-<p><strong>Dataset:</strong> MARKER010_NZ_CLAUDE1900_2026_YEARLY.CSV<br>
+<p><strong>Dataset:</strong> New_Zealand_1900_2026_claude_cleaned.csv<br>
 <strong>Assessor:</strong> Claude<br>
 <strong>Snapshot rule:</strong> Average of last 3 years (2024&ndash;2026)<br>
 <strong>Vision&ndash;Affect:</strong> Vision = A&times;C &nbsp;&middot;&nbsp; Affect = K&minus;S &nbsp;&middot;&nbsp; &sigma; = Vision &times; Affect<br>
@@ -61,97 +70,148 @@ strong{color:#1a1a2e}
 <tr><td>Mean Capacity</td><td>4.62</td></tr>
 <tr><td>Mean Stress</td><td>5.25</td></tr>
 <tr><td>Mean Abstraction</td><td>4.50</td></tr>
-<tr><td>Mean Node Value</td><td>12.52</td></tr>
+<tr><td>Mean Node Value</td><td>6.25</td></tr>
 <tr><td>Mean Bond Strength</td><td>12.52</td></tr>
-<tr><td>Stress Resilience (K&minus;S)</td><td class="negative">&minus;0.62</td></tr>
+<tr><td>Stress Resilience (K&minus;S)</td><td>-0.62</td></tr>
 <tr><td>System Vision (mean A&times;C)</td><td>21.00</td></tr>
-<tr><td>System Sigma</td><td class="negative">&minus;7.12</td></tr>
+<tr><td>System Sigma</td><td>-7.12</td></tr>
+<tr><td>Adjusted System Health (mean NV)</td><td>6.25</td></tr>
+<tr><td>K&minus;C Delta</td><td>0.00</td></tr>
+<tr><td>SAI (A/C)</td><td>0.97</td></tr>
 <tr><td>Classification</td><td><strong>Strained</strong></td></tr>
 </table>
 
 <h2>4. System Scalar Operators</h2>
 <table>
-<tr><th>Operator</th><th>Value</th><th>Interpretation</th></tr>
-<tr><td>M(t) &mdash; Metabolic Load (mean S)</td><td>5.25</td><td>Moderate strain</td></tr>
-<tr><td>Y(t) &mdash; Mythic Integration (mean A&times;C)</td><td>21.00</td><td>Positive but pressured</td></tr>
-<tr><td>Mean Headroom (K&minus;S)</td><td class="negative">&minus;0.62</td><td>Capacity lagging stress</td></tr>
-<tr><td>&Psi; &mdash; Deliberative field (Archive+Lore+Stewards affect)</td><td class="negative">&minus;0.33</td><td>Depleted</td></tr>
-<tr><td>&Phi; &mdash; Reactive field (Helm+Shield+Hands+Flow stress)</td><td>5.50</td><td>Elevated stress in reactive nodes</td></tr>
-<tr><td>&chi; = &Psi; &minus; &Phi;</td><td class="negative">&minus;5.83</td><td>Deliberative underperformance</td></tr>
-<tr><td>&Theta; = &Phi;/&Psi; (reactive/deliberative ratio)</td><td class="negative">&minus;16.50</td><td>Severe imbalance — reactive stress dominates</td></tr>
-<tr><td>&Lambda; &mdash; Coupling proxy (Bond Strength)</td><td>12.52</td><td>Moderate institutional coupling</td></tr>
+<tr><th>Operator</th><th>Value</th></tr>
+<tr><td>M(t) &mdash; Metabolic Load (mean S)</td><td>5.25</td></tr>
+<tr><td>Y(t) &mdash; Mythic Integration (mean A&times;C)</td><td>21.00</td></tr>
+<tr><td>Mean Headroom (K&minus;S)</td><td>-0.62</td></tr>
+<tr><td>&Psi; &mdash; Deliberative field (Archive+Lore+Stewards affect)</td><td>-0.33</td></tr>
+<tr><td>&Phi; &mdash; Reactive field (Helm+Shield+Hands+Flow stress)</td><td>5.50</td></tr>
+<tr><td>&chi; = &Psi; &minus; &Phi;</td><td>-5.83</td></tr>
+<tr><td>&Theta; = &Phi;/&Psi; (reactive/deliberative ratio)</td><td>-16.50</td></tr>
+<tr><td>&Lambda; &mdash; Coupling proxy (mean Bond Strength)</td><td>12.52</td></tr>
+<tr><td>K&minus;C Delta</td><td>0.00</td></tr>
+<tr><td>SAI (A/C ratio)</td><td>0.97</td></tr>
 </table>
+<div class='operator-reading'>The decisive structural fact is a negative Ψ (-0.33) confronting high Φ (5.50), yielding χ of -5.83 and an inverted Θ of -16.50. This means the deliberative field — the institutions meant to think ahead, hold meaning, and steward assets — has been dragged below zero by the collapse of Stewards, even though Archive and Lore individually retain positive affect. The system has crossed into a regime where reactive stress dominates unchecked: the body is feverish and the brain, though lucid, cannot cool it. This is not yet critical failure — the positive σ of Shield, Archive, and Lore provides a floor — but the negative Θ indicates the system cannot self-correct through deliberation alone.</div>
 
-<h2>5. Current Node Table (2024&ndash;2026 avg)</h2>
+<h2>5. Current Node Table</h2>
 <table>
-<tr><th>Node</th><th>Attractor</th><th>C</th><th>K</th><th>S</th><th>A</th><th>NV</th><th>B</th><th>Vision (A&times;C)</th><th>Affect (K&minus;S)</th><th>&sigma;</th></tr>
-<tr><td><strong>Helm</strong></td><td>King</td><td>5.0</td><td>5.0</td><td>6.0</td><td>5.0</td><td>12.5</td><td>12.5</td><td>25.0</td><td>&minus;1.0</td><td class="negative"><strong>&minus;25.0</strong></td></tr>
-<tr><td><strong>Shield</strong></td><td>Warrior</td><td>5.0</td><td>5.0</td><td>3.0</td><td>5.0</td><td>12.5</td><td>12.5</td><td>25.0</td><td>2.0</td><td class="positive"><strong>50.0</strong></td></tr>
-<tr><td><strong>Archive</strong></td><td>Library</td><td>5.0</td><td>5.0</td><td>4.0</td><td>5.0</td><td>12.5</td><td>12.5</td><td>25.0</td><td>1.0</td><td class="positive"><strong>25.0</strong></td></tr>
-<tr><td><strong>Lore</strong></td><td>Temple</td><td>5.0</td><td>5.0</td><td>4.0</td><td>5.0</td><td>12.5</td><td>12.5</td><td>25.0</td><td>1.0</td><td class="positive"><strong>25.0</strong></td></tr>
-<tr><td><strong>Stewards</strong></td><td>Manor</td><td>4.0</td><td>4.0</td><td>7.0</td><td>4.0</td><td>10.0</td><td>10.0</td><td>16.0</td><td>&minus;3.0</td><td class="negative"><strong>&minus;48.0</strong></td></tr>
-<tr><td><strong>Craft</strong></td><td>Workshop</td><td>4.0</td><td>4.0</td><td>5.0</td><td>4.0</td><td>10.0</td><td>10.0</td><td>16.0</td><td>&minus;1.0</td><td class="negative"><strong>&minus;16.0</strong></td></tr>
-<tr><td><strong>Hands</strong></td><td>Harvesters</td><td>5.0</td><td>5.0</td><td>6.0</td><td>4.0</td><td>11.0</td><td>11.0</td><td>20.0</td><td>&minus;1.0</td><td class="negative"><strong>&minus;20.0</strong></td></tr>
-<tr><td><strong>Flow</strong></td><td>Agora</td><td>4.0</td><td>4.0</td><td>7.0</td><td>4.0</td><td>10.0</td><td>10.0</td><td>16.0</td><td>&minus;3.0</td><td class="negative"><strong>&minus;48.0</strong></td></tr>
+<tr><th>Node</th><th>Attractor</th><th>C</th><th>K</th><th>S</th><th>A</th>
+<th>NV</th><th>B</th><th>Vision (A&times;C)</th><th>Affect (K&minus;S)</th><th>&sigma;</th>
+<th>Short Reading</th></tr>
+<tr><td><strong>Helm</strong></td><td>King</td><td>5.00</td><td>5.00</td><td>6.00</td><td>5.00</td><td>6.50</td><td>13.04</td><td>25.00</td><td>-1.00</td><td class='negative'><strong>-25.00</strong></td><td class='short-read'>**King decoupled:** Executive coordination operates at negative affect (K=5, S=6), meaning the central nervous system is consuming more than it produces — policy energy is absorbed by crisis management rather than strategic direction, and the government's capacity to translate institutional knowledge into material reform has broken down.</td></tr>
+<tr><td><strong>Shield</strong></td><td>Warrior</td><td>5.00</td><td>5.00</td><td>3.00</td><td>5.00</td><td>9.50</td><td>14.79</td><td>25.00</td><td>2.00</td><td class='positive'><strong>50.00</strong></td><td class='short-read'>**Warrior latent:** The strongest node in the system (σ=50) with the lowest stress of any node (S=3) and positive affect (+2), indicating that defence and public order functions remain intact and under-mobilised — New Zealand's security position is sound but this surplus is not being converted into broader system resilience.</td></tr>
+<tr><td><strong>Archive</strong></td><td>Library</td><td>5.00</td><td>5.00</td><td>4.00</td><td>5.00</td><td>8.50</td><td>14.19</td><td>25.00</td><td>1.00</td><td class='positive'><strong>25.00</strong></td><td class='short-read'>**Library latent:** Institutional memory holds at positive σ (25) with modest positive affect (+1), suggesting that legal frameworks, bureaucratic knowledge, and democratic norms persist, but the archive functions in maintenance mode rather than active institutional renewal — remembering well, but not yet adapting.</td></tr>
+<tr><td><strong>Lore</strong></td><td>Temple</td><td>5.00</td><td>5.00</td><td>4.00</td><td>5.00</td><td>8.50</td><td>14.19</td><td>25.00</td><td>1.00</td><td class='positive'><strong>25.00</strong></td><td class='short-read'>**Temple latent:** Meaning-making and normative legitimacy retain the same profile as the Archive (σ=25, Affect=+1), indicating that New Zealand's bicultural settlement, environmental identity, and democratic self-concept have not collapsed — but the Temple is not generating new meaning adequate to the material crisis below it.</td></tr>
+<tr><td><strong>Stewards</strong></td><td>Manor</td><td>4.00</td><td>4.00</td><td>7.00</td><td>4.00</td><td>3.00</td><td>10.28</td><td>16.00</td><td>-3.00</td><td class='negative'><strong>-48.00</strong></td><td class='short-read'>**Manor hollowed out:** The worst-performing node alongside Flow (σ=-48), with the system's highest stress (S=7) against low capacity (K=4) — asset stewardship has become extractive, housing and infrastructure investment have failed to match demographic need, and the connective tissue binding institutional promise to material reality has torn.</td></tr>
+<tr><td><strong>Craft</strong></td><td>Workshop</td><td>4.00</td><td>4.00</td><td>5.00</td><td>4.00</td><td>5.00</td><td>11.23</td><td>16.00</td><td>-1.00</td><td class='negative'><strong>-16.00</strong></td><td class='short-read'>**Workshop decoupled:** Technical expertise operates at mild negative affect (K=4, S=5, σ=-16), reflecting skill erosion and productivity stagnation — the Workshop still functions but is disconnected from the broader system, neither receiving adequate investment from the Manor nor delivering sufficient innovation to the Agora.</td></tr>
+<tr><td><strong>Hands</strong></td><td>Harvesters</td><td>5.00</td><td>5.00</td><td>6.00</td><td>4.00</td><td>6.00</td><td>12.14</td><td>20.00</td><td>-1.00</td><td class='negative'><strong>-20.00</strong></td><td class='short-read'>**Harvesters decoupled:** The labour base operates under elevated stress (S=6) against adequate but strained capacity (K=5), with σ=-20 — workers are present but motivationally and materially pressured, and the gap between labour's lived experience and the system's mythic self-image constitutes the most politically volatile decoupling in the system.</td></tr>
+<tr><td><strong>Flow</strong></td><td>Agora</td><td>4.00</td><td>4.00</td><td>7.00</td><td>4.00</td><td>3.00</td><td>10.28</td><td>16.00</td><td>-3.00</td><td class='negative'><strong>-48.00</strong></td><td class='short-read'>**Agora hollowed out:** Exchange and logistics match Stewards as the system's weakest node (σ=-48, S=7, K=4), confirming that the circulatory system has thinned — trade exposure, cost-of-living inflation, and infrastructure bottlenecks mean the economy is circulating less value through more friction.</td></tr>
+
 </table>
+<div class="vector">P(2026) ≈ (-25.00, 50.00, 25.00, 25.00, -48.00, -16.00, -20.00, -48.00)</div>
+
+<div class="divider">&starf;</div>
 
 <h2>6. Vision&ndash;Affect Reading</h2>
-<p>The system exhibits a clear split: <strong>Shield, Archive, and Lore</strong> show strong positive sigma (integrated vision-under-feeling), while <strong>Stewards, Flow, Helm, Hands, and Craft</strong> are in negative territory, indicating decoupling or thinning. The King (Helm) is mildly strained in executive coordination; the Manor and Agora are hollowed out by high stress and low capacity; while the Warrior and Library/Temple remain robust anchors. Overall, New Zealand&rsquo;s mythic integration is holding at the institutional memory and meaning-making level, but asset stewardship and exchange/logistics are under significant pressure, pulling the system toward strain.</p>
+<p>System Vision at 21.00 is the lowest of all peer societies and well below New Zealand's own post-war peak of 33.72. This is not because abstraction or coherence has collapsed — both hover near 5 for the anchor nodes — but because the material nodes (Stewards C=4, Flow C=4) drag the mean down. System Affect at -0.62 confirms negative headroom: the civilisation is spending more than it generates across the node field. The resulting system σ of -7.12 means vision-under-feeling is mildly negative — the country can see where it wants to go but feels it moving in the wrong direction. Critically, σ is distributed in a sharp bimodal pattern: Shield at +50 and Archive/Lore at +25 versus Stewards and Flow at -48 each. The system is not uniformly degraded; it is split between intact mythic anchors and a failing material base.</p>
 
 <h2>7. Structural Dynamics</h2>
-<h3>7.1 Primary Anomaly</h3>
-<p>Severe negative theta (&minus;16.5) reveals that deliberative nodes (especially Stewards) are carrying disproportionate stress compared to reactive nodes, inverting the healthy hierarchy where deliberative fields should provide stability.</p>
-<h3>7.2 Dominant Anchor</h3>
-<p>Shield (Warrior) with &sigma;&nbsp;=&nbsp;50 &mdash; defence and order functions are performing well, providing a buffer against systemic drift.</p>
-<h3>7.3 Main Weakness</h3>
-<p>Stewards (Manor) and Flow (Agora) at &sigma;&nbsp;=&nbsp;&minus;48 &mdash; rent-seeking/decay and mythic-material decoupling are the critical failure modes.</p>
-<h3>7.4 Archive&ndash;Lore Relation</h3>
-<p>Both strong and aligned (&sigma;&nbsp;=&nbsp;25), suggesting the Library and Temple are mutually reinforcing &mdash; institutional record and normative legitimacy are intact.</p>
-<h3>7.5 Fast-Loop / Slow-Loop Relation</h3>
-<p>Reactive nodes (Helm, Shield, Hands, Flow) show mixed signals; the fast loops (Helm/Hands/Flow) are thinning while Shield holds. Slow loops (Archive/Lore/Stewards) are bifurcated &mdash; memory and meaning strong, stewardship weak.</p>
+<h3>7.1 Primary Anomaly</h3><p>Stewards and Flow share identical profiles (C=4, K=4, S=7, A=4, σ=-48) — the Manor and the Agora have collapsed in lockstep, suggesting a common cause: the connective tissue that should channel resources to where they are needed and the circulatory system that should distribute value have both been captured by the same extractive dynamics (housing, commodity export dependency, infrastructure underinvestment).</p>
+<h3>7.2 Dominant Anchor</h3><p>Shield (σ=50) is the system's structural anchor, but its strength is paradoxical — low stress (S=3) in a system under high metabolic load (M=5.25) suggests the Warrior is intact precisely because it is disengaged from the system's central stresses. Defence surplus cannot substitute for material stewardship.</p>
+<h3>7.3 Main Weakness</h3><p>The Stewards-Flow dyad (combined σ=-96) constitutes the system's structural wound. Both nodes are hollowed out, meaning they retain formal structure but have lost functional capacity. The Manor still exists — property law, regulatory frameworks, local government — but it no longer stewards assets for collective benefit. The Agora still trades, but friction has overtaken throughput.</p>
+<h3>7.4 Archive&ndash;Lore Relation</h3><p>Archive and Lore are symmetric (both σ=25, Affect=+1), indicating that institutional memory and normative meaning move together. This is characteristic of small democracies with strong civic traditions: the Library and the Temple reinforce each other. However, both are in 'latent' state — remembering and believing, but not yet generating the new frameworks needed to address the material crisis. The risk is that prolonged material failure eventually erodes the legitimacy they currently hold.</p>
+<h3>7.5 Fast-Loop / Slow-Loop Relation</h3><p>Fast-layer reactive stress (Φ=5.50) overwhelms slow-layer deliberative capacity (Ψ=-0.33). The fast nodes — Helm (S=6), Hands (S=6), Flow (S=7) — are absorbing daily material pressure while the slow nodes that should provide strategic response are either latent (Archive, Lore) or hollowed (Stewards). The system is running hot on the surface while its deeper adaptive layers are either idle or broken.</p>
 
 <h2>8. Mythopoetic Layer</h2>
 <h3>8.1 National Mood Texture</h3>
-<p>New Zealand currently feels like a society where the <em>King is heard but weary</em>, the <em>Warrior stands firm</em>, but the <em>Manor is leaking and the Agora has grown quiet</em>.</p>
+<p>New Zealand currently feels like <strong>Lucid fatigue behind a calm face</strong>.</p>
+<p>New Zealand in 2025 feels like a household that still keeps its photographs on the mantelpiece and remembers every ancestor's name, but has noticed the roof leaking for years and can no longer afford the repair. There is no panic — the mythic anchors prevent it — but there is a settling awareness that the gap between who the country believes itself to be and what it can materially deliver is widening. The young notice it in rent payments. The regions notice it in closed services. The Māori renaissance keeps the Temple warm, but the Manor serves the landlord now.</p>
 <h3>8.2 Governing Metaphor</h3>
-<p><strong>New Zealand is a well-defended but under-maintained estate.</strong></p>
-<p>The outer walls (Shield) are strong, the archives and temple (Archive/Lore) are preserved, yet the stewards have grown tired, the workshops and harvesters strained, and the marketplace (Flow) has lost some of its vitality.</p>
+<p><strong>New Zealand is A well-remembered house on thinning foundations.</strong></p>
+<p>Shield, Archive, and Lore hold the roof, walls, and hearth-stories of national identity intact. Stewards and Flow — the foundations and plumbing — are crumbling beneath. Helm is present but unable to coordinate repairs. Hands are tired from holding up what the structure should support on its own. The house is still recognisably itself, still beautiful from the road, but the people inside feel the floors giving way.</p>
 <h3>8.3 Civilisational Persona</h3>
-<p>A pragmatic island nation that remembers its founding myths well but struggles to translate that memory into equitable stewardship and dynamic exchange in the present.</p>
+<p>If this system were a character, it would be <strong>The clear-eyed younger sibling who remembers everything, can still name what matters, but cannot afford the rent on their own story</strong>.</p>
+<p>New Zealand's combination of intact meaning-making (Lore σ=+25), institutional memory (Archive σ=+25), and material failure (Stewards/Flow σ=-48 each) maps precisely onto a figure who possesses moral clarity and self-knowledge but lacks the material power to enact what they understand. The persona is not confused or despairing — it is structurally constrained.</p>
 <h3>8.4 Gift and Wound</h3>
-<p><strong>Civilisational gift:</strong> Deep institutional memory and a robust sense of order and legitimacy.<br>
-<strong>Civilisational wound:</strong> Erosion of the connective tissue (Stewards) and circulatory vitality (Flow), leading to a sense of quiet fatigue beneath the surface resilience.</p>
+<p><strong>Civilisational gift:</strong> Self-knowledge that has not yet curdled into cynicism<br>
+<strong>Civilisational wound:</strong> Material hollowing that the mythic self-image cannot indefinitely survive</p>
+<p>The gift is real: σ=+25 in both Archive and Lore means New Zealand retains a functioning normative compass and institutional memory at a time when peer societies (Australia's Lore crisis, America's Helm failure, France's paralysis) have lost one or both. The wound is equally real: σ=-48 in both Stewards and Flow means the material base is failing at a rate that will, if uncorrected, eventually drain the legitimacy of the very institutions that currently hold. Gift and wound are temporally coupled — the gift buys time that the wound is consuming.</p>
 <h3>8.5 Mythic Tension</h3>
-<p>This period is a struggle between <strong>the Warrior&rsquo;s shield (defence of what is)</strong> and <strong>the Manor&rsquo;s decay (failure to steward what could be)</strong>.</p>
-<p>The decisive question is whether the Library&rsquo;s records and the Temple&rsquo;s meaning can re-energise the Harvesters and the Agora before the King&rsquo;s coordination capacity frays further.</p>
+<p>This period is a struggle between <strong>God's Own Country — the egalitarian paradise, clean and fair, where anyone can make a life</strong>
+and <strong>The Hollowed Tenancy — a country that remembers fairness but practices extraction, where the young inherit the story but not the house.</strong></p>
+<p>These two poles map directly onto the bimodal σ distribution: the positive cluster (Shield, Archive, Lore) sustains the first myth; the negative cluster (Stewards, Flow, Helm, Hands, Craft) generates the second. The tension is not between competing ideologies but between the country's mythic self-image and its material reality. This is why χ is so deeply negative (-5.83): the deliberative system that holds the myth cannot materially fund it.</p>
+<h3>8.6 Mythic Alignment by Node</h3>
+<table>
+<tr><th>Node</th><th>Attractor</th><th>State</th><th>Reading</th></tr>
+<tr><td><strong>Helm</strong></td><td>King</td><td><em>decoupled</em></td><td>The King is present but cannot govern the wound. With σ=-25 and stress exceeding capacity, executive coordination absorbs crisis energy without converting it into structural repair. The Crown still speaks, but the Manor and Agora no longer respond to its directives.</td></tr>
+<tr><td><strong>Shield</strong></td><td>Warrior</td><td><em>latent</em></td><td>The Warrior rests with the system's highest σ (+50) and lowest stress (S=3). Defence and public order are intact, but this strength is idle — a reserve force in a war that is economic and structural, not military. Latency here means untapped potential, not failure.</td></tr>
+<tr><td><strong>Archive</strong></td><td>Library</td><td><em>latent</em></td><td>The Library remembers clearly — legal norms, democratic procedure, Treaty frameworks, bureaucratic competence — but operates in preservation mode (Affect=+1, σ=25). It holds the system's floor but has not yet become the active source of institutional innovation the crisis demands.</td></tr>
+<tr><td><strong>Lore</strong></td><td>Temple</td><td><em>latent</em></td><td>The Temple retains its congregation (σ=25, Affect=+1). Bicultural identity, environmental stewardship as value, democratic egalitarianism — these meaning-structures persist. But the Temple is not generating new legitimating narratives adequate to the material hollowing. It holds, but it does not yet renew.</td></tr>
+<tr><td><strong>Stewards</strong></td><td>Manor</td><td><em>hollowed out</em></td><td>The Manor stands but serves the landlord, not the household. At σ=-48 with S=7 and K=4, asset stewardship has inverted: housing, infrastructure, and public investment frameworks retain their formal architecture while functionally extracting from, rather than building for, the population they nominally serve.</td></tr>
+<tr><td><strong>Craft</strong></td><td>Workshop</td><td><em>decoupled</em></td><td>The Workshop operates but in isolation (σ=-16, Affect=-1). Technical skill persists in pockets — agriculture, software, film — but is disconnected from a coherent national productivity strategy. The Workshop neither receives adequate investment from the Manor nor feeds adequately into the Agora.</td></tr>
+<tr><td><strong>Hands</strong></td><td>Harvesters</td><td><em>decoupled</em></td><td>The Harvesters work under stress (S=6) that exceeds the system's capacity to reward them (Affect=-1). Labour is present but increasingly decoupled from the mythic promise — workers participate in an economy that tells them they live in paradise while charging them rents that contradict it.</td></tr>
+<tr><td><strong>Flow</strong></td><td>Agora</td><td><em>hollowed out</em></td><td>The Agora has thinned to its worst state (σ=-48, S=7, K=4). Trade dependence, infrastructure bottlenecks, cost-of-living friction, and geographic isolation compound into a circulatory system that moves less value at greater cost. The market square is still open, but the shelves are thinner and the prices higher.</td></tr>
+
+</table>
+<div class="myth-close">&ldquo;The Temple has not emptied. The Library has not burned. The Warrior sleeps soundly because no enemy comes. But the Manor has been sold to those who do not live in it, and the Agora's blood runs thin. New Zealand remembers who it was. The question the metrics pose is whether memory, unfunded, becomes elegy.&rdquo;</div>
 
 <h2>9. Historical Phase Portrait</h2>
-<p>From 1900&ndash;2026, New Zealand has shown cyclical patterns: high resilience in the early 20th century and the post-WWII boom (headroom &gt;1 in many periods), strain during the 1920s&ndash;1930s Depression era and recent decades. The current <strong>Strained</strong> posture continues a slow decline from the 2010s peak, with sigma turning negative around 2022&ndash;2023 and headroom crossing into negative territory by 2024.</p>
+<table>
+<tr><th>Era</th><th>M(t)</th><th>Y(t)</th><th>Headroom</th><th>&Lambda;</th><th>&Theta;</th><th>Posture</th></tr>
+<tr><td>1900–1924</td><td>2.59</td><td>23.32</td><td>2.98</td><td>18.84</td><td>0.85</td><td>Stable</td></tr>
+<tr><td>1925–1949</td><td>4.48</td><td>23.82</td><td>1.00</td><td>16.80</td><td>3.03</td><td>Functional</td></tr>
+<tr><td>1950–1974</td><td>2.59</td><td>33.72</td><td>3.84</td><td>26.91</td><td>0.66</td><td>Generative</td></tr>
+<tr><td>1975–1999</td><td>5.22</td><td>19.51</td><td>-0.43</td><td>11.81</td><td>-25.13</td><td>Strained</td></tr>
+<tr><td>2000–2024</td><td>4.62</td><td>24.88</td><td>0.41</td><td>16.10</td><td>5.25</td><td>Functional</td></tr>
+<tr><td>2025–2026</td><td>5.25</td><td>21.00</td><td>-0.62</td><td>12.52</td><td>-16.50</td><td>Strained</td></tr>
+
+</table>
+<p>New Zealand's trajectory reveals a structural rhyme: the current snapshot (M=5.25, Headroom=-0.62, Θ=-16.50) closely echoes the 1975–1999 Strained period (M=5.22, Headroom=-0.43, Θ=-25.13) that followed the post-war golden age. That earlier crisis — the end of guaranteed British markets, Muldoonist over-regulation, then the Rogernomics shock — also presented as intact meaning-structures confronting material disruption. The 2000–2024 recovery (Headroom=+0.41, Θ=5.25) demonstrated that New Zealand can return from negative regimes when stewardship and circulation are repaired. But the current pattern is more structurally dangerous than the 1975 analogue: Vision has fallen from 24.88 to 21.00 (the lowest in the historical record save the 1975–1999 trough of 19.51), and the Stewards-Flow dyad is more symmetrically degraded than before. The decisive question is whether the latent strength of Archive and Lore — which survived the Rogernomics revolution and anchored the subsequent recovery — can again provide the normative floor from which material reconstruction proceeds. The difference this time is that Helm is decoupled rather than merely stressed, meaning the translation mechanism between institutional knowledge and executive action is weaker than it was when the fourth Labour government launched reforms in 1984.</p>
+
+
+<h2>10. Comparative Position</h2>
+<table>
+<tr><th>Society</th><th>Period</th><th>&Theta;</th><th>Headroom</th><th>System &sigma;</th><th>Classification</th></tr>
+<tr class='self-row'><td><strong>→ New Zealand</strong></td><td>2024–2026</td><td>-16.50</td><td>-0.62</td><td>-7.12</td><td>Strained</td></tr>
+<tr><td><strong>USA</strong></td><td>2024-2026</td><td>—</td><td>0.25</td><td>65.88</td><td>Radically Divergent — High Performance Islands in a Failing System</td></tr>
+<tr><td><strong>Germany</strong></td><td>2024-2026</td><td>—</td><td>2.62</td><td>177.25</td><td>Institutionally Excellent, Directionally Paralysed</td></tr>
+<tr><td><strong>China</strong></td><td>2024-2026</td><td>—</td><td>2.88</td><td>188.38</td><td>Authoritarian High-Performance with Constrained Labour</td></tr>
+<tr><td><strong>Australia</strong></td><td>2024-2026</td><td>—</td><td>1.25</td><td>77.25</td><td>Civilisational Crisis of Meaning</td></tr>
+<tr><td><strong>France</strong></td><td>2024-2026</td><td>2.80</td><td>-0.04</td><td>-2.39</td><td>Paralyzed Sophist</td></tr>
+<tr><td><strong>Norway</strong></td><td>2023-2025</td><td>1.20</td><td>3.71</td><td>270.88</td><td>Institutionally Excellent, Civilisationally Complacent</td></tr>
+
+</table>
+<p>Among its peers, New Zealand occupies a distinctive and exposed position. Its system σ (-7.12) is the lowest of all surveyed societies — below even France's -2.39. Its Vision (21.00) is less than half of Norway's (73.05), a third of China's (61.12), and well below Australia's (46.38). Yet New Zealand's mythic anchors (Shield σ=+50, Archive and Lore σ=+25 each) outperform several larger peers: Australia suffers a civilisational crisis of meaning that New Zealand has avoided, and the USA's Lore and Helm are in worse condition. The sharpest comparison is with Norway, which shares small-population democratic character but operates with headroom of +3.71 versus New Zealand's -0.62 — the difference is almost entirely in Stewards and Flow, where Norway's sovereign wealth model and integrated logistics deliver what New Zealand's commodity-dependent, housing-inflated economy cannot. Germany's institutional excellence (Archive, Stewards, Craft all strong) exposes precisely the nodes where New Zealand has failed: the Workshop and the Manor. New Zealand is, among its peers, the society with the clearest self-knowledge and the thinnest material means to act on it.</p>
+
 
 <h2>11. Implications, Risk &amp; Opportunity</h2>
-<h3>Strength</h3>
-<p>Strong Shield, Archive, and Lore provide a solid foundation for defence, memory, and legitimacy &mdash; the society &ldquo;remembers who it is&rdquo; and can mobilise order effectively.</p>
-<h3>Risk 1 &mdash; Stewardship Collapse</h3>
-<p>Stewards at &sigma;&nbsp;=&nbsp;&minus;48 and high stress (S&nbsp;=&nbsp;7) signals accelerating rent-seeking or decay in asset management; if unaddressed, this could erode long-term capacity.</p>
-<h3>Risk 2 &mdash; Flow Decoupling</h3>
-<p>Flow node at &sigma;&nbsp;=&nbsp;&minus;48 indicates mythic-material decoupling &mdash; exchange and logistics are not aligned with vision, risking economic and social fragmentation.</p>
-<h3>Risk 3 &mdash; Executive Fatigue</h3>
-<p>Helm (King) at &sigma;&nbsp;=&nbsp;&minus;25 with elevated stress risks paralysis or capture in executive coordination functions.</p>
-<h3>Opportunity</h3>
-<p>Leverage the strong Archive&ndash;Lore axis to renew the Stewards and Flow nodes. Re-couple vision (high in deliberative nodes) with the reactive base through targeted investment in connective tissue and circulatory systems. The positive system vision (21.0) offers room to act before strain hardens into critical.</p>
+<h3>Strength</h3><p>The intact mythic triad of Shield, Archive, and Lore (combined σ=+100) provides a legitimacy floor and institutional memory base that most peer societies have partially or fully lost. This is the structural precondition for reform: the country retains the normative consensus and democratic infrastructure needed to rebuild material nodes without first having to reconstruct meaning itself.</p>
+<h3>Risk 1 &mdash; Stewardship Inversion Becomes Permanent</h3><p>Stewards at σ=-48 with S=7 reflects a hollowed-out asset stewardship regime — primarily the housing-infrastructure complex — that is now self-reinforcing. Property wealth concentration, underinvestment in public infrastructure, and regulatory capture by existing asset holders create a feedback loop that the current Helm (decoupled, σ=-25) cannot break. If uncorrected within 5–10 years, Stewards' failure will begin to erode Archive and Lore legitimacy as the population loses faith in institutions that remember fairness but cannot deliver it.</p>
+<h3>Risk 2 &mdash; Flow Contraction Triggers Hands Deterioration</h3><p>Flow and Hands are structurally coupled: when the Agora thins (σ=-48), the Harvesters bear the cost (σ=-20, S=6). Continued cost-of-living pressure, geographic isolation from trade routes, and infrastructure bottlenecks risk pushing Hands from decoupled (current) to hollowed out — a demographic and motivational failure mode that manifests as emigration of skilled workers and declining labour force participation. New Zealand's small population makes this threshold lower than for larger peers.</p>
+<h3>Risk 3 &mdash; Latency in Archive and Lore Becomes Rigidity</h3><p>Both Archive and Lore are latent — intact but not actively generating new institutional or normative frameworks. Prolonged latency in a strained system risks hardening into rigidity: the Library preserves yesterday's procedures and the Temple repeats yesterday's values without adapting either to the material crisis. The historical parallel is the late Muldoon era, when intact institutions froze rather than adapted, requiring an external shock (the 1984 currency crisis) to force renewal.</p>
+<h3>Opportunity</h3><p>Shield's surplus (σ=+50, Affect=+2) represents the system's most underutilised asset. Redirecting even partial defence and public-order capacity toward domestic infrastructure resilience, civil logistics, and stewardship reform could begin to close the Stewards-Flow gap without requiring new institutional construction. The Warrior does not need to fight — it needs to build. This conversion of latent Shield capacity into Stewards-Flow rehabilitation is the highest-leverage intervention the system can make.</p>
 
 <h2>12. Final Assessment</h2>
-<p>New Zealand is a <strong>Strained</strong> system with <strong>robust mythic anchors in Shield, Archive, and Lore</strong> but also <strong>critical vulnerabilities in Stewards and Flow</strong>.</p>
-<p>Its strongest civilisational image is the <strong>Warrior&ndash;Library&ndash;Temple triad</strong> &mdash; order, memory, and meaning.<br>
-Its most endangered image is the <strong>Manor and Agora</strong> &mdash; stewardship and exchange.</p>
-<p>The decisive question is whether the <strong>records in the Library and legitimacy in the Temple</strong> can be re-coupled to the <strong>Harvesters and the Agora</strong> before the <strong>Manor&rsquo;s decay</strong> and <strong>executive fatigue in the King</strong> hardens into structural decline.</p>
+<p>New Zealand is a <strong>Strained — Mythic Anchors Intact, Stewardship in Decline</strong>
+system with <strong>A coherent normative identity and functioning institutional memory provide the legitimacy floor that most peer societies have lost — the Temple and Library hold.</strong>
+but also <strong>The material substrate (Stewards σ=-48, Flow σ=-48) has hollowed beneath the mythic surface, and the Helm lacks the coupling to translate institutional knowledge into material reform..</strong></p>
+<p>Its strongest civilisational image is <strong>The Library-Temple dyad — New Zealand's democratic self-concept, bicultural settlement, and institutional memory remain the system's centre of gravity..</strong><br>
+Its most endangered image is <strong>The Manor — asset stewardship has inverted from collective provision to extractive capture, and if it is not restored, it will eventually pull the Temple down with it..</strong><br>
+The decisive question is whether <strong>Stewards↔Flow (combined σ=-96) — the collapse of the connective tissue and circulatory system in lockstep is the system's defining pathology and the only structural relationship that, if reversed, would shift the entire system from Strained back to Functional.</strong>
+can be re-coupled before <strong>Mythic-material decoupling: the widening gap between what New Zealand's meaning-structures promise (egalitarian commonwealth) and what its material nodes deliver (extractive tenancy) is the slow process that will, if unchecked, hollow the very legitimacy currently holding the system together.</strong> hardens into structure.</p>
+<div class="final-line">&ldquo;New Zealand remembers who it is. It has not yet decided whether to fund that memory or mourn it.&rdquo;</div>
 
 <div class="footer">
 Report generated: 2026-04-25<br>
-Model: CAMS Ensemble v3.2-R.3-VA (metrics computed; narrative synthesised from data)<br>
-Assessor: Claude &nbsp;&middot;&nbsp; Dataset: MARKER010_NZ_CLAUDE1900_2026_YEARLY.CSV &nbsp;&middot;&nbsp; Snapshot: 2024&ndash;2026 (3 years)<br>
+Model: claude-opus-4-6 (Neural Nations CAMS Ensemble v3.2-R.3-VA)<br>
+Assessor: Claude &nbsp;&middot;&nbsp; Dataset: New_Zealand_1900_2026_claude_cleaned.csv &nbsp;&middot;&nbsp;
+Snapshot: 2024&ndash;2026 (3 years)<br>
 Stress polarity: positive = strain<br>
-Neural Nations CAMS Research &middot; Open Science (Common Property) &middot; Co-authored with Claude Sonnet&nbsp;4.6 (Anthropic)
+Neural Nations CAMS Research &middot; Open Science (Common Property) &middot; Co-authored with Claude Opus&nbsp;4.6 (Anthropic)
 </div>
 
 </div>

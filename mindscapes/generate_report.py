@@ -433,8 +433,8 @@ def generate_narrative(client, summary, country):
     print("\n── Claude narrative (streaming) ──────────────────────────────")
     with client.messages.stream(
         model="claude-opus-4-6",
-        max_tokens=10000,
-        thinking={"type": "adaptive"},
+        max_tokens=16000,
+        thinking={"type": "enabled", "budget_tokens": 2000},
         system=[{"type": "text", "text": SYSTEM_PROMPT,
                  "cache_control": {"type": "ephemeral"}}],
         messages=[{"role": "user", "content": user_msg}],
@@ -444,10 +444,12 @@ def generate_narrative(client, summary, country):
             print(chunk, end="", flush=True)
     print("\n────────────────────────────────────────────────────────────\n")
 
-    start = text.find('{'); end = text.rfind('}') + 1
+    # Strip code fences if present
+    clean = text.replace('```json', '').replace('```', '')
+    start = clean.find('{'); end = clean.rfind('}') + 1
     if start == -1 or end <= start:
         raise ValueError("No JSON in Claude response:\n" + text[:600])
-    return json.loads(text[start:end])
+    return json.loads(clean[start:end])
 
 # ── Manifest helpers ──────────────────────────────────────────────────────────
 
@@ -463,7 +465,10 @@ def update_manifest(manifest_path, country, period, generated_date,
     """Add or update this report's entry in the manifest JSON."""
     reports = manifest.get('reports', [])
     report_id = f"{country.lower().replace(' ','-')}-{max(period.split('–'))}"
-    rel_path  = str(Path(out_path).relative_to(Path(manifest_path).parent.parent)).replace('\\','/')
+    try:
+        rel_path = str(Path(out_path).relative_to(Path(manifest_path).parent.parent)).replace('\\','/')
+    except ValueError:
+        rel_path = str(Path(out_path).resolve().relative_to(Path(manifest_path).resolve().parent.parent)).replace('\\','/')
 
     sigmas = {n: round(nodes_ops[n]['sigma'], 2) for n in STANDARD_NODES
               if n in nodes_ops and nodes_ops[n].get('sigma') is not None}
