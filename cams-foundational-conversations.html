@@ -54,7 +54,118 @@
     }
     </script>
 
-    <link rel="stylesheet" href="style.css">    <style>    .conv-toc {    display: grid;    grid-template-columns: 1fr 1fr;    gap: 10px;    margin: 18px 0 0 0;    }    @media (max-width: 640px) { .conv-toc { grid-template-columns: 1fr; } }    .conv-toc a {    display: block;    padding: 12px 16px;    border: 1px solid #e0e0e0;    border-radius: 6px;    text-decoration: none;    color: #1f77b4;    font-size: 0.88em;    font-weight: 600;    transition: border-color 0.15s, background 0.15s;    }    .conv-toc a:hover { border-color: #1f77b4; background: #f0f6fb; }    .conv-toc .toc-meta { display: block; font-size: 0.78em; color: #999; font-weight: 400; margin-top: 3px; }    .conv-section {    border-top: 2px solid #e8ecf2;    margin-top: 40px;    padding-top: 28px;    }    .conv-section:first-child { border-top: none; margin-top: 0; padding-top: 0; }    .conv-header {    margin-bottom: 20px;    }    .conv-header h2 {    font-size: 1.15rem;    font-weight: 700;    color: #1a1a2e;    margin: 0 0 6px 0;    }    .conv-meta {    font-size: 0.82em;    color: #888;    display: flex;    gap: 16px;    flex-wrap: wrap;    }    .conv-meta span { display: flex; align-items: center; gap: 4px; }    .message {    margin-bottom: 18px;    border-radius: 6px;    overflow: hidden;    }    .message-header {    display: flex;    align-items: center;    gap: 10px;    padding: 7px 14px;    font-size: 0.78em;    font-weight: 700;    text-transform: uppercase;    letter-spacing: 0.06em;    }    .message-header .timestamp {    font-weight: 400;    color: #aaa;    letter-spacing: 0;    text-transform: none;    font-size: 0.95em;    }    .msg-kari .message-header {    background: #f0f6fb;    color: #1f77b4;    border-bottom: 1px solid #d8eaf7;    }    .msg-ai .message-header {    background: #f7f7f7;    color: #555;    border-bottom: 1px solid #e8e8e8;    }    .message-body {    padding: 14px 18px;    font-size: 0.9em;    line-height: 1.72;    color: #333;    }    .msg-kari .message-body { background: #fafcff; border: 1px solid #d8eaf7; border-top: none; }    .msg-ai .message-body { background: #fff; border: 1px solid #e8e8e8; border-top: none; }    .message-body p { margin: 0 0 10px 0; }    .message-body p:last-child { margin-bottom: 0; }    .message-body h3 { font-size: 0.95em; font-weight: 700; margin: 14px 0 6px; color: #1a1a2e; }    .message-body h4 { font-size: 0.88em; font-weight: 700; margin: 12px 0 5px; color: #333; }    .message-body ul, .message-body ol { margin: 6px 0 10px 18px; padding: 0; }    .message-body li { margin-bottom: 4px; }    .message-body hr { border: none; border-top: 1px solid #e0e0e0; margin: 14px 0; }    .message-body blockquote {    margin: 10px 0;    padding: 8px 14px;    border-left: 3px solid #1f77b4;    background: #f0f6fb;    color: #555;    font-style: italic;    }    .pasted-ref {    background: #fffbf0;    border: 1px dashed #d4b800;    border-radius: 4px;    padding: 10px 14px;    font-size: 0.82em;    color: #666;    margin-bottom: 12px;    }    .back-link { font-size: 0.85em; color: #1f77b4; text-decoration: none; }    .back-link:hover { text-decoration: underline; }    </style>
+    <link rel="stylesheet" href="style.css">
+    <style>
+    .conv-toc {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 18px 0 0 0;
+    }
+    @media (max-width: 640px) { .conv-toc { grid-template-columns: 1fr; } }
+    .conv-toc a {
+    display: block;
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #1f77b4;
+    font-size: 0.88em;
+    font-weight: 600;
+    transition: border-color 0.15s, background 0.15s;
+    }
+    .conv-toc a:hover { border-color: #1f77b4; background: #f0f6fb; }
+    .conv-toc .toc-meta { display: block; font-size: 0.78em; color: #999; font-weight: 400; margin-top: 3px; }
+    .conv-section {
+    border-top: 2px solid #e8ecf2;
+    margin-top: 40px;
+    padding-top: 28px;
+    }
+    .conv-section:first-child { border-top: none; margin-top: 0; padding-top: 0; }
+    .conv-header {
+    margin-bottom: 20px;
+    }
+    .conv-header h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 6px 0;
+    }
+    .conv-meta {
+    font-size: 0.82em;
+    color: #888;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    }
+    .conv-meta span { display: flex; align-items: center; gap: 4px; }
+    .message {
+    margin-bottom: 18px;
+    border-radius: 6px;
+    overflow: hidden;
+    }
+    .message-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 14px;
+    font-size: 0.78em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    }
+    .message-header .timestamp {
+    font-weight: 400;
+    color: #aaa;
+    letter-spacing: 0;
+    text-transform: none;
+    font-size: 0.95em;
+    }
+    .msg-kari .message-header {
+    background: #f0f6fb;
+    color: #1f77b4;
+    border-bottom: 1px solid #d8eaf7;
+    }
+    .msg-ai .message-header {
+    background: #f7f7f7;
+    color: #555;
+    border-bottom: 1px solid #e8e8e8;
+    }
+    .message-body {
+    padding: 14px 18px;
+    font-size: 0.9em;
+    line-height: 1.72;
+    color: #333;
+    }
+    .msg-kari .message-body { background: #fafcff; border: 1px solid #d8eaf7; border-top: none; }
+    .msg-ai .message-body { background: #fff; border: 1px solid #e8e8e8; border-top: none; }
+    .message-body p { margin: 0 0 10px 0; }
+    .message-body p:last-child { margin-bottom: 0; }
+    .message-body h3 { font-size: 0.95em; font-weight: 700; margin: 14px 0 6px; color: #1a1a2e; }
+    .message-body h4 { font-size: 0.88em; font-weight: 700; margin: 12px 0 5px; color: #333; }
+    .message-body ul, .message-body ol { margin: 6px 0 10px 18px; padding: 0; }
+    .message-body li { margin-bottom: 4px; }
+    .message-body hr { border: none; border-top: 1px solid #e0e0e0; margin: 14px 0; }
+    .message-body blockquote {
+    margin: 10px 0;
+    padding: 8px 14px;
+    border-left: 3px solid #1f77b4;
+    background: #f0f6fb;
+    color: #555;
+    font-style: italic;
+    }
+    .pasted-ref {
+    background: #fffbf0;
+    border: 1px dashed #d4b800;
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-size: 0.82em;
+    color: #666;
+    margin-bottom: 12px;
+    }
+    .back-link { font-size: 0.85em; color: #1f77b4; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+    </style>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
     <script>
@@ -80,7 +191,7 @@
                 <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
                 <div class="nav-dropdown-menu">
                     <a href="results.html">Results at a Glance</a>
-                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
         <a href="cams-advanced-analysis.html">Advanced Analysis</a>
                     <a href="escalation-archetypes.html">Escalation Archetypes</a>
                     <a href="cams-failure-modes.html">Failure Modes Map</a>
@@ -112,7 +223,7 @@
         <hr class="mobile-divider">
         <div class="mobile-section-title">Insights</div>
         <a href="results.html">Results at a Glance</a>
-                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
         <a href="cams-advanced-analysis.html">Advanced Analysis</a>
         <a href="escalation-archetypes.html">Escalation Archetypes</a>
         <a href="cams-failure-modes.html">Failure Modes Map</a>

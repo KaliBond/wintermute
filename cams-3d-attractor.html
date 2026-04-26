@@ -54,7 +54,70 @@
     }
     </script>
 
-    <link rel="stylesheet" href="style.css">    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>    <style>    .plot-container {    background: rgba(255, 255, 255, 0.95);    border-radius: 15px;    padding: 20px;    margin: 20px 0;    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);    }    #plot {    width: 100%;    height: 70vh;    min-height: 500px;    }    .controls {    margin: 20px 0;    display: flex;    gap: 10px;    flex-wrap: wrap;    justify-content: center;    }    .control-btn {    padding: 8px 16px;    background: #3498db;    color: white;    border: none;    border-radius: 20px;    cursor: pointer;    transition: all 0.3s ease;    }    .control-btn:hover {    background: #2980b9;    }    .control-btn.inactive {    background: #95a5a6;    }    .slider-container {    display: flex;    align-items: center;    gap: 10px;    background: rgba(255, 255, 255, 0.1);    padding: 10px;    border-radius: 20px;    }    .power-type-info {    display: grid;    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));    gap: 15px;    margin: 20px 0;    }    .power-type {    background: rgba(255, 255, 255, 0.1);    padding: 15px;    border-radius: 10px;    border-left: 4px solid;    }    .technocratic { border-color: deepskyblue; }    .theocratic { border-color: indigo; }    .militarist { border-color: crimson; }    .plutocratic { border-color: gold; }    .democratic { border-color: lime; }    .kleptocratic { border-color: darkorange; }    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+    .plot-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+    #plot {
+    width: 100%;
+    height: 70vh;
+    min-height: 500px;
+    }
+    .controls {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    }
+    .control-btn {
+    padding: 8px 16px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    }
+    .control-btn:hover {
+    background: #2980b9;
+    }
+    .control-btn.inactive {
+    background: #95a5a6;
+    }
+    .slider-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 20px;
+    }
+    .power-type-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+    }
+    .power-type {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid;
+    }
+    .technocratic { border-color: deepskyblue; }
+    .theocratic { border-color: indigo; }
+    .militarist { border-color: crimson; }
+    .plutocratic { border-color: gold; }
+    .democratic { border-color: lime; }
+    .kleptocratic { border-color: darkorange; }
+    </style>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
     <script>
@@ -80,7 +143,7 @@
                 <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
                 <div class="nav-dropdown-menu">
                     <a href="results.html">Results at a Glance</a>
-                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
         <a href="cams-advanced-analysis.html">Advanced Analysis</a>
                     <a href="escalation-archetypes.html">Escalation Archetypes</a>
                     <a href="cams-failure-modes.html">Failure Modes Map</a>
@@ -112,7 +175,7 @@
         <hr class="mobile-divider">
         <div class="mobile-section-title">Insights</div>
         <a href="results.html">Results at a Glance</a>
-                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
         <a href="cams-advanced-analysis.html">Advanced Analysis</a>
         <a href="escalation-archetypes.html">Escalation Archetypes</a>
         <a href="cams-failure-modes.html">Failure Modes Map</a>

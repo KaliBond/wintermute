@@ -54,7 +54,290 @@
     }
     </script>
 
-    <link rel="stylesheet" href="style.css">    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">    <style>    body { overflow-x: hidden; }    /* ── Page shell ── */    .page-shell { display: flex; flex-direction: column; min-height: 100vh; }    /* ── Hero ── */    .ms-hero {    text-align: center;    padding: 52px 20px 36px;    color: white;    }    .ms-hero h1 {    font-family: 'Cormorant Garamond', serif;    font-size: 3em;    font-weight: 600;    margin: 0 0 10px;    color: white;    text-align: center;    letter-spacing: -.02em;    }    .ms-hero p {    font-size: 1.05em;    color: rgba(255,255,255,0.8);    max-width: 580px;    margin: 0 auto 28px;    line-height: 1.7;    }    /* ── Filter bar ── */    .filter-bar {    display: flex;    justify-content: center;    gap: 10px;    flex-wrap: wrap;    margin-bottom: 36px;    }    .filter-btn {    font-family: 'Inter', sans-serif;    font-size: 0.78em;    font-weight: 600;    letter-spacing: .06em;    text-transform: uppercase;    padding: 7px 18px;    border: 1.5px solid rgba(255,255,255,0.35);    background: rgba(255,255,255,0.1);    color: rgba(255,255,255,0.85);    border-radius: 20px;    cursor: pointer;    transition: all .2s;    }    .filter-btn:hover,    .filter-btn.active {    background: rgba(255,255,255,0.22);    border-color: rgba(255,255,255,0.7);    color: white;    }    /* ── Main content area ── */    .ms-main {    max-width: 1200px;    margin: 0 auto;    padding: 0 24px 60px;    width: 100%;    }    /* ── Report cards grid ── */    .cards-grid {    display: grid;    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));    gap: 22px;    }    .report-card {    background: rgba(255,255,255,0.96);    border-radius: 14px;    padding: 24px 26px;    box-shadow: 0 6px 28px rgba(0,0,0,0.18);    display: flex;    flex-direction: column;    gap: 14px;    transition: transform .18s, box-shadow .18s;    cursor: pointer;    text-decoration: none;    color: inherit;    }    .report-card:hover {    transform: translateY(-3px);    box-shadow: 0 12px 36px rgba(0,0,0,0.22);    }    .report-card[data-hidden="true"] { display: none; }    /* Card header */    .card-head {    display: flex;    align-items: flex-start;    gap: 12px;    }    .card-flag { font-size: 2.2em; line-height: 1; flex-shrink: 0; }    .card-title { flex: 1; min-width: 0; }    .card-title h3 {    font-family: 'Cormorant Garamond', serif;    font-size: 1.6em;    font-weight: 600;    color: #1a1a2e;    margin: 0 0 2px;    }    .card-period {    font-family: 'Inter', sans-serif;    font-size: 0.74em;    color: #999;    font-weight: 500;    letter-spacing: .04em;    }    .badge {    font-family: 'Inter', sans-serif;    font-size: 0.68em;    font-weight: 700;    letter-spacing: .05em;    text-transform: uppercase;    padding: 4px 10px;    border-radius: 12px;    white-space: nowrap;    flex-shrink: 0;    align-self: flex-start;    margin-top: 2px;    }    .badge-resilient  { background: #d1fae5; color: #065f46; }    .badge-stable     { background: #dbeafe; color: #1e40af; }    .badge-functional { background: #e0f2fe; color: #0369a1; }    .badge-strained   { background: #fef3c7; color: #92400e; }    .badge-critical   { background: #fee2e2; color: #991b1b; }    /* Exec phrase */    .exec-phrase {    font-family: 'Cormorant Garamond', serif;    font-style: italic;    font-size: 0.97em;    color: #374151;    border-left: 3px solid #764ba2;    padding: 8px 12px;    background: #faf7ff;    border-radius: 0 6px 6px 0;    line-height: 1.55;    }    /* Sigma bars */    .sigma-section { }    .sigma-label {    font-family: 'Inter', sans-serif;    font-size: 0.68em;    font-weight: 700;    letter-spacing: .08em;    text-transform: uppercase;    color: #aaa;    margin-bottom: 7px;    }    .sigma-bars {    display: flex;    gap: 3px;    align-items: flex-end;    height: 40px;    }    .sigma-bar-wrap {    flex: 1;    display: flex;    flex-direction: column;    align-items: center;    gap: 3px;    height: 100%;    justify-content: flex-end;    }    .sigma-bar {    width: 100%;    border-radius: 2px 2px 0 0;    min-height: 2px;    }    .sigma-bar.pos { background: #059669; }    .sigma-bar.neg { background: #dc2626; border-radius: 0 0 2px 2px; }    .sigma-node-lbl {    font-family: 'Inter', sans-serif;    font-size: 0.6em;    color: #bbb;    white-space: nowrap;    margin-top: 3px;    }    /* Metrics strip */    .metrics-strip {    display: grid;    grid-template-columns: repeat(4, 1fr);    gap: 8px;    }    .metric-cell {    text-align: center;    background: #f9fafb;    border-radius: 7px;    padding: 7px 4px;    }    .metric-cell .m-label {    font-family: 'Inter', sans-serif;    font-size: 0.62em;    font-weight: 600;    letter-spacing: .04em;    text-transform: uppercase;    color: #aaa;    display: block;    }    .metric-cell .m-val {    font-family: 'Inter', sans-serif;    font-size: 0.95em;    font-weight: 700;    color: #1a1a2e;    display: block;    margin-top: 2px;    }    .metric-cell .m-val.pos { color: #059669; }    .metric-cell .m-val.neg { color: #dc2626; }    /* View button */    .view-btn {    display: block;    text-align: center;    background: linear-gradient(135deg, #667eea, #764ba2);    color: white;    text-decoration: none;    padding: 10px 16px;    border-radius: 8px;    font-family: 'Inter', sans-serif;    font-size: 0.82em;    font-weight: 600;    transition: opacity .15s;    margin-top: auto;    }    .view-btn:hover { opacity: .88; }    /* ── Generate CTA card ── */    .generate-card {    background: rgba(255,255,255,0.12);    border: 2px dashed rgba(255,255,255,0.3);    border-radius: 14px;    padding: 24px 26px;    display: flex;    flex-direction: column;    align-items: center;    justify-content: center;    text-align: center;    gap: 12px;    color: white;    min-height: 200px;    }    .generate-card h3 {    font-family: 'Cormorant Garamond', serif;    font-size: 1.4em;    color: white;    margin: 0;    }    .generate-card p {    font-size: 0.82em;    color: rgba(255,255,255,0.7);    margin: 0;    max-width: 240px;    line-height: 1.6;    }    .generate-card code {    font-size: 0.75em;    background: rgba(0,0,0,0.25);    padding: 6px 12px;    border-radius: 6px;    color: rgba(255,255,255,0.9);    display: block;    width: 100%;    max-width: 300px;    text-align: left;    }    /* ── Empty state ── */    #empty-state {    display: none;    text-align: center;    color: rgba(255,255,255,0.6);    padding: 60px 20px;    font-family: 'Cormorant Garamond', serif;    font-size: 1.2em;    font-style: italic;    }    /* ── Loading ── */    #loading-msg {    text-align: center;    color: rgba(255,255,255,0.7);    padding: 40px;    font-family: 'Inter', sans-serif;    font-size: 0.9em;    }    </style>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    body { overflow-x: hidden; }
+    /* ── Page shell ── */
+    .page-shell { display: flex; flex-direction: column; min-height: 100vh; }
+    /* ── Hero ── */
+    .ms-hero {
+    text-align: center;
+    padding: 52px 20px 36px;
+    color: white;
+    }
+    .ms-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3em;
+    font-weight: 600;
+    margin: 0 0 10px;
+    color: white;
+    text-align: center;
+    letter-spacing: -.02em;
+    }
+    .ms-hero p {
+    font-size: 1.05em;
+    color: rgba(255,255,255,0.8);
+    max-width: 580px;
+    margin: 0 auto 28px;
+    line-height: 1.7;
+    }
+    /* ── Filter bar ── */
+    .filter-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+    }
+    .filter-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78em;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 7px 18px;
+    border: 1.5px solid rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.85);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all .2s;
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+    background: rgba(255,255,255,0.22);
+    border-color: rgba(255,255,255,0.7);
+    color: white;
+    }
+    /* ── Main content area ── */
+    .ms-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+    width: 100%;
+    }
+    /* ── Report cards grid ── */
+    .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 22px;
+    }
+    .report-card {
+    background: rgba(255,255,255,0.96);
+    border-radius: 14px;
+    padding: 24px 26px;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.18);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: transform .18s, box-shadow .18s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    }
+    .report-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.22);
+    }
+    .report-card[data-hidden="true"] { display: none; }
+    /* Card header */
+    .card-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    }
+    .card-flag { font-size: 2.2em; line-height: 1; flex-shrink: 0; }
+    .card-title { flex: 1; min-width: 0; }
+    .card-title h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6em;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin: 0 0 2px;
+    }
+    .card-period {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.74em;
+    color: #999;
+    font-weight: 500;
+    letter-spacing: .04em;
+    }
+    .badge {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.68em;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-top: 2px;
+    }
+    .badge-resilient  { background: #d1fae5; color: #065f46; }
+    .badge-stable     { background: #dbeafe; color: #1e40af; }
+    .badge-functional { background: #e0f2fe; color: #0369a1; }
+    .badge-strained   { background: #fef3c7; color: #92400e; }
+    .badge-critical   { background: #fee2e2; color: #991b1b; }
+    /* Exec phrase */
+    .exec-phrase {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.97em;
+    color: #374151;
+    border-left: 3px solid #764ba2;
+    padding: 8px 12px;
+    background: #faf7ff;
+    border-radius: 0 6px 6px 0;
+    line-height: 1.55;
+    }
+    /* Sigma bars */
+    .sigma-section { }
+    .sigma-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.68em;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-bottom: 7px;
+    }
+    .sigma-bars {
+    display: flex;
+    gap: 3px;
+    align-items: flex-end;
+    height: 40px;
+    }
+    .sigma-bar-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    height: 100%;
+    justify-content: flex-end;
+    }
+    .sigma-bar {
+    width: 100%;
+    border-radius: 2px 2px 0 0;
+    min-height: 2px;
+    }
+    .sigma-bar.pos { background: #059669; }
+    .sigma-bar.neg { background: #dc2626; border-radius: 0 0 2px 2px; }
+    .sigma-node-lbl {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6em;
+    color: #bbb;
+    white-space: nowrap;
+    margin-top: 3px;
+    }
+    /* Metrics strip */
+    .metrics-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    }
+    .metric-cell {
+    text-align: center;
+    background: #f9fafb;
+    border-radius: 7px;
+    padding: 7px 4px;
+    }
+    .metric-cell .m-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.62em;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: #aaa;
+    display: block;
+    }
+    .metric-cell .m-val {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95em;
+    font-weight: 700;
+    color: #1a1a2e;
+    display: block;
+    margin-top: 2px;
+    }
+    .metric-cell .m-val.pos { color: #059669; }
+    .metric-cell .m-val.neg { color: #dc2626; }
+    /* View button */
+    .view-btn {
+    display: block;
+    text-align: center;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82em;
+    font-weight: 600;
+    transition: opacity .15s;
+    margin-top: auto;
+    }
+    .view-btn:hover { opacity: .88; }
+    /* ── Generate CTA card ── */
+    .generate-card {
+    background: rgba(255,255,255,0.12);
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 14px;
+    padding: 24px 26px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 12px;
+    color: white;
+    min-height: 200px;
+    }
+    .generate-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4em;
+    color: white;
+    margin: 0;
+    }
+    .generate-card p {
+    font-size: 0.82em;
+    color: rgba(255,255,255,0.7);
+    margin: 0;
+    max-width: 240px;
+    line-height: 1.6;
+    }
+    .generate-card code {
+    font-size: 0.75em;
+    background: rgba(0,0,0,0.25);
+    padding: 6px 12px;
+    border-radius: 6px;
+    color: rgba(255,255,255,0.9);
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    text-align: left;
+    }
+    /* ── Empty state ── */
+    #empty-state {
+    display: none;
+    text-align: center;
+    color: rgba(255,255,255,0.6);
+    padding: 60px 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2em;
+    font-style: italic;
+    }
+    /* ── Loading ── */
+    #loading-msg {
+    text-align: center;
+    color: rgba(255,255,255,0.7);
+    padding: 40px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9em;
+    }
+    </style>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
     <script>
@@ -82,7 +365,7 @@
                 <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
                 <div class="nav-dropdown-menu">
                     <a href="results.html">Results at a Glance</a>
-                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
         <a href="cams-advanced-analysis.html">Advanced Analysis</a>
                     <a href="escalation-archetypes.html">Escalation Archetypes</a>
                     <a href="cams-failure-modes.html">Failure Modes Map</a>
@@ -114,7 +397,7 @@
         <hr class="mobile-divider">
         <div class="mobile-section-title">Insights</div>
         <a href="results.html">Results at a Glance</a>
-                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
         <a href="cams-advanced-analysis.html">Advanced Analysis</a>
         <a href="escalation-archetypes.html">Escalation Archetypes</a>
         <a href="cams-failure-modes.html">Failure Modes Map</a>

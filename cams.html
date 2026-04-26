@@ -54,7 +54,108 @@
     }
     </script>
 
-    <link rel="stylesheet" href="style.css">    <style>    .metrics-table {    width: 100%;    border-collapse: collapse;    margin: 30px 0;    font-size: 0.95em;    background: #fff;    box-shadow: 0 2px 8px rgba(0,0,0,0.1);    }    .metrics-table thead tr {    background-color: #1f77b4;    color: #ffffff;    text-align: left;    }    .metrics-table th,    .metrics-table td {    padding: 12px 15px;    }    .metrics-table tbody tr {    border-bottom: 1px solid #dddddd;    }    .metrics-table tbody tr:nth-of-type(even) {    background-color: #f3f3f3;    }    .metrics-table tbody tr:last-of-type {    border-bottom: 2px solid #1f77b4;    }    .status-fragile {    color: #ff7f0e;    font-weight: bold;    }    .status-stable {    color: #2ca02c;    font-weight: bold;    }    .status-terminal {    color: #d62728;    font-weight: bold;    }    .status-resilient {    color: #17becf;    font-weight: bold;    }    .dashboard-btn {    display: inline-block;    padding: 15px 40px;    background: linear-gradient(135deg, #1f77b4 0%, #17becf 100%);    color: white;    text-decoration: none;    border-radius: 8px;    font-size: 1.2em;    font-weight: bold;    margin: 30px 0;    box-shadow: 0 4px 12px rgba(31, 119, 180, 0.3);    transition: all 0.3s ease;    }    .dashboard-btn:hover {    transform: translateY(-2px);    box-shadow: 0 6px 16px rgba(31, 119, 180, 0.4);    }    .hero {    text-align: center;    padding: 40px 20px;    background: linear-gradient(135deg, #0e1117 0%, #262730 100%);    color: #fafafa;    border-radius: 12px;    margin-bottom: 40px;    }    .hero h1 {    margin: 0;    font-size: 2.5em;    color: #17becf;    }    .hero .tagline {    font-size: 1.3em;    margin: 15px 0;    color: #fafafa;    }    .accuracy-stats {    display: grid;    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));    gap: 20px;    margin: 30px 0;    }    .stat-box {    background: #f8f9fa;    padding: 20px;    border-radius: 8px;    text-align: center;    border-left: 4px solid #1f77b4;    }    .stat-number {    font-size: 2.5em;    font-weight: bold;    color: #1f77b4;    }    .stat-label {    color: #666;    margin-top: 8px;    }    </style>
+    <link rel="stylesheet" href="style.css">
+    <style>
+    .metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+    font-size: 0.95em;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .metrics-table thead tr {
+    background-color: #1f77b4;
+    color: #ffffff;
+    text-align: left;
+    }
+    .metrics-table th,
+    .metrics-table td {
+    padding: 12px 15px;
+    }
+    .metrics-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+    }
+    .metrics-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+    }
+    .metrics-table tbody tr:last-of-type {
+    border-bottom: 2px solid #1f77b4;
+    }
+    .status-fragile {
+    color: #ff7f0e;
+    font-weight: bold;
+    }
+    .status-stable {
+    color: #2ca02c;
+    font-weight: bold;
+    }
+    .status-terminal {
+    color: #d62728;
+    font-weight: bold;
+    }
+    .status-resilient {
+    color: #17becf;
+    font-weight: bold;
+    }
+    .dashboard-btn {
+    display: inline-block;
+    padding: 15px 40px;
+    background: linear-gradient(135deg, #1f77b4 0%, #17becf 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 30px 0;
+    box-shadow: 0 4px 12px rgba(31, 119, 180, 0.3);
+    transition: all 0.3s ease;
+    }
+    .dashboard-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(31, 119, 180, 0.4);
+    }
+    .hero {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #0e1117 0%, #262730 100%);
+    color: #fafafa;
+    border-radius: 12px;
+    margin-bottom: 40px;
+    }
+    .hero h1 {
+    margin: 0;
+    font-size: 2.5em;
+    color: #17becf;
+    }
+    .hero .tagline {
+    font-size: 1.3em;
+    margin: 15px 0;
+    color: #fafafa;
+    }
+    .accuracy-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+    }
+    .stat-box {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    border-left: 4px solid #1f77b4;
+    }
+    .stat-number {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #1f77b4;
+    }
+    .stat-label {
+    color: #666;
+    margin-top: 8px;
+    }
+    </style>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
     <script>
@@ -80,7 +181,7 @@
                 <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
                 <div class="nav-dropdown-menu">
                     <a href="results.html">Results at a Glance</a>
-                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
         <a href="cams-advanced-analysis.html">Advanced Analysis</a>
                     <a href="escalation-archetypes.html">Escalation Archetypes</a>
                     <a href="cams-failure-modes.html">Failure Modes Map</a>
@@ -112,7 +213,7 @@
         <hr class="mobile-divider">
         <div class="mobile-section-title">Insights</div>
         <a href="results.html">Results at a Glance</a>
-                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
         <a href="cams-advanced-analysis.html">Advanced Analysis</a>
         <a href="escalation-archetypes.html">Escalation Archetypes</a>
         <a href="cams-failure-modes.html">Failure Modes Map</a>

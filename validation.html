@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Validation &amp; Limits — CAMS — Neural Nations</title>
+    <meta name="description" content="What CAMS has shown, what it has not yet proven, its known limits, and what would strengthen or weaken it. An honest account of where the research programme stands.">
+    <meta name="keywords" content="CAMS validation, limits, empirical, coordination mapping, civilisational complexity, Kari McKern, Neural Nations">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/validation">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/validation">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="Validation &amp; Limits — CAMS — Neural Nations">
+    <meta property="og:description" content="What CAMS has shown, what it has not yet proven, and what would strengthen or weaken it.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Validation &amp; Limits — CAMS — Neural Nations">
+    <meta name="twitter:description" content="An honest account of where the CAMS research programme stands.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Neural Nations",
+          "url": "https://neuralnations.org",
+          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
+          "author": { "@id": "https://neuralnations.org/#kari" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://neuralnations.org/#kari",
+          "name": "Kari McKern",
+          "url": "https://neuralnations.org/cams-project-history",
+          "jobTitle": "Independent Researcher",
+          "description": "Creator of CAMS — the Complex Adaptive Model State. Researcher, former public servant, IT specialist, Sydney Australia.",
+          "sameAs": [
+            "https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/",
+            "https://github.com/KaliBond"
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+
+    <style>
+        .val-page {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+
+        .val-header { margin-bottom: 40px; }
+        .val-eyebrow {
+            font-size: 0.72em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #7e22ce;
+            margin-bottom: 10px;
+        }
+        .val-header h1 {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #1a0a2e;
+            line-height: 1.2;
+            margin: 0 0 14px;
+        }
+        .val-lede {
+            font-size: 1.08em;
+            line-height: 1.75;
+            color: #333;
+            background: #f4f0ff;
+            border-left: 4px solid #7e22ce;
+            border-radius: 0 8px 8px 0;
+            padding: 18px 22px;
+            margin: 0 0 48px;
+        }
+
+        .val-section {
+            margin-bottom: 48px;
+            scroll-margin-top: 80px;
+        }
+        .val-section-label {
+            font-size: 0.68em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #9ca3af;
+            margin-bottom: 6px;
+        }
+        .val-section h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #1a0a2e;
+            margin: 0 0 18px;
+            line-height: 1.3;
+        }
+        .val-section p {
+            font-size: 0.97em;
+            line-height: 1.75;
+            color: #374151;
+            margin: 0 0 14px;
+        }
+
+        /* Lists */
+        .val-list {
+            margin: 0 0 14px;
+            padding-left: 0;
+            list-style: none;
+        }
+        .val-list li {
+            font-size: 0.97em;
+            line-height: 1.7;
+            color: #374151;
+            padding: 6px 0 6px 28px;
+            position: relative;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .val-list li:last-child { border-bottom: none; }
+        .val-list li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: #7e22ce;
+            font-weight: 700;
+        }
+
+        /* Checklist */
+        .val-checklist {
+            margin: 0 0 14px;
+            padding-left: 0;
+            list-style: none;
+        }
+        .val-checklist li {
+            font-size: 0.97em;
+            line-height: 1.7;
+            color: #374151;
+            padding: 6px 0 6px 32px;
+            position: relative;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .val-checklist li:last-child { border-bottom: none; }
+        .val-checklist.strengthen li::before {
+            content: "✓";
+            position: absolute;
+            left: 4px;
+            color: #059669;
+            font-weight: 700;
+        }
+        .val-checklist.weaken li::before {
+            content: "✗";
+            position: absolute;
+            left: 4px;
+            color: #dc2626;
+            font-weight: 700;
+        }
+
+        /* Section card backgrounds */
+        .val-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px 28px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        .val-card.green  { border-left: 4px solid #059669; }
+        .val-card.red    { border-left: 4px solid #dc2626; }
+        .val-card.amber  { border-left: 4px solid #d97706; }
+        .val-card.purple { border-left: 4px solid #7e22ce; }
+
+        /* Final reading box */
+        .val-close {
+            background: #1a0a2e;
+            color: white;
+            border-radius: 12px;
+            padding: 32px 36px;
+            margin-top: 56px;
+        }
+        .val-close .close-label {
+            font-size: 0.68em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #a78bfa;
+            margin-bottom: 12px;
+        }
+        .val-close h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: white;
+            margin: 0 0 16px;
+        }
+        .val-close p {
+            font-size: 0.97em;
+            line-height: 1.75;
+            color: #d1d5db;
+            margin: 0 0 12px;
+        }
+        .val-close p:last-child { margin-bottom: 0; }
+        .val-close strong { color: white; }
+
+        @media (max-width: 600px) {
+            .val-page { padding: 28px 16px 60px; }
+            .val-close { padding: 24px 20px; }
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar" id="navbar"></nav>
+
+<main class="val-page">
+
+    <header class="val-header">
+        <p class="val-eyebrow">CAMS Research Programme</p>
+        <h1>Validation &amp; Limits</h1>
+        <div class="val-lede">
+            CAMS is an empirical coordination-mapping framework. It is designed to track how societies, institutions, and organisations coordinate under stress.<br><br>
+            It should not be read as a deterministic theory of history, a complete causal model, or a prediction engine. CAMS does not claim to know the future. It aims to make present coordination dynamics more visible.
+        </div>
+    </header>
+
+    <!-- What CAMS has shown -->
+    <section class="val-section" id="shown">
+        <p class="val-section-label">Evidence base</p>
+        <h2>What CAMS has shown</h2>
+        <div class="val-card purple">
+            <p>Across historical and contemporary datasets, CAMS has identified recurring patterns associated with major crisis:</p>
+            <ul class="val-list">
+                <li>declining institutional capacity;</li>
+                <li>rising social and organisational stress;</li>
+                <li>weakening bonds between core functions;</li>
+                <li>loss of synchrony between leadership, security, economy, labour, knowledge, memory, meaning, and stewardship.</li>
+            </ul>
+            <p style="margin-bottom:0;">CAMS has also distinguished some high-stress systems that fractured from others that absorbed shock or entered long-term frozen states.</p>
+        </div>
+    </section>
+
+    <!-- What CAMS has not yet proven -->
+    <section class="val-section" id="not-proven">
+        <p class="val-section-label">Current limits</p>
+        <h2>What CAMS has not yet proven</h2>
+        <div class="val-card amber">
+            <p><strong>CAMS has not yet proven reliable prospective prediction.</strong></p>
+            <p>Its strongest evidence so far is retrodictive: applying the framework to known historical cases and testing whether crisis signatures appear before or during periods of breakdown.</p>
+            <p style="margin-bottom:0;">CAMS has not yet been formally peer reviewed or independently replicated at scale by external human research teams. It remains a research programme: structured, empirical, falsifiable, but not settled science.</p>
+        </div>
+    </section>
+
+    <!-- Known limits -->
+    <section class="val-section" id="known-limits">
+        <p class="val-section-label">Methodological limits</p>
+        <h2>Known limits</h2>
+        <div class="val-card amber">
+            <ul class="val-list">
+                <li>CAMS depends on input quality. Historical records are uneven, modern data can be politically distorted, and LLM-assisted scoring may introduce bias.</li>
+                <li>Its scores should be read as ordinal risk bands, not exact measurements. A low score does not automatically mean collapse; a high-stress signal does not always mean regime failure.</li>
+                <li>Some rapid-onset fractures may also bypass gradual warning signals. CAMS is better at detecting accumulating desynchronisation than sudden rupture.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Two-column: strengthen / weaken -->
+    <section class="val-section" id="strengthen-weaken">
+        <p class="val-section-label">Falsifiability</p>
+        <h2>What would strengthen or weaken CAMS</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+            <div class="val-card green">
+                <p style="font-size:0.72em;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#059669;margin-bottom:12px;">Would strengthen</p>
+                <ul class="val-checklist strengthen">
+                    <li>Blinded case testing</li>
+                    <li>Prospective 2026–2028 evaluation</li>
+                    <li>Independent human replication</li>
+                    <li>Comparison with simpler baseline models</li>
+                    <li>Publication of failed and ambiguous cases</li>
+                </ul>
+            </div>
+            <div class="val-card red">
+                <p style="font-size:0.72em;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#dc2626;margin-bottom:12px;">Would weaken</p>
+                <ul class="val-checklist weaken">
+                    <li>Repeatedly missing known crises</li>
+                    <li>Flagging stable systems as high risk</li>
+                    <li>Performing no better than simpler indicators</li>
+                    <li>Heavy dependence on one model, scorer, or dataset</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to read CAMS -->
+    <div class="val-close" id="how-to-read">
+        <p class="close-label">How to read CAMS</p>
+        <h2>CAMS is a map of coordination risk, not an oracle.</h2>
+        <p>Its central claim is modest: complex societies often fail not only because they lack resources or legitimacy, but because their <strong>coordination system loses synchrony</strong>.</p>
+        <p>CAMS attempts to make that loss visible before it becomes obvious.</p>
+    </div>
+
+</main>
+
+<footer class="footer">
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+
+<script src="nav.js"></script>
+</body>
+</html>

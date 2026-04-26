@@ -54,7 +54,161 @@
     }
     </script>
 
-    <link rel="stylesheet" href="style.css">    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>    <style>    html, body {    height: 100%;    overflow: hidden;    }    .page-shell {    display: flex;    flex-direction: column;    height: 100vh;    }    #viz-row {    display: flex;    flex: 1;    overflow: hidden;    padding: 14px 20px 14px 20px;    gap: 14px;    /* inherit gradient background from body */    }    #network-card {    flex: 1;    background: rgba(255,255,255,0.97);    border-radius: 15px;    box-shadow: 0 8px 25px rgba(0,0,0,0.12);    overflow: hidden;    position: relative;    }    #network-title {    position: absolute;    top: 14px;    left: 18px;    font-size: 0.78rem;    font-weight: 700;    text-transform: uppercase;    letter-spacing: 0.08em;    color: #1f77b4;    z-index: 2;    pointer-events: none;    }    #network {    width: 100%;    height: 100%;    }    #sidebar {    width: 290px;    background: rgba(255,255,255,0.97);    border-radius: 15px;    box-shadow: 0 8px 25px rgba(0,0,0,0.12);    overflow-y: auto;    padding: 16px 16px 20px;    flex-shrink: 0;    }    .sb-section-label {    font-size: 0.75rem;    font-weight: 700;    text-transform: uppercase;    letter-spacing: 0.08em;    color: #1f77b4;    border-bottom: 1px solid #e8eaf0;    padding-bottom: 5px;    margin: 16px 0 10px;    }    .sb-section-label:first-of-type { margin-top: 0; }    .ctrl-row {    display: flex;    flex-wrap: wrap;    gap: 6px;    margin-bottom: 4px;    }    .ctrl-btn {    background: #1f77b4;    color: #fff;    border: none;    padding: 5px 12px;    border-radius: 20px;    font-size: 0.8rem;    cursor: pointer;    font-family: inherit;    }    .ctrl-btn:hover { background: #155e96; }    .ctrl-btn.sec { background: #e8eaf0; color: #333; }    .ctrl-btn.sec:hover { background: #d0d4e0; }    #detail-panel {    background: #f5f7fc;    border-radius: 8px;    border-left: 3px solid #1f77b4;    padding: 10px 12px;    font-size: 0.83rem;    color: #444;    line-height: 1.6;    min-height: 56px;    }    #detail-panel .detail-label {    font-weight: 700;    color: #1a1a2e;    font-size: 0.86rem;    margin-bottom: 5px;    }    .loop-card {    background: #f5f7fc;    border-left: 3px solid #e74c3c;    border-radius: 6px;    padding: 8px 10px;    margin-bottom: 7px;    cursor: pointer;    transition: border-color 0.15s;    }    .loop-card:hover { border-left-color: #c0392b; background: #eef0f8; }    .loop-title {    font-weight: 700;    color: #2c3e50;    font-size: 0.83rem;    margin-bottom: 3px;    }    .loop-desc {    color: #666;    font-size: 0.79rem;    line-height: 1.5;    }    .arch-card {    background: #f5f7fc;    border-left: 3px solid #9b59b6;    border-radius: 6px;    padding: 8px 10px;    margin-bottom: 7px;    cursor: pointer;    transition: border-color 0.15s;    }    .arch-card:hover { border-left-color: #7d3c98; background: #eef0f8; }    .arch-title {    font-weight: 700;    color: #2c3e50;    font-size: 0.83rem;    margin-bottom: 3px;    }    .legend-row {    display: flex;    align-items: center;    gap: 8px;    margin-bottom: 5px;    font-size: 0.81rem;    color: #444;    }    .leg-box {    width: 26px;    height: 15px;    border-radius: 3px;    border: 1.5px solid #ccc;    flex-shrink: 0;    }    ::-webkit-scrollbar { width: 5px; }    ::-webkit-scrollbar-track { background: transparent; }    ::-webkit-scrollbar-thumb { background: #c8cfe0; border-radius: 3px; }    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>
+    html, body {
+    height: 100%;
+    overflow: hidden;
+    }
+    .page-shell {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    }
+    #viz-row {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    padding: 14px 20px 14px 20px;
+    gap: 14px;
+    /* inherit gradient background from body */
+    }
+    #network-card {
+    flex: 1;
+    background: rgba(255,255,255,0.97);
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    overflow: hidden;
+    position: relative;
+    }
+    #network-title {
+    position: absolute;
+    top: 14px;
+    left: 18px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #1f77b4;
+    z-index: 2;
+    pointer-events: none;
+    }
+    #network {
+    width: 100%;
+    height: 100%;
+    }
+    #sidebar {
+    width: 290px;
+    background: rgba(255,255,255,0.97);
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    overflow-y: auto;
+    padding: 16px 16px 20px;
+    flex-shrink: 0;
+    }
+    .sb-section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #1f77b4;
+    border-bottom: 1px solid #e8eaf0;
+    padding-bottom: 5px;
+    margin: 16px 0 10px;
+    }
+    .sb-section-label:first-of-type { margin-top: 0; }
+    .ctrl-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 4px;
+    }
+    .ctrl-btn {
+    background: #1f77b4;
+    color: #fff;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-family: inherit;
+    }
+    .ctrl-btn:hover { background: #155e96; }
+    .ctrl-btn.sec { background: #e8eaf0; color: #333; }
+    .ctrl-btn.sec:hover { background: #d0d4e0; }
+    #detail-panel {
+    background: #f5f7fc;
+    border-radius: 8px;
+    border-left: 3px solid #1f77b4;
+    padding: 10px 12px;
+    font-size: 0.83rem;
+    color: #444;
+    line-height: 1.6;
+    min-height: 56px;
+    }
+    #detail-panel .detail-label {
+    font-weight: 700;
+    color: #1a1a2e;
+    font-size: 0.86rem;
+    margin-bottom: 5px;
+    }
+    .loop-card {
+    background: #f5f7fc;
+    border-left: 3px solid #e74c3c;
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-bottom: 7px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    }
+    .loop-card:hover { border-left-color: #c0392b; background: #eef0f8; }
+    .loop-title {
+    font-weight: 700;
+    color: #2c3e50;
+    font-size: 0.83rem;
+    margin-bottom: 3px;
+    }
+    .loop-desc {
+    color: #666;
+    font-size: 0.79rem;
+    line-height: 1.5;
+    }
+    .arch-card {
+    background: #f5f7fc;
+    border-left: 3px solid #9b59b6;
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-bottom: 7px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    }
+    .arch-card:hover { border-left-color: #7d3c98; background: #eef0f8; }
+    .arch-title {
+    font-weight: 700;
+    color: #2c3e50;
+    font-size: 0.83rem;
+    margin-bottom: 3px;
+    }
+    .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+    font-size: 0.81rem;
+    color: #444;
+    }
+    .leg-box {
+    width: 26px;
+    height: 15px;
+    border-radius: 3px;
+    border: 1.5px solid #ccc;
+    flex-shrink: 0;
+    }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #c8cfe0; border-radius: 3px; }
+    </style>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
     <script>
@@ -81,7 +235,7 @@
                 <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
                 <div class="nav-dropdown-menu">
                     <a href="results.html">Results at a Glance</a>
-                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
         <a href="cams-advanced-analysis.html">Advanced Analysis</a>
                     <a href="escalation-archetypes.html">Escalation Archetypes</a>
                     <a href="cams-failure-modes.html">Failure Modes Map</a>
@@ -113,7 +267,7 @@
         <hr class="mobile-divider">
         <div class="mobile-section-title">Insights</div>
         <a href="results.html">Results at a Glance</a>
-                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
         <a href="cams-advanced-analysis.html">Advanced Analysis</a>
         <a href="escalation-archetypes.html">Escalation Archetypes</a>
         <a href="cams-failure-modes.html">Failure Modes Map</a>

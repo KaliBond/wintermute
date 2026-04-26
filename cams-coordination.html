@@ -54,7 +54,142 @@
     }
     </script>
 
-    <link rel="stylesheet" href="style.css" />    <style>    :root{    --bg:#f3f4f6;    --panel:#ffffff;    --text:#1f2937;    --muted:#6b7280;    --node-fill:#eaf2ff;    --node-stroke:#5b7ea6;    --shadow:0 6px 16px rgba(0,0,0,0.10);    --control:#2563eb;    --metabolic:#16a34a;    --mythic:#7c3aed;    --stress:#dc2626;    }    *{box-sizing:border-box}    body{    margin:0;    font-family:Arial, Helvetica, sans-serif;    background:var(--bg);    color:var(--text);    }    /* ---- page content ---- */    .wrap{    max-width:1280px;    margin:0 auto;    padding:28px 24px;    }    h1{    margin:0 0 6px;    text-align:center;    font-size:34px;    font-weight:700;    }    .subtitle{    text-align:center;    color:var(--muted);    font-size:15px;    margin-bottom:20px;    }    .layout{    display:grid;    grid-template-columns: 1fr 320px;    gap:18px;    align-items:start;    }    .board{    background:var(--panel);    border:1px solid #d8dee8;    border-radius:14px;    box-shadow:var(--shadow);    padding:10px;    }    .side{    background:var(--panel);    border:1px solid #d8dee8;    border-radius:14px;    box-shadow:var(--shadow);    padding:18px 18px 16px;    }    .side h2{font-size:18px;margin:0 0 10px}    .side h3{font-size:14px;margin:16px 0 6px;color:#111827}    .side p,.side li{font-size:13px;line-height:1.45;color:#374151}    .legend{    display:grid;    grid-template-columns:1fr 1fr;    gap:8px 12px;    margin-top:8px;    font-size:13px;    }    .legend-item{display:flex;align-items:center;gap:8px;color:#374151}    .swatch{width:22px;height:4px;border-radius:999px;flex:0 0 auto}    .control{background:var(--control)}    .metabolic{background:var(--metabolic)}    .mythic{background:var(--mythic)}    .stress{background:var(--stress)}    svg{    width:100%;    height:auto;    display:block;    background:#fbfcfe;    border-radius:10px;    }    .node ellipse{    fill:var(--node-fill);    stroke:var(--node-stroke);    stroke-width:2.2;    filter:drop-shadow(0 3px 7px rgba(0,0,0,0.12));    }    .node text{    font-size:16px;    font-weight:700;    fill:#1f2937;    text-anchor:middle;    dominant-baseline:middle;    pointer-events:none;    }    .small{font-size:12px;fill:#4b5563;font-weight:400}    .edge{fill:none;stroke-width:3.3;opacity:0.95}    .edge.control{stroke:var(--control)}    .edge.metabolic{stroke:var(--metabolic)}    .edge.mythic{stroke:var(--mythic)}    .edge.stress{stroke:var(--stress)}    .edge-label{    font-size:12px;    fill:#374151;    paint-order:stroke;    stroke:#fbfcfe;    stroke-width:4px;    stroke-linejoin:round;    }    .loop{    fill:#ffffff;    stroke:#374151;    stroke-width:2;    filter:drop-shadow(0 2px 4px rgba(0,0,0,0.10));    }    .loop-text{    font-size:12px;    font-weight:700;    text-anchor:middle;    dominant-baseline:middle;    fill:#111827;    }    .note{margin-top:12px;font-size:12px;color:#6b7280}    footer{    text-align:center;    padding:24px;    font-size:13px;    color:var(--muted);    margin-top:32px;    }    @media(max-width:1050px){    .layout{grid-template-columns:1fr}    }    </style>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+    :root{
+    --bg:#f3f4f6;
+    --panel:#ffffff;
+    --text:#1f2937;
+    --muted:#6b7280;
+    --node-fill:#eaf2ff;
+    --node-stroke:#5b7ea6;
+    --shadow:0 6px 16px rgba(0,0,0,0.10);
+    --control:#2563eb;
+    --metabolic:#16a34a;
+    --mythic:#7c3aed;
+    --stress:#dc2626;
+    }
+    *{box-sizing:border-box}
+    body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    }
+    /* ---- page content ---- */
+    .wrap{
+    max-width:1280px;
+    margin:0 auto;
+    padding:28px 24px;
+    }
+    h1{
+    margin:0 0 6px;
+    text-align:center;
+    font-size:34px;
+    font-weight:700;
+    }
+    .subtitle{
+    text-align:center;
+    color:var(--muted);
+    font-size:15px;
+    margin-bottom:20px;
+    }
+    .layout{
+    display:grid;
+    grid-template-columns: 1fr 320px;
+    gap:18px;
+    align-items:start;
+    }
+    .board{
+    background:var(--panel);
+    border:1px solid #d8dee8;
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:10px;
+    }
+    .side{
+    background:var(--panel);
+    border:1px solid #d8dee8;
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:18px 18px 16px;
+    }
+    .side h2{font-size:18px;margin:0 0 10px}
+    .side h3{font-size:14px;margin:16px 0 6px;color:#111827}
+    .side p,.side li{font-size:13px;line-height:1.45;color:#374151}
+    .legend{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px 12px;
+    margin-top:8px;
+    font-size:13px;
+    }
+    .legend-item{display:flex;align-items:center;gap:8px;color:#374151}
+    .swatch{width:22px;height:4px;border-radius:999px;flex:0 0 auto}
+    .control{background:var(--control)}
+    .metabolic{background:var(--metabolic)}
+    .mythic{background:var(--mythic)}
+    .stress{background:var(--stress)}
+    svg{
+    width:100%;
+    height:auto;
+    display:block;
+    background:#fbfcfe;
+    border-radius:10px;
+    }
+    .node ellipse{
+    fill:var(--node-fill);
+    stroke:var(--node-stroke);
+    stroke-width:2.2;
+    filter:drop-shadow(0 3px 7px rgba(0,0,0,0.12));
+    }
+    .node text{
+    font-size:16px;
+    font-weight:700;
+    fill:#1f2937;
+    text-anchor:middle;
+    dominant-baseline:middle;
+    pointer-events:none;
+    }
+    .small{font-size:12px;fill:#4b5563;font-weight:400}
+    .edge{fill:none;stroke-width:3.3;opacity:0.95}
+    .edge.control{stroke:var(--control)}
+    .edge.metabolic{stroke:var(--metabolic)}
+    .edge.mythic{stroke:var(--mythic)}
+    .edge.stress{stroke:var(--stress)}
+    .edge-label{
+    font-size:12px;
+    fill:#374151;
+    paint-order:stroke;
+    stroke:#fbfcfe;
+    stroke-width:4px;
+    stroke-linejoin:round;
+    }
+    .loop{
+    fill:#ffffff;
+    stroke:#374151;
+    stroke-width:2;
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,0.10));
+    }
+    .loop-text{
+    font-size:12px;
+    font-weight:700;
+    text-anchor:middle;
+    dominant-baseline:middle;
+    fill:#111827;
+    }
+    .note{margin-top:12px;font-size:12px;color:#6b7280}
+    footer{
+    text-align:center;
+    padding:24px;
+    font-size:13px;
+    color:var(--muted);
+    margin-top:32px;
+    }
+    @media(max-width:1050px){
+    .layout{grid-template-columns:1fr}
+    }
+    </style>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
     <script>
@@ -81,7 +216,7 @@
                 <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
                 <div class="nav-dropdown-menu">
                     <a href="results.html">Results at a Glance</a>
-                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
         <a href="cams-advanced-analysis.html">Advanced Analysis</a>
                     <a href="escalation-archetypes.html">Escalation Archetypes</a>
                     <a href="cams-failure-modes.html">Failure Modes Map</a>
@@ -113,7 +248,7 @@
         <hr class="mobile-divider">
         <div class="mobile-section-title">Insights</div>
         <a href="results.html">Results at a Glance</a>
-                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
         <a href="cams-advanced-analysis.html">Advanced Analysis</a>
         <a href="escalation-archetypes.html">Escalation Archetypes</a>
         <a href="cams-failure-modes.html">Failure Modes Map</a>

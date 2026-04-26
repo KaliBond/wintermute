@@ -54,7 +54,71 @@
     }
     </script>
 
-    <link rel="stylesheet" href="style.css">    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>    <style>    .aa-controls {    display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 16px;    }    .aa-controls label { font-size: 0.82rem; font-weight: 600; color: #555; display: block; margin-bottom: 4px; }    .aa-controls select { padding: 8px 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 0.9rem; }    .aa-btn {    padding: 10px 22px;    background: linear-gradient(135deg, #764ba2, #667eea);    color: white; font-size: 0.95rem; font-weight: 700;    border: none; border-radius: 10px; cursor: pointer;    }    .aa-btn:hover { opacity: 0.9; }    .loader-row {    display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 16px;    }    .loader-row label { font-size: 0.85rem; font-weight: 600; color: #555; display: block; margin-bottom: 4px; }    .loader-row select { padding: 8px 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 0.9rem; }    .loader-row button {    padding: 9px 18px; background: #764ba2; color: white;    border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;    }    .loader-row button:hover { background: #5a3580; }    .tab-bar { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }    .tab-btn {    padding: 8px 18px; border-radius: 20px; border: 1.5px solid #d0c0e8;    background: white; color: #764ba2; font-weight: 600; font-size: 0.88rem;    cursor: pointer; transition: all 0.2s;    }    .tab-btn.active { background: #764ba2; color: white; border-color: #764ba2; }    .tab-btn:hover:not(.active) { background: #f3ecfa; }    .tab-panel { display: none; }    .tab-panel.active { display: block; }    .status-bar {    background: #f8f5ff; border-left: 4px solid #764ba2;    padding: 10px 14px; border-radius: 6px; font-size: 0.88rem; color: #555; margin-bottom: 16px;    }    .insight-cards {    display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));    gap: 12px; margin-top: 12px;    }    .insight-card { background: #f8f5ff; border-radius: 10px; padding: 14px; text-align: center; }    .ic-rank { font-size: 0.72rem; color: #888; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }    .ic-node { font-size: 1.05rem; font-weight: 700; color: #5a3580; }    .ic-ndig { font-size: 1.55rem; font-weight: 700; color: #764ba2; line-height: 1.2; }    .ic-bits { font-size: 0.75rem; color: #888; }    .result-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 8px; }    .result-table th { background: #f0eaf7; color: #5a3580; font-weight: 700; padding: 8px 6px; text-align: center; border-bottom: 2px solid #d0c0e8; }    .result-table td { padding: 6px 8px; border-bottom: 1px solid #f0f0f0; text-align: center; }    .result-table td:first-child { font-weight: 700; text-align: left; }    .result-table tr:hover td { background: #faf8ff; }    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }    @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }    h3.section-title { font-size: 1rem; font-weight: 700; color: #5a3580; margin: 20px 0 10px 0; border-bottom: 1px solid #e8e0f0; padding-bottom: 6px; }    .notice { background: #e8f4f8; border-left: 4px solid #3498db; padding: 10px 14px; border-radius: 6px; font-size: 0.84rem; color: #444; margin-bottom: 14px; }    .warning-box { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px 14px; border-radius: 6px; font-size: 0.84rem; color: #664d03; margin-bottom: 12px; }    .slider-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }    .slider-row label { font-size: 0.85rem; font-weight: 600; color: #555; min-width: 140px; }    .slider-row input[type=range] { accent-color: #764ba2; flex: 1; max-width: 180px; }    .sl-val { font-size: 0.85rem; font-weight: 700; color: #444; min-width: 24px; }    .sep { display: flex; align-items: center; padding: 4px 12px; color: #aaa; font-size: 0.85rem; }    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <style>
+    .aa-controls {
+    display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 16px;
+    }
+    .aa-controls label { font-size: 0.82rem; font-weight: 600; color: #555; display: block; margin-bottom: 4px; }
+    .aa-controls select { padding: 8px 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 0.9rem; }
+    .aa-btn {
+    padding: 10px 22px;
+    background: linear-gradient(135deg, #764ba2, #667eea);
+    color: white; font-size: 0.95rem; font-weight: 700;
+    border: none; border-radius: 10px; cursor: pointer;
+    }
+    .aa-btn:hover { opacity: 0.9; }
+    .loader-row {
+    display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 16px;
+    }
+    .loader-row label { font-size: 0.85rem; font-weight: 600; color: #555; display: block; margin-bottom: 4px; }
+    .loader-row select { padding: 8px 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 0.9rem; }
+    .loader-row button {
+    padding: 9px 18px; background: #764ba2; color: white;
+    border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;
+    }
+    .loader-row button:hover { background: #5a3580; }
+    .tab-bar { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+    .tab-btn {
+    padding: 8px 18px; border-radius: 20px; border: 1.5px solid #d0c0e8;
+    background: white; color: #764ba2; font-weight: 600; font-size: 0.88rem;
+    cursor: pointer; transition: all 0.2s;
+    }
+    .tab-btn.active { background: #764ba2; color: white; border-color: #764ba2; }
+    .tab-btn:hover:not(.active) { background: #f3ecfa; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .status-bar {
+    background: #f8f5ff; border-left: 4px solid #764ba2;
+    padding: 10px 14px; border-radius: 6px; font-size: 0.88rem; color: #555; margin-bottom: 16px;
+    }
+    .insight-cards {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+    gap: 12px; margin-top: 12px;
+    }
+    .insight-card { background: #f8f5ff; border-radius: 10px; padding: 14px; text-align: center; }
+    .ic-rank { font-size: 0.72rem; color: #888; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+    .ic-node { font-size: 1.05rem; font-weight: 700; color: #5a3580; }
+    .ic-ndig { font-size: 1.55rem; font-weight: 700; color: #764ba2; line-height: 1.2; }
+    .ic-bits { font-size: 0.75rem; color: #888; }
+    .result-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 8px; }
+    .result-table th { background: #f0eaf7; color: #5a3580; font-weight: 700; padding: 8px 6px; text-align: center; border-bottom: 2px solid #d0c0e8; }
+    .result-table td { padding: 6px 8px; border-bottom: 1px solid #f0f0f0; text-align: center; }
+    .result-table td:first-child { font-weight: 700; text-align: left; }
+    .result-table tr:hover td { background: #faf8ff; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+    h3.section-title { font-size: 1rem; font-weight: 700; color: #5a3580; margin: 20px 0 10px 0; border-bottom: 1px solid #e8e0f0; padding-bottom: 6px; }
+    .notice { background: #e8f4f8; border-left: 4px solid #3498db; padding: 10px 14px; border-radius: 6px; font-size: 0.84rem; color: #444; margin-bottom: 14px; }
+    .warning-box { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px 14px; border-radius: 6px; font-size: 0.84rem; color: #664d03; margin-bottom: 12px; }
+    .slider-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+    .slider-row label { font-size: 0.85rem; font-weight: 600; color: #555; min-width: 140px; }
+    .slider-row input[type=range] { accent-color: #764ba2; flex: 1; max-width: 180px; }
+    .sl-val { font-size: 0.85rem; font-weight: 700; color: #444; min-width: 24px; }
+    .sep { display: flex; align-items: center; padding: 4px 12px; color: #aaa; font-size: 0.85rem; }
+    </style>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
     <script>
@@ -81,7 +145,7 @@
                 <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
                 <div class="nav-dropdown-menu">
                     <a href="results.html">Results at a Glance</a>
-                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
         <a href="cams-advanced-analysis.html">Advanced Analysis</a>
                     <a href="escalation-archetypes.html">Escalation Archetypes</a>
                     <a href="cams-failure-modes.html">Failure Modes Map</a>
@@ -113,7 +177,7 @@
         <hr class="mobile-divider">
         <div class="mobile-section-title">Insights</div>
         <a href="results.html">Results at a Glance</a>
-                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
         <a href="cams-advanced-analysis.html">Advanced Analysis</a>
         <a href="escalation-archetypes.html">Escalation Archetypes</a>
         <a href="cams-failure-modes.html">Failure Modes Map</a>

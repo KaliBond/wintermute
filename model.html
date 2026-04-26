@@ -54,7 +54,80 @@
     }
     </script>
 
-    <link rel="stylesheet" href="style.css">    <style>    .formula-block {    background: #1e2130;    color: #e0e0e0;    padding: 14px 20px;    border-radius: 8px;    font-family: monospace;    font-size: 0.95em;    margin: 12px 0;    overflow-x: auto;    }    .node-grid {    display: grid;    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));    gap: 12px;    margin: 20px 0;    }    .node-card {    padding: 14px 16px;    border-radius: 8px;    border-left: 4px solid;    background: #f8f9fa;    }    .node-card strong { display: block; margin-bottom: 4px; }    .node-card span { font-size: 0.88em; color: #555; }    .node-lore      { border-color: #9b59b6; }    .node-archive   { border-color: #3498db; }    .node-helm      { border-color: #e74c3c; }    .node-stewards  { border-color: #e67e22; }    .node-shield    { border-color: #c0392b; }    .node-craft     { border-color: #1abc9c; }    .node-hands     { border-color: #7f8c8d; }    .node-flow      { border-color: #f1c40f; }    .metric-row {    display: grid;    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));    gap: 12px;    margin: 16px 0;    }    .metric-card {    padding: 14px 16px;    background: #f0f4fb;    border-radius: 8px;    border-top: 3px solid #1f77b4;    }    .metric-card strong { display: block; margin-bottom: 4px; color: #1f77b4; }    .metric-card span { font-size: 0.88em; color: #555; }    .regime-table {    width: 100%;    border-collapse: collapse;    margin: 16px 0;    font-size: 0.95em;    }    .regime-table th {    background: #1f77b4;    color: white;    padding: 10px 14px;    text-align: left;    }    .regime-table td {    padding: 10px 14px;    border-bottom: 1px solid #dde4f0;    }    .regime-table tr:nth-child(even) td { background: #f8f9fa; }    .section-label {    font-size: 0.78rem;    font-weight: 700;    text-transform: uppercase;    letter-spacing: 0.08em;    color: #1f77b4;    margin: 32px 0 8px;    }    </style>
+    <link rel="stylesheet" href="style.css">
+    <style>
+    .formula-block {
+    background: #1e2130;
+    color: #e0e0e0;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.95em;
+    margin: 12px 0;
+    overflow-x: auto;
+    }
+    .node-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+    }
+    .node-card {
+    padding: 14px 16px;
+    border-radius: 8px;
+    border-left: 4px solid;
+    background: #f8f9fa;
+    }
+    .node-card strong { display: block; margin-bottom: 4px; }
+    .node-card span { font-size: 0.88em; color: #555; }
+    .node-lore      { border-color: #9b59b6; }
+    .node-archive   { border-color: #3498db; }
+    .node-helm      { border-color: #e74c3c; }
+    .node-stewards  { border-color: #e67e22; }
+    .node-shield    { border-color: #c0392b; }
+    .node-craft     { border-color: #1abc9c; }
+    .node-hands     { border-color: #7f8c8d; }
+    .node-flow      { border-color: #f1c40f; }
+    .metric-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+    }
+    .metric-card {
+    padding: 14px 16px;
+    background: #f0f4fb;
+    border-radius: 8px;
+    border-top: 3px solid #1f77b4;
+    }
+    .metric-card strong { display: block; margin-bottom: 4px; color: #1f77b4; }
+    .metric-card span { font-size: 0.88em; color: #555; }
+    .regime-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.95em;
+    }
+    .regime-table th {
+    background: #1f77b4;
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    }
+    .regime-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #dde4f0;
+    }
+    .regime-table tr:nth-child(even) td { background: #f8f9fa; }
+    .section-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #1f77b4;
+    margin: 32px 0 8px;
+    }
+    </style>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
     <script>
@@ -80,7 +153,7 @@
                 <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
                 <div class="nav-dropdown-menu">
                     <a href="results.html">Results at a Glance</a>
-                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
         <a href="cams-advanced-analysis.html">Advanced Analysis</a>
                     <a href="escalation-archetypes.html">Escalation Archetypes</a>
                     <a href="cams-failure-modes.html">Failure Modes Map</a>
@@ -112,7 +185,7 @@
         <hr class="mobile-divider">
         <div class="mobile-section-title">Insights</div>
         <a href="results.html">Results at a Glance</a>
-                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
         <a href="cams-advanced-analysis.html">Advanced Analysis</a>
         <a href="escalation-archetypes.html">Escalation Archetypes</a>
         <a href="cams-failure-modes.html">Failure Modes Map</a>
