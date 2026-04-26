@@ -3,207 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Primary SEO -->
-    <title>CAMS Failure Modes Map — Neural Nations</title>
-    <meta name="description" content="Interactive causal loop diagram of the four CAMS failure spirals: R1 Flow-Hands death spiral, R2 rent-seeking trap, R3 Shield capture, R4 institutional amnesia.">
-    <meta name="keywords" content="CAMS, Neural Nations, civilisational complexity, institutional analysis, Kari McKern">
-    <meta name="author" content="Kari McKern">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://neuralnations.org/cams-failure-modes">
-
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://neuralnations.org/cams-failure-modes">
-    <meta property="og:site_name" content="Neural Nations">
-    <meta property="og:locale" content="en_AU">
-    <meta property="og:title" content="CAMS Failure Modes Map — Neural Nations">
-    <meta property="og:description" content="Interactive causal loop diagram of the four CAMS failure spirals: R1 Flow-Hands death spiral, R2 rent-seeking trap, R3 Shield capture, R4 institutional amnesia.">
-    <meta property="og:image" content="https://neuralnations.org/og-image.png">
-
-    <!-- Twitter / X Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CAMS Failure Modes Map — Neural Nations">
-    <meta name="twitter:description" content="Interactive causal loop diagram of the four CAMS failure spirals: R1 Flow-Hands death spiral, R2 rent-seeking trap, R3 Shield capture, R4 institutional amnesia.">
-    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "WebSite",
-          "name": "Neural Nations",
-          "url": "https://neuralnations.org",
-          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
-          "author": { "@id": "https://neuralnations.org/#kari" }
-        },
-        {
-          "@type": "Person",
-          "@id": "https://neuralnations.org/#kari",
-          "name": "Kari McKern",
-          "url": "https://neuralnations.org/cams-project-history",
-          "jobTitle": "Independent Researcher",
-          "description": "Creator of CAMS — the Complex Adaptive Model State. Researcher, former public servant, IT specialist, Sydney Australia.",
-          "sameAs": [
-            "https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/",
-            "https://github.com/KaliBond"
-          ]
-        }
-      ]
-    }
-    </script>
-
+    <title>Argentina CAMS 1950–2026: The Thermodynamic Freeze Attractor</title>
+    <!-- SWAPPED CDN TO JSDELIVR FOR BETTER RELIABILITY -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network/standalone/umd/vis-network.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     <style type="text/css">
-    /* --- CORE STYLES --- */
-    body, html { font-family: 'Inter', sans-serif; margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #f0f2f5; }
-    .page-shell { display: flex; flex-direction: column; height: 100vh; }
-    #cldContainer { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; }
-    #cldNetwork { flex-grow: 1; border: 1px solid #d1d5db; background-color: #ffffff; width: 100%; height: 100%; }
-    /* UI Elements */
-    #modelTitleDisplay { position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold; color: #1F2937; background-color: rgba(255, 255, 255, 0.9); padding: 10px 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); z-index: 10; pointer-events: none; }
-    .action-btn { position: absolute; bottom: 20px; z-index: 25; padding: 10px 18px; font-size: 14px; font-weight: 500; border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-    /* Button Positioning */
-    #saveButton { left: 20px; background-color: #2563EB; color: white; }
-    #saveButton:hover { background-color: #1D4ED8; }
-    #loadNewButton { left: 140px; background-color: #fff; color: #374151; }
-    #loadNewButton:hover { background-color: #f9fafb; }
-    /* New Button: Save Map Data (JSON) */
-    #saveDataButton { left: 285px; background-color: #10B981; color: white; }
-    #saveDataButton:hover { background-color: #059669; }
-    #storyButton { left: 430px; background-color: #0f766e; color: white; text-decoration: none; display: inline-flex; align-items: center; }
-    #storyButton:hover { background-color: #0d6460; }
-    /* Legends */
-    .legend-container { 
-    position: fixed; 
-    right: 20px; 
-    width: 280px; 
-    background: rgba(255,255,255,0.96); 
-    border-radius: 8px; 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
-    max-height: 42px; 
-    overflow: hidden; 
-    z-index: 20; 
-    transition: max-height 0.3s ease; 
-    border: 1px solid #e5e7eb; 
-    display: flex; 
-    flex-direction: column; 
-    }
-    .legend-container.expanded { 
-    max-height: 50vh; 
-    z-index: 100; 
-    }
-    #legend { top: 20px; }
-    #archetypeLegend { top: 75px; }
-    .legend-header { padding: 12px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; background: #fff; border-bottom: 1px solid #eee; }
-    .legend-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex-grow: 1; }
-    .legend-list li { padding: 8px 12px; border-bottom: 1px solid #f3f4f6; font-size: 13px; cursor: pointer; border-left: 3px solid transparent; }
-    .legend-list li:hover { background-color: #eff6ff; }
-    /* Dragging visuals */
-    .legend-list li.dragging { opacity: 0.5; background: #e5e7eb; }
-    /* Description Box */
-    #descPanel { position: fixed; right: 20px; bottom: 80px; width: 280px; background: #fff; padding: 16px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 30; display: none; max-height: 300px; overflow-y: auto; font-size: 14px; line-height: 1.5; border: 1px solid #ddd; }
-    #descPanel strong { display: block; margin-bottom: 6px; color: #1E40AF; font-size: 15px; }
-    /* Tooltips */
-    .tooltip { position: absolute; background: rgba(255,255,255,0.98); border: 1px solid #ccc; padding: 10px; border-radius: 6px; font-size: 13px; display: none; z-index: 1000; pointer-events: none; max-width: 250px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); line-height: 1.4; }
-    #canvasTooltip { background: rgba(17, 24, 39, 0.95); color: white; border: none; }
-    #helperTooltip {
-    position: absolute; bottom: 70px; left: 20px;
-    background: rgba(0,0,0,0.6); color: white;
-    padding: 8px 12px; border-radius: 20px;
-    font-size: 12px; pointer-events: none; z-index: 5;
-    }
-    /* MODALS */
-    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; }
-    .modal-box { background: white; padding: 25px; border-radius: 8px; width: 600px; max-width: 90%; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-    .modal-box textarea { width: 100%; height: 250px; padding: 12px; font-family: monospace; border: 1px solid #ccc; border-radius: 4px; background: #f9fafb; }
-    .modal-box button { padding: 12px 18px; background: #2563EB; color: white; border: none; font-weight: bold; cursor: pointer; font-size: 15px; border-radius: 6px; }
-    .modal-box button:hover { background: #1D4ED8; }
-    .modal-box button.secondary { background: #E5E7EB; color: #374151; }
-    .modal-box button.secondary:hover { background: #D1D5DB; }
-    /* Save Modal Specifics */
-    #filenameInput { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; margin: 5px 0 15px 0; box-sizing: border-box;}
+        /* --- CORE STYLES --- */
+        body, html { font-family: 'Inter', sans-serif; margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #f0f2f5; }
+        #cldContainer { position: relative; width: 100%; height: 100vh; display: flex; flex-direction: column; }
+        #cldNetwork { flex-grow: 1; border: 1px solid #d1d5db; background-color: #ffffff; width: 100%; height: 100%; }
+
+        /* UI Elements */
+        #modelTitleDisplay { position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold; color: #1F2937; background-color: rgba(255, 255, 255, 0.9); padding: 10px 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); z-index: 10; pointer-events: none; }
+        
+        .action-btn { position: absolute; bottom: 20px; z-index: 25; padding: 10px 18px; font-size: 14px; font-weight: 500; border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        
+        /* Button Positioning */
+        #saveButton { left: 20px; background-color: #2563EB; color: white; }
+        #saveButton:hover { background-color: #1D4ED8; }
+        
+        #loadNewButton { left: 140px; background-color: #fff; color: #374151; }
+        #loadNewButton:hover { background-color: #f9fafb; }
+
+        /* New Button: Save Map Data (JSON) */
+        #saveDataButton { left: 285px; background-color: #10B981; color: white; }
+        #saveDataButton:hover { background-color: #059669; }
+
+        /* Legends */
+        .legend-container { 
+            position: fixed; 
+            right: 20px; 
+            width: 280px; 
+            background: rgba(255,255,255,0.96); 
+            border-radius: 8px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+            max-height: 42px; 
+            overflow: hidden; 
+            z-index: 20; 
+            transition: max-height 0.3s ease; 
+            border: 1px solid #e5e7eb; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .legend-container.expanded { 
+            max-height: 50vh; 
+            z-index: 100; 
+        }
+
+        #legend { top: 20px; }
+        #archetypeLegend { top: 75px; }
+        
+        .legend-header { padding: 12px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; background: #fff; border-bottom: 1px solid #eee; }
+        .legend-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex-grow: 1; }
+        .legend-list li { padding: 8px 12px; border-bottom: 1px solid #f3f4f6; font-size: 13px; cursor: pointer; border-left: 3px solid transparent; }
+        .legend-list li:hover { background-color: #eff6ff; }
+        
+        /* Dragging visuals */
+        .legend-list li.dragging { opacity: 0.5; background: #e5e7eb; }
+
+        /* Description Box */
+        #descPanel { position: fixed; right: 20px; bottom: 80px; width: 280px; background: #fff; padding: 16px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 30; display: none; max-height: 300px; overflow-y: auto; font-size: 14px; line-height: 1.5; border: 1px solid #ddd; }
+        #descPanel strong { display: block; margin-bottom: 6px; color: #1E40AF; font-size: 15px; }
+
+        /* Tooltips */
+        .tooltip { position: absolute; background: rgba(255,255,255,0.98); border: 1px solid #ccc; padding: 10px; border-radius: 6px; font-size: 13px; display: none; z-index: 1000; pointer-events: none; max-width: 250px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); line-height: 1.4; }
+        #canvasTooltip { background: rgba(17, 24, 39, 0.95); color: white; border: none; }
+        #helperTooltip {
+            position: absolute; bottom: 70px; left: 20px;
+            background: rgba(0,0,0,0.6); color: white;
+            padding: 8px 12px; border-radius: 20px;
+            font-size: 12px; pointer-events: none; z-index: 5;
+        }
+
+        /* MODALS */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; }
+        .modal-box { background: white; padding: 25px; border-radius: 8px; width: 600px; max-width: 90%; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .modal-box textarea { width: 100%; height: 250px; padding: 12px; font-family: monospace; border: 1px solid #ccc; border-radius: 4px; background: #f9fafb; }
+        .modal-box button { padding: 12px 18px; background: #2563EB; color: white; border: none; font-weight: bold; cursor: pointer; font-size: 15px; border-radius: 6px; }
+        .modal-box button:hover { background: #1D4ED8; }
+        .modal-box button.secondary { background: #E5E7EB; color: #374151; }
+        .modal-box button.secondary:hover { background: #D1D5DB; }
+        
+        /* Save Modal Specifics */
+        #filenameInput { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; margin: 5px 0 15px 0; box-sizing: border-box;}
     </style>
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-ESZ16XVVNN');
-    </script>
 </head>
 <body>
-<div class="page-shell">
-<nav class="navbar">
-    <div class="nav-container">
-        <a href="index.html" class="nav-logo">
-            <span class="nav-logo-badge">NN</span>
-            <span class="nav-logo-text">Neural Nations</span>
-        </a>
-        <div class="nav-menu">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="model.html" class="nav-link">Model</a>
-            <a href="datasets.html" class="nav-link">Datasets</a>
-            <a href="explore.html" class="nav-link">Explore</a>
-            <div class="nav-dropdown">
-                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
-                <div class="nav-dropdown-menu">
-                    <a href="results.html">Results at a Glance</a>
-                    <a href="validation.html">Validation &amp; Limits</a>
-        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
-                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
-                    <a href="cams-failure-modes.html">Failure Modes Map</a>
-                    <a href="failure-modes-story.html">Failure Modes Story</a>
-        <a href="argentina-cams-map.html">Argentina — CAMS Map</a>
-                    <a href="argentina-cams-map.html">Argentina — CAMS Map</a>
-                </div>
-            </div>
-            <a href="research-diary.html" class="nav-link">Research Diary</a>
-            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
-        </div>
-        <div class="nav-actions">
-            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
-                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
-            </a>
-            <a href="newsletter.html" class="nav-btn-newsletter">
-                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
-            </a>
-            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </div>
-    <div class="nav-mobile" id="nav-mobile">
-        <a href="index.html">Home</a>
-        <a href="model.html">Model</a>
-        <a href="datasets.html">Datasets</a>
-        <a href="explore.html">Explore</a>
-        <a href="research-diary.html">Research Diary</a>
-        <a href="mindscapes.html">Mindscapes</a>
-        <hr class="mobile-divider">
-        <div class="mobile-section-title">Insights</div>
-        <a href="results.html">Results at a Glance</a>
-                    <a href="validation.html">Validation &amp; Limits</a>
-        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
-        <a href="escalation-archetypes.html">Escalation Archetypes</a>
-        <a href="cams-failure-modes.html">Failure Modes Map</a>
-        <a href="failure-modes-story.html">Failure Modes Story</a>
-        <a href="argentina-cams-map.html">Argentina — CAMS Map</a>
-    </div>
-</nav>
 
     <div id="cldContainer">
-        <div id="modelTitleDisplay">CAMS Node Failure Modes</div>
+        <div id="modelTitleDisplay">Argentina CAMS 1950–2026: The Thermodynamic Freeze Attractor</div>
         <button id="saveButton" class="action-btn">Save Map</button>
         <button id="loadNewButton" class="action-btn">Load Map Data</button>
         <button id="saveDataButton" class="action-btn">Save Map Data</button>
-        <a id="storyButton" href="/failure-modes-story" class="action-btn">Read the story →</a>
         
-        <div id="helperTooltip" style="display:none;">Click edge again &amp; drag to curve it</div>
+        <div id="helperTooltip">Step 1: Click edge to select (Red)<br>Step 2: Drag mouse to curve</div>
         <div id="cldNetwork"></div>
         
         <div id="legend" class="legend-container">
@@ -215,609 +109,393 @@
             <ul id="archetypeList" class="legend-list"></ul>
         </div>
         
-        <!-- Timescale colour key -->
-        <div id="timescaleKey" style="
-            position:absolute; bottom:20px; left:20px;
-            background:rgba(255,255,255,0.93); border:1px solid #e5e7eb;
-            border-radius:8px; padding:10px 14px; font-size:12px;
-            font-family:'Inter',sans-serif; color:#374151;
-            box-shadow:0 2px 8px rgba(0,0,0,0.09); z-index:15; line-height:1.7;">
-            <div style="font-weight:700; margin-bottom:5px; font-size:12.5px; color:#111827;">Node timescale</div>
-            <div style="display:flex;align-items:center;gap:7px"><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#DBEAFE;border:2px solid #3B82F6;"></span> Fast — operational (months–years)</div>
-            <div style="display:flex;align-items:center;gap:7px"><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#FEF3C7;border:2px solid #D97706;"></span> Structural (years–decades)</div>
-            <div style="display:flex;align-items:center;gap:7px"><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#EDE9FE;border:2px solid #7C3AED;"></span> Institutional (years–decades)</div>
-            <div style="display:flex;align-items:center;gap:7px"><span style="display:inline-block;width:11px;height:11px;border-radius:2px;background:#CCFBF1;border:2px solid #14B8A6;"></span> Existential (decades–centuries)</div>
-            <div style="display:flex;align-items:center;gap:7px"><span style="display:inline-block;width:11px;height:11px;border-radius:2px;background:#FEE2E2;border:2px solid #DC2626;"></span> System variable</div>
-        </div>
-
         <div id="descPanel"></div>
         <div id="mainTooltip" class="tooltip"></div>
         <div id="canvasTooltip" class="tooltip"></div>
     </div>
 
     <!-- Input/Load Modal -->
-    <div id="inputModal" class="modal-overlay" style="display: none;">
+    <div id="inputModal" class="modal-overlay" style="display: none;"> <!-- Default to flex so it shows on load if empty -->
         <div class="modal-box">
             <h2 style="margin:0; color:#111827;">Load Map Data</h2>
             <p style="margin:0; color:#6B7280; font-size:14px;">Paste the JSON from Gemini below:</p>
-            <textarea id="jsonInput" placeholder="INJECT_JSON_HERE" spellcheck="false">{
+            <textarea id="jsonInput" placeholder="{" spellcheck="false">{
   "metadata": {
-    "topic": "CAMS Node Failure Modes",
-    "description": "The systemic dynamics by which each of the eight institutional nodes fails, and how failure in one node propagates through the system",
-    "version": "1.0",
-    "created": "2026-04-16"
+    "topic": "Argentina CAMS 1950-2026: The Thermodynamic Freeze Attractor"
   },
   "nodes": [
     {
-      "id": "flow",
-      "label": "Flow",
-      "description": "Circulatory system of exchange, logistics, supply chains. First visible failure point.",
-      "shape": "ellipse",
-      "x": -400,
-      "y": -200,
-      "color": {
-        "background": "#DBEAFE",
-        "border": "#3B82F6"
-      },
-      "borderWidth": 2
-    },
-    {
-      "id": "hands",
-      "label": "Hands",
-      "description": "Labour base, demographic health, motivational engagement. Responds rapidly to system stress.",
-      "shape": "ellipse",
-      "x": -400,
-      "y": 0,
-      "color": {
-        "background": "#DBEAFE",
-        "border": "#3B82F6"
-      },
-      "borderWidth": 2
-    },
-    {
-      "id": "stress",
-      "label": "System Stress",
-      "description": "Aggregate pressure from external shocks or internal inefficiencies. Increases downstream pressures.",
+      "id": "n1",
+      "label": "System Mean V̄",
       "shape": "box",
-      "x": -200,
-      "y": -100,
-      "color": {
-        "background": "#FEE2E2",
-        "border": "#DC2626"
-      },
-      "borderWidth": 2.5
-    },
-    {
-      "id": "craft",
-      "label": "Craft",
-      "description": "Technical expertise, specialised knowledge, innovation capacity. Medium-speed failure.",
-      "shape": "ellipse",
-      "x": -100,
-      "y": -250,
-      "color": {
-        "background": "#FEF3C7",
-        "border": "#D97706"
-      },
-      "borderWidth": 2
-    },
-    {
-      "id": "stewards",
-      "label": "Stewards",
-      "description": "Asset control, resource stewardship, capital preservation. Prone to rent-seeking under stress.",
-      "shape": "ellipse",
-      "x": -100,
-      "y": -50,
-      "color": {
-        "background": "#FEF3C7",
-        "border": "#D97706"
-      },
-      "borderWidth": 2
-    },
-    {
-      "id": "shield",
-      "label": "Shield",
-      "description": "Defence and coercive capacity. Can atrophy or hyperactivate\u2014both are failure modes.",
-      "shape": "ellipse",
-      "x": 100,
-      "y": -200,
-      "color": {
-        "background": "#EDE9FE",
-        "border": "#7C3AED"
-      },
-      "borderWidth": 2
-    },
-    {
-      "id": "helm",
-      "label": "Helm",
-      "description": "Executive coordination, strategic decision-making. Vulnerable to capture or paralysis.",
-      "shape": "ellipse",
-      "x": 200,
-      "y": -100,
-      "color": {
-        "background": "#EDE9FE",
-        "border": "#7C3AED"
-      },
-      "borderWidth": 2
-    },
-    {
-      "id": "archive",
-      "label": "Archive",
-      "description": "Institutional memory, historical record, regulatory continuity. Slow to fail, impossible to recover.",
-      "shape": "box",
-      "x": 300,
-      "y": 100,
-      "color": {
-        "background": "#CCFBF1",
-        "border": "#14B8A6"
-      },
-      "borderWidth": 2
-    },
-    {
-      "id": "lore",
-      "label": "Lore",
-      "description": "Shared meaning, legitimacy narratives, cultural identity. Generational timescale. Loss is existential.",
-      "shape": "box",
-      "x": 400,
-      "y": 250,
-      "color": {
-        "background": "#CCFBF1",
-        "border": "#14B8A6"
-      },
-      "borderWidth": 2.5
-    },
-    {
-      "id": "coordination_capacity",
-      "label": "Coordination Capacity",
-      "description": "System's ability to respond coherently to shocks. Declines as nodes fail.",
-      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 2.5,
       "x": 0,
-      "y": 200,
-      "color": {
-        "background": "#FEE2E2",
-        "border": "#DC2626"
-      },
-      "borderWidth": 2.5
+      "y": 0,
+      "description": "The aggregate Node Value across all eight CAMS nodes — the system's overall cognitive health score. Argentina's V̄ oscillates between near-zero (1955, 1975, 2001) and a ceiling of ~10.8 (1950) that has never been re-attained. In 2026 it stands at 5.11, well below the crisis threshold of 12. [n1]"
     },
     {
-      "id": "institutional_memory",
-      "label": "Institutional Memory",
-      "description": "Collective knowledge of past crises, institutional procedures, adaptive capacity. Erodes with Archive and Lore collapse.",
+      "id": "n2",
+      "label": "Helm (Executive Coherence)",
       "shape": "box",
-      "x": 250,
-      "y": -150,
-      "color": {
-        "background": "#CCF0F5",
-        "border": "#0891B2"
-      },
-      "borderWidth": 2
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": -350,
+      "y": -200,
+      "description": "The governance and leadership node — the capacity of Argentina's executive institutions to set direction, maintain legitimacy, and coordinate the other nodes. Helm has ranged from 11.2 (1950 Perón peak) to -0.8 (1975 pre-coup), demonstrating the most extreme volatility of any node. In 2026 it sits at V=4.0, chronically sub-critical. [n2]"
+    },
+    {
+      "id": "n3",
+      "label": "Shield (Coercive-Legal Anchor)",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": -350,
+      "y": 200,
+      "description": "Military, police, and judicial institutions — the node that enforces order and maintains system connectivity even when other nodes collapse. Shield is Argentina's most stable node across 76 years, consistently the last to fall and first to anchor recovery. In 2026 it stands at V=5.0, the system's only positive anchor. [n3]"
+    },
+    {
+      "id": "n4",
+      "label": "Flow (Material-Normative Integration)",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": 350,
+      "y": -200,
+      "description": "The material economy's alignment with normative meaning — whether the flow of goods, currency, and resources carries legitimate social meaning. Argentina's most volatile economic node: V=-2.0 in 2001 (currency collapse), V=10.0 in 2007 (commodity boom), V=1.8 in 2026 (chronic crisis). [n4]"
+    },
+    {
+      "id": "n5",
+      "label": "Hands (Motivational Labor)",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": 350,
+      "y": 200,
+      "description": "The capacity of Argentine workers to find meaning and motivation in productive labor — the node most sensitive to repression, hyperinflation, and despair. Collapsed to -0.5 during the military dictatorship's violence, to 0.0 in 2001, and remains chronically depressed at V=0.5 in 2026. [n5]"
+    },
+    {
+      "id": "n6",
+      "label": "Lore (Normative-Narrative Capacity)",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": -180,
+      "y": -340,
+      "description": "Argentina's meaning-making infrastructure — the stories, values, and cultural frameworks that give collective life coherence. Peaked at V=12.0 in 1984 with democratic re-founding; decayed to V=3.0 in 2026. Paradoxically persists through cultural output (tango, football, literature) even when material nodes have collapsed. [n6]"
+    },
+    {
+      "id": "n7",
+      "label": "Archive (Institutional Memory)",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": 180,
+      "y": -340,
+      "description": "The capacity to encode, transmit, and act on collective historical memory — the slow loop that theoretically allows Argentina to learn from its own collapse cycles. Reached V=11.0 in 1984; degraded to V=1.5 in 2026, meaning institutional memory of past catastrophes is increasingly inaccessible to current decision-makers. [n7]"
+    },
+    {
+      "id": "n8",
+      "label": "Oscillation Depth",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": 0,
+      "y": -250,
+      "description": "The amplitude of each collapse-recovery cycle — how far V̄ falls and how high it recovers. Troughs have deepened from 2.8 (1955) to 1.9 (2001); peaks have declined from 10.8 (1950) to 9.1 (2007). This secular degradation of the oscillation envelope is the system's ratchet toward permanent freeze. [n8]"
+    },
+    {
+      "id": "n9",
+      "label": "Recovery Capacity",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": 200,
+      "y": 0,
+      "description": "The system's ability to rebuild institutional coherence after each collapse — a function of remaining Bond Strength, Archive integrity, and exogenous resource injection. Each cycle depletes recovery capacity: the 2003-2026 recovery (V̄ max ~9.1) never reached 1950 levels, and the 2024-2026 recovery (V̄ max ~5.3) is the weakest on record. [n9]"
+    },
+    {
+      "id": "n10",
+      "label": "Exogenous Entropy Injection",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 2.5,
+      "x": 0,
+      "y": 340,
+      "description": "External energy sources that prevent absolute system collapse — commodity export revenues (soy, lithium), IMF liquidity, cultural exports, remittances, and foreign investment. This is the structural reason Argentina never fully dies: the external world continuously subsidises its frozen equilibrium. Without this, the Thermodynamic Freeze would become terminal. [n10]"
+    },
+    {
+      "id": "n11",
+      "label": "Kappa (Criticality Index)",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": -200,
+      "y": 0,
+      "description": "The system's fracture risk — the rate-weighted dispersion across nodes. Paradoxically low in 2026 (0.22-0.28) not because the system is healthy but because all nodes are declining together (omega compressed). Spiked to 0.65-0.75 in 2001 (EXTREME tier), the highest recorded Argentine value. [n11]"
+    },
+    {
+      "id": "n12",
+      "label": "Cultural Slow-Loop (eta_loop)",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": 0,
+      "y": 150,
+      "description": "The product of Archive and Lore connectivity that keeps the system's Laplacian positive — the 'poetry threshold' that Argentina consistently clears even in deep freeze. Estimated at 20-25 in 2026, well above the 0.6 survival threshold. Borges, Cortázar, Maradona, Messi: cultural nodes continue producing meaning when political-economic nodes have frozen. [n12]"
     }
   ],
   "edges": [
     {
       "id": "e1",
-      "from": "stress",
-      "to": "flow",
-      "label": "Mythic-material decoupling",
-      "color": {
-        "color": "#1E40AF"
-      },
+      "from": "n2",
+      "to": "n1",
       "width": 5,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "System stress disrupts supply chains and commerce. Fast visible failure mode (months\u2013years)."
+      "lag": 1,
+      "color": { "color": "#1E40AF" },
+      "label": "Helm anchors V̄\n+\nLag: 1 year",
+      "description": "When Helm rises, the system's mean Node Value rises — executive coherence is the primary driver of aggregate system health. The 1955 and 1975 coups show the inverse: Helm collapse (to negative V) drags V̄ below 3.0 within one year. The 2003-07 Kirchner recovery shows the upside: Helm rising from -0.5 to 9.5 drove V̄ from 2.0 to 8.5. [e1]"
     },
     {
       "id": "e2",
-      "from": "flow",
-      "to": "hands",
-      "label": "Labour disengagement",
-      "color": {
-        "color": "#1E40AF"
-      },
+      "from": "n4",
+      "to": "n1",
       "width": 5,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Flow failure reduces employment, income security, and motivation. Workers disengage."
+      "lag": 0,
+      "color": { "color": "#1E40AF" },
+      "label": "Flow drives system V̄\n+\nLag: 0 years",
+      "description": "Flow is the most contemporaneously sensitive node — currency collapse (2001: V=-2.0) immediately suppresses V̄ to its historic low of 1.93. Conversely, the commodity boom of 2003-08 pushed Flow to V=10.0, driving the strongest recovery gradient in Argentine history. Flow is the system's economic heartbeat. [e2]"
     },
     {
       "id": "e3",
-      "from": "hands",
-      "to": "stress",
-      "label": "Loss of productive capacity",
-      "color": {
-        "color": "#991B1B"
-      },
-      "width": 4,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Demographic failure or demotivation reduces aggregate labour, increasing system pressure."
+      "from": "n3",
+      "to": "n1",
+      "width": 3,
+      "lag": 0,
+      "color": { "color": "#1E40AF" },
+      "label": "Shield as floor\n+\nLag: 0 years",
+      "description": "Shield's structural stability prevents V̄ from reaching absolute zero — it is the system's permanent floor. In every collapse (1955, 1975, 1982, 1989, 2001), Shield was the last node to fall and the one that maintained minimum institutional connectivity. Its V=5.0 in 2026 is what keeps the frozen system above terminal collapse. [e3]"
     },
     {
       "id": "e4",
-      "from": "stress",
-      "to": "craft",
-      "label": "Deferral of innovation",
-      "color": {
-        "color": "#1E40AF"
-      },
-      "width": 3,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Under stress, organisations abandon long-term R&D and technical investment."
+      "from": "n1",
+      "to": "n9",
+      "width": 4,
+      "lag": 2,
+      "color": { "color": "#1E40AF" },
+      "label": "Health enables recovery\n+\nLag: 2 years",
+      "description": "Higher system V̄ builds the institutional substrate required for recovery — more functioning nodes means more cross-node coherence and Bond Strength accumulation. But this relationship has a ceiling: Argentina's V̄ has never returned to 1950 levels, meaning each recovery cycle starts from a lower base. [e4]"
     },
     {
       "id": "e5",
-      "from": "craft",
-      "to": "coordination_capacity",
-      "label": "Loss of adaptive tooling",
-      "color": {
-        "color": "#991B1B"
-      },
-      "width": 3,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Eroded Craft capacity reduces the system's ability to build solutions or respond flexibly."
+      "from": "n9",
+      "to": "n1",
+      "width": 4,
+      "lag": 1,
+      "color": { "color": "#1E40AF" },
+      "label": "Recovery rebuilds V̄\n+\nLag: 1 year",
+      "description": "Recovery capacity, when deployed, raises V̄ — the post-coup rebuilds (1956-58, 1983-86, 2003-07) show this mechanism clearly. But each cycle depletes the recovery substrate: the 2024-26 stabilization reaches only V̄=5.3, the weakest post-crisis peak in 76 years. The recovery loop is progressively losing power. [e5]"
     },
     {
       "id": "e6",
-      "from": "stress",
-      "to": "stewards",
-      "label": "Asset concentration pressure",
-      "color": {
-        "color": "#1E40AF"
-      },
+      "from": "n1",
+      "to": "n8",
       "width": 3,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Under pressure, Stewards shift from stewardship to rent-seeking and asset hoarding."
+      "lag": 0,
+      "color": { "color": "#991B1B" },
+      "label": "Collapse deepens amplitude\n-\nLag: 0 years",
+      "description": "Each time V̄ falls, it increases oscillation depth — the distance between the peak and trough of each cycle widens over time (peaks declining: 10.8→9.1; troughs deepening: 2.8→1.9). This is the ratchet mechanism: collapses are more destructive than recoveries are reconstructive. [e6]"
     },
     {
       "id": "e7",
-      "from": "stewards",
-      "to": "flow",
-      "label": "Capital withdrawal",
-      "color": {
-        "color": "#991B1B"
-      },
-      "width": 3,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Rent-seeking and asset hoarding stranglate capital circulation. Flow deteriorates further."
+      "from": "n8",
+      "to": "n9",
+      "width": 4,
+      "lag": 3,
+      "color": { "color": "#991B1B" },
+      "label": "Depth erodes recovery\n-\nLag: 3 years",
+      "description": "Deeper oscillations permanently erode recovery capacity — each catastrophic trough (1955, 1975, 1989, 2001) destroys institutional substrates (competent civil servants, functional enterprises, social trust) that cannot be rebuilt within a single recovery cycle. The 2001 trough was so deep that Argentina's 2024-26 recovery is still the weakest on record. [e7]"
     },
     {
       "id": "e8",
-      "from": "coordination_capacity",
-      "to": "helm",
-      "label": "Decision paralysis",
-      "color": {
-        "color": "#1E40AF"
-      },
-      "width": 4,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Low coordination capacity means Helm cannot act coherently. Paralysis or capture results."
+      "from": "n10",
+      "to": "n9",
+      "width": 5,
+      "lag": 1,
+      "color": { "color": "#1E40AF" },
+      "label": "External subsidy enables recovery\n+\nLag: 1 year",
+      "description": "Commodity booms, IMF programs, and cultural exports provide the exogenous energy that makes recovery possible without fundamental structural change. The 1990s Convertibilidad, the 2003-11 soy boom, and current lithium revenues are all external entropy injections. Without this, Argentina's oscillation attractor would terminate. [e8]"
     },
     {
       "id": "e9",
-      "from": "helm",
-      "to": "shield",
-      "label": "Strategic incoherence",
-      "color": {
-        "color": "#1E40AF"
-      },
+      "from": "n10",
+      "to": "n1",
       "width": 3,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Helm dysfunction sends contradictory signals to Shield. Atrophy or hyperactivation ensues."
+      "lag": 1,
+      "color": { "color": "#1E40AF" },
+      "label": "External energy lifts floor\n+\nLag: 1 year",
+      "description": "External resources directly raise the system's floor — they fund the minimum institutional maintenance (salaries, services, security) that keeps V̄ above terminal values. This is why Argentina never fully collapses despite structural dysfunction: the global commodity system continuously provides life support. [e9]"
     },
     {
       "id": "e10",
-      "from": "shield",
-      "to": "helm",
-      "label": "Coercive capture / militarisation",
-      "color": {
-        "color": "#991B1B"
-      },
-      "width": 4,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Hyperactivated Shield captures Helm through coercive pressure. Self-reinforcing loop."
+      "from": "n6",
+      "to": "n12",
+      "width": 3,
+      "lag": 2,
+      "color": { "color": "#1E40AF" },
+      "label": "Lore feeds slow-loop\n+\nLag: 2 years",
+      "description": "Argentina's narrative capacity — its cultural production of meaning — continuously feeds the slow cultural loop that maintains lambda-2 above zero. Even when political and economic nodes are frozen, tango, football, and literature sustain the identity networks that prevent total social dissolution. [e10]"
     },
     {
       "id": "e11",
-      "from": "helm",
-      "to": "institutional_memory",
-      "label": "Institutional erosion",
-      "color": {
-        "color": "#1E40AF"
-      },
+      "from": "n7",
+      "to": "n12",
       "width": 3,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Helm dysfunction undermines procedures, records, and institutional continuity."
+      "lag": 2,
+      "color": { "color": "#1E40AF" },
+      "label": "Archive feeds slow-loop\n+\nLag: 2 years",
+      "description": "Institutional memory of past collapses theoretically enables avoidance learning — the Argentine archive of 1955, 1975, 1989, 2001 should inform current governance. But with Archive V=1.5 in 2026, this signal is nearly inaudible: the slow loop persists culturally but not institutionally. [e11]"
     },
     {
       "id": "e12",
-      "from": "institutional_memory",
-      "to": "archive",
-      "label": "Record decay / censorship",
-      "color": {
-        "color": "#1E40AF"
-      },
-      "width": 3,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Loss of memory culture leads to Archive abandonment, destruction, or rewriting."
+      "from": "n12",
+      "to": "n1",
+      "width": 2,
+      "lag": 5,
+      "color": { "color": "#1E40AF" },
+      "label": "Cultural loop sustains minimum V̄\n+\nLag: 5 years",
+      "description": "The cultural slow-loop maintains the system above absolute zero — it is why Argentina's lambda-2 stays positive even in Thermodynamic Freeze. This is the 'poetry threshold' mechanism: a society can survive institutional collapse if it retains cultural connectivity. Argentina proves this is possible across decades. [e12]"
     },
     {
       "id": "e13",
-      "from": "archive",
-      "to": "lore",
-      "label": "Normative collapse",
-      "color": {
-        "color": "#991B1B"
-      },
+      "from": "n2",
+      "to": "n11",
       "width": 4,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Without Archive record, Lore loses grounding. Legitimacy narratives fragment or are captured."
+      "lag": 1,
+      "color": { "color": "#991B1B" },
+      "label": "Helm collapse spikes kappa\n-\nLag: 1 year",
+      "description": "When Helm collapses toward or below zero, it creates extreme rate dispersion — different nodes decay at radically different speeds, spiking kappa toward CRITICAL/EXTREME. The 2001 'five presidents in two weeks' event drove kappa to 0.65-0.75. Current Helm at V=4.0 keeps kappa suppressed to 0.22-0.28. [e13]"
     },
     {
       "id": "e14",
-      "from": "lore",
-      "to": "helm",
-      "label": "Legitimacy erosion",
-      "color": {
-        "color": "#991B1B"
-      },
-      "width": 5,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Lore collapse removes the meaning-base that justifies Helm's authority. Helm loses legitimacy to act."
+      "from": "n11",
+      "to": "n8",
+      "width": 3,
+      "lag": 0,
+      "color": { "color": "#1E40AF" },
+      "label": "High kappa triggers collapse\n+\nLag: 0 years",
+      "description": "When kappa crosses the CRITICAL threshold (~0.42+), the system fractures — nodes desynchronize and the weakest links (Flow, Hands, Archive) collapse faster than Shield can compensate. Each of Argentina's five major crises (1955, 1975, 1982, 1989, 2001) was preceded by kappa crossing into WARNING/CRITICAL tier. [e14]"
     },
     {
       "id": "e15",
-      "from": "stress",
-      "to": "coordination_capacity",
-      "label": "Cognitive overload",
-      "color": {
-        "color": "#991B1B"
-      },
-      "width": 4,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "System-wide stress exceeds Coordination Capacity to process and respond. Cascade failure risk."
+      "from": "n3",
+      "to": "n2",
+      "width": 3,
+      "lag": 2,
+      "color": { "color": "#991B1B" },
+      "label": "Shield overwhelm displaces Helm\n-\nLag: 2 years",
+      "description": "When Shield V significantly exceeds Helm V (the Praetorian Condition), military institutions displace civilian governance — as in 1966-68, 1976-82, and intermittently throughout the oscillation cycle. This relationship is the mechanism of Argentina's coups: Shield stability in a Helm collapse creates the political space for military intervention. [e15]"
     },
     {
       "id": "e16",
-      "from": "coordination_capacity",
-      "to": "lore",
-      "label": "Sense-making collapse",
-      "color": {
-        "color": "#1E40AF"
-      },
+      "from": "n5",
+      "to": "n4",
+      "width": 3,
+      "lag": 1,
+      "color": { "color": "#1E40AF" },
+      "label": "Labor motivation drives Flow\n+\nLag: 1 year",
+      "description": "When Hands collapses (motivational extinction through repression, hyperinflation, despair), economic productivity falls and Flow decouples from the material economy. The 1976-82 military period shows this in reverse: Hands at -0.5 (torture/disappearance) while Flow held at 5.0, revealing that Argentina's economy can function without motivated labor — but only temporarily. [e16]"
+    },
+    {
+      "id": "e17",
+      "from": "n4",
+      "to": "n5",
       "width": 2,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "When coordination breaks, shared narratives fragment. Lore cannot maintain coherence."
+      "lag": 1,
+      "color": { "color": "#1E40AF" },
+      "label": "Material collapse demotivates\n+\nLag: 1 year",
+      "description": "Flow collapse (currency crisis, hyperinflation, default) destroys worker motivation — when material coordination fails, Hands V collapses in its wake. The 1989 hyperinflation and 2001 default both show V_Hands following V_Flow down with a one-year lag. Argentina's chronically low Hands (0.5 in 2026) reflects the accumulated scar tissue of repeated Flow collapses. [e17]"
     }
   ],
   "loops": [
     {
       "id": "R1",
-      "name": "Flow-Hands Death Spiral",
+      "name": "The Collapse Spiral",
       "type": "R",
-      "nodeIds": [
-        "flow",
-        "hands",
-        "stress"
-      ],
-      "edgeIds": [
-        "e1",
-        "e2",
-        "e3"
-      ],
-      "description": "Flow failure \u2192 labour disengagement \u2192 reduced productive capacity \u2192 increased system stress \u2192 worsens Flow failure. Fastest visible collapse loop (months\u2013years)."
+      "description": "Helm collapse reduces V̄, which deepens oscillation amplitude, which erodes recovery capacity, which further reduces V̄. This is the dominant reinforcing loop that converts each Argentine crisis into a deeper-than-expected catastrophe. Once triggered (kappa crossing CRITICAL), this loop drives the system to its trough in 1-3 years. Visible in 1953-55, 1972-75, 1987-89, 1999-2001. [R1]",
+      "nodeIds": ["n2", "n1", "n8", "n9"],
+      "edgeIds": ["e1", "e6", "e7", "e5"]
     },
     {
       "id": "R2",
-      "name": "Steward Rent-Seeking Trap",
+      "name": "The Flow-Hands Death Spiral",
       "type": "R",
-      "nodeIds": [
-        "stress",
-        "stewards",
-        "flow"
-      ],
-      "edgeIds": [
-        "e6",
-        "e7"
-      ],
-      "description": "Stress \u2192 asset hoarding \u2192 capital withdrawal \u2192 Flow strangulation \u2192 more stress. Medium-speed wealth-concentration spiral (years\u2013decades)."
+      "description": "Flow collapse demotivates labor (Hands), which reduces productive output, which further collapses Flow. This is the Argentina-specific vicious cycle that turns currency crises into social crises: the 2001 default destroyed Flow, which destroyed Hands motivation, which prevented economic recovery for three years. Operating at low intensity chronically in 2026. [R2]",
+      "nodeIds": ["n4", "n5"],
+      "edgeIds": ["e16", "e17"]
     },
     {
       "id": "R3",
-      "name": "Shield Hyperactivation",
+      "name": "The Praetorian Amplifier",
       "type": "R",
-      "nodeIds": [
-        "helm",
-        "shield"
-      ],
-      "edgeIds": [
-        "e9",
-        "e10"
-      ],
-      "description": "Helm paralysis \u2192 incoherent signals to Shield \u2192 Shield hyperactivates (militarisation) \u2192 Shield captures Helm \u2192 Helm further paralysed. Security dilemma feedback loop."
+      "description": "Helm collapse reduces V̄, which spikes kappa, which deepens oscillation depth — creating the institutional vacuum that Shield exploits to displace Helm via coup. The coup itself temporarily stabilises kappa (by imposing order) but then collapses Hands (through repression), restarting the cycle at a lower base. Argentina's coup mechanism is a reinforcing loop that resets without healing. [R3]",
+      "nodeIds": ["n2", "n11", "n8", "n3"],
+      "edgeIds": ["e13", "e14", "e6", "e15"]
     },
     {
-      "id": "R4",
-      "name": "Institutional Amnesia Cascade",
-      "type": "R",
-      "nodeIds": [
-        "helm",
-        "institutional_memory",
-        "archive",
-        "lore"
-      ],
-      "edgeIds": [
-        "e11",
-        "e12",
-        "e13",
-        "e14"
-      ],
-      "description": "Helm dysfunction \u2192 erosion of institutional memory \u2192 Archive decay \u2192 Lore fragmentation \u2192 loss of legitimacy removes Helm's justification to act \u2192 Helm further weakened. Generational collapse spiral (decades\u2013centuries)."
-    },
-    {
-      "id": "B1",
-      "name": "Craft Mitigation (if activated)",
+      "id": "B4",
+      "name": "The Commodity Life-Support Loop",
       "type": "B",
-      "nodeIds": [
-        "stress",
-        "craft",
-        "coordination_capacity",
-        "helm"
-      ],
-      "edgeIds": [
-        "e4",
-        "e5",
-        "e8"
-      ],
-      "description": "Stress initially triggers innovation in Craft. Enhanced Craft capacity improves coordination and Helm's ability to respond\u2014but only if investment is maintained. Fragile balancing loop."
+      "description": "When V̄ falls toward crisis, external entropy injection (commodity revenues, IMF) activates recovery capacity, which raises V̄ toward a new (lower) equilibrium — preventing terminal collapse but not enabling genuine recovery. This balancing loop is why Argentina neither dies nor thrives: the global economy subsidises its oscillation indefinitely. [B4]",
+      "nodeIds": ["n10", "n9", "n1"],
+      "edgeIds": ["e8", "e5", "e9"]
     },
     {
-      "id": "B2",
-      "name": "Crisis-Driven Re-Coupling",
+      "id": "B5",
+      "name": "The Shield Anchor",
       "type": "B",
-      "nodeIds": [
-        "stress",
-        "hands",
-        "lore"
-      ],
-      "edgeIds": [
-        "e2",
-        "e16"
-      ],
-      "description": "Extreme stress can temporarily revive shared purpose (Lore re-couples with urgency), increasing collective action capacity. Temporary and finite\u2014collapses once crisis passes without institutional renewal."
+      "description": "Shield's structural stability prevents V̄ from reaching absolute zero — when all other nodes collapse, Shield's persistence (V=5.0 across every trough) maintains minimum institutional connectivity and provides the platform from which recovery begins. This balancing loop has prevented every Argentine collapse from becoming permanent — so far. [B5]",
+      "nodeIds": ["n3", "n1"],
+      "edgeIds": ["e3"]
+    },
+    {
+      "id": "B6",
+      "name": "The Poetry Threshold",
+      "type": "B",
+      "description": "Lore and Archive feed the cultural slow-loop (eta_loop), which maintains lambda-2 above zero, which keeps V̄ from reaching absolute zero even in Thermodynamic Freeze. This is why Argentina produces world-class culture — Borges, Cortázar, Maradona, Messi — even during institutional collapse: cultural connectivity is the last circuit to go dark. [B6]",
+      "nodeIds": ["n6", "n7", "n12", "n1"],
+      "edgeIds": ["e10", "e11", "e12"]
+    },
+    {
+      "id": "B7",
+      "name": "The Recovery Ceiling",
+      "type": "B",
+      "description": "Higher V̄ builds recovery capacity, which raises V̄ further — but this loop has a hard ceiling set by the cumulative depletion of each oscillation cycle. The ceiling has dropped with each cycle: 10.8 (1950) → 9.1 (2007) → 5.3 (2025). The recovery capacity loop is progressively weakening relative to the collapse spiral, explaining why Argentina is approaching permanent freeze. [B7]",
+      "nodeIds": ["n1", "n9"],
+      "edgeIds": ["e4", "e5"]
     }
   ],
   "archetypes": [
     {
       "id": "arch1",
-      "name": "Limits to Growth",
-      "nodeIds": [
-        "flow",
-        "hands",
-        "stress"
-      ],
-      "edgeIds": [
-        "e1",
-        "e2",
-        "e3"
-      ],
-      "description": "Flow-Hands system hits a ceiling: labour supply or material scarcity limits circulation. Growth halts. Reinforcing pressure builds. System tips into contraction."
+      "name": "Limits to Growth — Recovery Ceiling",
+      "description": "Each recovery cycle hits a ceiling determined by the cumulative damage of previous collapses. The growth engine (recovery capacity, commodity booms, institutional rebuilding) is progressively constrained by the limiting factor: depleted institutional substrate that cannot be rebuilt within a single cycle. Argentina's peak V̄ declining from 10.8 to 9.1 to 5.3 across 76 years is the textbook Limits to Growth signature. The leverage point is not more recovery effort but removal of the limiting factor — which requires structural institutional reform across multiple generations.",
+      "nodeIds": ["n1", "n9", "n8", "n10"],
+      "edgeIds": ["e4", "e5", "e7", "e8", "e6"]
     },
     {
       "id": "arch2",
-      "name": "Fixes That Fail",
-      "nodeIds": [
-        "stewards",
-        "flow",
-        "stress"
-      ],
-      "edgeIds": [
-        "e6",
-        "e7"
-      ],
-      "description": "Short-term fix: hoard assets (Stewards rent-seeking). Side effect: strangles Flow. Intended benefit erodes. System stress increases. Worse than before."
+      "name": "Shifting the Burden — Commodity Dependency",
+      "description": "Argentina repeatedly addresses the symptom (institutional collapse, fiscal crisis) with the quick fix (commodity revenues, IMF bailouts, austerity) rather than the fundamental solution (institutional reform, Lore reconstruction, Archive restoration). Each bailout relieves the pressure for structural change, atrophying the fundamental solution further. The system becomes progressively more dependent on external entropy injection, making each subsequent crisis more dangerous because the fundamental capacity for self-repair has weakened.",
+      "nodeIds": ["n10", "n9", "n1", "n6", "n7"],
+      "edgeIds": ["e8", "e9", "e5", "e10", "e11", "e12"]
     },
     {
       "id": "arch3",
-      "name": "Shifting the Burden to the Intervenor (Shield Militarisation)",
-      "nodeIds": [
-        "helm",
-        "shield",
-        "coordination_capacity"
-      ],
-      "edgeIds": [
-        "e9",
-        "e10"
-      ],
-      "description": "Problem: Helm paralysis, loss of coordination. Apparent fix: hand control to Shield (military/coercive apparatus). Side effect: Shield hyperactivates, captures Helm. Dependency deepens. Fundamental problem (coordination) worsens."
-    },
-    {
-      "id": "arch4",
-      "name": "Tragedy of the Commons (Institutional Records)",
-      "nodeIds": [
-        "helm",
-        "archive",
-        "institutional_memory"
-      ],
-      "edgeIds": [
-        "e11",
-        "e12"
-      ],
-      "description": "Individual actors (Helm, Stewards) extract value by rewriting or destroying Archive records for short-term advantage. Shared commons (institutional memory) erodes. Collective capacity collapses."
-    },
-    {
-      "id": "arch5",
-      "name": "Eroding Goals / Normative Drift",
-      "nodeIds": [
-        "lore",
-        "helm",
-        "archive"
-      ],
-      "edgeIds": [
-        "e13",
-        "e14"
-      ],
-      "description": "Original legitimacy (Lore) set a goal (e.g., 'serve the common good'). As Archive erodes, the historical record of that goal fades. New interpretations of Lore are captured. Original purpose is lost."
+      "name": "Oscillation Attractor — The Argentine Constant",
+      "description": "Argentina is the canonical Oscillation attractor in the CAMS dataset: 8 complete collapse-recovery cycles in 76 years, each deepening the trough and lowering the recovery ceiling, converging toward Thermodynamic Freeze as the long-run equilibrium. The system is neither dying (Shield anchor, cultural slow-loop, external subsidies prevent it) nor recovering (oscillation depth erosion, Recovery Ceiling archetype prevent it). It is oscillating toward a frozen point from which no internal mechanism can escape.",
+      "nodeIds": ["n1", "n2", "n3", "n8", "n9", "n11"],
+      "edgeIds": ["e1", "e3", "e6", "e7", "e13", "e14", "e15"]
     }
   ]
 }</textarea>
@@ -1031,17 +709,37 @@
         function initEngine(data) {
             const hasPositions = data.nodes && data.nodes.some(n => n.x !== undefined && n.y !== undefined);
 
-            const nodeData = (data.nodes || []).map(n => ({
-                ...n,
-                x: n.x ? Number(n.x) : undefined,
-                y: n.y ? Number(n.y) : undefined
-            }));
-
+            // MODIFIED: Append [ID] to node labels (without hardcoded 'n')
+            const nodeData = (data.nodes || []).map(n => {
+                let label = n.label || "";
+                const tag = `[${n.id}]`; // Corrected: uses pure ID
+                // Prevent duplicate appending if data is re-loaded
+                if (!label.includes(tag)) {
+                    label = label ? `${label} ${tag}` : tag;
+                }
+                return {
+                    ...n, 
+                    label: label,
+                    x: n.x ? Number(n.x) : undefined, 
+                    y: n.y ? Number(n.y) : undefined
+                };
+            });
+            
+            // MODIFIED: Append [ID] to edge labels (without hardcoded 'e')
             const edgeData = (data.edges || []).map(e => {
-                const smooth = (e.smooth && e.smooth.roundness !== undefined)
-                    ? e.smooth
-                    : { enabled: true, type: "cubicBezier", roundness: 0.3 };
-                return { ...e, from: String(e.from), to: String(e.to), title: undefined, smooth };
+                let smooth = { enabled: true, type: "cubicBezier", roundness: 0.3 };
+                if (e.smooth && e.smooth.roundness !== undefined) {
+                    smooth = e.smooth; 
+                }
+                
+                let label = e.label || "";
+                const tag = `[${e.id}]`; // Corrected: uses pure ID
+                // Prevent duplicate appending and ensure ID is visible
+                if (!label.includes(tag)) {
+                    label = label ? `${label} ${tag}` : tag;
+                }
+
+                return {...e, label: label, from:String(e.from), to:String(e.to), title:undefined, smooth: smooth};
             });
 
             nodes = new vis.DataSet(nodeData);
@@ -1095,9 +793,7 @@
 
             renderLists();
             setupInteractions();
-            setupListSorting();
-            // Auto-expand feedback loops panel
-            document.getElementById('legend').classList.add('expanded');
+            setupListSorting(); 
         }
 
         // --- 3. CUSTOM INTERACTION LOGIC ---
@@ -1117,21 +813,18 @@
                 }
 
                 if (params.nodes.length === 0) { 
-                    if (params.edges.length > 0) {
+                    if (params.edges.length > 0) { 
                         const clickedEdgeId = params.edges[0];
                         activeEdgeForRecurve = (activeEdgeForRecurve === clickedEdgeId) ? null : clickedEdgeId;
                         if(activeEdgeForRecurve) {
                             network.selectEdges([activeEdgeForRecurve]);
-                            resetHighlights(false);
-                            document.getElementById('helperTooltip').style.display = 'block';
+                            resetHighlights(false); 
                         } else {
                             network.selectEdges([]);
-                            document.getElementById('helperTooltip').style.display = 'none';
                         }
-                    } else {
+                    } else { 
                         activeEdgeForRecurve = null;
                         network.selectEdges([]);
-                        document.getElementById('helperTooltip').style.display = 'none';
                         resetHighlights();
                     }
                 } else {
@@ -1515,7 +1208,5 @@
             if(!exp) el.classList.add('expanded');
         }
     </script>
-</div><!-- /.page-shell -->
-<script src="nav.js"></script>
 </body>
 </html>
