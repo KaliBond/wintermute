@@ -1,0 +1,357 @@
+{
+  "metadata": {
+    "topic": "Germany (BRD): How a Society Rebuilt Legitimacy from Rubble"
+  },
+  "nodes": [
+    {
+      "id": "n1",
+      "label": "Democratic Legitimacy",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": 0,
+      "y": 0,
+      "description": "The Grundgesetz-anchored constitutional order gaining genuine popular roots — not inherited authority but rebuilt trust, accumulated through delivered welfare, institutional restraint, and the absorption of challenge. The central stock of the BRD's systemic success. [n1]"
+    },
+    {
+      "id": "n2",
+      "label": "Export Prosperity",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": -200,
+      "y": 200,
+      "description": "The Wirtschaftswunder engine — DM surplus, full employment, industrial export dominance. The primary non-coercive legitimacy mechanism: a democracy that delivers material welfare consistently over decades builds a depth of popular support that no ideology alone can match. [n2]"
+    },
+    {
+      "id": "n3",
+      "label": "Civic Moral Reckoning",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": -180,
+      "y": -150,
+      "description": "Vergangenheitsbewältigung — the slow, contested, never-completed reckoning with the Nazi period. Rebuilt Lore coherence from moral rubble. Not a one-time event but an ongoing process: from Adenauer's pragmatic amnesty to the 68ers' rupture to the historians' debate. [n3]"
+    },
+    {
+      "id": "n4",
+      "label": "Left Counter-Culture",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": 270,
+      "y": -150,
+      "description": "The 68er movement, Green politics, feminist movement, peace movement — a permanent productive tension within the democratic system. What the GDR imprisoned, the BRD eventually absorbed into parliament. The latent civic energy that kept the democracy honest. [n4]"
+    },
+    {
+      "id": "n5",
+      "label": "European Embedding",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 2.5,
+      "x": 400,
+      "y": 100,
+      "description": "EEC/EG structural integration, Franco-German axis, Schuman Plan architecture — the framework within which BRD sovereignty was both constrained and rehabilitated. European integration was not a cost of legitimacy but its primary external source: Germany trusted by its former victims. [n5]"
+    },
+    {
+      "id": "n6",
+      "label": "Social Market Economy",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": -360,
+      "y": 60,
+      "description": "Ordoliberalism operationalised: state sets the framework, market allocates within it. Mitbestimmung (codetermination), DGB unions, welfare state, Bundesbank — the institutional synthesis that prevented Weimar-style class conflict while enabling growth. [n6]"
+    },
+    {
+      "id": "n7",
+      "label": "US Security Umbrella",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 2.5,
+      "x": -420,
+      "y": 210,
+      "description": "NATO protection enabling minimal defence spending through the critical reconstruction decades; Marshall Plan liquidity; and the geopolitical framework within which West Germany could rebuild without the security anxieties that had destabilised Weimar. An exogenous structural advantage the BRD used productively — unlike the GDR's Soviet dependency. [n7]"
+    },
+    {
+      "id": "n8",
+      "label": "Gastarbeiter Economy",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": 250,
+      "y": 220,
+      "description": "The guest worker system — Turks, Italians, Greeks, Yugoslavs recruited into the Wirtschaftswunder's labour gaps. Structurally indispensable to the economic miracle yet socially treated as temporary. The BRD's deferred integration question: the Gastarbeiter who never left, and whose children were born German but not recognised as such. [n8]"
+    },
+    {
+      "id": "n9",
+      "label": "Bundesbank Credibility",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": -50,
+      "y": 310,
+      "description": "DM stability, anti-inflation mandate, formal independence from political pressure — the monetary anchor of the social market model. The Bundesbank was the Ordoliberal institution that survived every political cycle, maintaining the export price discipline that underpinned the Wirtschaftswunder's external competitiveness. [n9]"
+    },
+    {
+      "id": "n10",
+      "label": "Ostpolitik",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": 60,
+      "y": -300,
+      "description": "Brandt's strategic recognition of Eastern realities — accepting the Oder-Neisse border, negotiating with the GDR, pursuing humanitarian access. Ostpolitik was the BRD asserting mature sovereignty within Westbindung constraints, and ultimately the policy framework that made 1989 reunification diplomatically possible. [n10]"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "n7",
+      "to": "n6",
+      "width": 4,
+      "lag": 2,
+      "color": { "color": "#1E40AF" },
+      "label": "Marshall Plan enables framework\n+\nLag: Years",
+      "description": "US Marshall Plan liquidity and the geopolitical imperative of a stable Western Germany created the conditions within which Erhard's Social Market Economy could be designed and implemented. American structural support gave the Ordoliberal experiment its founding resource base. [e1]"
+    },
+    {
+      "id": "e2",
+      "from": "n7",
+      "to": "n2",
+      "width": 4,
+      "lag": 2,
+      "color": { "color": "#1E40AF" },
+      "label": "Frees reconstruction capital\n+\nLag: Years",
+      "description": "NATO protection meant defence spending could be held below 3 percent of GDP through the critical 1950s and 60s — redirecting resources into industrial reconstruction, infrastructure, and welfare state construction at the exact moment they were needed most. [e2]"
+    },
+    {
+      "id": "e3",
+      "from": "n6",
+      "to": "n2",
+      "width": 5,
+      "lag": 3,
+      "color": { "color": "#1E40AF" },
+      "label": "Ordoliberal framework drives growth\n+\nLag: Years",
+      "description": "The Social Market Economy's institutional design — competitive markets within a strong regulatory framework, codetermination preventing destructive labour conflict, welfare cushions enabling risk-taking — produced the sustained, broad-based growth that distinguished the Wirtschaftswunder from flash-in-the-pan booms. [e3]"
+    },
+    {
+      "id": "e4",
+      "from": "n9",
+      "to": "n2",
+      "width": 4,
+      "lag": 2,
+      "color": { "color": "#1E40AF" },
+      "label": "DM stability anchors exports\n+\nLag: Quarters",
+      "description": "Bundesbank independence and the anti-inflation mandate maintained the DM's purchasing power and international credibility — making German exports reliable, competitively priced, and trusted by trading partners in a way that inflationary economies could not match. [e4]"
+    },
+    {
+      "id": "e5",
+      "from": "n5",
+      "to": "n2",
+      "width": 4,
+      "lag": 3,
+      "color": { "color": "#1E40AF" },
+      "label": "Common market expands access\n+\nLag: Years",
+      "description": "EEC membership gave German exporters preferential access to the largest consumer markets in Europe at precisely the moment German industrial capacity was being rebuilt. The common market was not merely an economic arrangement but a structural amplifier of the Wirtschaftswunder. [e5]"
+    },
+    {
+      "id": "e6",
+      "from": "n2",
+      "to": "n1",
+      "width": 5,
+      "lag": 3,
+      "color": { "color": "#1E40AF" },
+      "label": "Prosperity delivers the contract\n+\nLag: Years",
+      "description": "Full employment, rising real wages, affordable housing, and expanding consumer access were the material terms of the BRD's democratic social contract. A democracy that consistently delivers prosperity builds a depth of popular identification that no abstract constitutional argument can substitute. [e6]"
+    },
+    {
+      "id": "e7",
+      "from": "n2",
+      "to": "n8",
+      "width": 4,
+      "lag": 2,
+      "color": { "color": "#1E40AF" },
+      "label": "Full employment pulls migrants\n+\nLag: Months",
+      "description": "The Wirtschaftswunder generated structural labour shortages — in mines, construction, manufacturing, and services — that the domestic population could not fill. Bilateral recruitment agreements with Italy (1955), then Spain, Greece, Turkey, and others were the economic system's demand signal for more labour. [e7]"
+    },
+    {
+      "id": "e8",
+      "from": "n8",
+      "to": "n2",
+      "width": 4,
+      "lag": 1,
+      "color": { "color": "#1E40AF" },
+      "label": "Guest workers sustain growth\n+\nLag: Immediate",
+      "description": "Gastarbeiter filled the precise structural gaps that would otherwise have constrained the economic miracle — providing the labour elasticity that kept wage inflation in check while output expanded. Without them, the Wirtschaftswunder would have hit a labour ceiling a decade earlier than it did. [e8]"
+    },
+    {
+      "id": "e9",
+      "from": "n8",
+      "to": "n4",
+      "width": 3,
+      "lag": 4,
+      "color": { "color": "#1E40AF" },
+      "label": "Deferred integration fuels critique\n+\nLag: Years",
+      "description": "The fiction that Gastarbeiter were temporary — that economic indispensability could be separated from social membership — generated a deferred identity crisis that became a persistent fuel for left-libertarian political mobilisation: multicultural questions, citizenship rights, Leitkultur debates. [e9]"
+    },
+    {
+      "id": "e10",
+      "from": "n3",
+      "to": "n1",
+      "width": 4,
+      "lag": 4,
+      "color": { "color": "#1E40AF" },
+      "label": "Moral foundation deepens legitimacy\n+\nLag: Years",
+      "description": "A democracy that publicly confronts its own worst chapter builds a kind of legitimacy that no prosperity alone can generate — the legitimacy of honesty. Vergangenheitsbewältigung, however contested and incomplete, gave the BRD an ethical credibility that Adenauer's Germany had conspicuously lacked. [e10]"
+    },
+    {
+      "id": "e11",
+      "from": "n3",
+      "to": "n5",
+      "width": 4,
+      "lag": 5,
+      "color": { "color": "#1E40AF" },
+      "label": "Rehabilitation enables partnership\n+\nLag: Decades",
+      "description": "Germany's willingness — however halting — to name what happened enabled its European neighbours to trust it with integration. France's extraordinary decision to anchor Germany within European structures rather than punish it required a Germany visibly engaged in its own moral reckoning. [e11]"
+    },
+    {
+      "id": "e12",
+      "from": "n4",
+      "to": "n3",
+      "width": 5,
+      "lag": 2,
+      "color": { "color": "#1E40AF" },
+      "label": "68ers force accountability\n+\nLag: Years",
+      "description": "The 1968 student movement's most durable achievement was not political but moral: it forced the Nazi-era generation to account for itself publicly. The children who asked their parents what they had done during the Third Reich fractured the convenient amnesia that Adenauer's pragmatic restoration had permitted. [e12]"
+    },
+    {
+      "id": "e13",
+      "from": "n4",
+      "to": "n1",
+      "width": 3,
+      "lag": 2,
+      "color": { "color": "#991B1B" },
+      "label": "Challenge creates legitimacy stress\n-\nLag: Months",
+      "description": "Left-libertarian challenge imposed real stress on BRD legitimacy — RAF terrorism, Berufsverbote (occupational bans), Nachrüstungsdebatte (rearmament controversy), mass anti-nuclear demonstrations. The democratic system was tested by the very critique it was permitting. [e13]"
+    },
+    {
+      "id": "e14",
+      "from": "n1",
+      "to": "n3",
+      "width": 3,
+      "lag": 3,
+      "color": { "color": "#1E40AF" },
+      "label": "Stable democracy enables reckoning\n+\nLag: Years",
+      "description": "It takes institutional confidence to permit a society to look directly at its own worst chapter. The BRD's growing democratic stability created the political space within which Vergangenheitsbewältigung could deepen — from the 1960s Auschwitz trials to the Historians' Debate of the 1980s. [e14]"
+    },
+    {
+      "id": "e15",
+      "from": "n1",
+      "to": "n6",
+      "width": 3,
+      "lag": 2,
+      "color": { "color": "#1E40AF" },
+      "label": "Legitimacy sustains institutions\n+\nLag: Years",
+      "description": "A democratically legitimate state can maintain and reform the Ordoliberal framework against short-term political pressures — defending Bundesbank independence, sustaining codetermination, adjusting welfare provisions — in ways that an illegitimate state cannot. [e15]"
+    },
+    {
+      "id": "e16",
+      "from": "n5",
+      "to": "n1",
+      "width": 4,
+      "lag": 3,
+      "color": { "color": "#1E40AF" },
+      "label": "Integration validates sovereignty\n+\nLag: Years",
+      "description": "EEC membership, and especially the Franco-German partnership, provided external validation of BRD legitimacy that domestic institutions alone could not generate in the early decades. Being trusted by France was a form of constitutional recognition that the Bundestag could not bestow on itself. [e16]"
+    },
+    {
+      "id": "e17",
+      "from": "n6",
+      "to": "n9",
+      "width": 3,
+      "lag": 3,
+      "color": { "color": "#1E40AF" },
+      "label": "Social Market institutionalises independence\n+\nLag: Years",
+      "description": "The Ordoliberal framework's logic required an independent monetary authority — a Bundesbank insulated from electoral pressure — as its monetary complement. The Social Market Economy's design created the institutional conditions within which Bundesbank credibility could be built and defended. [e17]"
+    },
+    {
+      "id": "e18",
+      "from": "n10",
+      "to": "n1",
+      "width": 3,
+      "lag": 4,
+      "color": { "color": "#1E40AF" },
+      "label": "Ostpolitik demonstrates sovereignty\n+\nLag: Years",
+      "description": "Brandt's Ostpolitik demonstrated that West Germany could exercise strategic foreign policy initiative within — rather than despite — its Western commitments. The Kniefall in Warsaw and the Eastern treaties were acts of mature sovereignty that deepened BRD legitimacy, particularly among the left. [e18]"
+    },
+    {
+      "id": "e19",
+      "from": "n1",
+      "to": "n4",
+      "width": 3,
+      "lag": 3,
+      "color": { "color": "#991B1B" },
+      "label": "Stability absorbs radical edge\n-\nLag: Years",
+      "description": "A genuinely stable democracy offers the left-libertarian impulse a channel into institutional politics — the Green Party's entry into the Bundestag in 1983 being the clearest example. Stable legitimacy does not eliminate critique but converts it from systemic challenge to productive tension. [e19]"
+    }
+  ],
+  "loops": [
+    {
+      "id": "R1",
+      "name": "The Wirtschaftswunder Engine",
+      "type": "R",
+      "description": "Social Market framework drives export prosperity; prosperity delivers the democratic social contract; legitimate democracy sustains and reforms Ordoliberal institutions. A self-reinforcing prosperity-legitimacy cycle that, once started, was structurally difficult to interrupt — the BRD's deepest source of systemic resilience. [R1]",
+      "nodeIds": ["n6", "n2", "n1"],
+      "edgeIds": ["e3", "e6", "e15"]
+    },
+    {
+      "id": "R2",
+      "name": "The European Anchor",
+      "type": "R",
+      "description": "Civic moral reckoning enables Germany as trusted European partner; European embedding amplifies export access; export prosperity delivers democratic legitimacy; stable democracy deepens moral reckoning. A reinforcing loop that made BRD moral reconstruction and economic success mutually dependent — the deeper the reckoning, the stronger the European anchor, the more resilient the prosperity. [R2]",
+      "nodeIds": ["n3", "n5", "n2", "n1"],
+      "edgeIds": ["e11", "e5", "e6", "e14"]
+    },
+    {
+      "id": "R3",
+      "name": "The Guest Worker Engine",
+      "type": "R",
+      "description": "Export prosperity drives structural labour demand; Gastarbeiter fill the gaps and sustain growth. A reinforcing loop that extended the Wirtschaftswunder beyond its domestic labour ceiling — but at the cost of a deferred social integration question that the loop itself was generating. [R3]",
+      "nodeIds": ["n2", "n8"],
+      "edgeIds": ["e7", "e8"]
+    },
+    {
+      "id": "R4",
+      "name": "The Ordoliberal Anchor",
+      "type": "R",
+      "description": "Social Market framework institutionalises Bundesbank independence; DM stability anchors export competitiveness; export prosperity sustains the political conditions for Social Market continuity. A reinforcing loop that gave the BRD monetary and institutional stability through every political cycle from Adenauer to Kohl. [R4]",
+      "nodeIds": ["n6", "n9", "n2"],
+      "edgeIds": ["e17", "e4", "e3"]
+    },
+    {
+      "id": "B1",
+      "name": "The Absorption Loop",
+      "type": "B",
+      "description": "Left counter-culture deepens civic moral reckoning; moral reckoning strengthens democratic legitimacy; stable democratic legitimacy partially absorbs and converts radical critique into institutional politics. The balancing loop that explains why the BRD survived its 68er challenge where Weimar collapsed under far lesser pressure — the system was designed to process dissent rather than suppress it. [B1]",
+      "nodeIds": ["n4", "n3", "n1"],
+      "edgeIds": ["e12", "e10", "e19"]
+    }
+  ],
+  "archetypes": [
+    {
+      "id": "arch1",
+      "name": "Shifting the Burden",
+      "description": "The US security umbrella temporarily shifted the burden of self-generated legitimacy — but uniquely, the BRD used this window to build genuine internal institutional capacity (Social Market, Bundesbank, welfare state, European integration). The burden was shifted productively rather than indefinitely. This is the positive inversion of the GDR's Soviet dependency: same structural mechanism, opposite outcome, because the BRD invested the borrowed time in solving the underlying problem. [arch1]",
+      "nodeIds": ["n7", "n6", "n2", "n1", "n5"],
+      "edgeIds": ["e1", "e2", "e3", "e6", "e16"]
+    },
+    {
+      "id": "arch2",
+      "name": "Limits to Growth",
+      "description": "The Gastarbeiter system was a classic Limits to Growth structure: export prosperity demanded labour inputs beyond domestic supply; guest workers extended the growth curve; but their social non-integration generated the conditions (deferred identity questions, multicultural tensions) that set a ceiling on the social-democratic model. The growth continued; the integration did not. Germany is still managing the consequences of treating a social question as a labour variable. [arch2]",
+      "nodeIds": ["n2", "n8", "n4"],
+      "edgeIds": ["e7", "e8", "e9"]
+    }
+  ]
+}
