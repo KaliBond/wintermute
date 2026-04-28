@@ -3,6 +3,9 @@
 # Note: Cloudflare Pretty URLs handles *.html → extensionless automatically.
 # Only list redirects to *different* destinations here.
 
+# www → apex redirect (requires www added as custom domain in Pages dashboard)
+https://www.neuralnations.org/* https://neuralnations.org/:splat 301
+
 # /research and /research/ → canonical /research-diary
 /research/              /research-diary         301
 /research               /research-diary         301
