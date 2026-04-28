@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Start Here — Neural Nations</title>
+    <meta name="description" content="New to Neural Nations or CAMS? Start here. Three entry points by audience type, a plain-English explainer, and a guide to what's on the site.">
+    <meta name="keywords" content="CAMS, Neural Nations, start here, guide, Kari McKern, civilisational complexity">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/start-here">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/start-here">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="Start Here — Neural Nations">
+    <meta property="og:description" content="New to Neural Nations or CAMS? Three entry points by audience type, a plain-English explainer, and a guide to what's on the site.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Start Here — Neural Nations">
+    <meta name="twitter:description" content="New to Neural Nations or CAMS? Three entry points, a plain-English explainer, and a site guide.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Neural Nations",
+          "url": "https://neuralnations.org",
+          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
+          "author": { "@id": "https://neuralnations.org/#kari" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://neuralnations.org/#kari",
+          "name": "Kari McKern",
+          "url": "https://neuralnations.org/cams-project-history",
+          "jobTitle": "Independent Researcher"
+        }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .sh-page {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+        .sh-hero {
+            margin-bottom: 44px;
+        }
+        .sh-eyebrow {
+            font-size: 0.72em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #1f77b4;
+            margin-bottom: 10px;
+        }
+        .sh-hero h1 {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #1a0a2e;
+            line-height: 1.2;
+            margin: 0 0 16px;
+        }
+        .sh-hero p {
+            font-size: 1.08em;
+            line-height: 1.75;
+            color: #374151;
+            margin: 0;
+        }
+        /* Audience track cards */
+        .sh-tracks {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 18px;
+            margin: 36px 0 48px;
+        }
+        .sh-track {
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            padding: 24px 20px 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: box-shadow 0.15s, transform 0.15s;
+            display: flex;
+            flex-direction: column;
+        }
+        .sh-track:hover {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.09);
+            transform: translateY(-2px);
+        }
+        .sh-track.curious  { border-top: 4px solid #d97706; }
+        .sh-track.practice { border-top: 4px solid #2ca02c; }
+        .sh-track.research { border-top: 4px solid #1f77b4; }
+        .sh-track.press    { border-top: 4px solid #9b59b6; }
+        .sh-track-icon { font-size: 1.8em; margin-bottom: 10px; }
+        .sh-track h2 {
+            font-size: 1em;
+            font-weight: 700;
+            margin: 0 0 8px;
+            line-height: 1.3;
+        }
+        .sh-track.curious  h2 { color: #d97706; }
+        .sh-track.practice h2 { color: #2ca02c; }
+        .sh-track.research h2 { color: #1f77b4; }
+        .sh-track.press    h2 { color: #9b59b6; }
+        .sh-track p {
+            font-size: 0.87em;
+            color: #555;
+            line-height: 1.65;
+            flex: 1;
+            margin: 0 0 14px;
+        }
+        .sh-track-links {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .sh-track-links a {
+            font-size: 0.83em;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .sh-track.curious  .sh-track-links a { color: #d97706; }
+        .sh-track.practice .sh-track-links a { color: #2ca02c; }
+        .sh-track.research .sh-track-links a { color: #1f77b4; }
+        .sh-track.press    .sh-track-links a { color: #9b59b6; }
+        /* Explainer section */
+        .sh-explainer {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 32px 32px 28px;
+            margin: 0 0 44px;
+        }
+        .sh-explainer h2 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #1a0a2e;
+            margin: 0 0 18px;
+        }
+        .sh-explainer p {
+            font-size: 0.97em;
+            line-height: 1.78;
+            color: #374151;
+            margin: 0 0 14px;
+        }
+        .sh-explainer p:last-child { margin-bottom: 0; }
+        /* Site map section */
+        .sh-sitemap {
+            margin: 0 0 44px;
+        }
+        .sh-sitemap h2 {
+            font-size: 0.72em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #9ca3af;
+            margin: 0 0 16px;
+        }
+        .sh-sitemap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 10px;
+        }
+        .sh-sitemap-item {
+            display: block;
+            padding: 13px 16px;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            text-decoration: none;
+            color: inherit;
+            transition: border-color 0.15s;
+        }
+        .sh-sitemap-item:hover { border-color: #1f77b4; }
+        .sh-sitemap-item strong {
+            display: block;
+            font-size: 0.9em;
+            color: #1a1a1a;
+            margin-bottom: 2px;
+        }
+        .sh-sitemap-item span {
+            font-size: 0.8em;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+        /* Keplerian note */
+        .sh-keplerian {
+            background: #f0f4f8;
+            border-left: 4px solid #1f77b4;
+            border-radius: 0 10px 10px 0;
+            padding: 20px 24px;
+            margin: 0 0 36px;
+        }
+        .sh-keplerian .kep-label {
+            font-size: 0.7em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #1f77b4;
+            margin-bottom: 8px;
+        }
+        .sh-keplerian p {
+            font-size: 0.92em;
+            line-height: 1.72;
+            color: #374151;
+            margin: 0 0 8px;
+        }
+        .sh-keplerian p:last-child { margin-bottom: 0; }
+        /* FAQ link footer */
+        .sh-faq-cta {
+            text-align: center;
+            padding: 32px 24px;
+            background: #1a0a2e;
+            border-radius: 12px;
+            color: white;
+        }
+        .sh-faq-cta p {
+            font-size: 0.97em;
+            color: #d1d5db;
+            margin: 0 0 16px;
+            line-height: 1.65;
+        }
+        .sh-faq-cta a {
+            display: inline-block;
+            padding: 10px 24px;
+            background: #1f77b4;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.92em;
+        }
+        .sh-faq-cta a:hover { background: #1560a0; }
+        @media (max-width: 600px) {
+            .sh-hero h1 { font-size: 1.6rem; }
+            .sh-explainer { padding: 24px 20px; }
+            .sh-page { padding: 28px 16px 60px; }
+        }
+    </style>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+
+<nav class="navbar" id="navbar"></nav>
+
+<main class="sh-page">
+
+    <header class="sh-hero">
+        <p class="sh-eyebrow">Neural Nations</p>
+        <h1>You don't need to be an expert.<br>You just need a question.</h1>
+        <p>Most political analysis describes what societies say about themselves. CAMS asks a different question: how well are they actually coordinating — and in which direction are they moving? This page helps you find the part of the site that's most useful to you.</p>
+    </header>
+
+    <!-- Audience tracks -->
+    <div class="sh-tracks">
+
+        <div class="sh-track curious">
+            <div class="sh-track-icon">📖</div>
+            <h2>Curious reader</h2>
+            <p>You found this through a link, a search, or a newsletter, and you want to understand what CAMS actually says about the world — without having to read a methodology paper first.</p>
+            <div class="sh-track-links">
+                <a href="research-diary.html">Research Diary — start anywhere →</a>
+                <a href="faq.html">Plain-English FAQ →</a>
+            </div>
+        </div>
+
+        <div class="sh-track practice">
+            <div class="sh-track-icon">📊</div>
+            <h2>Practitioner or strategist</h2>
+            <p>You work in policy, organisational risk, strategy, or institutional analysis. You want to apply the model to a real question, not read about it.</p>
+            <div class="sh-track-links">
+                <a href="https://cams-advanced-analysis.streamlit.app" target="_blank">Open the dashboard — no login →</a>
+                <a href="explore.html">Browse all tools →</a>
+                <a href="contact.html">Request a briefing note →</a>
+            </div>
+        </div>
+
+        <div class="sh-track research">
+            <div class="sh-track-icon">🔬</div>
+            <h2>Researcher or scholar</h2>
+            <p>You want to engage seriously with the framework — methodology, data, validation claims, or co-authorship. Scepticism is not a problem. It is the point of this platform.</p>
+            <div class="sh-track-links">
+                <a href="model.html">Read the model documentation →</a>
+                <a href="validation.html">Validation &amp; Limits →</a>
+                <a href="datasets.html">Download open datasets →</a>
+                <a href="contact.html">Peer review enquiries →</a>
+            </div>
+        </div>
+
+        <div class="sh-track press">
+            <div class="sh-track-icon">🎙️</div>
+            <h2>Journalist or writer</h2>
+            <p>You're working on a story about geopolitics, institutional collapse, complexity science, or the intersection of AI and social analysis. Background briefings are available.</p>
+            <div class="sh-track-links">
+                <a href="research-diary.html">Read the diary →</a>
+                <a href="contact.html">Request an interview or briefing →</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 60-second explainer -->
+    <section class="sh-explainer">
+        <h2>What is CAMS? — sixty seconds</h2>
+        <p>Every stable society in history has had to solve the same eight problems: who leads, who defends, who remembers, who legitimises, who produces, who labours, who circulates resources, and who maintains knowledge. CAMS calls these the eight nodes.</p>
+        <p>Each node is scored on four dimensions each year — how coherent it is internally, how much capacity it has, how much stress it's under, and how sophisticated its planning is. Those scores produce a number. Track that number across decades and you get a trajectory: not a prediction, but a measurable direction of travel.</p>
+        <p>When institutions stay coordinated under pressure, societies function. When the connections between them fray — when executive leadership loses contact with the economy, or cultural legitimacy decouples from productive capacity — the system starts to behave differently. CAMS is designed to detect that shift before it becomes a crisis.</p>
+        <p>The dataset currently covers 45 historical series across 38 societies and organisations, from ancient Rome to contemporary Norway to Boeing, with 39,351 node-year records freely available for download.</p>
+    </section>
+
+    <!-- Honest method note -->
+    <div class="sh-keplerian">
+        <p class="kep-label">A note on method</p>
+        <p>CAMS is a <strong>sampling instrument calibrated empirically</strong> — not a theory derived from first principles. Kepler mapped planetary orbits with extraordinary accuracy before Newton explained why they moved that way. CAMS is in the same position: consistent retrodictive accuracy, but the formal derivation from first principles is ongoing.</p>
+        <p>The author is an independent researcher. CAMS has not yet been formally peer-reviewed. The work is published openly so that scrutiny is possible. Rigorous scepticism is not a challenge to this project — it is the point. For a full account of what has been demonstrated and what has not, see the <a href="validation.html" style="color:#1f77b4;font-weight:600;">Validation &amp; Limits page →</a></p>
+    </div>
+
+    <!-- Site map -->
+    <section class="sh-sitemap">
+        <h2>What's on the site</h2>
+        <div class="sh-sitemap-grid">
+            <a href="model.html" class="sh-sitemap-item">
+                <strong>The CAMS Model</strong>
+                <span>Eight nodes, four metrics, all formulas. Version status and changelog included.</span>
+            </a>
+            <a href="validation.html" class="sh-sitemap-item">
+                <strong>Validation &amp; Limits</strong>
+                <span>What has been shown. What hasn't. What would strengthen or weaken the framework.</span>
+            </a>
+            <a href="datasets.html" class="sh-sitemap-item">
+                <strong>Open Datasets</strong>
+                <span>39,351 records, freely downloadable. 38 societies, 45 series, 1800–2025.</span>
+            </a>
+            <a href="https://cams-advanced-analysis.streamlit.app" class="sh-sitemap-item" target="_blank">
+                <strong>Live Dashboard</strong>
+                <span>8-node scores, bond strength, phase-space. No login. Opens in Streamlit.</span>
+            </a>
+            <a href="explore.html" class="sh-sitemap-item">
+                <strong>Explore Tools</strong>
+                <span>Failure Modes, Escalation Archetypes, Attractors, Mindscapes, and more.</span>
+            </a>
+            <a href="research-diary.html" class="sh-sitemap-item">
+                <strong>Research Diary</strong>
+                <span>Chronological log of findings, revisions, blind tests, and validation milestones.</span>
+            </a>
+            <a href="results.html" class="sh-sitemap-item">
+                <strong>Results at a Glance</strong>
+                <span>Key findings across societies in summary form.</span>
+            </a>
+            <a href="cams-project-history.html" class="sh-sitemap-item">
+                <strong>Project History</strong>
+                <span>How CAMS developed from mid-2024 onward — without inflation or prospectus language.</span>
+            </a>
+            <a href="faq.html" class="sh-sitemap-item">
+                <strong>FAQ</strong>
+                <span>Common questions about the framework, the data, the method, and the limits.</span>
+            </a>
+            <a href="contact.html" class="sh-sitemap-item">
+                <strong>Contact &amp; Collaborate</strong>
+                <span>Three tracks: Scholar, Practitioner, General Public &amp; Press.</span>
+            </a>
+            <a href="https://github.com/KaliBond/wintermute" class="sh-sitemap-item" target="_blank">
+                <strong>GitHub Repository</strong>
+                <span>Full source: datasets, Python implementation, validation reports, scoring protocols.</span>
+            </a>
+            <a href="newsletter.html" class="sh-sitemap-item">
+                <strong>Newsletter</strong>
+                <span>Complex Adaptive Humans — LinkedIn newsletter by Kari McKern.</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- CTA to FAQ -->
+    <div class="sh-faq-cta">
+        <p>Still have questions about what CAMS is, whether it's peer-reviewed, what the version labels mean, or what the model can and can't do?</p>
+        <a href="faq.html">Read the FAQ →</a>
+    </div>
+
+</main>
+
+<footer class="footer">
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+
+<script src="nav.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"eac4293c49694b218c0f96b44f4550b5","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>

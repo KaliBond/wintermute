@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FAQ — Neural Nations</title>
+    <meta name="description" content="Frequently asked questions about CAMS: what it is, how scores are produced, what the version labels mean, what the model can and cannot do, and how to get involved.">
+    <meta name="keywords" content="CAMS FAQ, Neural Nations, civilisational complexity, Kari McKern, CAMS methodology, CAMS peer review">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/faq">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/faq">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="FAQ — Neural Nations">
+    <meta property="og:description" content="Common questions about CAMS: methodology, data, version labels, what the model can and cannot do, and how to get involved.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="FAQ — Neural Nations">
+    <meta name="twitter:description" content="Common questions about CAMS methodology, data, version labels, and limits.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Neural Nations",
+          "url": "https://neuralnations.org",
+          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
+          "author": { "@id": "https://neuralnations.org/#kari" }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What does CAMS stand for and what does it do?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "CAMS stands for Complex Adaptive Model State. It models any society or complex organisation as a network of eight functional nodes scored across four metrics, producing time series that show how each node has evolved, how strongly the nodes are coupled, and where the system sits between stable coordination and coordination failure."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is CAMS peer-reviewed?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. CAMS has not yet been formally peer-reviewed. This is stated clearly because it matters. The work is published openly so that external scrutiny is possible. Scholarly critique and independent replication are the explicit goal."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the difference between CAMS v2.3, v2.3.1, and v3.2-R?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "CAMS v2.3 is the current stable canonical specification. CAMS v2.3.1 is a conditional revision to the Compression Theorem from April 2026 and does not change the scoring formulas. CAMS v3.2-R is an experimental research extension adding operator notation for the Explorer and Interpreter tools — it is not a new framework version."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Are the equations derived from first principles or calibrated empirically?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Calibrated empirically. CAMS is a sampling instrument, not a theory derived from thermodynamic first principles. The Kepler analogy applies: Kepler mapped planetary orbits accurately before Newton explained why they moved. CAMS fits observed societal behaviour with consistent retrodictive accuracy, but the formal derivation is ongoing."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I download the datasets?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, freely. All 39,351 records across 38 societies and 45 historical series are available on the Datasets page and from the GitHub repository at KaliBond/wintermute. No login required."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .faq-page {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+        .faq-hero { margin-bottom: 40px; }
+        .faq-eyebrow {
+            font-size: 0.72em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #1f77b4;
+            margin-bottom: 10px;
+        }
+        .faq-hero h1 {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #1a0a2e;
+            line-height: 1.2;
+            margin: 0 0 16px;
+        }
+        .faq-hero p {
+            font-size: 1.05em;
+            line-height: 1.75;
+            color: #374151;
+        }
+        /* Jump nav */
+        .faq-jumpnav {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin-bottom: 48px;
+        }
+        .faq-jumpnav p {
+            font-size: 0.72em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #9ca3af;
+            margin: 0 0 12px;
+        }
+        .faq-jumpnav ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .faq-jumpnav ul li a {
+            display: inline-block;
+            font-size: 0.85em;
+            color: #1f77b4;
+            padding: 4px 12px;
+            background: #fff;
+            border: 1px solid #dde4f0;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: background 0.12s;
+        }
+        .faq-jumpnav ul li a:hover { background: #e8f4fd; }
+        /* Sections */
+        .faq-section {
+            margin-bottom: 52px;
+            scroll-margin-top: 80px;
+        }
+        .faq-section-label {
+            font-size: 0.68em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #9ca3af;
+            margin-bottom: 4px;
+        }
+        .faq-section h2 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #1a0a2e;
+            margin: 0 0 22px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        /* Individual Q&A */
+        .faq-item {
+            margin-bottom: 28px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .faq-item h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0 0 10px;
+            line-height: 1.4;
+        }
+        .faq-item p {
+            font-size: 0.97em;
+            line-height: 1.78;
+            color: #374151;
+            margin: 0 0 10px;
+        }
+        .faq-item p:last-child { margin-bottom: 0; }
+        .faq-item ul {
+            margin: 6px 0 10px;
+            padding-left: 0;
+            list-style: none;
+        }
+        .faq-item ul li {
+            font-size: 0.96em;
+            line-height: 1.7;
+            color: #374151;
+            padding: 4px 0 4px 22px;
+            position: relative;
+            border-bottom: 1px solid #f9f9f9;
+        }
+        .faq-item ul li:last-child { border-bottom: none; }
+        .faq-item ul li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: #1f77b4;
+            font-weight: 700;
+        }
+        .faq-item a { color: #1f77b4; }
+        /* Inline code */
+        .faq-item code {
+            font-family: monospace;
+            font-size: 0.9em;
+            background: #f0f4f8;
+            padding: 1px 5px;
+            border-radius: 4px;
+        }
+        /* Callout box */
+        .faq-callout {
+            background: #f0f4f8;
+            border-left: 4px solid #1f77b4;
+            border-radius: 0 8px 8px 0;
+            padding: 16px 20px;
+            margin: 10px 0;
+            font-size: 0.93em;
+            line-height: 1.72;
+            color: #374151;
+        }
+        /* Bottom CTA */
+        .faq-cta {
+            margin-top: 56px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            padding: 28px 28px;
+            background: #f0f4f8;
+            border-radius: 12px;
+        }
+        .faq-cta p {
+            font-size: 0.95em;
+            color: #374151;
+            margin: 0;
+            flex: 1;
+            line-height: 1.6;
+        }
+        .faq-cta a {
+            white-space: nowrap;
+            padding: 10px 20px;
+            background: #1f77b4;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+        @media (max-width: 600px) {
+            .faq-hero h1 { font-size: 1.6rem; }
+            .faq-page { padding: 28px 16px 60px; }
+            .faq-cta { flex-direction: column; }
+        }
+    </style>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+
+<nav class="navbar" id="navbar"></nav>
+
+<main class="faq-page">
+
+    <header class="faq-hero">
+        <p class="faq-eyebrow">Frequently Asked Questions</p>
+        <h1>FAQ</h1>
+        <p>Common questions about what CAMS is, how it works, what it has demonstrated, and what it has not. This page is written to be useful to sceptical readers — including those whose job it is to find holes in frameworks like this one.</p>
+    </header>
+
+    <!-- Jump nav -->
+    <nav class="faq-jumpnav" aria-label="Jump to section">
+        <p>Jump to</p>
+        <ul>
+            <li><a href="#what-is-cams">What CAMS is</a></li>
+            <li><a href="#methodology">Methodology</a></li>
+            <li><a href="#versions">Version labels</a></li>
+            <li><a href="#can-cannot">What it can and cannot do</a></li>
+            <li><a href="#data">Data and openness</a></li>
+            <li><a href="#get-involved">Getting involved</a></li>
+        </ul>
+    </nav>
+
+    <!-- Section 1 -->
+    <section class="faq-section" id="what-is-cams">
+        <p class="faq-section-label">About the framework</p>
+        <h2>What CAMS is</h2>
+
+        <div class="faq-item">
+            <h3>What does CAMS stand for, and what does it actually do?</h3>
+            <p>CAMS stands for Complex Adaptive Model State. It models any society — or any sufficiently complex organisation — as a network of eight functional nodes scored across four metrics. The output is a set of time series showing how each node has evolved, how strongly the nodes are coupled, and where the system sits in the space between stable coordination and coordination failure.</p>
+            <p>The eight nodes are: <strong>Helm</strong> (executive governance), <strong>Shield</strong> (military and defence), <strong>Lore</strong> (cultural memory and ideology), <strong>Archive</strong> (institutional memory and records), <strong>Stewards</strong> (property and elite resource control), <strong>Craft</strong> (knowledge workers and technical capacity), <strong>Hands</strong> (labour), and <strong>Flow</strong> (trade and economic circulation).</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What problem is Neural Nations trying to solve?</h3>
+            <p>Most frameworks for understanding societies are either purely qualitative — historical narrative, political theory — or they focus on specific quantitative proxies like GDP, Gini coefficient, or democracy indices that don't capture how a system is coordinating as a whole. CAMS tries to occupy the gap: a structured, measurable, cross-culturally comparable instrument for institutional health.</p>
+            <p>The practical question it asks is: can you tell, from structure and trajectory alone — not from ideology, not from outcome — which direction a society is moving and how much stress it is absorbing?</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Why eight nodes? Why not more or fewer?</h3>
+            <p>CAMS started with a much larger set of candidate functions and was progressively reduced. Eight turned out to be the minimum number of functions that is (a) universally present across all stable societies regardless of era, culture, or scale, and (b) sufficient to detect the structural patterns that precede major historical transitions.</p>
+            <p>The argument for this minimal architecture is written up formally in the draft paper "Why Eight Nodes?" in the <a href="https://github.com/KaliBond/wintermute" target="_blank">GitHub repository</a>.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Is CAMS peer-reviewed?</h3>
+            <p>No. CAMS has not yet been formally peer-reviewed. This is stated clearly because it matters. The work is published openly — datasets, formulas, scoring protocols, validation reports — precisely so that scrutiny is possible.</p>
+            <p>Scholarly critique and independent replication are the explicit goal, not an afterthought. The <a href="validation.html">Validation &amp; Limits page</a> states exactly what has been demonstrated and what has not. The <a href="contact.html">Contact page</a> has a specific track for peer review and co-authorship enquiries.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Are the equations derived from first principles or calibrated empirically?</h3>
+            <div class="faq-callout">
+                CAMS is a <strong>sampling instrument calibrated empirically</strong> — not a theory derived from thermodynamic first principles. This is the most important thing to understand about its epistemic status.
+            </div>
+            <p>The Kepler analogy applies: Kepler mapped planetary orbits with extraordinary precision before Newton explained why they moved that way. CAMS is in the same position — it fits observed societal behaviour with consistent retrodictive accuracy, but it does not yet have the formal derivation that a mature scientific theory requires. The formal derivation is ongoing work.</p>
+            <p>This is an honest statement of where the research programme currently stands, not a limitation to be embarrassed about.</p>
+        </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section class="faq-section" id="methodology">
+        <p class="faq-section-label">How it works</p>
+        <h2>Methodology</h2>
+
+        <div class="faq-item">
+            <h3>How are scores produced?</h3>
+            <p>Each node is scored on a 1–10 scale across four dimensions — Coherence, Capacity, Stress, and Abstraction — for each year in the dataset. Scoring is done by multiple AI language models working independently from the historical record. Depending on the series, between three and five scorers are used.</p>
+            <p>Results from multiple scorers are compared for concordance. High concordance across independently trained systems suggests the signal is in the historical record rather than in any one scorer's assumptions.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What does "blinded" scoring mean in practice?</h3>
+            <p>The blinding protocol means that when a scorer evaluates, say, the United States in 1925, it is given only the historical information available at that time — not the outcome of the Depression, the New Deal, or World War Two. The scorer is asked to assess the node's function in that year without knowing what happened next.</p>
+            <p>This matters because the standard critique of any retrospective model is that it was calibrated to fit known outcomes. Blinding makes that critique harder to sustain, though it doesn't eliminate it: the scorers are trained on historical text that may implicitly contain outcome information. This limitation is acknowledged openly in the methodology documentation.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What does <code>r &gt; 0.7</code> mean here?</h3>
+            <p><code>r</code> is the Pearson correlation coefficient — a measure of how consistently two variables move together, ranging from −1 (perfectly inverse) to +1 (perfectly aligned). In CAMS, "ensemble r &gt; 0.7" means that when multiple independent AI scorers score the same society for the same year, their outputs correlate above 0.7: they are largely agreeing on the structural trajectory even though they are working independently.</p>
+            <p>This concordance threshold is used to validate that the signal is consistent across scorers, not just an artefact of one model's assumptions or training data.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>How should I interpret "prediction", "hindcast", and "validation" claims?</h3>
+            <ul>
+                <li><strong>Hindcast</strong> means applying the model to known historical data and testing whether the model would have detected the right structural signals. Ensemble hindcast accuracy of 75–90% across tested societies is the strongest evidence CAMS currently has.</li>
+                <li><strong>Validation</strong> means cross-checking CAMS outputs against independent datasets — for example, the Seshat Databank cross-validation, which yielded r = 0.78 on Latium/Rome — or testing concordance across multiple independent scorers.</li>
+                <li><strong>Prospective prediction</strong> — applying the model to the present and testing whether it is right about the future — is the test CAMS has not yet had time to pass or fail. It is the explicitly stated next step in the research programme.</li>
+            </ul>
+        </div>
+
+        <div class="faq-item">
+            <h3>How large is the dataset and what does it cover?</h3>
+            <p>As of April 2026: 45 historical series, 38 distinct societies and organisations, 39,351 node-year records. The time span runs from 5 CE to 2026, though coverage is densest from 1800 onward. Societies include nation-states, empires, city-states, and corporate organisations. All datasets are freely downloadable from the <a href="datasets.html">Datasets page</a> and from <a href="https://github.com/KaliBond/wintermute" target="_blank">GitHub</a>.</p>
+        </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section class="faq-section" id="versions">
+        <p class="faq-section-label">Version labels</p>
+        <h2>What do the version labels mean?</h2>
+
+        <div class="faq-item">
+            <h3>What is the difference between CAMS, CAMS v2.3, CAMS v2.3.1, and CAMS v3.2-R?</h3>
+            <ul>
+                <li><strong>CAMS</strong> refers to the framework as a whole — the name of the measurement system.</li>
+                <li><strong>CAMS v2.3</strong> is the current stable canonical specification — the version documented on the <a href="model.html">Model page</a> and tagged in the GitHub README. This is the version all datasets use.</li>
+                <li><strong>CAMS v2.3.1</strong> is a conditional revision from April 2026 to the Compression Theorem. It clarifies that the eight-node partition is regime-dependent rather than a universal upper bound. It does not change the scoring formulas or the dataset schema.</li>
+                <li><strong>CAMS v3.2-R</strong> is an experimental research extension, not a new framework version. It adds operator notation — ESCH σ, κ, headroom, attractor states — used in the Explorer and Interpreter tools. Think of it as a specialist instrument built on top of the stable v2.3 foundation.</li>
+            </ul>
+            <p>If you see a version label in the Research Diary that doesn't appear in the model changelog — such as "CAMS PRIME v3.0" (a working label from the January 2026 Sweden analysis) — treat it as a historical working name that has been superseded by the canonical v2.3 specification.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Which version should I use for my own analysis?</h3>
+            <p>CAMS v2.3 — the stable canonical specification documented on the <a href="model.html">Model page</a>. The datasets and scoring protocols published in the GitHub repository all follow v2.3. Unless you are specifically working with the Explorer or Interpreter tools and need the v3.2-R operator extensions, v2.3 is the right starting point.</p>
+        </div>
+    </section>
+
+    <!-- Section 4 -->
+    <section class="faq-section" id="can-cannot">
+        <p class="faq-section-label">Scope and limits</p>
+        <h2>What CAMS can and cannot do</h2>
+
+        <div class="faq-item">
+            <h3>What can CAMS do well?</h3>
+            <ul>
+                <li>Detect accumulating structural stress in institutional networks before crisis becomes visible in conventional indicators.</li>
+                <li>Compare societies across radically different cultures, eras, and scales using a common measurement framework.</li>
+                <li>Distinguish between societies that absorb stress and adapt versus those moving toward coordination failure.</li>
+                <li>Identify which specific institutional nodes are under the most pressure in a given period.</li>
+                <li>Provide a structural rather than ideological lens for geopolitical and historical analysis — one that does not privilege any particular political system by design.</li>
+            </ul>
+        </div>
+
+        <div class="faq-item">
+            <h3>What can CAMS not do?</h3>
+            <ul>
+                <li>Reliably predict specific events, dates, or outcomes. CAMS identifies trajectory and structural risk — not event timing.</li>
+                <li>Provide exact measurements. Scores should be read as ordinal risk bands, not precise quantities.</li>
+                <li>Capture sudden-onset fractures that bypass gradual desynchronisation. CAMS is better at detecting accumulating stress than rapid rupture.</li>
+                <li>Replace judgement. The model is an instrument for making patterns visible, not a substitute for interpretation.</li>
+                <li>Claim the status of settled science. It is a research programme: structured, empirical, and falsifiable — but not yet independently replicated at scale by external human research teams.</li>
+            </ul>
+        </div>
+
+        <div class="faq-item">
+            <h3>What would strengthen or weaken CAMS as a framework?</h3>
+            <p>The <a href="validation.html">Validation &amp; Limits page</a> addresses this in full. In brief:</p>
+            <p><strong>Would strengthen:</strong> blinded prospective case testing (2026–2028), independent human replication of scoring, comparison with simpler baseline models, publication of failed and ambiguous cases.</p>
+            <p><strong>Would weaken:</strong> repeatedly missing known crises, flagging stable systems as high risk, performing no better than simpler indicators, heavy dependence on a single scorer or dataset.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Why does the framework apply to corporations as well as nations?</h3>
+            <p>CAMS is scale-covariant: the same eight functional problems — executive leadership, defence and security, cultural memory, institutional records, elite resource control, knowledge capacity, labour, and circulation — appear in every stable complex organisation, not just nation-states. A corporation, a government department, a medieval city-state, and a contemporary nation-state all have to solve these problems or cease to function.</p>
+            <p>The Boeing analysis (1990–2025) and the Qantas, Nexperia, and SpaceX datasets in the open data repository demonstrate the corporate application. The node mapping differs slightly — for example, "Shield" maps to security and legal capacity in a corporate context — but the measurement logic is identical.</p>
+        </div>
+    </section>
+
+    <!-- Section 5 -->
+    <section class="faq-section" id="data">
+        <p class="faq-section-label">Data and openness</p>
+        <h2>Data, access, and privacy</h2>
+
+        <div class="faq-item">
+            <h3>Can I download and reuse the datasets?</h3>
+            <p>Yes, freely. All 39,351 records across 38 societies and 45 historical series are available for download on the <a href="datasets.html">Datasets page</a> and from the GitHub repository at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>. The repository is public, AI scraping is explicitly permitted, and forks and contributions are welcome. No login is required for anything on this site.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>How often are datasets and tools updated?</h3>
+            <p>The dataset is actively extended. Each significant addition is documented in the <a href="research-diary.html">Research Diary</a>. The Streamlit dashboard updates automatically when new data or features are pushed to GitHub.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Why are some materials hosted on external platforms?</h3>
+            <p>The live dashboard runs on Streamlit Cloud because interactive computation at scale requires a live server. Some artefacts in the Explore section were produced using external tools during the research process. Canonical outputs — datasets, formulas, scoring protocols, and validation reports — are hosted in the GitHub repository or on neuralnations.org directly.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Does the site collect personal data?</h3>
+            <p>No personal data is collected or stored when you browse neuralnations.org. The dashboard carries the same statement. Google Analytics is present on the site for aggregate traffic measurement — no personally identifiable information is retained. No cookies requiring consent are set beyond what Analytics uses, and no advertising or third-party tracking is present.</p>
+        </div>
+    </section>
+
+    <!-- Section 6 -->
+    <section class="faq-section" id="get-involved">
+        <p class="faq-section-label">Getting involved</p>
+        <h2>Where to start and how to get in touch</h2>
+
+        <div class="faq-item">
+            <h3>Where should a complete beginner start?</h3>
+            <p>The <a href="research-diary.html">Research Diary</a>. Pick any entry that sounds interesting. Individual entries are written to be readable independently — no prior knowledge of complexity science or the full framework is required. The <a href="start-here.html">Start Here page</a> also has a plain-language sixty-second explainer if you want context before diving into a specific entry.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>How can I get in touch — as a researcher, practitioner, journalist, or curious reader?</h3>
+            <p>The <a href="contact.html">Contact page</a> has three structured tracks: Scholar &amp; Peer Review (for academics and methodologists), Practitioner &amp; Policy (for analysts and strategists), and General Public &amp; Press (for journalists, educators, and curious readers). Each track explains what kind of engagement is possible and what information is most useful to include when writing.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Is the companion book available?</h3>
+            <p><em>The Architecture of Civilisation: A Thermodynamic Science of Societal Dynamics</em> (First Edition) is complete and in preparation for release. Updates will appear in the <a href="research-diary.html">Research Diary</a> and the <a href="https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/" target="_blank">Complex Adaptive Humans LinkedIn newsletter</a>.</p>
+        </div>
+    </section>
+
+    <!-- Bottom CTA -->
+    <div class="faq-cta">
+        <p>Question not answered here? The Research Diary, the Model page, and the Validation &amp; Limits page cover most specifics in more depth — or write directly.</p>
+        <a href="contact.html">Get in touch →</a>
+    </div>
+
+</main>
+
+<footer class="footer">
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+
+<script src="nav.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"eac4293c49694b218c0f96b44f4550b5","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
