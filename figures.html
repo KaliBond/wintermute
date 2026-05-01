@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Figures — A Functional Taxonomy of Human Social Organisation</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --accent:     #1e5082;
+    --accent-lt:  #e8f0f8;
+    --accent-mid: #2e6fa3;
+    --text:       #1a1a2e;
+    --muted:      #5a6478;
+    --border:     #c8d8ea;
+    --bg:         #111820;
+    --panel:      #1a2535;
+    --sidebar-w:  260px;
+  }
+
+  html, body { height: 100%; }
+
+  body {
+    font-family: system-ui, sans-serif;
+    background: var(--bg);
+    color: #e0e8f0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Top bar ─────────────────────────────────────────────── */
+  .topbar {
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.6rem 1.2rem;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+  .topbar a.home {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+  .topbar a.home:hover { color: #fff; }
+  .topbar .title {
+    font-weight: 700;
+    font-size: 0.92rem;
+    flex: 1;
+  }
+  .topbar .counter {
+    font-size: 0.8rem;
+    opacity: 0.75;
+    white-space: nowrap;
+  }
+
+  /* ── Layout ──────────────────────────────────────────────── */
+  .layout {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  /* ── Sidebar ─────────────────────────────────────────────── */
+  .sidebar {
+    width: var(--sidebar-w);
+    background: var(--panel);
+    border-right: 1px solid rgba(255,255,255,0.07);
+    overflow-y: auto;
+    flex-shrink: 0;
+    padding: 0.6rem 0;
+  }
+  .sidebar-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.4rem 1rem 0.6rem;
+  }
+  .thumb-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    width: 100%;
+    padding: 0.55rem 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    color: #c8d8ea;
+    transition: background 0.15s;
+    border-left: 3px solid transparent;
+  }
+  .thumb-btn:hover { background: rgba(255,255,255,0.05); }
+  .thumb-btn.active {
+    background: rgba(30,80,130,0.35);
+    border-left-color: #5fa3d8;
+    color: #fff;
+  }
+  .thumb-btn img {
+    width: 52px;
+    height: 38px;
+    object-fit: cover;
+    border-radius: 3px;
+    background: #2a3545;
+    flex-shrink: 0;
+  }
+  .thumb-info { min-width: 0; }
+  .thumb-id {
+    font-size: 0.7rem;
+    color: #5fa3d8;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    display: block;
+  }
+  .thumb-name {
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    line-height: 1.3;
+  }
+
+  /* ── Viewer ──────────────────────────────────────────────── */
+  .viewer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .viewer-img-area {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 1.5rem;
+    background: var(--bg);
+    min-height: 0;
+  }
+
+  .viewer-img-area img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 6px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    background: #fff;
+  }
+
+  /* ── Caption bar ─────────────────────────────────────────── */
+  .caption-bar {
+    background: var(--panel);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 0.85rem 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+  .caption-text { flex: 1; min-width: 200px; }
+  .caption-fig-id {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #5fa3d8;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+  .caption-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #e8f0f8;
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+  .caption-sub {
+    font-size: 0.82rem;
+    color: var(--muted);
+    display: block;
+    line-height: 1.45;
+  }
+
+  /* ── Nav buttons ─────────────────────────────────────────── */
+  .nav-btns {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+  .nav-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #c8d8ea;
+    border-radius: 6px;
+    padding: 0.45rem 1rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.15s;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+  .nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+  /* ── Keyboard hint ───────────────────────────────────────── */
+  .kb-hint {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.3);
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  /* ── Mobile: collapse sidebar ────────────────────────────── */
+  .sidebar-toggle {
+    display: none;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: #fff;
+    padding: 0.3rem 0.7rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 650px) {
+    .sidebar { display: none; }
+    .sidebar.open { display: block; position: fixed; top: 0; left: 0; height: 100%; z-index: 100; width: 240px; }
+    .sidebar-toggle { display: inline-block; }
+    .kb-hint { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Figures</button>
+  <a href="functional_taxonomy.html" class="home">← Back to paper</a>
+  <span class="title">A Functional Taxonomy of Human Social Organisation — Figures</span>
+  <span class="counter" id="counter">1 / 10</span>
+</div>
+
+<div class="layout">
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-label">All figures</div>
+    <!-- populated by JS -->
+  </nav>
+
+  <!-- Main viewer -->
+  <div class="viewer">
+    <div class="viewer-img-area" id="imgArea">
+      <img id="mainImg" src="" alt="">
+    </div>
+    <div class="caption-bar">
+      <div class="caption-text">
+        <span class="caption-fig-id" id="capId"></span>
+        <span class="caption-title" id="capTitle"></span>
+        <span class="caption-sub" id="capSub"></span>
+      </div>
+      <div class="nav-btns">
+        <button class="nav-btn" id="btnPrev" onclick="navigate(-1)">← Prev</button>
+        <button class="nav-btn" id="btnNext" onclick="navigate(+1)">Next →</button>
+      </div>
+      <span class="kb-hint">← → arrow keys to navigate</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const FIGURES = [
+  {
+    id: 'fig1',
+    file: 'civilisations_dendrogram_overview.png',
+    label: 'Figure 1',
+    title: 'Civilisational Dendrogram — Cluster Overview',
+    sub: 'Ward linkage on 16 standardised CAMS metrics, n = 229. Eight clusters at natural cut. Per-cluster detail in Figures 3–10.'
+  },
+  {
+    id: 'fig2',
+    file: 'civilisations_morphology.png',
+    label: 'Figure 2',
+    title: 'Civilisational Morphology — Capability × Stress (n = 229)',
+    sub: 'Each cluster has a distinct colour and shape. Same overall score can sit in opposite morphological regimes — Norway and the Sassanian Empire both score ~7.8, but one is "Modern HF", the other "Stressed regional".'
+  },
+  {
+    id: 'fig3',
+    file: 'dendro_C1_Imperial_mode.png',
+    label: 'Appendix · C1',
+    title: 'Imperial Mode (n=15) — Internal Structure',
+    sub: 'Mean overall score 8.59 · Mean capability 8.87 · Mean stress 7.40'
+  },
+  {
+    id: 'fig4',
+    file: 'dendro_C2_Modern_high_function.png',
+    label: 'Appendix · C2',
+    title: 'Modern High-Function (n=23) — Internal Structure',
+    sub: 'Mean overall score 8.13 · Mean capability 8.75 · Mean stress 5.45'
+  },
+  {
+    id: 'fig5',
+    file: 'dendro_C3_Stressed_regional.png',
+    label: 'Appendix · C3',
+    title: 'Stressed Regional (n=40) — Internal Structure',
+    sub: 'Mean overall score 7.38 · Mean capability 7.52 · Mean stress 6.74'
+  },
+  {
+    id: 'fig6',
+    file: 'dendro_C4_Upper_mid_stable.png',
+    label: 'Appendix · C4',
+    title: 'Upper-Mid Stable (n=17) — Internal Structure',
+    sub: 'Mean overall score 6.54 · Mean capability 6.88 · Mean stress 5.08'
+  },
+  {
+    id: 'fig7',
+    file: 'dendro_C5_Upper_mid_stressed.png',
+    label: 'Appendix · C5',
+    title: 'Upper-Mid Stressed (n=19) — Internal Structure',
+    sub: 'Mean overall score 5.94 · Mean capability 5.86 · Mean stress 6.32'
+  },
+  {
+    id: 'fig8',
+    file: 'dendro_C6_Broad_middle.png',
+    label: 'Appendix · C6',
+    title: 'Broad Middle (n=68) — Internal Structure',
+    sub: 'Mean overall score 5.33 · Mean capability 5.34 · Mean stress 5.27'
+  },
+  {
+    id: 'fig9',
+    file: 'dendro_C7_Fragile.png',
+    label: 'Appendix · C7',
+    title: 'Fragile (n=21) — Internal Structure',
+    sub: 'Mean overall score 4.60 · Mean capability 4.19 · Mean stress 6.40'
+  },
+  {
+    id: 'fig10',
+    file: 'dendro_C8_Extractive__failed.png',
+    label: 'Appendix · C8',
+    title: 'Extractive / Failed (n=26) — Internal Structure',
+    sub: 'Mean overall score 4.02 · Mean capability 3.73 · Mean stress 5.26'
+  },
+];
+
+let current = 0;
+
+function buildSidebar() {
+  const nav = document.getElementById('sidebar');
+  FIGURES.forEach((fig, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'thumb-btn' + (i === 0 ? ' active' : '');
+    btn.id = 'thumb-' + i;
+    btn.onclick = () => showFig(i);
+    btn.innerHTML = `
+      <img src="${fig.file}" alt="${fig.title}" loading="lazy">
+      <div class="thumb-info">
+        <span class="thumb-id">${fig.label}</span>
+        <span class="thumb-name">${fig.title}</span>
+      </div>`;
+    nav.appendChild(btn);
+  });
+}
+
+function showFig(idx) {
+  current = idx;
+  const fig = FIGURES[idx];
+  document.getElementById('mainImg').src = fig.file;
+  document.getElementById('mainImg').alt = fig.title;
+  document.getElementById('capId').textContent = fig.label;
+  document.getElementById('capTitle').textContent = fig.title;
+  document.getElementById('capSub').textContent = fig.sub;
+  document.getElementById('counter').textContent = `${idx+1} / ${FIGURES.length}`;
+  document.getElementById('btnPrev').disabled = (idx === 0);
+  document.getElementById('btnNext').disabled = (idx === FIGURES.length - 1);
+  // Update sidebar active state
+  document.querySelectorAll('.thumb-btn').forEach((b, i) => {
+    b.classList.toggle('active', i === idx);
+  });
+  // Scroll sidebar thumbnail into view
+  const tb = document.getElementById('thumb-' + idx);
+  if (tb) tb.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  // Scroll viewer to top
+  document.getElementById('imgArea').scrollTop = 0;
+  // Update URL hash
+  history.replaceState(null, '', '#' + fig.id);
+}
+
+function navigate(dir) {
+  const next = current + dir;
+  if (next >= 0 && next < FIGURES.length) showFig(next);
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); navigate(+1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); navigate(-1); }
+});
+
+// Init
+buildSidebar();
+
+// Check for hash on load
+const hash = location.hash.replace('#','');
+const startIdx = FIGURES.findIndex(f => f.id === hash);
+showFig(startIdx >= 0 ? startIdx : 0);
+</script>
+</body>
+</html>
