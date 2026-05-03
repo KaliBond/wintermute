@@ -637,6 +637,140 @@
         </div>
     </div>
 
+    <!-- NEW DATASETS — MAY 2026 CAM5 EXTENSION + ENVELOPE FILES -->
+    <div class="card">
+        <p class="section-label">New Datasets — May 2026 · cam5 Extension Series</p>
+        <p style="font-size: 0.88em; color: #666; margin-bottom: 20px;">7 new 5-agent ensemble mean datasets added May 2026. Argentina, Germany, China, Thailand and Sweden now have extended or higher-quality cam5 series scored with Node Value and Bond Strength included.</p>
+
+        <p class="region-heading">Americas</p>
+        <div class="dataset-grid">
+            <div class="dataset-card">
+                <span class="society">Argentina</span>
+                <span class="meta">1950–2026 · 5-Agent Ensemble · with Node Value &amp; Bond Strength</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Argentina_CAMS5_calc_1950_2026_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/cleaned_datasets/Argentina_CAMS5_calc_1950_2026_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card">
+                <span class="society">Argentina</span>
+                <span class="meta">1950–2026 · 5-Agent Ensemble · raw scores (C, K, S, A)</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Argentina_CAMS5_ensemble_1950_2026_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/cleaned_datasets/Argentina_CAMS5_ensemble_1950_2026_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+        </div>
+
+        <p class="region-heading">Europe</p>
+        <div class="dataset-grid">
+            <div class="dataset-card">
+                <span class="society">Germany</span>
+                <span class="meta">1880–2026 · 5-Agent Ensemble · extends to 1880</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/germany_cams5_ensemble_mean_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/cleaned_datasets/germany_cams5_ensemble_mean_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card">
+                <span class="society">Sweden</span>
+                <span class="meta">1850–2026 · 5-Agent Ensemble · new series</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/sweden_CAMS5_calc_1880_2026_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/cleaned_datasets/sweden_CAMS5_calc_1880_2026_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+        </div>
+
+        <p class="region-heading">Asia-Pacific</p>
+        <div class="dataset-grid">
+            <div class="dataset-card">
+                <span class="society">China</span>
+                <span class="meta">1850–2026 · 5-Agent Ensemble · extends to 1850</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/China_CAMS5_ensemble_1850_2026_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/cleaned_datasets/China_CAMS5_ensemble_1850_2026_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card">
+                <span class="society">Thailand</span>
+                <span class="meta">1850–2026 · 5-Agent Ensemble · clean reissue with Bond Strength</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Thailand_CAMS5_ensemble_1850_2026_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/cleaned_datasets/Thailand_CAMS5_ensemble_1850_2026_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ENVELOPE / UNCERTAINTY FILES — MAY 2026 -->
+    <div class="card">
+        <p class="section-label">Ensemble Envelope Files — Inter-Rater Uncertainty</p>
+        <p style="font-size: 0.88em; color: #666; margin-bottom: 8px;">
+            Companion uncertainty files for the cam5 ensemble series. Each row gives the standard deviation across the 5 raters for each metric (C_sd, K_sd, S_sd, A_sd), plus the node-value range, minimum and maximum. Use these to assess inter-rater agreement and construct confidence intervals around the ensemble mean scores.
+        </p>
+        <p style="font-size: 0.82em; color: #888; margin-bottom: 20px;">Schema: <code>Society, Year, Node, C_sd, K_sd, S_sd, A_sd, V_range, V_min, V_max</code></p>
+
+        <div class="dataset-grid">
+            <div class="dataset-card">
+                <span class="society">Argentina — Envelope</span>
+                <span class="meta">1950–2026 · inter-rater SD per node per year</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Argentina_CAMS5_envelope_SD_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/cleaned_datasets/Argentina_CAMS5_envelope_SD_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card">
+                <span class="society">China — Envelope</span>
+                <span class="meta">1850–2026 · inter-rater SD per node per year</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/China_CAMS5_envelope_1850_2026_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/cleaned_datasets/China_CAMS5_envelope_1850_2026_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card">
+                <span class="society">Thailand — Envelope</span>
+                <span class="meta">1850–2026 · inter-rater SD per node per year</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Thailand_CAMS5_envelope_SD_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/cleaned_datasets/Thailand_CAMS5_envelope_SD_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card">
+                <span class="society">United Kingdom — Envelope</span>
+                <span class="meta">1880–2026 · inter-rater SD per node per year</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/UK_CAMNATIONS5_envelope_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/cleaned_datasets/UK_CAMNATIONS5_envelope_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card">
+                <span class="society">Germany — Envelope</span>
+                <span class="meta">1880–2026 · inter-rater SD per node per year</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/germany_cams5_envelope_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/cleaned_datasets/germany_cams5_envelope_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card">
+                <span class="society">Russia — Envelope</span>
+                <span class="meta">1800–2026 · inter-rater SD per node per year</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/russia_cams5_envelope_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/cleaned_datasets/russia_cams5_envelope_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card">
+                <span class="society">Sweden — Envelope</span>
+                <span class="meta">1850–2026 · inter-rater SD per node per year</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/sweden_CAMS5_envelope_SD_cleaned.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/cleaned_datasets/sweden_CAMS5_envelope_SD_cleaned.csv" target="_blank" class="dl">Download CSV</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- HOLLINGS PAPER DATASETS -->
     <div class="card">
         <p class="section-label">Holling's Paper — Supporting Datasets</p>
