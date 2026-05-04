@@ -220,7 +220,15 @@ input[type=range]#yr-slider::-webkit-slider-thumb{-webkit-appearance:none;width:
       <div id="hero-meaning" style="font-family:var(--font-s); font-size:11.5px; line-height:1.55; color:var(--text2); max-width:100%;">—</div>
     </div>
 
-    <!-- Node viz moved to right column -->
+    <!-- CANVAS -->
+    <div style="margin:0 18px 0; padding:12px 12px 0; background:#FBF7EC; border:1px solid var(--border); border-radius:2px; box-shadow:0 2px 0 var(--border2),0 18px 40px -20px rgba(27,42,51,0.15); position:relative;">
+      <div style="font-family:var(--font-m); font-size:8px; letter-spacing:2px; color:var(--text3); text-transform:uppercase; margin-bottom:6px; padding-left:4px;">Live Coordination View</div>
+      <div class="canvas-area" style="min-height:300px; padding:0; justify-content:center; position:relative;">
+        <canvas id="sybon" width="400" height="300"></canvas>
+        <div id="node-tooltip" style="position:fixed; display:none; background:#fff; border:1px solid var(--border); padding:8px 10px; font-family:var(--font-m); font-size:9px; max-width:220px; z-index:20; pointer-events:none; box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>
+      </div>
+      <div id="yr-big" style="font-family:var(--font-d); font-size:72px; font-weight:700; color:rgba(27,42,51,0.08); text-align:right; line-height:1; padding:0 8px 4px; margin-top:-16px; pointer-events:none; user-select:none;">—</div>
+    </div>
 
     <div class="basin-band">
       <div>
@@ -242,14 +250,6 @@ input[type=range]#yr-slider::-webkit-slider-thumb{-webkit-appearance:none;width:
   <!-- DOSSIER -->
   <div class="dossier-col" id="dossier-col">
 
-    <!-- NODE ANIMATION BOX (now on right) -->
-    <div style="margin:16px 16px 0; padding:12px; background:#FBF7EC; border:1px solid var(--border); border-radius:2px; box-shadow:0 2px 0 var(--border2),0 18px 40px -20px rgba(27,42,51,0.15);">
-      <div style="font-family:var(--font-m); font-size:8px; letter-spacing:2px; color:var(--text3); text-transform:uppercase; margin-bottom:6px; padding-left:4px;">Live Coordination View</div>
-      <div class="canvas-area" style="min-height:320px; padding:0; justify-content:center; position:relative;">
-        <canvas id="sybon" width="380" height="320"></canvas>
-        <div id="node-tooltip" style="position:fixed; display:none; background:#fff; border:1px solid var(--border); padding:8px 10px; font-family:var(--font-m); font-size:9px; max-width:220px; z-index:20; pointer-events:none; box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>
-      </div>
-    </div>
 
     <div class="dossier-header">
       <div class="dossier-stamp">CAMS Intelligence Dossier</div>
@@ -835,6 +835,7 @@ function render(){
   document.getElementById('hdr-soc').textContent=curSociety;
   document.getElementById('hdr-yr').textContent=yr;
   document.getElementById('yr-display').textContent=yr;
+  document.getElementById('yr-big').textContent=yr;
   document.getElementById('d-soc').textContent=curSociety;
   document.getElementById('d-yr').textContent=yr;
 
