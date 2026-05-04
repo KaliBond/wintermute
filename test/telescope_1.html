@@ -199,6 +199,13 @@ input[type=range]#yr-slider::-webkit-slider-thumb{-webkit-appearance:none;width:
       <input type="range" id="yr-slider" min="0" max="0" step="1" value="0" oninput="onYearSlide(this.value)">
       <div class="yr-range" id="yr-max">—</div>
       <div class="year-val" id="yr-display">—</div>
+      <select id="roll-speed" style="font-family:var(--font-m);font-size:9px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:2px 4px;cursor:pointer;">
+        <option value="1200">Slow</option>
+        <option value="600" selected>Normal</option>
+        <option value="250">Fast</option>
+        <option value="80">Turbo</option>
+      </select>
+      <button id="roll-btn" onclick="toggleRoll()" style="font-family:var(--font-m);font-size:9px;letter-spacing:1px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:4px 10px;cursor:pointer;">▶ ROLL</button>
     </div>
 
     <!-- PROMINENT ATTRACTOR HERO -->
@@ -240,7 +247,7 @@ input[type=range]#yr-slider::-webkit-slider-thumb{-webkit-appearance:none;width:
       <div style="font-family:var(--font-m); font-size:8px; letter-spacing:2px; color:var(--text3); text-transform:uppercase; margin-bottom:6px; padding-left:4px;">Live Coordination View</div>
       <div class="canvas-area" style="min-height:320px; padding:0; justify-content:center; position:relative;">
         <canvas id="sybon" width="380" height="320"></canvas>
-        <div id="node-tooltip" style="position:absolute; display:none; background:#fff; border:1px solid var(--border); padding:8px 10px; font-family:var(--font-m); font-size:9px; max-width:220px; z-index:20; pointer-events:none; box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>
+        <div id="node-tooltip" style="position:fixed; display:none; background:#fff; border:1px solid var(--border); padding:8px 10px; font-family:var(--font-m); font-size:9px; max-width:220px; z-index:20; pointer-events:none; box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>
       </div>
     </div>
 
@@ -938,6 +945,7 @@ function updateURL(){
 
 // ── SOCIETY SELECT ───────────────────────────────────────────────────────────
 function setSociety(s){
+  stopRoll();
   curSociety=s;
   // Nudge sim positions so springs reconfigure
   sim.pos.forEach((p,i)=>{
@@ -958,6 +966,36 @@ function setSociety(s){
   document.querySelectorAll('.soc-btn').forEach(b=>b.classList.toggle('active',b.dataset.soc===s));
   render();
   updateURL();
+}
+
+// ── ROLL ─────────────────────────────────────────────────────────────────────
+let rollTimer = null;
+function toggleRoll(){
+  if(rollTimer){ stopRoll(); } else { startRoll(); }
+}
+function startRoll(){
+  stopRoll();
+  const btn = document.getElementById('roll-btn');
+  btn.textContent = '⏹ STOP';
+  btn.style.background = 'var(--amber)';
+  btn.style.color = '#fff';
+  btn.style.borderColor = 'var(--amber)';
+  const ms = parseInt(document.getElementById('roll-speed').value, 10);
+  rollTimer = setInterval(()=>{
+    const years = Object.keys(DATA[curSociety]).sort((a,b)=>+a-+b);
+    curYearIdx = (curYearIdx + 1) % years.length;
+    const sl = document.getElementById('yr-slider');
+    sl.value = curYearIdx;
+    const pct = years.length > 1 ? (curYearIdx/(years.length-1))*100 : 50;
+    sl.style.setProperty('--pct', pct+'%');
+    render();
+  }, ms);
+  document.getElementById('roll-speed').onchange = ()=>{ if(rollTimer) startRoll(); };
+}
+function stopRoll(){
+  if(rollTimer){ clearInterval(rollTimer); rollTimer=null; }
+  const btn = document.getElementById('roll-btn');
+  if(btn){ btn.textContent='▶ ROLL'; btn.style.background=''; btn.style.color=''; btn.style.borderColor=''; }
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
