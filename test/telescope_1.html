@@ -5,38 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CAMS Explore • Neural Nations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,500;1,9..144,300&family=Special+Elite&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300&family=Special+Elite&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#ffffff;
-  --bg2:#f7f8fc;
-  --bg3:#f0f2f7;
-  --bg4:#e8ebf2;
-  --border:#d8dce6;
-  --border2:#c5cad8;
-  --teal:#00b89e;
-  --teal2:#008f7a;
+  --bg:#F5F1E4;
+  --bg2:#EDE7D4;
+  --bg3:#E2DAC3;
+  --bg4:#D6CEAF;
+  --border:#E2DAC3;
+  --border2:#C9BE9E;
+  --teal:#2F6F7D;
+  --teal2:#2E8B6B;
   --teal-dim:#b8e8e0;
-  --amber:#d98c00;
+  --amber:#D98B2B;
   --amber2:#b36f00;
   --amber-dim:#f5d9a8;
-  --red:#c53030;
-  --red2:#9c2626;
-  --blue:#2b6cb0;
-  --purple:#6b46c1;
-  --text:#1a2533;
-  --text2:#4a5a70;
-  --text3:#6b7a90;
-  --gold:#c8961a;
-  --font-d:'Fraunces',serif;
+  --red:#C84C3E;
+  --red2:#8B2E22;
+  --blue:#2F7ECC;
+  --purple:#8A5BB8;
+  --text:#1B2A33;
+  --text2:#2F4652;
+  --text3:#5A6E78;
+  --gold:#D98B2B;
+  --font-d:'Fraunces','Playfair Display',Georgia,serif;
+  --font-s:'Source Serif 4','Source Serif Pro',Georgia,serif;
   --font-t:'Special Elite',cursive;
-  --font-m:'JetBrains Mono',monospace;
+  --font-ui:'Inter',-apple-system,sans-serif;
+  --font-m:'JetBrains Mono',ui-monospace,monospace;
 }
 body{background:var(--bg);color:var(--text);font-family:var(--font-d);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.035;background:radial-gradient(ellipse at 20% 50%,rgba(120,100,60,0.15),transparent 70%),radial-gradient(ellipse at 80% 20%,rgba(100,80,50,0.1),transparent 60%)}
 
 /* HEADER */
-header{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;border-bottom:1px solid var(--border);background:#fff;position:sticky;top:0;z-index:10}
+header{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:10}
 .logo{display:flex;flex-direction:column}
 .logo h1{font-family:var(--font-d);font-size:17px;font-weight:200;color:var(--text);letter-spacing:2px}
 .logo h1 strong{color:var(--amber);font-weight:600}
@@ -47,12 +50,12 @@ header{display:flex;align-items:center;justify-content:space-between;padding:10p
 /* SOCIETY BAR */
 .society-bar{display:flex;align-items:center;gap:0;padding:0 20px;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
 .society-bar::-webkit-scrollbar{display:none}
-.soc-btn{font-family:var(--font-m);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:10px 14px;background:none;border:none;border-bottom:2px solid transparent;color:var(--text3);cursor:pointer;white-space:nowrap;transition:all .15s;margin-bottom:-1px}
+.soc-btn{font-family:var(--font-ui);font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:10px 14px;background:none;border:none;border-bottom:2px solid transparent;color:var(--text3);cursor:pointer;white-space:nowrap;transition:all .15s;margin-bottom:-1px}
 .soc-btn:hover{color:var(--text)}
 .soc-btn.active{color:var(--amber);border-bottom-color:var(--amber)}
 
 /* MAIN LAYOUT */
-.main{display:grid;grid-template-columns:1fr 420px;min-height:calc(100vh - 88px);gap:24px; padding:0 20px;}
+.main{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 88px);gap:0; padding:0;}
 
 /* LEFT — telescope + year */
 .telescope-col{display:flex;flex-direction:column;border-right:1px solid var(--border)}
@@ -76,7 +79,7 @@ input[type=range]#yr-slider::-webkit-slider-thumb{-webkit-appearance:none;width:
 /* METRICS ROW */
 .metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;border-top:1px solid var(--border);background:var(--border)}
 .metric-box{background:var(--bg2);padding:10px 12px;text-align:center}
-.metric-label{font-family:var(--font-m);font-size:8px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px}
+.metric-label{font-family:var(--font-ui);font-size:8px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px}
 .metric-val{font-family:var(--font-m);font-size:16px;font-weight:700;transition:color .3s}
 .metric-sub{font-family:var(--font-m);font-size:8px;color:var(--text3);margin-top:1px}
 
@@ -86,17 +89,17 @@ input[type=range]#yr-slider::-webkit-slider-thumb{-webkit-appearance:none;width:
 #timeline-canvas{display:block;width:100%}
 
 /* RIGHT — DOSSIER */
-.dossier-col{background:var(--bg2);display:flex;flex-direction:column;overflow-y:auto;max-height:calc(100vh - 88px)}
-.dossier-header{padding:14px 18px 10px;border-bottom:1px solid var(--border);background:var(--bg3)}
+.dossier-col{background:#EDE7D4;display:flex;flex-direction:column;overflow-y:auto;max-height:calc(100vh - 88px)}
+.dossier-header{padding:14px 18px 10px;border-bottom:1px solid var(--border);background:#E2DAC3}
 .dossier-stamp{font-family:var(--font-m);font-size:8px;letter-spacing:4px;color:var(--text3);text-transform:uppercase;margin-bottom:6px}
 .dossier-title{font-family:var(--font-d);font-size:26px;font-weight:200;color:var(--text);font-style:italic; letter-spacing:-0.5px;}
 .dossier-title strong{color:var(--amber);font-style:normal;font-weight:600;}
 .threat-badge{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:4px 10px;border:1px solid;font-family:var(--font-m);font-size:9px;letter-spacing:1.5px;text-transform:uppercase}
-.dossier-body{padding:16px; flex:1; display:grid; grid-template-columns:1fr; gap:16px; align-items:start;}
+.dossier-body{padding:16px; flex:1; display:grid; grid-template-columns:1fr 1.35fr 1fr; gap:16px; align-items:start;}
 .section{padding:14px 18px;}
 .sec-label{font-family:var(--font-m);font-size:8px;letter-spacing:3px;color:var(--teal2);text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
-.sec-body{font-family:var(--font-t);font-size:12.5px;line-height:1.85;color:var(--text2)}
+.sec-body{font-family:var(--font-s);font-size:13px;line-height:1.75;color:var(--text2)}
 .highlight{color:var(--amber);font-style:normal}
 .danger{color:var(--red)}
 .safe{color:var(--teal)}
@@ -114,7 +117,7 @@ input[type=range]#yr-slider::-webkit-slider-thumb{-webkit-appearance:none;width:
 .nr-bar{flex:1;height:5px;background:var(--border);overflow:hidden}
 .nr-fill{height:100%;transition:width .5s ease}
 .nr-val{font-family:var(--font-m);font-size:9px;color:var(--text3);width:32px;text-align:right;flex-shrink:0}
-.mindscape{font-family:var(--font-d);font-size:13px;line-height:1.8;color:var(--text2);font-style:italic;padding:14px 18px;border-left:2px solid var(--teal-dim);margin:14px 18px 0;background:var(--bg3)}
+.mindscape{font-family:var(--font-d);font-size:13px;line-height:1.8;color:var(--text2);font-style:italic;padding:14px 18px;border-left:2px solid var(--amber);margin:14px 18px 0;background:#FBF7EC}
 .dossier-footer{padding:10px 18px;border-top:1px solid var(--border);font-family:var(--font-m);font-size:8px;color:var(--text3);letter-spacing:1px;display:flex;justify-content:space-between}
 
 .attractor-hero {
@@ -134,7 +137,7 @@ input[type=range]#yr-slider::-webkit-slider-thumb{-webkit-appearance:none;width:
 .basin-band { opacity: 0.65; font-size: 0.9em; }
 
 @keyframes scanline{0%{top:-8px}100%{top:100%}}
-.scanline{position:fixed;left:0;width:100%;height:2px;background:linear-gradient(transparent,rgba(0,212,184,0.04),transparent);pointer-events:none;animation:scanline 8s linear infinite}
+.scanline{position:fixed;left:0;width:100%;height:2px;background:linear-gradient(transparent,rgba(47,111,125,0.03),transparent);pointer-events:none;animation:scanline 8s linear infinite}
 
 @media print {
   body { background:#fff; color:#111; }
@@ -207,7 +210,7 @@ input[type=range]#yr-slider::-webkit-slider-thumb{-webkit-appearance:none;width:
         </div>
         <div id="hero-threat" style="font-family:var(--font-m); font-size:9px; padding:4px 10px; border:1px solid; letter-spacing:1.5px; text-transform:uppercase; white-space:nowrap;">—</div>
       </div>
-      <div id="hero-meaning" style="font-family:var(--font-t); font-size:11.5px; line-height:1.55; color:#b8ccd8; max-width:100%;">—</div>
+      <div id="hero-meaning" style="font-family:var(--font-s); font-size:11.5px; line-height:1.55; color:var(--text2); max-width:100%;">—</div>
     </div>
 
     <!-- Node viz moved to right column -->
@@ -233,7 +236,7 @@ input[type=range]#yr-slider::-webkit-slider-thumb{-webkit-appearance:none;width:
   <div class="dossier-col" id="dossier-col">
 
     <!-- NODE ANIMATION BOX (now on right) -->
-    <div style="margin:16px 16px 0; padding:12px; background:#fff; border:1px solid var(--border); border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+    <div style="margin:16px 16px 0; padding:12px; background:#FBF7EC; border:1px solid var(--border); border-radius:2px; box-shadow:0 2px 0 var(--border2),0 18px 40px -20px rgba(27,42,51,0.15);">
       <div style="font-family:var(--font-m); font-size:8px; letter-spacing:2px; color:var(--text3); text-transform:uppercase; margin-bottom:6px; padding-left:4px;">Live Coordination View</div>
       <div class="canvas-area" style="min-height:320px; padding:0; justify-content:center; position:relative;">
         <canvas id="sybon" width="380" height="320"></canvas>
@@ -327,114 +330,241 @@ function nodeColor(v, nodeName){
 function nc(v){const[r,g,b]=nodeRGB(v);return`rgb(${r},${g},${b})`;}
 function ncA(v,a){const[r,g,b]=nodeRGB(v);return`rgba(${r},${g},${b},${a})`;}
 
-const particles = Array(24).fill(0).map((_,i)=>({
-  edge:i%8, t:Math.random(), speed:0.003+Math.random()*0.005
-}));
+// ── SPRING PHYSICS SIMULATION ─────────────────────────────────────
+// Each node is a particle with position + velocity.
+// Springs connect every pair; rest length ∝ 1/bond, stiffness ∝ bond.
+// Central gravity pulls toward CX,CY. Repulsion prevents overlap.
+
+const sim = {
+  pos: NODES.map((_,i) => {
+    const a = -Math.PI/2 + 2*Math.PI*i/8;
+    return { x: CX + R*Math.cos(a), y: CY + R*Math.sin(a), vx:0, vy:0 };
+  }),
+  targetPos: null, // computed from data each frame
+  trails: NODES.map(() => []), // position history for motion trails
+};
+
+function computeTargets(d) {
+  // Target rest positions: stronger bonds → closer to centre
+  // Dominant node pulls toward center; weak nodes drift out
+  const nd = d.nodes;
+  const vals = NODES.map(n => nd[n] ? nd[n].V : 0);
+  const bonds = NODES.map(n => nd[n] ? nd[n].b : 0);
+  const maxB = Math.max(...bonds, 0.01);
+  return NODES.map((n, i) => {
+    const dist = R * (0.35 + 0.65 * (1 - bonds[i]/maxB)); // strong bond = close
+    const a = -Math.PI/2 + 2*Math.PI*i/8;
+    return { x: CX + dist*Math.cos(a), y: CY + dist*Math.sin(a) };
+  });
+}
+
+function stepPhysics(d) {
+  const nd = d.nodes;
+  const bonds = NODES.map(n => nd[n] ? nd[n].b : 0);
+  const vals = NODES.map(n => nd[n] ? nd[n].V : 0);
+  const stress = NODES.map(n => nd[n] ? nd[n].S : 0);
+  const targets = computeTargets(d);
+  const dt = 0.16;
+  const damping = 0.88;
+  const N = sim.pos.length;
+
+  for (let i = 0; i < N; i++) {
+    const p = sim.pos[i];
+    let fx = 0, fy = 0;
+
+    // Spring toward target position (main attractor)
+    const stiffness = 0.06 + bonds[i] * 0.12;
+    fx += (targets[i].x - p.x) * stiffness;
+    fy += (targets[i].y - p.y) * stiffness;
+
+    // Central gravity (Λ pull)
+    const dxc = CX - p.x, dyc = CY - p.y;
+    const distC = Math.hypot(dxc, dyc) + 1;
+    const gravStr = 0.02 * d.b; // stronger Λ = more cohesion
+    fx += dxc * gravStr;
+    fy += dyc * gravStr;
+
+    // Inter-node springs: bonded pairs attract, all pairs repel
+    for (let j = 0; j < N; j++) {
+      if (i === j) continue;
+      const q = sim.pos[j];
+      const dx = q.x - p.x, dy = q.y - p.y;
+      const dist = Math.hypot(dx, dy) + 0.1;
+      const nx = dx/dist, ny = dy/dist;
+
+      // Repulsion (prevent overlap)
+      const repel = -800 / (dist * dist);
+      fx += nx * repel;
+      fy += ny * repel;
+
+      // Spring between adjacent nodes (ring topology)
+      if (j === (i+1)%8 || j === (i+7)%8) {
+        const avgBond = (bonds[i] + bonds[j]) / 2;
+        const restLen = 50 + (1 - avgBond) * 80;
+        const springF = (dist - restLen) * avgBond * 0.04;
+        fx += nx * springF;
+        fy += ny * springF;
+      }
+
+      // Cross-links for high-bond pairs (non-adjacent)
+      const crossBond = (bonds[i] + bonds[j]) / 2;
+      if (crossBond > 0.5) {
+        const restLen = 80 + (1 - crossBond) * 60;
+        const springF = (dist - restLen) * crossBond * 0.008;
+        fx += nx * springF;
+        fy += ny * springF;
+      }
+    }
+
+    // Stress jitter — high-stress nodes vibrate
+    const jitter = stress[i] * 0.3;
+    fx += (Math.random() - 0.5) * jitter;
+    fy += (Math.random() - 0.5) * jitter;
+
+    p.vx = (p.vx + fx * dt) * damping;
+    p.vy = (p.vy + fy * dt) * damping;
+    p.x += p.vx;
+    p.y += p.vy;
+
+    // Clamp inside canvas
+    const margin = 30;
+    p.x = Math.max(margin, Math.min(canvas.width - margin, p.x));
+    p.y = Math.max(margin, Math.min(canvas.height - margin, p.y));
+
+    // Trail history
+    sim.trails[i].push({ x: p.x, y: p.y });
+    if (sim.trails[i].length > 40) sim.trails[i].shift();
+  }
+}
 
 function drawFrame(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle='#f8f9fc';ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle='#F5F1E4';ctx.fillRect(0,0,canvas.width,canvas.height);
 
   const yr = years[curYearIdx];
   if(!yr) return;
   const d = DATA[curSociety][yr];
   const nd = d.nodes;
-
-  const angles = NODES.map((_,i)=>-Math.PI/2 + 2*Math.PI*i/8);
-  const pts = angles.map(a=>({x:CX+R*Math.cos(a),y:CY+R*Math.sin(a)}));
   const vals = NODES.map(n=>nd[n]?nd[n].V:0);
   const bonds = NODES.map(n=>nd[n]?nd[n].b:0);
 
-  // Lambda glow (bond = proxy for Λ)
+  // Step physics
+  stepPhysics(d);
+
+  const pts = sim.pos;
   const lam = d.b;
   const breathe = 0.94+0.06*Math.sin(animT*0.025);
-  const lR = 20 + lam*42*breathe;
+
+  // ── Lambda centre glow ──
+  const lR = 16 + lam*36*breathe;
   for(let i=3;i>=1;i--){
-    const g=ctx.createRadialGradient(CX,CY,0,CX,CY,lR*(1+i*0.7));
-    g.addColorStop(0,`rgba(120,80,230,${lam*0.2/i})`);
+    const g=ctx.createRadialGradient(CX,CY,0,CX,CY,lR*(1+i*0.8));
+    g.addColorStop(0,`rgba(140,91,184,${lam*0.18/i})`);
     g.addColorStop(1,'transparent');
-    ctx.fillStyle=g;ctx.beginPath();ctx.arc(CX,CY,lR*(1+i*0.7),0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(CX,CY,lR*(1+i*0.8),0,Math.PI*2);ctx.fill();
   }
-  ctx.beginPath();ctx.arc(CX,CY,lR*0.45,0,Math.PI*2);
-  ctx.fillStyle=`rgba(160,130,255,${0.3+lam*0.5})`;ctx.fill();
-  ctx.fillStyle=`rgba(60,70,90,0.9)`;
+  ctx.beginPath();ctx.arc(CX,CY,lR*0.4,0,Math.PI*2);
+  ctx.fillStyle=`rgba(140,91,184,${0.2+lam*0.4})`;ctx.fill();
+  ctx.fillStyle='rgba(27,42,51,0.85)';
   ctx.font=`700 9px 'JetBrains Mono',monospace`;
   ctx.textAlign='center';ctx.textBaseline='middle';
   ctx.fillText(`Λ ${lam.toFixed(2)}`,CX,CY);
 
-  // Bond cables
-  ctx.save();
-  ctx.setLineDash([4,8]);ctx.lineDashOffset=-animT*0.5;
+  // ── Motion trails ──
   for(let i=0;i<8;i++){
-    const j=(i+1)%8;
-    const b=(bonds[i]+bonds[j])/2;
-    const v=(vals[i]+vals[j])/2;
-    const[r,g,bl]=nodeColor(v, NODES[i]);
-    ctx.strokeStyle=`rgba(${r},${g},${bl},${b*0.55})`;
-    ctx.lineWidth=0.8+b*2.2;
-    ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.stroke();
+    const trail = sim.trails[i];
+    if(trail.length<2) continue;
+    const[r,g,bl]=nodeColor(vals[i], NODES[i]);
+    ctx.beginPath();
+    ctx.moveTo(trail[0].x, trail[0].y);
+    for(let t=1;t<trail.length;t++){
+      ctx.lineTo(trail[t].x, trail[t].y);
+    }
+    ctx.strokeStyle=`rgba(${r},${g},${bl},0.08)`;
+    ctx.lineWidth=2;
+    ctx.stroke();
+  }
+
+  // ── Bond springs (curved) ──
+  ctx.save();
+  // Draw all pairs with meaningful bonds
+  for(let i=0;i<8;i++){
+    for(let j=i+1;j<8;j++){
+      const avgB=(bonds[i]+bonds[j])/2;
+      if(avgB<0.15) continue; // skip very weak
+      const isAdj = (j===(i+1)%8 || i===(j+1)%8);
+      const alpha = isAdj ? avgB*0.5 : avgB*0.2;
+      const lw = isAdj ? 0.5+avgB*2.5 : 0.3+avgB*1.2;
+      const avgV=(vals[i]+vals[j])/2;
+      const[r,g,bl]=nodeColor(avgV, NODES[i]);
+
+      // Curved spring line
+      const mx=(pts[i].x+pts[j].x)/2, my=(pts[i].y+pts[j].y)/2;
+      const dx=pts[j].x-pts[i].x, dy=pts[j].y-pts[i].y;
+      const dist=Math.hypot(dx,dy);
+      // Perpendicular offset for curve (oscillates slightly)
+      const wobble = Math.sin(animT*0.03 + i + j) * (1-avgB) * 8;
+      const cx2=mx + (-dy/dist)*wobble, cy2=my + (dx/dist)*wobble;
+
+      ctx.beginPath();
+      ctx.moveTo(pts[i].x, pts[i].y);
+      ctx.quadraticCurveTo(cx2, cy2, pts[j].x, pts[j].y);
+      ctx.strokeStyle=`rgba(${r},${g},${bl},${alpha})`;
+      ctx.lineWidth=lw;
+      ctx.stroke();
+    }
   }
   ctx.restore();
 
-  // Entropy particles
-  for(const p of particles){
-    if(!nd[NODES[p.edge]])continue;
-    const j=(p.edge+1)%8;
-    const v=vals[p.edge];
-    const stressFactor=Math.max(0,(10-nd[NODES[p.edge]].V)/18);
-    const px=pts[p.edge].x+(pts[j].x-pts[p.edge].x)*p.t;
-    const py=pts[p.edge].y+(pts[j].y-pts[p.edge].y)*p.t;
-    const[r,g,b]=nodeColor(v, NODES[p.edge]);
-    ctx.beginPath();ctx.arc(px,py,1.8,0,Math.PI*2);
-    ctx.fillStyle=`rgba(${r},${g},${b},${0.2+stressFactor*0.7})`;ctx.fill();
-    p.t+=p.speed*(0.5+stressFactor*3);
-    if(p.t>1){p.t=0;p.edge=Math.floor(Math.random()*8);}
-  }
-
-  // Nodes
+  // ── Nodes ──
   for(let i=0;i<8;i++){
     const{x,y}=pts[i];
     const v=vals[i];
     const b=bonds[i];
-    const nR=9+Math.max(0,v+10)/20*20;
+    const nR=10+Math.max(0,v+10)/20*18;
     const[r,g,bl]=nodeColor(v, NODES[i]);
 
     // Glow
-    for(let layer=3;layer>=1;layer--){
-      const g2=ctx.createRadialGradient(x,y,0,x,y,nR*(1+layer*0.7));
-      g2.addColorStop(0,`rgba(${r},${g},${bl},${0.1/layer})`);
+    for(let layer=2;layer>=1;layer--){
+      const g2=ctx.createRadialGradient(x,y,0,x,y,nR*(1+layer*0.8));
+      g2.addColorStop(0,`rgba(${r},${g},${bl},${0.08/layer})`);
       g2.addColorStop(1,'transparent');
-      ctx.beginPath();ctx.arc(x,y,nR*(1+layer*0.7),0,Math.PI*2);
+      ctx.beginPath();ctx.arc(x,y,nR*(1+layer*0.8),0,Math.PI*2);
       ctx.fillStyle=g2;ctx.fill();
     }
-    // Body
-    const ng=ctx.createRadialGradient(x-nR*0.3,y-nR*0.3,0,x,y,nR);
-    ng.addColorStop(0,'rgba(255,255,255,0.9)');
-    ng.addColorStop(0.4,`rgba(${r},${g},${bl},0.95)`);
-    ng.addColorStop(1,`rgba(${Math.floor(r*0.25)},${Math.floor(g*0.25)},${Math.floor(bl*0.25)},0.7)`);
+
+    // Body — solid with subtle highlight
+    const ng=ctx.createRadialGradient(x-nR*0.25,y-nR*0.25,0,x,y,nR);
+    ng.addColorStop(0,`rgba(${Math.min(255,r+80)},${Math.min(255,g+80)},${Math.min(255,bl+80)},0.95)`);
+    ng.addColorStop(0.5,`rgba(${r},${g},${bl},0.95)`);
+    ng.addColorStop(1,`rgba(${Math.floor(r*0.4)},${Math.floor(g*0.4)},${Math.floor(bl*0.4)},0.85)`);
     ctx.beginPath();ctx.arc(x,y,nR,0,Math.PI*2);
     ctx.fillStyle=ng;ctx.fill();
 
-    // Label outside
-    const la=angles[i];const ld=R+28;
-    const lx=CX+ld*Math.cos(la);const ly=CY+ld*Math.sin(la);
-    const horiz=Math.abs(Math.cos(la))>0.78;
-    ctx.fillStyle=`rgba(${r},${g},${bl},0.9)`;
-    ctx.font=`700 8px 'JetBrains Mono',monospace`;
-    ctx.textAlign=horiz?(Math.cos(la)>0?'left':'right'):'center';
-    ctx.textBaseline='middle';
+    // Thin ring
+    ctx.beginPath();ctx.arc(x,y,nR,0,Math.PI*2);
+    ctx.strokeStyle=`rgba(${r},${g},${bl},0.3)`;ctx.lineWidth=0.5;ctx.stroke();
+
+    // Label — float above
+    const angle = Math.atan2(y-CY, x-CX);
+    const labelDist = nR + 12;
+    const lx = x + labelDist*Math.cos(angle);
+    const ly = y + labelDist*Math.sin(angle);
+    ctx.fillStyle=`rgba(${r},${g},${bl},0.85)`;
+    ctx.font=`600 8px 'Inter',sans-serif`;
+    ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText(NODES[i],lx,ly);
 
-    // Value inside node
-    ctx.fillStyle='rgba(10,16,30,0.85)';
+    // Value inside
+    ctx.fillStyle='rgba(27,42,51,0.9)';
     ctx.font=`700 9px 'JetBrains Mono',monospace`;
     ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText((v>=0?'+':'')+v.toFixed(1),x,y);
   }
 
   // Year watermark
-  ctx.fillStyle='rgba(26,37,51,0.06)';
-  ctx.font=`200 72px 'Fraunces',serif`;
+  ctx.fillStyle='rgba(27,42,51,0.05)';
+  ctx.font=`200 64px 'Fraunces',serif`;
   ctx.textAlign='left';ctx.textBaseline='bottom';
   ctx.fillText(yr,8,canvas.height-4);
 
@@ -454,7 +584,7 @@ function drawTimeline(){
   const W=tlc.offsetWidth||600;const H=56;
   tlc.width=W;
   tc.clearRect(0,0,W,H);
-  tc.fillStyle='#0b1020';tc.fillRect(0,0,W,H);
+  tc.fillStyle='#1B2A33';tc.fillRect(0,0,W,H);
 
   const soc=DATA[curSociety];
   const allYrs=Object.keys(soc).map(Number).sort((a,b)=>a-b);
@@ -659,55 +789,10 @@ function buildDossier(society, year){
   const pwr = dominantPowerHolder(d, society, yr);
   const nominalRealHTML = `<div class="power-item" style="grid-column:1 / -1; background:var(--bg4); border-color:var(--amber-dim);"><div class="pi-label">NOMINAL vs REAL COORDINATION</div><div class="pi-val" style="font-size:10px; line-height:1.4;">Nominal: <strong>${pwr.nominal.role}</strong> (${pwr.nominal.power})<br>Real: <strong class="hi">${pwr.realNode}</strong> — ${pwr.gapNote}</div></div>`;
 
-  // ── WARNINGS ────────────────────────────────────────────────────────────────
-  function buildWarnings(){
-    const items = [];
-
-    // S/K threshold warnings
-    if(sk > 2.0)       items.push({sev:'CRITICAL', text:`S/K ratio at ${sk.toFixed(2)} — well past the Praetorian threshold of 2.0. Institutional coherence is in terminal stress. Historical analogues: Rome post-235 CE, Weimar Germany 1931–33.`});
-    else if(sk > 1.6)  items.push({sev:'HIGH',     text:`S/K ratio at ${sk.toFixed(2)} — within the high-stress band. Rapid deterioration in coordination capacity is the primary risk. Exit windows from vulnerable positions begin to close.`});
-    else if(sk > 1.3)  items.push({sev:'MODERATE', text:`S/K ratio at ${sk.toFixed(2)} — elevated. The system is absorbing more stress than it is converting to capacity. Watch for phase transition signals in the next 1–2 periods.`});
-
-    // Praetorian index
-    if(praetorian > 0.5)       items.push({sev:'CRITICAL', text:`Praetorian Index at +${praetorian.toFixed(2)}: Shield has decisively overrun Helm. Nominal civilian authority is a performance. The security apparatus sets the actual agenda.`});
-    else if(praetorian > 0.3)  items.push({sev:'HIGH',     text:`Praetorian pressure building — Shield leads Helm by ${(praetorian*100).toFixed(0)} index points. Executive power is being colonised by security logic.`});
-
-    // Bond coherence
-    if(b < 0.15)       items.push({sev:'CRITICAL', text:`Bond coherence collapsed to ${b.toFixed(3)}. Inter-node coordination is functionally absent. This is the structural signature of systemic disintegration, not mere stress.`});
-    else if(b < 0.3)   items.push({sev:'HIGH',     text:`Bond coherence at ${b.toFixed(3)} — critically low. The nodes are no longer pulling together. Fragmentation is the operating condition, not an emerging risk.`});
-
-    // Cognitive gap inversion
-    if(cog_gap < -0.25) items.push({sev:'CRITICAL', text:`Cognitive gap inverted sharply (${cog_gap.toFixed(2)}): slow-loop institutions (Archive, Lore) are being overwhelmed by fast-loop nodes. Cultural memory and critical knowledge are being subordinated to reactive operational logic.`});
-    else if(cog_gap < -0.12) items.push({sev:'HIGH', text:`Cognitive gap negative (${cog_gap.toFixed(2)}): slow-loop thinking is losing ground to fast-cycle reactive governance. Knowledge infrastructure is under-resourced relative to security and executive demands.`});
-
-    // Mass Formation substrate
-    if(mfRisk) items.push({sev:'HIGH', text:`Mass Formation substrate is ACTIVE: low bond coherence, inverted cognitive gap, and elevated S/K ratio are co-present. This is the thermodynamic precondition for collective hypnosis around a named anxiety object. Lore and Archive preservation is the strategic priority.`});
-
-    // Hollow nodes
-    if(hollowNodes.length > 0) items.push({sev:'MODERATE', text:`Hollow node signature detected in: ${hollowNodes.join(', ')}. Abstraction significantly exceeds Capacity — high-sounding, low-functioning. These nodes consume legitimacy without delivering coordination.`});
-
-    // No warnings
-    if(items.length === 0) items.push({sev:'LOW', text:`No threshold crossings detected. The system is within normal operating parameters for the ${bInfo.name} basin. Monitor S/K and bond coherence for early-transition signals.`});
-
-    return items;
-  }
-
-  const warnings = buildWarnings();
-
-  const warningsHTML = warnings.map(w => {
-    const col = w.sev==='CRITICAL'?'#d03030':w.sev==='HIGH'?'#d07020':w.sev==='MODERATE'?'#c0a020':'#30b090';
-    const bg  = w.sev==='CRITICAL'?'rgba(208,48,48,0.07)':w.sev==='HIGH'?'rgba(208,112,32,0.07)':w.sev==='MODERATE'?'rgba(192,160,32,0.07)':'rgba(48,176,144,0.05)';
-    return `<div style="display:flex;gap:10px;align-items:flex-start;padding:8px 10px;background:${bg};border-left:3px solid ${col};margin-bottom:6px;">
-      <span style="font-family:var(--font-m);font-size:8px;letter-spacing:2px;color:${col};white-space:nowrap;padding-top:2px;">${w.sev}</span>
-      <span style="font-family:var(--font-t);font-size:12px;line-height:1.7;color:var(--text2);">${w.text}</span>
-    </div>`;
-  }).join('');
-
   return{
-    bInfo, threat, warnings,
+    bInfo, threat,
     sections:[
       {label:'ZEITGEIST — THE FEEL OF THE ERA', isFeatured:true, body:`<p style="font-size:13.5px; line-height:1.75;">${zeitgeist_map[basin]}</p>`},
-      {label:'⚠ SYSTEM WARNINGS', isWarnings:true, body: warningsHTML},
       {label:'Power Topology',body:`
         <div class="power-grid">
           <div class="power-item"><div class="pi-label">Dominant Node</div><div class="pi-val hi">${topNode}</div></div>
@@ -804,39 +889,33 @@ function render(){
   else if(basin==='NAVIGATIONAL') mindscape+=`a society that has earned its optimism. The reconstruction instinct is strong; the social contract feels real. The hard work is ensuring the slow loop is rebuilt, not just the fast one.`;
   else mindscape+=`a system balanced on the tipping edge. The metrics do not yet warrant alarm but the direction of travel is the question that matters now.`;
 
-  const z    = dos.sections.find(s => s.label.includes('ZEITGEIST'));
-  const warn = dos.sections.find(s => s.isWarnings);
-  const p    = dos.sections.find(s => s.label === 'Power Topology');
+  // 3-panel horizontal layout (left → center → right)
+  const z = dos.sections.find(s => s.label.includes('ZEITGEIST'));
+  const p = dos.sections.find(s => s.label === 'Power Topology');
   const surv = dos.sections.find(s => s.label === 'Survival Protocol');
   const traj = dos.sections.find(s => s.label === 'Trajectory');
 
   body.innerHTML = `
-    <div style="grid-column:1/-1; background:linear-gradient(180deg,#1a1408 0%,var(--bg2) 100%); border-left:4px solid #f0a020; padding:18px 20px;">
-      <div class="sec-label" style="color:#f0a020; font-size:9px; letter-spacing:4px; margin-bottom:10px;">${z ? z.label : ''}</div>
-      <div style="font-family:var(--font-t); font-size:13.5px; line-height:1.85; color:#d4c8a8;">${z ? z.body : ''}</div>
+    <div class="section" style="background: linear-gradient(180deg, #2F4652 0%, #1B2A33 100%); border-left: 4px solid var(--amber); padding:14px 16px; height:100%;">
+      <div class="sec-label" style="color:#f0a020; font-size:9px; letter-spacing:4px;">${z ? z.label : ''}</div>
+      <div class="sec-body" style="font-size:13.5px; line-height:1.8; color:#EDE7D4;">${z ? z.body : ''}</div>
     </div>
-    <div style="grid-column:1/-1; padding:14px 16px; background:var(--bg3); border:1px solid var(--border2);">
-      <div class="sec-label" style="color:var(--red); font-size:9px; letter-spacing:3px; margin-bottom:10px;">${warn ? warn.label : ''}</div>
-      <div>${warn ? warn.body : ''}</div>
+
+    <div class="section" style="padding:14px 16px; background:var(--bg); border:1px solid var(--border); height:100%;">
+      <div class="sec-label" style="color:var(--teal);">${p ? p.label : ''}</div>
+      <div class="sec-body">${p ? p.body : ''}</div>
     </div>
-    <div style="grid-column:1/-1; display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-      <div class="section" style="padding:14px 16px; background:#fff; border:1px solid var(--border);">
-        <div class="sec-label" style="color:var(--teal2);">${p ? p.label : ''}</div>
-        <div class="sec-body">${p ? p.body : ''}</div>
+
+    <div style="display:flex; flex-direction:column; gap:16px; height:100%;">
+      <div class="section" style="padding:14px 16px; background:var(--bg); border:1px solid var(--border); flex:1;">
+        <div class="sec-label" style="color:var(--teal);">${surv ? surv.label : ''}</div>
+        <div class="sec-body">${surv ? surv.body : ''}</div>
       </div>
-      <div style="display:flex; flex-direction:column; gap:16px;">
-        <div class="section" style="padding:14px 16px; background:#fff; border:1px solid var(--border);">
-          <div class="sec-label" style="color:var(--teal2);">${surv ? surv.label : ''}</div>
-          <div class="sec-body">${surv ? surv.body : ''}</div>
-        </div>
-        <div class="section" style="padding:14px 16px; background:#fff; border:1px solid var(--border);">
-          <div class="sec-label" style="color:var(--teal2);">${traj ? traj.label : ''}</div>
-          <div class="sec-body">${traj ? traj.body : ''}</div>
-        </div>
+      <div class="section" style="padding:14px 16px; background:var(--bg); border:1px solid var(--border); flex:1;">
+        <div class="sec-label" style="color:var(--teal);">${traj ? traj.label : ''}</div>
+        <div class="sec-body">${traj ? traj.body : ''}</div>
       </div>
-    </div>
-    <div style="grid-column:1/-1;">
-      <div class="mindscape" style="margin:0;">${mindscape}</div>
+      <div class="mindscape" style="margin:0; flex-shrink:0;">${mindscape}</div>
     </div>
   `;
 
@@ -853,15 +932,19 @@ function onYearSlide(v){
 }
 
 function updateURL(){
-  try{
-    const params = new URLSearchParams({soc: curSociety, yr: years[curYearIdx]});
-    history.replaceState(null, '', '?' + params.toString());
-  }catch(e){ /* srcdoc iframe — deep-link state not available */ }
+  const params = new URLSearchParams({soc: curSociety, yr: years[curYearIdx]});
+  history.replaceState(null, '', '?' + params.toString());
 }
 
 // ── SOCIETY SELECT ───────────────────────────────────────────────────────────
 function setSociety(s){
   curSociety=s;
+  // Nudge sim positions so springs reconfigure
+  sim.pos.forEach((p,i)=>{
+    p.vx += (Math.random()-0.5)*3;
+    p.vy += (Math.random()-0.5)*3;
+  });
+  sim.trails = NODES.map(()=>[]);
   years=Object.keys(DATA[s]).sort((a,b2)=>parseInt(a)-parseInt(b2));
   const slider=document.getElementById('yr-slider');
   slider.max=years.length-1;
