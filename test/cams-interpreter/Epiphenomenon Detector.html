@@ -1,0 +1,127 @@
+<!doctype html><html><head><meta charset="utf-8"><title>CAMS · Epiphenomenon Detector</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+*{box-sizing:border-box;margin:0;}
+body{background:var(--paper-1);font-family:var(--font-sans);color:var(--ink-900);min-height:100vh;display:flex;align-items:start;justify-content:center;padding:32px 16px;}
+
+.detector{width:100%;max-width:720px;}
+
+/* header */
+.det-header{margin-bottom:20px;}
+.det-header h2{font-family:var(--font-sans);font-size:22px;font-weight:700;color:var(--accent-teal);letter-spacing:-.01em;margin-bottom:2px;}
+.det-header .sub{font-size:12px;color:var(--ink-500);font-family:var(--font-mono);}
+
+/* category */
+.cat{background:var(--paper-0);border:var(--border-hair);border-radius:4px;margin-bottom:10px;}
+.cat-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:default;}
+.cat-title{font-size:14px;font-weight:700;color:var(--ink-900);}
+.cat-badge{font-family:var(--font-mono);font-size:11px;font-weight:600;padding:2px 8px;border-radius:var(--r-pill);letter-spacing:.03em;}
+.cat-badge.clear{background:#E6F2EC;color:#1D5B45;}
+.cat-badge.alert{background:#FBE9E6;color:#7A2A22;}
+
+.cat-body{padding:0 16px 14px;}
+.cat-body.empty{padding:4px 16px 14px;font-size:12.5px;color:var(--ink-300);font-style:italic;}
+
+/* signal */
+.signal{padding:10px 0;border-top:1px solid var(--paper-3);}
+.signal:first-child{border-top:none;}
+.signal-num{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--ink-300);margin-bottom:4px;}
+.signal-title{font-size:13px;font-weight:600;color:var(--ink-900);margin-bottom:3px;}
+.signal-body{font-size:12.5px;color:var(--ink-700);line-height:1.5;}
+.signal-body code{font-family:var(--font-mono);font-size:11.5px;background:var(--paper-2);padding:1px 4px;border-radius:2px;color:var(--ink-900);}
+
+/* network stats footer */
+.net-stats{margin-top:16px;background:var(--paper-0);border:var(--border-hair);border-radius:4px;padding:14px 16px;}
+.net-stats h4{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-500);margin-bottom:10px;}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+@media(min-width:560px){.stats-grid{grid-template-columns:repeat(6,1fr);}}
+.stat{text-align:center;}
+.stat .label{font-family:var(--font-mono);font-size:10px;color:var(--ink-500);margin-bottom:2px;}
+.stat .val{font-family:var(--font-mono);font-size:20px;font-weight:500;color:var(--ink-900);font-variant-numeric:tabular-nums;letter-spacing:-.02em;}
+.stat .val.warn{color:var(--mode-stress);}
+.stat .val.inf{font-size:16px;color:var(--mode-stress);}
+</style></head><body>
+
+<div class="detector">
+  <div class="det-header">
+    <h2>Epiphenomenon Detector</h2>
+    <div class="sub">Secondary signal analysis · surface-level phenomena decomposed into latent drivers</div>
+  </div>
+
+  <!-- Social Conditions -->
+  <div class="cat">
+    <div class="cat-head">
+      <span class="cat-title">Social Conditions</span>
+      <span class="cat-badge clear">✓ clear</span>
+    </div>
+    <div class="cat-body empty">No signals in this category.</div>
+  </div>
+
+  <!-- Power Dynamics -->
+  <div class="cat">
+    <div class="cat-head">
+      <span class="cat-title">Power Dynamics</span>
+      <span class="cat-badge alert">1 signal</span>
+    </div>
+    <div class="cat-body">
+      <div class="signal">
+        <div class="signal-num">1</div>
+        <div class="signal-title">Near-disconnection — <code>λ₂=0.000</code></div>
+        <div class="signal-body">Fiedler value near zero. Network partition risk is acute — integration can be severed by small perturbations.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Elite Behaviour -->
+  <div class="cat">
+    <div class="cat-head">
+      <span class="cat-title">Elite Behaviour</span>
+      <span class="cat-badge clear">✓ clear</span>
+    </div>
+    <div class="cat-body empty">No signals in this category.</div>
+  </div>
+
+  <!-- Social Mood -->
+  <div class="cat">
+    <div class="cat-head">
+      <span class="cat-title">Social Mood</span>
+      <span class="cat-badge alert">2 signals</span>
+    </div>
+    <div class="cat-body">
+      <div class="signal">
+        <div class="signal-num">1</div>
+        <div class="signal-title">Hands affect is neutral (<code>K=5.0</code>, <code>S=5.0</code>)</div>
+        <div class="signal-body">The mass population is managing stress within capacity. No acute demoralisation signal — equilibrium with underlying tension.</div>
+      </div>
+      <div class="signal">
+        <div class="signal-num">2</div>
+        <div class="signal-title">Moderate Hands coherence (<code>C=5.0</code>)</div>
+        <div class="signal-body">Civic participation is present but contingent — compliance culture rather than genuine civic investment. The population cooperates instrumentally, not from conviction.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Secondary Phenomena -->
+  <div class="cat">
+    <div class="cat-head">
+      <span class="cat-title">Secondary Phenomena</span>
+      <span class="cat-badge clear">✓ clear</span>
+    </div>
+    <div class="cat-body empty">No signals in this category.</div>
+  </div>
+
+  <!-- Network Statistics -->
+  <div class="net-stats">
+    <h4>Network Statistics</h4>
+    <div class="stats-grid">
+      <div class="stat"><div class="label">B(t)</div><div class="val">0.000</div></div>
+      <div class="stat"><div class="label">δ_B</div><div class="val">0.000</div></div>
+      <div class="stat"><div class="label">Ṽ</div><div class="val">7.500</div></div>
+      <div class="stat"><div class="label">D̃</div><div class="val">5.000</div></div>
+      <div class="stat"><div class="label">λ₂</div><div class="val warn">0.000</div></div>
+      <div class="stat"><div class="label">R(t)</div><div class="val inf">∞</div></div>
+    </div>
+  </div>
+</div>
+
+</body></html>
