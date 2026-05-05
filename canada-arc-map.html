@@ -3,228 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Primary SEO -->
-    <title>CAMS Failure Modes Map — Neural Nations</title>
-    <meta name="description" content="Interactive causal loop diagram of the four CAMS failure spirals: R1 Flow-Hands death spiral, R2 rent-seeking trap, R3 Shield capture, R4 institutional amnesia.">
-    <meta name="keywords" content="CAMS, Neural Nations, civilisational complexity, institutional analysis, Kari McKern">
-    <meta name="author" content="Kari McKern">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://neuralnations.org/cams-failure-modes">
-
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://neuralnations.org/cams-failure-modes">
-    <meta property="og:site_name" content="Neural Nations">
-    <meta property="og:locale" content="en_AU">
-    <meta property="og:title" content="CAMS Failure Modes Map — Neural Nations">
-    <meta property="og:description" content="Interactive causal loop diagram of the four CAMS failure spirals: R1 Flow-Hands death spiral, R2 rent-seeking trap, R3 Shield capture, R4 institutional amnesia.">
-    <meta property="og:image" content="https://neuralnations.org/og-image.png">
-
-    <!-- Twitter / X Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CAMS Failure Modes Map — Neural Nations">
-    <meta name="twitter:description" content="Interactive causal loop diagram of the four CAMS failure spirals: R1 Flow-Hands death spiral, R2 rent-seeking trap, R3 Shield capture, R4 institutional amnesia.">
-    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "WebSite",
-          "name": "Neural Nations",
-          "url": "https://neuralnations.org",
-          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
-          "author": { "@id": "https://neuralnations.org/#kari" }
-        },
-        {
-          "@type": "Person",
-          "@id": "https://neuralnations.org/#kari",
-          "name": "Kari McKern",
-          "url": "https://neuralnations.org/cams-project-history",
-          "jobTitle": "Independent Researcher",
-          "description": "Creator of CAMS — the Complex Adaptive Model State. Researcher, former public servant, IT specialist, Sydney Australia.",
-          "sameAs": [
-            "https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/",
-            "https://github.com/KaliBond"
-          ]
-        }
-      ]
-    }
-    </script>
-
+    <title>Aha! Map v1.1</title>
+    <!-- SWAPPED CDN TO JSDELIVR FOR BETTER RELIABILITY -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network/standalone/umd/vis-network.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     <style type="text/css">
-    /* --- CORE STYLES --- */
-    body, html { font-family: 'Inter', sans-serif; margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #f0f2f5; }
-    .page-shell { display: flex; flex-direction: column; height: 100vh; }
-    #cldContainer { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; }
-    #cldNetwork { flex-grow: 1; border: 1px solid #d1d5db; background-color: #ffffff; width: 100%; height: 100%; }
-    /* UI Elements */
-    #modelTitleDisplay { position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold; color: #1F2937; background-color: rgba(255, 255, 255, 0.9); padding: 10px 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); z-index: 10; pointer-events: none; }
-    .action-btn { position: absolute; bottom: 20px; z-index: 25; padding: 10px 18px; font-size: 14px; font-weight: 500; border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-    /* Button Positioning */
-    #saveButton { left: 20px; background-color: #2563EB; color: white; }
-    #saveButton:hover { background-color: #1D4ED8; }
-    #loadNewButton { left: 140px; background-color: #fff; color: #374151; }
-    #loadNewButton:hover { background-color: #f9fafb; }
-    /* New Button: Save Map Data (JSON) */
-    #saveDataButton { left: 285px; background-color: #10B981; color: white; }
-    #saveDataButton:hover { background-color: #059669; }
-    #storyButton { left: 430px; background-color: #0f766e; color: white; text-decoration: none; display: inline-flex; align-items: center; }
-    #storyButton:hover { background-color: #0d6460; }
-    /* Legends */
-    .legend-container { 
-    position: fixed; 
-    right: 20px; 
-    width: 280px; 
-    background: rgba(255,255,255,0.96); 
-    border-radius: 8px; 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
-    max-height: 42px; 
-    overflow: hidden; 
-    z-index: 20; 
-    transition: max-height 0.3s ease; 
-    border: 1px solid #e5e7eb; 
-    display: flex; 
-    flex-direction: column; 
-    }
-    .legend-container.expanded { 
-    max-height: 50vh; 
-    z-index: 100; 
-    }
-    #legend { top: 20px; }
-    #archetypeLegend { top: 75px; }
-    .legend-header { padding: 12px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; background: #fff; border-bottom: 1px solid #eee; }
-    .legend-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex-grow: 1; }
-    .legend-list li { padding: 8px 12px; border-bottom: 1px solid #f3f4f6; font-size: 13px; cursor: pointer; border-left: 3px solid transparent; }
-    .legend-list li:hover { background-color: #eff6ff; }
-    /* Dragging visuals */
-    .legend-list li.dragging { opacity: 0.5; background: #e5e7eb; }
-    /* Description Box */
-    #descPanel { position: fixed; right: 20px; bottom: 80px; width: 280px; background: #fff; padding: 16px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 30; display: none; max-height: 300px; overflow-y: auto; font-size: 14px; line-height: 1.5; border: 1px solid #ddd; }
-    #descPanel strong { display: block; margin-bottom: 6px; color: #1E40AF; font-size: 15px; }
-    /* Tooltips */
-    .tooltip { position: absolute; background: rgba(255,255,255,0.98); border: 1px solid #ccc; padding: 10px; border-radius: 6px; font-size: 13px; display: none; z-index: 1000; pointer-events: none; max-width: 250px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); line-height: 1.4; }
-    #canvasTooltip { background: rgba(17, 24, 39, 0.95); color: white; border: none; }
-    #helperTooltip {
-    position: absolute; bottom: 70px; left: 20px;
-    background: rgba(0,0,0,0.6); color: white;
-    padding: 8px 12px; border-radius: 20px;
-    font-size: 12px; pointer-events: none; z-index: 5;
-    }
-    /* MODALS */
-    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; }
-    .modal-box { background: white; padding: 25px; border-radius: 8px; width: 600px; max-width: 90%; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-    .modal-box textarea { width: 100%; height: 250px; padding: 12px; font-family: monospace; border: 1px solid #ccc; border-radius: 4px; background: #f9fafb; }
-    .modal-box button { padding: 12px 18px; background: #2563EB; color: white; border: none; font-weight: bold; cursor: pointer; font-size: 15px; border-radius: 6px; }
-    .modal-box button:hover { background: #1D4ED8; }
-    .modal-box button.secondary { background: #E5E7EB; color: #374151; }
-    .modal-box button.secondary:hover { background: #D1D5DB; }
-    /* Save Modal Specifics */
-    #filenameInput { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; margin: 5px 0 15px 0; box-sizing: border-box;}
+        /* --- CORE STYLES --- */
+        body, html { font-family: 'Inter', sans-serif; margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #f0f2f5; }
+        #cldContainer { position: relative; width: 100%; height: 100vh; display: flex; flex-direction: column; }
+        #cldNetwork { flex-grow: 1; border: 1px solid #d1d5db; background-color: #ffffff; width: 100%; height: 100%; }
+
+        /* UI Elements */
+        #modelTitleDisplay { position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold; color: #1F2937; background-color: rgba(255, 255, 255, 0.9); padding: 10px 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); z-index: 10; pointer-events: none; }
+        
+        .action-btn { position: absolute; bottom: 20px; z-index: 25; padding: 10px 18px; font-size: 14px; font-weight: 500; border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        
+        /* Button Positioning */
+        #saveButton { left: 20px; background-color: #2563EB; color: white; }
+        #saveButton:hover { background-color: #1D4ED8; }
+        
+        #loadNewButton { left: 140px; background-color: #fff; color: #374151; }
+        #loadNewButton:hover { background-color: #f9fafb; }
+
+        /* New Button: Save Map Data (JSON) */
+        #saveDataButton { left: 285px; background-color: #10B981; color: white; }
+        #saveDataButton:hover { background-color: #059669; }
+
+        /* Legends */
+        .legend-container { 
+            position: fixed; 
+            right: 20px; 
+            width: 280px; 
+            background: rgba(255,255,255,0.96); 
+            border-radius: 8px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+            max-height: 42px; 
+            overflow: hidden; 
+            z-index: 20; 
+            transition: max-height 0.3s ease; 
+            border: 1px solid #e5e7eb; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .legend-container.expanded { 
+            max-height: 50vh; 
+            z-index: 100; 
+        }
+
+        #legend { top: 20px; }
+        #archetypeLegend { top: 75px; }
+        
+        .legend-header { padding: 12px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; background: #fff; border-bottom: 1px solid #eee; }
+        .legend-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex-grow: 1; }
+        .legend-list li { padding: 8px 12px; border-bottom: 1px solid #f3f4f6; font-size: 13px; cursor: pointer; border-left: 3px solid transparent; }
+        .legend-list li:hover { background-color: #eff6ff; }
+        
+        /* Dragging visuals */
+        .legend-list li.dragging { opacity: 0.5; background: #e5e7eb; }
+
+        /* Description Box */
+        #descPanel { position: fixed; right: 20px; bottom: 80px; width: 280px; background: #fff; padding: 16px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 30; display: none; max-height: 300px; overflow-y: auto; font-size: 14px; line-height: 1.5; border: 1px solid #ddd; }
+        #descPanel strong { display: block; margin-bottom: 6px; color: #1E40AF; font-size: 15px; }
+
+        /* Tooltips */
+        .tooltip { position: absolute; background: rgba(255,255,255,0.98); border: 1px solid #ccc; padding: 10px; border-radius: 6px; font-size: 13px; display: none; z-index: 1000; pointer-events: none; max-width: 250px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); line-height: 1.4; }
+        #canvasTooltip { background: rgba(17, 24, 39, 0.95); color: white; border: none; }
+        #helperTooltip {
+            position: absolute; bottom: 70px; left: 20px;
+            background: rgba(0,0,0,0.6); color: white;
+            padding: 8px 12px; border-radius: 20px;
+            font-size: 12px; pointer-events: none; z-index: 5;
+        }
+
+        /* MODALS */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; }
+        .modal-box { background: white; padding: 25px; border-radius: 8px; width: 600px; max-width: 90%; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .modal-box textarea { width: 100%; height: 250px; padding: 12px; font-family: monospace; border: 1px solid #ccc; border-radius: 4px; background: #f9fafb; }
+        .modal-box button { padding: 12px 18px; background: #2563EB; color: white; border: none; font-weight: bold; cursor: pointer; font-size: 15px; border-radius: 6px; }
+        .modal-box button:hover { background: #1D4ED8; }
+        .modal-box button.secondary { background: #E5E7EB; color: #374151; }
+        .modal-box button.secondary:hover { background: #D1D5DB; }
+        
+        /* Save Modal Specifics */
+        #filenameInput { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; margin: 5px 0 15px 0; box-sizing: border-box;}
     </style>
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-ESZ16XVVNN');
-    </script>
 </head>
 <body>
-<div class="page-shell">
-<nav class="navbar">
-    <div class="nav-container">
-        <a href="index.html" class="nav-logo">
-            <span class="nav-logo-badge">NN</span>
-            <span class="nav-logo-text">Neural Nations</span>
-        </a>
-        <div class="nav-menu">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="start-here.html" class="nav-link">Start Here</a>
-            <a href="model.html" class="nav-link">Model</a>
-            <a href="datasets.html" class="nav-link">Datasets</a>
-            <a href="explore.html" class="nav-link">Explore</a>
-            <div class="nav-dropdown">
-                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
-                <div class="nav-dropdown-menu">
-                    <a href="results.html">Results at a Glance</a>
-                    <a href="validation.html">Validation &amp; Limits</a>
-                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
-                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
-                    <a href="cams-failure-modes.html">Failure Modes Map</a>
-                    <a href="failure-modes-story.html">Failure Modes Story</a>
-                    <a href="nz-arc-map.html">New Zealand &mdash; Arc Map</a>
-                    <a href="nz-arc-story.html">New Zealand &mdash; Institutional Arc</a>
-                    <a href="argentina-cams-map.html">Argentina &mdash; Arc Map</a>
-                    <a href="argentina-cams-story.html">Argentina &mdash; CAMS Story</a>
-                    <a href="germany-arc-map.html">Germany &mdash; Arc Map</a>
-                    <a href="germany-arc-story.html">Germany &mdash; Arc Story</a>
-                    <a href="canada-arc-map.html">Canada &mdash; Arc Map</a>
-                    <a href="canada-arc-story.html">Canada &mdash; The Border Tribe</a>
-                    <a href="attractors.html">Attractors</a>
-                </div>
-            </div>
-            <a href="research-diary.html" class="nav-link">Research Diary</a>
-            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
-            <a href="faq.html" class="nav-link">FAQ</a>
-            <a href="contact.html" class="nav-link">Contact</a>
-        </div>
-        <div class="nav-actions">
-            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
-                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
-            </a>
-            <a href="newsletter.html" class="nav-btn-newsletter">
-                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
-            </a>
-            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </div>
-    <div class="nav-mobile" id="nav-mobile">
-        <a href="index.html">Home</a>
-        <a href="start-here.html">Start Here</a>
-        <a href="model.html">Model</a>
-        <a href="datasets.html">Datasets</a>
-        <a href="explore.html">Explore</a>
-        <a href="research-diary.html">Research Diary</a>
-        <a href="mindscapes.html">Mindscapes</a>
-        <a href="faq.html">FAQ</a>
-        <a href="contact.html">Contact</a>
-        <hr class="mobile-divider">
-        <div class="mobile-section-title">Insights</div>
-        <a href="results.html">Results at a Glance</a>
-        <a href="validation.html">Validation &amp; Limits</a>
-        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
-        <a href="escalation-archetypes.html">Escalation Archetypes</a>
-        <a href="cams-failure-modes.html">Failure Modes Map</a>
-        <a href="failure-modes-story.html">Failure Modes Story</a>
-        <a href="nz-arc-map.html">New Zealand &mdash; Arc Map</a>
-        <a href="nz-arc-story.html">New Zealand &mdash; Institutional Arc</a>
-        <a href="argentina-cams-map.html">Argentina &mdash; Arc Map</a>
-        <a href="argentina-cams-story.html">Argentina &mdash; CAMS Story</a>
-        <a href="germany-arc-map.html">Germany &mdash; Arc Map</a>
-        <a href="germany-arc-story.html">Germany &mdash; Arc Story</a>
-                    <a href="canada-arc-map.html">Canada &mdash; Arc Map</a>
-                    <a href="canada-arc-story.html">Canada &mdash; The Border Tribe</a>
-        <a href="attractors.html">Attractors</a>
-    </div>
-</nav>
 
     <div id="cldContainer">
-        <div id="modelTitleDisplay">CAMS Node Failure Modes</div>
+        <div id="modelTitleDisplay">Aha! Map v1.1</div>
         <button id="saveButton" class="action-btn">Save Map</button>
         <button id="loadNewButton" class="action-btn">Load Map Data</button>
         <button id="saveDataButton" class="action-btn">Save Map Data</button>
-        <a id="storyButton" href="/failure-modes-story" class="action-btn">Read the story →</a>
         
-        <div id="helperTooltip" style="display:none;">Click edge again &amp; drag to curve it</div>
+        <div id="helperTooltip">Step 1: Click edge to select (Red)<br>Step 2: Drag mouse to curve</div>
         <div id="cldNetwork"></div>
         
         <div id="legend" class="legend-container">
@@ -236,609 +109,548 @@
             <ul id="archetypeList" class="legend-list"></ul>
         </div>
         
-        <!-- Timescale colour key -->
-        <div id="timescaleKey" style="
-            position:absolute; bottom:20px; left:20px;
-            background:rgba(255,255,255,0.93); border:1px solid #e5e7eb;
-            border-radius:8px; padding:10px 14px; font-size:12px;
-            font-family:'Inter',sans-serif; color:#374151;
-            box-shadow:0 2px 8px rgba(0,0,0,0.09); z-index:15; line-height:1.7;">
-            <div style="font-weight:700; margin-bottom:5px; font-size:12.5px; color:#111827;">Node timescale</div>
-            <div style="display:flex;align-items:center;gap:7px"><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#DBEAFE;border:2px solid #3B82F6;"></span> Fast — operational (months–years)</div>
-            <div style="display:flex;align-items:center;gap:7px"><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#FEF3C7;border:2px solid #D97706;"></span> Structural (years–decades)</div>
-            <div style="display:flex;align-items:center;gap:7px"><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#EDE9FE;border:2px solid #7C3AED;"></span> Institutional (years–decades)</div>
-            <div style="display:flex;align-items:center;gap:7px"><span style="display:inline-block;width:11px;height:11px;border-radius:2px;background:#CCFBF1;border:2px solid #14B8A6;"></span> Existential (decades–centuries)</div>
-            <div style="display:flex;align-items:center;gap:7px"><span style="display:inline-block;width:11px;height:11px;border-radius:2px;background:#FEE2E2;border:2px solid #DC2626;"></span> System variable</div>
-        </div>
-
         <div id="descPanel"></div>
         <div id="mainTooltip" class="tooltip"></div>
         <div id="canvasTooltip" class="tooltip"></div>
     </div>
 
     <!-- Input/Load Modal -->
-    <div id="inputModal" class="modal-overlay" style="display: none;">
+    <div id="inputModal" class="modal-overlay" style="display: flex;"> <!-- Default to flex so it shows on load if empty -->
         <div class="modal-box">
             <h2 style="margin:0; color:#111827;">Load Map Data</h2>
             <p style="margin:0; color:#6B7280; font-size:14px;">Paste the JSON from Gemini below:</p>
-            <textarea id="jsonInput" placeholder="INJECT_JSON_HERE" spellcheck="false">{
+            <textarea id="jsonInput" placeholder="Paste JSON here" spellcheck="false">{
   "metadata": {
-    "topic": "CAMS Node Failure Modes",
-    "description": "The systemic dynamics by which each of the eight institutional nodes fails, and how failure in one node propagates through the system",
-    "version": "1.0",
-    "created": "2026-04-16"
+    "topic": "Canada and the Tao of Terra: A Border Tribe Map"
   },
   "nodes": [
     {
-      "id": "flow",
-      "label": "Flow",
-      "description": "Circulatory system of exchange, logistics, supply chains. First visible failure point.",
-      "shape": "ellipse",
-      "x": -400,
-      "y": -200,
+      "id": "n1",
+      "label": "Sovereign Cognitive Capacity",
+      "shape": "box",
       "color": {
-        "background": "#DBEAFE",
-        "border": "#3B82F6"
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
       },
-      "borderWidth": 2
+      "borderWidth": 1,
+      "x": 0,
+      "y": 0,
+      "description": "The accumulated capacity of the polity to think for itself: institutional memory (Archive) and authoritative knowledge traditions (Lore). Carriers include public broadcasters, sovereign universities, civil-service expertise, deliberative civic culture. Erodes through cognitive capture; rebuilds through slow-loop investment. [n1]"
     },
     {
-      "id": "hands",
-      "label": "Hands",
-      "description": "Labour base, demographic health, motivational engagement. Responds rapidly to system stress.",
-      "shape": "ellipse",
+      "id": "n2",
+      "label": "Junior-Partner Identity",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
       "x": -400,
       "y": 0,
+      "description": "The accumulated psychological and cultural disposition to defer to the hegemon: the taken-for-granted self-conception of the Anglosphere middle power. Reproduces itself through Anglosphere institutions and atrophies when sovereign cognition rises. [n2]"
+    },
+    {
+      "id": "n3",
+      "label": "Anglosphere Lock-In",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
+      "x": -220,
+      "y": -160,
+      "description": "The institutional binding to the hegemon: Five Eyes, AUKUS, defence-industrial integration, financial alignment, the treaty stack. Once engaged it raises switching costs and routes elite incentives outward. [n3]"
+    },
+    {
+      "id": "n4",
+      "label": "Slow-Loop Capital",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
+      "x": -50,
+      "y": 240,
+      "description": "Intergenerational stocks (ecological, institutional, civic, infrastructural) that compound on long horizons. The patrimony that funds future cooperation. Compounds with cognitive capacity; depleted by elite modularity. [n4]"
+    },
+    {
+      "id": "n5",
+      "label": "Tao-of-Terra Linkage",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
+      "x": 320,
+      "y": 80,
+      "description": "Depth of connection to the planetary commonwealth of slow-loop civilisations: Indigenous Australian Lore, Chinese statecraft, Andean and Sahelian Archive, Pacific knowledge systems, older European pre-modern wisdom. The seed crystal of post-Anglosphere cognitive sovereignty. [n5]"
+    },
+    {
+      "id": "n6",
+      "label": "Elite Modularity",
+      "shape": "ellipse",
       "color": {
         "background": "#DBEAFE",
         "border": "#3B82F6"
       },
-      "borderWidth": 2
+      "borderWidth": 1,
+      "x": -300,
+      "y": -320,
+      "description": "The flow rate at which the governing class identifies with and circulates through the transnational Anglosphere network rather than the domestic polity. High modularity drains cognitive capacity and slow-loop capital. [n6]"
     },
     {
-      "id": "stress",
-      "label": "System Stress",
-      "description": "Aggregate pressure from external shocks or internal inefficiencies. Increases downstream pressures.",
-      "shape": "box",
-      "x": -200,
-      "y": -100,
-      "color": {
-        "background": "#FEE2E2",
-        "border": "#DC2626"
-      },
-      "borderWidth": 2.5
-    },
-    {
-      "id": "craft",
-      "label": "Craft",
-      "description": "Technical expertise, specialised knowledge, innovation capacity. Medium-speed failure.",
+      "id": "n7",
+      "label": "Thermodynamic Surplus",
       "shape": "ellipse",
-      "x": -100,
-      "y": -250,
       "color": {
-        "background": "#FEF3C7",
-        "border": "#D97706"
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
       },
-      "borderWidth": 2
+      "borderWidth": 2.5,
+      "x": -460,
+      "y": -280,
+      "description": "The energetic and economic surplus available to fund cooperation: cheap energy, demographic dividend, dollar seigniorage, productivity dividend. As surplus contracts, iterated cooperation becomes unaffordable and elite defection rises. Largely exogenous. [n7]"
     },
     {
-      "id": "stewards",
-      "label": "Stewards",
-      "description": "Asset control, resource stewardship, capital preservation. Prone to rent-seeking under stress.",
+      "id": "n8",
+      "label": "Corporate-Tech Cognitive Capture",
       "shape": "ellipse",
-      "x": -100,
-      "y": -50,
       "color": {
-        "background": "#FEF3C7",
-        "border": "#D97706"
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
       },
-      "borderWidth": 2
+      "borderWidth": 1,
+      "x": 60,
+      "y": -220,
+      "description": "The flow rate at which deliberation, civic argument and individual cognition is routed through US corporate platforms and AI systems trained on corpora the host society did not choose. Erodes sovereign cognitive capacity at the substrate level. [n8]"
     },
     {
-      "id": "shield",
-      "label": "Shield",
-      "description": "Defence and coercive capacity. Can atrophy or hyperactivate\u2014both are failure modes.",
+      "id": "n9",
+      "label": "Hegemonic Shock",
       "shape": "ellipse",
-      "x": 100,
-      "y": -200,
       "color": {
-        "background": "#EDE9FE",
-        "border": "#7C3AED"
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
       },
-      "borderWidth": 2
+      "borderWidth": 2.5,
+      "x": 430,
+      "y": -260,
+      "description": "Exogenous rupture in the hegemon's stability: fiscal, military, political, technological. Disrupts Anglosphere lock-in and forces the search for alternative cooperative architectures. [n9]"
     },
     {
-      "id": "helm",
-      "label": "Helm",
-      "description": "Executive coordination, strategic decision-making. Vulnerable to capture or paralysis.",
+      "id": "n10",
+      "label": "Indigenous & Eastern Wisdom Inflows",
       "shape": "ellipse",
-      "x": 200,
-      "y": -100,
       "color": {
-        "background": "#EDE9FE",
-        "border": "#7C3AED"
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
       },
-      "borderWidth": 2
-    },
-    {
-      "id": "archive",
-      "label": "Archive",
-      "description": "Institutional memory, historical record, regulatory continuity. Slow to fail, impossible to recover.",
-      "shape": "box",
-      "x": 300,
-      "y": 100,
-      "color": {
-        "background": "#CCFBF1",
-        "border": "#14B8A6"
-      },
-      "borderWidth": 2
-    },
-    {
-      "id": "lore",
-      "label": "Lore",
-      "description": "Shared meaning, legitimacy narratives, cultural identity. Generational timescale. Loss is existential.",
-      "shape": "box",
-      "x": 400,
-      "y": 250,
-      "color": {
-        "background": "#CCFBF1",
-        "border": "#14B8A6"
-      },
-      "borderWidth": 2.5
-    },
-    {
-      "id": "coordination_capacity",
-      "label": "Coordination Capacity",
-      "description": "System's ability to respond coherently to shocks. Declines as nodes fail.",
-      "shape": "box",
-      "x": 0,
-      "y": 200,
-      "color": {
-        "background": "#FEE2E2",
-        "border": "#DC2626"
-      },
-      "borderWidth": 2.5
-    },
-    {
-      "id": "institutional_memory",
-      "label": "Institutional Memory",
-      "description": "Collective knowledge of past crises, institutional procedures, adaptive capacity. Erodes with Archive and Lore collapse.",
-      "shape": "box",
-      "x": 250,
-      "y": -150,
-      "color": {
-        "background": "#CCF0F5",
-        "border": "#0891B2"
-      },
-      "borderWidth": 2
+      "borderWidth": 2.5,
+      "x": 470,
+      "y": 270,
+      "description": "External knowledge currents from civilisations whose Archive and Lore were never absorbed into the Anglosphere stack: Indigenous nations, Chinese philosophical and governance traditions, Pacific and Andean knowledge systems. Substrate for Tao-of-Terra reconstitution. [n10]"
     }
   ],
   "edges": [
     {
       "id": "e1",
-      "from": "stress",
-      "to": "flow",
-      "label": "Mythic-material decoupling",
+      "from": "n2",
+      "to": "n3",
+      "width": 5,
+      "lag": 1,
       "color": {
         "color": "#1E40AF"
       },
-      "width": 5,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "System stress disrupts supply chains and commerce. Fast visible failure mode (months\u2013years)."
+      "label": "Identity reinforces alignment\n+\nLag: 1 yr",
+      "description": "Subordinate self-conception makes lock-in feel natural and necessary; treaty engagements are framed as common sense rather than as choices. [e1]"
     },
     {
       "id": "e2",
-      "from": "flow",
-      "to": "hands",
-      "label": "Labour disengagement",
+      "from": "n3",
+      "to": "n6",
+      "width": 5,
+      "lag": 1,
       "color": {
         "color": "#1E40AF"
       },
-      "width": 5,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Flow failure reduces employment, income security, and motivation. Workers disengage."
+      "label": "Lock-in routes careers\n+\nLag: 1 yr",
+      "description": "Institutional integration creates the career graph that runs through Washington and London, making transnational identification the rational option for ambitious elites. [e2]"
     },
     {
       "id": "e3",
-      "from": "hands",
-      "to": "stress",
-      "label": "Loss of productive capacity",
+      "from": "n6",
+      "to": "n1",
+      "width": 6,
+      "lag": 2,
       "color": {
         "color": "#991B1B"
       },
-      "width": 4,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Demographic failure or demotivation reduces aggregate labour, increasing system pressure."
+      "label": "Modular elites starve cognition\n-\nLag: 2 yrs",
+      "description": "Elites whose reference group is transnational have no incentive to invest in domestic Archive and Lore. Defunding of public broadcasters, universities, and civil-service expertise follows. [e3]"
     },
     {
       "id": "e4",
-      "from": "stress",
-      "to": "craft",
-      "label": "Deferral of innovation",
+      "from": "n6",
+      "to": "n4",
+      "width": 5,
+      "lag": 3,
       "color": {
-        "color": "#1E40AF"
+        "color": "#991B1B"
       },
-      "width": 3,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Under stress, organisations abandon long-term R&D and technical investment."
+      "label": "Modularity drains capital\n-\nLag: 3 yrs",
+      "description": "Long-horizon investment requires elite anchoring in the polity that benefits in twenty or thirty years. Modularity destroys that horizon and the capital stock erodes. [e4]"
     },
     {
       "id": "e5",
-      "from": "craft",
-      "to": "coordination_capacity",
-      "label": "Loss of adaptive tooling",
+      "from": "n1",
+      "to": "n2",
+      "width": 4,
+      "lag": 2,
       "color": {
         "color": "#991B1B"
       },
-      "width": 3,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Eroded Craft capacity reduces the system's ability to build solutions or respond flexibly."
+      "label": "Cognition dissolves subordination\n-\nLag: 2 yrs",
+      "description": "When a society can think for itself, the inherited subordinate self-image becomes harder to sustain. Conversely, where cognition collapses, junior-partner identity hardens by default. [e5]"
     },
     {
       "id": "e6",
-      "from": "stress",
-      "to": "stewards",
-      "label": "Asset concentration pressure",
+      "from": "n4",
+      "to": "n1",
+      "width": 5,
+      "lag": 2,
       "color": {
         "color": "#1E40AF"
       },
-      "width": 3,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Under pressure, Stewards shift from stewardship to rent-seeking and asset hoarding."
+      "label": "Slow capital sustains cognition\n+\nLag: 2 yrs",
+      "description": "Universities, libraries, broadcasters and civic institutions are the material carriers of cognition. Without their resource base, cognition cannot persist across generations. [e6]"
     },
     {
       "id": "e7",
-      "from": "stewards",
-      "to": "flow",
-      "label": "Capital withdrawal",
+      "from": "n1",
+      "to": "n4",
+      "width": 4,
+      "lag": 4,
       "color": {
-        "color": "#991B1B"
+        "color": "#1E40AF"
       },
-      "width": 3,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Rent-seeking and asset hoarding stranglate capital circulation. Flow deteriorates further."
+      "label": "Cognition rebuilds capital\n+\nLag: 4 yrs",
+      "description": "A society that can deliberate well will choose to rebuild slow-loop capital. The two stocks reinforce each other in either direction: virtuous together or vicious together. [e7]"
     },
     {
       "id": "e8",
-      "from": "coordination_capacity",
-      "to": "helm",
-      "label": "Decision paralysis",
+      "from": "n7",
+      "to": "n4",
+      "width": 4,
+      "lag": 1,
       "color": {
         "color": "#1E40AF"
       },
-      "width": 4,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Low coordination capacity means Helm cannot act coherently. Paralysis or capture results."
+      "label": "Surplus funds cooperation\n+\nLag: 1 yr",
+      "description": "Slow-loop investment requires surplus above subsistence. Without it, even well-intentioned societies cannot accumulate intergenerational capital. [e8]"
     },
     {
       "id": "e9",
-      "from": "helm",
-      "to": "shield",
-      "label": "Strategic incoherence",
+      "from": "n7",
+      "to": "n6",
+      "width": 4,
+      "lag": 2,
       "color": {
-        "color": "#1E40AF"
+        "color": "#991B1B"
       },
-      "width": 3,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Helm dysfunction sends contradictory signals to Shield. Atrophy or hyperactivation ensues."
+      "label": "Falling surplus accelerates defection\n-\nLag: 2 yrs",
+      "description": "When surplus contracts, the iterated prisoner's dilemma payoff matrix shifts. Elite cooperation becomes individually irrational and modularity (exit) accelerates. [e9]"
     },
     {
       "id": "e10",
-      "from": "shield",
-      "to": "helm",
-      "label": "Coercive capture / militarisation",
+      "from": "n3",
+      "to": "n8",
+      "width": 5,
+      "lag": 1,
       "color": {
-        "color": "#991B1B"
+        "color": "#1E40AF"
       },
-      "width": 4,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Hyperactivated Shield captures Helm through coercive pressure. Self-reinforcing loop."
+      "label": "Lock-in imports the cognition layer\n+\nLag: 1 yr",
+      "description": "Anglosphere alignment includes the digital substrate. The platforms, AI systems and data architectures of the hegemon become the medium of domestic deliberation. [e10]"
     },
     {
       "id": "e11",
-      "from": "helm",
-      "to": "institutional_memory",
-      "label": "Institutional erosion",
+      "from": "n8",
+      "to": "n1",
+      "width": 7,
+      "lag": 1,
       "color": {
-        "color": "#1E40AF"
+        "color": "#991B1B"
       },
-      "width": 3,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Helm dysfunction undermines procedures, records, and institutional continuity."
+      "label": "Captured cognition cannot be sovereign\n-\nLag: 1 yr",
+      "description": "When the substrate of thought is owned and value-tuned elsewhere, sovereign cognition has nowhere to live. Cognitive sovereignty is impossible without cognitive infrastructure. [e11]"
     },
     {
       "id": "e12",
-      "from": "institutional_memory",
-      "to": "archive",
-      "label": "Record decay / censorship",
+      "from": "n9",
+      "to": "n3",
+      "width": 5,
+      "lag": 0,
       "color": {
-        "color": "#1E40AF"
+        "color": "#991B1B"
       },
-      "width": 3,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Loss of memory culture leads to Archive abandonment, destruction, or rewriting."
+      "label": "Shock weakens the binding\n-\nLag: 0",
+      "description": "Sufficient hegemonic instability ruptures the lock-in: either by hegemon withdrawal, by extraterritorial overreach, or by junior-partner reconsideration under pressure. [e12]"
     },
     {
       "id": "e13",
-      "from": "archive",
-      "to": "lore",
-      "label": "Normative collapse",
-      "color": {
-        "color": "#991B1B"
-      },
-      "width": 4,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Without Archive record, Lore loses grounding. Legitimacy narratives fragment or are captured."
-    },
-    {
-      "id": "e14",
-      "from": "lore",
-      "to": "helm",
-      "label": "Legitimacy erosion",
-      "color": {
-        "color": "#991B1B"
-      },
+      "from": "n9",
+      "to": "n5",
       "width": 5,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "Lore collapse removes the meaning-base that justifies Helm's authority. Helm loses legitimacy to act."
-    },
-    {
-      "id": "e15",
-      "from": "stress",
-      "to": "coordination_capacity",
-      "label": "Cognitive overload",
-      "color": {
-        "color": "#991B1B"
-      },
-      "width": 4,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
-      },
-      "description": "System-wide stress exceeds Coordination Capacity to process and respond. Cascade failure risk."
-    },
-    {
-      "id": "e16",
-      "from": "coordination_capacity",
-      "to": "lore",
-      "label": "Sense-making collapse",
+      "lag": 1,
       "color": {
         "color": "#1E40AF"
       },
-      "width": 2,
-      "arrows": {
-        "to": {
-          "enabled": true
-        }
+      "label": "Shock opens the search\n+\nLag: 1 yr",
+      "description": "When the imported cognitive layer falters, societies reach for the surviving alternatives: Indigenous Archive, Asian and Pacific knowledge systems, planetary slow-loop traditions. [e13]"
+    },
+    {
+      "id": "e14",
+      "from": "n10",
+      "to": "n5",
+      "width": 6,
+      "lag": 0,
+      "color": {
+        "color": "#1E40AF"
       },
-      "description": "When coordination breaks, shared narratives fragment. Lore cannot maintain coherence."
+      "label": "Inflows constitute the linkage\n+\nLag: 0",
+      "description": "The Tao-of-Terra is built directly out of these inflows: Indigenous teachings, Chinese philosophical and governance traditions, Pacific and Andean knowledge, ecological wisdom. [e14]"
+    },
+    {
+      "id": "e15",
+      "from": "n5",
+      "to": "n1",
+      "width": 6,
+      "lag": 2,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Linkage rebuilds cognition\n+\nLag: 2 yrs",
+      "description": "Slow-loop civilisations carry the templates and corpora that can re-seed sovereign cognitive capacity once the imported corporate layer is rejected or fails. [e15]"
+    },
+    {
+      "id": "e16",
+      "from": "n5",
+      "to": "n2",
+      "width": 5,
+      "lag": 3,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Planetary commonwealth dissolves subordination\n-\nLag: 3 yrs",
+      "description": "Belonging to the planetary commonwealth of slow-loop civilisations replaces the abused-junior-partner self-conception with a different identity altogether: peer in a wider conversation. [e16]"
+    },
+    {
+      "id": "e17",
+      "from": "n8",
+      "to": "n2",
+      "width": 4,
+      "lag": 2,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Capture deepens subordination\n+\nLag: 2 yrs",
+      "description": "When you think on the hegemon's platforms you tend to think the hegemon's thoughts. Subordination becomes pre-conscious, baked into the medium itself. [e17]"
+    },
+    {
+      "id": "e18",
+      "from": "n1",
+      "to": "n5",
+      "width": 4,
+      "lag": 2,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Cognition deepens linkage\n+\nLag: 2 yrs",
+      "description": "A polity with restored cognitive capacity can engage the planetary commonwealth as a partner, not a recipient: translating, contributing, integrating, learning to listen. [e18]"
+    },
+    {
+      "id": "e19",
+      "from": "n4",
+      "to": "n7",
+      "width": 3,
+      "lag": 5,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Capital underwrites surplus\n+\nLag: 5 yrs",
+      "description": "On the longest horizons, slow-loop capital underwrites the productive base that generates thermodynamic surplus. Erode the capital and the surplus eventually follows it down. [e19]"
+    },
+    {
+      "id": "e20",
+      "from": "n6",
+      "to": "n2",
+      "width": 3,
+      "lag": 4,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Flagrant modularity provokes backlash\n-\nLag: 4 yrs",
+      "description": "When the elite class is visibly abandoning the polity, public consciousness recoils and sovereigntist politics rises. Often hijacked by xenophobic populism, but the corrective signal is real. [e20]"
     }
   ],
   "loops": [
     {
       "id": "R1",
-      "name": "Flow-Hands Death Spiral",
+      "name": "Subordination Reinforcement",
       "type": "R",
+      "description": "The Anglosphere subordination death spiral. Junior-partner identity drives lock-in, which routes elites away from the polity, which starves cognition, which leaves no resource to challenge the subordinate self-image. The identity hardens with each iteration. [R1]",
       "nodeIds": [
-        "flow",
-        "hands",
-        "stress"
+        "n1",
+        "n2",
+        "n3",
+        "n6"
       ],
       "edgeIds": [
         "e1",
         "e2",
-        "e3"
-      ],
-      "description": "Flow failure \u2192 labour disengagement \u2192 reduced productive capacity \u2192 increased system stress \u2192 worsens Flow failure. Fastest visible collapse loop (months\u2013years)."
+        "e3",
+        "e5"
+      ]
     },
     {
       "id": "R2",
-      "name": "Steward Rent-Seeking Trap",
+      "name": "Cognitive Capture Spiral",
       "type": "R",
+      "description": "The substrate-level capture loop. Lock-in imports the corporate cognition layer, which captures domestic deliberation, which erodes sovereign cognition, which leaves the junior-partner identity unchallenged, which sustains the lock-in. The cruel paradox: the system loses cognition exactly when it most needs it. [R2]",
       "nodeIds": [
-        "stress",
-        "stewards",
-        "flow"
+        "n1",
+        "n2",
+        "n3",
+        "n8"
+      ],
+      "edgeIds": [
+        "e1",
+        "e5",
+        "e10",
+        "e11"
+      ]
+    },
+    {
+      "id": "R3",
+      "name": "Slow-Loop Compounding",
+      "type": "R",
+      "description": "The mutual reinforcement of sovereign cognition and slow-loop capital. They build each other or destroy each other together; there is no neutral state. Currently turning vicious as both stocks deplete in lockstep. [R3]",
+      "nodeIds": [
+        "n1",
+        "n4"
       ],
       "edgeIds": [
         "e6",
         "e7"
-      ],
-      "description": "Stress \u2192 asset hoarding \u2192 capital withdrawal \u2192 Flow strangulation \u2192 more stress. Medium-speed wealth-concentration spiral (years\u2013decades)."
-    },
-    {
-      "id": "R3",
-      "name": "Shield Hyperactivation",
-      "type": "R",
-      "nodeIds": [
-        "helm",
-        "shield"
-      ],
-      "edgeIds": [
-        "e9",
-        "e10"
-      ],
-      "description": "Helm paralysis \u2192 incoherent signals to Shield \u2192 Shield hyperactivates (militarisation) \u2192 Shield captures Helm \u2192 Helm further paralysed. Security dilemma feedback loop."
+      ]
     },
     {
       "id": "R4",
-      "name": "Institutional Amnesia Cascade",
+      "name": "Tech-Capture Reinforcement",
       "type": "R",
+      "description": "The platform-capture loop. Imported cognition layer reinforces subordinate identity, which strengthens lock-in, which deepens platform capture. The fastest-cycling loop in the system and the hardest to escape because it operates below conscious awareness. [R4]",
       "nodeIds": [
-        "helm",
-        "institutional_memory",
-        "archive",
-        "lore"
+        "n2",
+        "n3",
+        "n8"
       ],
       "edgeIds": [
-        "e11",
-        "e12",
-        "e13",
-        "e14"
-      ],
-      "description": "Helm dysfunction \u2192 erosion of institutional memory \u2192 Archive decay \u2192 Lore fragmentation \u2192 loss of legitimacy removes Helm's justification to act \u2192 Helm further weakened. Generational collapse spiral (decades\u2013centuries)."
+        "e1",
+        "e10",
+        "e17"
+      ]
     },
     {
-      "id": "B1",
-      "name": "Craft Mitigation (if activated)",
-      "type": "B",
+      "id": "R5",
+      "name": "Tao-of-Terra Restoration",
+      "type": "R",
+      "description": "The reconstitution loop, currently latent. Planetary linkage feeds cognition; cognition deepens the linkage further. Once activated by sufficient shock and sufficient inflow, this becomes the engine of post-Anglosphere sovereignty. The whole story turns on whether this loop can be brought to ignition before R1, R2, R3 and R4 finish their work. [R5]",
       "nodeIds": [
-        "stress",
-        "craft",
-        "coordination_capacity",
-        "helm"
+        "n1",
+        "n5"
       ],
       "edgeIds": [
-        "e4",
-        "e5",
-        "e8"
-      ],
-      "description": "Stress initially triggers innovation in Craft. Enhanced Craft capacity improves coordination and Helm's ability to respond\u2014but only if investment is maintained. Fragile balancing loop."
+        "e15",
+        "e18"
+      ]
     },
     {
-      "id": "B2",
-      "name": "Crisis-Driven Re-Coupling",
+      "id": "B6",
+      "name": "Sovereigntist Backlash",
       "type": "B",
+      "description": "The democratic correction loop. When elite modularity becomes blatant, political backlash erodes the legitimacy of subordinate identity, weakening lock-in and constraining further modularity. Slow, unreliable, often hijacked by xenophobic populism, but it is the system's own corrective mechanism. [B6]",
       "nodeIds": [
-        "stress",
-        "hands",
-        "lore"
+        "n2",
+        "n3",
+        "n6"
       ],
       "edgeIds": [
+        "e1",
         "e2",
-        "e16"
-      ],
-      "description": "Extreme stress can temporarily revive shared purpose (Lore re-couples with urgency), increasing collective action capacity. Temporary and finite\u2014collapses once crisis passes without institutional renewal."
+        "e20"
+      ]
     }
   ],
   "archetypes": [
     {
       "id": "arch1",
-      "name": "Limits to Growth",
+      "name": "Shifting the Burden",
+      "description": "The master archetype. Each generation faces a choice between rebuilding Archive and Lore (the fundamental fix, slow and expensive) and leaning harder on the hegemon's cognition layer and security architecture (the symptomatic fix, fast and cheap). The symptomatic fix is always individually rational, and each iteration erodes the institutional carriers required for the fundamental fix. After enough cycles the polity has lost not only the slow-loop capital but the capacity to rebuild it. The lethal feature is the delay structure between symptom relief and capacity loss.",
       "nodeIds": [
-        "flow",
-        "hands",
-        "stress"
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n6"
       ],
       "edgeIds": [
         "e1",
         "e2",
-        "e3"
-      ],
-      "description": "Flow-Hands system hits a ceiling: labour supply or material scarcity limits circulation. Growth halts. Reinforcing pressure builds. System tips into contraction."
+        "e3",
+        "e5",
+        "e6",
+        "e7"
+      ]
     },
     {
       "id": "arch2",
-      "name": "Fixes That Fail",
+      "name": "Drift to Low Performance (Eroding Goals)",
+      "description": "The standard for what counts as sovereignty is quietly dialed downward each cycle. What was vassalage a generation ago is rebranded as partnership; what was independent broadcasting is rebranded as content provision; what was civil-service expertise is rebranded as managerial efficiency. The cognitive capture is the substrate that makes the drift invisible: the citizens cannot easily name what they have lost because the platforms on which they would name it are themselves the agents of loss.",
       "nodeIds": [
-        "stewards",
-        "flow",
-        "stress"
+        "n1",
+        "n2",
+        "n3",
+        "n8"
       ],
       "edgeIds": [
-        "e6",
-        "e7"
-      ],
-      "description": "Short-term fix: hoard assets (Stewards rent-seeking). Side effect: strangles Flow. Intended benefit erodes. System stress increases. Worse than before."
+        "e1",
+        "e5",
+        "e10",
+        "e11",
+        "e17"
+      ]
     },
     {
       "id": "arch3",
-      "name": "Shifting the Burden to the Intervenor (Shield Militarisation)",
+      "name": "Tragedy of the Cognitive Commons",
+      "description": "The cognitive commons (public broadcasters, sovereign universities, deliberative civic culture, shared platforms of argument) is degraded by individually rational exits. Each elite who modularises and each citizen who jacks into corporate platforms gains private benefit while the collective deliberative capacity erodes. The democratic correction loop is too slow and too easily hijacked by xenophobic populism to compensate, and the commons quietly disappears one rational defection at a time.",
       "nodeIds": [
-        "helm",
-        "shield",
-        "coordination_capacity"
+        "n2",
+        "n3",
+        "n6",
+        "n8"
       ],
       "edgeIds": [
-        "e9",
-        "e10"
-      ],
-      "description": "Problem: Helm paralysis, loss of coordination. Apparent fix: hand control to Shield (military/coercive apparatus). Side effect: Shield hyperactivates, captures Helm. Dependency deepens. Fundamental problem (coordination) worsens."
-    },
-    {
-      "id": "arch4",
-      "name": "Tragedy of the Commons (Institutional Records)",
-      "nodeIds": [
-        "helm",
-        "archive",
-        "institutional_memory"
-      ],
-      "edgeIds": [
-        "e11",
-        "e12"
-      ],
-      "description": "Individual actors (Helm, Stewards) extract value by rewriting or destroying Archive records for short-term advantage. Shared commons (institutional memory) erodes. Collective capacity collapses."
-    },
-    {
-      "id": "arch5",
-      "name": "Eroding Goals / Normative Drift",
-      "nodeIds": [
-        "lore",
-        "helm",
-        "archive"
-      ],
-      "edgeIds": [
-        "e13",
-        "e14"
-      ],
-      "description": "Original legitimacy (Lore) set a goal (e.g., 'serve the common good'). As Archive erodes, the historical record of that goal fades. New interpretations of Lore are captured. Original purpose is lost."
+        "e1",
+        "e2",
+        "e10",
+        "e17",
+        "e20"
+      ]
     }
   ]
 }</textarea>
@@ -1052,17 +864,37 @@
         function initEngine(data) {
             const hasPositions = data.nodes && data.nodes.some(n => n.x !== undefined && n.y !== undefined);
 
-            const nodeData = (data.nodes || []).map(n => ({
-                ...n,
-                x: n.x ? Number(n.x) : undefined,
-                y: n.y ? Number(n.y) : undefined
-            }));
-
+            // MODIFIED: Append [ID] to node labels (without hardcoded 'n')
+            const nodeData = (data.nodes || []).map(n => {
+                let label = n.label || "";
+                const tag = `[${n.id}]`; // Corrected: uses pure ID
+                // Prevent duplicate appending if data is re-loaded
+                if (!label.includes(tag)) {
+                    label = label ? `${label} ${tag}` : tag;
+                }
+                return {
+                    ...n, 
+                    label: label,
+                    x: n.x ? Number(n.x) : undefined, 
+                    y: n.y ? Number(n.y) : undefined
+                };
+            });
+            
+            // MODIFIED: Append [ID] to edge labels (without hardcoded 'e')
             const edgeData = (data.edges || []).map(e => {
-                const smooth = (e.smooth && e.smooth.roundness !== undefined)
-                    ? e.smooth
-                    : { enabled: true, type: "cubicBezier", roundness: 0.3 };
-                return { ...e, from: String(e.from), to: String(e.to), title: undefined, smooth };
+                let smooth = { enabled: true, type: "cubicBezier", roundness: 0.3 };
+                if (e.smooth && e.smooth.roundness !== undefined) {
+                    smooth = e.smooth; 
+                }
+                
+                let label = e.label || "";
+                const tag = `[${e.id}]`; // Corrected: uses pure ID
+                // Prevent duplicate appending and ensure ID is visible
+                if (!label.includes(tag)) {
+                    label = label ? `${label} ${tag}` : tag;
+                }
+
+                return {...e, label: label, from:String(e.from), to:String(e.to), title:undefined, smooth: smooth};
             });
 
             nodes = new vis.DataSet(nodeData);
@@ -1116,9 +948,7 @@
 
             renderLists();
             setupInteractions();
-            setupListSorting();
-            // Auto-expand feedback loops panel
-            document.getElementById('legend').classList.add('expanded');
+            setupListSorting(); 
         }
 
         // --- 3. CUSTOM INTERACTION LOGIC ---
@@ -1138,21 +968,18 @@
                 }
 
                 if (params.nodes.length === 0) { 
-                    if (params.edges.length > 0) {
+                    if (params.edges.length > 0) { 
                         const clickedEdgeId = params.edges[0];
                         activeEdgeForRecurve = (activeEdgeForRecurve === clickedEdgeId) ? null : clickedEdgeId;
                         if(activeEdgeForRecurve) {
                             network.selectEdges([activeEdgeForRecurve]);
-                            resetHighlights(false);
-                            document.getElementById('helperTooltip').style.display = 'block';
+                            resetHighlights(false); 
                         } else {
                             network.selectEdges([]);
-                            document.getElementById('helperTooltip').style.display = 'none';
                         }
-                    } else {
+                    } else { 
                         activeEdgeForRecurve = null;
                         network.selectEdges([]);
-                        document.getElementById('helperTooltip').style.display = 'none';
                         resetHighlights();
                     }
                 } else {
@@ -1536,16 +1363,5 @@
             if(!exp) el.classList.add('expanded');
         }
     </script>
-</div><!-- /.page-shell -->
-<script src="nav.js"></script>
-
-<footer class="footer">
-    <nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
-        <a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a>
-        <a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a>
-        <a href="results.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Results</a>
-    </nav>
-    <p>&copy; 2026 Kari McKern &mdash; Neural Nations CAMS Research. Built as open science &mdash; contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
-</footer>
 </body>
 </html>

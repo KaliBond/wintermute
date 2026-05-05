@@ -1,0 +1,382 @@
+{
+  "metadata": {
+    "topic": "Canada and the Tao of Terra: A Border Tribe Map"
+  },
+  "nodes": [
+    {
+      "id": "n1",
+      "label": "Sovereign Cognitive Capacity",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": 0,
+      "y": 0,
+      "description": "The accumulated capacity of the polity to think for itself: institutional memory (Archive) and authoritative knowledge traditions (Lore). Carriers include public broadcasters, sovereign universities, civil-service expertise, deliberative civic culture. Erodes through cognitive capture; rebuilds through slow-loop investment. [n1]"
+    },
+    {
+      "id": "n2",
+      "label": "Junior-Partner Identity",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": -400,
+      "y": 0,
+      "description": "The accumulated psychological and cultural disposition to defer to the hegemon: the taken-for-granted self-conception of the Anglosphere middle power. Reproduces itself through Anglosphere institutions and atrophies when sovereign cognition rises. [n2]"
+    },
+    {
+      "id": "n3",
+      "label": "Anglosphere Lock-In",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": -220,
+      "y": -160,
+      "description": "The institutional binding to the hegemon: Five Eyes, AUKUS, defence-industrial integration, financial alignment, the treaty stack. Once engaged it raises switching costs and routes elite incentives outward. [n3]"
+    },
+    {
+      "id": "n4",
+      "label": "Slow-Loop Capital",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": -50,
+      "y": 240,
+      "description": "Intergenerational stocks (ecological, institutional, civic, infrastructural) that compound on long horizons. The patrimony that funds future cooperation. Compounds with cognitive capacity; depleted by elite modularity. [n4]"
+    },
+    {
+      "id": "n5",
+      "label": "Tao-of-Terra Linkage",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": 320,
+      "y": 80,
+      "description": "Depth of connection to the planetary commonwealth of slow-loop civilisations: Indigenous Australian Lore, Chinese statecraft, Andean and Sahelian Archive, Pacific knowledge systems, older European pre-modern wisdom. The seed crystal of post-Anglosphere cognitive sovereignty. [n5]"
+    },
+    {
+      "id": "n6",
+      "label": "Elite Modularity",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": -300,
+      "y": -320,
+      "description": "The flow rate at which the governing class identifies with and circulates through the transnational Anglosphere network rather than the domestic polity. High modularity drains cognitive capacity and slow-loop capital. [n6]"
+    },
+    {
+      "id": "n7",
+      "label": "Thermodynamic Surplus",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 2.5,
+      "x": -460,
+      "y": -280,
+      "description": "The energetic and economic surplus available to fund cooperation: cheap energy, demographic dividend, dollar seigniorage, productivity dividend. As surplus contracts, iterated cooperation becomes unaffordable and elite defection rises. Largely exogenous. [n7]"
+    },
+    {
+      "id": "n8",
+      "label": "Corporate-Tech Cognitive Capture",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": 60,
+      "y": -220,
+      "description": "The flow rate at which deliberation, civic argument and individual cognition is routed through US corporate platforms and AI systems trained on corpora the host society did not choose. Erodes sovereign cognitive capacity at the substrate level. [n8]"
+    },
+    {
+      "id": "n9",
+      "label": "Hegemonic Shock",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 2.5,
+      "x": 430,
+      "y": -260,
+      "description": "Exogenous rupture in the hegemon's stability: fiscal, military, political, technological. Disrupts Anglosphere lock-in and forces the search for alternative cooperative architectures. [n9]"
+    },
+    {
+      "id": "n10",
+      "label": "Indigenous & Eastern Wisdom Inflows",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 2.5,
+      "x": 470,
+      "y": 270,
+      "description": "External knowledge currents from civilisations whose Archive and Lore were never absorbed into the Anglosphere stack: Indigenous nations, Chinese philosophical and governance traditions, Pacific and Andean knowledge systems. Substrate for Tao-of-Terra reconstitution. [n10]"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "n2",
+      "to": "n3",
+      "width": 5,
+      "lag": 1,
+      "color": { "color": "#1E40AF" },
+      "label": "Identity reinforces alignment\n+\nLag: 1 yr",
+      "description": "Subordinate self-conception makes lock-in feel natural and necessary; treaty engagements are framed as common sense rather than as choices. [e1]"
+    },
+    {
+      "id": "e2",
+      "from": "n3",
+      "to": "n6",
+      "width": 5,
+      "lag": 1,
+      "color": { "color": "#1E40AF" },
+      "label": "Lock-in routes careers\n+\nLag: 1 yr",
+      "description": "Institutional integration creates the career graph that runs through Washington and London, making transnational identification the rational option for ambitious elites. [e2]"
+    },
+    {
+      "id": "e3",
+      "from": "n6",
+      "to": "n1",
+      "width": 6,
+      "lag": 2,
+      "color": { "color": "#991B1B" },
+      "label": "Modular elites starve cognition\n-\nLag: 2 yrs",
+      "description": "Elites whose reference group is transnational have no incentive to invest in domestic Archive and Lore. Defunding of public broadcasters, universities, and civil-service expertise follows. [e3]"
+    },
+    {
+      "id": "e4",
+      "from": "n6",
+      "to": "n4",
+      "width": 5,
+      "lag": 3,
+      "color": { "color": "#991B1B" },
+      "label": "Modularity drains capital\n-\nLag: 3 yrs",
+      "description": "Long-horizon investment requires elite anchoring in the polity that benefits in twenty or thirty years. Modularity destroys that horizon and the capital stock erodes. [e4]"
+    },
+    {
+      "id": "e5",
+      "from": "n1",
+      "to": "n2",
+      "width": 4,
+      "lag": 2,
+      "color": { "color": "#991B1B" },
+      "label": "Cognition dissolves subordination\n-\nLag: 2 yrs",
+      "description": "When a society can think for itself, the inherited subordinate self-image becomes harder to sustain. Conversely, where cognition collapses, junior-partner identity hardens by default. [e5]"
+    },
+    {
+      "id": "e6",
+      "from": "n4",
+      "to": "n1",
+      "width": 5,
+      "lag": 2,
+      "color": { "color": "#1E40AF" },
+      "label": "Slow capital sustains cognition\n+\nLag: 2 yrs",
+      "description": "Universities, libraries, broadcasters and civic institutions are the material carriers of cognition. Without their resource base, cognition cannot persist across generations. [e6]"
+    },
+    {
+      "id": "e7",
+      "from": "n1",
+      "to": "n4",
+      "width": 4,
+      "lag": 4,
+      "color": { "color": "#1E40AF" },
+      "label": "Cognition rebuilds capital\n+\nLag: 4 yrs",
+      "description": "A society that can deliberate well will choose to rebuild slow-loop capital. The two stocks reinforce each other in either direction: virtuous together or vicious together. [e7]"
+    },
+    {
+      "id": "e8",
+      "from": "n7",
+      "to": "n4",
+      "width": 4,
+      "lag": 1,
+      "color": { "color": "#1E40AF" },
+      "label": "Surplus funds cooperation\n+\nLag: 1 yr",
+      "description": "Slow-loop investment requires surplus above subsistence. Without it, even well-intentioned societies cannot accumulate intergenerational capital. [e8]"
+    },
+    {
+      "id": "e9",
+      "from": "n7",
+      "to": "n6",
+      "width": 4,
+      "lag": 2,
+      "color": { "color": "#991B1B" },
+      "label": "Falling surplus accelerates defection\n-\nLag: 2 yrs",
+      "description": "When surplus contracts, the iterated prisoner's dilemma payoff matrix shifts. Elite cooperation becomes individually irrational and modularity (exit) accelerates. [e9]"
+    },
+    {
+      "id": "e10",
+      "from": "n3",
+      "to": "n8",
+      "width": 5,
+      "lag": 1,
+      "color": { "color": "#1E40AF" },
+      "label": "Lock-in imports the cognition layer\n+\nLag: 1 yr",
+      "description": "Anglosphere alignment includes the digital substrate. The platforms, AI systems and data architectures of the hegemon become the medium of domestic deliberation. [e10]"
+    },
+    {
+      "id": "e11",
+      "from": "n8",
+      "to": "n1",
+      "width": 7,
+      "lag": 1,
+      "color": { "color": "#991B1B" },
+      "label": "Captured cognition cannot be sovereign\n-\nLag: 1 yr",
+      "description": "When the substrate of thought is owned and value-tuned elsewhere, sovereign cognition has nowhere to live. Cognitive sovereignty is impossible without cognitive infrastructure. [e11]"
+    },
+    {
+      "id": "e12",
+      "from": "n9",
+      "to": "n3",
+      "width": 5,
+      "lag": 0,
+      "color": { "color": "#991B1B" },
+      "label": "Shock weakens the binding\n-\nLag: 0",
+      "description": "Sufficient hegemonic instability ruptures the lock-in: either by hegemon withdrawal, by extraterritorial overreach, or by junior-partner reconsideration under pressure. [e12]"
+    },
+    {
+      "id": "e13",
+      "from": "n9",
+      "to": "n5",
+      "width": 5,
+      "lag": 1,
+      "color": { "color": "#1E40AF" },
+      "label": "Shock opens the search\n+\nLag: 1 yr",
+      "description": "When the imported cognitive layer falters, societies reach for the surviving alternatives: Indigenous Archive, Asian and Pacific knowledge systems, planetary slow-loop traditions. [e13]"
+    },
+    {
+      "id": "e14",
+      "from": "n10",
+      "to": "n5",
+      "width": 6,
+      "lag": 0,
+      "color": { "color": "#1E40AF" },
+      "label": "Inflows constitute the linkage\n+\nLag: 0",
+      "description": "The Tao-of-Terra is built directly out of these inflows: Indigenous teachings, Chinese philosophical and governance traditions, Pacific and Andean knowledge, ecological wisdom. [e14]"
+    },
+    {
+      "id": "e15",
+      "from": "n5",
+      "to": "n1",
+      "width": 6,
+      "lag": 2,
+      "color": { "color": "#1E40AF" },
+      "label": "Linkage rebuilds cognition\n+\nLag: 2 yrs",
+      "description": "Slow-loop civilisations carry the templates and corpora that can re-seed sovereign cognitive capacity once the imported corporate layer is rejected or fails. [e15]"
+    },
+    {
+      "id": "e16",
+      "from": "n5",
+      "to": "n2",
+      "width": 5,
+      "lag": 3,
+      "color": { "color": "#991B1B" },
+      "label": "Planetary commonwealth dissolves subordination\n-\nLag: 3 yrs",
+      "description": "Belonging to the planetary commonwealth of slow-loop civilisations replaces the abused-junior-partner self-conception with a different identity altogether: peer in a wider conversation. [e16]"
+    },
+    {
+      "id": "e17",
+      "from": "n8",
+      "to": "n2",
+      "width": 4,
+      "lag": 2,
+      "color": { "color": "#1E40AF" },
+      "label": "Capture deepens subordination\n+\nLag: 2 yrs",
+      "description": "When you think on the hegemon's platforms you tend to think the hegemon's thoughts. Subordination becomes pre-conscious, baked into the medium itself. [e17]"
+    },
+    {
+      "id": "e18",
+      "from": "n1",
+      "to": "n5",
+      "width": 4,
+      "lag": 2,
+      "color": { "color": "#1E40AF" },
+      "label": "Cognition deepens linkage\n+\nLag: 2 yrs",
+      "description": "A polity with restored cognitive capacity can engage the planetary commonwealth as a partner, not a recipient: translating, contributing, integrating, learning to listen. [e18]"
+    },
+    {
+      "id": "e19",
+      "from": "n4",
+      "to": "n7",
+      "width": 3,
+      "lag": 5,
+      "color": { "color": "#1E40AF" },
+      "label": "Capital underwrites surplus\n+\nLag: 5 yrs",
+      "description": "On the longest horizons, slow-loop capital underwrites the productive base that generates thermodynamic surplus. Erode the capital and the surplus eventually follows it down. [e19]"
+    },
+    {
+      "id": "e20",
+      "from": "n6",
+      "to": "n2",
+      "width": 3,
+      "lag": 4,
+      "color": { "color": "#991B1B" },
+      "label": "Flagrant modularity provokes backlash\n-\nLag: 4 yrs",
+      "description": "When the elite class is visibly abandoning the polity, public consciousness recoils and sovereigntist politics rises. Often hijacked by xenophobic populism, but the corrective signal is real. [e20]"
+    }
+  ],
+  "loops": [
+    {
+      "id": "R1",
+      "name": "Subordination Reinforcement",
+      "type": "R",
+      "description": "The Anglosphere subordination death spiral. Junior-partner identity drives lock-in, which routes elites away from the polity, which starves cognition, which leaves no resource to challenge the subordinate self-image. The identity hardens with each iteration. [R1]",
+      "nodeIds": ["n1", "n2", "n3", "n6"],
+      "edgeIds": ["e1", "e2", "e3", "e5"]
+    },
+    {
+      "id": "R2",
+      "name": "Cognitive Capture Spiral",
+      "type": "R",
+      "description": "The substrate-level capture loop. Lock-in imports the corporate cognition layer, which captures domestic deliberation, which erodes sovereign cognition, which leaves the junior-partner identity unchallenged, which sustains the lock-in. The cruel paradox: the system loses cognition exactly when it most needs it. [R2]",
+      "nodeIds": ["n1", "n2", "n3", "n8"],
+      "edgeIds": ["e1", "e5", "e10", "e11"]
+    },
+    {
+      "id": "R3",
+      "name": "Slow-Loop Compounding",
+      "type": "R",
+      "description": "The mutual reinforcement of sovereign cognition and slow-loop capital. They build each other or destroy each other together; there is no neutral state. Currently turning vicious as both stocks deplete in lockstep. [R3]",
+      "nodeIds": ["n1", "n4"],
+      "edgeIds": ["e6", "e7"]
+    },
+    {
+      "id": "R4",
+      "name": "Tech-Capture Reinforcement",
+      "type": "R",
+      "description": "The platform-capture loop. Imported cognition layer reinforces subordinate identity, which strengthens lock-in, which deepens platform capture. The fastest-cycling loop in the system and the hardest to escape because it operates below conscious awareness. [R4]",
+      "nodeIds": ["n2", "n3", "n8"],
+      "edgeIds": ["e1", "e10", "e17"]
+    },
+    {
+      "id": "R5",
+      "name": "Tao-of-Terra Restoration",
+      "type": "R",
+      "description": "The reconstitution loop, currently latent. Planetary linkage feeds cognition; cognition deepens the linkage further. Once activated by sufficient shock and sufficient inflow, this becomes the engine of post-Anglosphere sovereignty. The whole story turns on whether this loop can be brought to ignition before R1, R2, R3 and R4 finish their work. [R5]",
+      "nodeIds": ["n1", "n5"],
+      "edgeIds": ["e15", "e18"]
+    },
+    {
+      "id": "B6",
+      "name": "Sovereigntist Backlash",
+      "type": "B",
+      "description": "The democratic correction loop. When elite modularity becomes blatant, political backlash erodes the legitimacy of subordinate identity, weakening lock-in and constraining further modularity. Slow, unreliable, often hijacked by xenophobic populism, but it is the system's own corrective mechanism. [B6]",
+      "nodeIds": ["n2", "n3", "n6"],
+      "edgeIds": ["e1", "e2", "e20"]
+    }
+  ],
+  "archetypes": [
+    {
+      "id": "arch1",
+      "name": "Shifting the Burden",
+      "description": "The master archetype. Each generation faces a choice between rebuilding Archive and Lore (the fundamental fix, slow and expensive) and leaning harder on the hegemon's cognition layer and security architecture (the symptomatic fix, fast and cheap). The symptomatic fix is always individually rational, and each iteration erodes the institutional carriers required for the fundamental fix. After enough cycles the polity has lost not only the slow-loop capital but the capacity to rebuild it. The lethal feature is the delay structure between symptom relief and capacity loss.",
+      "nodeIds": ["n1", "n2", "n3", "n4", "n6"],
+      "edgeIds": ["e1", "e2", "e3", "e5", "e6", "e7"]
+    },
+    {
+      "id": "arch2",
+      "name": "Drift to Low Performance (Eroding Goals)",
+      "description": "The standard for what counts as sovereignty is quietly dialed downward each cycle. What was vassalage a generation ago is rebranded as partnership; what was independent broadcasting is rebranded as content provision; what was civil-service expertise is rebranded as managerial efficiency. The cognitive capture is the substrate that makes the drift invisible: the citizens cannot easily name what they have lost because the platforms on which they would name it are themselves the agents of loss.",
+      "nodeIds": ["n1", "n2", "n3", "n8"],
+      "edgeIds": ["e1", "e5", "e10", "e11", "e17"]
+    },
+    {
+      "id": "arch3",
+      "name": "Tragedy of the Cognitive Commons",
+      "description": "The cognitive commons (public broadcasters, sovereign universities, deliberative civic culture, shared platforms of argument) is degraded by individually rational exits. Each elite who modularises and each citizen who jacks into corporate platforms gains private benefit while the collective deliberative capacity erodes. The democratic correction loop is too slow and too easily hijacked by xenophobic populism to compensate, and the commons quietly disappears one rational defection at a time.",
+      "nodeIds": ["n2", "n3", "n6", "n8"],
+      "edgeIds": ["e1", "e2", "e10", "e17", "e20"]
+    }
+  ]
+}
