@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CAMS · Technical Guide &amp; FAQ</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+  *{box-sizing:border-box;margin:0;}
+  html,body{background:var(--paper-1);color:var(--ink-900);font-family:var(--font-serif, 'Source Serif 4', Georgia, serif);}
+  body{font-size:15px;line-height:1.65;}
+
+  /* ---------- Page shell ---------- */
+  .page{max-width:1180px;margin:0 auto;padding:48px 56px 96px;display:grid;grid-template-columns:220px 1fr;gap:48px;}
+  @media (max-width:980px){ .page{grid-template-columns:1fr;padding:32px 24px 64px;} aside.toc{position:static!important;} }
+
+  /* ---------- TOC ---------- */
+  aside.toc{position:sticky;top:24px;align-self:start;font-family:var(--font-sans,'Inter',sans-serif);font-size:12px;line-height:1.5;}
+  .toc-h{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-500);font-weight:700;margin-bottom:10px;}
+  .toc a{display:block;padding:5px 0 5px 10px;border-left:2px solid var(--paper-3);color:var(--ink-700);text-decoration:none;}
+  .toc a:hover{color:var(--ink-900);border-left-color:var(--accent-teal,#2E8B6B);}
+  .toc .sub{padding-left:22px;font-size:11px;color:var(--ink-500);}
+
+  /* ---------- Headings ---------- */
+  h1{font-family:'Fraunces',serif;font-weight:300;font-size:54px;line-height:1.05;letter-spacing:-.015em;color:var(--ink-900);margin-bottom:6px;}
+  h1 .sub{display:block;font-family:var(--font-sans,'Inter',sans-serif);font-size:13px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-500);margin-bottom:18px;}
+  h2{font-family:'Fraunces',serif;font-weight:500;font-size:30px;line-height:1.15;color:var(--ink-900);margin:64px 0 4px;letter-spacing:-.005em;}
+  h2 .num{display:inline-block;width:1.6em;font-family:var(--font-mono,'JetBrains Mono',monospace);font-size:16px;font-weight:400;color:var(--node-helm);vertical-align:middle;margin-right:.4em;}
+  h2 + .lede{font-family:var(--font-sans);font-size:13px;color:var(--ink-500);margin-bottom:22px;letter-spacing:.01em;}
+  h3{font-family:'Fraunces',serif;font-weight:500;font-size:20px;line-height:1.2;margin:32px 0 8px;color:var(--ink-900);}
+  h4{font-family:var(--font-sans);font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-500);margin:24px 0 8px;}
+
+  p{margin:10px 0;text-wrap:pretty;}
+  p + p{margin-top:14px;}
+  strong{font-weight:700;color:var(--ink-900);}
+  em{font-style:italic;color:var(--ink-700);}
+  code,kbd{font-family:var(--font-mono,'JetBrains Mono',monospace);font-size:.92em;background:var(--paper-2);padding:1px 6px;border-radius:3px;color:var(--ink-900);}
+  kbd{border:1px solid var(--paper-3);background:var(--paper-0);padding:1px 5px;font-size:.82em;}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:0 0 32px;border-bottom:1px solid var(--paper-3);margin-bottom:8px;}
+  .hero .meta{display:flex;gap:24px;font-family:var(--font-mono);font-size:11px;color:var(--ink-500);margin-top:24px;letter-spacing:.04em;}
+  .hero .meta b{color:var(--ink-900);font-weight:600;}
+  .hero .lede-large{font-family:'Fraunces',serif;font-weight:400;font-size:21px;line-height:1.45;color:var(--ink-700);max-width:720px;margin-top:16px;}
+
+  /* ---------- Cards ---------- */
+  .card{background:var(--paper-0);border:1px solid var(--paper-3);border-radius:4px;padding:20px 24px;margin:14px 0;}
+  .card-mono{font-family:var(--font-mono);font-size:12.5px;line-height:1.7;}
+
+  /* ---------- Math & formula ---------- */
+  .formula{font-family:var(--font-mono,'JetBrains Mono',monospace);background:var(--paper-2);border-left:3px solid var(--accent-teal,#2E8B6B);padding:14px 18px;margin:14px 0;font-size:13.5px;line-height:1.7;color:var(--ink-900);overflow-x:auto;white-space:pre;}
+  .formula .lbl{color:var(--ink-500);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:6px;font-family:var(--font-sans);}
+
+  /* ---------- Tables ---------- */
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px;}
+  th{font-family:var(--font-sans);font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-500);text-align:left;padding:8px 10px;border-bottom:1.5px solid var(--ink-700);}
+  td{padding:9px 10px;border-bottom:1px solid var(--paper-3);vertical-align:top;}
+  td.mono{font-family:var(--font-mono);font-size:12.5px;color:var(--ink-700);white-space:nowrap;}
+  td.swatch{width:8px;padding-right:0;}
+  td.swatch span{display:block;width:6px;height:24px;border-radius:1px;}
+
+  /* ---------- Node grid ---------- */
+  .nodegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--paper-3);border-radius:4px;overflow:hidden;margin:18px 0;background:var(--paper-0);}
+  .layercol{padding:18px 18px 22px;border-right:1px solid var(--paper-3);}
+  .layercol:last-child{border-right:none;}
+  .layer-h{font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .layer-h::before{content:'';width:10px;height:10px;border-radius:50%;}
+  .layer-mythic .layer-h::before{background:var(--node-lore);}
+  .layer-iface .layer-h::before{background:var(--node-helm);}
+  .layer-mat .layer-h::before{background:var(--node-craft);}
+  .nodecard{padding:10px 0;border-top:1px solid var(--paper-2);}
+  .nodecard:first-of-type{border-top:none;}
+  .nodecard .name{font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:var(--ink-900);}
+  .nodecard .desc{font-family:var(--font-sans);font-size:12px;color:var(--ink-700);line-height:1.5;margin-top:2px;}
+
+  /* ---------- App cards ---------- */
+  .appcard{display:grid;grid-template-columns:60px 1fr;gap:20px;background:var(--paper-0);border:1px solid var(--paper-3);border-radius:4px;padding:22px 24px;margin:14px 0;}
+  .appcard .glyph{font-family:'Fraunces',serif;font-weight:300;font-size:42px;color:var(--accent-teal,#2E8B6B);line-height:1;letter-spacing:-.02em;}
+  .appcard h3{margin-top:0;}
+  .appcard h3 a{color:inherit;text-decoration:none;border-bottom:1px solid var(--paper-3);}
+  .appcard h3 a:hover{border-bottom-color:var(--accent-teal,#2E8B6B);}
+  .appcard .pill{display:inline-block;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;color:var(--ink-500);padding:2px 8px;border:1px solid var(--paper-3);border-radius:99px;margin-left:8px;vertical-align:middle;}
+
+  /* ---------- FAQ ---------- */
+  details.faq{border-top:1px solid var(--paper-3);padding:14px 0;}
+  details.faq[open]{padding-bottom:18px;}
+  details.faq summary{cursor:pointer;font-family:'Fraunces',serif;font-weight:500;font-size:17px;color:var(--ink-900);list-style:none;display:flex;justify-content:space-between;align-items:baseline;gap:14px;}
+  details.faq summary::-webkit-details-marker{display:none;}
+  details.faq summary::after{content:'+';font-family:var(--font-mono);font-size:18px;color:var(--ink-500);font-weight:300;}
+  details.faq[open] summary::after{content:'−';}
+  details.faq summary:hover{color:var(--node-helm);}
+  details.faq .answer{margin-top:12px;color:var(--ink-700);}
+
+  /* ---------- Signal tier badges ---------- */
+  .tier{display:inline-block;font-family:var(--font-mono);font-size:10.5px;font-weight:700;letter-spacing:.1em;padding:2px 9px;border-radius:2px;border:1px solid currentColor;}
+  .t-nominal{color:var(--state-stable);}
+  .t-watch{color:var(--state-resilient);}
+  .t-warning{color:#C28856;}
+  .t-critical{color:var(--node-helm);}
+  .t-extreme{color:var(--state-collapse);}
+
+  /* ---------- Footer ---------- */
+  footer.colophon{margin-top:80px;padding-top:24px;border-top:1px solid var(--paper-3);font-family:var(--font-sans);font-size:11.5px;color:var(--ink-500);line-height:1.7;display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+
+  /* ---------- Notation key ---------- */
+  .notation{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0;border:1px solid var(--paper-3);border-radius:4px;background:var(--paper-0);overflow:hidden;}
+  .notation > div{padding:12px 16px;border-right:1px solid var(--paper-3);border-bottom:1px solid var(--paper-3);}
+  .notation > div .sym{font-family:var(--font-mono);font-weight:700;color:var(--node-helm);font-size:14px;}
+  .notation > div .nm{font-family:var(--font-sans);font-size:11.5px;color:var(--ink-700);margin-top:2px;}
+  .notation > div .desc{font-size:12.5px;color:var(--ink-700);margin-top:6px;line-height:1.5;}
+
+  a.inline{color:var(--accent-teal,#2E8B6B);text-decoration:none;border-bottom:1px solid var(--paper-3);}
+  a.inline:hover{border-bottom-color:var(--accent-teal,#2E8B6B);}
+
+  ul.tight{list-style:none;padding:0;margin:10px 0;}
+  ul.tight li{padding:5px 0 5px 18px;position:relative;}
+  ul.tight li::before{content:'·';position:absolute;left:6px;color:var(--ink-500);font-weight:700;}
+
+  .controls-table td:first-child{width:140px;}
+  .controls-table kbd{display:inline-block;}
+
+  hr{border:none;border-top:1px solid var(--paper-3);margin:28px 0;}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- ============================================================== TOC ============================================================== -->
+<aside class="toc">
+  <div class="toc-h">Contents</div>
+  <a href="#overview">1 · Overview</a>
+  <a href="#nodes">2 · The eight nodes</a>
+  <a href="#measures">3 · The four measures</a>
+  <a href="#derived">4 · Derived metrics</a>
+  <a class="sub" href="#derived-node">Per-node</a>
+  <a class="sub" href="#derived-system">System-wide</a>
+  <a class="sub" href="#derived-criticality">Criticality</a>
+  <a href="#basins">5 · Basin classification</a>
+  <a href="#apps">6 · The four apps</a>
+  <a class="sub" href="#app-network">Network</a>
+  <a class="sub" href="#app-telescope">Telescope</a>
+  <a class="sub" href="#app-interpreter">Interpreter</a>
+  <a class="sub" href="#app-detector">Detector</a>
+  <a href="#datasets">7 · Datasets</a>
+  <a href="#workflow">8 · Workflow</a>
+  <a href="#faq">9 · FAQ</a>
+  <a href="#notation">Notation key</a>
+</aside>
+
+<!-- ============================================================== MAIN ============================================================== -->
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <h1>
+    <span class="sub">CAMS Suite · v3.2-R</span>
+    The technical guide.
+  </h1>
+  <p class="lede-large">
+    A working reference for the four CAMS apps in this project — what each metric means, where it comes from, how to read the screens, and which questions the framework can and cannot answer.
+  </p>
+  <div class="meta">
+    <span><b>10</b> societies</span>
+    <span><b>1800–2026</b></span>
+    <span><b>8 nodes</b> · 4 measures</span>
+    <span><b>v3.2-R</b> kernel</span>
+  </div>
+</section>
+
+<!-- ============ 1. OVERVIEW ============ -->
+<h2 id="overview"><span class="num">1</span>Overview</h2>
+<p class="lede">What CAMS measures, in one paragraph.</p>
+
+<p>
+  <strong>CAMS</strong> — the Complex Adaptive Model State framework — represents a society as a network of <strong>eight institutional nodes</strong>, each scored on <strong>four measures</strong> at every observed year. The eight nodes are organised into three coupled <em>layers</em> — Mythic (meaning), Interface (governance), Material (production) — and the cross-layer coupling Λ(t) is the load-bearing systemic indicator.
+</p>
+<p>
+  Once a society's matrix <code>M[node][measure]</code> is loaded for a given year, a deterministic compute kernel derives ~25 scalar fields and one weighted graph. This guide describes those fields, the four apps that visualise them, and how to read what the apps display.
+</p>
+
+<div class="card card-mono">
+  <strong>Data shape per society-year.</strong><br>
+  <code>matrix[8 nodes][4 measures]</code> &nbsp;&rarr;&nbsp; <code>compute(matrix)</code> &nbsp;&rarr;&nbsp; <code>{ V, B, σ, λ₂, R, κ, η_loop, headroom, attractor, alarmConfidence, … }</code>
+</div>
+
+<!-- ============ 2. NODES ============ -->
+<h2 id="nodes"><span class="num">2</span>The eight institutional nodes</h2>
+<p class="lede">Three layers · eight nodes · stable across all societies and time periods.</p>
+
+<p>
+  Every CAMS dataset uses the same eight nodes regardless of era or culture. The names are chosen to be transposable — <em>Helm</em>, <em>Lore</em>, <em>Hands</em> — rather than tied to modern institutional labels (Cabinet, University, Workforce). This is what makes Rome 200 CE comparable with Argentina 1976.
+</p>
+
+<div class="nodegrid">
+  <div class="layercol layer-mythic">
+    <div class="layer-h">Mythic layer</div>
+    <div class="nodecard"><div class="name" style="color:var(--node-lore);">Lore</div><div class="desc">Doctrine, world-picture, the stories a society tells itself about itself.</div></div>
+    <div class="nodecard"><div class="name" style="color:var(--node-archive);">Archive</div><div class="desc">Records, memory institutions, accumulated knowledge.</div></div>
+  </div>
+  <div class="layercol layer-iface">
+    <div class="layer-h">Interface layer</div>
+    <div class="nodecard"><div class="name" style="color:var(--node-helm);">Helm</div><div class="desc">Decision-making executive — head-of-state, cabinet, central command.</div></div>
+    <div class="nodecard"><div class="name" style="color:var(--node-stewards);">Stewards</div><div class="desc">Resource control — finance ministries, central banks, owners of capital.</div></div>
+    <div class="nodecard"><div class="name" style="color:var(--node-shield);">Shield</div><div class="desc">Defence and force projection — military, police, security services.</div></div>
+  </div>
+  <div class="layercol layer-mat">
+    <div class="layer-h">Material layer</div>
+    <div class="nodecard"><div class="name" style="color:var(--node-craft);">Craft</div><div class="desc">Skilled production — engineers, technicians, artisans, R&amp;D.</div></div>
+    <div class="nodecard"><div class="name" style="color:var(--node-hands);">Hands</div><div class="desc">Labour — the unskilled and semi-skilled workforce.</div></div>
+    <div class="nodecard"><div class="name" style="color:var(--node-flow);">Flow</div><div class="desc">Trade, distribution, logistics, merchants.</div></div>
+  </div>
+</div>
+
+<!-- ============ 3. MEASURES ============ -->
+<h2 id="measures"><span class="num">3</span>The four measures</h2>
+<p class="lede">Each node scored on four orthogonal dimensions. Range 1–10, ensemble-averaged across raters.</p>
+
+<table>
+<thead><tr><th></th><th>Measure</th><th>Symbol</th><th>What it captures</th><th>Range</th></tr></thead>
+<tbody>
+  <tr><td class="swatch"><span style="background:var(--mode-coherence);"></span></td><td><strong>Coherence</strong></td><td class="mono">C</td><td>Internal alignment of the node — does it know what it is for?</td><td class="mono">1–10</td></tr>
+  <tr><td class="swatch"><span style="background:var(--mode-capacity);"></span></td><td><strong>Capacity</strong></td><td class="mono">K</td><td>Resources, headcount, and effectiveness available to the node.</td><td class="mono">1–10</td></tr>
+  <tr><td class="swatch"><span style="background:var(--mode-stress);"></span></td><td><strong>Stress</strong></td><td class="mono">S</td><td>Accumulated pressure, dysfunction, unmet demand on the node.</td><td class="mono">1–10</td></tr>
+  <tr><td class="swatch"><span style="background:var(--mode-abstraction);"></span></td><td><strong>Abstraction</strong></td><td class="mono">A</td><td>Symbolic sophistication, long-range planning capacity.</td><td class="mono">1–10</td></tr>
+</tbody>
+</table>
+
+<p>
+  Measures are scored independently per rater (currently a 3- or 5-AI ensemble — GPT, Grok, Gemini, with Claude added in some panels) and averaged. Inter-rater standard deviation is published alongside each ensemble in the <em>envelope</em> CSV files.
+</p>
+
+<!-- ============ 4. DERIVED METRICS ============ -->
+<h2 id="derived"><span class="num">4</span>Derived metrics</h2>
+<p class="lede">From the 8×4 input matrix the kernel produces three families of derived fields.</p>
+
+<h3 id="derived-node">Per-node fields</h3>
+
+<div class="formula"><span class="lbl">Node value · the headline scalar per node</span>
+V<sub>i</sub> = C<sub>i</sub> + K<sub>i</sub> − S<sub>i</sub> + ½ A<sub>i</sub></div>
+
+<div class="formula"><span class="lbl">ESCH activation index</span>
+σ<sub>i</sub> = (A<sub>i</sub> · C<sub>i</sub>) · (K<sub>i</sub> − S<sub>i</sub>)</div>
+
+<p>
+  V<sub>i</sub> is what node <strong>radius</strong> renders in the Network view. Positive V means the node is currently a contributor; negative V means it is a net liability. σ<sub>i</sub> measures how much <em>narrative force</em> the node is applying — a low-capacity, high-abstraction node (think: a regime broadcasting myth while the lights go out) shows σ &lt; 0.
+</p>
+
+<h3 id="derived-system">System-wide fields</h3>
+
+<div class="formula"><span class="lbl">Bond strength · pairwise coupling via Gaussian RBF</span>
+W<sub>ij</sub> = exp( −‖x<sub>i</sub> − x<sub>j</sub>‖² / 2σ<sub>w</sub>² )    where σ<sub>w</sub> = median pairwise distance
+
+B(t) = (2 / N(N−1)) · Σ<sub>i&lt;j</sub> W<sub>ij</sub>      [aggregate bond]
+B<sub>i</sub>  = (1 / (N−1)) · Σ<sub>j≠i</sub> W<sub>ij</sub>     [per-node bond]</div>
+
+<div class="formula"><span class="lbl">Coordination Laplacian · spectral structure</span>
+L = D − W,  D<sub>ii</sub> = Σ<sub>j</sub> W<sub>ij</sub>
+λ₂  = algebraic connectivity (2nd smallest eigenvalue of L)
+R   = λ<sub>max</sub> / λ₂                  [Master Stability Function]</div>
+
+<p>
+  λ₂ is the textbook measure of how well a network <em>can synchronise</em>. Falling λ₂ signals fragmentation. R climbs when the network becomes hard to coordinate (one stiff mode, many weak ones).
+</p>
+
+<h3 id="derived-criticality">Criticality &amp; attractor signals</h3>
+
+<div class="formula"><span class="lbl">Cognitive-plane criticality (the headline alarm metric)</span>
+ω<sub>μ</sub>(t) = std( μ<sub>i</sub> ),  μ<sub>i</sub> = (C<sub>i</sub> + A<sub>i</sub>)/2
+κ(t)   = B(t) / ω<sub>μ</sub>(t)</div>
+
+<p>The κ value is binned into <strong>tiers</strong> (calibrated v3.2-R):</p>
+
+<p style="margin:14px 0 24px;display:flex;gap:8px;flex-wrap:wrap;font-size:12px;">
+  <span class="tier t-nominal">NOMINAL</span><span style="color:var(--ink-500);">κ &lt; 0.30</span>
+  <span class="tier t-watch">WATCH</span><span style="color:var(--ink-500);">0.30 ≤ κ &lt; 0.35</span>
+  <span class="tier t-warning">WARNING</span><span style="color:var(--ink-500);">0.35 ≤ κ &lt; 0.42</span>
+  <span class="tier t-critical">CRITICAL</span><span style="color:var(--ink-500);">0.42 ≤ κ &lt; 0.57</span>
+  <span class="tier t-extreme">EXTREME</span><span style="color:var(--ink-500);">κ ≥ 0.57</span>
+</p>
+
+<div class="formula"><span class="lbl">Library attractor · mythic capture indicator</span>
+η<sub>loop</sub> = (B<sub>Lore</sub> · B<sub>Archive</sub>) / S<sub>Hands</sub></div>
+
+<div class="formula"><span class="lbl">Headroom · log-slack against stress and rate dispersion</span>
+x(t)     = log B<sub>eff</sub>  −  0.6 · log(1 + Ω<sub>eff</sub>)  −  0.2 · log(1 + D⁺)
+x<sub>min</sub>(t) = min<sub>i</sub> [ log B<sub>i</sub>  −  0.6 · log(1 + ω<sub>i</sub>)  −  0.2 · log(1 + d<sub>i</sub>) ]</div>
+
+<div class="formula"><span class="lbl">Phase-space coordinates &amp; overreach</span>
+Φ(t) = (V̄, σ<sub>V</sub>)                  [system phase point]
+ε(t) = Ā · S̄ / K̄                  [abstraction overreach]
+τ(t) = K̄ / S̄                       [capacity-to-stress ratio]</div>
+
+<!-- ============ 5. BASINS ============ -->
+<h2 id="basins"><span class="num">5</span>Basin classification</h2>
+<p class="lede">The composite logic that names what the system is currently <em>doing</em>.</p>
+
+<p>The kernel returns a single attractor label per year, derived from V̄, σ<sub>V</sub>, κ, and Helm's V:</p>
+
+<table>
+<thead><tr><th>Attractor</th><th>Trigger</th><th>Reading</th></tr></thead>
+<tbody>
+  <tr><td><strong style="color:var(--state-stable);">Re-synchronisation</strong></td><td class="mono">κ &lt; 0.35 ∧ helm V ≥ 6 ∧ σ<sub>V</sub> ≤ 4.5</td><td>System is coordinating productively. Not growth, not crisis — working order.</td></tr>
+  <tr><td><strong style="color:var(--state-resilient);">Oscillation</strong></td><td class="mono">κ ≥ 0.35 ∧ helm V ≥ 6</td><td>Coordination is straining; cycles between loose and tight regimes.</td></tr>
+  <tr><td><strong style="color:#C28856;">Buffering</strong></td><td class="mono">V̄ &gt; 15 ∧ σ<sub>V</sub> &lt; 2.0</td><td>Ample slack, low variance. Often pre-disregard — the system is not currently being challenged.</td></tr>
+  <tr><td><strong style="color:var(--node-helm);">Fracture</strong></td><td class="mono">helm V &lt; 6  or  σ<sub>V</sub> &gt; 4.5  or  (κ ≥ 0.35 ∧ helm V &lt; 6)</td><td>Executive decoupling, rising heterogeneity. Pre-collapse signature.</td></tr>
+  <tr><td><strong style="color:var(--state-collapse);">Thermodynamic Freeze</strong></td><td class="mono">V̄ &lt; 0</td><td>Aggregate node value negative. Most nodes are net liabilities.</td></tr>
+</tbody>
+</table>
+
+<p>
+  Alongside the attractor, an <strong>alarm confidence</strong> level is emitted: <code>HIGH</code> when κ ≥ 0.35 <em>and</em> helm V &lt; 6, <code>MEDIUM</code> when κ ≥ 0.35 alone, <code>LOW</code> when λ₂ &lt; 0.5, <code>NOMINAL</code> otherwise.
+</p>
+
+<!-- ============ 6. APPS ============ -->
+<h2 id="apps"><span class="num">6</span>The four apps</h2>
+<p class="lede">Each app reads the same compute output and surfaces a different cross-section of it.</p>
+
+<!-- App: Network -->
+<div class="appcard" id="app-network">
+  <div class="glyph">◍</div>
+  <div>
+    <h3>CAMS Network<span class="pill">live coordination view</span></h3>
+    <p>Eight nodes, drawn at force-directed positions, with edge thickness = pairwise bond strength W<sub>ij</sub>, node radius = |V<sub>i</sub>|, and a halo whose radius encodes σ<sub>i</sub> (positive: outer ring; negative: inner ring).</p>
+
+    <h4>How to read it</h4>
+    <ul class="tight">
+      <li><strong>Big nodes</strong> = high node value V — net contributors. <strong>Small nodes</strong> = drained.</li>
+      <li><strong>Thick edges</strong> = the two nodes are coordinated (similar C/K/S/A profile). Thin or missing = fragmented.</li>
+      <li><strong>Outer halo</strong> = σ &gt; 0 (node is doing work). <strong>Inner halo</strong> = σ &lt; 0 (broadcasting myth without backing).</li>
+      <li>Stat strip top-of-screen: B̄, λ₂, κ, V̄, σ<sub>V</sub>, current attractor.</li>
+    </ul>
+
+    <h4>Controls</h4>
+    <table class="controls-table"><tbody>
+      <tr><td><kbd>Society</kbd></td><td>Sidebar list — switch the dataset.</td></tr>
+      <tr><td><kbd>Year slider</kbd></td><td>Scrub through the available years; scrubbing is tween-eased so transitions are continuous.</td></tr>
+      <tr><td><kbd>▶ / ⏸</kbd></td><td>Autoplay through the timeline at the chosen speed.</td></tr>
+      <tr><td><kbd>Speed</kbd></td><td>Step interval (ms). Tween length tracks this.</td></tr>
+      <tr><td><kbd>Hover node</kbd></td><td>Reveals C/K/S/A and B<sub>i</sub> for that node.</td></tr>
+    </tbody></table>
+  </div>
+</div>
+
+<!-- App: Telescope -->
+<div class="appcard" id="app-telescope">
+  <div class="glyph">◎</div>
+  <div>
+    <h3><a href="./">CAMS Telescope</a><span class="pill">historical dossier</span></h3>
+    <p>A typewriter-styled briefing terminal for one society at one moment. Surfaces the <em>nominal vs. real</em> power configuration: who is formally in charge versus which node is currently doing the systemic work (highest V).</p>
+
+    <h4>Use this when</h4>
+    <ul class="tight">
+      <li>You want a single-page assessment of a country at a specific year — for a paper, a slide, or a sanity check.</li>
+      <li>You want to see if Helm is still the dominant node, or whether Stewards / Shield / Lore have eclipsed it.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- App: Interpreter -->
+<div class="appcard" id="app-interpreter">
+  <div class="glyph">≣</div>
+  <div>
+    <h3><a href="../cams-interpreter.html">CAMS Interpreter</a><span class="pill">signal-to-narrative bridge</span></h3>
+    <p>For each derived signal that crosses a threshold, the Interpreter emits a <em>signal card</em> — a plain-language description of what to look for in the historical record, plus a <strong>Trove search string</strong> that would falsify or confirm it. This is the framework's bridge to historiography.</p>
+    <h4>Each card contains</h4>
+    <ul class="tight">
+      <li><strong>Title</strong> — the metric &amp; threshold that fired.</li>
+      <li><strong>Body</strong> — what civilisational signature this typically corresponds to.</li>
+      <li><strong>Confidence</strong> — HIGH / MED / LOW based on how robust the threshold is.</li>
+      <li><strong>Exemplar</strong> — historical years when this signature was observed.</li>
+      <li><strong>Trove query</strong> — a literal search string to plug into the National Library's Trove (Australian newspapers 1803–present), forming the falsification path.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- App: Detector -->
+<div class="appcard" id="app-detector">
+  <div class="glyph">⌬</div>
+  <div>
+    <h3>Epiphenomenon Detector<span class="pill">surface-vs-substrate diff</span></h3>
+    <p>A detector for moments when the <em>visible</em> politics of a society (the noisy surface signal) decouples from its <em>structural</em> state (the slow-moving CAMS substrate). The detector flags years where what people are arguing about and what is actually changing in the institution graph have diverged.</p>
+    <h4>Reading the output</h4>
+    <ul class="tight">
+      <li>Green band: surface and structure track each other — politics is doing the work it claims to.</li>
+      <li>Amber band: divergence growing — political theatre running ahead of (or behind) the structural reality.</li>
+      <li>Red band: full epiphenomenal regime — surface is uncoupled, structure is changing under cover.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ 7. DATASETS ============ -->
+<h2 id="datasets"><span class="num">7</span>Datasets</h2>
+<p class="lede">10 societies · 1800–2026 · ensemble-mean scoring across multi-AI panels.</p>
+
+<table>
+<thead><tr><th>Society</th><th>Range</th><th>Years</th><th>Source file</th></tr></thead>
+<tbody>
+  <tr><td><strong>USA</strong></td><td class="mono">1900–2026</td><td class="mono">127</td><td class="mono">MARKER_USA_1900_2026_ENSEMBLE_MEAN</td></tr>
+  <tr><td><strong>UK</strong></td><td class="mono">1880–2026</td><td class="mono">147</td><td class="mono">UK_CAMNATIONS5_ensemble_mean</td></tr>
+  <tr><td><strong>Germany</strong></td><td class="mono">1880–2026</td><td class="mono">147</td><td class="mono">germany_cams5_ensemble_mean</td></tr>
+  <tr><td><strong>Russia</strong></td><td class="mono">1800–2026</td><td class="mono">227</td><td class="mono">russia_cams5_ensemble_mean</td></tr>
+  <tr><td><strong>Australia</strong></td><td class="mono">1875–2026</td><td class="mono">152</td><td class="mono">Australia_CAMS5_ensemble_mean_1875_2026</td></tr>
+  <tr><td><strong>Canada</strong></td><td class="mono">1850–2026</td><td class="mono">33</td><td class="mono">Canada_CAMS5_ensemble_mean_1850_2026</td></tr>
+  <tr><td><strong>Argentina</strong></td><td class="mono">1950–2026</td><td class="mono">77</td><td class="mono">Argentina_CAMS5_ensemble_mean_scores</td></tr>
+  <tr><td><strong>China</strong></td><td class="mono">1850–2026</td><td class="mono">19</td><td class="mono">China_CAMS5_ensemble_1850_2026</td></tr>
+  <tr><td><strong>Thailand</strong></td><td class="mono">1850–2025</td><td class="mono">36</td><td class="mono">Thailand_CAMS5_ensemble_1850_2026</td></tr>
+  <tr><td><strong>Sweden</strong></td><td class="mono">1850–2026</td><td class="mono">19</td><td class="mono">sweden_CAMS5_calc_1880_2026</td></tr>
+</tbody>
+</table>
+
+<p>
+  Note the temporal density variance: Russia and the UK are dense annual series; Canada, Sweden and China are sparse (typically 5–10-year intervals). The compute kernel is point-wise — sparser series will appear to "tween" further during playback.
+</p>
+
+<h4>Scoring methodology</h4>
+<p>
+  Each (society, year, node) triple is scored independently by 3–5 large language models from a blinded prompt — scorers do not know the terminal state of the society. The four measures (C, K, S, A) are returned per node, on a 1–10 scale. The published <em>ensemble mean</em> is the simple arithmetic mean across raters; the <em>envelope</em> is the per-cell standard deviation. Reliability passes the r &gt; 0.7 threshold across raters per the Wintermute repo's validation summary.
+</p>
+
+<!-- ============ 8. WORKFLOW ============ -->
+<h2 id="workflow"><span class="num">8</span>Recommended workflow</h2>
+<p class="lede">A canonical investigation path through the four apps.</p>
+
+<ol style="padding-left:18px;line-height:1.8;">
+  <li><strong>Telescope</strong> first. Pick a society, pick a year — get a single dossier page. This anchors your intuition before you look at signals.</li>
+  <li><strong>Network</strong> second. Scrub the full timeline. Look for where the graph reorganises — node sizes flipping, edges thickening or vanishing, the halo polarity changing on Helm or Lore. These reorganisations are the events.</li>
+  <li><strong>Interpreter</strong> third. Move to the years the Network flagged. Read which signals are firing. Note the Trove queries — you now have falsifiable predictions.</li>
+  <li><strong>Detector</strong> last. Ask whether the signals you saw correspond to a genuine structural shift or to surface-only political theatre. The detector tells you which.</li>
+</ol>
+
+<!-- ============ 9. FAQ ============ -->
+<h2 id="faq"><span class="num">9</span>FAQ</h2>
+<p class="lede">Questions that come up repeatedly.</p>
+
+<details class="faq">
+  <summary>Is this just a fancy index? What stops κ from drifting wherever you want it to?</summary>
+  <div class="answer">
+    <p>κ is a <em>ratio</em> of two structural quantities — the average pairwise coupling B(t) and the dispersion of the cognitive plane ω<sub>μ</sub>(t) — both computed from the raw 8×4 matrix. It cannot be tuned without changing the underlying scores. If you doubt the score of any (society, year, node, measure), the envelope CSVs give you the inter-rater SD; values within ±1 SD do not move κ across tiers in any society we have inspected.</p>
+  </div>
+</details>
+
+<details class="faq">
+  <summary>How do you know the AI scorers aren't just memorising outcomes?</summary>
+  <div class="answer">
+    <p>The protocol is <em>blinded scoring</em>: each year is presented to the raters without the terminal-state context. We then check inter-rater reliability — three or five independent models converge on similar scores when the structural conditions are similar, even when the public narrative is dramatic. Where they disagree (envelope SD &gt; 1.5), that itself is a signal — the model treats high-disagreement years as low-confidence cells, not as noise to suppress.</p>
+  </div>
+</details>
+
+<details class="faq">
+  <summary>Why eight nodes? Why not nine or fifteen?</summary>
+  <div class="answer">
+    <p>Eight is the smallest set that admits a non-trivial three-layer decomposition with at least two members in the smallest layer. Fewer than eight collapses Mythic into a single node, which loses the Lore/Archive distinction (doctrine vs. memory). More than eight introduces nodes that load on the same factor as existing ones (e.g. "judiciary" loads heavily on Helm + Stewards + Archive and adds dimensions of variance the rater consistency cannot support). Eight is the empirical sweet spot.</p>
+  </div>
+</details>
+
+<details class="faq">
+  <summary>What does negative Stress mean? I see <code>S = −2</code> in some files.</summary>
+  <div class="answer">
+    <p>Some published series use the <strong>signed-Stress convention</strong> (range −10 to 0) — India and Saudi Arabia in particular. The compute kernel and this guide use the absolute value. The data ingestion script flips negatives back to positive at load time so all downstream metrics are consistent.</p>
+  </div>
+</details>
+
+<details class="faq">
+  <summary>Year transitions look smooth in the Network — is the model interpolating data?</summary>
+  <div class="answer">
+    <p>No. The displayed values are tween-eased between two adjacent observed years for visual continuity, but every <em>computed</em> field (V, B, λ₂, κ, attractor) is recomputed from the interpolated matrix on each frame. The data points themselves are exactly what the ensemble produced; only the path between them is smoothed.</p>
+  </div>
+</details>
+
+<details class="faq">
+  <summary>Which signal should I trust most when they disagree?</summary>
+  <div class="answer">
+    <p>The composite alarm logic is designed to require corroboration: <code>HIGH</code> requires <em>both</em> κ ≥ 0.35 and helm V &lt; 6. Single-metric alarms are downgraded to <code>MEDIUM</code> or <code>LOW</code> deliberately. If you must pick one signal, λ₂ is the most theory-grounded (it is the textbook synchronisation criterion for any networked dynamical system), and κ is the most empirically calibrated against historical collapse cases.</p>
+  </div>
+</details>
+
+<details class="faq">
+  <summary>Can I add a new society?</summary>
+  <div class="answer">
+    <p>Yes. Score the 8×4 matrix for each year you want, in the canonical CSV schema (<code>Society, Year, Node, Coherence, Capacity, Stress, Abstraction</code>). Drop it in <code>uploads/</code> and ask for it to be ingested — the parser only needs the eight node names to match exactly (Lore / Archive / Helm / Stewards / Shield / Craft / Hands / Flow).</p>
+  </div>
+</details>
+
+<details class="faq">
+  <summary>What can the framework <em>not</em> do?</summary>
+  <div class="answer">
+    <p>It cannot predict <em>which</em> historical event will trigger a state change — only that the structural conditions for one are present or absent. It cannot resolve sub-national variation (a federation is a single matrix; regional dynamics are out-of-scope). It treats organisations and societies with the same kernel, which works at population scales but not for sub-100-person institutions where the law of large numbers fails. And it is not a forecasting tool in any conventional sense: the kernel describes the phase point of the system, not its trajectory.</p>
+  </div>
+</details>
+
+<details class="faq">
+  <summary>How do I cite this?</summary>
+  <div class="answer">
+    <p>The underlying framework: McKern, K. (2026). <em>The Adaptive Cycle in Civilisational Phase Space: Mapping Holling onto the Metabolism–Myth Dyad</em> — and the accompanying CAMS v3.2-R formulation. Datasets are CC0; cite the Wintermute repository: <code>github.com/KaliBond/wintermute</code>.</p>
+  </div>
+</details>
+
+<!-- ============ NOTATION ============ -->
+<h2 id="notation"><span class="num">·</span>Notation key</h2>
+<p class="lede">Quick lookup for symbols used throughout the apps.</p>
+
+<div class="notation">
+  <div><span class="sym">C, K, S, A</span><div class="nm">Coherence · Capacity · Stress · Abstraction</div><div class="desc">The four input measures per node, scored 1–10 by the AI rater ensemble.</div></div>
+  <div><span class="sym">V<sub>i</sub></span><div class="nm">Node value</div><div class="desc">C + K − S + ½A. The headline scalar shown as node radius in the Network.</div></div>
+  <div><span class="sym">σ<sub>i</sub></span><div class="nm">ESCH activation</div><div class="desc">(A·C)·(K−S). Positive = node is doing real work; negative = broadcasting myth without backing.</div></div>
+  <div><span class="sym">B(t), B<sub>i</sub></span><div class="nm">Bond strength</div><div class="desc">Aggregate (system-wide) and per-node coupling, computed via Gaussian RBF on node profiles.</div></div>
+  <div><span class="sym">W<sub>ij</sub></span><div class="nm">Edge weight</div><div class="desc">Pairwise similarity between nodes i and j. Drawn as edge thickness in the Network.</div></div>
+  <div><span class="sym">λ₂</span><div class="nm">Algebraic connectivity</div><div class="desc">Second-smallest eigenvalue of the coordination Laplacian L = D − W. Falling λ₂ = fragmenting network.</div></div>
+  <div><span class="sym">R</span><div class="nm">Master Stability</div><div class="desc">λ<sub>max</sub> / λ₂. Climbs when the network is hard to coordinate.</div></div>
+  <div><span class="sym">κ(t)</span><div class="nm">Cognitive criticality</div><div class="desc">B(t) / ω<sub>μ</sub>(t). Tier-binned (NOMINAL / WATCH / WARNING / CRITICAL / EXTREME). The headline alarm.</div></div>
+  <div><span class="sym">η<sub>loop</sub></span><div class="nm">Library attractor</div><div class="desc">(B<sub>Lore</sub> · B<sub>Archive</sub>) / S<sub>Hands</sub>. High values = mythic capture by the meaning layer.</div></div>
+  <div><span class="sym">x(t), x<sub>min</sub></span><div class="nm">Headroom</div><div class="desc">Log-slack against stress and rate dispersion. Aggregate and worst-node forms.</div></div>
+  <div><span class="sym">Φ(t)</span><div class="nm">Phase point</div><div class="desc">(V̄, σ<sub>V</sub>) — system mean and dispersion. The (x, y) the basin classifier reads.</div></div>
+  <div><span class="sym">ε(t)</span><div class="nm">Overreach</div><div class="desc">Ā · S̄ / K̄. Ambition relative to capacity to deliver.</div></div>
+  <div><span class="sym">τ(t)</span><div class="nm">Capacity ratio</div><div class="desc">K̄ / S̄. Above 1 = capacity exceeds stress; below 1 = unmet demand dominates.</div></div>
+  <div><span class="sym">Λ(t)</span><div class="nm">Cross-layer coupling</div><div class="desc">Coupling between Mythic, Interface, Material layers. Λ &lt; 0.45 = coordination failure.</div></div>
+</div>
+
+<!-- ============ COLOPHON ============ -->
+<footer class="colophon">
+  <div>
+    <strong>CAMS suite</strong> · technical guide v1.0<br>
+    Compute kernel: v3.2-R · April 2026 formulation<br>
+    Datasets: ensemble-mean files, KaliBond/wintermute · CC0
+  </div>
+  <div style="text-align:right;">
+    <a class="inline" href="./">Telescope</a> ·
+    <a class="inline" href="../cams-interpreter.html">Interpreter</a>
+  </div>
+</footer>
+
+</main>
+</div>
+
+</body>
+</html>

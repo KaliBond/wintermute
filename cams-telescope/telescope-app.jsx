@@ -545,8 +545,8 @@ function TelescopeApp() {
 
         /* Back link */
         React.createElement('div', { style: { marginTop: 24, paddingTop: 16, borderTop: '1px solid var(--scope-border)' } },
-          React.createElement('a', { href: 'CAMS Network.html', style: { fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--scope-teal2)', textDecoration: 'none', marginRight: 16 } }, '→ Network view'),
-          React.createElement('a', { href: 'CAMS Interpreter.html', style: { fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--scope-teal2)', textDecoration: 'none' } }, '→ Interpreter'),
+          React.createElement('a', { href: 'guide.html', style: { fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--scope-teal2)', textDecoration: 'none', marginRight: 16 } }, '→ Technical guide'),
+          React.createElement('a', { href: '../cams-interpreter.html', style: { fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--scope-teal2)', textDecoration: 'none' } }, '→ Interpreter'),
         ),
       ),
     ),
