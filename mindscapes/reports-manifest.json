@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-30",
+  "generated": "2026-05-07",
   "version": "3.2-R.2-VA",
   "reports": [
     {
@@ -351,6 +351,45 @@
       "weakest": [
         "Shield",
         "Hands"
+      ]
+    },
+    {
+      "id": "argentina-2026",
+      "country": "Argentina",
+      "flag": "🇦🇷",
+      "period": "2024–2026",
+      "generated": "2026-05-07",
+      "dataset": "Argentina_CAMS5_ensemble_mean_scores.csv",
+      "classification": "Collapse Risk",
+      "classification_tier": "critical",
+      "exec_phrase": "A civilisation drowning in every register at once.",
+      "file": "mindscapes/Argentina_2026_CAMS_Report.html",
+      "metrics": {
+        "M": 7.27,
+        "Y": 12.7,
+        "headroom": -3.16,
+        "sys_sigma": -38.27,
+        "theta": -2.31,
+        "lambda": null
+      },
+      "node_sigmas": {
+        "Helm": -51.2,
+        "Shield": -25.6,
+        "Archive": -27.0,
+        "Lore": -48.0,
+        "Stewards": -35.34,
+        "Craft": -41.6,
+        "Hands": -41.4,
+        "Flow": -36.0
+      },
+      "strongest": [
+        "Shield",
+        "Archive",
+        "Stewards"
+      ],
+      "weakest": [
+        "Helm",
+        "Lore"
       ]
     }
   ]
