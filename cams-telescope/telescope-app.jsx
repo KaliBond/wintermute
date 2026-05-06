@@ -198,17 +198,41 @@ function NodeBarTS({ name, value, max }) {
   );
 }
 
-/* ── Heuristic scope-style narrative bits (non-canon, deterministic) ── */
+/* ── Basin zeitgeist narratives ── */
 function describeBasin(basin, r) {
   const m = {
-    'Peak Expansion': ['Ascendant. Coordination energy abundant; institutions speak with one voice.', 'LOW'],
-    'Navigational': ['Reformist working window. Crisis past; reconstruction in progress.', 'LOW'],
-    'Early Strain': ['Ambient unease without clear object. Nostalgia is becoming political. Institutions feel less competent than memory claims. The future is contested.', 'LOW'],
-    'Praetorian': ['Reactive, threat-saturated, rapid-cycling. No long-horizon strategy survives. Emergency is permanent.', 'CRITICAL'],
-    'Archipelago': ['Tribal-ironic register. Shared discourse fragmented; coalitions are local.', 'MEDIUM'],
-    'Mass Formation': ['Ritual-denunciation regime. Single named enemy organises everything.', 'HIGH'],
-    'Phantom I': ['Heritage flourishing masks material drift.', 'MEDIUM'],
-    'Phantom II': ['Post-political fatigue. Cynicism saturates.', 'MEDIUM'],
+    'Peak Expansion': [
+      `Collective confidence is at full expression. Shared purpose requires no enforcement — it is experienced as natural and correct. Long-horizon thinking dominates public discourse. The dominant emotional register is expansive optimism with an undertow of self-congratulation. This is the phase in which the map is mistaken for the territory.`,
+      'LOW',
+    ],
+    'Navigational': [
+      `The mood is purposeful. A shared problem-solving orientation pervades institutional life. Pragmatism is valued over ideology. Trust in collective action is high; the social contract feels reciprocal. The dominant emotional register is forward-looking relief — crisis is recent memory, reconstruction is the work.`,
+      'LOW',
+    ],
+    'Early Strain': [
+      `Ambient unease without a clear object. Optimism has not inverted but nostalgia is becoming a political force. Institutions feel less competent than memory says they were. Competing narratives are fragmenting the shared discourse. The future is contested rather than assumed.`,
+      'LOW',
+    ],
+    'Praetorian': [
+      `Reactive, threat-saturated, rapid-cycling. No long-horizon strategy is coherent — only stimulus-response management. Emergency is the permanent condition. External enemies and internal traitors provide directionality to anxiety that has no structural resolution. Strongman behaviour functions as stress management, not governance.`,
+      'CRITICAL',
+    ],
+    'Archipelago': [
+      `Privatised coordination. Real organisation flows through corporate, factional, and network nodes below or beyond the state. Public institutions persist as theatre. Irony and detachment armour people against commitment. The dominant register is solipsistic intensity — deeply tribal within small groups, deeply indifferent outside them.`,
+      'MEDIUM',
+    ],
+    'Mass Formation': [
+      `A named anxiety object has crystallised. Approximately 20–30% of the population has entered a hypnosis-like state — capable of collective behaviour that no individual within it would endorse in isolation. Ethical self-awareness is suppressed in the hypnotised cohort. Dissent is experienced as existential threat, not disagreement.`,
+      'HIGH',
+    ],
+    'Phantom I': [
+      `Cultural and intellectual life persists — perhaps flourishes in isolated nodes — while the material substrate deteriorates. Art, law, and ritual continue as if the structure still holds. The map is mistaken for the territory, and this mistake is the proudest expression of civilisational identity. Decline is not legible from within the cultural forms that carry its memory.`,
+      'MEDIUM',
+    ],
+    'Phantom II': [
+      `Post-political fatigue has set in. Cynicism saturates public discourse; cultural forms persist but lack animating conviction — participation is performative rather than felt. The gap between institutional narrative and lived experience is total and no longer surprising.`,
+      'MEDIUM',
+    ],
   };
   return m[basin] || ['—', 'LOW'];
 }
@@ -452,10 +476,21 @@ function TelescopeApp() {
           DossierCard({
             label: 'Survival protocol',
             children: React.createElement('p', { style: { fontFamily: 'var(--font-mono)', fontSize: 11, lineHeight: 1.6, color: 'var(--scope-text2)' } },
-              basin === 'Praetorian' ? 'Affiliate conspicuously with Shield actors — they hold operational coordination energy regardless of nominal titles. Never criticise the security apparatus in public. Keep Archive and Lore activity private.'
-              : basin === 'Early Strain' ? 'Cultivate Lore actors but hedge. The basin is tipping — tomorrow\'s dominant node may not be today\'s. Build lateral bonds across nodes: that is what survives the coming rearrangement.'
-              : basin === 'Peak Expansion' ? 'Affiliate with whichever institution most recently expanded — they hold momentum-credit. Avoid backward-facing rhetoric.'
-              : 'Maintain plural affiliations. No single node carries enough coordination energy to make exclusive loyalty rational.',
+              basin === 'Praetorian'
+                ? `Affiliate conspicuously with Shield actors — they hold operational coordination energy regardless of nominal titles. Never criticise the security apparatus in public. Keep Archive and Lore activity private: slow-loop thinking is dangerous here. Exit windows close at sk > 2.0.`
+              : basin === 'Early Strain'
+                ? `Cultivate ${dominant} actors but hedge. The basin is tipping — tomorrow's dominant node may not be today's. Avoid being publicly identified with any single faction. Build lateral bonds across nodes: that is what will survive the coming rearrangement.`
+              : basin === 'Peak Expansion'
+                ? `Align with the dominant node (${dominant}) — its coordination energy is real and reliable. Avoid direct criticism of imperial or expansionist narratives: the cost is social marginalisation with no countervailing reward. This is a good time to build durable Archive and Lore investments.`
+              : basin === 'Navigational'
+                ? `Work with the Helm — it has genuine authority and is using it for construction rather than defence. Invest in Archive and Lore nodes now, before the next transition. The window for institution-building is open.`
+              : basin === 'Archipelago'
+                ? `Find your enclave and operate within it. Cross-enclave coordination is possible but costly. The state is not your protector but it is not your enemy either — it simply lacks coherent agency. Avoid symbolic acts of loyalty or resistance: they cost more than they return.`
+              : basin === 'Mass Formation'
+                ? `Maximum caution. Do not attempt to reason with the hypnotised cohort — reason is not the medium of this state. Cultivate the non-hypnotised minority (~30% of population): they are not gone, merely quiet. Archive and Lore preservation is the strategic priority — institutions will be rebuilt from whatever survives this phase.`
+              : (basin === 'Phantom I' || basin === 'Phantom II')
+                ? `The cultural layer is alive and can be worked with. The material layer is unreliable — do not depend on infrastructure, supply chains, or official authority for anything critical. Build your own material networks. The intellectual wealth of this society is real and worth preserving; its political claims are not.`
+              : `Maintain plural affiliations. No single node carries enough coordination energy to make exclusive loyalty rational.`,
             ),
           }),
         ),
@@ -493,7 +528,19 @@ function TelescopeApp() {
 
         /* Closing italic */
         React.createElement('p', { style: { fontFamily: 'var(--font-typewriter)', fontSize: 13, lineHeight: 1.6, color: 'var(--scope-text2)', marginTop: 14, fontStyle: 'italic' } },
-          `The ${nation} of ${year || '—'} — a system in which the ostensible governors govern least. The titles remain; the coordination energy has migrated.`,
+          basin === 'Praetorian'
+            ? `The ${nation} of ${year} — a system in which the ostensible governors govern least. The titles remain; the coordination energy has migrated to the security apparatus. History will record the events; CAMS records the physics.`
+          : (basin === 'Phantom I' || basin === 'Phantom II')
+            ? `The ${nation} of ${year} — a civilisation that mistakes its cultural elaboration for structural health. The Archive glows while the foundations settle. This is the most poignant of basins: the most articulate moment is also the last.`
+          : basin === 'Mass Formation'
+            ? `The ${nation} of ${year} — a society in which the thermodynamic substrate for collective hypnosis is fully prepared. The named object has arrived or is imminent. Individual ethics remain intact in the non-hypnotised minority; collective ethics have been suspended.`
+          : basin === 'Peak Expansion'
+            ? `The ${nation} of ${year} — a coordination system operating at its designed apex. The eight nodes are coupled and purposeful. The trap is invisible from inside: the self-assurance of this moment is the seed of the next transition.`
+          : basin === 'Archipelago'
+            ? `The ${nation} of ${year} — a polity that has outsourced its coherence to private nodes. The formal architecture persists; the animating coordination has departed. This is not collapse — it is diffusion.`
+          : basin === 'Navigational'
+            ? `The ${nation} of ${year} — a society that has earned its optimism. The reconstruction instinct is strong; the social contract feels real. The hard work is ensuring the slow loop is rebuilt, not just the fast one.`
+          : `The ${nation} of ${year} — a system balanced on the tipping edge. The metrics do not yet warrant alarm but the direction of travel is the question that matters now.`,
         ),
 
         /* Back link */
