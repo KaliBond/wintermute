@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operational Pressure and Symbolic Integration — CAMS v3.2-R Working Paper</title>
+<meta name="description" content="A dyadic scalar for civilisational coordination diagnosis. CAMS v3.2-R Working Paper v1.1, May 2026.">
+<meta name="author" content="Kari Freyr McKern">
+<meta property="og:title" content="Operational Pressure and Symbolic Integration: A Dyadic Scalar for Civilisational Coordination Diagnosis">
+<meta property="og:description" content="Operationalising fast-loop operational pressure and slow-loop symbolic integration as a coupled diagnostic dyad within CAMS v3.2-R.">
+<meta property="og:image" content="https://neuralnations.org/og-image.png">
+<link rel="canonical" href="https://neuralnations.org/metabolism-meaning">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+        delimiters: [
+            {left: '\\[', right: '\\]', display: true},
+            {left: '\\(', right: '\\)', display: false}
+        ],
+        throwOnError: false
+    });"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --accent:       #1b4d5e;
+    --accent-light: #e2f0f4;
+    --accent-mid:   #2a6e83;
+    --text:         #1a1a2e;
+    --muted:        #556070;
+    --border:       #c0d4dc;
+    --bg:           #f9fafb;
+    --card-bg:      #ffffff;
+    --max-w:        780px;
+    --eq-bg:        #f0f5f8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 1.04rem;
+    line-height: 1.78;
+    color: var(--text);
+    background: var(--bg);
+  }
+
+  /* ── Site banner ──────────────────────────────────────────────── */
+  .site-banner {
+    background: var(--accent);
+    color: rgba(255,255,255,0.9);
+    text-align: center;
+    padding: 0.38rem 1rem;
+    font-size: 0.76rem;
+    letter-spacing: 0.05em;
+    font-family: system-ui, sans-serif;
+  }
+  .site-banner a { color: #9fd4e8; text-decoration: none; }
+  .site-banner a:hover { text-decoration: underline; }
+
+  /* ── Hero ─────────────────────────────────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, #0d2e3a 0%, #1b4d5e 55%, #2a6e83 100%);
+    color: #fff;
+    padding: 4rem 1.5rem 3.5rem;
+    text-align: center;
+  }
+  .hero .label {
+    display: inline-block;
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.28);
+    border-radius: 2rem;
+    padding: 0.22rem 1rem;
+    font-size: 0.74rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: system-ui, sans-serif;
+    margin-bottom: 1.3rem;
+  }
+  .hero h1 {
+    font-size: clamp(1.55rem, 4.5vw, 2.35rem);
+    font-weight: 700;
+    line-height: 1.22;
+    margin-bottom: 0.85rem;
+    letter-spacing: -0.01em;
+  }
+  .hero .subtitle {
+    font-size: 1.02rem;
+    opacity: 0.82;
+    font-style: italic;
+    margin-bottom: 1.6rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-meta {
+    display: flex;
+    justify-content: center;
+    gap: 1.4rem;
+    flex-wrap: wrap;
+    font-size: 0.82rem;
+    font-family: system-ui, sans-serif;
+    opacity: 0.78;
+  }
+
+  /* ── Paper body ───────────────────────────────────────────────── */
+  .paper-body {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  /* ── Abstract ─────────────────────────────────────────────────── */
+  .abstract-block {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 1.6rem 1.8rem;
+    margin-bottom: 3rem;
+  }
+  .abstract-block h2 {
+    font-family: system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 0.8rem;
+  }
+  .abstract-block p { font-size: 0.97rem; line-height: 1.72; color: var(--muted); }
+
+  /* ── Sections ─────────────────────────────────────────────────── */
+  .section { margin-bottom: 2.8rem; }
+  .section > h2 {
+    font-size: 1.18rem;
+    font-weight: 700;
+    color: var(--accent);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0.4rem;
+    margin-bottom: 1.1rem;
+  }
+  .subsection { margin-top: 1.8rem; margin-bottom: 1.4rem; }
+  .subsection h3 {
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--accent-mid);
+    margin-bottom: 0.75rem;
+  }
+  .appendix-section { margin-top: 3.5rem; padding-top: 1.5rem; border-top: 2px dashed var(--border); }
+  .appendix-section h2 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--accent-mid);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: system-ui, sans-serif;
+  }
+
+  p { margin-bottom: 1.1rem; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── Display equations ────────────────────────────────────────── */
+  .eq {
+    background: var(--eq-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.5rem;
+    margin: 1.4rem 0;
+    overflow-x: auto;
+    text-align: center;
+  }
+  .eq-label {
+    font-family: system-ui, sans-serif;
+    font-size: 0.74rem;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 0.45rem;
+  }
+  .bullet-list {
+    margin: 0.8rem 0 1rem 0;
+    padding-left: 1.5rem;
+  }
+  .bullet-list li { margin-bottom: 0.4rem; }
+
+  /* ── Tables ───────────────────────────────────────────────────── */
+  .table-caption {
+    font-family: system-ui, sans-serif;
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+    font-style: italic;
+  }
+  .table-wrap {
+    overflow-x: auto;
+    margin: 1.2rem 0 1.8rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    font-family: system-ui, sans-serif;
+    background: var(--card-bg);
+  }
+  .data-table th {
+    background: var(--accent);
+    color: #fff;
+    padding: 0.65rem 0.75rem;
+    text-align: right;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .data-table th:first-child { text-align: center; }
+  .data-table th:last-child  { text-align: left; }
+  .data-table td {
+    padding: 0.55rem 0.75rem;
+    text-align: right;
+    border-bottom: 1px solid #edf2f5;
+    white-space: nowrap;
+  }
+  .data-table td:first-child { text-align: center; font-weight: 700; }
+  .data-table td:last-child  { text-align: left; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: var(--accent-light); }
+  .data-table .highlight td { background: #fff8e1; font-weight: 600; }
+  /* Parameter table — left-aligned body */
+  .param-table th { text-align: left; }
+  .param-table td { text-align: left; }
+  .param-table td:nth-child(2) { text-align: center; font-weight: 700; }
+
+  /* ── Inline marks ─────────────────────────────────────────────── */
+  code {
+    font-family: 'Courier New', monospace;
+    font-size: 0.88em;
+    background: var(--accent-light);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    color: var(--accent);
+  }
+  blockquote {
+    border-left: 4px solid var(--accent-mid);
+    padding: 0.8rem 1.2rem;
+    margin: 1.4rem 0;
+    background: var(--accent-light);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  /* ── FC list (falsification) ──────────────────────────────────── */
+  .fc-list { list-style: none; padding: 0; margin: 1rem 0; }
+  .fc-list li {
+    padding: 0.7rem 1rem;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent-mid);
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 0.7rem;
+    background: var(--card-bg);
+    font-size: 0.97rem;
+  }
+  .fc-label {
+    font-family: system-ui, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  /* ── References ───────────────────────────────────────────────── */
+  .references {
+    border-top: 2px solid var(--border);
+    padding-top: 2rem;
+    margin-top: 3rem;
+  }
+  .references h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+  .ref-list { list-style: none; }
+  .ref-list li {
+    font-size: 0.93rem;
+    line-height: 1.65;
+    padding-left: 1.8rem;
+    position: relative;
+    margin-bottom: 0.9rem;
+    color: var(--muted);
+  }
+  .ref-list li::before { content: '—'; position: absolute; left: 0; color: var(--accent-mid); }
+
+  /* ── Footer ───────────────────────────────────────────────────── */
+  .paper-footer {
+    font-family: system-ui, sans-serif;
+    font-size: 0.78rem;
+    color: #aaa;
+    text-align: center;
+    margin-top: 3rem;
+    border-top: 1px solid var(--border);
+    padding-top: 1.2rem;
+    font-style: italic;
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 2.8rem 1rem 2.4rem; }
+    .paper-body { padding: 2rem 1rem 4rem; }
+    .abstract-block { padding: 1.2rem; }
+    .eq { padding: 0.9rem 1rem; }
+    .data-table { font-size: 0.78rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="site-banner">
+  Neural Nations — Open Science Research &nbsp;·&nbsp;
+  <a href="https://neuralnations.org/explore">← Back to Explore</a>
+  &nbsp;·&nbsp;
+  <a href="https://neuralnations.org">neuralnations.org</a>
+</div>
+
+<div class="hero">
+  <div class="label">CAMS v3.2-R Working Paper · Revised v1.1 · May 2026</div>
+  <h1>Operational Pressure and Symbolic Integration:<br>A Dyadic Scalar for Civilisational<br>Coordination Diagnosis</h1>
+  <p class="subtitle">Operationalising fast-loop throughput demand and slow-loop institutional integration as a coupled diagnostic scalar within CAMS v3.2-R</p>
+  <div class="hero-meta">
+    <span>Kari Freyr McKern</span>
+    <span>Neural Nations Research</span>
+    <span>May 2026</span>
+    <span>~5,200 words</span>
+  </div>
+  <div style="margin-top: 1.4rem;">
+    <a href="metabolism-meaning.tex" download
+       style="display:inline-flex; align-items:center; gap:7px; padding:7px 18px; background:rgba(255,255,255,0.13); border:1px solid rgba(255,255,255,0.3); border-radius:20px; color:rgba(255,255,255,0.9); font-size:0.8rem; font-family:system-ui,sans-serif; font-weight:600; text-decoration:none; letter-spacing:0.03em; transition:background 0.2s;"
+       onmouseover="this.style.background='rgba(255,255,255,0.22)'" onmouseout="this.style.background='rgba(255,255,255,0.13)'">
+      ↓ Download LaTeX source (.tex)
+    </a>
+  </div>
+</div>
+
+<div class="paper-body">
+
+  <!-- Abstract -->
+  <div class="abstract-block">
+    <h2>Abstract</h2>
+    <p>This paper proposes a dyadic scalar decomposition within the Complex Adaptive Model of Societies (CAMS) v3.2-R. The <strong>operational-pressure field</strong> \(\mathcal{P}(t)\) indexes fast-loop material throughput demand across Hands, Flow, and Shield via mean node stress. The <strong>symbolic-integration field</strong> \(\mathcal{Y}(t)\) indexes slow-loop institutional memory and interpretive capacity across Archive, Lore, and Stewards via a coherence–abstraction composite. Their mismatch \(\mathcal{D}(t) = \mathcal{P}(t) - \delta\mathcal{Y}(t)\), normalised by aggregate bond strength \(\mathcal{B}(t)\), yields a risk index \(\mathcal{R}(t)\) that distinguishes total systemic weakening from asymmetric collapse, high-energy differentiation from crisis, and mobilisation from decay. Applied to the Latium Vetus ensemble (460 BCE–2010 CE), the dyad identifies 540 CE as extreme operational overload (\(\mathcal{R}=1.37\)), 1200 CE and 1960 CE as meaning-buffered synchronisation (\(\mathcal{R}\approx-0.1\)), and 2010 CE as near-neutral mismatch (\(\mathcal{R}=0.00\)) without systemic fracture. All parameters are disclosed and sensitivity-tested; the headline 540-vs-1200 ordering is robust across 93.3% of the plausible parameter space. The dyad's incremental explanatory power over existing CAMS scalars is modest (\(\Delta R^2 \approx 0.016\)), but its partial correlation with slow-loop integration capacity, controlling for mean stress and mean node value, is substantial (\(r_{\text{partial}} = -0.609,\; p &lt; 0.001\)). The paper engages Turchin's structural-demographic theory, Tainter's marginal-returns framework, Holling–Gunderson panarchy, and Habermas's system/lifeworld colonisation thesis. Six pre-registered falsification criteria are stated. The core claim is that civilisational stability depends on the phase alignment of fast-loop operational pressure and slow-loop symbolic integration under coupling.</p>
+  </div>
+
+  <!-- 1. Introduction -->
+  <div class="section">
+    <h2>1. Introduction</h2>
+    <p>Civilisational analysis often treats wealth, armies, institutions, legitimacy, and cultural confidence as a single vector called "strength," and their joint decline as "weakness." This language is heuristically convenient, but it obscures the more analytically interesting cases: moments when the material system is strained while cultural memory survives, when symbolic confidence remains high despite logistical exhaustion, or when productive capacity expands faster than institutional meaning can integrate it.</p>
+    <p>The distinction between <strong>operational pressure</strong> and <strong>symbolic integration</strong> is useful because these two subsystems move at different characteristic speeds. Operational pressure is fast. Labour, exchange, transport, policing, war-making, and supply networks must respond immediately to perturbation. Symbolic integration is slower. Archives, legal memory, educational traditions, ritual calendars, and civilisational narratives integrate shocks over decades or centuries. Crisis, on this view, emerges not simply from high stress, but from <strong>rate mismatch</strong> between these two fields—what CAMS terms <em>phase desynchronisation</em>.</p>
+    <p>Within CAMS v3.2-R, this distinction is not an external imposition. The framework already partitions the eight-node architecture into a fast loop (Helm, Shield, Flow, Hands, Craft; characteristic time-scale \(\tau \sim\) years to decades) and a slow loop (Archive, Lore, Stewards; \(\tau \sim\) decades to centuries) based on empirical validation across eighteen societies. The dyad developed here makes that partition explicit as a scalar decomposition. Operational pressure is operationalised over the fast-loop nodes most directly engaged in material throughput; symbolic integration is operationalised over the slow-loop nodes that provide institutional memory and coherence.</p>
+    <p>This paper proceeds as follows. Section 2 situates the dyad within CAMS theory, the Extended Social Cognition Hypothesis (ESCH), and relevant literatures. Section 3 provides the formal definitions, parameter specifications, and coupling normalisation. Section 4 applies the dyad to Latium Vetus. Section 5 reports diagnostic increment and sensitivity. Section 6 discusses asymmetric collapse, mobilisation, and scale. Section 7 states falsification criteria. Section 8 concludes.</p>
+  </div>
+
+  <!-- 2. Theoretical Frame -->
+  <div class="section">
+    <h2>2. Theoretical Frame</h2>
+
+    <div class="subsection">
+      <h3>2.1 Coordination, Panarchy, and Structural Demography</h3>
+      <p>The decomposition of social systems into fast and slow variables has deep roots in resilience theory. Holling and Gunderson's <strong>panarchy</strong> framework identifies "slow" variables—soil fertility, institutional memory, cultural identity—as the structural substrate that organises "fast" variables—population, production, conflict—into recurrent cycles. The CAMS 3–5 partition is a direct operationalisation of this architecture: the slow loop provides the "memory" that allows the fast loop to recover from perturbation without losing coordination.</p>
+      <p>Turchin's <strong>structural-demographic theory</strong> (SDT) offers a closely related argument under different vocabulary. SDT posits that crisis emerges when elite overproduction and popular immiseration outrun the state's fiscal and legitimating capacity to absorb them. In dyadic terms, operational pressure (demographic stress, military demand, fiscal extraction) rises faster than symbolic integration (state legitimacy, legal continuity, elite cohesion) can metabolise it. Turchin's "political stress indicator" is, in effect, a scalar proxy for the mismatch field \(\mathcal{D}(t)\).</p>
+      <p>Tainter's <strong>marginal-returns-to-complexity</strong> thesis argues that societies collapse not because stress is high in absolute terms, but because the energetic and organisational cost of maintaining complexity rises faster than the returns from that complexity. This is a thermodynamic analogue of the dyad: when operational throughput requires ever-larger symbolic overhead (bureaucracy, ritual, legal complexity) to maintain the same coordination, the \(\mathcal{P}/\mathcal{Y}\) ratio degrades.</p>
+      <p>Habermas's <strong>colonisation of the lifeworld</strong> thesis provides the sociological counterpart. Habermas distinguishes the "system" (steering media: money, power, administration) from the "lifeworld" (symbolic reproduction: culture, society, personality). When the system—analogous to our operational-pressure field—expands into the lifeworld—analogous to symbolic integration—without being translated into communicatively intelligible meaning, the result is pathological coordination: alienation, legitimation crisis, and eventual systemic blockage. The dyad operationalises this colonisation dynamic as a measurable scalar.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>2.2 CAMS and the Extended Social Cognition Hypothesis</h3>
+      <p>Under the Extended Social Cognition Hypothesis (ESCH), the eight CAMS nodes are recurrent functional exteriorisations of distributed social cognition. Crisis is cognitive desynchronisation (\(\operatorname{Var}(\text{rate}_i) \uparrow, \lambda_2 \downarrow\)), not merely institutional breakage. The dyad therefore treats operational pressure and symbolic integration as two coupled but non-identical cognitive planes.</p>
+      <p>The existing CAMS <strong>Type I phantom</strong> signature—high abstraction \(A\) persisting while node value \(V\) and coherence \(\sigma\) collapse—describes exactly the condition the dyad calls "asymmetric collapse." The dyad does not discover a new phenomenon; it provides a scalar index for an existing signature. This is a feature, not a bug: the dyad is a measurement instrument, not a theoretical revolution.</p>
+    </div>
+  </div>
+
+  <!-- 3. Formal Definition -->
+  <div class="section">
+    <h2>3. Formal Definition</h2>
+    <p>Let \(\mathcal{F} = \{\text{Hands}, \text{Flow}, \text{Shield}\}\) denote the operational-pressure node set and \(\mathcal{S} = \{\text{Archive}, \text{Lore}, \text{Stewards}\}\) denote the symbolic-integration node set. All variables are drawn from the CAMS v3.2-R canonical state vector \(\mathbf{X}(t) \in \mathbb{R}^{8 \times 5}\).</p>
+
+    <div class="subsection">
+      <h3>3.1 Operational-Pressure Field</h3>
+      <p>The operational-pressure field \(\mathcal{P}(t)\) measures immediate throughput demand on the fast loop:</p>
+      <div class="eq">
+        \[\mathcal{P}(t) = \frac{1}{3}\sum_{n \in \mathcal{F}} S_n(t)\]
+        <div class="eq-label">Equation 3.1</div>
+      </div>
+      <p>Stress \(S_n(t)\) is the direct observable load on each node. Capacity shortfall is intentionally excluded from \(\mathcal{P}(t)\) because capacity \(K\) is already endogenous to the CAMS node-value formula \(V = C + K - S + 0.5A\). Adding \((K_{\max} - K)\) would double-count the capacity signal and conflate exogenous load with endogenous headroom. The operational-pressure field is therefore a <strong>pure load index</strong>.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>3.2 Symbolic-Integration Field</h3>
+      <p>The symbolic-integration field \(\mathcal{Y}(t)\) measures the slow-loop capacity to absorb, interpret, and transmute stress into coordinated action:</p>
+      <div class="eq">
+        \[\mathcal{Y}(t) = \frac{1}{3}\sum_{n \in \mathcal{S}} \bigl[ \beta\, C_n(t) + (1-\beta)\, A_n(t) \bigr]\]
+        <div class="eq-label">Equation 3.2</div>
+      </div>
+      <p>Stress is intentionally <strong>excluded</strong> from \(\mathcal{Y}(t)\). In the initial draft (v1.0), stress entered \(\mathcal{Y}(t)\) as a "drag" term, creating algebraic double-counting: a pure stress shock to slow-loop nodes mechanically worsened \(\mathcal{D}(t)\) even when integration capacity was unchanged. The revised v1.1 formulation treats \(\mathcal{Y}(t)\) as <strong>pure integration capacity</strong>, measured by coherence and abstraction alone. The mismatch \(\mathcal{D}(t)\) then captures the gap between load and capacity without conflating the two.</p>
+      <p>The parameter \(\beta = 0.6\) weights coherence as the primary integrative substrate. This is justified by the Library Attractor validation (McKern 2026), which found that slow-loop coherence correlates \(r = +0.786\) with system-level bond strength across eighteen societies, while abstraction contributes secondary but non-zero variance.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>3.3 Mismatch and Risk</h3>
+      <div class="eq">
+        \[\mathcal{D}(t) = \mathcal{P}(t) - \delta\,\mathcal{Y}(t), \qquad \delta = 1.0\]
+        <div class="eq-label">Equation 3.3a</div>
+      </div>
+      <ul class="bullet-list">
+        <li>\(\mathcal{D} &gt; 0\): operational pressure exceeds symbolic integration.</li>
+        <li>\(\mathcal{D} &lt; 0\): symbolic integration buffers operational pressure.</li>
+        <li>\(\mathcal{D} \approx 0\): phase-synchronised.</li>
+      </ul>
+      <p>The normalised risk index is:</p>
+      <div class="eq">
+        \[\mathcal{R}(t) = \frac{\mathcal{D}(t)}{\varepsilon + \mathcal{B}(t)}, \qquad \varepsilon = 1.0\]
+        <div class="eq-label">Equation 3.3b</div>
+      </div>
+      <p>where \(\mathcal{B}(t)\) is aggregate bond strength. Higher \(\mathcal{R}\) indicates that mismatch is occurring in a poorly coupled system.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>3.4 Parameter Disclosure and Justification</h3>
+      <p class="table-caption">Table 0. Parameter values, justification, and sensitivity range.</p>
+      <div class="table-wrap">
+        <table class="data-table param-table">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Value</th>
+              <th>Justification</th>
+              <th>Sensitivity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>\(\beta\)</td><td>0.6</td><td>Library Attractor validation: coherence is primary load-bearing substrate</td><td>Tested 0.3–0.9</td></tr>
+            <tr><td>\(\delta\)</td><td>1.0</td><td>Linear coupling; unit scaling</td><td>Tested 0.5–1.9</td></tr>
+            <tr><td>\(\varepsilon\)</td><td>1.0</td><td>Regularisation preventing singularity at \(\mathcal{B}=0\)</td><td>Tested 0.5–5.0</td></tr>
+            <tr><td>\(\alpha\)</td><td>0</td><td>Capacity excluded from \(\mathcal{P}\) to avoid double-counting with \(V\)</td><td>Fixed</td></tr>
+            <tr><td>\(\gamma\)</td><td>0</td><td>Stress excluded from \(\mathcal{Y}\) to avoid double-counting</td><td>Fixed</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Sensitivity result:</strong> The headline ordering (540 CE \(\mathcal{D}&gt;0\) vs 1200 CE \(\mathcal{D}&lt;0\)) is robust across <strong>93.3%</strong> of the tested parameter space (\(\beta \in [0.3, 0.9]\), \(\delta \in [0.5, 1.9]\)). The only failures occur at \(\delta \leq 0.5\), where the symbolic-integration term is too weak to overcome operational load even in high-coordination epochs. This justifies \(\delta = 1.0\) as a conservative threshold that preserves the 1200 CE buffering signature (Appendix A).</p>
+    </div>
+  </div>
+
+  <!-- 4. Case Illustration -->
+  <div class="section">
+    <h2>4. Case Illustration: Latium Vetus, 460 BCE–2010 CE</h2>
+    <p>The Latium Vetus ensemble provides an ideal methodological test because central Italy after Rome is not a simple rise-and-fall narrative. It contains imperial residue, ecclesiastical continuity, urban contraction, medieval recomposition, Renaissance intensification, Risorgimento mobilisation, post-war recovery, and contemporary institutional thinning. Table 1 reports the dyad for selected horizons.</p>
+
+    <p class="table-caption">Table 1. Dyad field values at selected horizons, Latium Vetus 460 BCE–2010 CE. Bold entries mark the historically most extreme readings.</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>\(\bar{V}\)</th>
+            <th>\(\mathcal{B}\)</th>
+            <th>\(\mathcal{P}\)</th>
+            <th>\(\mathcal{Y}\)</th>
+            <th>\(\mathcal{D}\)</th>
+            <th>\(\mathcal{R}\)</th>
+            <th>CAMS Attractor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>460 BCE</td><td>3.88</td><td>7.65</td><td>7.40</td><td>5.95</td><td>1.45</td><td>0.17</td><td>Oscillation</td>
+          </tr>
+          <tr class="highlight">
+            <td>540 CE</td><td>−1.70</td><td>2.51</td><td>8.67</td><td>3.87</td><td>4.80</td><td><strong>1.37</strong></td><td><strong>Thermodynamic Freeze</strong></td>
+          </tr>
+          <tr>
+            <td>760</td><td>5.99</td><td>10.30</td><td>5.40</td><td>5.92</td><td>−0.52</td><td>−0.05</td><td>Re-synchronisation</td>
+          </tr>
+          <tr>
+            <td>900</td><td>1.71</td><td>4.34</td><td>6.13</td><td>4.52</td><td>1.61</td><td>0.30</td><td>Buffering</td>
+          </tr>
+          <tr class="highlight">
+            <td>1200</td><td>10.25</td><td>19.03</td><td>4.00</td><td>7.37</td><td>−3.37</td><td><strong>−0.17</strong></td><td><strong>Re-synchronisation</strong></td>
+          </tr>
+          <tr>
+            <td>1320</td><td>2.12</td><td>5.44</td><td>6.80</td><td>4.79</td><td>2.01</td><td>0.31</td><td>Fracture</td>
+          </tr>
+          <tr>
+            <td>1480</td><td>9.62</td><td>18.76</td><td>4.87</td><td>7.32</td><td>−2.45</td><td>−0.12</td><td>Re-synchronisation</td>
+          </tr>
+          <tr>
+            <td>1800</td><td>3.19</td><td>6.40</td><td>7.00</td><td>5.05</td><td>1.95</td><td>0.26</td><td>Buffering</td>
+          </tr>
+          <tr>
+            <td>1860</td><td>3.05</td><td>6.45</td><td>6.93</td><td>4.93</td><td>2.00</td><td>0.27</td><td>Mobilisation</td>
+          </tr>
+          <tr class="highlight">
+            <td>1960</td><td>11.74</td><td>21.73</td><td>4.60</td><td>7.16</td><td>−2.56</td><td><strong>−0.11</strong></td><td><strong>Re-synchronisation</strong></td>
+          </tr>
+          <tr>
+            <td>2010</td><td>7.60</td><td>11.97</td><td>6.60</td><td>6.56</td><td>0.04</td><td>0.00</td><td>Managed Decline</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="subsection">
+      <h3>4.1 The Gothic War Horizon (540 CE)</h3>
+      <p>The 540 CE horizon records the only thermodynamic freeze in the 2,470-year series: \(\bar{V} = -1.70\), \(\mathcal{B} = 2.51\), mean stress \(\approx 8.75\). Operational pressure is extreme (\(\mathcal{P} = 8.67\)) while symbolic integration collapses to a local minimum (\(\mathcal{Y} = 3.87\)). The mismatch \(\mathcal{D} = 4.80\) is the highest in the dataset, and \(\mathcal{R} = 1.37\) indicates that this mismatch occurred in a system with virtually no coupling left to redistribute stress.</p>
+      <p>The node pattern is diagnostically revealing. <strong>Helm</strong> (\(V = +0.50\)) and <strong>Archive</strong> (\(V = +0.40\)) are the most resilient nodes, followed by Lore (\(V = -0.10\)). The actual survival cluster is <strong>sovereignty-plus-memory</strong> (Helm/Archive/Lore), not a clean metabolism/meaning split: Stewards (\(V = -3.50\)), assigned to symbolic integration, collapses harder than Shield (\(V = -0.90\)), assigned to operational pressure. This contradicts a naive partition reading and confirms that the dyad's value lies in its scalar decomposition, not in the node labels alone.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>4.2 The Medieval Peak (1200 CE)</h3>
+      <p>By 1200 CE, the dyad has inverted. \(\mathcal{P} = 4.00\) and \(\mathcal{Y} = 7.37\) produce \(\mathcal{D} = -3.37\) and \(\mathcal{R} = -0.17\). This is a <strong>meaning-buffered regime</strong>: operational pressure has not vanished, but symbolic-integration institutions (the Papal Curia, the commune, the <em>studia</em>) exceed immediate demand. Bond strength is at a local maximum (\(\mathcal{B} = 19.03\)). The system is synchronised, not merely rich.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>4.3 The Black Death Horizon (1320 CE)</h3>
+      <p>The 1320 CE reading shows a different crisis form. \(\mathcal{P} = 6.80\) and \(\mathcal{Y} = 4.79\) give \(\mathcal{D} = 2.01\) and \(\mathcal{R} = 0.31\). Mean node value falls to 2.12. Yet Archive remains at \(V = 6.0\) while Hands and Flow sit near the bottom of the distribution. The useful distinction is not "collapse versus continuity" but <strong>which subsystem collapses, which persists, and how coupling changes between them</strong>. The Black Death is a demographic-operational shock partially buffered by surviving memory institutions—a different coordination state from the Gothic War freeze.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>4.4 The Modern Horizon (2010 CE)</h3>
+      <p>The 2010 reading is best understood as recomposition under renewed dispersion. \(\mathcal{P} = 6.60\), \(\mathcal{Y} = 6.56\), giving \(\mathcal{D} = 0.04\) and \(\mathcal{R} = 0.00\). Operational pressure and symbolic integration are almost exactly balanced, but Executive Decoupling is active (\(V_{\text{Helm}} = 4.9\)). The result is not Gothic-style breakdown; it is a <strong>thin synchrony</strong>—a managed decline attractor in which the system neither freezes nor flourishes.</p>
+    </div>
+  </div>
+
+  <!-- 5. Diagnostic Increment -->
+  <div class="section">
+    <h2>5. Diagnostic Increment and Sensitivity</h2>
+
+    <div class="subsection">
+      <h3>5.1 Informational Increment over Existing Scalars</h3>
+      <p>A legitimate concern is whether \(\mathcal{D}(t)\) adds information beyond simpler CAMS diagnostics. Table 2 reports correlations across all 79 epochs.</p>
+
+      <p class="table-caption">Table 2. Incremental predictive value of the dyad over existing CAMS scalars (Latium Vetus, n = 79 epochs).</p>
+      <div class="table-wrap">
+        <table class="data-table param-table">
+          <thead>
+            <tr>
+              <th>Predictor(s)</th>
+              <th style="text-align:center;">\(R^2\) with \(\mathcal{D}\)</th>
+              <th>Interpretation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Mean Stress \(\bar{S}\)</td><td style="text-align:center;">0.861</td><td>86% of \(\mathcal{D}\) variance recoverable from mean stress alone</td></tr>
+            <tr><td>Mean Node Value \(\bar{V}\)</td><td style="text-align:center;">0.931 (via \(\rho = -0.965\))</td><td>System health strongly anti-correlated with mismatch</td></tr>
+            <tr><td>\(\bar{S} + \bar{V}\)</td><td style="text-align:center;">0.958</td><td>Combined scalar prediction is very strong</td></tr>
+            <tr><td>\(\bar{S} + \bar{V} + \mathcal{Y}\)</td><td style="text-align:center;">0.974</td><td>Adding \(\mathcal{Y}\) yields \(\Delta R^2 = 0.016\)</td></tr>
+            <tr><td>\(\bar{S} + \bar{V} + \bar{C}_{\text{slow}} + \bar{A}_{\text{slow}}\)</td><td style="text-align:center;">0.974</td><td>Slow-loop components add equivalent increment</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The <strong>incremental explanatory power</strong> of the dyad over existing scalars is modest: approximately 1.6% additional variance. However, the <strong>partial correlation</strong> of \(\mathcal{D}\) with \(\mathcal{Y}\), controlling for \(\bar{V}\) and \(\bar{S}\), is substantial (\(r_{\text{partial}} = -0.609, p &lt; 0.001\)). This means that slow-loop integration capacity explains unique variance in mismatch that is not captured by aggregate stress or node value alone.</p>
+      <p>The dyad's primary value is therefore <strong>conceptual decomposition</strong>, not predictive supremacy. It separates load from capacity, allowing diagnosis of <em>which</em> subsystem is failing, rather than collapsing both into a single "health" score.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>5.2 Partition Robustness</h3>
+      <p>The 3+3 node partition (Hands/Flow/Shield vs Archive/Lore/Stewards) is empirically grounded in the CAMS 3–5 slow/fast validation, but it is not uniquely determined by the Latium data. A robustness test across all 560 ordered 3+3 partitions finds:</p>
+      <ul class="bullet-list">
+        <li><strong>100%</strong> reproduce the headline ordering (540 CE \(\mathcal{D}&gt;0\) vs 1200 CE \(\mathcal{D}&lt;0\)).</li>
+        <li><strong>100%</strong> show negative Spearman correlation between \(\mathcal{D}\) and \(\bar{V}\).</li>
+        <li>The paper's chosen partition ranks at the <strong>36th percentile</strong> in correlation strength.</li>
+      </ul>
+      <p>The partition is therefore <strong>defensible but not uniquely validated</strong> by this dataset. It should be treated as a theoretically motivated operationalisation of the panarchy slow/fast architecture, not as a data-derived optimal split.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>5.3 Comparative Protocol (Pre-registered)</h3>
+      <p>The present paper is a single-case methodological illustration. Cross-society validation is pre-registered as follows (Appendix B).</p>
+      <p><strong>Target societies:</strong> UK (CAMNATIONS5, 1996–2026), France (1900–1970), USA (1996–2026), and Rome (imperial, 100–400 CE).</p>
+      <p><strong>Test:</strong> Compute \(\mathcal{D}(t)\) with identical parameters (\(\beta=0.6, \delta=1.0, \varepsilon=1.0\)) and test whether (i) \(\mathcal{D}\) peaks in the 5–25 years before independently dated crises, and (ii) the 540/1200 ordering generalises to comparable freeze/synchrony horizons in other polities.</p>
+      <p><strong>Failure condition:</strong> If \(\mathcal{D}\) fails to discriminate crisis from non-crisis epochs in ≥3 of 4 societies, the dyad will be abandoned as a diagnostic scalar.</p>
+    </div>
+  </div>
+
+  <!-- 6. Discussion -->
+  <div class="section">
+    <h2>6. Discussion</h2>
+
+    <div class="subsection">
+      <h3>6.1 Asymmetric Collapse and the Type I Phantom</h3>
+      <p>The 540 CE horizon demonstrates the <strong>Type I phantom</strong> signature already formalised in CAMS v3.2-R: high abstraction \(A\) persists (Archive \(A = 6.8\)) while node value \(V\) and coherence collapse. The dyad makes this signature measurable as a scalar gap: \(\mathcal{P}\) is extreme while \(\mathcal{Y}\) is merely low, not zero. Archive is not merely a passive memory bank; it is a slow-loop stabiliser whose abstraction outlives its operational capacity. However, Archive cannot restore operational pressure by itself. When Hands, Flow, and Shield fail together, memory survives without coordination.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>6.2 The Mobilisation Exemption</h3>
+      <p>The 1860 Risorgimento (\(\mathcal{R}=0.27\)) and 1940 Fascist-war horizons both show positive \(\mathcal{D}\) without systemic fracture. In these windows, stress and capacity rise together across fast-loop nodes—a <strong>Mobilisation attractor</strong> per CAMS War Analysis v2.0. The dyad therefore requires a mobilisation exemption: positive \(\mathcal{D}\) in the presence of rising fast-loop capacity and strong coupling may indicate mobilised differentiation rather than pathological mismatch. This parallels the Stress–Capacity anti-correlation failures observed in v3.2-R retrospective validation.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>6.3 Scale Conflation</h3>
+      <p>Latium Vetus is a <strong>regional</strong> reconstruction, not a national-state or empire-level series. Treating it as a "civilisation" alongside national-level CAMS datasets (USA, UK, France) is a scale conflation that requires caution. The 20-year temporal resolution further compresses stress-rate dynamics, rendering annual-scale early-warning thresholds (e.g., \(\kappa \geq 0.35\)) non-operational. This dataset is a <strong>long-memory boundary test</strong> for the dyad's formalism, not a standard crisis-prediction pipeline.</p>
+    </div>
+  </div>
+
+  <!-- 7. Falsification Criteria -->
+  <div class="section">
+    <h2>7. Falsification Criteria</h2>
+    <p>The following criteria are pre-registered. Failure on any two constitutes grounds for abandoning the dyad as a useful diagnostic.</p>
+    <ul class="fc-list">
+      <li>
+        <span class="fc-label">FC1 — Cross-society predictive failure</span>
+        In a blinded test across ≥4 societies, \(\mathcal{D}\) fails to peak in the 5–25 years before independently dated coordination crises in ≥3 cases.
+      </li>
+      <li>
+        <span class="fc-label">FC2 — False buffering</span>
+        A society experiences collapse or regime change within 10 years of an epoch where \(\mathcal{D} &lt; 0\) and \(\mathcal{R} &lt; 0\) (meaning-buffered classification), falsifying the claim that negative mismatch implies resilience.
+      </li>
+      <li>
+        <span class="fc-label">FC3 — Inverse phantom</span>
+        A horizon at which Archive and Lore abstraction collapse while Hands/Flow capacity remains intact (Type II inverse), producing \(\mathcal{D} &lt; 0\) despite operational health, falsifies the asymmetric-collapse universality claim.
+      </li>
+      <li>
+        <span class="fc-label">FC4 — Parameter fragility</span>
+        The 540/1200 ordering reverses under parameter values independently justified (e.g., \(\beta\) derived from cross-society Library Attractor regressions, \(\delta\) from panarchy theory).
+      </li>
+      <li>
+        <span class="fc-label">FC5 — Incremental nullity</span>
+        In cross-society panel regression, adding \(\mathcal{Y}\) to a model with \(\bar{V}\) and \(\bar{S}\) yields \(\Delta R^2 &lt; 0.01\) and \(p &gt; 0.05\) for the \(\mathcal{Y}\) coefficient.
+      </li>
+      <li>
+        <span class="fc-label">FC6 — Comparative non-transferability</span>
+        The pre-registered comparative protocol (§5.3) yields non-replication in ≥3 of 4 target societies.
+      </li>
+    </ul>
+  </div>
+
+  <!-- 8. Conclusion -->
+  <div class="section">
+    <h2>8. Conclusion</h2>
+    <p>The distinction between operational pressure and symbolic integration converts civilisational analysis from narrative judgement into coordination diagnosis. It shows that societies can be materially overloaded but symbolically coherent, symbolically elaborate but materially exhausted, or highly differentiated yet still synchronised.</p>
+    <p>In CAMS v3.2-R terms, crisis is not simply high stress. It is the condition in which fast-loop operational demand, slow-loop symbolic integration, and institutional coupling lose phase alignment. The Latium Vetus case demonstrates the value of this decomposition: the Gothic War becomes a conductance failure under operational overload; the Black Death becomes a demographic-operational shock partially buffered by surviving memory; the Renaissance becomes coordinated differentiation; and the modern horizon becomes thin synchrony without total collapse.</p>
+    <blockquote>Civilisational stability depends on the synchronisation of operational pressure and symbolic integration under stress.</blockquote>
+    <p>Where operational pressure exceeds symbolic integration and coupling weakens, crisis becomes likely. Where symbolic integration buffers operational pressure and coupling remains strong, stress can be absorbed. Where symbolic integration survives after operational pressure collapses, continuity persists as memory before it returns as coordination.</p>
+  </div>
+
+  <!-- References -->
+  <div class="references">
+    <h2>References</h2>
+    <ul class="ref-list">
+      <li>Fischer-Kowalski, M., et al. (2011). Methods of Socio-Metabolic Research. In <em>Long Term Trends in Global Material and Energy Use</em>.</li>
+      <li>Habermas, J. (1981). <em>The Theory of Communicative Action, Vol. 2: Lifeworld and System.</em> Beacon Press.</li>
+      <li>Holling, C. S., &amp; Gunderson, L. H. (2002). <em>Panarchy: Understanding Transformations in Human and Natural Systems.</em> Island Press.</li>
+      <li>McKern, K. (2026). <em>CAMS v3.2-R: Complete Mathematical Formalisation with 3–5 Timescale Partition and Retrospective Validation.</em> CAMS Working Paper.</li>
+      <li>McKern, K. (2026). <em>Extended Social Cognition Hypothesis (ESCH): Eight Nodes as Recurrent Functional Exteriorisations.</em> CAMS Theoretical Supplement.</li>
+      <li>Tainter, J. A. (1988). <em>The Collapse of Complex Societies.</em> Cambridge University Press.</li>
+      <li>Turchin, P. (2016). <em>Ages of Discord: A Structural-Demographic Analysis of American History.</em> Beresta Books.</li>
+    </ul>
+  </div>
+
+  <!-- Appendix A -->
+  <div class="appendix-section">
+    <h2>Appendix A: Parameter Sensitivity</h2>
+    <p>The headline ordering (540 CE \(\mathcal{D}&gt;0\) vs 1200 CE \(\mathcal{D}&lt;0\)) was tested across \(\beta \in [0.3, 0.9]\) (step 0.05) and \(\delta \in [0.5, 1.9]\) (step 0.1), yielding 195 parameter combinations. The ordering held in 182 of 195 cases (93.3%). The 13 failures all occurred at \(\delta \leq 0.5\), where the symbolic-integration term is too weak to produce negative mismatch even in high-coordination epochs. This boundary justifies \(\delta = 1.0\) as a conservative value that preserves the 1200 CE buffering signature.</p>
+    <p>Epsilon sensitivity (\(\varepsilon = 0.5, 1.0, 2.0, 5.0\)) preserves the qualitative \(\mathcal{R}\) ordering across all key horizons, with \(\mathcal{R}_{540}\) ranging from 1.60 to 0.64 and \(\mathcal{R}_{1200}\) remaining negative throughout.</p>
+  </div>
+
+  <!-- Appendix B -->
+  <div class="appendix-section">
+    <h2>Appendix B: Pre-registered Comparative Protocol</h2>
+    <p><strong>Target datasets:</strong> UK (CAMNATIONS5, 1996–2026; ICC(2,k)=0.973), France (1900–1970 ensemble; validated Executive Decoupling signature), USA (1996–2026; Mobilisation attractor, 2020), and Rome (imperial, 100–400 CE).</p>
+    <p><strong>Procedure:</strong></p>
+    <ol class="bullet-list" style="list-style-type: decimal;">
+      <li>Compute \(\mathcal{P}(t), \mathcal{Y}(t), \mathcal{D}(t), \mathcal{R}(t)\) with fixed parameters (\(\beta=0.6, \delta=1.0, \varepsilon=1.0\)).</li>
+      <li>Identify independently dated crisis horizons (France 1940, UK Brexit 2016, USA 2020, Rome 410 CE).</li>
+      <li>Test whether \(\mathcal{D}\) peaks in the 5–25-year window preceding each crisis.</li>
+      <li>Test whether the 540/1200 ordering generalises (freeze epochs have \(\mathcal{D}&gt;0\), synchrony epochs have \(\mathcal{D}&lt;0\)).</li>
+    </ol>
+    <p><strong>Failure threshold:</strong> Non-replication in ≥3 of 4 societies triggers FC6 and dyad abandonment.</p>
+  </div>
+
+  <div class="paper-footer">
+    Word count: ~5,200 &nbsp;·&nbsp; All parameters disclosed &nbsp;·&nbsp; Sensitivity and correlation diagnostics reported &nbsp;·&nbsp; Australian English<br>
+    Open Science — Neural Nations Research · <a href="https://neuralnations.org" style="color: var(--accent-mid);">neuralnations.org</a>
+  </div>
+
+</div>
+</body>
+</html>
