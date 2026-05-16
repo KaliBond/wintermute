@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Anxiety Machine — Epiphenomenon@Trove</title>
+<script>
+/* ── Tiny self-contained charting library ─────────────────────── */
+const C = {
+  /* helpers */
+  clr: (ctx, c) => { ctx.fillStyle = c; ctx.strokeStyle = c; },
+  txt: (ctx, s, x, y, opts={}) => {
+    ctx.save();
+    ctx.font = `${opts.bold?'bold ':''}${opts.size||11}px 'Helvetica Neue',Arial,sans-serif`;
+    ctx.fillStyle = opts.color||'#555';
+    ctx.textAlign = opts.align||'center';
+    ctx.textBaseline = opts.base||'middle';
+    if(opts.rot){ ctx.translate(x,y); ctx.rotate(opts.rot); ctx.fillText(s,0,0); }
+    else ctx.fillText(s,x,y);
+    ctx.restore();
+  },
+  line: (ctx, pts, color, width=2, dash=[]) => {
+    ctx.save(); ctx.strokeStyle=color; ctx.lineWidth=width;
+    ctx.setLineDash(dash); ctx.lineJoin='round';
+    ctx.beginPath(); pts.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));
+    ctx.stroke(); ctx.restore();
+  },
+  area: (ctx, pts, color, base) => {
+    ctx.save(); ctx.fillStyle=color;
+    ctx.beginPath(); ctx.moveTo(pts[0][0], base);
+    pts.forEach(([x,y])=>ctx.lineTo(x,y));
+    ctx.lineTo(pts[pts.length-1][0], base); ctx.closePath(); ctx.fill(); ctx.restore();
+  },
+  /* axes */
+  axes: (ctx, ml,mt,w,h, xLabels, yMax, yLabel, y2Max, y2Min, y2Label, color2) => {
+    ctx.save();
+    ctx.strokeStyle='#ccc'; ctx.lineWidth=1;
+    // grid
+    for(let i=0;i<=4;i++){
+      const y=mt+h-i*h/4;
+      ctx.beginPath(); ctx.moveTo(ml,y); ctx.lineTo(ml+w,y); ctx.stroke();
+      C.txt(ctx,(yMax*i/4).toFixed(0),ml-6,y,{align:'right',size:10});
+    }
+    // x labels
+    xLabels.forEach((lbl,i)=>{
+      const x=ml+i*(w/(xLabels.length-1));
+      C.txt(ctx,lbl,x,mt+h+14,{size:10,color:'#666'});
+    });
+    // y-axis left label
+    C.txt(ctx,yLabel,12,mt+h/2,{rot:-Math.PI/2,size:10,color:'#666',align:'center'});
+    // y-axis right
+    if(y2Max!==undefined && color2){
+      const range=y2Max-(y2Min||0);
+      for(let i=0;i<=4;i++){
+        const y=mt+h-i*h/4;
+        const v=(y2Min||0)+range*i/4;
+        C.txt(ctx,v.toFixed(2),ml+w+6,y,{align:'left',size:10,color:color2});
+      }
+      C.txt(ctx,y2Label,ml+w+42,mt+h/2,{rot:Math.PI/2,size:10,color:color2,align:'center'});
+    }
+    ctx.restore();
+  },
+  legend: (ctx, items, x, y) => {
+    items.forEach(({color,label,dash},i)=>{
+      const lx=x, ly=y+i*18;
+      ctx.save(); ctx.fillStyle=color;
+      if(dash){ ctx.strokeStyle=color; ctx.lineWidth=2; ctx.setLineDash([5,3]);
+        ctx.beginPath(); ctx.moveTo(lx,ly); ctx.lineTo(lx+20,ly); ctx.stroke(); }
+      else ctx.fillRect(lx,ly-5,20,10);
+      ctx.restore();
+      C.txt(ctx,label,lx+26,ly,{align:'left',size:10,color:'#555'});
+    });
+  }
+};
+</script>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --mid: #444466;
+    --pale: #f5f4ef;
+    --accent: #2471a3;
+    --red: #c0392b;
+    --orange: #e67e22;
+    --green: #1e8449;
+    --rule: #d0cfc8;
+    --max-w: 780px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--pale);
+    color: var(--ink);
+    line-height: 1.75;
+  }
+  .masthead {
+    background: var(--ink);
+    color: #e8e4d8;
+    padding: 48px 24px 40px;
+    text-align: center;
+  }
+  .masthead .kicker {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #9090b0;
+    margin-bottom: 18px;
+  }
+  .masthead h1 {
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.15;
+    max-width: 720px;
+    margin: 0 auto 18px;
+    letter-spacing: -0.5px;
+  }
+  .masthead .deck {
+    font-size: clamp(15px, 2vw, 19px);
+    color: #b0b0c8;
+    max-width: 620px;
+    margin: 0 auto 24px;
+    font-style: italic;
+  }
+  .masthead .byline {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12px;
+    color: #7070a0;
+    letter-spacing: 1px;
+  }
+  article {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+  .lede {
+    font-size: 20px;
+    line-height: 1.65;
+    color: var(--mid);
+    padding: 36px 0 32px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 36px;
+  }
+  h2 {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 48px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--accent);
+  }
+  h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 32px 0 14px;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+  p { margin-bottom: 20px; font-size: 17px; }
+  strong { color: var(--ink); }
+
+  .callout {
+    background: white;
+    border-left: 4px solid var(--accent);
+    padding: 20px 24px;
+    margin: 32px 0;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--mid);
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .callout .stat {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    font-style: normal;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .chart-wrap {
+    background: white;
+    border-radius: 6px;
+    padding: 24px 20px 16px;
+    margin: 36px 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .chart-wrap .chart-title {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .chart-wrap .chart-sub {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 16px;
+  }
+  .chart-wrap canvas { width: 100% !important; }
+
+  .fig-embed {
+    margin: 36px 0;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  .fig-embed img { width: 100%; display: block; }
+  .fig-caption {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12px;
+    color: #777;
+    padding: 12px 16px;
+    background: #fafafa;
+    border-top: 1px solid var(--rule);
+    line-height: 1.5;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 28px 0;
+  }
+  .stat-box {
+    background: white;
+    border-radius: 6px;
+    padding: 20px 16px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .stat-box .num {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+  }
+  .stat-box .label {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11px;
+    color: #888;
+    line-height: 1.4;
+    margin-top: 4px;
+  }
+  .stat-box.red .num  { color: var(--red); }
+  .stat-box.orange .num { color: var(--orange); }
+  .stat-box.green .num { color: var(--green); }
+
+  .table-wrap { overflow-x: auto; margin: 28px 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  th {
+    background: var(--accent);
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+  }
+  td { padding: 9px 14px; border-bottom: 1px solid #eee; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f9f9f9; }
+
+  .rule { border: none; border-top: 1px solid var(--rule); margin: 40px 0; }
+  .methodology {
+    background: #eef3f8;
+    border-radius: 6px;
+    padding: 24px 28px;
+    margin: 40px 0;
+    font-size: 14px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: var(--mid);
+    line-height: 1.6;
+  }
+  .methodology h4 {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 520px) {
+    .grid-3 { grid-template-columns: 1fr; }
+    .stat-box .num { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="kicker">Epiphenomenon @ Trove &nbsp;·&nbsp; Data Analysis &nbsp;·&nbsp; May 2026</div>
+  <h1>The Anxiety Machine</h1>
+  <p class="deck">What 125 years of Australian newspapers and two decades of parliamentary debates reveal about how we talk when we're stressed</p>
+  <div class="byline">A public summary of the Epiphenomenon@Trove research experiment</div>
+</div>
+
+<article>
+
+<p class="lede">When Australians are doing it tough, politicians talk about China. When working people are squeezed, Parliament fills with talk about the cost of living. When property investors feel threatened, "negative gearing" dominates the headlines. These aren't random. They're patterns — and the data in the national archive shows them stretching back more than a century.</p>
+
+<h2>The Big Idea</h2>
+
+<h3>Our political language is a symptom, not a cause</h3>
+
+<p>We tend to assume that political discourse reflects what's actually happening in the world. If politicians are talking about the threat from China, it's because China is being threatening. If the cost of living dominates Question Time, it's because prices are rising. If small business is in the news, it's because small business is in trouble.</p>
+
+<p>Sometimes that's true. But a systematic analysis of 125 years of Australian newspaper archives and 20 years of parliamentary Hansard reveals something more interesting: <strong>the language our political system uses is shaped at least as much by the health of Australian institutions as by anything happening in the outside world.</strong></p>
+
+<p>When things are going well — when wages are decent, institutions are functioning, public trust is reasonably high — Australia's political discourse is relatively calm, even when real foreign threats exist. When internal conditions deteriorate, the volume goes up. The topic shifts. And the particular language that emerges depends on <em>which</em> part of Australian life is under pressure.</p>
+
+<div class="callout">
+  "The China threat talk in Australian Parliament was better predicted by domestic institutional stress than by Chinese foreign policy — with a two-to-three year lead."
+</div>
+
+<h2>Finding One</h2>
+<h3>The China threat is largely a mirror, not a window</h3>
+
+<p>Between 2006 and 2016, threat-coded China discourse in the House of Representatives averaged less than one reference per million words. Between 2017 and 2021, it rose to an average of 21 per million. At its peak in 2021, it had increased 37-fold from the 2006–2016 baseline.</p>
+
+<div class="grid-3">
+  <div class="stat-box">
+    <span class="num">37×</span>
+    <span class="label">Increase in China threat language in Parliament, 2006–2021</span>
+  </div>
+  <div class="stat-box red">
+    <span class="num">r = −0.74</span>
+    <span class="label">Correlation: institutional health leads China discourse by 2–3 years</span>
+  </div>
+  <div class="stat-box orange">
+    <span class="num">49%</span>
+    <span class="label">Of variance in China threat talk explained by domestic CAMS metrics alone</span>
+  </div>
+</div>
+
+<p>Did this spike in threat language correspond to a 37-fold increase in threatening Chinese behaviour? No. What it corresponded to was a deterioration in Australia's domestic institutional health that began two to three years earlier — falling public trust, rising political instability, declining real wages, weakening social cohesion.</p>
+
+<p>The statistical relationship is striking: measures of Australia's institutional health predicted subsequent China-threat discourse with a lag of two to three years (correlation r = −0.74 to −0.76), while the reverse — China talk predicting institutional health — was essentially zero.</p>
+
+<div class="chart-wrap">
+  <div class="chart-title">Parliamentary China-threat discourse vs Australian institutional health, 2006–2025</div>
+  <div class="chart-sub">Hansard House of Representatives · ppm = references per million words · τ = coherence index (higher = healthier)</div>
+  <canvas id="chartSino" width="720" height="240" style="width:100%;height:auto"></canvas>
+</div>
+
+<p>This doesn't mean the concerns raised in Parliament about China were fabricated. Real events — AUKUS, the Belt and Road debate, COVID-era tensions — played a role. But the underlying <em>volume and intensity</em> of threat-coded language was disproportionate to those events, and its trajectory followed the arc of domestic institutional deterioration with extraordinary consistency.</p>
+
+<p>There's also a historical parallel. Looking at Trove newspaper archives from 1900 to 1955, the same mechanism appears in reverse: during periods of high institutional coherence and economic confidence, Australian newspapers expressed their foundational exclusionary ideology — the White Australia Policy — more loudly and confidently than during crises. Threat-coded China discourse from that era was strongest during the Federation boom (1900–1913) when Australia was doing well, not when it was doing poorly. We called this the <strong>prosperity-ideology effect</strong>: confident systems express their exclusions from a position of strength.</p>
+
+<div class="table-wrap">
+  <table>
+    <tr><th>Regime</th><th>When it occurs</th><th>What it looks like</th><th>Historical examples</th></tr>
+    <tr>
+      <td><strong>Prosperity Ideology</strong></td>
+      <td>High institutional health, economic confidence</td>
+      <td>Confident expression of foundational exclusions — louder prejudice from a position of strength</td>
+      <td>White Australia discourse 1900–1913; Menzies-era anti-communism</td>
+    </tr>
+    <tr>
+      <td><strong>Stress Projection</strong></td>
+      <td>Falling institutional health, declining trust and wages</td>
+      <td>Elevated threat-coded foreign discourse; political instability; leadership churn</td>
+      <td>Sinophobia surge 2017–2021; post-WWI Red Scare 1919–1922</td>
+    </tr>
+    <tr>
+      <td><strong>Event Response</strong></td>
+      <td>Real external shocks</td>
+      <td>Sharp, contemporaneous spikes that decay quickly</td>
+      <td>Russophobia surge after February 2022 Ukraine invasion</td>
+    </tr>
+  </table>
+</div>
+
+<h2>Finding Two</h2>
+<h3>The economy sends a two-year warning before the political storm arrives</h3>
+
+<p>While the China-threat finding concerned the foreign register of Australian political anxiety, a parallel analysis tracked the domestic register: working-class grievance language in both the historical newspaper archive and in contemporary parliamentary debates.</p>
+
+<p>The grievance lexicon included phrases like "cost of living", "battler", "working families", "real wages", "housing affordability", "gig economy", "wage theft", and "robodebt". These were counted year by year in Hansard from 2006 to 2025.</p>
+
+<p>The key finding: <strong>the condition of Australia's labour and working-class institutions predicted the volume of parliamentary grievance discourse two years in advance</strong> — with a correlation of r = −0.75, one of the strongest single predictors in the entire dataset.</p>
+
+<div class="fig-embed">
+  <img src="figH1_hands_timeseries.png" alt="Working-class grievance discourse vs Hands Node Value, 1900-1955 and 2006-2025">
+  <div class="fig-caption"><strong>Figure 1.</strong> Working-class grievance discourse (ppm, orange) vs the CAMS Hands Node Value (blue dashed) — a composite score of coherence, capacity, stress, and abstraction in the labour domain. Top panel: Trove newspaper archive 1900–1955. Bottom panel: Hansard 2006–2025. In both cases, deterioration in the Hands node precedes the surge in grievance language by roughly two years.</div>
+</div>
+
+<p>To make this concrete: in 2020–21, the CAMS model rated the health of Australian working-class institutions at its lowest point since the 1930s Depression — scoring the Hands node across four dimensions (coherence of purpose, institutional capacity, systemic stress, and degree of abstraction from everyday life) rather than any single economic indicator. Two years later, in 2022–24, parliamentary debate was dominated by cost-of-living language at near-record levels (822 references per million words by 2024).</p>
+
+<div class="callout">
+  <span class="stat">2 years</span>
+  The structural lead time: deteriorating labour conditions in 2020–21 predicted the cost-of-living political storm of 2022–24 with two years to spare.
+</div>
+
+<p>The same pattern appeared in the historical archive. The Depression floor of 1931 — when the labour institution measure hit its all-time minimum (-0.5) — corresponded to the peak of newspaper grievance language: "susso" queues, "the dole", breadlines, "relief work", class-war rhetoric. Comparable in standardised terms to the 2024 peak.</p>
+
+<div class="chart-wrap">
+  <div class="chart-title">Grievance discourse in Parliament, 2006–2025</div>
+  <div class="chart-sub">Hansard House of Representatives · references per million words · key events annotated</div>
+  <canvas id="chartGriev" width="720" height="220" style="width:100%;height:auto"></canvas>
+</div>
+
+<p>A robustness check confirmed the result wasn't a single-scandal artefact: removing the word "robodebt" from the grievance vocabulary reduced the 2022–24 peak by only 5–12%, leaving the underlying surge intact.</p>
+
+<p>Comparing the two historical periods directly, using the same statistical scale:</p>
+<div class="grid-3">
+  <div class="stat-box red">
+    <span class="num">z = +2.37</span>
+    <span class="label">Grievance discourse peak, Depression 1931</span>
+  </div>
+  <div class="stat-box red">
+    <span class="num">z = +2.54</span>
+    <span class="label">Grievance discourse peak, 2024 — <em>exceeds 1931</em> in standardised terms</span>
+  </div>
+  <div class="stat-box orange">
+    <span class="num">+0.17σ</span>
+    <span class="label">2024 cost-of-living crisis is <em>louder</em> relative to its baseline than 1931 was</span>
+  </div>
+</div>
+
+<p>This doesn't mean conditions are worse than the Depression — they manifestly aren't. It means the contemporary parliamentary system amplifies labour stress into discourse more intensely than the 1930s press did. The 24-hour news cycle, social media, and a more adversarial parliamentary culture all lower the baseline and raise the ceiling for grievance expression.</p>
+
+<h2>Finding Three</h2>
+<h3>Different stresses produce different political languages</h3>
+
+<p>Australia's political system doesn't produce one kind of grievance — it produces several, depending on which section of society is under pressure.</p>
+
+<p>When working people are squeezed — wages stagnant, job insecurity rising, housing unaffordable — the political language that emerges is about "battlers", "working families", "real wages", and "cost of living". This is the <strong>labour register</strong>.</p>
+
+<p>When property owners and business operators are under pressure — foreclosures rising, business confidence falling, investments threatened — a different political language emerges: "small business", "investors", "negative gearing", "red tape", "foreclosures". This is the <strong>capital register</strong>.</p>
+
+<p>The historical record shows these two registers operate independently — and their simultaneous presence marks genuine systemic crisis.</p>
+
+<div class="fig-embed">
+  <img src="figH7_stewards_registers.png" alt="Stewards vs Hands — The Two-Register Model">
+  <div class="fig-caption"><strong>Figure 2.</strong> The two-register model across 125 years. Top: foreclosure discourse (capital-stress, blue) vs grievance discourse (labour-stress, red), with both institutional health measures overlaid. The 1931 Depression fires both registers simultaneously. WWI fires only the labour register (working people squeezed, asset-owners relatively protected). Bottom: the CAMS quadrant map showing which register dominates across 1895–2025.</div>
+</div>
+
+<div class="chart-wrap">
+  <div class="chart-title">Which register dominates? Hands vs Stewards institutional health, 1895–2025</div>
+  <div class="chart-sub">Four historical regimes identified by the intersection of labour health and capital/asset-owner health</div>
+  <canvas id="chartQuadrant" width="720" height="300" style="width:100%;height:auto"></canvas>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <tr><th>Period</th><th>Labour health</th><th>Capital/asset health</th><th>Dominant discourse</th></tr>
+    <tr><td><strong>Depression 1930–33</strong></td><td>Extreme floor</td><td>Extreme floor</td><td>Both registers fire — maximum political instability</td></tr>
+    <tr><td><strong>WWI 1916–19</strong></td><td>Very low</td><td>Moderate</td><td>Labour register only — class grievance, conscription battles</td></tr>
+    <tr><td><strong>Menzies boom 1950–59</strong></td><td>Strong</td><td>Strong</td><td>Neither dominant — relatively low political temperature</td></tr>
+    <tr><td><strong>Howard boom 2003–07</strong></td><td>Good</td><td>Historic peak</td><td>Asset-owner politics — property, aspirational voters, WorkChoices</td></tr>
+    <tr><td><strong>GFC 2008–09</strong></td><td>Moderate</td><td>Drops sharply</td><td>Both registers briefly activated</td></tr>
+    <tr><td><strong>2020–25 (now)</strong></td><td>Floor (lowest since 1930s)</td><td>Moderate</td><td><strong>Labour register only</strong> — cost of living dominates, property owners relatively protected</td></tr>
+  </table>
+</div>
+
+<p>The contemporary period is historically unusual. The CAMS Hands node shows stress at its highest and coherence and capacity at their lowest since the 1930s. But unlike the Depression and the 1970s stagflation — when both sides of the economy were hurting simultaneously — the Stewards node (capital and asset-owner institutions) in the 2020s remains comparatively intact. Property prices stayed elevated. Superannuation recovered after COVID. Business profits remained strong even as real wages fell. House prices stayed elevated. Superannuation recovered after COVID. Business profits remained strong even as real wages fell.</p>
+
+<p>This one-sided stress explains why the political temperature is high but the system hasn't collapsed: one node is floored, one is still standing. The working-class political register is at maximum volume; the capital-side register is comparatively quiet.</p>
+
+<h2>Finding Four</h2>
+<h3>We only campaign loudly for things we haven't won yet</h3>
+
+<p>A symmetric test was run alongside the grievance analysis: if bad times produce grievance language, do good times produce confident, aspirational labour language? We searched for "eight hour day", "living wage", and "full employment" across the same 56-year newspaper archive.</p>
+
+<p>The result was a null — and the null turned out to be the most interesting finding of all.</p>
+
+<div class="chart-wrap">
+  <div class="chart-title">The vocabulary of aspiration: when does confident labour language peak?</div>
+  <div class="chart-sub">Trove newspaper archive 1900–1955 · "eight hour day", "living wage", "full employment" ppm by year</div>
+  <canvas id="chartPositive" width="720" height="240" style="width:100%;height:auto"></canvas>
+</div>
+
+<p>"Eight hour day" peaked in 1911 — not in the 1950s when the eight-hour day was settled law, but during the Federation-era campaigns to extend it state by state. "Living wage" peaked in 1919 — not during the prosperous 1920s, but during the post-war labour militancy when it was still being fought for. "Full employment" peaked in 1945 — not during the Menzies boom when it had become routine policy, but during the debate over the White Paper on Full Employment when the idea was still contested.</p>
+
+<p>By the 1950s — the decade of highest institutional health in the entire 125-year record — all three terms had fallen to their historic minimum. The eight-hour day, the living wage, and full employment were now law. There was nothing left to campaign for.</p>
+
+<div class="callout">
+  "Institutionalised victories stop being articulated. We shout loudest about what we haven't secured yet."
+</div>
+
+<p>This asymmetry has a clean implication: <strong>grievance discourse responds monotonically to deteriorating conditions — rising as things get worse. Aspirational discourse responds to the contest — peaking during the struggle, then falling silent at the moment of victory.</strong></p>
+
+<p>The same pattern appears on the capital side: "negative gearing" discourse in Australian newspapers was highest not during the Howard boom (when property investors were most secure) but during 2010–2016, when Labor was threatening to reform the policy. 2006 and 2007, the peak of the property boom, saw only modest negative gearing discussion. 2013, when the policy was under active political threat, saw five times more.</p>
+
+<h2>What This Means for Australia in 2026</h2>
+
+<h3>The forecast is structural, not political</h3>
+
+<p>The analytical framework makes a specific, falsifiable prediction about Australian politics in the near term. Labour institutional health is at its 2020s floor. On the two-year lead time established by the data, cost-of-living and class-grievance discourse should peak around 2027–2028 and then begin declining — but only if the underlying conditions actually improve.</p>
+
+<p>The data also suggests a clear structural prescription: the discourse register will shift when, and only when, real wages rise sustainably, job insecurity declines, and housing becomes more accessible. Industrial relations reform, real wage growth, and housing supply are not just policy choices — they are the specific inputs that the two-year lead time model says will determine what Australians are talking about in Parliament in 2028.</p>
+
+<p>Crucially, the framework suggests that <strong>foreign-threat signalling is not an effective substitute</strong> for addressing domestic labour stress. The data from 2017–2025 shows both channels can run simultaneously — elevated China-threat language and elevated cost-of-living language coexisted through 2021 — but the Albanese government's diplomatic re-engagement with China from 2022 onward reduced the foreign register without affecting the domestic one. The cost-of-living surge continued regardless, because its driver was the 2020–21 Hands floor, not the state of Australia-China relations.</p>
+
+<p>The model also has an early-warning implication for the capital side: if property prices and business conditions deteriorate significantly — which they haven't, yet — the foreclosure and business-failure discourse would be expected to rise, activating the capital register alongside the labour register and creating the double-stress pattern last seen in the 1930s Depression and the 1970s stagflation.</p>
+
+<div class="callout">
+  The reappearance of aspirational language — "real wages rising", "housing affordability improving", "wages growth" — in parliamentary speech will itself mark recovery. The positive vocabulary returns when the struggle has been won.
+</div>
+
+<hr class="rule">
+
+<div class="methodology">
+  <h4>A Note on Methodology</h4>
+  <p>This research used the Trove National Library of Australia newspaper digitisation API to count the frequency of specific search terms in Australian newspapers, year by year, from 1895 to 1955. Frequencies were normalised against a baseline word ("the") to produce parts-per-million (ppm) measures comparable across years and corpus sizes.</p>
+  <p>Parliamentary data used Hansard XML files from the Open Australia Foundation, covering House of Representatives debates from 2006 to 2025. Institutional health measures came from the CAMS (Civilizational Analysis and Measurement System) annual Australian dataset, which scores eight dimensions of institutional function across eight societal nodes on a yearly basis from 1895 to 2026.</p>
+  <p>Key statistical methods: Spearman rank correlation, OLS regression, Mann-Whitney U tests, lag-correlation analysis, and z-score normalisation for cross-corpus comparison. All results quoted in this summary passed conventional significance thresholds (p &lt; 0.05) unless explicitly noted as marginal or null. The Hansard regression (n≈20) is noted as suggestive structural evidence rather than definitive proof.</p>
+  <p>The research was conducted in May 2026 as part of the Epiphenomenon@Trove project.</p>
+  <p style="margin-top:14px;"><strong>Full technical report:</strong> <a href="Epiphenomenon_Trove_Grok_Report_v2.docx" style="color:#2471a3;">Epiphenomenon@Trove — Grok Report v2 (Word)</a></p>
+</div>
+
+</article>
+
+<script>
+window.addEventListener('load', function() {
+
+/* ── CHART 1: China-threat bars + τ line ───────────────────── */
+(function(){
+  const cv = document.getElementById('chartSino');
+  const ctx = cv.getContext('2d');
+  const W=720, H=240, ml=52, mt=18, mr=58, mb=62;
+  const cw=W-ml-mr, ch=H-mt-mb;
+  const years=[2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025];
+  const sino=[0.05,0.05,0.4,0.06,0.2,0.1,0.1,0.1,0.1,0.1,0.57,1.2,2.1,4.5,18.2,35.1,22.1,14.3,10.2,8.5];
+  const tau=[1.74,1.64,1.21,1.39,1.22,1.40,1.28,1.20,1.12,1.18,1.25,1.38,1.33,1.30,0.99,0.97,1.08,1.10,1.14,1.14];
+  const n=years.length, bw=cw/n*0.65, gap=cw/n;
+  const sinoMax=36, tauMin=0.85, tauMax=1.85;
+  function sx(i){ return ml+i*gap+gap/2; }
+  function sy(v){ return mt+ch-(v/sinoMax)*ch; }
+  function ty(v){ return mt+ch-((v-tauMin)/(tauMax-tauMin))*ch; }
+
+  // grid
+  ctx.strokeStyle='#eee'; ctx.lineWidth=1;
+  [0,9,18,27,36].forEach(v=>{
+    const y=sy(v);
+    ctx.beginPath(); ctx.moveTo(ml,y); ctx.lineTo(ml+cw,y); ctx.stroke();
+    ctx.fillStyle='#888'; ctx.font='10px Arial'; ctx.textAlign='right'; ctx.textBaseline='middle';
+    ctx.fillText(v,ml-4,y);
+  });
+  // tau right axis
+  [0.9,1.1,1.3,1.5,1.7].forEach(v=>{
+    const y=ty(v);
+    ctx.fillStyle='#2471a3'; ctx.textAlign='left';
+    ctx.fillText(v.toFixed(1),ml+cw+4,y);
+  });
+
+  // bars
+  sino.forEach((v,i)=>{
+    const x=sx(i)-bw/2, bh=(v/sinoMax)*ch;
+    ctx.fillStyle='rgba(192,57,43,0.3)';
+    ctx.fillRect(x, mt+ch-bh, bw, bh);
+    ctx.strokeStyle='rgba(192,57,43,0.7)'; ctx.lineWidth=1;
+    ctx.strokeRect(x, mt+ch-bh, bw, bh);
+  });
+
+  // tau line
+  const tauPts=tau.map((v,i)=>[sx(i),ty(v)]);
+  ctx.strokeStyle='#2471a3'; ctx.lineWidth=2.5; ctx.setLineDash([]);
+  ctx.beginPath(); tauPts.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y)); ctx.stroke();
+  tauPts.forEach(([x,y])=>{ ctx.fillStyle='#2471a3'; ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2); ctx.fill(); });
+
+  // x labels (every 2 years)
+  ctx.fillStyle='#666'; ctx.font='10px Arial'; ctx.textAlign='center'; ctx.textBaseline='top';
+  years.forEach((yr,i)=>{ if(i%2===0) ctx.fillText(yr, sx(i), mt+ch+5); });
+
+  // axis labels
+  ctx.save(); ctx.fillStyle='#888'; ctx.font='11px Arial'; ctx.textAlign='center';
+  ctx.translate(13,mt+ch/2); ctx.rotate(-Math.PI/2); ctx.fillText('China-threat ppm',0,0); ctx.restore();
+  ctx.save(); ctx.fillStyle='#2471a3'; ctx.font='11px Arial'; ctx.textAlign='center';
+  ctx.translate(W-10,mt+ch/2); ctx.rotate(Math.PI/2); ctx.fillText('τ (higher = healthier)',0,0); ctx.restore();
+
+  // legend
+  const ly=H-20;
+  ctx.fillStyle='rgba(192,57,43,0.5)'; ctx.fillRect(ml,ly-5,16,10);
+  ctx.fillStyle='#555'; ctx.font='11px Arial'; ctx.textAlign='left'; ctx.textBaseline='middle';
+  ctx.fillText('China-threat language ppm',ml+20,ly);
+  ctx.strokeStyle='#2471a3'; ctx.lineWidth=2.5; ctx.setLineDash([]);
+  ctx.beginPath(); ctx.moveTo(ml+210,ly); ctx.lineTo(ml+230,ly); ctx.stroke();
+  ctx.fillText('Institutional coherence τ',ml+234,ly);
+})();
+
+/* ── CHART 2: Grievance area + Hands line ──────────────────── */
+(function(){
+  const cv=document.getElementById('chartGriev');
+  const ctx=cv.getContext('2d');
+  const W=720,H=220,ml=52,mt=18,mr=58,mb=55;
+  const cw=W-ml-mr, ch=H-mt-mb;
+  const years=[2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025];
+  const griev=[78,193,399,62,185,136,143,117,109,87,105,118,202,166,289,225,527,712,822,780];
+  const hands=[9.5,15.5,12.5,13.5,11.5,13.5,12.5,12.5,8.5,11.5,11.5,11.5,11.5,11.5,7.5,5.5,8.5,8.5,7.5,8.5];
+  const n=years.length, gap=cw/(n-1);
+  const gMax=900, hMin=0, hMax=20;
+  function gx(i){ return ml+i*gap; }
+  function gy(v){ return mt+ch-(v/gMax)*ch; }
+  function hy(v){ return mt+ch-((v-hMin)/(hMax-hMin))*ch; }
+
+  // grid
+  ctx.strokeStyle='#eee'; ctx.lineWidth=1;
+  [0,225,450,675,900].forEach(v=>{
+    const y=gy(v);
+    ctx.beginPath(); ctx.moveTo(ml,y); ctx.lineTo(ml+cw,y); ctx.stroke();
+    ctx.fillStyle='#888'; ctx.font='10px Arial'; ctx.textAlign='right'; ctx.textBaseline='middle';
+    ctx.fillText(v,ml-4,y);
+  });
+  [0,5,10,15,20].forEach(v=>{
+    const y=hy(v);
+    ctx.fillStyle='#e67e22'; ctx.textAlign='left';
+    ctx.fillText(v,ml+cw+4,y);
+  });
+
+  // grievance area
+  ctx.fillStyle='rgba(192,57,43,0.12)';
+  ctx.beginPath(); ctx.moveTo(gx(0),mt+ch);
+  griev.forEach((v,i)=>ctx.lineTo(gx(i),gy(v)));
+  ctx.lineTo(gx(n-1),mt+ch); ctx.closePath(); ctx.fill();
+  // grievance line
+  ctx.strokeStyle='#c0392b'; ctx.lineWidth=2.5; ctx.setLineDash([]);
+  ctx.beginPath(); griev.forEach((v,i)=>i?ctx.lineTo(gx(i),gy(v)):ctx.moveTo(gx(i),gy(v))); ctx.stroke();
+  griev.forEach((v,i)=>{ ctx.fillStyle='#c0392b'; ctx.beginPath(); ctx.arc(gx(i),gy(v),3,0,Math.PI*2); ctx.fill(); });
+
+  // hands dashed line
+  ctx.strokeStyle='#e67e22'; ctx.lineWidth=2; ctx.setLineDash([6,4]);
+  ctx.beginPath(); hands.forEach((v,i)=>i?ctx.lineTo(gx(i),hy(v)):ctx.moveTo(gx(i),hy(v))); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // key annotations
+  const annots=[{i:14,lbl:'Hands\nfloor'},{i:18,lbl:'822 ppm\npeak'}];
+  annots.forEach(({i,lbl})=>{
+    const x=gx(i);
+    ctx.strokeStyle='#aaa'; ctx.lineWidth=0.8; ctx.setLineDash([3,3]);
+    ctx.beginPath(); ctx.moveTo(x,mt+10); ctx.lineTo(x,mt+ch); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle='#777'; ctx.font='9px Arial'; ctx.textAlign='center'; ctx.textBaseline='top';
+    lbl.split('\n').forEach((ln,j)=>ctx.fillText(ln,x,mt+12+j*11));
+  });
+
+  // x labels
+  ctx.fillStyle='#666'; ctx.font='10px Arial'; ctx.textAlign='center'; ctx.textBaseline='top';
+  years.forEach((yr,i)=>{ if(i%2===0) ctx.fillText(yr,gx(i),mt+ch+5); });
+
+  // axis labels
+  ctx.save(); ctx.fillStyle='#888'; ctx.font='11px Arial'; ctx.textAlign='center';
+  ctx.translate(13,mt+ch/2); ctx.rotate(-Math.PI/2); ctx.fillText('Grievance ppm',0,0); ctx.restore();
+  ctx.save(); ctx.fillStyle='#e67e22'; ctx.font='11px Arial'; ctx.textAlign='center';
+  ctx.translate(W-10,mt+ch/2); ctx.rotate(Math.PI/2); ctx.fillText('Labour health →',0,0); ctx.restore();
+
+  // legend
+  const ly=H-18;
+  ctx.fillStyle='rgba(192,57,43,0.4)'; ctx.fillRect(ml,ly-5,16,10);
+  ctx.fillStyle='#555'; ctx.font='11px Arial'; ctx.textAlign='left'; ctx.textBaseline='middle';
+  ctx.fillText('Grievance ppm (Hansard)',ml+20,ly);
+  ctx.strokeStyle='#e67e22'; ctx.lineWidth=2; ctx.setLineDash([6,4]);
+  ctx.beginPath(); ctx.moveTo(ml+220,ly); ctx.lineTo(ml+240,ly); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillText('Labour institutional health',ml+244,ly);
+})();
+
+/* ── CHART 3: Quadrant scatter ─────────────────────────────── */
+(function(){
+  const cv=document.getElementById('chartQuadrant');
+  const ctx=cv.getContext('2d');
+  const W=720,H=300,ml=58,mt=18,mr=20,mb=55;
+  const cw=W-ml-mr, ch=H-mt-mb;
+  const pts=[
+    {x:13.5,y:12.0,r:10,lbl:'1900s',col:'rgba(30,132,73,0.75)'},
+    {x:10.5,y:10.5,r:9, lbl:'1910s',col:'rgba(36,113,163,0.65)'},
+    {x:13.2,y:9.7, r:9, lbl:'1920s',col:'rgba(36,113,163,0.65)'},
+    {x:10.8,y:8.0, r:14,lbl:'1930s\n(Depression)',col:'rgba(192,57,43,0.85)'},
+    {x:11.2,y:11.8,r:9, lbl:'1940s',col:'rgba(125,60,152,0.65)'},
+    {x:15.6,y:13.2,r:12,lbl:'1950s\n(Menzies boom)',col:'rgba(30,132,73,0.85)'},
+    {x:14.9,y:12.6,r:9, lbl:'1960s',col:'rgba(30,132,73,0.6)'},
+    {x:10.0,y:8.8, r:12,lbl:'1970s\n(stagflation)',col:'rgba(192,57,43,0.75)'},
+    {x:11.5,y:11.2,r:9, lbl:'1980s',col:'rgba(36,113,163,0.6)'},
+    {x:13.4,y:11.1,r:9, lbl:'1990s',col:'rgba(36,113,163,0.6)'},
+    {x:18.6,y:13.5,r:12,lbl:'2000s\n(Howard boom)',col:'rgba(30,132,73,0.85)'},
+    {x:15.9,y:11.6,r:9, lbl:'2010s',col:'rgba(36,113,163,0.6)'},
+    {x:12.6,y:7.9, r:14,lbl:'2020s\n▶ NOW',col:'rgba(230,126,34,0.95)'},
+  ];
+  const xMin=4,xMax=24,yMin=4,yMax=18;
+  function px(v){ return ml+(v-xMin)/(xMax-xMin)*cw; }
+  function py(v){ return mt+ch-(v-yMin)/(yMax-yMin)*ch; }
+
+  // quadrant shading
+  const midX=px(10), midY=py(10);
+  ctx.fillStyle='rgba(192,57,43,0.04)'; ctx.fillRect(ml,midY,midX-ml,mt+ch-midY);
+  ctx.fillStyle='rgba(30,132,73,0.04)'; ctx.fillRect(midX,mt,ml+cw-midX,midY-mt);
+
+  // grid
+  ctx.strokeStyle='#eee'; ctx.lineWidth=1;
+  [4,8,12,16,20,24].forEach(v=>{
+    ctx.beginPath(); ctx.moveTo(px(v),mt); ctx.lineTo(px(v),mt+ch); ctx.stroke();
+    ctx.fillStyle='#888'; ctx.font='10px Arial'; ctx.textAlign='center'; ctx.textBaseline='top';
+    ctx.fillText(v,px(v),mt+ch+4);
+  });
+  [4,6,8,10,12,14,16,18].forEach(v=>{
+    ctx.beginPath(); ctx.moveTo(ml,py(v)); ctx.lineTo(ml+cw,py(v)); ctx.stroke();
+    ctx.fillStyle='#888'; ctx.textAlign='right'; ctx.textBaseline='middle';
+    ctx.fillText(v,ml-4,py(v));
+  });
+
+  // threshold lines
+  ctx.strokeStyle='#bbb'; ctx.lineWidth=1.2; ctx.setLineDash([5,4]);
+  ctx.beginPath(); ctx.moveTo(midX,mt); ctx.lineTo(midX,mt+ch); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(ml,midY); ctx.lineTo(ml+cw,midY); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // quadrant labels (faint)
+  ctx.fillStyle='rgba(192,57,43,0.25)'; ctx.font='bold 11px Arial'; ctx.textAlign='center';
+  ctx.fillText('BOTH STRESSED — crisis',px(7),py(6.5));
+  ctx.fillStyle='rgba(30,132,73,0.25)';
+  ctx.fillText('BOTH STRONG — prosperity',px(17.5),py(15));
+  ctx.fillStyle='rgba(230,126,34,0.3)';
+  ctx.fillText('Hands only stressed',px(17),py(6.5));
+  ctx.fillStyle='rgba(36,113,163,0.25)';
+  ctx.fillText('Stewards only stressed',px(7),py(15));
+
+  // bubbles
+  pts.forEach(p=>{
+    ctx.fillStyle=p.col;
+    ctx.beginPath(); ctx.arc(px(p.x),py(p.y),p.r,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='rgba(0,0,0,0.2)'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.arc(px(p.x),py(p.y),p.r,0,Math.PI*2); ctx.stroke();
+    ctx.fillStyle='#222'; ctx.font=`bold 9px Arial`;
+    const lns=p.lbl.split('\n');
+    const by=py(p.y)+(p.r+10);
+    const fy=by+mt+ch<H?by:py(p.y)-p.r-6-lns.length*11;
+    ctx.textAlign='center'; ctx.textBaseline='top';
+    lns.forEach((ln,j)=>ctx.fillText(ln,px(p.x),fy+j*11));
+  });
+
+  // axes labels
+  ctx.fillStyle='#666'; ctx.font='12px Arial'; ctx.textAlign='center'; ctx.textBaseline='top';
+  ctx.fillText('Capital / Asset-owner health  →',ml+cw/2,mt+ch+28);
+  ctx.save(); ctx.fillStyle='#666'; ctx.font='12px Arial'; ctx.textAlign='center';
+  ctx.translate(13,mt+ch/2); ctx.rotate(-Math.PI/2); ctx.fillText('Labour / Working-class health  →',0,0); ctx.restore();
+})();
+
+/* ── CHART 4: Positive labour vocabulary ───────────────────── */
+(function(){
+  const cv=document.getElementById('chartPositive');
+  const ctx=cv.getContext('2d');
+  const W=720,H=240,ml=52,mt=18,mr=58,mb=65;
+  const cw=W-ml-mr, ch=H-mt-mb;
+  const years=[1900,1905,1910,1915,1919,1920,1925,1930,1931,1935,1940,1945,1950,1955];
+  const eh=   [1203,1809,1663,1632,1895,1658,1145, 868, 911, 626, 510, 497, 277, 164];
+  const lw=   [ 220, 343, 777, 570,2546,2162, 660, 562, 562, 594, 243, 264, 325, 143];
+  const fe=   [  36,  27,  51,  58,  54,  45,  38,  67,  82, 262, 247,2486, 852, 834];
+  const hand= [  12,13.5,  16,10.5, 5.5, 9.5, 9.5, 1.5,-0.5,10.5,  14,  11,10.5,11.5];
+  const n=years.length, bw=cw/n*0.65, slot=cw/n;
+  const totals=eh.map((_,i)=>eh[i]+lw[i]+fe[i]);
+  const yMax=Math.ceil(Math.max(...totals)/500)*500;
+  const hMin=-2,hMax=20;
+  function bx(i){ return ml+i*slot+slot/2-bw/2; }
+  function by(top,bot){ return [mt+ch-(top/yMax)*ch, (top-bot)/yMax*ch]; }
+  function hy(v){ return mt+ch-((v-hMin)/(hMax-hMin))*ch; }
+
+  // grid
+  ctx.strokeStyle='#eee'; ctx.lineWidth=1;
+  for(let i=0;i<=4;i++){
+    const v=yMax*i/4, y=mt+ch-(i/4)*ch;
+    ctx.beginPath(); ctx.moveTo(ml,y); ctx.lineTo(ml+cw,y); ctx.stroke();
+    ctx.fillStyle='#888'; ctx.font='10px Arial'; ctx.textAlign='right'; ctx.textBaseline='middle';
+    ctx.fillText(Math.round(v),ml-4,y);
+  }
+  [0,5,10,15,20].forEach(v=>{
+    ctx.fillStyle='#e67e22'; ctx.textAlign='left'; ctx.textBaseline='middle';
+    ctx.fillText(v,ml+cw+4,hy(v));
+  });
+
+  // stacked bars
+  const cols=['rgba(36,113,163,0.45)','rgba(36,113,163,0.75)','rgba(26,54,93,0.85)'];
+  const stacks=[eh,lw,fe];
+  years.forEach((_,i)=>{
+    let cum=0;
+    stacks.forEach((s,si)=>{
+      const val=s[i];
+      const [y,h]=by(cum+val,cum);
+      ctx.fillStyle=cols[si]; ctx.fillRect(bx(i),y,bw,h);
+      cum+=val;
+    });
+  });
+
+  // hands dashed line
+  ctx.strokeStyle='#e67e22'; ctx.lineWidth=2.5; ctx.setLineDash([6,4]);
+  ctx.beginPath(); hand.forEach((v,i)=>{
+    const x=bx(i)+bw/2;
+    i?ctx.lineTo(x,hy(v)):ctx.moveTo(x,hy(v));
+  }); ctx.stroke(); ctx.setLineDash([]);
+  hand.forEach((v,i)=>{ ctx.fillStyle='#e67e22'; ctx.beginPath(); ctx.arc(bx(i)+bw/2,hy(v),3,0,Math.PI*2); ctx.fill(); });
+
+  // x labels
+  ctx.fillStyle='#666'; ctx.font='10px Arial'; ctx.textAlign='center'; ctx.textBaseline='top';
+  years.forEach((yr,i)=>ctx.fillText(yr,bx(i)+bw/2,mt+ch+5));
+
+  // axis labels
+  ctx.save(); ctx.fillStyle='#888'; ctx.font='11px Arial'; ctx.textAlign='center';
+  ctx.translate(13,mt+ch/2); ctx.rotate(-Math.PI/2); ctx.fillText('ppm (stacked)',0,0); ctx.restore();
+  ctx.save(); ctx.fillStyle='#e67e22'; ctx.font='11px Arial'; ctx.textAlign='center';
+  ctx.translate(W-10,mt+ch/2); ctx.rotate(Math.PI/2); ctx.fillText('Labour health →',0,0); ctx.restore();
+
+  // legend
+  const ly=H-18;
+  const items=[
+    {col:cols[0],lbl:'"eight hour day"'},
+    {col:cols[1],lbl:'"living wage"'},
+    {col:cols[2],lbl:'"full employment"'},
+  ];
+  let lx=ml;
+  items.forEach(({col,lbl})=>{
+    ctx.fillStyle=col; ctx.fillRect(lx,ly-5,14,10);
+    ctx.fillStyle='#555'; ctx.font='10px Arial'; ctx.textAlign='left'; ctx.textBaseline='middle';
+    ctx.fillText(lbl,lx+18,ly); lx+=ctx.measureText(lbl).width+36;
+  });
+  ctx.strokeStyle='#e67e22'; ctx.lineWidth=2; ctx.setLineDash([6,4]);
+  ctx.beginPath(); ctx.moveTo(lx,ly); ctx.lineTo(lx+20,ly); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#555'; ctx.fillText('Labour institutional health',lx+24,ly);
+})();
+
+}); // end window.load
+</script>
+</body>
+</html>
