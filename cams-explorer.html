@@ -384,6 +384,7 @@ async function loadData() {
         const opt = document.createElement('option');
         opt.value = name;
         opt.textContent = name;
+        if (name.includes('ensemble') || name.includes('(ens)')) opt.style.fontWeight = '700';
         sel.appendChild(opt);
     });
 

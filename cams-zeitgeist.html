@@ -748,7 +748,7 @@ async function init() {
     setStatus(societies.length + ' societies loaded.');
 
     const sel = document.getElementById('societySelect');
-    societies.forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; sel.appendChild(o); });
+    societies.forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; if(s.includes('ensemble')||s.includes('(ens)')) o.style.fontWeight='700'; sel.appendChild(o); });
 
     function setSociety(s) {
         if (playInterval) togglePlay();
