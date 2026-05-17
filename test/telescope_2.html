@@ -66,9 +66,9 @@ input[type=range]#yr-slider{flex:1;-webkit-appearance:none;height:2px;background
 input[type=range]#yr-slider::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--amber);border-radius:50%;border:2px solid var(--bg);cursor:pointer;box-shadow:0 0 8px rgba(240,160,32,0.5)}
 .yr-range{font-family:var(--font-m);font-size:8px;color:var(--text3)}
 
-/* CANVAS */
+/* COORD VIZ */
 .canvas-area{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;gap:12px;min-height:460px}
-#sybon{display:block}
+#coord-svg{display:block}
 
 /* BASIN BAND */
 .basin-band{display:flex;align-items:center;justify-content:center;gap:20px;padding:8px 20px;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);width:100%}
@@ -141,7 +141,7 @@ input[type=range]#yr-slider::-webkit-slider-thumb{-webkit-appearance:none;width:
 
 @media print {
   body { background:#fff; color:#111; }
-  header, .society-bar, .year-strip, .basin-band, .metrics-row, .timeline-area, .scanline, canvas { display:none !important; }
+  header, .society-bar, .year-strip, .basin-band, .metrics-row, .timeline-area, .scanline { display:none !important; }
   .dossier-col { max-height:none; overflow:visible; background:#fff; color:#111; border:none; }
   .dossier-header { background:#f8f8f8; border-bottom:2px solid #000; }
   .section { border-bottom:1px solid #ccc; page-break-inside:avoid; }
@@ -224,7 +224,7 @@ input[type=range]#yr-slider::-webkit-slider-thumb{-webkit-appearance:none;width:
     <div style="margin:0 18px 0; padding:12px 12px 0; background:#FBF7EC; border:1px solid var(--border); border-radius:2px; box-shadow:0 2px 0 var(--border2),0 18px 40px -20px rgba(27,42,51,0.15); position:relative;">
       <div style="font-family:var(--font-m); font-size:8px; letter-spacing:2px; color:var(--text3); text-transform:uppercase; margin-bottom:6px; padding-left:4px;">Live Coordination View</div>
       <div class="canvas-area" style="min-height:300px; padding:0; justify-content:center; position:relative;">
-        <canvas id="sybon" width="400" height="300"></canvas>
+        <svg id="coord-svg" viewBox="0 0 400 300" width="400" height="300" style="display:block; background:#FBF7EC; max-width:100%;"></svg>
         <div id="node-tooltip" style="position:fixed; display:none; background:#fff; border:1px solid var(--border); padding:8px 10px; font-family:var(--font-m); font-size:9px; max-width:220px; z-index:20; pointer-events:none; box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>
       </div>
       <div id="yr-big" style="font-family:var(--font-d); font-size:72px; font-weight:700; color:rgba(27,42,51,0.08); text-align:right; line-height:1; padding:0 8px 4px; margin-top:-16px; pointer-events:none; user-select:none;">—</div>
@@ -311,284 +311,225 @@ let years = [];
 let animT = 0;
 let animRaf = null;
 
-// ── CANVAS ────────────────────────────────────────────────────────────────────
-const canvas = document.getElementById('sybon');
-const ctx = canvas.getContext('2d');
-const CX=210, CY=180, R=130;
+// ── SVG COORDINATION VIEW (ported from cams-telescope/telescope-app.jsx CoordView) ──
+const SVG_W = 400, SVG_H = 300;
+const NS = 'http://www.w3.org/2000/svg';
 
-function nodeRGB(v){
-  if(v>=12)  return [0,230,190];
-  if(v>=6)   return [60,200,140];
-  if(v>=0)   return [230,165,30];
-  if(v>=-6)  return [220,90,40];
-  return [210,40,50];
-}
-
-// Slow (reflective/long-horizon) vs Fast (reactive) node coloring for light theme
-function nodeColor(v, nodeName){
-  const isSlow = SLOW_NODES.includes(nodeName);
-  if(isSlow){
-    // Cool teal/cyan family for slow
-    if(v>=12)  return [0,180,160];
-    if(v>=6)   return [40,160,140];
-    if(v>=0)   return [80,140,120];
-    if(v>=-6)  return [180,100,80];
-    return [160,60,70];
-  } else {
-    // Warm amber/orange-red for fast
-    if(v>=12)  return [220,140,40];
-    if(v>=6)   return [210,130,50];
-    if(v>=0)   return [200,110,40];
-    if(v>=-6)  return [200,80,50];
-    return [180,50,40];
-  }
-}
-function nc(v){const[r,g,b]=nodeRGB(v);return`rgb(${r},${g},${b})`;}
-function ncA(v,a){const[r,g,b]=nodeRGB(v);return`rgba(${r},${g},${b},${a})`;}
-
-// ── SPRING PHYSICS SIMULATION ─────────────────────────────────────
-// Each node is a particle with position + velocity.
-// Springs connect every pair; rest length ∝ 1/bond, stiffness ∝ bond.
-// Central gravity pulls toward CX,CY. Repulsion prevents overlap.
-
-const sim = {
-  pos: NODES.map((_,i) => {
-    const a = -Math.PI/2 + 2*Math.PI*i/8;
-    return { x: CX + R*Math.cos(a), y: CY + R*Math.sin(a), vx:0, vy:0 };
-  }),
-  targetPos: null, // computed from data each frame
-  trails: NODES.map(() => []), // position history for motion trails
+const TS_NODE_HEX = {
+  Lore:'#2E8B6B', Archive:'#2F7A5C',
+  Helm:'#C84C3E', Stewards:'#D98B2B', Shield:'#B0392E',
+  Craft:'#3A6FA8', Hands:'#4B7CAE', Flow:'#6A8FB8',
 };
 
-function computeTargets(d) {
-  // Target rest positions: stronger bonds → closer to centre
-  // Dominant node pulls toward center; weak nodes drift out
-  const nd = d.nodes;
-  const vals = NODES.map(n => nd[n] ? nd[n].V : 0);
-  const bonds = NODES.map(n => nd[n] ? nd[n].b : 0);
-  const maxB = Math.max(...bonds, 0.01);
-  return NODES.map((n, i) => {
-    const dist = R * (0.35 + 0.65 * (1 - bonds[i]/maxB)); // strong bond = close
-    const a = -Math.PI/2 + 2*Math.PI*i/8;
-    return { x: CX + dist*Math.cos(a), y: CY + dist*Math.sin(a) };
-  });
+// Particle state — one entry per node, persists across frames
+const coordState = NODES.map((_,i) => {
+  const a = (i/8)*Math.PI*2 - Math.PI/2;
+  const r0 = Math.min(SVG_W, SVG_H)*0.30;
+  return { x: SVG_W/2 + Math.cos(a)*r0, y: SVG_H/2 + Math.sin(a)*r0, vx:0, vy:0 };
+});
+
+// Compute Gaussian RBF W matrix, V values, and sigma from node data object
+function computeCoordInputs(nd) {
+  const matrix = NODES.map(n => nd[n] ? [nd[n].C, nd[n].K, nd[n].S, nd[n].A] : [5,5,5,5]);
+  const V = matrix.map(([c,k,s,a]) => c + k - s + 0.5*a);
+  const sigma = matrix.map(([c,k,s,a]) => (a*c)*(k-s));
+  const edist = (x,y) => Math.sqrt(x.reduce((acc,xi,ii) => acc+(xi-y[ii])**2, 0));
+  const Dmat = matrix.map(x => matrix.map(y => edist(x,y)));
+  const flat = [];
+  for(let i=0;i<8;i++) for(let j=i+1;j<8;j++) flat.push(Dmat[i][j]);
+  flat.sort((a,b)=>a-b);
+  const med = flat[Math.floor(flat.length/2)] || 1;
+  const sw = Math.max(med, 0.5);
+  const W = Dmat.map(row => row.map(d => Math.exp(-(d*d)/(2*sw*sw))));
+  return { matrix, V, sigma, W };
 }
 
-function stepPhysics(d) {
-  const nd = d.nodes;
-  const bonds = NODES.map(n => nd[n] ? nd[n].b : 0);
-  const vals = NODES.map(n => nd[n] ? nd[n].V : 0);
-  const stress = NODES.map(n => nd[n] ? nd[n].S : 0);
-  const targets = computeTargets(d);
-  const dt = 0.16;
-  const damping = 0.88;
-  const N = sim.pos.length;
+// Build the SVG DOM structure (edges + node groups); called once before animation starts
+function initCoordSVG() {
+  const svg = document.getElementById('coord-svg');
+  svg.innerHTML = '';
 
-  for (let i = 0; i < N; i++) {
-    const p = sim.pos[i];
-    let fx = 0, fy = 0;
+  // Concentric guide rings (opacity matches CoordView)
+  const ringsG = document.createElementNS(NS, 'g');
+  ringsG.setAttribute('opacity', '0.16');
+  [0.20, 0.34, 0.46].forEach(f => {
+    const c = document.createElementNS(NS, 'circle');
+    c.setAttribute('cx', SVG_W/2); c.setAttribute('cy', SVG_H/2);
+    c.setAttribute('r', Math.min(SVG_W,SVG_H)*f);
+    c.setAttribute('fill','none'); c.setAttribute('stroke','var(--border2)');
+    c.setAttribute('stroke-width','0.5'); c.setAttribute('stroke-dasharray','2 4');
+    ringsG.appendChild(c);
+  });
+  svg.appendChild(ringsG);
 
-    // Spring toward target position (main attractor)
-    const stiffness = 0.06 + bonds[i] * 0.12;
-    fx += (targets[i].x - p.x) * stiffness;
-    fy += (targets[i].y - p.y) * stiffness;
-
-    // Central gravity (Λ pull)
-    const dxc = CX - p.x, dyc = CY - p.y;
-    const distC = Math.hypot(dxc, dyc) + 1;
-    const gravStr = 0.02 * d.b; // stronger Λ = more cohesion
-    fx += dxc * gravStr;
-    fy += dyc * gravStr;
-
-    // Inter-node springs: bonded pairs attract, all pairs repel
-    for (let j = 0; j < N; j++) {
-      if (i === j) continue;
-      const q = sim.pos[j];
-      const dx = q.x - p.x, dy = q.y - p.y;
-      const dist = Math.hypot(dx, dy) + 0.1;
-      const nx = dx/dist, ny = dy/dist;
-
-      // Repulsion (prevent overlap)
-      const repel = -800 / (dist * dist);
-      fx += nx * repel;
-      fy += ny * repel;
-
-      // Spring between adjacent nodes (ring topology)
-      if (j === (i+1)%8 || j === (i+7)%8) {
-        const avgBond = (bonds[i] + bonds[j]) / 2;
-        const restLen = 50 + (1 - avgBond) * 80;
-        const springF = (dist - restLen) * avgBond * 0.04;
-        fx += nx * springF;
-        fy += ny * springF;
-      }
-
-      // Cross-links for high-bond pairs (non-adjacent)
-      const crossBond = (bonds[i] + bonds[j]) / 2;
-      if (crossBond > 0.5) {
-        const restLen = 80 + (1 - crossBond) * 60;
-        const springF = (dist - restLen) * crossBond * 0.008;
-        fx += nx * springF;
-        fy += ny * springF;
-      }
-    }
-
-    // Stress jitter — high-stress nodes vibrate
-    const jitter = stress[i] * 0.3;
-    fx += (Math.random() - 0.5) * jitter;
-    fy += (Math.random() - 0.5) * jitter;
-
-    p.vx = (p.vx + fx * dt) * damping;
-    p.vy = (p.vy + fy * dt) * damping;
-    p.x += p.vx;
-    p.y += p.vy;
-
-    // Clamp inside canvas
-    const margin = 30;
-    p.x = Math.max(margin, Math.min(canvas.width - margin, p.x));
-    p.y = Math.max(margin, Math.min(canvas.height - margin, p.y));
-
-    // Trail history
-    sim.trails[i].push({ x: p.x, y: p.y });
-    if (sim.trails[i].length > 40) sim.trails[i].shift();
+  // 12 bond edge lines — updated each frame
+  const edgesG = document.createElementNS(NS, 'g');
+  svg._edgeEls = [];
+  for(let k=0;k<12;k++) {
+    const line = document.createElementNS(NS, 'line');
+    line.setAttribute('stroke-linecap','round');
+    line.setAttribute('opacity','0');
+    edgesG.appendChild(line);
+    svg._edgeEls.push(line);
   }
+  svg.appendChild(edgesG);
+
+  // Node groups — halo + body + specular + value label + name label
+  const nodesG = document.createElementNS(NS, 'g');
+  svg._nodeEls = [];
+  NODES.forEach((n) => {
+    const g = document.createElementNS(NS, 'g');
+
+    const halo = document.createElementNS(NS, 'circle');
+    halo.setAttribute('fill', 'rgba(0,184,158,0.32)');
+    g.appendChild(halo);
+
+    const body = document.createElementNS(NS, 'circle');
+    body.setAttribute('fill', TS_NODE_HEX[n] || '#888');
+    body.setAttribute('stroke', 'rgba(0,0,0,0.18)');
+    body.setAttribute('stroke-width', '1');
+    g.appendChild(body);
+
+    const spec = document.createElementNS(NS, 'circle');
+    spec.setAttribute('fill', 'rgba(255,255,255,0.22)');
+    g.appendChild(spec);
+
+    const valTxt = document.createElementNS(NS, 'text');
+    valTxt.setAttribute('text-anchor','middle');
+    valTxt.setAttribute('dominant-baseline','central');
+    valTxt.setAttribute('font-family','var(--font-m)');
+    valTxt.setAttribute('font-weight','700');
+    valTxt.setAttribute('fill','#fff');
+    valTxt.setAttribute('y','1');
+    g.appendChild(valTxt);
+
+    const nameTxt = document.createElementNS(NS, 'text');
+    nameTxt.setAttribute('text-anchor','middle');
+    nameTxt.setAttribute('font-family','var(--font-m)');
+    nameTxt.setAttribute('font-size','10');
+    nameTxt.setAttribute('font-weight','600');
+    nameTxt.setAttribute('fill','var(--text2)');
+    nameTxt.textContent = n;
+    g.appendChild(nameTxt);
+
+    nodesG.appendChild(g);
+    svg._nodeEls.push({ g, halo, body, spec, valTxt, nameTxt });
+  });
+  svg.appendChild(nodesG);
 }
 
 function drawFrame(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle='#F5F1E4';ctx.fillRect(0,0,canvas.width,canvas.height);
-
   const yr = years[curYearIdx];
   if(!yr) return;
   const d = DATA[curSociety][yr];
   const nd = d.nodes;
-  const vals = NODES.map(n=>nd[n]?nd[n].V:0);
-  const bonds = NODES.map(n=>nd[n]?nd[n].b:0);
 
-  // Step physics
-  stepPhysics(d);
+  const { matrix, V, sigma, W } = computeCoordInputs(nd);
 
-  const pts = sim.pos;
-  const lam = d.b;
-  const breathe = 0.94+0.06*Math.sin(animT*0.025);
+  // Node radius proportional to |V| (matches CoordView sizeMap)
+  const Vabs = V.map(Math.abs);
+  const vMin = Math.min(...Vabs), vMax = Math.max(...Vabs, 1);
+  const sizeMap = NODES.map((_,i) => {
+    const norm = vMax===vMin ? 0.5 : (Vabs[i]-vMin)/(vMax-vMin);
+    return 18 + norm*22;
+  });
 
-  // ── Lambda centre glow ──
-  const lR = 16 + lam*36*breathe;
-  for(let i=3;i>=1;i--){
-    const g=ctx.createRadialGradient(CX,CY,0,CX,CY,lR*(1+i*0.8));
-    g.addColorStop(0,`rgba(140,91,184,${lam*0.18/i})`);
-    g.addColorStop(1,'transparent');
-    ctx.fillStyle=g;ctx.beginPath();ctx.arc(CX,CY,lR*(1+i*0.8),0,Math.PI*2);ctx.fill();
-  }
-  ctx.beginPath();ctx.arc(CX,CY,lR*0.4,0,Math.PI*2);
-  ctx.fillStyle=`rgba(140,91,184,${0.2+lam*0.4})`;ctx.fill();
-  ctx.fillStyle='rgba(27,42,51,0.85)';
-  ctx.font=`700 9px 'JetBrains Mono',monospace`;
-  ctx.textAlign='center';ctx.textBaseline='middle';
-  ctx.fillText(`Λ ${lam.toFixed(2)}`,CX,CY);
+  // Top 12 bond pairs for edge display
+  const allPairs = [];
+  for(let i=0;i<8;i++) for(let j=i+1;j<8;j++) allPairs.push({i,j,w:W[i][j]});
+  allPairs.sort((a,b)=>b.w-a.w);
+  const edges = allPairs.slice(0,12);
 
-  // ── Motion trails ──
-  for(let i=0;i<8;i++){
-    const trail = sim.trails[i];
-    if(trail.length<2) continue;
-    const[r,g,bl]=nodeColor(vals[i], NODES[i]);
-    ctx.beginPath();
-    ctx.moveTo(trail[0].x, trail[0].y);
-    for(let t=1;t<trail.length;t++){
-      ctx.lineTo(trail[t].x, trail[t].y);
+  // Bond threshold for spring forces (top 12 pairs get springs)
+  const wList = allPairs.map(p=>p.w);
+  const wThresh = wList[Math.min(11,wList.length-1)] || 0;
+
+  const cx = SVG_W/2, cy = SVG_H/2;
+  const Lmin = Math.min(SVG_W,SVG_H)*0.18;
+  const Lmax = Math.min(SVG_W,SVG_H)*0.50;
+  const nodes = coordState;
+  const t = animT;
+
+  // Physics step — identical to CoordView.step()
+  for(let i=0;i<8;i++) {
+    let fx=0, fy=0;
+    for(let j=0;j<8;j++) {
+      if(i===j) continue;
+      const dx=nodes[j].x-nodes[i].x, dy=nodes[j].y-nodes[i].y;
+      const dist=Math.hypot(dx,dy)+0.001;
+      const ww=W[i][j];
+      if(ww>=wThresh) {
+        const L=Lmin+(Lmax-Lmin)*(1-ww);
+        const k=0.012*(0.25+ww);
+        const f=k*(dist-L);
+        fx+=(dx/dist)*f; fy+=(dy/dist)*f;
+      }
+      const rep=6500/(dist*dist);
+      fx-=(dx/dist)*rep; fy-=(dy/dist)*rep;
     }
-    ctx.strokeStyle=`rgba(${r},${g},${bl},0.08)`;
-    ctx.lineWidth=2;
-    ctx.stroke();
-  }
-
-  // ── Bond springs (curved) ──
-  ctx.save();
-  // Draw all pairs with meaningful bonds
-  for(let i=0;i<8;i++){
-    for(let j=i+1;j<8;j++){
-      const avgB=(bonds[i]+bonds[j])/2;
-      if(avgB<0.15) continue; // skip very weak
-      const isAdj = (j===(i+1)%8 || i===(j+1)%8);
-      const alpha = isAdj ? avgB*0.5 : avgB*0.2;
-      const lw = isAdj ? 0.5+avgB*2.5 : 0.3+avgB*1.2;
-      const avgV=(vals[i]+vals[j])/2;
-      const[r,g,bl]=nodeColor(avgV, NODES[i]);
-
-      // Curved spring line
-      const mx=(pts[i].x+pts[j].x)/2, my=(pts[i].y+pts[j].y)/2;
-      const dx=pts[j].x-pts[i].x, dy=pts[j].y-pts[i].y;
-      const dist=Math.hypot(dx,dy);
-      // Perpendicular offset for curve (oscillates slightly)
-      const wobble = Math.sin(animT*0.03 + i + j) * (1-avgB) * 8;
-      const cx2=mx + (-dy/dist)*wobble, cy2=my + (dx/dist)*wobble;
-
-      ctx.beginPath();
-      ctx.moveTo(pts[i].x, pts[i].y);
-      ctx.quadraticCurveTo(cx2, cy2, pts[j].x, pts[j].y);
-      ctx.strokeStyle=`rgba(${r},${g},${bl},${alpha})`;
-      ctx.lineWidth=lw;
-      ctx.stroke();
+    fx+=(cx-nodes[i].x)*0.0028;
+    fy+=(cy-nodes[i].y)*0.0028;
+    const stress=matrix[i][2];
+    const amp=Math.max(0,stress-5)*0.06;
+    const phase=i*0.7;
+    fx+=Math.cos(t*0.025+phase)*amp;
+    fy+=Math.sin(t*0.022+phase*1.3)*amp;
+    if(sigma[i]<0) {
+      const ox=nodes[i].x-cx, oy=nodes[i].y-cy;
+      const od=Math.hypot(ox,oy)+0.001;
+      fx+=(ox/od)*0.05; fy+=(oy/od)*0.05;
     }
+    nodes[i].vx=(nodes[i].vx+fx)*0.72;
+    nodes[i].vy=(nodes[i].vy+fy)*0.72;
+    const vmag=Math.hypot(nodes[i].vx,nodes[i].vy);
+    if(vmag>1.4){nodes[i].vx=nodes[i].vx/vmag*1.4; nodes[i].vy=nodes[i].vy/vmag*1.4;}
   }
-  ctx.restore();
-
-  // ── Nodes ──
   for(let i=0;i<8;i++){
-    const{x,y}=pts[i];
-    const v=vals[i];
-    const b=bonds[i];
-    const nR=10+Math.max(0,v+10)/20*18;
-    const[r,g,bl]=nodeColor(v, NODES[i]);
-
-    // Glow
-    for(let layer=2;layer>=1;layer--){
-      const g2=ctx.createRadialGradient(x,y,0,x,y,nR*(1+layer*0.8));
-      g2.addColorStop(0,`rgba(${r},${g},${bl},${0.08/layer})`);
-      g2.addColorStop(1,'transparent');
-      ctx.beginPath();ctx.arc(x,y,nR*(1+layer*0.8),0,Math.PI*2);
-      ctx.fillStyle=g2;ctx.fill();
-    }
-
-    // Body — solid with subtle highlight
-    const ng=ctx.createRadialGradient(x-nR*0.25,y-nR*0.25,0,x,y,nR);
-    ng.addColorStop(0,`rgba(${Math.min(255,r+80)},${Math.min(255,g+80)},${Math.min(255,bl+80)},0.95)`);
-    ng.addColorStop(0.5,`rgba(${r},${g},${bl},0.95)`);
-    ng.addColorStop(1,`rgba(${Math.floor(r*0.4)},${Math.floor(g*0.4)},${Math.floor(bl*0.4)},0.85)`);
-    ctx.beginPath();ctx.arc(x,y,nR,0,Math.PI*2);
-    ctx.fillStyle=ng;ctx.fill();
-
-    // Thin ring
-    ctx.beginPath();ctx.arc(x,y,nR,0,Math.PI*2);
-    ctx.strokeStyle=`rgba(${r},${g},${bl},0.3)`;ctx.lineWidth=0.5;ctx.stroke();
-
-    // Label — float above
-    const angle = Math.atan2(y-CY, x-CX);
-    const labelDist = nR + 12;
-    const lx = x + labelDist*Math.cos(angle);
-    const ly = y + labelDist*Math.sin(angle);
-    ctx.fillStyle=`rgba(${r},${g},${bl},0.85)`;
-    ctx.font=`600 8px 'Inter',sans-serif`;
-    ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText(NODES[i],lx,ly);
-
-    // Value inside
-    ctx.fillStyle='rgba(27,42,51,0.9)';
-    ctx.font=`700 9px 'JetBrains Mono',monospace`;
-    ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText((v>=0?'+':'')+v.toFixed(1),x,y);
+    nodes[i].x+=nodes[i].vx; nodes[i].y+=nodes[i].vy;
+    const m=50;
+    if(nodes[i].x<m){nodes[i].x=m; nodes[i].vx*=-0.4;}
+    if(nodes[i].x>SVG_W-m){nodes[i].x=SVG_W-m; nodes[i].vx*=-0.4;}
+    if(nodes[i].y<m){nodes[i].y=m; nodes[i].vy*=-0.4;}
+    if(nodes[i].y>SVG_H-m){nodes[i].y=SVG_H-m; nodes[i].vy*=-0.4;}
   }
 
-  // Year watermark
-  ctx.fillStyle='rgba(27,42,51,0.05)';
-  ctx.font=`200 64px 'Fraunces',serif`;
-  ctx.textAlign='left';ctx.textBaseline='bottom';
-  ctx.fillText(yr,8,canvas.height-4);
+  // Update SVG — edges
+  const svg = document.getElementById('coord-svg');
+  edges.forEach((e,k) => {
+    const el=svg._edgeEls[k]; if(!el) return;
+    const na=nodes[e.i], nb=nodes[e.j];
+    el.setAttribute('x1',na.x.toFixed(1)); el.setAttribute('y1',na.y.toFixed(1));
+    el.setAttribute('x2',nb.x.toFixed(1)); el.setAttribute('y2',nb.y.toFixed(1));
+    el.setAttribute('opacity',Math.max(0.10,e.w*0.85).toFixed(2));
+    el.setAttribute('stroke', e.w>0.6 ? 'var(--amber)' : 'var(--text3)');
+    el.setAttribute('stroke-width',(0.5+e.w*3.0).toFixed(2));
+  });
+  for(let k=edges.length;k<12;k++){const el=svg._edgeEls[k];if(el)el.setAttribute('opacity','0');}
+
+  // Update SVG — nodes
+  svg._nodeEls.forEach(({g,halo,body,spec,valTxt,nameTxt},i) => {
+    g.setAttribute('transform',`translate(${nodes[i].x.toFixed(1)},${nodes[i].y.toFixed(1)})`);
+    const sz=sizeMap[i];
+    const sig=sigma[i];
+    const stress=matrix[i][2];
+    const pulse=1+Math.sin(t*0.08+i)*(stress>6?0.06:0.025);
+    halo.setAttribute('r',(( sz+7+Math.min(18,Math.abs(sig)/30))*pulse).toFixed(1));
+    halo.setAttribute('fill', sig>=0 ? 'rgba(0,184,158,0.32)' : 'rgba(197,48,48,0.42)');
+    body.setAttribute('r',sz.toFixed(1));
+    spec.setAttribute('r',(sz*0.42).toFixed(1));
+    spec.setAttribute('cx',(-sz*0.28).toFixed(1));
+    spec.setAttribute('cy',(-sz*0.28).toFixed(1));
+    valTxt.textContent = V[i]>=0 ? `+${V[i].toFixed(1)}` : V[i].toFixed(1);
+    valTxt.setAttribute('font-size',Math.max(9,sz*0.45).toFixed(1));
+    nameTxt.setAttribute('y',(-(sz+8)).toFixed(1));
+  });
 
   animT++;
 }
 
 function startAnim(){
   if(animRaf)cancelAnimationFrame(animRaf);
+  initCoordSVG();
   function loop(){drawFrame();animRaf=requestAnimationFrame(loop);}
   loop();
 }
@@ -957,12 +898,11 @@ function updateURL(){
 function setSociety(s){
   stopRoll();
   curSociety=s;
-  // Nudge sim positions so springs reconfigure
-  sim.pos.forEach((p,i)=>{
+  // Nudge positions so springs reconfigure for new society
+  coordState.forEach(p=>{
     p.vx += (Math.random()-0.5)*3;
     p.vy += (Math.random()-0.5)*3;
   });
-  sim.trails = NODES.map(()=>[]);
   years=Object.keys(DATA[s]).sort((a,b2)=>parseInt(a)-parseInt(b2));
   const slider=document.getElementById('yr-slider');
   slider.max=years.length-1;
@@ -1042,32 +982,29 @@ updateURL();
 
 startAnim();
 
-// Node hover tooltip
+// Node hover tooltip — hit-tests against live coordState positions
 const tooltip = document.getElementById('node-tooltip');
-const syb = document.getElementById('sybon');
+const syb = document.getElementById('coord-svg');
 syb.addEventListener('mousemove', (e) => {
   const rect = syb.getBoundingClientRect();
-  const mx = e.clientX - rect.left;
-  const my = e.clientY - rect.top;
+  const scaleX = SVG_W / rect.width;
+  const scaleY = SVG_H / rect.height;
+  const mx = (e.clientX - rect.left) * scaleX;
+  const my = (e.clientY - rect.top) * scaleY;
   const yr = years[curYearIdx];
   if(!yr || !DATA[curSociety] || !DATA[curSociety][yr]) return;
-  const d = DATA[curSociety][yr];
-  const nd = d.nodes;
-  const angles = NODES.map((_,i)=>-Math.PI/2 + 2*Math.PI*i/8);
-  const R=130, CX=210, CY=180;
+  const nd = DATA[curSociety][yr].nodes;
   let hit = -1, minDist = 999;
   for(let i=0; i<8; i++){
-    const x = CX + R * Math.cos(angles[i]);
-    const y = CY + R * Math.sin(angles[i]);
-    const dist = Math.hypot(mx - x, my - y);
-    if(dist < 18 && dist < minDist){ minDist = dist; hit = i; }
+    const dist = Math.hypot(mx - coordState[i].x, my - coordState[i].y);
+    if(dist < 28 && dist < minDist){ minDist = dist; hit = i; }
   }
   if(hit >= 0){
     const n = NODES[hit];
     const v = nd[n] ? nd[n].V : 0;
     const b = nd[n] ? nd[n].b : 0;
     const desc = NODE_DESC[n] || {role:'', desc:''};
-    tooltip.innerHTML = `<strong style="color:#f0a020">${n}</strong> — ${desc.role}<br><span style="color:#7898b0">${desc.desc}</span><br><span style="font-size:10px">V=${v.toFixed(1)} • b=${b.toFixed(2)} • ${(v>=0?'+':'')}${v.toFixed(1)}</span>`;
+    tooltip.innerHTML = `<strong style="color:#f0a020">${n}</strong> — ${desc.role}<br><span style="color:#7898b0">${desc.desc}</span><br><span style="font-size:10px">V=${v.toFixed(1)} • b=${b.toFixed(2)}</span>`;
     tooltip.style.left = (e.clientX + 12) + 'px';
     tooltip.style.top = (e.clientY - 20) + 'px';
     tooltip.style.display = 'block';
