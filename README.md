@@ -1,4 +1,4 @@
-# CAMS Framework: Complex Adaptive Model of Societies
+# CAMS Framework: Complex Adaptive Model System
 ## Version 2.3 — Formal Specification with Coordination Phase Space
 
 ![CAMS Logo](https://img.shields.io/badge/CAMS-v2.3-blue) ![License](https://img.shields.io/badge/License-Open%20Science-green) ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)

@@ -1,6 +1,6 @@
 # CAMS Framework Validation & Checks Formulation Document
 
-## Complex Adaptive Model State (CAMS) Framework
+## Complex Adaptive Model System (CAMS) Framework
 ### Systematic Validation and Quality Assurance Procedures
 
 **Version:** 1.0  
