@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Explorer — Epiphenomenon@Trove</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d1117;
+      --bg2: #161b22;
+      --bg3: #21262d;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --text-bright: #f0f6fc;
+      --teal: #2dd4bf;
+      --teal-dim: rgba(45,212,191,0.1);
+      --purple: #7e22ce;
+      --purple-lo: #5b21b6;
+      --gold: #f8f4e8;
+      --muted: #8b949e;
+      --amber: #fbbf24;
+      --violet: #a78bfa;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background: linear-gradient(135deg, var(--purple-lo), var(--purple));
+      padding: 0 1.5rem;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 16px rgba(91,33,182,0.4);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; height: 56px; gap: 2rem;
+    }
+    .nav-brand {
+      font-family: 'Lora', serif; font-weight: 600; font-size: 1.1rem;
+      color: #fff; text-decoration: none; white-space: nowrap;
+    }
+    .nav-links { display: flex; gap: 0.25rem; align-items: center; flex: 1; }
+    .nav-link {
+      color: rgba(255,255,255,0.85); text-decoration: none;
+      font-size: 0.875rem; font-weight: 500; padding: 0.4rem 0.75rem;
+      border-radius: 6px; transition: background 0.15s;
+    }
+    .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.15); color: #fff; }
+
+    /* ── Page header ──────────────────────────────────── */
+    .page-header {
+      background: linear-gradient(180deg, #0f0a1e 0%, var(--bg) 100%);
+      padding: 3.5rem 1.5rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .page-eyebrow {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 1rem;
+    }
+    .page-header h1 {
+      font-family: 'Lora', serif; font-size: clamp(1.7rem, 3.5vw, 2.5rem);
+      font-weight: 600; color: var(--gold); margin-bottom: 0.75rem;
+    }
+    .page-header p {
+      font-size: 0.95rem; color: var(--muted); max-width: 540px; margin: 0 auto;
+    }
+
+    /* ── Layout ───────────────────────────────────────── */
+    .main {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 5rem;
+    }
+
+    /* ── Tab nav ──────────────────────────────────────── */
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      background: none; border: none; cursor: pointer;
+      font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 500;
+      color: var(--muted); padding: 0.6rem 1rem; border-bottom: 2px solid transparent;
+      margin-bottom: -1px; white-space: nowrap; transition: color 0.15s, border-color 0.15s;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+    /* ── Tab panels ───────────────────────────────────── */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── Chart card ───────────────────────────────────── */
+    .chart-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.75rem; margin-bottom: 1.5rem;
+    }
+    .chart-card-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.25rem;
+    }
+    .chart-card-title {
+      font-family: 'Lora', serif; font-size: 1.05rem; font-weight: 600;
+      color: var(--text-bright); line-height: 1.35;
+    }
+    .chart-card-sub {
+      font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem;
+    }
+    .chart-badge {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--bg); background: var(--teal);
+      padding: 0.25rem 0.6rem; border-radius: 4px; white-space: nowrap;
+      height: fit-content;
+    }
+    canvas { width: 100% !important; }
+
+    /* ── Stats row ────────────────────────────────────── */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem; margin-bottom: 1.5rem;
+    }
+    .stat-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1rem 1.25rem;
+    }
+    .stat-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem;
+    }
+    .stat-value { font-size: 1.5rem; font-weight: 600; color: var(--text-bright); }
+    .stat-sub { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+
+    /* ── Annotation ───────────────────────────────────── */
+    .annotation-block {
+      background: var(--bg3); border-radius: 6px; padding: 1rem 1.25rem;
+      margin-top: 1.25rem; font-size: 0.82rem; color: var(--muted); line-height: 1.6;
+    }
+    .annotation-block strong { color: var(--text); }
+
+    /* ── Methodology note ─────────────────────────────── */
+    .method-note {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.25rem 1.5rem; margin-top: 2rem;
+      font-size: 0.82rem; color: var(--muted); line-height: 1.65;
+    }
+    .method-note-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--purple); margin-bottom: 0.5rem;
+    }
+
+    footer {
+      padding: 2rem 1.5rem; text-align: center;
+      font-size: 0.78rem; color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--teal); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .chart-card { padding: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">Neural Nations</a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/research" class="nav-link">Research</a>
+        <a href="/epiphenomenon/" class="nav-link">Epiphenomenon</a>
+        <a href="/epiphenomenon/data.html" class="nav-link active">Data</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <p class="page-eyebrow">Interactive Data Explorer</p>
+    <h1>Epiphenomenon@Trove — Dataset</h1>
+    <p>Explore the underlying data: threat discourse frequencies, Australia's structural profile, and WWI/WWII pre-war signals.</p>
+  </div>
+
+  <div class="main">
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="showTab('trove')">Trove Discourse</button>
+      <button class="tab-btn" onclick="showTab('hansard')">Hansard 2006–2025</button>
+      <button class="tab-btn" onclick="showTab('australia')">Australia SHI</button>
+      <button class="tab-btn" onclick="showTab('germany')">Germany Pre-War</button>
+    </div>
+
+    <!-- ── Tab 1: Trove ──────────────────────────────── -->
+    <div id="panel-trove" class="tab-panel active">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Peak sino-ppm</div>
+          <div class="stat-value" style="color:var(--teal)">647</div>
+          <div class="stat-sub">1905 — Yellow Peril peak</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Peak russo-ppm</div>
+          <div class="stat-value" style="color:var(--violet)">1,275</div>
+          <div class="stat-sub">1950 — Cold War onset</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Documents indexed</div>
+          <div class="stat-value">55M+</div>
+          <div class="stat-sub">Trove digitised press 1900–1954</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Corpus years</div>
+          <div class="stat-value">55</div>
+          <div class="stat-sub">Annual ppm 1900–1954</div>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div>
+            <div class="chart-card-title">Sino-referential discourse — Trove digitised press</div>
+            <div class="chart-card-sub">Mentions per million words, 1900–1954</div>
+          </div>
+          <span class="chart-badge">Trove</span>
+        </div>
+        <canvas id="c-trove-sino" height="220"></canvas>
+        <div class="annotation-block">
+          <strong>1904–1905 spike:</strong> Yellow Peril panic coincides with the Anglo-Japanese Alliance and Russo-Japanese War — first demonstration of an Asian military power defeating a European one. <strong>1950 rise:</strong> Korean War and PRC recognition debates drive discourse to post-war high. The 1910s–1940s trough reflects editorial displacement by World War coverage, not the absence of threat framing.
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div>
+            <div class="chart-card-title">Russo-referential discourse — Trove digitised press</div>
+            <div class="chart-card-sub">Mentions per million words, 1900–1954</div>
+          </div>
+          <span class="chart-badge" style="background:var(--violet)">Trove</span>
+        </div>
+        <canvas id="c-trove-russo" height="220"></canvas>
+        <div class="annotation-block">
+          <strong>1943 peak (762 ppm):</strong> Soviet Union as wartime ally — discourse at maximum, but largely positive. <strong>1948 spike (1,268 ppm):</strong> Cold War crystallises; the ally becomes the existential threat in a single year. <strong>1950 peak (1,275 ppm):</strong> Korean War drives russo-ppm to the dataset maximum; Sino and Russo fears fuse for the first time.
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div>
+            <div class="chart-card-title">Sino vs. Russo discourse comparison</div>
+            <div class="chart-card-sub">Both series overlaid, 1900–1954</div>
+          </div>
+        </div>
+        <canvas id="c-trove-both" height="220"></canvas>
+      </div>
+
+      <div class="method-note">
+        <div class="method-note-label">Methodology</div>
+        Raw keyword counts (sino_raw, russo_raw) normalised by total annual word count to produce per-million-word frequencies. Sino terms include: "China", "Chinese", "Sino-", "Celestial", "Yellow Peril" and related compounds. Russo terms include: "Russia", "Russian", "Soviet", "Bolshevik", "USSR" and related compounds. Source: National Library of Australia Trove digitised newspaper corpus.
+      </div>
+    </div>
+
+    <!-- ── Tab 2: Hansard ───────────────────────────── -->
+    <div id="panel-hansard" class="tab-panel">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Peak sino-ppm</div>
+          <div class="stat-value" style="color:var(--teal)">35.5</div>
+          <div class="stat-sub">2021 — China Threat peak</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Baseline (2008)</div>
+          <div class="stat-value">0.13</div>
+          <div class="stat-sub">sino-ppm before the turn</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Rate of change</div>
+          <div class="stat-value">127×</div>
+          <div class="stat-sub">2008→2021 multiplication</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Russo 2022</div>
+          <div class="stat-value" style="color:var(--violet)">17.4</div>
+          <div class="stat-sub">ppm post-Ukraine invasion</div>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div>
+            <div class="chart-card-title">Sino-referential discourse — Australian Parliament (Hansard)</div>
+            <div class="chart-card-sub">Mentions per million words, 2006–2025</div>
+          </div>
+          <span class="chart-badge">Hansard</span>
+        </div>
+        <canvas id="c-hans-sino" height="240"></canvas>
+        <div class="annotation-block">
+          <strong>2017 inflection:</strong> First significant rise driven by foreign interference debates. <strong>2018–2019:</strong> Huawei 5G exclusion, foreign donation legislation. <strong>2020–2021:</strong> COVID-19 origins debate, trade coercions, diplomatic rupture drive discourse to 127× the 2008 baseline. <strong>Post-2021:</strong> Partial diplomatic restoration under Albanese government produces discourse retreat, but not to pre-2017 levels.
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div>
+            <div class="chart-card-title">Sino vs. Russo — Parliamentary discourse comparison</div>
+            <div class="chart-card-sub">Per million words, 2006–2025</div>
+          </div>
+        </div>
+        <canvas id="c-hans-both" height="240"></canvas>
+        <div class="annotation-block">
+          <strong>Structural observation:</strong> Sino and Russo discourse have historically been anti-correlated in Australian parliamentary records — when one dominates, the other recedes. The 2022–2023 period is exceptional: for the first time in the dataset, both series spike simultaneously (Ukraine invasion + sustained China tensions). This co-activation of both threat discourses is structurally unprecedented in the Hansard record.
+        </div>
+      </div>
+
+      <div class="method-note">
+        <div class="method-note-label">Methodology</div>
+        Raw keyword counts extracted from Parliament of Australia Hansard records (House of Representatives and Senate combined). Normalised by total session word count. Years with fewer than 40 files excluded from trend analysis. 2005 and earlier not shown due to digitisation coverage gaps.
+      </div>
+    </div>
+
+    <!-- ── Tab 3: Australia SHI ─────────────────────── -->
+    <div id="panel-australia" class="tab-panel">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Current SHI (2026)</div>
+          <div class="stat-value" style="color:var(--amber)">+0.5</div>
+          <div class="stat-sub">Near-zero, slightly positive</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Historical minimum</div>
+          <div class="stat-value">−8.25</div>
+          <div class="stat-sub">1922 — Lore-Archive dominant</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Historical maximum</div>
+          <div class="stat-value">+2.5</div>
+          <div class="stat-sub">1975 — Vietnam-era peak</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Alarm threshold</div>
+          <div class="stat-value">+3.0</div>
+          <div class="stat-sub">Not yet breached historically</div>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div>
+            <div class="chart-card-title">Australia — Shield Hypertrophy Index, 1895–2026</div>
+            <div class="chart-card-sub">SHI = Shield NV − mean(Lore NV, Archive NV)</div>
+          </div>
+          <span class="chart-badge" style="background:var(--amber);color:#000">CAMS</span>
+        </div>
+        <canvas id="c-aus-shi" height="280"></canvas>
+        <div class="annotation-block">
+          <strong>Structural interpretation:</strong> Australia has maintained a consistently negative SHI throughout most of its recorded history — an unusually Lore-Archive dominant society. The recent positive drift (2015–2026) toward zero and above reflects AUKUS commitments, defence spending escalation, and intelligence-sharing intensification. Australia has not historically breached the +3.0 alarm threshold, but the current trajectory is the most sustained positive movement in the 130-year record.
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div>
+            <div class="chart-card-title">Australia SHI — Recent period detail (2000–2026)</div>
+            <div class="chart-card-sub">Showing the contemporary structural shift</div>
+          </div>
+        </div>
+        <canvas id="c-aus-recent" height="220"></canvas>
+      </div>
+
+      <div class="method-note">
+        <div class="method-note-label">Methodology</div>
+        Node Values (NV) computed from CAMS scoring of Australian institutional structure across eight nodes (Helm, Shield, Lore, Stewards, Craft, Hands, Archive, Flow) on four dimensions (Coherence, Capacity, Stress, Abstraction). SHI = Shield NV − mean(Lore NV, Archive NV). Positive SHI indicates Shield dominance over the knowledge-memory complex; negative indicates Lore-Archive dominance. Source: aus_annual.csv, CAMS ensemble scoring 1895–2026.
+      </div>
+    </div>
+
+    <!-- ── Tab 4: Germany ───────────────────────────── -->
+    <div id="panel-germany" class="tab-panel">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">1935 SHI (mean)</div>
+          <div class="stat-value" style="color:var(--teal)">+7.0</div>
+          <div class="stat-sub">Ensemble mean — critical breach</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">1935 SHI_min</div>
+          <div class="stat-value" style="color:var(--teal)">+5.25</div>
+          <div class="stat-sub">Pessimistic bound — still robust</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Lead time</div>
+          <div class="stat-value">4 yr</div>
+          <div class="stat-sub">Robust signal to war (1935→1939)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Weimar nadir</div>
+          <div class="stat-value">−8.9</div>
+          <div class="stat-sub">1929 — cultural peak / political collapse</div>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div>
+            <div class="chart-card-title">Germany — Shield Hypertrophy Index, 1925–1945</div>
+            <div class="chart-card-sub">CAMS5 ensemble mean · Alarm (+3.0) and Critical (+5.0) thresholds marked</div>
+          </div>
+          <span class="chart-badge" style="background:var(--red,#f87171);color:#000">Pre-War</span>
+        </div>
+        <canvas id="c-ger-shi" height="280"></canvas>
+        <div class="annotation-block">
+          <strong>Without-hindcasting finding:</strong> Germany's SHI crosses the +5.0 critical threshold at ensemble mean in 1934 (five-year lead time to war outbreak). The signal becomes robust — clearing +5.0 even at the pessimistic bound (SHI_min = +5.25) — in 1935 (four-year lead time). This finding is validated across five independent scoring passes and survives the strictest methodological constraints applied in this project.
+          <br><br>
+          <strong>Weimar paradox:</strong> The deeply negative SHI of the 1925–1932 period (nadir: −8.9 in 1929) reflects the extraordinary cultural and intellectual productivity of Weimar Germany — a society whose Lore and Archive nodes dominated its institutional structure precisely during its most politically vulnerable period.
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div>
+            <div class="chart-card-title">Germany SHI trajectory — year-by-year</div>
+            <div class="chart-card-sub">CAMS5 ensemble mean values, 1925–1945</div>
+          </div>
+        </div>
+        <canvas id="c-ger-bar" height="220"></canvas>
+      </div>
+
+      <div class="method-note">
+        <div class="method-note-label">Methodology — Five-scorer ensemble</div>
+        Germany, UK, Russia, and Norway each scored independently by five separate CAMS passes. Node Values averaged at the Coherence/Capacity/Stress/Abstraction level before Node Value computation. Inter-scorer variance reported as V_min/V_max envelope. Signals classified as Robust (SHI_min &gt; threshold), Partial (mean &gt; threshold, SHI_min ≤ threshold), or Ambiguous (envelope width &gt; 8 units). Full methodology: see the <a href="without-hindcasting.html">Without Hindcasting</a> working paper.
+      </div>
+    </div>
+
+  </div><!-- /main -->
+
+  <footer>
+    <a href="/epiphenomenon/">Epiphenomenon@Trove</a> ·
+    <a href="/">Neural Nations</a> ·
+    Data: Trove / Hansard / CAMS5 · All analysis: Kari Freyr
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script>
+    Chart.defaults.color = '#8b949e';
+    Chart.defaults.borderColor = '#30363d';
+
+    // ── Tab switching ──────────────────────────────────
+    function showTab(name) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('panel-' + name).classList.add('active');
+      event.target.classList.add('active');
+      // resize charts in newly revealed panel
+      setTimeout(() => window.dispatchEvent(new Event('resize')), 50);
+    }
+
+    // ── Data ───────────────────────────────────────────
+    const TY = [1900,1901,1902,1903,1904,1905,1906,1907,1908,1909,1910,1911,1912,1913,1914,1915,1916,1917,1918,1919,1920,1921,1922,1923,1924,1925,1926,1927,1928,1929,1930,1931,1932,1933,1934,1935,1936,1937,1938,1939,1940,1941,1942,1943,1944,1945,1946,1947,1948,1949,1950,1951,1952,1953,1954];
+    const TS = [183.1,81.8,37.2,72.8,428.4,647.2,175.2,293.1,308.5,174.0,198.4,161.5,156.9,150.2,195.1,111.6,56.2,57.3,42.9,130.1,139.2,159.9,81.4,85.5,70.6,92.4,87.6,111.2,45.8,61.5,36.4,42.4,55.6,66.3,79.9,73.4,86.7,117.7,90.9,47.5,69.2,84.1,152.0,70.4,77.8,60.9,34.7,34.3,49.3,64.7,277.0,176.4,92.6,73.3,143.9];
+    const TR = [164.9,186.4,98.1,305.9,517.7,315.6,95.5,42.4,71.1,83.9,32.6,59.4,62.5,38.1,126.4,176.5,157.1,85.3,155.3,276.2,306.0,81.0,117.8,81.9,53.4,308.3,135.2,201.1,101.4,118.8,131.6,330.7,168.3,126.3,148.7,93.5,145.8,128.2,95.1,344.9,431.7,179.9,271.5,762.3,432.4,236.8,545.8,485.3,1267.5,1009.6,1275.0,1111.2,633.4,588.0,1128.8];
+
+    const HY = [2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025];
+    const HS = [0.28,0.0,0.13,0.64,0.47,0.88,0.5,1.07,0.25,0.37,1.7,6.78,21.99,11.45,29.78,35.46,14.76,23.81,9.7,13.5];
+    const HR = [0.28,1.2,0.39,0.0,0.31,0.13,0.25,0.53,3.47,1.35,0.38,1.8,1.57,0.66,0.86,0.9,17.38,10.71,5.58,7.25];
+
+    const AY = [1895,1896,1897,1898,1899,1900,1901,1902,1903,1904,1905,1906,1907,1908,1909,1910,1911,1912,1913,1914,1915,1916,1917,1918,1919,1920,1921,1922,1923,1924,1925,1926,1927,1928,1929,1930,1931,1932,1933,1934,1935,1936,1937,1938,1939,1940,1941,1942,1943,1944,1945,1946,1947,1948,1949,1950,1951,1952,1953,1954,1955,1956,1957,1958,1959,1960,1961,1962,1963,1964,1965,1966,1967,1968,1969,1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026];
+    const ASHI = [-4.5,-5.0,-5.5,-6.5,-6.5,-8.0,-5.5,-6.5,-6.5,-6.5,-7.0,-7.75,-6.25,-5.25,-4.25,-4.75,-2.75,-2.75,-2.75,-0.75,-3.25,-2.75,-1.25,-0.75,-3.25,-6.25,-6.25,-8.25,-7.25,-7.25,-7.25,-7.25,-6.25,-5.75,-4.75,-4.75,-3.25,-4.75,-6.25,-6.25,-5.75,-4.75,-4.75,-4.75,-2.25,-1.75,-3.0,-2.75,-2.25,-2.25,-3.5,-4.25,-6.75,-7.25,-3.75,-4.75,-3.25,-4.25,-3.25,-3.25,-1.25,-1.75,-2.75,-3.25,-3.25,-3.25,-3.75,-4.25,-4.25,-4.25,-4.75,-3.25,-2.75,-4.75,-4.75,-3.25,-3.25,-4.0,-2.5,-1.0,1.5,-0.5,-0.5,-1.0,-1.0,-1.0,-1.5,-1.0,-2.5,-3.0,-3.0,-1.5,-1.5,-4.0,-2.5,-1.5,-1.5,-1.5,-1.5,-3.0,-2.0,-2.0,-2.0,-2.0,-3.5,-2.5,-2.5,-3.5,-0.5,-2.0,-1.0,-0.5,-1.5,-1.5,-0.5,1.5,1.0,2.5,1.5,2.5,1.0,2.0,1.5,1.5,0.5,-0.5,0.0,0.5,2.0,0.5,0.5,0.5];
+
+    const GY = [1925,1926,1927,1928,1929,1930,1931,1932,1933,1934,1935,1936,1937,1938,1939,1940,1941,1942,1943,1944,1945];
+    const GSHI = [-7.95,-7.6,-8.1,-7.7,-8.9,-3.0,-1.5,0.55,1.55,6.1,7.0,5.7,4.8,6.2,4.45,8.3,4.8,4.15,1.45,1.9,-1.3];
+
+    // ── Chart defaults ─────────────────────────────────
+    const baseOpts = {
+      responsive: true,
+      plugins: { tooltip: { mode: 'index', intersect: false }, legend: { display: false } },
+      scales: {
+        x: { grid: { color: '#21262d' }, ticks: { maxTicksLimit: 9, font: { size: 10, family: 'Inter' } } },
+        y: { grid: { color: '#21262d' }, ticks: { font: { size: 10, family: 'Inter' } } }
+      }
+    };
+
+    function lineDataset(data, color, fill = false) {
+      return {
+        data, borderColor: color,
+        backgroundColor: fill ? color.replace(')', ',0.08)').replace('rgb','rgba') : 'transparent',
+        fill, tension: 0.35, borderWidth: 2, pointRadius: 0, pointHoverRadius: 4
+      };
+    }
+
+    function threshLine(y_arr, val, color) {
+      return {
+        data: y_arr.map(() => val), borderColor: color, borderDash: [5,4],
+        borderWidth: 1.5, pointRadius: 0, fill: false
+      };
+    }
+
+    // ── Render charts ──────────────────────────────────
+
+    // Trove sino
+    new Chart('c-trove-sino', {
+      type: 'line',
+      data: { labels: TY, datasets: [lineDataset(TS, '#2dd4bf', true)] },
+      options: baseOpts
+    });
+
+    // Trove russo
+    new Chart('c-trove-russo', {
+      type: 'line',
+      data: { labels: TY, datasets: [lineDataset(TR, '#a78bfa', true)] },
+      options: baseOpts
+    });
+
+    // Trove both
+    new Chart('c-trove-both', {
+      type: 'line',
+      data: {
+        labels: TY,
+        datasets: [
+          { ...lineDataset(TS, '#2dd4bf'), label: 'Sino-ppm' },
+          { ...lineDataset(TR, '#a78bfa'), label: 'Russo-ppm' }
+        ]
+      },
+      options: { ...baseOpts, plugins: { ...baseOpts.plugins, legend: { display: true, labels: { font: { size: 10, family: 'Inter' }, color: '#8b949e', boxWidth: 14 } } } }
+    });
+
+    // Hansard sino
+    new Chart('c-hans-sino', {
+      type: 'bar',
+      data: { labels: HY, datasets: [{ data: HS, backgroundColor: 'rgba(45,212,191,0.55)', borderColor: '#2dd4bf', borderWidth: 1 }] },
+      options: baseOpts
+    });
+
+    // Hansard both
+    new Chart('c-hans-both', {
+      type: 'bar',
+      data: {
+        labels: HY,
+        datasets: [
+          { label: 'Sino ppm', data: HS, backgroundColor: 'rgba(45,212,191,0.55)', borderColor: '#2dd4bf', borderWidth: 1 },
+          { label: 'Russo ppm', data: HR, backgroundColor: 'rgba(167,139,250,0.55)', borderColor: '#a78bfa', borderWidth: 1 }
+        ]
+      },
+      options: { ...baseOpts, plugins: { ...baseOpts.plugins, legend: { display: true, labels: { font: { size: 10, family: 'Inter' }, color: '#8b949e', boxWidth: 14 } } } }
+    });
+
+    // Australia SHI full
+    new Chart('c-aus-shi', {
+      type: 'line',
+      data: {
+        labels: AY,
+        datasets: [
+          { ...lineDataset(ASHI, '#f59e0b', true), label: 'SHI' },
+          threshLine(AY, 0, 'rgba(255,255,255,0.12)'),
+          { ...threshLine(AY, 3.0, 'rgba(251,191,36,0.5)'), label: 'Alarm (+3.0)' }
+        ]
+      },
+      options: { ...baseOpts, scales: { ...baseOpts.scales, y: { ...baseOpts.scales.y, min: -10, max: 5 } } }
+    });
+
+    // Australia SHI recent (2000–2026)
+    const recentIdx = AY.indexOf(2000);
+    const AY_R = AY.slice(recentIdx);
+    const ASHI_R = ASHI.slice(recentIdx);
+    new Chart('c-aus-recent', {
+      type: 'line',
+      data: {
+        labels: AY_R,
+        datasets: [
+          { ...lineDataset(ASHI_R, '#f59e0b', true), pointRadius: 3, pointBackgroundColor: '#f59e0b' },
+          threshLine(AY_R, 0, 'rgba(255,255,255,0.12)'),
+          { ...threshLine(AY_R, 3.0, 'rgba(251,191,36,0.5)'), label: 'Alarm' }
+        ]
+      },
+      options: { ...baseOpts, scales: { ...baseOpts.scales, y: { ...baseOpts.scales.y, min: -4, max: 5 } } }
+    });
+
+    // Germany SHI line
+    new Chart('c-ger-shi', {
+      type: 'line',
+      data: {
+        labels: GY,
+        datasets: [
+          { ...lineDataset(GSHI, '#f59e0b', true), label: 'SHI (ensemble mean)', pointRadius: 3, pointBackgroundColor: '#f59e0b' },
+          { ...threshLine(GY, 0, 'rgba(255,255,255,0.12)'), label: 'Zero' },
+          { ...threshLine(GY, 3.0, 'rgba(251,191,36,0.5)'), label: 'Alarm (+3.0)' },
+          { ...threshLine(GY, 5.0, 'rgba(248,113,113,0.65)'), label: 'Critical (+5.0)' }
+        ]
+      },
+      options: {
+        ...baseOpts,
+        plugins: { ...baseOpts.plugins, legend: { display: true, labels: { font: { size: 10, family: 'Inter' }, color: '#8b949e', boxWidth: 14 } } },
+        scales: { ...baseOpts.scales, y: { ...baseOpts.scales.y, min: -10, max: 10 } }
+      }
+    });
+
+    // Germany SHI bar
+    new Chart('c-ger-bar', {
+      type: 'bar',
+      data: {
+        labels: GY,
+        datasets: [{
+          data: GSHI,
+          backgroundColor: GSHI.map(v => v >= 5 ? 'rgba(248,113,113,0.7)' : v >= 3 ? 'rgba(251,191,36,0.65)' : v >= 0 ? 'rgba(45,212,191,0.55)' : 'rgba(139,148,158,0.35)'),
+          borderColor: GSHI.map(v => v >= 5 ? '#f87171' : v >= 3 ? '#fbbf24' : v >= 0 ? '#2dd4bf' : '#30363d'),
+          borderWidth: 1
+        }]
+      },
+      options: {
+        ...baseOpts,
+        scales: { ...baseOpts.scales, y: { ...baseOpts.scales.y, min: -10, max: 10 } }
+      }
+    });
+  </script>
+  <script src="../nav.js"></script>
+</body>
+</html>

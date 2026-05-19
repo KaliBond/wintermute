@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Enemy Factory — Epiphenomenon@Trove</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d1117;
+      --bg2: #161b22;
+      --bg3: #21262d;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --text-bright: #f0f6fc;
+      --teal: #2dd4bf;
+      --teal-dim: rgba(45,212,191,0.1);
+      --purple: #7e22ce;
+      --purple-lo: #5b21b6;
+      --gold: #f8f4e8;
+      --muted: #8b949e;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Lora', serif;
+      line-height: 1.8;
+      min-height: 100vh;
+    }
+
+    /* ── Navbar ───────────────────────────────────────── */
+    .navbar {
+      background: linear-gradient(135deg, var(--purple-lo), var(--purple));
+      padding: 0 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px rgba(91,33,182,0.4);
+      font-family: 'Inter', sans-serif;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      height: 56px;
+      gap: 2rem;
+    }
+    .nav-brand {
+      font-family: 'Lora', serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #fff;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-links { display: flex; gap: 0.25rem; align-items: center; flex: 1; }
+    .nav-link {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-link:hover, .nav-link.active {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+    }
+
+    /* ── Article layout ───────────────────────────────── */
+    .article-wrap {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem 6rem;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 2.25rem;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .breadcrumb a { color: var(--teal); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb .sep { color: var(--border); }
+
+    /* Article header */
+    .article-tag {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1rem;
+    }
+    h1.article-title {
+      font-family: 'Lora', serif;
+      font-size: clamp(1.9rem, 4vw, 2.75rem);
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1.2;
+      margin-bottom: 1.1rem;
+    }
+    .article-subtitle {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 1.75rem;
+    }
+    .article-meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      color: var(--muted);
+      padding-bottom: 1.75rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2.25rem;
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* Prose */
+    p {
+      margin-bottom: 1.4rem;
+      font-size: 1.05rem;
+    }
+
+    /* Drop cap */
+    .drop-cap::first-letter {
+      font-size: 3.5rem;
+      font-weight: 600;
+      line-height: 0.85;
+      float: left;
+      margin-right: 0.08em;
+      margin-top: 0.05em;
+      color: var(--teal);
+      font-family: 'Lora', serif;
+    }
+
+    /* Section divider */
+    .divider {
+      text-align: center;
+      color: var(--muted);
+      margin: 2.5rem 0;
+      letter-spacing: 0.5em;
+      font-size: 0.85rem;
+    }
+
+    /* Pull quote */
+    blockquote {
+      border-left: 3px solid var(--teal);
+      padding: 0.75rem 1.25rem;
+      margin: 2rem 0;
+      background: var(--teal-dim);
+      border-radius: 0 6px 6px 0;
+    }
+    blockquote p {
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--text-bright);
+      margin: 0;
+    }
+
+    /* Data callout */
+    .data-callout {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--purple);
+      border-radius: 0 8px 8px 0;
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+    }
+    .data-callout .callout-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 0.5rem;
+    }
+    .data-callout p { font-size: 0.875rem; margin: 0; color: var(--text); }
+    .data-callout .stat { font-size: 1.4rem; font-weight: 600; color: var(--text-bright); }
+
+    /* Section heading */
+    h2 {
+      font-family: 'Lora', serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin: 2.5rem 0 1rem;
+    }
+
+    /* Systemic Reflection */
+    .reflection {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2rem 2rem 1.5rem;
+      margin-top: 3rem;
+    }
+    .reflection-header {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .reflection h3 {
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin: 1.5rem 0 0.6rem;
+    }
+    .reflection h3:first-of-type { margin-top: 0; }
+    .reflection p { font-size: 0.9rem; margin-bottom: 0.8rem; }
+
+    /* Chart */
+    .chart-block {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin: 2rem 0;
+    }
+    .chart-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    canvas { width: 100% !important; }
+
+    /* Nav links in article */
+    .article-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      gap: 1rem;
+    }
+    .article-nav a { color: var(--teal); text-decoration: none; }
+    .article-nav a:hover { text-decoration: underline; }
+
+    footer {
+      padding: 2rem 1.5rem;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    footer a { color: var(--teal); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">Neural Nations</a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/research" class="nav-link">Research</a>
+        <a href="/epiphenomenon/" class="nav-link active">Epiphenomenon</a>
+        <a href="/epiphenomenon/data.html" class="nav-link">Data</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="article-wrap">
+
+    <div class="breadcrumb">
+      <a href="/epiphenomenon/">Epiphenomenon@Trove</a>
+      <span class="sep">›</span>
+      <span>Arc Story</span>
+    </div>
+
+    <div class="article-tag">Arc Story · Australia · 1900–2025</div>
+    <h1 class="article-title">The Enemy Factory</h1>
+    <p class="article-subtitle">
+      How Australia learned to need a threat — and why the machinery never stops running.
+    </p>
+    <div class="article-meta">
+      <span>Kari Freyr</span>
+      <span>Epiphenomenon@Trove Project</span>
+      <span>Neural Nations</span>
+    </div>
+
+    <p class="drop-cap">There is a pattern so persistent in Australian public life that it has the quality of a geological feature. Every generation, a new enemy assembles itself in the press, in parliament, in the anxious conversations of a society that has never quite decided whether it belongs to its own hemisphere. The names change. The fear does not.</p>
+
+    <p>This is not a story about threats. It is a story about the infrastructure that produces them — the institutional, discursive, and structural machinery that Australian society has built, maintained, and periodically turbocharged across 125 years. To understand it, we need data as much as narrative: not just the words used, but how often, with what intensity, and against what structural backdrop.</p>
+
+    <div class="chart-block">
+      <div class="chart-title">Sino-referential discourse frequency — Trove digitised press, 1900–1954 (per million words)</div>
+      <canvas id="chartTrove" height="220"></canvas>
+    </div>
+
+    <p>The numbers above are not abstract. Each spike represents a moment when Australian society turned its attention — and its anxiety — toward China. The 1904–1905 peak, reaching 647 mentions per million words, coincides with the White Australia Policy's consolidation and the Russo-Japanese War, which demonstrated for the first time that an Asian power could defeat a European one on the battlefield. The machinery was already running.</p>
+
+    <div class="divider">· · ·</div>
+
+    <h2>The First Factory: Yellow Peril and White Australia</h2>
+
+    <p>In 1901, the Commonwealth of Australia was barely a year old and already building walls. The Immigration Restriction Act — the legislative cornerstone of the White Australia Policy — passed with near-unanimous support. It was not a policy born of particular malice toward any specific people; it was born of structural anxiety in a young settler-colonial state that had inherited Britain's racial categories and stood, geographically, in the wrong hemisphere for the world it had imagined itself belonging to.</p>
+
+    <p>What the Trove data reveals is not merely that anti-Chinese sentiment existed — historians have known that for generations — but its structural rhythm. The 1904 spike to 428 ppm and the 1905 peak at 647 ppm are not random events. They map precisely onto moments of geopolitical reorganisation: the Anglo-Japanese Alliance, the Russo-Japanese War, the demonstration that Asia was not, after all, the permanent object of European management.</p>
+
+    <blockquote>
+      <p>Australia's anxiety was never primarily about China. It was about the distance between who Australia imagined itself to be and where it actually sat on the map.</p>
+    </blockquote>
+
+    <p>The CAMS framework gives us a way to understand this structurally. In the early Commonwealth period, Australia's Lore node — institutions of knowledge, education, and cultural identity — scored high. The Archive node — historical memory and civilisational continuity — also sat strong. The Shield node — military capacity, security apparatus, defensive posture — was moderate. The result was a negative Shield Hypertrophy Index: Australia was, structurally, a country whose cultural and epistemic institutions dominated its security orientation.</p>
+
+    <p>The Yellow Peril panic was the psychic tax paid for that structural configuration. A society whose identity is deeply tied to its Lore institutions — to particular ideas about who belongs, what civilisation means, what the good life looks like — is precisely the kind of society most likely to generate existential threat narratives when those ideas are challenged by the world's refusal to confirm them.</p>
+
+    <div class="divider">· · ·</div>
+
+    <h2>The Quiet Decades, Then the Red Turn</h2>
+
+    <p>Between the wars, sino-referential discourse in the press dropped to a persistent low — rarely exceeding 100 ppm. The enemy factory retooled. Russia became the new source of dread: the Bolshevik revolution of 1917 produced its own spike, the general strikes of the 1920s generated another, and by the Depression years, the fear of domestic communist infiltration had largely displaced the older Yellow Peril frame.</p>
+
+    <p>This is structurally interesting. The discourse data shows that Australian threat-manufacturing is not monotonic — it does not simply accumulate. It cycles. When one enemy recedes, another rises. The factory never closes; it merely changes its product line.</p>
+
+    <div class="chart-block">
+      <div class="chart-title">Russo-referential discourse frequency — Trove digitised press, 1900–1954 (per million words)</div>
+      <canvas id="chartRusso" height="200"></canvas>
+    </div>
+
+    <p>The 1943 peak in russo_ppm — reaching 762 mentions per million words, the highest sustained reading in the dataset — is a reminder of how completely the threat calculus inverted during the Second World War. The Soviet Union was, briefly, an ally. Russia was discussed constantly, and positively. The enemy factory was running at full capacity, but in reverse.</p>
+
+    <p>Then 1948 arrived, and the Cold War began in earnest. The russo_ppm spike to 1,268 ppm in 1948 — nearly double any previous reading — marks the precise moment when Australia discovered that its wartime ally was now its existential enemy. The factory had a new contract.</p>
+
+    <div class="divider">· · ·</div>
+
+    <h2>The Contemporary Turn: From Red Scare to China Threat</h2>
+
+    <p>What the Hansard data from 2006 to 2025 shows is a transformation so rapid it is almost vertiginous. For more than a decade, references to China in the Australian parliament ran below two mentions per million words. The baseline was nearly flat. Then, between 2016 and 2021, it exploded.</p>
+
+    <div class="chart-block">
+      <div class="chart-title">Sino-referential discourse — Australian Hansard, 2006–2025 (per million words)</div>
+      <canvas id="chartHansard" height="220"></canvas>
+    </div>
+
+    <div class="data-callout">
+      <div class="callout-label">Key finding</div>
+      <div class="stat">35.5 ppm</div>
+      <p>Peak sino-referential frequency in Australian parliamentary Hansard (2021) — 127× the 2008 baseline of 0.28 ppm. The rate of change is without precedent in the 125-year Trove record.</p>
+    </div>
+
+    <p>The numbers are stark but incomplete. Frequency tells us that China was being mentioned. It does not tell us in what register, with what framing, toward what purpose. The qualitative analysis of the discourse reveals that by 2020, the dominant frame had shifted decisively from economic partnership to security threat, from strategic competition to civilisational confrontation.</p>
+
+    <p>And here the CAMS structural analysis becomes essential. Because what we observe in the discourse is not simply political rhetoric — it is the surface expression of deeper institutional shifts. Australia's Shield node has been rising. The AUKUS submarine agreement, the enhanced Five Eyes integration, the Pacific deterrence posture, the exponential growth in defence spending — these are not responses to a discovered threat. They are, in part, constitutive of one.</p>
+
+    <div class="divider">· · ·</div>
+
+    <h2>The Structural Reading</h2>
+
+    <p>The CAMS framework gives us a metric that cuts through the noise of individual political decisions: the Shield Hypertrophy Index. For most of Australia's recorded history, the SHI has been negative — meaning the Lore and Archive nodes (cultural institutions, historical memory, epistemic infrastructure) dominated the structural profile. Australia was, in a structural sense, a Lore-heavy society with a relatively modest security orientation.</p>
+
+    <div class="chart-block">
+      <div class="chart-title">Australia — Shield Hypertrophy Index, 1895–2026</div>
+      <canvas id="chartAusSHI" height="220"></canvas>
+    </div>
+
+    <p>The contemporary period — from approximately 2015 onward — shows something new: a sustained positive SHI. Shield is beginning to outpace the Lore-Archive complex. This is not alarming by the standards of the critical threshold (+5.0), but it represents a structural shift of a kind Australia has not experienced since the Second World War mobilisation of the early 1940s.</p>
+
+    <p>The question the CAMS framework raises — and cannot answer by itself — is whether this structural shift reflects a genuine change in Australia's strategic environment, or whether the threat discourse has become self-fulfilling: a manufactured enemy that, through the institutional weight of the security apparatus built to contain it, becomes increasingly real.</p>
+
+    <blockquote>
+      <p>The enemy factory does not require a real enemy. It requires only the institutional infrastructure of enemy-production — and that infrastructure, once built, generates its own demand.</p>
+    </blockquote>
+
+    <p>This is the epiphenomenon at the heart of the project. The discourse about China that now dominates Australian political life is not simply a response to events. It is also — partially, structurally, measurably — a product of systems that were designed to produce it: intelligence agencies, strategic think tanks, defence procurement cycles, alliance obligations, and a media ecosystem that has learned that anxiety sells.</p>
+
+    <div class="divider">· · ·</div>
+
+    <p>Carl Sagan wrote that the universe is under no obligation to make sense to us. Neither, it turns out, is history. But complexity science offers a different promise: not that systems will be legible, but that they will be patterned. And the pattern here — across 125 years, across six changes of enemy, across the full arc from White Australia to AUKUS — is one of a society that has found, in the production of threat, a way of managing the distance between where it is and where it imagined itself to be.</p>
+
+    <p>The enemy factory is not a conspiracy. It is a complex adaptive system. And like all such systems, it is much easier to understand in retrospect than to interrupt in real time. That is precisely why the structural analysis matters — why the numbers matter, why the CAMS framework matters. Not because data dissolves political judgment, but because it makes certain kinds of self-deception harder to sustain.</p>
+
+    <div class="reflection">
+      <div class="reflection-header">Systemic Reflection</div>
+
+      <h3>First Principles</h3>
+      <p>Threat discourse is not epiphenomenal to threat — it is partially constitutive of it. A society that talks about an enemy often enough, and with enough institutional weight, begins to build the structures that make that enemy real. The CAMS data shows this structurally: Australia's Shield node rise precedes, as much as it follows, the diplomatic deterioration with China.</p>
+
+      <h3>Core Wisdom</h3>
+      <p>The 125-year Trove record suggests that Australia's enemy cycles have structural regularities: they intensify during periods of geopolitical reorganisation, they recede when the institutional need diminishes, and they always find a new target. Understanding this pattern is not the same as denying the reality of strategic competition — it is the precondition for thinking clearly about it.</p>
+
+      <h3>Leverage Points</h3>
+      <p>The Archive node is the critical variable. Historical memory — the capacity to recognise recurring patterns and interrupt automatic responses — is the institutional counterweight to Shield hypertrophy. The current period of Archive node weakness (as scored in the CAMS framework) is precisely when structural pattern-recognition is most difficult and most necessary.</p>
+
+      <h3>Stakeholder Resonances</h3>
+      <p>This analysis speaks to Australian citizens trying to distinguish genuine strategic risk from manufactured anxiety; to policymakers who need to know whether their decisions are evidence-driven or system-driven; to historians who have long suspected that each new enemy is the old one in different clothes; and to the broader global community navigating a moment when the enemy factories of multiple great powers are running simultaneously.</p>
+    </div>
+
+    <div class="article-nav">
+      <a href="index.html">← Back to Epiphenomenon</a>
+      <a href="without-hindcasting.html">Without Hindcasting →</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>
+      <a href="/epiphenomenon/">Epiphenomenon@Trove</a> · <a href="/">Neural Nations</a> ·
+      Data: Trove / Hansard / CAMS5 ensemble scoring
+    </p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script>
+    Chart.defaults.color = '#8b949e';
+    Chart.defaults.borderColor = '#30363d';
+
+    const TROVE_YEARS = [1900,1901,1902,1903,1904,1905,1906,1907,1908,1909,1910,1911,1912,1913,1914,1915,1916,1917,1918,1919,1920,1921,1922,1923,1924,1925,1926,1927,1928,1929,1930,1931,1932,1933,1934,1935,1936,1937,1938,1939,1940,1941,1942,1943,1944,1945,1946,1947,1948,1949,1950,1951,1952,1953,1954];
+    const TROVE_SINO = [183.1,81.8,37.2,72.8,428.4,647.2,175.2,293.1,308.5,174.0,198.4,161.5,156.9,150.2,195.1,111.6,56.2,57.3,42.9,130.1,139.2,159.9,81.4,85.5,70.6,92.4,87.6,111.2,45.8,61.5,36.4,42.4,55.6,66.3,79.9,73.4,86.7,117.7,90.9,47.5,69.2,84.1,152.0,70.4,77.8,60.9,34.7,34.3,49.3,64.7,277.0,176.4,92.6,73.3,143.9];
+    const TROVE_RUSSO = [164.9,186.4,98.1,305.9,517.7,315.6,95.5,42.4,71.1,83.9,32.6,59.4,62.5,38.1,126.4,176.5,157.1,85.3,155.3,276.2,306.0,81.0,117.8,81.9,53.4,308.3,135.2,201.1,101.4,118.8,131.6,330.7,168.3,126.3,148.7,93.5,145.8,128.2,95.1,344.9,431.7,179.9,271.5,762.3,432.4,236.8,545.8,485.3,1267.5,1009.6,1275.0,1111.2,633.4,588.0,1128.8];
+    const HANS_YEARS = [2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025];
+    const HANS_SINO = [0.28,0.0,0.13,0.64,0.47,0.88,0.5,1.07,0.25,0.37,1.7,6.78,21.99,11.45,29.78,35.46,14.76,23.81,9.7,13.5];
+    const HANS_RUSSO = [0.28,1.2,0.39,0.0,0.31,0.13,0.25,0.53,3.47,1.35,0.38,1.8,1.57,0.66,0.86,0.9,17.38,10.71,5.58,7.25];
+    const AUS_YEARS = [1895,1896,1897,1898,1899,1900,1901,1902,1903,1904,1905,1906,1907,1908,1909,1910,1911,1912,1913,1914,1915,1916,1917,1918,1919,1920,1921,1922,1923,1924,1925,1926,1927,1928,1929,1930,1931,1932,1933,1934,1935,1936,1937,1938,1939,1940,1941,1942,1943,1944,1945,1946,1947,1948,1949,1950,1951,1952,1953,1954,1955,1956,1957,1958,1959,1960,1961,1962,1963,1964,1965,1966,1967,1968,1969,1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026];
+    const AUS_SHI = [-4.5,-5.0,-5.5,-6.5,-6.5,-8.0,-5.5,-6.5,-6.5,-6.5,-7.0,-7.75,-6.25,-5.25,-4.25,-4.75,-2.75,-2.75,-2.75,-0.75,-3.25,-2.75,-1.25,-0.75,-3.25,-6.25,-6.25,-8.25,-7.25,-7.25,-7.25,-7.25,-6.25,-5.75,-4.75,-4.75,-3.25,-4.75,-6.25,-6.25,-5.75,-4.75,-4.75,-4.75,-2.25,-1.75,-3.0,-2.75,-2.25,-2.25,-3.5,-4.25,-6.75,-7.25,-3.75,-4.75,-3.25,-4.25,-3.25,-3.25,-1.25,-1.75,-2.75,-3.25,-3.25,-3.25,-3.75,-4.25,-4.25,-4.25,-4.75,-3.25,-2.75,-4.75,-4.75,-3.25,-3.25,-4.0,-2.5,-1.0,1.5,-0.5,-0.5,-1.0,-1.0,-1.0,-1.5,-1.0,-2.5,-3.0,-3.0,-1.5,-1.5,-4.0,-2.5,-1.5,-1.5,-1.5,-1.5,-3.0,-2.0,-2.0,-2.0,-2.0,-3.5,-2.5,-2.5,-3.5,-0.5,-2.0,-1.0,-0.5,-1.5,-1.5,-0.5,1.5,1.0,2.5,1.5,2.5,1.0,2.0,1.5,1.5,0.5,-0.5,0.0,0.5,2.0,0.5,0.5,0.5];
+
+    const chartOpts = (title) => ({
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { mode: 'index', intersect: false }
+      },
+      scales: {
+        x: { grid: { color: '#21262d' }, ticks: { maxTicksLimit: 8, font: { size: 10, family: 'Inter' } } },
+        y: { grid: { color: '#21262d' }, ticks: { font: { size: 10, family: 'Inter' } } }
+      }
+    });
+
+    // Chart 1: Trove Sino
+    new Chart(document.getElementById('chartTrove'), {
+      type: 'line',
+      data: {
+        labels: TROVE_YEARS,
+        datasets: [{
+          data: TROVE_SINO,
+          borderColor: '#2dd4bf',
+          backgroundColor: 'rgba(45,212,191,0.08)',
+          fill: true,
+          tension: 0.35,
+          borderWidth: 2,
+          pointRadius: 0,
+          pointHoverRadius: 4
+        }]
+      },
+      options: chartOpts()
+    });
+
+    // Chart 2: Russo
+    new Chart(document.getElementById('chartRusso'), {
+      type: 'line',
+      data: {
+        labels: TROVE_YEARS,
+        datasets: [{
+          data: TROVE_RUSSO,
+          borderColor: '#a78bfa',
+          backgroundColor: 'rgba(167,139,250,0.08)',
+          fill: true,
+          tension: 0.35,
+          borderWidth: 2,
+          pointRadius: 0,
+          pointHoverRadius: 4
+        }]
+      },
+      options: chartOpts()
+    });
+
+    // Chart 3: Hansard Sino
+    new Chart(document.getElementById('chartHansard'), {
+      type: 'bar',
+      data: {
+        labels: HANS_YEARS,
+        datasets: [
+          {
+            label: 'Sino ppm',
+            data: HANS_SINO,
+            backgroundColor: 'rgba(45,212,191,0.6)',
+            borderColor: '#2dd4bf',
+            borderWidth: 1
+          },
+          {
+            label: 'Russo ppm',
+            data: HANS_RUSSO,
+            backgroundColor: 'rgba(167,139,250,0.6)',
+            borderColor: '#a78bfa',
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        ...chartOpts(),
+        plugins: {
+          legend: { display: true, labels: { font: { size: 10, family: 'Inter' }, color: '#8b949e', boxWidth: 12 } },
+          tooltip: { mode: 'index', intersect: false }
+        }
+      }
+    });
+
+    // Chart 4: Australia SHI
+    new Chart(document.getElementById('chartAusSHI'), {
+      type: 'line',
+      data: {
+        labels: AUS_YEARS,
+        datasets: [
+          {
+            data: AUS_SHI,
+            borderColor: '#f59e0b',
+            backgroundColor: 'rgba(245,158,11,0.07)',
+            fill: true,
+            tension: 0.35,
+            borderWidth: 2,
+            pointRadius: 0,
+            pointHoverRadius: 4
+          },
+          {
+            data: AUS_YEARS.map(() => 0),
+            borderColor: 'rgba(255,255,255,0.15)',
+            borderWidth: 1,
+            borderDash: [4,4],
+            pointRadius: 0,
+            fill: false
+          },
+          {
+            data: AUS_YEARS.map(() => 3.0),
+            borderColor: 'rgba(251,191,36,0.4)',
+            borderWidth: 1,
+            borderDash: [4,4],
+            pointRadius: 0,
+            fill: false,
+            label: 'Alarm threshold (+3.0)'
+          }
+        ]
+      },
+      options: {
+        ...chartOpts(),
+        plugins: {
+          legend: { display: false },
+          tooltip: { mode: 'index', intersect: false }
+        }
+      }
+    });
+  </script>
+  <script src="../nav.js"></script>
+</body>
+</html>

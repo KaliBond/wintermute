@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Without Hindcasting — Epiphenomenon@Trove</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d1117;
+      --bg2: #161b22;
+      --bg3: #21262d;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --text-bright: #f0f6fc;
+      --teal: #2dd4bf;
+      --teal-dim: rgba(45,212,191,0.1);
+      --purple: #7e22ce;
+      --purple-lo: #5b21b6;
+      --gold: #f8f4e8;
+      --muted: #8b949e;
+      --red: #f87171;
+      --amber: #fbbf24;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Lora', serif;
+      line-height: 1.8;
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background: linear-gradient(135deg, var(--purple-lo), var(--purple));
+      padding: 0 1.5rem;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 16px rgba(91,33,182,0.4);
+      font-family: 'Inter', sans-serif;
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; height: 56px; gap: 2rem;
+    }
+    .nav-brand {
+      font-family: 'Lora', serif; font-weight: 600; font-size: 1.1rem;
+      color: #fff; text-decoration: none; white-space: nowrap;
+    }
+    .nav-links { display: flex; gap: 0.25rem; align-items: center; flex: 1; }
+    .nav-link {
+      color: rgba(255,255,255,0.85); text-decoration: none;
+      font-size: 0.875rem; font-weight: 500; padding: 0.4rem 0.75rem;
+      border-radius: 6px; transition: background 0.15s, color 0.15s;
+    }
+    .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.15); color: #fff; }
+
+    .article-wrap {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem 6rem;
+    }
+
+    .breadcrumb {
+      font-family: 'Inter', sans-serif; font-size: 0.75rem; color: var(--muted);
+      margin-bottom: 2.25rem; display: flex; gap: 0.5rem; align-items: center;
+    }
+    .breadcrumb a { color: var(--teal); text-decoration: none; }
+    .breadcrumb .sep { color: var(--border); }
+
+    .article-tag {
+      font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem;
+    }
+    h1.article-title {
+      font-family: 'Lora', serif;
+      font-size: clamp(1.9rem, 4vw, 2.75rem);
+      font-weight: 600; color: var(--gold); line-height: 1.2; margin-bottom: 1.1rem;
+    }
+    .article-subtitle {
+      font-family: 'Lora', serif; font-style: italic;
+      font-size: 1.1rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.75rem;
+    }
+    .article-meta {
+      font-family: 'Inter', sans-serif; font-size: 0.78rem; color: var(--muted);
+      padding-bottom: 1.75rem; border-bottom: 1px solid var(--border); margin-bottom: 2.25rem;
+      display: flex; gap: 1.5rem; flex-wrap: wrap;
+    }
+
+    p { margin-bottom: 1.4rem; font-size: 1.05rem; }
+
+    .drop-cap::first-letter {
+      font-size: 3.5rem; font-weight: 600; line-height: 0.85;
+      float: left; margin-right: 0.08em; margin-top: 0.05em;
+      color: var(--teal); font-family: 'Lora', serif;
+    }
+
+    .divider { text-align: center; color: var(--muted); margin: 2.5rem 0; letter-spacing: 0.5em; font-size: 0.85rem; }
+
+    blockquote {
+      border-left: 3px solid var(--teal); padding: 0.75rem 1.25rem;
+      margin: 2rem 0; background: var(--teal-dim); border-radius: 0 6px 6px 0;
+    }
+    blockquote p { font-style: italic; font-size: 1.05rem; color: var(--text-bright); margin: 0; }
+
+    h2 {
+      font-family: 'Lora', serif; font-size: 1.35rem; font-weight: 600;
+      color: var(--gold); margin: 2.5rem 0 1rem;
+    }
+
+    /* Chart */
+    .chart-block {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.25rem; margin: 2rem 0;
+    }
+    .chart-title {
+      font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem;
+    }
+    canvas { width: 100% !important; }
+
+    /* Finding boxes */
+    .finding {
+      border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.75rem 0;
+      font-family: 'Inter', sans-serif; font-size: 0.875rem;
+      border: 1px solid;
+    }
+    .finding.robust {
+      background: rgba(45,212,191,0.08); border-color: var(--teal);
+    }
+    .finding.ambiguous {
+      background: rgba(251,191,36,0.08); border-color: var(--amber);
+    }
+    .finding.alarm {
+      background: rgba(248,113,113,0.08); border-color: var(--red);
+    }
+    .finding-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .finding.robust .finding-label { color: var(--teal); }
+    .finding.ambiguous .finding-label { color: var(--amber); }
+    .finding.alarm .finding-label { color: var(--red); }
+    .finding .stat { font-size: 1.3rem; font-weight: 600; color: var(--text-bright); }
+    .finding p { margin: 0.4rem 0 0; font-size: 0.85rem; color: var(--text); }
+
+    /* Table */
+    .tbl-wrap { overflow-x: auto; margin: 1.75rem 0; }
+    table {
+      width: 100%; border-collapse: collapse;
+      font-family: 'Inter', sans-serif; font-size: 0.8rem;
+    }
+    th {
+      background: var(--bg3); color: var(--teal);
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.6rem 0.75rem; text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 0.55rem 0.75rem; border-bottom: 1px solid #21262d;
+      color: var(--text);
+    }
+    tr:hover td { background: var(--bg3); }
+    .sig-robust { color: var(--teal); font-weight: 600; }
+    .sig-partial { color: var(--amber); font-weight: 600; }
+    .sig-no { color: var(--muted); }
+
+    /* Reflection */
+    .reflection {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 2rem 2rem 1.5rem; margin-top: 3rem;
+    }
+    .reflection-header {
+      font-family: 'Inter', sans-serif; font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal);
+      margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);
+    }
+    .reflection h3 {
+      font-family: 'Lora', serif; font-size: 1rem; font-weight: 600;
+      color: var(--gold); margin: 1.5rem 0 0.6rem;
+    }
+    .reflection h3:first-of-type { margin-top: 0; }
+    .reflection p { font-size: 0.9rem; margin-bottom: 0.8rem; }
+
+    .article-nav {
+      display: flex; justify-content: space-between;
+      margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+      font-family: 'Inter', sans-serif; font-size: 0.8rem; gap: 1rem;
+    }
+    .article-nav a { color: var(--teal); text-decoration: none; }
+    .article-nav a:hover { text-decoration: underline; }
+
+    footer {
+      padding: 2rem 1.5rem; text-align: center;
+      font-family: 'Inter', sans-serif; font-size: 0.78rem; color: var(--muted);
+      border-top: 1px solid var(--border); max-width: 700px; margin: 0 auto;
+    }
+    footer a { color: var(--teal); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">Neural Nations</a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/research" class="nav-link">Research</a>
+        <a href="/epiphenomenon/" class="nav-link active">Epiphenomenon</a>
+        <a href="/epiphenomenon/data.html" class="nav-link">Data</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="article-wrap">
+
+    <div class="breadcrumb">
+      <a href="/epiphenomenon/">Epiphenomenon@Trove</a>
+      <span class="sep">›</span>
+      <span>Working Paper</span>
+    </div>
+
+    <div class="article-tag">Working Paper · WWI · WWII · Structural Analysis</div>
+    <h1 class="article-title">Without Hindcasting</h1>
+    <p class="article-subtitle">
+      Reading structural collapse signals as a contemporary analyst would have — with no foreknowledge of what was coming.
+    </p>
+    <div class="article-meta">
+      <span>Kari Freyr</span>
+      <span>Epiphenomenon@Trove</span>
+      <span>Neural Nations</span>
+    </div>
+
+    <p class="drop-cap">The most seductive distortion in historical analysis is the one you cannot see: the knowledge of what happened next. Every analyst who has studied the years leading to either World War has done so in the long shadow of the outcome. The structural signals look obvious in retrospect. The question this working paper asks is harder — and more important: were they actionable in advance?</p>
+
+    <p>This is not a forensic exercise. It is a methodological one. The CAMS framework — the Complex Adaptive Model System — produces structural scores on eight institutional nodes. The Shield Hypertrophy Index (SHI) computes the dominance of the security node over the knowledge-memory complex. The question posed here: if you had these scores in 1930, in 1935, in 1938, and you had no knowledge of 1939, what would you have concluded?</p>
+
+    <p>The answer, validated across five independent scoring passes for each society, is more nuanced than a simple yes or no — and more useful for that reason.</p>
+
+    <div class="divider">· · ·</div>
+
+    <h2>The Discipline: What Without Hindcasting Means</h2>
+
+    <p>Hindcasting is the practice of reading historical data with knowledge of the outcome baked into the analysis. It is almost impossible to avoid entirely — the analyst who scores Germany's institutional structure in 1936 cannot unknow 1939. But it is possible to impose a discipline: to read each year's structural data and ask only what a well-informed contemporary analyst could have concluded, with access to public information but no foreknowledge.</p>
+
+    <p>The specific constraint applied here: for each threshold crossing, we ask whether the signal clears the bar not just at the ensemble mean, but at the <em>pessimistic boundary</em> — the minimum SHI across all five independent scorer interpretations. A signal is classified as robust only if the most sceptical of the five scorers would still have crossed the critical threshold. A signal is partial if only the mean crosses. A signal is ambiguous if the scorer envelope is too wide for any reading to be reliable.</p>
+
+    <div class="divider">· · ·</div>
+
+    <h2>Germany: The Clearest Signal</h2>
+
+    <p>Germany is the paradigm case. The trajectory from Weimar instability through Nazi consolidation to war is, in retrospect, apparently legible at every step. The without-hindcasting discipline asks: when does it actually become readable?</p>
+
+    <div class="chart-block">
+      <div class="chart-title">Germany — Shield Hypertrophy Index, 1925–1945 (CAMS5 ensemble mean)</div>
+      <canvas id="chartGermany" height="240"></canvas>
+    </div>
+
+    <p>The Weimar years (1925–1932) show a deeply negative SHI: Shield is dominated by Lore and Archive, reflecting Germany's extraordinarily rich intellectual and cultural life during a period of institutional fragility. The SHI reaches its nadir around 1929 — precisely the moment of Weimar's greatest cultural productivity and greatest political vulnerability. The two are not unrelated.</p>
+
+    <p>The trajectory changes decisively in 1933. By 1934, the ensemble mean SHI crosses +5.0 — the critical threshold — at 6.1. This is the actionable signal at the mean level: a reading suggesting that Germany's Shield node has developed a structural dominance over its knowledge-memory complex that, in comparable historical cases, has been associated with catastrophic institutional failure.</p>
+
+    <div class="finding robust">
+      <div class="finding-label">Robust signal — 1935</div>
+      <div class="stat">SHI_min = +5.25</div>
+      <p>In 1935, even the most pessimistic of the five scorer interpretations clears the +5.0 critical threshold. The signal is robust — it would have been actionable by a without-hindcasting analyst four years before war outbreak.</p>
+    </div>
+
+    <div class="finding ambiguous" style="margin-top: 0;">
+      <div class="finding-label">Partial signal — 1934</div>
+      <div class="stat">SHI_mean = +6.1, envelope width ≈ 7.25</div>
+      <p>The 1934 mean reading clears +5.0, giving a five-year lead time — but the scorer envelope is wide enough that a sceptical analyst would have qualified the finding. The 1935 reading resolves this ambiguity.</p>
+    </div>
+
+    <p>The inter-scorer variance validation is critical here. A mean-only finding of threshold crossing can be dismissed as artefact. The 1935 finding — where SHI_min = +5.25 — cannot. All five scorers agree that Germany's structural configuration is critically hypertrophied. This is a publication-quality, without-hindcasting result: the signal clears the critical bar even under pessimistic assumptions, four years before war.</p>
+
+    <div class="divider">· · ·</div>
+
+    <h2>The United Kingdom: Appeasement as Structure</h2>
+
+    <p>The UK presents a different and more disturbing picture. The CAMS5 validation reveals something remarkable: in the critical years 1935–1937, the UK's SHI scores show <em>perfect inter-scorer agreement</em> — SHI_min equals SHI_max. All five scorers converge on the same structural reading. There is no ambiguity about what the data shows.</p>
+
+    <p>What it shows is a Shield node that is elevated but not hypertrophied — held in structural check by strong Lore and Archive nodes. This is the CAMS signature of appeasement: not weakness, but a specific institutional configuration in which knowledge and memory institutions retain dominance over the security apparatus. The UK's foreign policy in this period was not a failure of courage; it was structurally determined by an institutional balance that precluded aggressive pre-emption.</p>
+
+    <div class="finding robust">
+      <div class="finding-label">UK — Appeasement configuration confirmed</div>
+      <div class="stat">Perfect scorer agreement 1935–1937</div>
+      <p>Five-scorer ensemble shows zero inter-scorer variance on the UK's structural profile during the appeasement years. The configuration is unambiguous: institutionally stable, epistemically balanced, structurally incapable of the kind of pre-emptive action that might have altered outcomes.</p>
+    </div>
+
+    <div class="divider">· · ·</div>
+
+    <h2>Russia: The Ambiguous Case</h2>
+
+    <p>If Germany is the paradigm case for robust signal detection, Russia in 1937–1938 is the paradigm case for ambiguity — and the methodology's honest acknowledgment of its own limits.</p>
+
+    <div class="finding ambiguous">
+      <div class="finding-label">Russia 1938 — Widest envelope in dataset</div>
+      <div class="stat">SHI range: −3.75 to +6.00 (envelope width: 9.75)</div>
+      <p>The five scorers disagree fundamentally about how to read Russia's institutional configuration in 1938. This is not a data quality problem — it reflects genuine epistemic ambiguity about Stalinist mobilisation versus epistemic degradation. The SHI signal alone is not actionable for Russia.</p>
+    </div>
+
+    <p>What the five scorers agree on is the Archive collapse. Russia's Archive node — historical memory, cultural continuity, epistemic infrastructure — shows consistent decline across all scoring passes. This is the informative signal for Russia: not Shield hypertrophy, but Archive breakdown. A society whose institutional memory is being systematically destroyed — through purges, censorship, the rewriting of history — is structurally degraded in ways that the SHI alone does not capture.</p>
+
+    <p>The without-hindcasting implication: a 1938 analyst using CAMS would have been uncertain about Russia's Shield profile but certain about its Archive collapse. The actionable insight is the Archive reading, not the SHI reading.</p>
+
+    <div class="divider">· · ·</div>
+
+    <h2>Norway: Structural Indefensibility</h2>
+
+    <p>Norway offers the tightest scorer agreement in the dataset — and the most troubling structural reading for a country that had committed to neutrality as a strategic posture.</p>
+
+    <p>All five scorers agree that Norway's Shield node is critically underdeveloped relative to its Lore-Archive complex. The SHI is robustly negative — but in a specific way: not the negative SHI of a culturally rich, institutionally balanced state, but the negative SHI of structural indefensibility in a changing strategic environment. The without-hindcasting reading of Norway's CAMS profile in the late 1930s is not a prediction of invasion — no structural analysis can produce that — but it is a clear signal that Norway's institutional configuration was incompatible with its strategic situation.</p>
+
+    <div class="finding robust">
+      <div class="finding-label">Norway — Tight envelope, structural indefensibility confirmed</div>
+      <div class="stat">Envelope width: 2.5–3.5 units (tightest in dataset)</div>
+      <p>All five scorers agree on Norway's structural profile. The finding is robust: Norway's security architecture was structurally inadequate for the strategic environment it faced. This is without-hindcasting actionable — a contemporary analyst would have been confident in this reading.</p>
+    </div>
+
+    <div class="divider">· · ·</div>
+
+    <h2>The Validation Summary</h2>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Case</th>
+            <th>Key signal</th>
+            <th>Year</th>
+            <th>SHI_mean</th>
+            <th>SHI_min</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Germany</td>
+            <td>SHI &gt; +5.0 (mean)</td>
+            <td>1934</td>
+            <td>+6.1</td>
+            <td>~+2.85</td>
+            <td class="sig-partial">Partial</td>
+          </tr>
+          <tr>
+            <td>Germany</td>
+            <td>SHI &gt; +5.0 (robust)</td>
+            <td>1935</td>
+            <td>+7.0</td>
+            <td>+5.25</td>
+            <td class="sig-robust">Robust ✓</td>
+          </tr>
+          <tr>
+            <td>Russia</td>
+            <td>SHI &gt; +5.0</td>
+            <td>1938</td>
+            <td>~+1.1</td>
+            <td>−3.75</td>
+            <td class="sig-no">Ambiguous</td>
+          </tr>
+          <tr>
+            <td>Russia</td>
+            <td>Archive collapse</td>
+            <td>1936–38</td>
+            <td>—</td>
+            <td>Archive_max=5.5</td>
+            <td class="sig-robust">Robust ✓</td>
+          </tr>
+          <tr>
+            <td>Norway</td>
+            <td>Structural indefensibility</td>
+            <td>1935–39</td>
+            <td>Negative</td>
+            <td>Negative (tight)</td>
+            <td class="sig-robust">Robust ✓</td>
+          </tr>
+          <tr>
+            <td>UK</td>
+            <td>Appeasement configuration</td>
+            <td>1935–37</td>
+            <td>Moderate</td>
+            <td>= SHI_max</td>
+            <td class="sig-robust">Robust ✓</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="divider">· · ·</div>
+
+    <p>The broader finding from this analysis is that structural signals — when validated across multiple independent scoring passes — can provide actionable intelligence about societal configuration years before political events render them legible to conventional analysis. Germany's Shield hypertrophy was robustly detectable in 1935, four years before war. Norway's structural vulnerability was consistently readable throughout the late 1930s.</p>
+
+    <p>What the methodology cannot do — and this is as important as what it can do — is predict events. It can characterise structural configurations. It cannot predict decisions. Germany's 1935 SHI profile tells us that its institutional configuration has become critically hypertrophied; it does not tell us when or whether that configuration will produce military aggression. The signal is structural, not prophetic.</p>
+
+    <blockquote>
+      <p>The without-hindcasting discipline is not about predicting the past. It is about understanding what was legible, and what wasn't, to any analyst who looked carefully at the available evidence at the time it was available.</p>
+    </blockquote>
+
+    <p>The implication for the present is uncomfortable but clear. If CAMS structural analysis provides 4–5 year lead time on major institutional failures in historical cases, then contemporary readings of societies with SHI values approaching or exceeding critical thresholds deserve serious analytical attention — regardless of how inconvenient that attention might be politically.</p>
+
+    <div class="reflection">
+      <div class="reflection-header">Systemic Reflection</div>
+
+      <h3>First Principles</h3>
+      <p>Structural signals precede political events. The institutional configuration of a society — the balance between its security apparatus and its knowledge-memory complex — changes slowly, and those changes are measurable before they produce the events that make them visible in conventional analysis. The CAMS framework operationalises this insight; the without-hindcasting discipline tests whether the operationalisation is robust.</p>
+
+      <h3>Core Wisdom</h3>
+      <p>Not all structural signals are equal. The Germany finding (SHI_min = +5.25 in 1935) is genuinely robust — it survives the most sceptical scoring interpretation. The Russia finding is genuinely ambiguous — five scorers cannot agree on the fundamental question of how to read Stalinist mobilisation. Acknowledging the difference between these cases is a sign of methodological integrity, not weakness.</p>
+
+      <h3>Leverage Points</h3>
+      <p>The Archive node is the early warning system within the warning system. When historical memory and epistemic infrastructure collapse — as in Russia in the 1930s, or as has been observed in other hypertrophied contemporary states — the society loses its capacity to correct itself. The Archive collapse signal is often more actionable than the SHI alone, because it is both more specific and more resistant to political ambiguity in the scoring.</p>
+
+      <h3>Stakeholder Resonances</h3>
+      <p>This analysis is relevant to anyone trying to apply structural analysis to contemporary strategic environments — intelligence analysts, policymakers, researchers, and concerned citizens who want to think about what the structural data says before the events make it obvious. The without-hindcasting discipline is ultimately an argument for structural humility: things that seem inevitable in retrospect were not inevitable at the time, and things that seem impossible now may be structurally underway.</p>
+    </div>
+
+    <div class="article-nav">
+      <a href="australia-story.html">← The Enemy Factory</a>
+      <a href="data.html">Data Explorer →</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>
+      <a href="/epiphenomenon/">Epiphenomenon@Trove</a> · <a href="/">Neural Nations</a> ·
+      CAMS5 ensemble validation · Five independent scoring passes per society
+    </p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script>
+    Chart.defaults.color = '#8b949e';
+    Chart.defaults.borderColor = '#30363d';
+
+    const GER_YEARS = [1925,1926,1927,1928,1929,1930,1931,1932,1933,1934,1935,1936,1937,1938,1939,1940,1941,1942,1943,1944,1945];
+    const GER_SHI =   [-7.95,-7.6,-8.1,-7.7,-8.9,-3.0,-1.5,0.55,1.55,6.1,7.0,5.7,4.8,6.2,4.45,8.3,4.8,4.15,1.45,1.9,-1.3];
+
+    // Annotation lines
+    const alarmLine = GER_YEARS.map(() => 3.0);
+    const criticalLine = GER_YEARS.map(() => 5.0);
+    const zeroLine = GER_YEARS.map(() => 0.0);
+
+    new Chart(document.getElementById('chartGermany'), {
+      type: 'line',
+      data: {
+        labels: GER_YEARS,
+        datasets: [
+          {
+            label: 'SHI (ensemble mean)',
+            data: GER_SHI,
+            borderColor: '#f59e0b',
+            backgroundColor: (ctx) => {
+              const chart = ctx.chart;
+              const {ctx: canvas, chartArea} = chart;
+              if (!chartArea) return 'transparent';
+              const gradient = canvas.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+              gradient.addColorStop(0, 'rgba(248,113,113,0.25)');
+              gradient.addColorStop(0.4, 'rgba(245,158,11,0.12)');
+              gradient.addColorStop(1, 'rgba(45,212,191,0.05)');
+              return gradient;
+            },
+            fill: true,
+            tension: 0.3,
+            borderWidth: 2.5,
+            pointRadius: 3,
+            pointHoverRadius: 5,
+            pointBackgroundColor: '#f59e0b'
+          },
+          {
+            label: 'Alarm (+3.0)',
+            data: alarmLine,
+            borderColor: 'rgba(251,191,36,0.5)',
+            borderDash: [5,4],
+            borderWidth: 1.5,
+            pointRadius: 0,
+            fill: false
+          },
+          {
+            label: 'Critical (+5.0)',
+            data: criticalLine,
+            borderColor: 'rgba(248,113,113,0.6)',
+            borderDash: [5,4],
+            borderWidth: 1.5,
+            pointRadius: 0,
+            fill: false
+          },
+          {
+            label: 'Zero',
+            data: zeroLine,
+            borderColor: 'rgba(255,255,255,0.12)',
+            borderWidth: 1,
+            pointRadius: 0,
+            fill: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: true,
+            labels: { font: { size: 10, family: 'Inter' }, color: '#8b949e', boxWidth: 14 }
+          },
+          tooltip: { mode: 'index', intersect: false }
+        },
+        scales: {
+          x: { grid: { color: '#21262d' }, ticks: { font: { size: 10, family: 'Inter' } } },
+          y: {
+            grid: { color: '#21262d' },
+            ticks: { font: { size: 10, family: 'Inter' } },
+            min: -10, max: 10
+          }
+        }
+      }
+    });
+  </script>
+  <script src="../nav.js"></script>
+</body>
+</html>

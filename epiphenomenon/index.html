@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Epiphenomenon@Trove — Neural Nations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d1117;
+      --bg2: #161b22;
+      --bg3: #21262d;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --text-bright: #f0f6fc;
+      --teal: #2dd4bf;
+      --teal-dim: rgba(45,212,191,0.12);
+      --purple: #7e22ce;
+      --purple-lo: #5b21b6;
+      --gold: #f8f4e8;
+      --muted: #8b949e;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── Navbar ───────────────────────────────────────── */
+    .navbar {
+      background: linear-gradient(135deg, var(--purple-lo), var(--purple));
+      padding: 0 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px rgba(91,33,182,0.4);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      height: 56px;
+      gap: 2rem;
+    }
+    .nav-brand {
+      font-family: 'Lora', serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #fff;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-links { display: flex; gap: 0.25rem; align-items: center; flex: 1; }
+    .nav-link {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-link:hover, .nav-link.active {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+    }
+    .nav-link.active { background: rgba(255,255,255,0.2); }
+
+    /* ── Hero ─────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(180deg, #0f0a1e 0%, var(--bg) 100%);
+      padding: 5rem 1.5rem 4rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 {
+      font-family: 'Lora', serif;
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1.2;
+      max-width: 700px;
+      margin: 0 auto 1.25rem;
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+    .hero-meta {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .hero-meta span { display: flex; align-items: center; gap: 0.4rem; }
+    .hero-meta .dot {
+      width: 6px; height: 6px;
+      background: var(--teal);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* ── Cards ────────────────────────────────────────── */
+    .cards-section {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem 5rem;
+    }
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.75rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--purple-lo), var(--teal));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .card:hover {
+      border-color: var(--teal);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(45,212,191,0.1);
+    }
+    .card:hover::before { opacity: 1; }
+    .card-tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+    .card h2 {
+      font-family: 'Lora', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-bright);
+      line-height: 1.35;
+    }
+    .card p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+    .card-arrow {
+      font-size: 0.8rem;
+      color: var(--teal);
+      margin-top: 0.25rem;
+      font-weight: 500;
+    }
+
+    /* ── Methodology strip ────────────────────────────── */
+    .method-strip {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2.5rem 1.5rem;
+    }
+    .method-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+    .method-item { }
+    .method-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 0.4rem;
+    }
+    .method-value {
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      color: var(--text-bright);
+      line-height: 1.4;
+    }
+    .method-sub {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    /* ── Footer ───────────────────────────────────────── */
+    footer {
+      padding: 2rem 1.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--teal); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .hero { padding: 3.5rem 1rem 3rem; }
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">Neural Nations</a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/research" class="nav-link">Research</a>
+        <a href="/epiphenomenon/" class="nav-link active">Epiphenomenon</a>
+        <a href="/epiphenomenon/data.html" class="nav-link">Data</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <p class="hero-eyebrow">Research Project</p>
+    <h1>Epiphenomenon@Trove</h1>
+    <p class="hero-sub">
+      A structural analysis of Australian threat discourse, institutional coherence,
+      and civilisational stress across 125 years — using the Complex Adaptive
+      Model System (CAMS) and the National Library of Australia's digitised press archive.
+    </p>
+    <div class="hero-meta">
+      <span><span class="dot"></span> 1900–2026</span>
+      <span><span class="dot"></span> 8 CAMS nodes</span>
+      <span><span class="dot"></span> Five-scorer ensemble</span>
+      <span><span class="dot"></span> 55M+ Trove documents</span>
+    </div>
+  </section>
+
+  <section class="method-strip">
+    <div class="method-inner">
+      <div class="method-item">
+        <div class="method-label">Framework</div>
+        <div class="method-value">CAMS</div>
+        <div class="method-sub">Complex Adaptive Model System — eight institutional nodes scored on Coherence, Capacity, Stress, Abstraction</div>
+      </div>
+      <div class="method-item">
+        <div class="method-label">Primary corpus</div>
+        <div class="method-value">Trove + Hansard</div>
+        <div class="method-sub">National Library of Australia digitised press 1900–1954; Parliamentary Hansard 2006–2025</div>
+      </div>
+      <div class="method-item">
+        <div class="method-label">Key metric</div>
+        <div class="method-value">Shield Hypertrophy Index</div>
+        <div class="method-sub">SHI = Shield NV − mean(Lore NV, Archive NV); alarm at +3.0, critical at +5.0</div>
+      </div>
+      <div class="method-item">
+        <div class="method-label">Validation</div>
+        <div class="method-value">Five-scorer ensemble</div>
+        <div class="method-sub">Findings tested for robustness across five independent scoring passes; inter-scorer variance reported</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cards-section">
+    <div class="section-label">Project Articles</div>
+    <div class="cards-grid">
+
+      <a href="australia-story.html" class="card">
+        <span class="card-tag">Arc Story · Australia</span>
+        <h2>The Enemy Factory</h2>
+        <p>
+          How Australian public discourse has repeatedly manufactured foreign threats —
+          from the Yellow Peril panics of the 1900s through Red Scare to the
+          contemporary China Threat. A structural reading of 125 years of anxiety.
+        </p>
+        <span class="card-arrow">Read the arc story →</span>
+      </a>
+
+      <a href="without-hindcasting.html" class="card">
+        <span class="card-tag">Working Paper · WWI · WWII</span>
+        <h2>Without Hindcasting</h2>
+        <p>
+          Can structural CAMS signals detect societal crisis before the fact?
+          A without-hindsight analysis of Germany, UK, Russia, and Norway
+          across both World Wars — testing whether the Shield Hypertrophy Index
+          provides actionable lead time.
+        </p>
+        <span class="card-arrow">Read the working paper →</span>
+      </a>
+
+      <a href="data.html" class="card">
+        <span class="card-tag">Interactive · Charts · Data</span>
+        <h2>Data Explorer</h2>
+        <p>
+          Explore the underlying datasets interactively. Trove threat discourse
+          frequency, Hansard parliamentary language, Australia's CAMS structural
+          profile, and Germany's pre-war Shield Hypertrophy trajectory —
+          all in one place.
+        </p>
+        <span class="card-arrow">Explore the data →</span>
+      </a>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      Epiphenomenon@Trove is a project of
+      <a href="/">Neural Nations</a> ·
+      Data: National Library of Australia (Trove), Parliament of Australia (Hansard) ·
+      CAMS framework: <a href="/">neuralnations.org</a>
+    </p>
+  </footer>
+
+  <script src="../nav.js"></script>
+</body>
+</html>
