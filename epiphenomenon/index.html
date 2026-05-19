@@ -4,211 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Epiphenomenon@Trove — Neural Nations</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../style.css">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #0d1117;
-      --bg2: #161b22;
-      --bg3: #21262d;
-      --border: #30363d;
-      --text: #c9d1d9;
-      --text-bright: #f0f6fc;
-      --teal: #2dd4bf;
-      --teal-dim: rgba(45,212,191,0.12);
-      --purple: #7e22ce;
-      --purple-lo: #5b21b6;
-      --gold: #f8f4e8;
-      --muted: #8b949e;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-
-
-    /* ── Hero ─────────────────────────────────────────── */
-    .hero {
-      background: linear-gradient(180deg, #0f0a1e 0%, var(--bg) 100%);
-      padding: 5rem 1.5rem 4rem;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-    }
-    .hero-eyebrow {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: 1.25rem;
-    }
-    .hero h1 {
-      font-family: 'Lora', serif;
-      font-size: clamp(2rem, 5vw, 3.25rem);
-      font-weight: 600;
-      color: var(--gold);
-      line-height: 1.2;
-      max-width: 700px;
-      margin: 0 auto 1.25rem;
-    }
-    .hero-sub {
-      font-size: 1.05rem;
-      color: var(--muted);
-      max-width: 560px;
-      margin: 0 auto 2rem;
-      line-height: 1.7;
-    }
-    .hero-meta {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-    .hero-meta span { display: flex; align-items: center; gap: 0.4rem; }
-    .hero-meta .dot {
-      width: 6px; height: 6px;
-      background: var(--teal);
-      border-radius: 50%;
-      display: inline-block;
-    }
-
-    /* ── Cards ────────────────────────────────────────── */
-    .cards-section {
-      max-width: 1060px;
-      margin: 0 auto;
-      padding: 3.5rem 1.5rem 5rem;
-    }
-    .section-label {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: 1.75rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.25rem;
-    }
-    .card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.75rem;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--purple-lo), var(--teal));
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-    .card:hover {
-      border-color: var(--teal);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 32px rgba(45,212,191,0.1);
-    }
-    .card:hover::before { opacity: 1; }
-    .card-tag {
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--teal);
-    }
-    .card h2 {
-      font-family: 'Lora', serif;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--text-bright);
-      line-height: 1.35;
-    }
-    .card p {
-      font-size: 0.875rem;
-      color: var(--muted);
-      line-height: 1.65;
-      flex: 1;
-    }
-    .card-arrow {
-      font-size: 0.8rem;
-      color: var(--teal);
-      margin-top: 0.25rem;
-      font-weight: 500;
-    }
-
-    /* ── Methodology strip ────────────────────────────── */
-    .method-strip {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 2.5rem 1.5rem;
-    }
-    .method-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 2rem;
-    }
-    .method-item { }
-    .method-label {
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: 0.4rem;
-    }
-    .method-value {
-      font-family: 'Lora', serif;
-      font-size: 1rem;
-      color: var(--text-bright);
-      line-height: 1.4;
-    }
-    .method-sub {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-top: 0.2rem;
-    }
-
-    /* ── Footer ───────────────────────────────────────── */
-    footer {
-      padding: 2rem 1.5rem;
-      text-align: center;
-      font-size: 0.8rem;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
-    }
-    footer a { color: var(--teal); text-decoration: none; }
-
-    @media (max-width: 600px) {
-      .hero { padding: 3.5rem 1rem 3rem; }
-      .cards-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles/cams.css">
+  <link rel="stylesheet" href="styles/site.css">
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
     <script>
@@ -217,95 +14,27 @@
       gtag('js', new Date());
       gtag('config', 'G-ESZ16XVVNN');
     </script></head>
-<body>
+<body class="lattice-bg">
 
-<nav class="navbar">
-    <div class="nav-container">
-        <a href="../index.html" class="nav-logo">
-            <span class="nav-logo-badge">NN</span>
-            <span class="nav-logo-text">Neural Nations</span>
-        </a>
-        <div class="nav-menu">
-            <a href="../index.html" class="nav-link">Home</a>
-            <a href="../start-here.html" class="nav-link">Start Here</a>
-            <a href="../model.html" class="nav-link">Model</a>
-            <a href="../datasets.html" class="nav-link">Datasets</a>
-            <a href="../explore.html" class="nav-link">Explore</a>
-            <div class="nav-dropdown">
-                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
-                <div class="nav-dropdown-menu">
-                    <a href="../results.html">Results at a Glance</a>
-                    <a href="../validation.html">Validation &amp; Limits</a>
-                    <a href="../cams-advanced-analysis.html">Advanced Analysis</a>
-                    <a href="../escalation-archetypes.html">Escalation Archetypes</a>
-                    <a href="../cams-failure-modes.html">Failure Modes Map</a>
-                    <a href="../failure-modes-story.html">Failure Modes Story</a>
-                    <a href="../nz-arc-map.html">New Zealand &mdash; Arc Map</a>
-                    <a href="../nz-arc-story.html">New Zealand &mdash; Institutional Arc</a>
-                    <a href="../argentina-cams-map.html">Argentina &mdash; Arc Map</a>
-                    <a href="../argentina-cams-story.html">Argentina &mdash; CAMS Story</a>
-                    <a href="../germany-arc-map.html">Germany &mdash; Arc Map</a>
-                    <a href="../germany-arc-story.html">Germany &mdash; Arc Story</a>
-                    <a href="../canada-arc-map.html">Canada &mdash; Arc Map</a>
-                    <a href="../canada-arc-story.html">Canada &mdash; The Border Tribe</a>
-                    <a href="../attractors.html">Attractors</a>
-                    <a href="index.html">Epiphenomenon@Trove</a>
-                </div>
-            </div>
-            <a href="../research-diary.html" class="nav-link">Research Diary</a>
-            <a href="../mindscapes.html" class="nav-link">Mindscapes</a>
-            <a href="../faq.html" class="nav-link">FAQ</a>
-            <a href="../contact.html" class="nav-link">Contact</a>
-            <a href="../framework/index.html" class="nav-link" style="color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework &#8599;</a>
-        </div>
-        <div class="nav-actions">
-            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
-                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
-            </a>
-            <a href="../newsletter.html" class="nav-btn-newsletter">
-                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
-            </a>
-            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </div>
-    <div class="nav-mobile" id="nav-mobile">
-        <a href="../index.html">Home</a>
-        <a href="../start-here.html">Start Here</a>
-        <a href="../model.html">Model</a>
-        <a href="../datasets.html">Datasets</a>
-        <a href="../explore.html">Explore</a>
-        <a href="../research-diary.html">Research Diary</a>
-        <a href="../mindscapes.html">Mindscapes</a>
-        <a href="../faq.html">FAQ</a>
-        <a href="../contact.html">Contact</a>
-        <a href="../framework/index.html">Framework &#8599;</a>
-        <hr class="mobile-divider">
-        <div class="mobile-section-title">Insights</div>
-        <a href="../results.html">Results at a Glance</a>
-        <a href="../validation.html">Validation &amp; Limits</a>
-        <a href="../cams-advanced-analysis.html">Advanced Analysis</a>
-        <a href="../escalation-archetypes.html">Escalation Archetypes</a>
-        <a href="../cams-failure-modes.html">Failure Modes Map</a>
-        <a href="../failure-modes-story.html">Failure Modes Story</a>
-        <a href="../nz-arc-map.html">New Zealand &mdash; Arc Map</a>
-        <a href="../nz-arc-story.html">New Zealand &mdash; Institutional Arc</a>
-        <a href="../argentina-cams-map.html">Argentina &mdash; Arc Map</a>
-        <a href="../argentina-cams-story.html">Argentina &mdash; CAMS Story</a>
-        <a href="../germany-arc-map.html">Germany &mdash; Arc Map</a>
-        <a href="../germany-arc-story.html">Germany &mdash; Arc Story</a>
-        <a href="../canada-arc-map.html">Canada &mdash; Arc Map</a>
-        <a href="../canada-arc-story.html">Canada &mdash; The Border Tribe</a>
-        <a href="../attractors.html">Attractors</a>
-        <a href="index.html">Epiphenomenon@Trove</a>
-    </div>
+<nav class="nn-nav">
+  <div class="nn-nav-inner">
+    <a href="../index.html" class="nn-mark">
+      <div class="glyph"></div>
+      <div class="wm">Neural Nations<small>CAMS · Civilisational Analysis Network</small></div>
+    </a>
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../explore.html">Research</a></li>
+      <li><a class="active" href="index.html">Epiphenomenon</a></li>
+      <li><a href="data.html">Data</a></li>
+    </ul>
+  </div>
 </nav>
 
   <section class="hero">
-    <p class="hero-eyebrow">Research Project</p>
+    <span class="eyebrow">Research Project · Apr 2026</span>
     <h1><a href="index.html" style="color:inherit;text-decoration:none;">Epiphenomenon@Trove</a></h1>
-    <p class="hero-sub">
+    <p class="lede">
       A structural analysis of Australian threat discourse, institutional coherence,
       and civilisational stress across 125 years — using the Complex Adaptive
       Model System (CAMS) and the National Library of Australia's digitised press archive.
@@ -316,7 +45,7 @@
       <span><span class="dot"></span> Five-scorer ensemble</span>
       <span><span class="dot"></span> 55M+ Trove documents</span>
     </div>
-    <p style="display:block; width:100%; text-align:center !important; font-weight:700; font-size:1.1rem; color:var(--text-bright); margin-top:2rem; letter-spacing:0.01em;">Human systems do not fail at random. Their stress builds in patterns.</p>
+    <p style="text-align:center; font-weight:700; font-size:1.1rem; color:var(--ink-900); margin-top:2rem; letter-spacing:0.01em; font-family:var(--font-display);">Human systems do not fail at random. Their stress builds in patterns.</p>
   </section>
 
   <section class="method-strip">
@@ -344,9 +73,9 @@
     </div>
   </section>
 
-  <section class="cards-section">
+  <section class="section">
     <div class="section-label">Project Articles</div>
-    <div class="cards-grid">
+    <div class="card-grid">
 
       <a href="australia-story.html" class="card">
         <span class="card-tag">Arc Story · Australia</span>
@@ -386,7 +115,7 @@
     </div>
   </section>
 
-  <footer>
+  <footer class="nn-foot">
     <p>
       Epiphenomenon@Trove is a project of
       <a href="../index.html">Neural Nations</a> ·
@@ -394,8 +123,6 @@
       CAMS framework: <a href="../index.html">neuralnations.org</a>
     </p>
   </footer>
-
-  <script src="../nav.js"></script>
 </body>
 </html>
 
