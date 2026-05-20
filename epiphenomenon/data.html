@@ -202,7 +202,7 @@
         <div class="chart-card-header">
           <div>
             <div class="chart-card-title">Australia — Shield Hypertrophy Index, 1895–2026</div>
-            <div class="chart-card-sub">SHI = Shield NV − mean(Lore NV, Archive NV)</div>
+            <div class="chart-card-sub">SHI = V(Shield) − mean(V(Lore), V(Archive)); Vᵢ = C + K + (A/2) − S</div>
           </div>
           <span class="chart-badge" style="background:var(--amber);color:#000">CAMS</span>
         </div>
@@ -224,7 +224,7 @@
 
       <div class="method-note">
         <div class="method-note-label">Methodology</div>
-        Node Values (NV) computed from CAMS scoring of Australian institutional structure across eight nodes (Helm, Shield, Lore, Stewards, Craft, Hands, Archive, Flow) on four dimensions (Coherence, Capacity, Stress, Abstraction). SHI = Shield NV − mean(Lore NV, Archive NV). Positive SHI indicates Shield dominance over the knowledge-memory complex; negative indicates Lore-Archive dominance. Source: aus_annual.csv, CAMS ensemble scoring 1895–2026.
+        Node values computed as Vᵢ = C + K + (A/2) − S, range [−7.5, 24.0], across eight nodes (Helm, Shield, Lore, Stewards, Craft, Hands, Archive, Flow) scored on Coherence, Capacity, Stress, Abstraction. SHI = V(Shield) − mean(V(Lore), V(Archive)). Positive SHI indicates Shield dominance over the knowledge-memory complex; negative indicates Lore-Archive dominance. Source: aus_annual.csv, CAMS ensemble scoring 1895–2026.
       </div>
     </div>
 
@@ -281,7 +281,7 @@
 
       <div class="method-note">
         <div class="method-note-label">Methodology — Five-scorer ensemble</div>
-        Germany, UK, Russia, and Norway each scored independently by five separate CAMS passes. Node Values averaged at the Coherence/Capacity/Stress/Abstraction level before Node Value computation. Inter-scorer variance reported as V_min/V_max envelope. Signals classified as Robust (SHI_min &gt; threshold), Partial (mean &gt; threshold, SHI_min ≤ threshold), or Ambiguous (envelope width &gt; 8 units). Full methodology: see the <a href="without-hindcasting.html">Without Hindcasting</a> working paper.
+        Germany, UK, Russia, and Norway each scored independently by five separate CAMS passes. Node values (Vᵢ = C + K + (A/2) − S) averaged after independent C/K/S/A scoring. Inter-scorer variance reported as V_min/V_max envelope. Signals classified as Robust (SHI_min &gt; threshold), Partial (mean &gt; threshold, SHI_min ≤ threshold), or Ambiguous (envelope width &gt; 8 units). Full methodology: see the <a href="without-hindcasting.html">Without Hindcasting</a> working paper.
       </div>
     </div>
 
