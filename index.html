@@ -55,6 +55,173 @@
     </script>
 
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* ── Home-page-specific styles ──────────────────────────── */
+        .home-hero {
+            padding: 40px 0 32px;
+            border-bottom: 1px solid #e8e0cc;
+            margin-bottom: 32px;
+        }
+        .home-lede {
+            font-size: 1.08em;
+            line-height: 1.75;
+            color: #555;
+            margin: 0 0 24px;
+        }
+        .home-lede p { margin: 0 0 14px; }
+        .home-lede p:last-child { margin: 0; }
+
+        .pull-quote {
+            font-size: 1.25em;
+            font-style: italic;
+            color: #2c3e50;
+            border-left: 3px solid #5b21b6;
+            padding: 8px 0 8px 18px;
+            margin: 0 0 24px;
+            line-height: 1.5;
+        }
+
+        .section-label {
+            font-size: 0.72em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #999;
+            margin: 0 0 14px;
+        }
+
+        /* ── Resource grid ───────────────────────────────────────── */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 32px;
+        }
+        .resource-tile {
+            display: block;
+            padding: 16px 18px;
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            text-decoration: none;
+            color: inherit;
+            transition: border-color .15s, box-shadow .15s;
+        }
+        .resource-tile:hover {
+            border-color: #5b21b6;
+            box-shadow: 0 2px 12px rgba(91,33,182,.10);
+        }
+        .resource-tile .rt-label {
+            font-size: 0.72em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #999;
+            margin-bottom: 5px;
+        }
+        .resource-tile .rt-title {
+            font-size: 0.97em;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+        .resource-tile .rt-desc {
+            font-size: 0.82em;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* ── What's New list ─────────────────────────────────────── */
+        .news-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 0;
+        }
+        .news-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            padding: 13px 16px;
+            background: #faf8ff;
+            border: 1px solid #e2daf5;
+            border-radius: 8px;
+            text-decoration: none;
+            color: inherit;
+            transition: border-color .15s;
+        }
+        .news-item:hover { border-color: #7c3aed; }
+        .news-item .ni-title {
+            font-size: 0.95em;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 3px;
+        }
+        .news-item .ni-desc {
+            font-size: 0.83em;
+            color: #666;
+            line-height: 1.55;
+        }
+
+        /* ── CTA row ─────────────────────────────────────────────── */
+        .cta-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 28px 0 0;
+            padding-top: 24px;
+            border-top: 1px solid #eee;
+        }
+        .cta-row a {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: opacity .15s;
+        }
+        .cta-row a:hover { opacity: .85; }
+        .cta-primary {
+            background: #5b21b6;
+            color: #fff;
+        }
+        .cta-secondary {
+            background: #fff;
+            color: #5b21b6;
+            border: 1px solid #5b21b6;
+        }
+
+        /* ── Stats strip ─────────────────────────────────────────── */
+        .stats-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin: 20px 0 28px;
+        }
+        .stat {
+            text-align: center;
+            padding: 14px 10px;
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .stat .sv { font-size: 1.5em; font-weight: 700; color: #1f77b4; line-height: 1; }
+        .stat .sl { font-size: 0.76em; color: #666; margin-top: 4px; line-height: 1.4; }
+
+        /* ── Divider ─────────────────────────────────────────────── */
+        .section-divider {
+            margin: 28px 0;
+            border: 0;
+            border-top: 1px solid #eee;
+        }
+
+        @media (max-width: 600px) {
+            .resource-grid { grid-template-columns: 1fr; }
+            .cta-row { flex-direction: column; }
+            .cta-row a { text-align: center; }
+        }
+    </style>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
     <script>
@@ -140,197 +307,178 @@
         <a href="argentina-cams-story.html">Argentina &mdash; CAMS Story</a>
         <a href="germany-arc-map.html">Germany &mdash; Arc Map</a>
         <a href="germany-arc-story.html">Germany &mdash; Arc Story</a>
-                    <a href="canada-arc-map.html">Canada &mdash; Arc Map</a>
-                    <a href="canada-arc-story.html">Canada &mdash; The Border Tribe</a>
+        <a href="canada-arc-map.html">Canada &mdash; Arc Map</a>
+        <a href="canada-arc-story.html">Canada &mdash; The Border Tribe</a>
         <a href="attractors.html">Attractors</a>
     </div>
 </nav>
+
 <img src="neuralnations-banner.png" alt="Neural Nations — modelling civilisations as coordinated thermodynamics functions" style="width:100%;max-height:420px;object-fit:cover;display:block;">
-<div style="background:#1a1a2e; padding: 11px 24px; text-align:center;">
-    <p style="margin:0; font-size:0.82em; color:#a0aab8; font-style:italic; line-height:1.6; max-width:820px; margin:0 auto;">Neural Nations is a misnomer — it suggests nations exchanging polite neurotransmitters at the UN. The site is doing something stranger: treating nations as visible cases of a deeper coordination anatomy. &ldquo;Nations&rdquo; is too narrow, because CAMS is really about recurring social cognition across states, firms, empires, civilisations, and any sufficiently organised collective. More like <em>Eight Recurrent Coordination Functions in Evolved Social Meta-Organisms Dot Org</em> — but that would frighten readers. So Neural Nations remains: technically wrong, poetically useful, and just dangerous enough to be memorable.</p>
-</div>
+
 <div class="container">
-        <div class="card">
-            <h1>Neural Nations</h1>
-            <p class="subtitle">Civilisational complexity research — open data, open code.</p>
+    <div class="card">
 
-            <blockquote class="hero-quote">Human systems do not fail at random. Their stress builds in patterns.</blockquote>
-
-            <p style="font-size: 1.05em; line-height: 1.75; margin: 0 0 20px;">
-                Neural Nations is an open research platform built around <strong>CAMS — the Complex Adaptive Model System</strong> — a scale-covariant framework for reading societies as living coordination systems rather than slogans, factions, or headlines. Across 45 historical series, 38 societies, and 39,351 records, CAMS tracks how cohesion, capacity, stress, and abstraction interact across eight institutional nodes, making structural drift visible before crisis becomes obvious.
-            </p>
-
+        <!-- ── Hero ──────────────────────────────────────────────── -->
+        <div class="home-hero">
+            <h1 style="text-align:left;margin-bottom:14px;">Neural Nations</h1>
+            <p class="pull-quote">Most commentary tells you what societies say about themselves.<br>
+            CAMS asks a different question: how well are they actually coordinating?</p>
             <div class="home-lede">
-                <p>Most commentary tells you what a society says about itself. CAMS asks a different question: how well is it actually coordinating?</p>
-                <p>Every durable society has to solve the same functional problems. It needs leadership, defence, memory, legitimacy, production, labour, circulation, and skilled execution. Neural Nations maps those functions across time, then measures how they reinforce each other or drift apart. The point is not ideology. The point is observability. A system under strain leaves a signature.</p>
+                <p>CAMS — the Complex Adaptive Model System — is a quantitative framework that measures the internal health and coherence of societies. It tracks eight institutional nodes: security, knowledge systems, material conditions, strategic direction, memory, execution, resource stewardship, and circulation. And how they interact over time.</p>
+                <p>When these nodes are well-coupled, societies tend to be resilient. When they decouple, stress rises faster than capacity, coordination breaks down, and the system becomes brittle. CAMS makes these hidden dynamics legible — often years or decades before they become obvious.</p>
             </div>
+        </div>
 
-            <div class="callout-block">
-                <div class="callout-label">Why this matters</div>
-                <p style="margin: 0; font-size: 0.95em; line-height: 1.7;">When a society is healthy, its institutions remain coupled even under pressure. When it begins to fail, the warning signs usually appear well before the spectacle: stress rises faster than capacity, coordination weakens across layers, and the system becomes more reactive, brittle, and prone to shock. CAMS is designed to make those transitions legible.</p>
+        <!-- ── Validation stats ───────────────────────────────────── -->
+        <div class="stats-strip">
+            <div class="stat">
+                <div class="sv">75–90%</div>
+                <div class="sl">Ensemble hindcast accuracy across tested societies</div>
             </div>
-
-            <!-- Keplerian disclosure -->
-            <div style="margin: 28px 0; padding: 20px 22px; background: #f0f4f8; border-left: 4px solid #1f77b4; border-radius: 0 8px 8px 0;">
-                <div style="font-size: 0.75em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #1f77b4; margin-bottom: 8px;">A note on method</div>
-                <p style="margin: 0 0 10px; font-size: 0.93em; line-height: 1.7; color: #333;">
-                    CAMS is a <strong>sampling instrument calibrated empirically</strong>, not a theory derived from first principles. Kepler mapped planetary orbits with extraordinary accuracy before Newton explained <em>why</em> they moved that way. CAMS works analogously: it is a measurement framework that fits observed societal behaviour with consistent retrodictive accuracy — but it does not yet have the underlying derivation a mature scientific theory requires.
-                </p>
-                <p style="margin: 0; font-size: 0.93em; line-height: 1.7; color: #333;">
-                    The author is an independent researcher. CAMS has not yet been formally peer-reviewed. This platform publishes the work openly — datasets, formulas, scoring protocols — precisely so that scrutiny is possible. Rigorous scepticism is not a challenge to this project. It is the point.
-                </p>
+            <div class="stat">
+                <div class="sv">r = −0.958</div>
+                <div class="sl">Entropy–health correlation in validated datasets</div>
             </div>
+            <div class="stat">
+                <div class="sv">45</div>
+                <div class="sl">Historical series across 38 societies, 1800–2025</div>
+            </div>
+            <div class="stat">
+                <div class="sv">r = 0.78</div>
+                <div class="sl">Seshat cross-validation, Latium/Rome (Apr 2026)</div>
+            </div>
+        </div>
 
-            <!-- Validation statistics -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 20px 0 28px;">
-                <div style="text-align: center; padding: 16px 12px; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px;">
-                    <div style="font-size: 1.6em; font-weight: 700; color: #1f77b4; line-height: 1;">75–90%</div>
-                    <div style="font-size: 0.78em; color: #666; margin-top: 4px; line-height: 1.4;">Ensemble hindcast accuracy across tested societies</div>
+        <!-- ── Why Neural Nations ─────────────────────────────────── -->
+        <hr class="section-divider">
+        <div style="margin-bottom:28px;">
+            <h2 style="font-size:1.1em;margin:0 0 12px;">Why "Neural Nations"?</h2>
+            <div class="home-lede">
+                <p>The name is technically misleading. Nations are only one scale at which this coordination anatomy appears. The same patterns show up in empires, civilisations, corporations, and organised collectives of any kind. "Neural Nations" is a misnomer — but it's poetically useful. It suggests something deeper than politics: the nervous system of organised human life.</p>
+            </div>
+        </div>
+
+        <!-- ── Keplerian note ─────────────────────────────────────── -->
+        <div style="padding:16px 20px;background:#f0f4f8;border-left:4px solid #1f77b4;border-radius:0 8px 8px 0;margin-bottom:28px;">
+            <div style="font-size:0.72em;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#1f77b4;margin-bottom:8px;">A note on method</div>
+            <p style="margin:0 0 8px;font-size:0.9em;line-height:1.7;color:#333;">
+                CAMS is a <strong>sampling instrument calibrated empirically</strong>, not a theory derived from first principles. Kepler mapped planetary orbits accurately before Newton explained why they moved that way. CAMS works analogously: it fits observed societal behaviour with consistent retrodictive accuracy, but does not yet have the underlying derivation a mature scientific theory requires.
+            </p>
+            <p style="margin:0;font-size:0.9em;line-height:1.7;color:#333;">
+                The author is an independent researcher. CAMS has not been formally peer-reviewed. This platform publishes the work openly — datasets, formulas, scoring protocols — precisely so scrutiny is possible. Rigorous scepticism is not a challenge to this project. It is the point.
+            </p>
+        </div>
+
+        <!-- ── Where to Start ─────────────────────────────────────── -->
+        <hr class="section-divider">
+        <p class="section-label">Where to Start</p>
+        <div class="resource-grid">
+            <a href="model.html" class="resource-tile">
+                <div class="rt-label">Framework</div>
+                <div class="rt-title">Read the Model</div>
+                <div class="rt-desc">The eight-node system, core formulas, and logic of CAMS as a comparative instrument.</div>
+            </a>
+            <a href="datasets.html" class="resource-tile">
+                <div class="rt-label">Open Data</div>
+                <div class="rt-title">Browse the Datasets</div>
+                <div class="rt-desc">Scoring methods, validation studies, and 45 open time-series downloadable from GitHub.</div>
+            </a>
+            <a href="research-diary.html" class="resource-tile">
+                <div class="rt-label">Recommended first</div>
+                <div class="rt-title">Research Diary</div>
+                <div class="rt-desc">Work in plain language as it develops. Real societies, real data, no prior knowledge required.</div>
+            </a>
+            <a href="explore.html" class="resource-tile">
+                <div class="rt-label">Tools</div>
+                <div class="rt-title">Explore the Tools</div>
+                <div class="rt-desc">Mindscapes, Failure Modes CLDs, synthetic validators, Escalation Archetypes, and more.</div>
+            </a>
+        </div>
+
+        <!-- ── Additional quick links ─────────────────────────────── -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;font-size:0.88em;">
+            <a href="test.html" style="color:#5b21b6;font-weight:600;text-decoration:none;padding:5px 12px;border:1px solid #c4b5fd;border-radius:5px;background:#faf5ff;">Nation State Diagnostic →</a>
+            <a href="cams-failure-modes.html" style="color:#5b21b6;font-weight:600;text-decoration:none;padding:5px 12px;border:1px solid #c4b5fd;border-radius:5px;background:#faf5ff;">Failure Modes Map →</a>
+            <a href="validation.html" style="color:#5b21b6;font-weight:600;text-decoration:none;padding:5px 12px;border:1px solid #c4b5fd;border-radius:5px;background:#faf5ff;">Validation &amp; Limits →</a>
+            <a href="https://cams-advanced-analysis.streamlit.app" target="_blank" style="color:#5b21b6;font-weight:600;text-decoration:none;padding:5px 12px;border:1px solid #c4b5fd;border-radius:5px;background:#faf5ff;">Live Dashboard ↗</a>
+            <a href="https://github.com/KaliBond/wintermute" target="_blank" style="color:#5b21b6;font-weight:600;text-decoration:none;padding:5px 12px;border:1px solid #c4b5fd;border-radius:5px;background:#faf5ff;">GitHub ↗</a>
+        </div>
+
+        <!-- ── What's New ─────────────────────────────────────────── -->
+        <hr class="section-divider">
+        <p class="section-label">What's New — May 2026</p>
+        <div class="news-list">
+            <a href="epiphenomenon/" class="news-item">
+                <div style="flex-shrink:0;font-size:1.3em;line-height:1;margin-top:1px;">🔬</div>
+                <div>
+                    <div class="ni-title">Epiphenomenon@Trove — Australian Threat Discourse</div>
+                    <div class="ni-desc">125-year study of manufactured threat discourse in Australian newspapers and parliament. Combines Trove + Hansard data with CAMS analysis. Shows how institutional conditions, not external events, drive threat narratives. Three new papers + interactive explorer.</div>
                 </div>
-                <div style="text-align: center; padding: 16px 12px; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px;">
-                    <div style="font-size: 1.6em; font-weight: 700; color: #1f77b4; line-height: 1;">r = −0.958</div>
-                    <div style="font-size: 0.78em; color: #666; margin-top: 4px; line-height: 1.4;">Entropy–health correlation in validated datasets</div>
+            </a>
+            <a href="seshat-explorer.html" class="news-item">
+                <div style="flex-shrink:0;font-size:1.3em;line-height:1;margin-top:1px;">🏛️</div>
+                <div>
+                    <div class="ni-title">Seshat × CAMS Cross-Validation</div>
+                    <div class="ni-desc">First independent test of CAMS against the Seshat Historical Database. Strong alignment on 35 Natural Geographic Areas over 5,500 years. Latium/Rome overlap: r&nbsp;=&nbsp;0.78.</div>
                 </div>
-                <div style="text-align: center; padding: 16px 12px; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px;">
-                    <div style="font-size: 1.6em; font-weight: 700; color: #1f77b4; line-height: 1;">45</div>
-                    <div style="font-size: 0.78em; color: #666; margin-top: 4px; line-height: 1.4;">Historical series across 38 societies, 1800–2025</div>
-                </div>
-                <div style="text-align: center; padding: 16px 12px; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px;">
-                    <div style="font-size: 1.6em; font-weight: 700; color: #1f77b4; line-height: 1;">r = 0.78</div>
-                    <div style="font-size: 0.78em; color: #666; margin-top: 4px; line-height: 1.4;">Seshat cross-validation, Latium/Rome (Apr 2026)</div>
+            </a>
+            <div class="news-item" style="background:#f5f9ff;border-color:#dce8f5;">
+                <div style="flex-shrink:0;font-size:1.3em;line-height:1;margin-top:1px;">⚙️</div>
+                <div>
+                    <div class="ni-title">New Tools Live</div>
+                    <div class="ni-desc" style="display:flex;flex-direction:column;gap:4px;margin-top:4px;">
+                        <a href="granger-validator.html" style="color:#1f77b4;font-weight:600;text-decoration:none;">Granger Causality Validator →</a>
+                        <a href="cams-failure-modes.html" style="color:#1f77b4;font-weight:600;text-decoration:none;">Interactive Failure Modes (Causal Loop Diagrams) →</a>
+                        <a href="mindscapes.html" style="color:#1f77b4;font-weight:600;text-decoration:none;">Mindscapes — National Mood Reports (France &amp; Norway live) →</a>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px;">
-                <a href="model.html" class="btn btn-primary">Explore the model →</a>
-                <a href="datasets.html" class="btn btn-secondary">Browse the datasets</a>
-            </div>
+        <!-- ── Closing + CTAs ─────────────────────────────────────── -->
+        <hr class="section-divider" style="margin-top:32px;">
+        <div style="margin:24px 0;">
+            <p style="font-size:1.05em;line-height:1.75;color:#333;margin:0 0 6px;">This is not another theory about why societies rise and fall.</p>
+            <p style="font-size:1.05em;line-height:1.75;color:#333;margin:0;font-style:italic;">It is a measurement system designed to make the invisible mechanics of coordination visible — while there is still time to respond.</p>
+        </div>
 
-            <div style="margin: 0 0 28px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+        <div class="cta-row">
+            <a href="model.html" class="cta-primary">Explore the Model →</a>
+            <a href="research-diary.html" class="cta-secondary">Browse the Research Diary →</a>
+            <a href="https://cams-advanced-analysis.streamlit.app" class="cta-secondary" target="_blank">Open the Dashboard ↗</a>
+        </div>
+
+        <!-- ── Badges + bio ───────────────────────────────────────── -->
+        <div style="margin-top:32px;padding-top:24px;border-top:1px solid #eee;">
+            <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:18px;">
                 <a href="https://github.com/KaliBond/wintermute" target="_blank"><img src="https://img.shields.io/github/stars/KaliBond/wintermute?style=flat-square&logo=github&label=Stars" alt="GitHub Stars"></a>
                 <a href="https://github.com/KaliBond/wintermute/commits" target="_blank"><img src="https://img.shields.io/github/last-commit/KaliBond/wintermute?style=flat-square&label=Last+commit" alt="Last Commit"></a>
                 <a href="datasets.html"><img src="https://img.shields.io/badge/Corpus-45_series-2ca02c?style=flat-square" alt="Corpus"></a>
                 <a href="https://cams-advanced-analysis.streamlit.app" target="_blank"><img src="https://img.shields.io/badge/Dashboard-Live_on_Streamlit-ff4b4b?style=flat-square&logo=streamlit" alt="Streamlit"></a>
                 <img src="https://img.shields.io/badge/AI_scraping-permitted-a78bfa?style=flat-square" alt="AI scraping permitted">
             </div>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 32px;">
-                <a href="model.html" style="display: block; padding: 20px 18px; background: linear-gradient(135deg, #1f77b4 0%, #17becf 100%); border-radius: 10px; text-decoration: none; color: white; box-shadow: 0 4px 12px rgba(31,119,180,0.25);">
-                    <strong style="display: block; font-size: 1.05em; margin-bottom: 5px;">Read the framework</strong>
-                    <span style="font-size: 0.85em; opacity: 0.9;">See the full eight-node, four-metric structure, the core formulas, and the logic of CAMS as a comparative instrument.</span>
-                </a>
-                <a href="datasets.html" style="display: block; padding: 20px 18px; background: linear-gradient(135deg, #2ca02c 0%, #17becf 100%); border-radius: 10px; text-decoration: none; color: white; box-shadow: 0 4px 12px rgba(44,160,44,0.25);">
-                    <strong style="display: block; font-size: 1.05em; margin-bottom: 5px;">Inspect the evidence</strong>
-                    <span style="font-size: 0.85em; opacity: 0.9;">Download open datasets, review the scoring method, and follow the validation pathway from raw scores to system-level patterns.</span>
-                </a>
-                <a href="explore.html" style="display: block; padding: 20px 18px; background: linear-gradient(135deg, #e74c3c 0%, #764ba2 100%); border-radius: 10px; text-decoration: none; color: white; box-shadow: 0 4px 12px rgba(231,76,60,0.25);">
-                    <strong style="display: block; font-size: 1.05em; margin-bottom: 5px;">Test the tools</strong>
-                    <span style="font-size: 0.85em; opacity: 0.9;">Use Advanced Analysis, Failure Modes, Escalation Archetypes, and Mindscapes to see how the model behaves across real cases.</span>
-                </a>
-                <a href="research-diary.html" style="display: block; padding: 20px 18px; background: linear-gradient(135deg, #d97706 0%, #b45309 100%); border-radius: 10px; text-decoration: none; color: white; box-shadow: 0 4px 12px rgba(217,119,6,0.25);">
-                    <strong style="display: block; font-size: 1.05em; margin-bottom: 5px;">Follow the research diary</strong>
-                    <span style="font-size: 0.85em; opacity: 0.9;">Read the work in plain language as it develops: results, revisions, blind tests, and theoretical extensions.</span>
-                </a>
-            </div>
-
-            <!-- Audience entry points -->
-            <div style="margin: 32px 0; padding-top: 24px; border-top: 1px solid #eee;">
-                <h2 style="font-size: 0.78em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #aaa; margin: 0 0 16px;">Where to start</h2>
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <div style="display: flex; align-items: flex-start; gap: 16px; padding: 16px 18px; background: #fffbf0; border: 1px solid #e8d5a0; border-radius: 8px;">
-                        <div style="font-size: 1.5em; line-height: 1; flex-shrink: 0;">📖</div>
-                        <div>
-                            <strong style="display: block; font-size: 0.95em; color: #1a1a1a; margin-bottom: 3px;">For the curious reader</strong>
-                            <span style="font-size: 0.85em; color: #555; line-height: 1.6;">Start with the Research Diary — real societies, real data, plain language. No prior knowledge of complexity science required.</span>
-                            <div style="margin-top: 8px;"><a href="research-diary.html" style="font-size: 0.84em; color: #1f77b4; font-weight: 600;">Read the Research Diary →</a></div>
-                        </div>
-                    </div>
-                    <div style="display: flex; align-items: flex-start; gap: 16px; padding: 16px 18px; background: #f0f8f0; border: 1px solid #a0d5a0; border-radius: 8px;">
-                        <div style="font-size: 1.5em; line-height: 1; flex-shrink: 0;">📊</div>
-                        <div>
-                            <strong style="display: block; font-size: 0.95em; color: #1a1a1a; margin-bottom: 3px;">For practitioners and strategists</strong>
-                            <span style="font-size: 0.85em; color: #555; line-height: 1.6;">Explore the live Streamlit dashboard — 8-node scores, bond strength, phase-space trajectories, Failure Modes and Escalation Archetypes. No login required.</span>
-                            <div style="margin-top: 8px;">
-                                <a href="https://cams-advanced-analysis.streamlit.app" target="_blank" style="font-size: 0.84em; color: #2ca02c; font-weight: 600;">Open the Dashboard →</a>
-                                &nbsp;&nbsp;<a href="explore.html" style="font-size: 0.84em; color: #2ca02c; font-weight: 600;">Explore Tools →</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="display: flex; align-items: flex-start; gap: 16px; padding: 16px 18px; background: #f0f0f8; border: 1px solid #a0a0d5; border-radius: 8px;">
-                        <div style="font-size: 1.5em; line-height: 1; flex-shrink: 0;">🔬</div>
-                        <div>
-                            <strong style="display: block; font-size: 0.95em; color: #1a1a1a; margin-bottom: 3px;">For researchers and scholars</strong>
-                            <span style="font-size: 0.85em; color: #555; line-height: 1.6;">Full methodology documentation, open datasets (39,351 records, GitHub), Seshat cross-validation, Granger causality tests, and scoring protocols. Peer review and co-authorship enquiries welcome.</span>
-                            <div style="margin-top: 8px;">
-                                <a href="model.html" style="font-size: 0.84em; color: #5050c8; font-weight: 600;">Read the Model →</a>
-                                &nbsp;&nbsp;<a href="datasets.html" style="font-size: 0.84em; color: #5050c8; font-weight: 600;">Open Datasets →</a>
-                                &nbsp;&nbsp;<a href="contact.html" style="font-size: 0.84em; color: #5050c8; font-weight: 600;">Collaborate →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid #eee;">
-                <h2 style="font-size: 0.78em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #aaa; margin: 0 0 14px;">What's New — May 2026</h2>
-                <div style="display: flex; flex-direction: column; gap: 9px; margin-bottom: 9px;">
-                    <a href="epiphenomenon/" style="display: flex; align-items: flex-start; gap: 14px; padding: 13px 16px; background: #f5f0ff; border: 1px solid #ddd4f5; border-radius: 8px; text-decoration: none; color: inherit;">
-                        <span style="font-size: 1.4em; line-height: 1;">🔬</span>
-                        <span>
-                            <strong style="display: block; font-size: 0.95em; color: #1a1a1a;">Epiphenomenon@Trove — Australian Threat Discourse Study</strong>
-                            <span style="font-size: 0.84em; color: #666;">125 years of manufactured anxiety: Trove + Hansard corpus, Shield Hypertrophy Index, five-scorer ensemble. Three articles + interactive data explorer.</span>
-                        </span>
-                    </a>
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 9px;">
-                    <a href="seshat-explorer.html" style="display: flex; align-items: flex-start; gap: 14px; padding: 13px 16px; background: #f5f0ff; border: 1px solid #ddd4f5; border-radius: 8px; text-decoration: none; color: inherit;">
-                        <span style="font-size: 1.4em; line-height: 1;">🏛️</span>
-                        <span>
-                            <strong style="display: block; font-size: 0.95em; color: #1a1a1a;">Seshat × CAMS — Cross-Dataset Validation</strong>
-                            <span style="font-size: 0.84em; color: #666;">First independent cross-validation of CAMS Λ(t) against Seshat SPC. 35 NGAs, 5,500 years. Latium/Rome overlap: r = 0.78.</span>
-                        </span>
-                    </a>
-                    <a href="granger-validator.html" style="display: flex; align-items: flex-start; gap: 14px; padding: 13px 16px; background: #f8faff; border: 1px solid #dde4f0; border-radius: 8px; text-decoration: none; color: inherit;">
-                        <span style="font-size: 1.4em; line-height: 1;">📊</span>
-                        <span>
-                            <strong style="display: block; font-size: 0.95em; color: #1a1a1a;">Granger Causality Validator</strong>
-                            <span style="font-size: 0.84em; color: #666;">In-browser synthetic validation suite — three-scenario stress test with adjustable lag, noise, and series length.</span>
-                        </span>
-                    </a>
-                    <a href="mindscapes.html" style="display: flex; align-items: flex-start; gap: 14px; padding: 13px 16px; background: #f8faff; border: 1px solid #dde4f0; border-radius: 8px; text-decoration: none; color: inherit;">
-                        <span style="font-size: 1.4em; line-height: 1;">🌐</span>
-                        <span>
-                            <strong style="display: block; font-size: 0.95em; color: #1a1a1a;">Mindscapes — National Mood Reports</strong>
-                            <span style="font-size: 0.84em; color: #666;">Claude-generated Vision–Affect &amp; Mythic Attractor reports. France and Norway live. Pipeline open.</span>
-                        </span>
-                    </a>
-                    <a href="cams-failure-modes.html" style="display: flex; align-items: flex-start; gap: 14px; padding: 13px 16px; background: #f8faff; border: 1px solid #dde4f0; border-radius: 8px; text-decoration: none; color: inherit;">
-                        <span style="font-size: 1.4em; line-height: 1;">🕸️</span>
-                        <span>
-                            <strong style="display: block; font-size: 0.95em; color: #1a1a1a;">CAMS Failure Modes — Causal Loop Diagram</strong>
-                            <span style="font-size: 0.84em; color: #666;">Interactive CLD: R1 Flow-Hands death spiral · R2 Rent-seeking trap · R3 Shield capture · R4 Institutional amnesia.</span>
-                        </span>
-                    </a>
-                </div>
-            </div>
-
-            <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid #eee; font-size: 0.85em; color: #666; line-height: 1.7;">
-                <strong style="color: #444;">Kari McKern</strong> — researcher, former public servant, IT specialist, and geopolitical analyst based in Sydney. CAMS began as a question about modern geopolitics and became a framework for civilisational dynamics. The data are open. The model is documented. The work continues.<br><br>
-                <a href="mailto:kari.freyr.4@gmail.com" style="color: #1f77b4;">kari.freyr.4@gmail.com</a><br>
+            <p style="font-size:0.85em;color:#666;line-height:1.7;margin:0;">
+                <strong style="color:#444;">Kari McKern</strong> — researcher, former public servant, IT specialist, and geopolitical analyst based in Sydney. CAMS began as a question about modern geopolitics and became a framework for civilisational dynamics. The data are open. The model is documented. The work continues.<br>
+                <a href="mailto:kari.freyr.4@gmail.com" style="color:#1f77b4;">kari.freyr.4@gmail.com</a> &nbsp;·&nbsp;
                 <em>"Patrolling the event horizon between the known and the unknown."</em>
-            </div>
+            </p>
         </div>
 
-    </div>
-    <footer class="footer">
-        <nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
-            <a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a>
-            <a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a>
-            <a href="results.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Results</a>
-        </nav>
-        <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
-    </footer>
-    </div>
+    </div><!-- /.card -->
+</div><!-- /.container -->
+
+<footer class="footer">
+    <nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a>
+        <a href="model.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Model</a>
+        <a href="datasets.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Datasets</a>
+        <a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a>
+        <a href="research-diary.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Research Diary</a>
+        <a href="contact.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Contact</a>
+    </nav>
+    <p>&copy; 2026 Kari McKern &mdash; Neural Nations CAMS Research. Built as open science &mdash; contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+
 <script src="nav.js"></script>
 </body>
 </html>
