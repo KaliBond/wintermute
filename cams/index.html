@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAMS Rich Datasets — Neural Nations</title>
+  <link rel="stylesheet" href="styles/cams.css">
+  <link rel="stylesheet" href="styles/site.css">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ESZ16XVVNN');
+  </script>
+  <style>
+    /* ---------- portal-specific overrides ---------- */
+    .section { padding: 3.5rem 1.5rem 4rem; max-width: 1100px; margin: 0 auto; }
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 760px) { .card-grid { grid-template-columns: 1fr; } }
+
+    .card .status {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 9.5px; font-weight: 600;
+      letter-spacing: .18em; text-transform: uppercase;
+      padding: 2px 8px; margin-left: 8px;
+      border: 1px solid; border-radius: 0;
+      vertical-align: 2px;
+    }
+    .status.live    { color: var(--state-adaptive); border-color: var(--state-adaptive); }
+    .status.next    { color: #B17F11; border-color: #B17F11; }
+    .status.future  { color: var(--ink-300); border-color: var(--ink-300); }
+    .card.future {
+      background: var(--paper-1);
+      pointer-events: none;
+    }
+    .card.future .card-arrow { color: var(--ink-300); }
+
+    /* ---------- SHI strip ---------- */
+    .shi-strip {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .shi-strip-inner {
+      border-top: 1.5px solid var(--ink-900);
+      border-bottom: 1.5px solid var(--ink-900);
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      background: var(--paper-0);
+    }
+    .shi-row {
+      padding: 1.4rem 1.5rem 1.6rem;
+      border-right: 1px solid var(--paper-3);
+    }
+    .shi-row:last-child { border-right: 0; }
+    .shi-row .country {
+      font-family: var(--font-mono);
+      font-size: 10.5px; font-weight: 600;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--ink-500); margin-bottom: 0.5rem;
+    }
+    .shi-row .val {
+      font-family: var(--font-mono);
+      font-size: 2.2rem; font-weight: 500;
+      color: var(--ink-900); letter-spacing: -.02em;
+      line-height: 1; font-variant-numeric: tabular-nums;
+    }
+    .shi-row .val .sign { color: var(--ink-300); }
+    .shi-row .val.ochre { color: var(--accent-ochre); }
+    .shi-row .val.muted { color: var(--ink-300); }
+    .shi-row .sub {
+      font-family: var(--font-serif);
+      font-size: 0.85rem; color: var(--ink-700);
+      margin-top: 0.4rem; line-height: 1.4;
+    }
+    .shi-row .sub b { font-weight: 600; color: var(--ink-900); }
+    .shi-row .spark { height: 36px; margin-top: 0.85rem; }
+    @media (max-width: 760px) {
+      .shi-strip-inner { grid-template-columns: 1fr; }
+      .shi-row { border-right: 0; border-bottom: 1px solid var(--paper-3); }
+      .shi-row:last-child { border-bottom: 0; }
+    }
+
+    /* ---------- comparative band ---------- */
+    .comparative {
+      max-width: 1100px; margin: 0 auto;
+      padding: 3rem 1.5rem 4.5rem;
+    }
+    .comparative-header {
+      display: flex; align-items: end; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--paper-3);
+      margin-bottom: 1.5rem;
+    }
+    .comparative h2 {
+      font-family: var(--font-display); font-weight: 600;
+      font-size: 1.85rem; line-height: 1.15;
+      letter-spacing: -.015em; color: var(--ink-900);
+      margin: 0.5rem 0 0;
+      font-variation-settings: "SOFT" 50;
+    }
+    .comparative .kicker { margin-bottom: 0; }
+    .comparative .legend {
+      display: flex; gap: 1.25rem; flex-wrap: wrap;
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--ink-700); letter-spacing: .04em;
+    }
+    .comparative .legend i {
+      display: inline-block; width: 14px; height: 2px;
+      margin-right: 7px; vertical-align: 3px;
+    }
+    .chart-shell {
+      background: var(--paper-0);
+      border: 1px solid var(--paper-3);
+      border-top: 1.5px solid var(--ink-900);
+      border-bottom: 1.5px solid var(--ink-900);
+      padding: 1.4rem 1.5rem 1.5rem;
+    }
+    .chart-shell .figure-label {
+      font-family: var(--font-mono);
+      font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--ink-500); margin-bottom: 0.85rem;
+      padding-bottom: 0.65rem; border-bottom: 1px solid var(--paper-3);
+    }
+    .chart-shell .annotation-block {
+      margin: 1rem -1.5rem -1.5rem;
+      padding: 0.95rem 1.5rem;
+      border-top: 1px solid var(--paper-3);
+      background: var(--paper-1);
+      font-family: var(--font-serif);
+      font-size: 0.93rem; line-height: 1.55;
+      color: var(--ink-700);
+    }
+    .chart-shell .annotation-block strong { color: var(--ink-900); }
+  </style>
+</head>
+<body class="lattice-bg">
+
+  <nav class="nn-nav">
+    <div class="nn-nav-inner">
+      <a href="../index.html" class="nn-mark">
+        <div class="glyph"></div>
+        <div class="wm">Neural Nations<small>CAMS · Complex Adaptive Model System</small></div>
+      </a>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a class="active" href="index.html">Datasets</a></li>
+        <li><a href="../methodology/index.html">Methodology</a></li>
+        <li><a href="../epiphenomenon/index.html">Epiphenomenon</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <span class="eyebrow">CAMS Rich Datasets</span>
+    <h1>Browse the research</h1>
+    <p>Multi-society, multi-corpus structural analysis under one framework. Each country section pairs a primary discourse corpus with the five-scorer CAMS ensemble to produce a shared, comparable structural reading.</p>
+  </div>
+
+  <!-- SHI snapshot strip -->
+  <div class="shi-strip" style="margin-top:2.5rem">
+    <div class="shi-strip-inner">
+      <div class="shi-row">
+        <div class="country">Australia · 2026</div>
+        <div class="val ochre"><span class="sign">+</span>0.5</div>
+        <svg class="spark" viewBox="0 0 240 36" preserveAspectRatio="none">
+          <line x1="0" y1="22" x2="240" y2="22" stroke="#E2DAC3" stroke-width="0.5"/>
+          <path d="M0,32 L40,28 L80,30 L120,26 L160,18 L200,12 L240,14"
+            fill="none" stroke="var(--accent-ochre)" stroke-width="1.6"/>
+        </svg>
+        <div class="sub">SHI near zero, <b>slightly positive</b>. Most sustained positive movement in the 130-year record.</div>
+      </div>
+      <div class="shi-row">
+        <div class="country">United States · 2025</div>
+        <div class="val muted">—</div>
+        <svg class="spark" viewBox="0 0 240 36" preserveAspectRatio="none">
+          <line x1="0" y1="22" x2="240" y2="22" stroke="#E2DAC3" stroke-width="0.5"/>
+          <path d="M0,28 L240,28" fill="none" stroke="#C4CCD0" stroke-width="1" stroke-dasharray="3 3"/>
+        </svg>
+        <div class="sub">CAMS reading underway. Sister arc-story <a href="../epiphenomenon/us-spiral.html" style="color:var(--accent-teal);text-decoration:none;border-bottom:1px solid var(--accent-teal)">already published</a>; structural dataset due Q3 2026.</div>
+      </div>
+      <div class="shi-row">
+        <div class="country">China · 1978–2026</div>
+        <div class="val muted">—</div>
+        <svg class="spark" viewBox="0 0 240 36" preserveAspectRatio="none">
+          <line x1="0" y1="22" x2="240" y2="22" stroke="#E2DAC3" stroke-width="0.5"/>
+          <path d="M0,28 L240,28" fill="none" stroke="#C4CCD0" stroke-width="1" stroke-dasharray="3 3"/>
+        </svg>
+        <div class="sub">People's Daily editorial corpus + State Council records. CAMNATIONS5 scoring scheduled.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section cards -->
+  <section class="section">
+    <div class="section-label">Country sections</div>
+    <div class="card-grid">
+
+      <a href="../epiphenomenon/index.html" class="card">
+        <span class="card-tag">Australia · Trove + Hansard <span class="status live">Live</span></span>
+        <h2>Epiphenomenon@Trove</h2>
+        <p>125 years of Australian threat discourse, anchored to a five-scorer CAMS structural profile. Arc story, working paper, methodology supplement, and interactive data explorer.</p>
+        <span class="card-arrow">Open section →</span>
+      </a>
+
+      <a href="#" class="card future">
+        <span class="card-tag">United States · Congressional Record + DoD <span class="status next">Next</span></span>
+        <h2>US Discourse</h2>
+        <p>Congressional Record (1973–2025) and Department of Defense strategy documents. Phase-transition signatures across the post-1945 American security ecology, tested against the CAMS ensemble.</p>
+        <span class="card-arrow">Coming Q3 2026</span>
+      </a>
+
+      <a href="#" class="card future">
+        <span class="card-tag">China · People's Daily + State Council <span class="status future">Future</span></span>
+        <h2>China Institutional</h2>
+        <p>People's Daily editorial corpus plus State Council policy records. CAMNATIONS5 reading of the reform period, 1978–2026 — first major test of CAMS on a non-Anglophone discourse system.</p>
+        <span class="card-arrow">Roadmap</span>
+      </a>
+
+      <a href="../methodology/index.html" class="card">
+        <span class="card-tag">Reference <span class="status live">Live</span></span>
+        <h2>Methodology</h2>
+        <p>The shared framework that every country section uses. Eight institutional nodes, four dimensions, the Shield Hypertrophy Index, and the CAMNATIONS5 five-scorer ensemble pipeline.</p>
+        <span class="card-arrow">Read the framework →</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- Methodology strip -->
+  <section class="method-strip">
+    <div class="method-inner">
+      <div>
+        <div class="method-label">Sections</div>
+        <div class="method-value">3 countries, growing</div>
+        <div class="method-sub">Australia live · United States next · People's Republic in development. Comparison band on the country pages.</div>
+      </div>
+      <div>
+        <div class="method-label">Shared framework</div>
+        <div class="method-value">CAMS · SHI · CAMNATIONS5</div>
+        <div class="method-sub">Eight institutional nodes, four dimensions, one ensemble pipeline. Cross-country comparison is principled because the measurement is the same.</div>
+      </div>
+      <div>
+        <div class="method-label">Open by default</div>
+        <div class="method-value">CSV · scoring · code</div>
+        <div class="method-sub">Every score reproducible from the published rubrics. Every dataset downloadable. Inter-scorer variance reported, not hidden.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparative band -->
+  <section class="comparative">
+    <div class="comparative-header">
+      <div>
+        <span class="kicker">§ Comparative band</span>
+        <h2>Two SHI trajectories on the same axis</h2>
+      </div>
+      <div class="legend">
+        <span><i style="background:var(--accent-ochre)"></i>Australia 1895–2026</span>
+        <span><i style="background:var(--accent-teal)"></i>Germany 1925–1945</span>
+        <span><i style="background:#C8961A;height:0;border-top:1px dashed #C8961A"></i>Alarm (+3.0)</span>
+        <span><i style="background:var(--state-collapse);height:0;border-top:1px dashed var(--state-collapse)"></i>Critical (+5.0)</span>
+      </div>
+    </div>
+
+    <div class="chart-shell">
+      <div class="figure-label">Fig. C · Shield Hypertrophy Index — cross-country (ensemble mean, aligned by year)</div>
+      <div style="height:340px"><canvas id="comp-chart"></canvas></div>
+      <div class="annotation-block">
+        <strong>Reading the band.</strong> Australia's 130-year SHI trajectory stays negative for almost the entire record — a Lore-Archive dominant society — and crosses zero only in the contemporary period (2015→). Germany's 1925–1945 SHI shows the canonical hypertrophy signature: a deep Weimar trough through 1929–32, a sharp positive break in 1933–34, robust crossing of the +5.0 critical threshold by 1935. Same axis, same definition, two structurally very different responses to early-20th-century shock. Read the case in <a href="../epiphenomenon/without-hindcasting.html">Without Hindcasting</a>.
+      </div>
+    </div>
+  </section>
+
+  <footer class="nn-foot">
+    <p>
+      <a href="index.html">CAMS Rich Datasets</a> · <a href="../index.html">Neural Nations</a> ·
+      <a href="../methodology/index.html">Methodology</a> · open data · CAMNATIONS5 ensemble pipeline
+    </p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="styles/charts.js"></script>
+  <script>
+    const AU_Y = [1895,1900,1905,1910,1915,1920,1925,1930,1935,1940,1945,1950,1955,1960,1965,1970,1975,1980,1985,1990,1995,2000,2005,2010,2015,2020,2024,2026];
+    const AU_S = [-4.5,-8.0,-7.0,-7.0,-4.75,-3.25,-7.25,-7.25,-4.75,-5.75,-3.5,-3.25,-3.25,-1.75,-3.25,-3.25,-1.0,-1.0,-1.0,-3.0,-1.5,-3.0,-2.0,-3.5,1.5,2.5,0.5,0.5];
+
+    const GE_S = AU_Y.map(y => {
+      const t = {1925:-7.95,1930:-3.0,1935:7.0,1940:8.3,1945:-1.3};
+      return t[y] !== undefined ? t[y] : null;
+    });
+
+    const O = NN_CHART;
+    new Chart('comp-chart', {
+      type: 'line',
+      data: {
+        labels: AU_Y,
+        datasets: [
+          O.line(AU_S, O.shield, { fill: true, label: 'Australia' }),
+          { ...O.line(GE_S, O.sino, { label: 'Germany 1925–1945' }), spanGaps: false, pointRadius: 3, pointBackgroundColor: O.sino },
+          O.threshLine(AU_Y, 0,    O.zero,                       'Zero'),
+          O.threshLine(AU_Y, 3.0,  O.rgba(O.alarm, 0.55),        'Alarm (+3.0)'),
+          O.threshLine(AU_Y, 5.0,  O.rgba(O.critical, 0.70),     'Critical (+5.0)')
+        ]
+      },
+      options: O.baseOpts({ scales: O.scales({ y: { ...O.scales().y, min: -10, max: 10 } }) })
+    });
+  </script>
+</body>
+</html>
