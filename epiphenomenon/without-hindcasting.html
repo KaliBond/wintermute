@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,31 +6,30 @@
   <title>Without Hindcasting — Epiphenomenon@Trove</title>
   <link rel="stylesheet" href="styles/cams.css">
   <link rel="stylesheet" href="styles/site.css">
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag("js", new Date());
-    gtag("config", "G-ESZ16XVVNN");
-  </script>
-</head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script></head>
 <body class="lattice-bg">
 
-  <nav class="nn-nav">
-    <div class="nn-nav-inner">
-      <a href="../index.html" class="nn-mark">
-        <div class="glyph"></div>
-        <div class="wm">Neural Nations<small>CAMS · Complex Adaptive Model System</small></div>
-      </a>
-      <ul>
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="../explore.html">Research</a></li>
-        <li><a class="active" href="index.html">Epiphenomenon</a></li>
-        <li><a href="data.html">Data</a></li>
-      </ul>
-    </div>
-  </nav>
+<nav class="nn-nav">
+  <div class="nn-nav-inner">
+    <a href="../index.html" class="nn-mark">
+      <div class="glyph"></div>
+      <div class="wm">Neural Nations<small>CAMS · Civilisational Analysis Network</small></div>
+    </a>
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../explore.html">Research</a></li>
+      <li><a class="active" href="index.html">Epiphenomenon</a></li>
+      <li><a href="data.html">Data</a></li>
+    </ul>
+  </div>
+</nav>
 
   <div class="article-wrap">
 
@@ -41,7 +40,7 @@
     </div>
 
     <div class="article-tag">Working Paper · WWI · WWII · Structural Analysis</div>
-    <h1 class="article-title">Without Hindcasting</h1>
+    <h1 class="article-title"><a href="index.html" style="color:inherit;text-decoration:none;">Without Hindcasting</a></h1>
     <p class="article-subtitle">
       Reading structural collapse signals as a contemporary analyst would have — with no foreknowledge of what was coming.
     </p>
@@ -73,7 +72,7 @@
 
     <div class="chart-card">
       <div class="chart-title">Germany — Shield Hypertrophy Index, 1925–1945 (CAMS5 ensemble mean)</div>
-      <div style="height:260px"><canvas id="chartGermany"></canvas></div>
+      <canvas id="chartGermany" height="240"></canvas>
     </div>
 
     <p>The Weimar years (1925–1932) show a deeply negative SHI: Shield is dominated by Lore and Archive, reflecting Germany's extraordinarily rich intellectual and cultural life during a period of institutional fragility. The SHI reaches its nadir around 1929 — precisely the moment of Weimar's greatest cultural productivity and greatest political vulnerability. The two are not unrelated.</p>
@@ -86,7 +85,7 @@
       <p>In 1935, even the most pessimistic of the five scorer interpretations clears the +5.0 critical threshold. The signal is robust — it would have been actionable by a without-hindcasting analyst four years before war outbreak.</p>
     </div>
 
-    <div class="finding partial">
+    <div class="finding ambiguous" style="margin-top: 0;">
       <div class="finding-label">Partial signal — 1934</div>
       <div class="stat">SHI_mean = +6.1, envelope width ≈ 7.25</div>
       <p>The 1934 mean reading clears +5.0, giving a five-year lead time — but the scorer envelope is wide enough that a sceptical analyst would have qualified the finding. The 1935 reading resolves this ambiguity.</p>
@@ -155,12 +154,54 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td>Germany</td><td>SHI &gt; +5.0 (mean)</td><td>1934</td><td>+6.1</td><td>~+2.85</td><td class="sig-partial">Partial</td></tr>
-          <tr><td>Germany</td><td>SHI &gt; +5.0 (robust)</td><td>1935</td><td>+7.0</td><td>+5.25</td><td class="sig-robust">Robust ✓</td></tr>
-          <tr><td>Russia</td><td>SHI &gt; +5.0</td><td>1938</td><td>~+1.1</td><td>−3.75</td><td class="sig-no">Ambiguous</td></tr>
-          <tr><td>Russia</td><td>Archive collapse</td><td>1936–38</td><td>—</td><td>Archive_max=5.5</td><td class="sig-robust">Robust ✓</td></tr>
-          <tr><td>Norway</td><td>Structural indefensibility</td><td>1935–39</td><td>Negative</td><td>Negative (tight)</td><td class="sig-robust">Robust ✓</td></tr>
-          <tr><td>UK</td><td>Appeasement configuration</td><td>1935–37</td><td>Moderate</td><td>= SHI_max</td><td class="sig-robust">Robust ✓</td></tr>
+          <tr>
+            <td>Germany</td>
+            <td>SHI &gt; +5.0 (mean)</td>
+            <td>1934</td>
+            <td>+6.1</td>
+            <td>~+2.85</td>
+            <td class="sig-partial">Partial</td>
+          </tr>
+          <tr>
+            <td>Germany</td>
+            <td>SHI &gt; +5.0 (robust)</td>
+            <td>1935</td>
+            <td>+7.0</td>
+            <td>+5.25</td>
+            <td class="sig-robust">Robust ✓</td>
+          </tr>
+          <tr>
+            <td>Russia</td>
+            <td>SHI &gt; +5.0</td>
+            <td>1938</td>
+            <td>~+1.1</td>
+            <td>−3.75</td>
+            <td class="sig-no">Ambiguous</td>
+          </tr>
+          <tr>
+            <td>Russia</td>
+            <td>Archive collapse</td>
+            <td>1936–38</td>
+            <td>—</td>
+            <td>Archive_max=5.5</td>
+            <td class="sig-robust">Robust ✓</td>
+          </tr>
+          <tr>
+            <td>Norway</td>
+            <td>Structural indefensibility</td>
+            <td>1935–39</td>
+            <td>Negative</td>
+            <td>Negative (tight)</td>
+            <td class="sig-robust">Robust ✓</td>
+          </tr>
+          <tr>
+            <td>UK</td>
+            <td>Appeasement configuration</td>
+            <td>1935–37</td>
+            <td>Moderate</td>
+            <td>= SHI_max</td>
+            <td class="sig-robust">Robust ✓</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -194,7 +235,7 @@
     </div>
 
     <div class="article-nav">
-      <a href="us-spiral.html">← The US Security Spiral</a>
+      <a href="australia-story.html">← The Enemy Factory</a>
       <a href="data.html">Data Explorer →</a>
     </div>
 
@@ -208,43 +249,92 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <script src="styles/charts.js"></script>
   <script>
-    const GER_YEARS = [1925,1926,1927,1928,1929,1930,1931,1932,1933,1934,1935,1936,1937,1938,1939,1940,1941,1942,1943,1944,1945];
-    const GER_SHI   = [-7.95,-7.6,-8.1,-7.7,-8.9,-3.0,-1.5,0.55,1.55,6.1,7.0,5.7,4.8,6.2,4.45,8.3,4.8,4.15,1.45,1.9,-1.3];
+    Chart.defaults.color = '#5A6E78';
+    Chart.defaults.borderColor = '#E2DAC3';
 
-    new Chart('chartGermany', {
+    const GER_YEARS = [1925,1926,1927,1928,1929,1930,1931,1932,1933,1934,1935,1936,1937,1938,1939,1940,1941,1942,1943,1944,1945];
+    const GER_SHI =   [-7.95,-7.6,-8.1,-7.7,-8.9,-3.0,-1.5,0.55,1.55,6.1,7.0,5.7,4.8,6.2,4.45,8.3,4.8,4.15,1.45,1.9,-1.3];
+
+    // Annotation lines
+    const alarmLine = GER_YEARS.map(() => 3.0);
+    const criticalLine = GER_YEARS.map(() => 5.0);
+    const zeroLine = GER_YEARS.map(() => 0.0);
+
+    new Chart(document.getElementById('chartGermany'), {
       type: 'line',
       data: {
         labels: GER_YEARS,
         datasets: [
           {
-            ...NN_CHART.line(GER_SHI, NN_CHART.shield, { fill: true, label: 'SHI (ensemble mean)' }),
-            pointRadius: 3, pointHoverRadius: 5,
+            label: 'SHI (ensemble mean)',
+            data: GER_SHI,
+            borderColor: '#D98B2B',
             backgroundColor: (ctx) => {
               const chart = ctx.chart;
-              const { ctx: c, chartArea } = chart;
+              const {ctx: canvas, chartArea} = chart;
               if (!chartArea) return 'transparent';
-              const g = c.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-              g.addColorStop(0,   NN_CHART.rgba(NN_CHART.critical, 0.30));
-              g.addColorStop(0.4, NN_CHART.rgba(NN_CHART.shield,   0.14));
-              g.addColorStop(1,   NN_CHART.rgba(NN_CHART.sino,     0.06));
-              return g;
-            }
+              const gradient = canvas.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+              gradient.addColorStop(0, 'rgba(200,76,62,0.20)');
+              gradient.addColorStop(0.4, 'rgba(217,139,43,0.10)');
+              gradient.addColorStop(1, 'rgba(47,111,125,0.05)');
+              return gradient;
+            },
+            fill: true,
+            tension: 0.3,
+            borderWidth: 2.5,
+            pointRadius: 3,
+            pointHoverRadius: 5,
+            pointBackgroundColor: '#D98B2B'
           },
-          NN_CHART.threshLine(GER_YEARS, 0,   NN_CHART.zero,                                  'Zero'),
-          NN_CHART.threshLine(GER_YEARS, 3.0, NN_CHART.rgba(NN_CHART.alarm,    0.55),         'Alarm (+3.0)'),
-          NN_CHART.threshLine(GER_YEARS, 5.0, NN_CHART.rgba(NN_CHART.critical, 0.70),         'Critical (+5.0)')
+          {
+            label: 'Alarm (+3.0)',
+            data: alarmLine,
+            borderColor: 'rgba(217,139,43,0.55)',
+            borderDash: [5,4],
+            borderWidth: 1.5,
+            pointRadius: 0,
+            fill: false
+          },
+          {
+            label: 'Critical (+5.0)',
+            data: criticalLine,
+            borderColor: 'rgba(200,76,62,0.60)',
+            borderDash: [5,4],
+            borderWidth: 1.5,
+            pointRadius: 0,
+            fill: false
+          },
+          {
+            label: 'Zero',
+            data: zeroLine,
+            borderColor: 'rgba(255,255,255,0.12)',
+            borderWidth: 1,
+            pointRadius: 0,
+            fill: false
+          }
         ]
       },
-      options: NN_CHART.baseOpts({
+      options: {
+        responsive: true,
         plugins: {
-          legend: NN_CHART.legend(),
-          tooltip: { mode: 'index', intersect: false, backgroundColor: NN_CHART.surface, titleColor: NN_CHART.text, bodyColor: NN_CHART.text, borderColor: NN_CHART.grid, borderWidth: 1 }
+          legend: {
+            display: true,
+            labels: { font: { size: 10, family: 'Inter' }, color: '#8b949e', boxWidth: 14 }
+          },
+          tooltip: { mode: 'index', intersect: false }
         },
-        scales: NN_CHART.scales({ y: { ...NN_CHART.scales().y, min: -10, max: 10 } })
-      })
+        scales: {
+          x: { grid: { color: '#E2DAC3' }, ticks: { font: { size: 10, family: 'Inter' } } },
+          y: {
+            grid: { color: '#E2DAC3' },
+            ticks: { font: { size: 10, family: 'Inter' } },
+            min: -10, max: 10
+          }
+        }
+      }
     });
   </script>
 </body>
 </html>
+
