@@ -57,29 +57,68 @@
     <link rel="stylesheet" href="style.css">
     <style>
         /* ── Home-page-specific styles ──────────────────────────── */
-        .home-hero {
-            padding: 40px 0 32px;
-            border-bottom: 1px solid #e8e0cc;
-            margin-bottom: 32px;
-        }
-        .home-lede {
-            font-size: 1.08em;
-            line-height: 1.75;
-            color: #555;
-            margin: 0 0 24px;
-        }
-        .home-lede p { margin: 0 0 14px; }
-        .home-lede p:last-child { margin: 0; }
 
-        .pull-quote {
-            font-size: 1.25em;
-            font-style: italic;
-            color: #2c3e50;
-            border-left: 3px solid #5b21b6;
-            padding: 8px 0 8px 18px;
-            margin: 0 0 24px;
-            line-height: 1.5;
+        /* Hero — dark full-bleed panel, bleeds to card edges */
+        .home-hero {
+            background: linear-gradient(150deg, #1a0533 0%, #2d1065 60%, #3b1580 100%);
+            margin: -30px -30px 36px;
+            padding: 60px 40px 52px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
+        /* Subtle grid overlay */
+        .home-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 48px 48px;
+            pointer-events: none;
+        }
+        /* Vignette at bottom edge to fade into card */
+        .home-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0; height: 40px;
+            background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.06));
+            pointer-events: none;
+        }
+        .home-hero h1 {
+            font-size: 2.8em;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.025em;
+            margin: 0 0 28px;
+            position: relative;
+            z-index: 1;
+        }
+        .pull-quote {
+            font-size: 1.22em;
+            font-style: italic;
+            color: rgba(255,255,255,0.88);
+            line-height: 1.65;
+            max-width: 52ch;
+            margin: 0 auto;
+            padding: 22px 0 0;
+            border-top: 1px solid rgba(255,255,255,0.22);
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        /* Body text — constrained reading column, centred */
+        .home-lede {
+            font-size: 1.04em;
+            line-height: 1.8;
+            color: #444;
+            max-width: 66ch;
+            margin: 0 auto 24px;
+        }
+        .home-lede p { margin: 0 0 16px; }
+        .home-lede p:last-child { margin: 0; }
 
         .section-label {
             font-size: 0.72em;
@@ -320,13 +359,14 @@
 
         <!-- ── Hero ──────────────────────────────────────────────── -->
         <div class="home-hero">
-            <h1 style="text-align:center;margin-bottom:14px;">Neural Nations</h1>
-            <p class="pull-quote" style="text-align:center;border-left:none;padding-left:0;border-top:1px solid #d8d0ee;border-bottom:1px solid #d8d0ee;padding:14px 0;">Most commentary tells you what societies say about themselves.<br>
+            <h1>Neural Nations</h1>
+            <p class="pull-quote">Most commentary tells you what societies say about themselves.<br>
             CAMS asks a different question: how well are they actually coordinating?</p>
-            <div class="home-lede">
-                <p>CAMS — the Complex Adaptive Model System — is a quantitative framework that measures the internal health and coherence of societies. It tracks eight institutional nodes: security, knowledge systems, material conditions, strategic direction, memory, execution, resource stewardship, and circulation. And how they interact over time.</p>
-                <p>When these nodes are well-coupled, societies tend to be resilient. When they decouple, stress rises faster than capacity, coordination breaks down, and the system becomes brittle. CAMS makes these hidden dynamics legible — often years or decades before they become obvious.</p>
-            </div>
+        </div>
+
+        <div class="home-lede" style="margin-top:4px;">
+            <p>CAMS — the Complex Adaptive Model System — is a quantitative framework that measures the internal health and coherence of societies. It tracks eight institutional nodes: security, knowledge systems, material conditions, strategic direction, memory, execution, resource stewardship, and circulation. And how they interact over time.</p>
+            <p>When these nodes are well-coupled, societies tend to be resilient. When they decouple, stress rises faster than capacity, coordination breaks down, and the system becomes brittle. CAMS makes these hidden dynamics legible — often years or decades before they become obvious.</p>
         </div>
 
         <!-- ── Validation stats ───────────────────────────────────── -->
@@ -437,9 +477,9 @@
 
         <!-- ── Closing + CTAs ─────────────────────────────────────── -->
         <hr class="section-divider" style="margin-top:32px;">
-        <div style="margin:24px 0;">
-            <p style="font-size:1.05em;line-height:1.75;color:#333;margin:0 0 6px;">This is not another theory about why societies rise and fall.</p>
-            <p style="font-size:1.05em;line-height:1.75;color:#333;margin:0;font-style:italic;">It is a measurement system designed to make the invisible mechanics of coordination visible — while there is still time to respond.</p>
+        <div style="margin:28px auto;max-width:58ch;text-align:center;">
+            <p style="font-size:1.08em;line-height:1.8;color:#333;margin:0 0 8px;">This is not another theory about why societies rise and fall.</p>
+            <p style="font-size:1.08em;line-height:1.8;color:#5b21b6;margin:0;font-style:italic;font-weight:500;">It is a measurement system designed to make the invisible mechanics of coordination visible — while there is still time to respond.</p>
         </div>
 
         <div class="cta-row">
