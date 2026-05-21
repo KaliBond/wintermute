@@ -161,6 +161,21 @@
     padding: 22px 24px;
     margin-top: 8px;
     }
+    .validation-strip {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 10px;
+        margin: 20px 0 24px;
+    }
+    .vstat {
+        text-align: center;
+        padding: 14px 10px;
+        background: #f8faff;
+        border: 1px solid #dde4f0;
+        border-radius: 8px;
+    }
+    .vstat .vsv { font-size: 1.45em; font-weight: 700; color: #1f77b4; line-height: 1; }
+    .vstat .vsl { font-size: 0.76em; color: #666; margin-top: 5px; line-height: 1.4; }
     </style>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
@@ -276,7 +291,27 @@
                 <div class="lbl">Time span covered</div>
             </div>
         </div>
-        <p style="font-size:0.85em; color:#666; margin: -8px 0 12px; text-align:center;">28 datasets fully validated (Stress-column pass) · 8 further datasets undergoing quality review</p>
+        <p style="font-size:0.85em; color:#666; margin: -8px 0 20px; text-align:center;">28 datasets fully validated (Stress-column pass) · 8 further datasets undergoing quality review</p>
+
+        <p style="font-size:0.72em;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#999;margin:0 0 10px;">Validation results</p>
+        <div class="validation-strip">
+            <div class="vstat">
+                <div class="vsv">75–90%</div>
+                <div class="vsl">Ensemble hindcast accuracy across tested societies</div>
+            </div>
+            <div class="vstat">
+                <div class="vsv">r = −0.958</div>
+                <div class="vsl">Entropy–health correlation in validated datasets</div>
+            </div>
+            <div class="vstat">
+                <div class="vsv">45</div>
+                <div class="vsl">Historical series across 38 societies, 1800–2025</div>
+            </div>
+            <div class="vstat">
+                <div class="vsv">r = 0.78</div>
+                <div class="vsl">Seshat cross-validation, Latium/Rome (Apr 2026)</div>
+            </div>
+        </div>
 
         <div class="method-box">
             <strong>Methodology — how the scores are produced:</strong><br>
