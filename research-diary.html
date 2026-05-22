@@ -276,6 +276,45 @@
 
         <div class="diary-entry research-milestone">
             <div class="entry-header">
+                <h3>Site Expansion — 32 Societies, New Datasets, and Publication Updates</h3>
+                <div>
+                    <span class="entry-type">Milestone</span>
+                    <span class="entry-date">2026-05-22</span>
+                </div>
+            </div>
+            <div class="entry-content">
+                <p>A significant expansion of the site's data coverage and published materials, completed over 21–22 May 2026.</p>
+
+                <h3>CAMS National Diagnostic — 32 Societies</h3>
+                <p>The diagnostic tool (previously covering 10 societies) has been rebuilt to cover 32 societies across six world regions: Western Europe, East Asia, South Asia, MENA, Eurasia, and the Americas and Africa. The new version is live at <a href="status_report" style="color:#1f77b4;">/status_report</a> and linked from the Explore page.</p>
+                <p>The 22 new societies were processed from cleaned CSV datasets using a Python build pipeline (<code>build/build_new_societies.py</code>) that applies per-society B₀ normalisation, canonical node-name mapping, and 8-node completeness validation. Societies added: Japan, India, France, Netherlands, Denmark, Norway, Singapore, Saudi Arabia, Iran, Ukraine, Indonesia, Hong Kong, Israel, Pakistan, Iraq, Lebanon, Syria, Thailand, UAE, Venezuela, Brazil, South Africa.</p>
+                <p>The historical analogue corpus grew from ~500 to over 2,700 year-society points. Iran's missing bond-strength data is handled gracefully — the Λ index displays as N/A where BS is unavailable. The selector is reorganised into labelled regional groups rather than a flat pill list.</p>
+
+                <h3>New Datasets on /datasets</h3>
+                <p>All 22 new society CSVs are now listed on the <a href="datasets" style="color:#1f77b4;">Datasets</a> page with GitHub View and Download links, organised by region. Iran ensemble mean and envelope files were added separately. A warning flag marks all 22 as pending integration into the Explorer, Interpreter, and Zeitgeist Detector — this is deferred to when resources allow.</p>
+
+                <h3>Publications and Reports</h3>
+                <p>Three document upgrades on the Explore page: the Epiphenomenon@Trove Falsification Results (v5) and the full Grok Report (v3) are now published as PDFs, replacing the previous Word documents. The CAMS Framework collected research notebook (NotebookLM) was added as the top entry in Core Papers. The Kari McKern profile at Pearls &amp; Irritations was added to the Outreach section.</p>
+
+                <h3>Index page</h3>
+                <p>The closing tagline was consolidated to: <em>"This is not another theory about why societies rise and fall — it is a measurement system."</em> The dashboard CTA now links to the in-browser web version rather than the hosted Streamlit app.</p>
+
+                <p style="margin-top:16px;font-weight:600;color:#1a1a2e;">Kari McKern</p>
+
+                <div class="tags">
+                    <span class="tag">#national-diagnostic</span>
+                    <span class="tag">#32-societies</span>
+                    <span class="tag">#datasets</span>
+                    <span class="tag">#epiphenomenon-trove</span>
+                    <span class="tag">#site-update</span>
+                    <span class="tag">#falsification</span>
+                    <span class="tag">#build-pipeline</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="diary-entry research-milestone">
+            <div class="entry-header">
                 <h3>Three Working Papers Published — The CAMS Paper Series</h3>
                 <div>
                     <span class="entry-type">Milestone</span>
