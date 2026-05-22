@@ -56,96 +56,142 @@
 
     <link rel="stylesheet" href="style.css">
     <style>
-    .diary-entry {
-    background: rgba(255, 255, 255, 0.98);
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 25px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    border-left: 4px solid #3498db;
-    }
-    .entry-header {
+/* Research diary — CAMS cream-paper palette
+   Entry-type accents map to CAMS-aligned hues:
+   Discovery → accent-teal · Milestone → jade · Breakthrough → ochre
+   Validation → muted plum · Methodology → terracotta */
+.diary-entry {
+    background: #FBF8EF;
+    border: 1px solid #DAD2B8;
+    border-left: 4px solid #2F6F7D;
+    border-radius: 6px;
+    padding: 25px 28px;
+    margin-bottom: 22px;
+    box-shadow: 0 1px 0 rgba(27,42,51,0.04);
+}
+.entry-header {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #DAD2B8;
+}
+.entry-header h3 {
+    margin: 0;
+    color: #1B2A33;
+    font-size: 1.25em;
+    line-height: 1.35;
+}
+.entry-header > div {
+    display: flex;
     align-items: center;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(52, 152, 219, 0.2);
-    }
-    .entry-date {
-    color: #7f8c8d;
-    font-size: 0.9em;
-    font-weight: bold;
-    }
-    .entry-type {
-    background: #3498db;
-    color: white;
-    padding: 4px 12px;
-    border-radius: 15px;
-    font-size: 0.8em;
+    gap: 10px;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+.entry-date {
+    color: #6B7480;
+    font-size: 0.82em;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+}
+.entry-type {
+    background: #2F6F7D;
+    color: #F5F1E4;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.7em;
+    font-weight: 600;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    }
-    .entry-content {
-    line-height: 1.7;
-    color: #2c3e50;
-    }
-    .entry-content h3 {
-    color: #2980b9;
-    margin-top: 20px;
+}
+.entry-content {
+    line-height: 1.72;
+    color: #1B2A33;
+}
+.entry-content h3 {
+    color: #2F6F7D;
+    margin-top: 22px;
     margin-bottom: 10px;
-    }
-    .entry-content h4 {
-    color: #34495e;
-    margin-top: 15px;
+    font-size: 1.05em;
+}
+.entry-content h4 {
+    color: #1B2A33;
+    margin-top: 18px;
     margin-bottom: 8px;
-    }
-    .research-milestone {
-    border-left-color: #27ae60;
-    }
-    .research-milestone .entry-type {
-    background: #27ae60;
-    }
-    .breakthrough {
-    border-left-color: #f39c12;
-    }
-    .breakthrough .entry-type {
-    background: #f39c12;
-    }
-    .validation {
-    border-left-color: #9b59b6;
-    }
-    .validation .entry-type {
-    background: #9b59b6;
-    }
-    .methodology {
-    border-left-color: #e74c3c;
-    }
-    .methodology .entry-type {
-    background: #e74c3c;
-    }
-    .search-box {
-    margin-bottom: 20px;
-    padding: 12px;
+    font-size: 0.98em;
+    font-weight: 600;
+}
+.entry-content h5 {
+    color: #2F4651;
+    margin-top: 14px;
+    margin-bottom: 6px;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+.entry-content a {
+    color: #2F6F7D;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+.entry-content a:hover { text-decoration-thickness: 2px; }
+
+/* Entry-type variants */
+.research-milestone               { border-left-color: #5B7A4F; }
+.research-milestone .entry-type   { background: #5B7A4F; }
+.breakthrough                     { border-left-color: #D98B2B; }
+.breakthrough .entry-type         { background: #D98B2B; color: #1B2A33; }
+.validation                       { border-left-color: #7B5B8E; }
+.validation .entry-type           { background: #7B5B8E; }
+.methodology                      { border-left-color: #B5523A; }
+.methodology .entry-type          { background: #B5523A; }
+
+.search-box {
+    margin-bottom: 18px;
+    padding: 11px 16px;
     width: 100%;
-    border: 2px solid #3498db;
-    border-radius: 25px;
-    font-size: 1em;
-    background: rgba(255, 255, 255, 0.9);
-    }
-    .tags {
-    margin-top: 15px;
+    box-sizing: border-box;
+    border: 1px solid #DAD2B8;
+    border-radius: 999px;
+    font-size: 0.95em;
+    font-family: inherit;
+    background: #FBF8EF;
+    color: #1B2A33;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+.search-box:focus {
+    outline: none;
+    border-color: #2F6F7D;
+    box-shadow: 0 0 0 3px rgba(47,111,125,0.12);
+}
+.search-box::placeholder { color: #8A7E63; }
+
+.tags {
+    margin-top: 18px;
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    }
-    .tag {
-    background: rgba(52, 152, 219, 0.1);
-    color: #2980b9;
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 0.8em;
-    border: 1px solid rgba(52, 152, 219, 0.3);
-    }
+    gap: 6px;
+}
+.tag {
+    background: #F0E9D2;
+    color: #2F4651;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.78em;
+    font-weight: 500;
+    border: 1px solid #DAD2B8;
+    font-family: ui-monospace, 'JetBrains Mono', SFMono-Regular, Menlo, monospace;
+}
+/* Legend-row swatches in the about card */
+.card .tag.legend-discovery    { background: rgba(47,111,125,0.12);  border-color: rgba(47,111,125,0.30);  color: #2F6F7D; }
+.card .tag.legend-milestone    { background: rgba(91,122,79,0.14);   border-color: rgba(91,122,79,0.32);   color: #4A6440; }
+.card .tag.legend-breakthrough { background: rgba(217,139,43,0.16);  border-color: rgba(217,139,43,0.36);  color: #8A5814; }
+.card .tag.legend-validation   { background: rgba(123,91,142,0.14);  border-color: rgba(123,91,142,0.32);  color: #6B4D7E; }
+.card .tag.legend-methodology  { background: rgba(181,82,58,0.14);   border-color: rgba(181,82,58,0.32);   color: #934228; }
     </style>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
@@ -244,30 +290,30 @@
 
     <div class="card">
         <h2>📔 About This Research Diary</h2>
-        <p style="font-size:0.85em; color:#888; line-height:1.65; background:#f8f8f8; border-left:3px solid #ddd; border-radius:0 6px 6px 0; padding:10px 16px; margin-bottom:18px;">
-    <strong>Reading note:</strong> This diary is a chronological research log. Dataset sizes, society counts, and version labels reflect the state of the project at the time each entry was written. Current canonical figures — 45 series, 38 societies, 39,351 records, CAMS v2.3 — are on the <a href="datasets.html" style="color:#1f77b4;">Datasets</a> and <a href="model.html" style="color:#1f77b4;">Model</a> pages.
+        <p style="font-size:0.85em; color:#4A5560; line-height:1.65; background:#F0E9D2; border-left:3px solid #DAD2B8; border-radius:0 6px 6px 0; padding:10px 16px; margin-bottom:18px;">
+    <strong>Reading note:</strong> This diary is a chronological research log. Dataset sizes, society counts, and version labels reflect the state of the project at the time each entry was written. Current canonical figures — 45 series, 38 societies, 39,351 records, CAMS v2.3 — are on the <a href="datasets.html" style="color: #2F6F7D;">Datasets</a> and <a href="model.html" style="color: #2F6F7D;">Model</a> pages.
 </p>
         <p>This research diary documents the ongoing development and validation of the Complex Adaptive Model System (CAMS) framework. Each entry captures key insights, breakthroughs, methodological developments, and empirical findings in the journey to understand societies as thermodynamic Complex Adaptive Systems with measurable physical characteristics.</p>
 
-        <p style="padding: 14px 16px; background: rgba(231, 76, 60, 0.08); border-left: 3px solid #e74c3c; margin-top: 15px; font-size: 0.93em; line-height: 1.75;">
+        <p style="padding: 14px 16px; background: #F4E6DD; border-left: 3px solid #B5523A; margin-top: 15px; font-size: 0.93em; line-height: 1.75;">
             <strong>Note:</strong> The neural network hypothesis has been falsified. CAMS now focuses on thermodynamic principles, entropy flows, and phase transitions as the fundamental description of societal dynamics. The current model treats each society as a network of eight institutional nodes coupled by bond strengths — where bond strength between any two nodes is a function of their respective Node Values, and Node Value is itself a linear combination of Coherence, Capacity, and Abstraction minus Stress. Societal health emerges from the coordination of these nodes across two timescale loops: a fast entropy-export quartet (Hands, Flow, Shield, Craft) and a slow negentropy-maintenance quartet (Helm, Stewards, Archive, Lore). When inter-node coupling is strong and the loops are synchronised, the system operates in deliberative mode — high free energy, long time horizons, adaptive capacity. When coupling degrades under stress, the criticality index 𝒳(t) rises, time horizons compress, and the system shifts toward reactive mode or, at the extreme, phase transition — fracture, oscillation, or buffered collapse. The claim is not metaphorical: these dynamics are measured, not inferred, using four scored metrics per node per year across 38 societies (45 series) from 5 CE to 2026.
         </p>
 
         <p style="margin-top: 16px; font-size: 0.95em;">
-            New to CAMS? Start with the model overview: <a href="model.html" style="color: #1f77b4; font-weight: 600;">The CAMS Model — 8 nodes, 4 metrics, key formulas →</a><br>
-            Open datasets: <a href="datasets.html" style="color: #1f77b4; font-weight: 600;">45 series · 39,351 records, free download →</a><br>
-            Live tools &amp; case studies: <a href="applications.html" style="color: #1f77b4; font-weight: 600;">Explore CAMS in Action →</a>
+            New to CAMS? Start with the model overview: <a href="model.html" style="color: #2F6F7D; font-weight: 600;">The CAMS Model — 8 nodes, 4 metrics, key formulas →</a><br>
+            Open datasets: <a href="datasets.html" style="color: #2F6F7D; font-weight: 600;">45 series · 39,351 records, free download →</a><br>
+            Live tools &amp; case studies: <a href="applications.html" style="color: #2F6F7D; font-weight: 600;">Explore CAMS in Action →</a>
         </p>
         
         <input type="text" class="search-box" placeholder="Search diary entries..." id="searchBox" onkeyup="searchEntries()">
         
         <div style="margin-top: 15px;">
             <strong>Entry Types:</strong>
-            <span class="tag" style="background: rgba(52, 152, 219, 0.1);">Discovery</span>
-            <span class="tag" style="background: rgba(39, 174, 96, 0.1);">Milestone</span>
-            <span class="tag" style="background: rgba(243, 156, 18, 0.1);">Breakthrough</span>
-            <span class="tag" style="background: rgba(155, 89, 182, 0.1);">Validation</span>
-            <span class="tag" style="background: rgba(231, 76, 60, 0.1);">Methodology</span>
+            <span class="tag legend-discovery">Discovery</span>
+            <span class="tag legend-milestone">Milestone</span>
+            <span class="tag legend-breakthrough">Breakthrough</span>
+            <span class="tag legend-validation">Validation</span>
+            <span class="tag legend-methodology">Methodology</span>
         </div>
     </div>
 
@@ -286,12 +332,12 @@
                 <p>A significant expansion of the site's data coverage and published materials, completed over 21–22 May 2026.</p>
 
                 <h3>CAMS National Diagnostic — 32 Societies</h3>
-                <p>The diagnostic tool (previously covering 10 societies) has been rebuilt to cover 32 societies across six world regions: Western Europe, East Asia, South Asia, MENA, Eurasia, and the Americas and Africa. The new version is live at <a href="status_report" style="color:#1f77b4;">/status_report</a> and linked from the Explore page.</p>
+                <p>The diagnostic tool (previously covering 10 societies) has been rebuilt to cover 32 societies across six world regions: Western Europe, East Asia, South Asia, MENA, Eurasia, and the Americas and Africa. The new version is live at <a href="status_report" style="color: #2F6F7D;">/status_report</a> and linked from the Explore page.</p>
                 <p>The 22 new societies were processed from cleaned CSV datasets using a Python build pipeline (<code>build/build_new_societies.py</code>) that applies per-society B₀ normalisation, canonical node-name mapping, and 8-node completeness validation. Societies added: Japan, India, France, Netherlands, Denmark, Norway, Singapore, Saudi Arabia, Iran, Ukraine, Indonesia, Hong Kong, Israel, Pakistan, Iraq, Lebanon, Syria, Thailand, UAE, Venezuela, Brazil, South Africa.</p>
                 <p>The historical analogue corpus grew from ~500 to over 2,700 year-society points. Iran's missing bond-strength data is handled gracefully — the Λ index displays as N/A where BS is unavailable. The selector is reorganised into labelled regional groups rather than a flat pill list.</p>
 
                 <h3>New Datasets on /datasets</h3>
-                <p>All 22 new society CSVs are now listed on the <a href="datasets" style="color:#1f77b4;">Datasets</a> page with GitHub View and Download links, organised by region. Iran ensemble mean and envelope files were added separately. A warning flag marks all 22 as pending integration into the Explorer, Interpreter, and Zeitgeist Detector — this is deferred to when resources allow.</p>
+                <p>All 22 new society CSVs are now listed on the <a href="datasets" style="color: #2F6F7D;">Datasets</a> page with GitHub View and Download links, organised by region. Iran ensemble mean and envelope files were added separately. A warning flag marks all 22 as pending integration into the Explorer, Interpreter, and Zeitgeist Detector — this is deferred to when resources allow.</p>
 
                 <h3>Publications and Reports</h3>
                 <p>Three document upgrades on the Explore page: the Epiphenomenon@Trove Falsification Results (v5) and the full Grok Report (v3) are now published as PDFs, replacing the previous Word documents. The CAMS Framework collected research notebook (NotebookLM) was added as the top entry in Core Papers. The Kari McKern profile at Pearls &amp; Irritations was added to the Outreach section.</p>
@@ -299,7 +345,7 @@
                 <h3>Index page</h3>
                 <p>The closing tagline was consolidated to: <em>"This is not another theory about why societies rise and fall — it is a measurement system."</em> The dashboard CTA now links to the in-browser web version rather than the hosted Streamlit app.</p>
 
-                <p style="margin-top:16px;font-weight:600;color:#1a1a2e;">Kari McKern</p>
+                <p style="margin-top:16px;font-weight:600;color: #1B2A33;">Kari McKern</p>
 
                 <div class="tags">
                     <span class="tag">#national-diagnostic</span>
@@ -341,7 +387,7 @@
 
                 <p>All three are published as open-science PDFs under the same licence as the datasets — anyone can download, cite, and build on them. The LaTeX source for Paper 2 is in the repository.</p>
 
-                <p style="margin-top:16px;font-weight:600;color:#1a1a2e;">Kari McKern</p>
+                <p style="margin-top:16px;font-weight:600;color: #1B2A33;">Kari McKern</p>
 
                 <div class="tags">
                     <span class="tag">#paper-series</span>
@@ -398,7 +444,7 @@
                 <p>The platform remains deliberately empirical and transparent: no ideology, no hype, no black box. Just better observability of living civilisations under stress.</p>
 
                 <p>The work continues &mdash; openly, iteratively, and in public.</p>
-                <p style="margin-top:16px;font-weight:600;color:#1a1a2e;">Kari McKern</p>
+                <p style="margin-top:16px;font-weight:600;color: #1B2A33;">Kari McKern</p>
             </div>
         </div>
 
@@ -458,11 +504,11 @@
                     The result was strong evidence of scale invariance: the same organisational principles, node relationships, and crisis signatures repeat across all five societies regardless of their specific historical context or scale. The AI recovered correct quadrant assignments and identified major structural transitions in each dataset without external context. This is the most direct test the framework has faced, and it passed.
                 </p>
                 <p>
-                    The full write-up is available on the <a href="scale-invariance.html" style="color: #2980b9;">Scale Invariance Experiment page</a> with blinded CSVs for download — the inference challenge remains open. The detailed report is available as a <a href="CAMS_Scale_Invariance_Report_2026.pdf" style="color: #2980b9;">PDF</a>. The key finding is documented as a <a href="https://claude.ai/public/artifacts/ab4bb88c-415f-4d1d-9178-94ac64cc12cf" target="_blank" style="color: #2980b9;">Claude artifact</a>.
+                    The full write-up is available on the <a href="scale-invariance.html" style="color: #2F6F7D;">Scale Invariance Experiment page</a> with blinded CSVs for download — the inference challenge remains open. The detailed report is available as a <a href="CAMS_Scale_Invariance_Report_2026.pdf" style="color: #2F6F7D;">PDF</a>. The key finding is documented as a <a href="https://claude.ai/public/artifacts/ab4bb88c-415f-4d1d-9178-94ac64cc12cf" target="_blank" style="color: #2F6F7D;">Claude artifact</a>.
                 </p>
                 <h4>Thermodynamic Jungle — Phase-Space Tool</h4>
                 <p>
-                    As a companion to the scale invariance work, a new interactive visualisation plots all 38 societies in phase space using Cognition (A×C) versus Stress Buffer (K−S) with an animated year slider from 1900 onwards. The tool makes the quadrant dynamics visible in real time — which societies are generative, which are dissociating, and when. Available at <a href="thermodynamic-jungle.html" style="color: #2980b9;">thermodynamic-jungle.html</a>.
+                    As a companion to the scale invariance work, a new interactive visualisation plots all 38 societies in phase space using Cognition (A×C) versus Stress Buffer (K−S) with an animated year slider from 1900 onwards. The tool makes the quadrant dynamics visible in real time — which societies are generative, which are dissociating, and when. Available at <a href="thermodynamic-jungle.html" style="color: #2F6F7D;">thermodynamic-jungle.html</a>.
                 </p>
                 <p style="font-size: 0.88em; color: #888; margin-top: 18px;">
                     The blinding key (mapping file numbers to societies) is held separately and will be published in this diary once the inference challenge closes.
@@ -481,7 +527,7 @@
             <div class="entry-content">
                 <h3>What the Site Now Does Well</h3>
 
-                <p>The validation gap that existed in the book is substantially addressed by the site. The <a href="datasets.html" style="color: #2980b9;">datasets page</a> now names the triple-AI ensemble (GPT-4, Grok, Gemini), specifies the blinding protocol, states the inter-rater reliability measure (r&nbsp;&gt;&nbsp;0.7), and links the underlying documentation. The empirical core is visible and verifiable. A critic can no longer claim the evidence is hidden or unfalsifiable — they have to engage with the data directly, which is precisely the position CAMS needs to be in.</p>
+                <p>The validation gap that existed in the book is substantially addressed by the site. The <a href="datasets.html" style="color: #2F6F7D;">datasets page</a> now names the triple-AI ensemble (GPT-4, Grok, Gemini), specifies the blinding protocol, states the inter-rater reliability measure (r&nbsp;&gt;&nbsp;0.7), and links the underlying documentation. The empirical core is visible and verifiable. A critic can no longer claim the evidence is hidden or unfalsifiable — they have to engage with the data directly, which is precisely the position CAMS needs to be in.</p>
 
                 <p>The methodology statement on blinding is the most important sentence on the site: <em>"Each historical node is scored without reference to outcome — scorers do not know the terminal state of the society."</em> That's the key falsifiability claim, front and centre. If that blinding protocol holds, it addresses the circularity objection — that the scores were calibrated to fit known outcomes — more directly than anything in the book.</p>
 
@@ -491,7 +537,7 @@
 
                 <h3>What the Site Doesn't Yet Resolve</h3>
 
-                <p><strong>The Keplerian disclosure is still absent from the public-facing material.</strong> The <a href="model.html" style="color: #2980b9;">model page</a> presents the formulas — node value, bond strength, the dynamics update equation — without stating clearly whether these are empirically calibrated or derived from first principles. A visiting academic will see Ising/spin-glass language and thermodynamic analogies and may assume a stronger theoretical foundation than currently exists. The book acknowledges this honestly in Chapter 10; the website should carry at least a one-sentence version of the same disclosure on the model page. Something like: <em>"The equations are empirically calibrated against historical data; formal derivation from thermodynamic first principles is ongoing."</em></p>
+                <p><strong>The Keplerian disclosure is still absent from the public-facing material.</strong> The <a href="model.html" style="color: #2F6F7D;">model page</a> presents the formulas — node value, bond strength, the dynamics update equation — without stating clearly whether these are empirically calibrated or derived from first principles. A visiting academic will see Ising/spin-glass language and thermodynamic analogies and may assume a stronger theoretical foundation than currently exists. The book acknowledges this honestly in Chapter 10; the website should carry at least a one-sentence version of the same disclosure on the model page. Something like: <em>"The equations are empirically calibrated against historical data; formal derivation from thermodynamic first principles is ongoing."</em></p>
 
                 <p><strong>The "ensemble r &gt; 0.7" claim needs more visibility.</strong> It appears in the datasets page methodology box but isn't linked to the underlying validation documents in a way that makes it easy to find. The DATASET_VALIDATION_SUMMARY.md link is there, but the average visitor won't click it. A brief results table — showing r values across the three scorers for a few representative societies — on the model page itself would make this much more persuasive.</p>
 
@@ -514,7 +560,7 @@
                 </div>
             </div>
             <div class="entry-content">
-                <p>After months of blind ensemble scoring, phase-space plotting, and long threads with three independent LLMs (including <a href="grok.html" style="color: #2980b9;">that conversation with Grok</a> where we kept circling back to "herding cats on a primate scale"), the model has taken what I think is its most important step yet.</p>
+                <p>After months of blind ensemble scoring, phase-space plotting, and long threads with three independent LLMs (including <a href="grok.html" style="color: #2F6F7D;">that conversation with Grok</a> where we kept circling back to "herding cats on a primate scale"), the model has taken what I think is its most important step yet.</p>
 
                 <p>I've posted a full draft paper: <em>"Why Eight Nodes? A Rate-Separation and Coupling Argument for the Minimal Coordination Architecture of Complex Societies."</em> The emphasis on "draft" matters — this is a working document put out for feedback and scrutiny, not a final claim.</p>
 
@@ -564,13 +610,13 @@
                 <h4>🌀 New Visualisations</h4>
                 <p>Two new interactive visualisation tools are now live on the site:</p>
                 <ul>
-                    <li><strong><a href="attractors.html" style="color: #3498db;">Civilisational Attractor Space</a></strong> — 3D Plotly phase-space explorer mapping six civilisational archetypes as Lorenz attractor trajectories. Parameters encode coupling sensitivity (σ), stress dispersion (ρ), and dissipation rate (β). Archetypes range from Sustainable Convergence to Coordination Crisis.</li>
-                    <li><strong><a href="cams-coordination.html" style="color: #3498db;">CAMS Coordination Diagram</a></strong> — 8-node causal-loop map of the CAMS framework, showing Mythic, Interface, and Material layer interactions with reinforcing and balancing feedback loops.</li>
+                    <li><strong><a href="attractors.html" style="color: #2F6F7D;">Civilisational Attractor Space</a></strong> — 3D Plotly phase-space explorer mapping six civilisational archetypes as Lorenz attractor trajectories. Parameters encode coupling sensitivity (σ), stress dispersion (ρ), and dissipation rate (β). Archetypes range from Sustainable Convergence to Coordination Crisis.</li>
+                    <li><strong><a href="cams-coordination.html" style="color: #2F6F7D;">CAMS Coordination Diagram</a></strong> — 8-node causal-loop map of the CAMS framework, showing Mythic, Interface, and Material layer interactions with reinforcing and balancing feedback loops.</li>
                 </ul>
                 <p>Both tools are open science — no login required.</p>
 
                 <h4>📂 Dataset Expansion: 27 New CSV Files</h4>
-                <p>Twenty-seven cleaned CAMS datasets (Jan–Mar 2026) have been added to the <a href="https://github.com/KaliBond/wintermute" target="_blank" style="color: #3498db;">research repository</a>, bringing total coverage to 32+ societies. New additions include:</p>
+                <p>Twenty-seven cleaned CAMS datasets (Jan–Mar 2026) have been added to the <a href="https://github.com/KaliBond/wintermute" target="_blank" style="color: #2F6F7D;">research repository</a>, bringing total coverage to 32+ societies. New additions include:</p>
                 <ul>
                     <li><strong>Europe:</strong> Finland (Gemini + Grok), Germany (×2), Norway, Sweden</li>
                     <li><strong>Middle East:</strong> Iran (×2), UAE</li>
@@ -618,13 +664,13 @@
                 </ul>
 
                 <h5>Node Value &amp; Health</h5>
-                <pre style="background: #1e2130; color: #e0e0e0; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 0.9em;">V_i(t) = C_i + K_i + (A_i / 2) − S_i    range: [−7.5, 24.0]
+                <pre style="background: #1e2130; color: #DAD2B8; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 0.9em;">V_i(t) = C_i + K_i + (A_i / 2) − S_i    range: [−7.5, 24.0]
 
 V̄(t)  = (1/8) Σ V_i(t)
 σ_V(t) = sqrt( (1/8) Σ (V_i − V̄)² )</pre>
 
                 <h5>Bond Strength (negative-domain safe)</h5>
-                <pre style="background: #1e2130; color: #e0e0e0; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 0.9em;">B_ij(t) = sqrt( max(V_i+8, 0) · max(V_j+8, 0) ) / 32    ∈ [0, 1]</pre>
+                <pre style="background: #1e2130; color: #DAD2B8; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 0.9em;">B_ij(t) = sqrt( max(V_i+8, 0) · max(V_j+8, 0) ) / 32    ∈ [0, 1]</pre>
                 <p>Canonical directed graph with Helm as universal hub and full Mythic ↔ Interface ↔ Material bridges.</p>
 
                 <h5>Mythic–Material Coupling Index Λ(t)</h5>
@@ -635,7 +681,7 @@ V̄(t)  = (1/8) Σ V_i(t)
                 <p><strong>Coordination Phase Transition (CPT)</strong> at t* when Φ enters Crisis with dσ_V/dt &gt; 0, dV̄/dt &lt; 0, and Λ(t*) &lt; 0.45.</p>
 
                 <h5>Dynamics</h5>
-                <pre style="background: #1e2130; color: #e0e0e0; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 0.9em;">V_i(t+1) = V_i(t) + α Σ_j B_ij(V_j − V_i) + ε_i(t+1)</pre>
+                <pre style="background: #1e2130; color: #DAD2B8; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 0.9em;">V_i(t+1) = V_i(t) + α Σ_j B_ij(V_j − V_i) + ε_i(t+1)</pre>
                 <p>Graph Laplacian diffusion plus shocks. Order parameters: ξ₁ = V̄, ξ₂ = σ_V, ξ₃ = Λ.</p>
 
                 <h4>⚠️ Failure Modes</h4>
@@ -661,7 +707,7 @@ V̄(t)  = (1/8) Σ V_i(t)
                 <p>All societies obey identical (V̄, σ_V, Λ) geometry. Crisis = mythic–material decoupling, detectable ≥5 years pre-CPT. Falsification protocol: cross-LLM r &gt; 0.7, Λ(t−5) AUC &gt; 0.75, universal ρ(s, k) &lt; −0.3.</p>
 
                 <h4>📊 The Dashboard</h4>
-                <p>The interactive dashboard at <a href="https://cams-advanced-analysis.streamlit.app/" target="_blank" style="color: #3498db; font-weight: bold;">cams-advanced-analysis.streamlit.app</a> provides four specialised tools:</p>
+                <p>The interactive dashboard at <a href="https://cams-advanced-analysis.streamlit.app/" target="_blank" style="color: #2F6F7D; font-weight: 600;">cams-advanced-analysis.streamlit.app</a> provides four specialised tools:</p>
                 <ul>
                     <li>📊 <strong>dDIG Analysis</strong>: Institutional influence via directed information gain I(X→Y|Z)</li>
                     <li>🌀 <strong>Dyad Field Analysis</strong>: M-Y dynamics tracking metabolic-mythic tension</li>
@@ -692,7 +738,7 @@ V̄(t)  = (1/8) Σ V_i(t)
                 <h4>🎯 Explicit Claims on Record</h4>
                 <p>For Newsletter #8, I wish to be explicit about my claims for the Complex Adaptive Model System. I put the following question to all major AI platforms:</p>
 
-                <blockquote style="padding: 15px; background: rgba(52, 152, 219, 0.05); border-left: 4px solid #3498db; margin: 20px 0; font-style: italic;">
+                <blockquote style="padding: 15px; background: #E8EDEE; border-left: 4px solid #2F6F7D; margin: 20px 0; font-style: italic;">
                     "Give me an overview of the evidence for social Complex Adaptive System behaviour across my projects. What conclusions can we safely make?"
                 </blockquote>
 
@@ -719,7 +765,7 @@ V̄(t)  = (1/8) Σ V_i(t)
 
                 <p>This represents the first successful predictive mathematical formalisation of civilisational dynamics—transforming social analysis from ideology to applied thermodynamics.</p>
 
-                <p><a href="https://claude.ai/share/e8769642-256f-4fdb-87b7-b3fbecb7c2db" target="_blank" style="color: #3498db; font-weight: bold;">📖 Read Full Claude Analysis →</a></p>
+                <p><a href="https://claude.ai/share/e8769642-256f-4fdb-87b7-b3fbecb7c2db" target="_blank" style="color: #2F6F7D; font-weight: 600;">📖 Read Full Claude Analysis →</a></p>
 
                 <h4>🟢 GPT-5.0 (OpenAI)</h4>
 
@@ -752,7 +798,7 @@ V̄(t)  = (1/8) Σ V_i(t)
 
                 <p>But the core claim now stands: social systems behave as thermodynamic Complex Adaptive Systems, and CAMS makes that behaviour visible, measurable, and contestable.</p>
 
-                <p><a href="https://chatgpt.com/share/6934a060-9148-800c-8ae1-743135343207" target="_blank" style="color: #10a37f; font-weight: bold;">📖 Read Full GPT-5.0 Analysis →</a></p>
+                <p><a href="https://chatgpt.com/share/6934a060-9148-800c-8ae1-743135343207" target="_blank" style="color: #5B7A4F; font-weight: 600;">📖 Read Full GPT-5.0 Analysis →</a></p>
 
                 <h4>⚫ GROK (xAI)</h4>
 
@@ -806,7 +852,7 @@ V̄(t)  = (1/8) Σ V_i(t)
 
                 <p><strong>Lesson:</strong> Policy is not tuning a machine but massaging a distributed brain whose eight lobes must breathe together. When thought outruns feeling, Japan day-dreams in crisis; when feeling outruns thought, it fights ghosts. Sustainable renewal needs both smarter stories and lighter hearts—an inhale matched by an even exhale.</p>
 
-                <p><a href="https://www.kimi.com/share/19af59f0-9d12-80ab-8000-0000d4e6415d" target="_blank" style="color: #9b59b6; font-weight: bold;">📖 Read Full Kimi Japan Analysis →</a></p>
+                <p><a href="https://www.kimi.com/share/19af59f0-9d12-80ab-8000-0000d4e6415d" target="_blank" style="color: #7B5B8E; font-weight: 600;">📖 Read Full Kimi Japan Analysis →</a></p>
 
                 <h4>🎓 Cross-Platform Consensus</h4>
 
@@ -819,7 +865,7 @@ V̄(t)  = (1/8) Σ V_i(t)
                     <li>✅ <strong>Cross-cultural validity transcends ideological categories</strong></li>
                 </ol>
 
-                <p style="margin-top: 20px; padding: 15px; background: rgba(231, 76, 60, 0.1); border-left: 3px solid #e74c3c; font-weight: bold;">
+                <p style="margin-top: 20px; padding: 15px; background: #F4E6DD; border-left: 3px solid #B5523A; font-weight: bold;">
                     For the record: The CAMS framework claims societies are Complex Adaptive Systems in the technical, physical sense—not as analogy but as measurable thermodynamic reality. This claim is now validated across four independent AI platforms analysing 38 societies (45 series) spanning 5000+ years.
                 </p>
 
@@ -847,8 +893,8 @@ V̄(t)  = (1/8) Σ V_i(t)
                 <h4>🎯 Comprehensive Meta-Analysis</h4>
                 <p>After extensive analysis across 32+ societies spanning 5000 years of civilizational history, we can now make <strong>definitive claims about societies as Complex Adaptive Systems (CAS)</strong>. The evidence is overwhelming, cross-cultural, and predictive.</p>
 
-                <p style="padding: 10px; background: rgba(155, 89, 182, 0.1); border-left: 3px solid #9b59b6; font-size: 0.95em; margin: 15px 0;">
-                    <strong>Attribution:</strong> This synthesis was performed by <a href="https://claude.ai/chat/7d77666f-c335-4499-91b2-37a2a1435008" target="_blank" style="color: #9b59b6;">Claude (Anthropic)</a> after searching through extensive collaborative history and analyzing patterns across all CAMS datasets and validations.
+                <p style="padding: 10px; background: #ECE5EE; border-left: 3px solid #7B5B8E; font-size: 0.95em; margin: 15px 0;">
+                    <strong>Attribution:</strong> This synthesis was performed by <a href="https://claude.ai/chat/7d77666f-c335-4499-91b2-37a2a1435008" target="_blank" style="color: #7B5B8E;">Claude (Anthropic)</a> after searching through extensive collaborative history and analyzing patterns across all CAMS datasets and validations.
                 </p>
 
                 <h4>📊 Category 1: Universal Structural Properties</h4>
@@ -921,7 +967,7 @@ V̄(t)  = (1/8) Σ V_i(t)
                 <h4>🏆 Scientific Significance</h4>
                 <p>The CAMS framework represents the <strong>first successful predictive mathematical formalisation of civilisational dynamics</strong>. The evidence supports treating this as a genuine scientific advance in social analysis—one that positions societies as physical systems amenable to objective measurement.</p>
 
-                <p style="margin-top: 20px; padding: 15px; background: rgba(52, 152, 219, 0.1); border-left: 3px solid #3498db; font-style: italic;">
+                <p style="margin-top: 20px; padding: 15px; background: #E8EDEE; border-left: 3px solid #2F6F7D; font-style: italic;">
                     "This work moves social science from descriptive taxonomy to predictive physics. We can now measure, compare, and forecast societal dynamics with the same rigor applied to thermodynamic systems. The implications for policy, governance, and global cooperation are profound."
                 </p>
 
@@ -959,7 +1005,7 @@ V̄(t)  = (1/8) Σ V_i(t)
                     <li><strong>Phase Classification:</strong> STABLE → STRESSED → FRAGILE → CRITICAL progression tracking</li>
                     <li><strong>Enhanced Metrics:</strong> Grand Metric Ψ, coherence asymmetry, stress variance, synchronization</li>
                 </ul>
-                <p><a href="https://cams-advanced-analysis.streamlit.app/" target="_blank" style="color: #3498db; font-weight: bold;">🔬 Launch CAMS Dashboard →</a></p>
+                <p><a href="https://cams-advanced-analysis.streamlit.app/" target="_blank" style="color: #2F6F7D; font-weight: 600;">🔬 Launch CAMS Dashboard →</a></p>
 
                 <h4>🔬 Technical Implementation</h4>
                 <p>The dashboard draws on a unified data repository (45 series, 38 societies, spanning 5000+ years) and automatically updates when new data or features are pushed to GitHub.</p>
@@ -975,7 +1021,7 @@ V̄(t)  = (1/8) Σ V_i(t)
 
                 <h4>🔗 External AI Integration</h4>
                 <p>For comprehensive analysis queries, researchers can leverage Kimi AI's advanced reasoning capabilities:</p>
-                <p><a href="https://ujsyhx7botnvm.ok.kimi.link/" target="_blank" style="color: #9b59b6; font-weight: bold;">🤖 Kimi AI Research Assistant →</a></p>
+                <p><a href="https://ujsyhx7botnvm.ok.kimi.link/" target="_blank" style="color: #7B5B8E; font-weight: 600;">🤖 Kimi AI Research Assistant →</a></p>
 
                 <div class="tags">
                     <span class="tag">#dashboards</span>
@@ -996,8 +1042,8 @@ V̄(t)  = (1/8) Σ V_i(t)
                 </div>
             </div>
             <div class="entry-content">
-                <div style="padding: 15px; background: rgba(231, 76, 60, 0.1); border: 2px solid #e74c3c; border-radius: 8px; margin-bottom: 20px;">
-                    <h4 style="color: #e74c3c; margin-top: 0;">⚠️ SCIENTIFIC CORRECTION (December 2025)</h4>
+                <div style="padding: 15px; background: #F4E6DD; border: 1px solid #B5523A; border-radius: 8px; margin-bottom: 20px;">
+                    <h4 style="color: #B5523A; margin-top: 0;">⚠️ SCIENTIFIC CORRECTION (December 2025)</h4>
                     <p style="margin-bottom: 0;"><strong>The neural network hypothesis described in this entry has been falsified.</strong> While the empirical findings (83% accuracy, universal thresholds, cross-cultural validation) remain valid, the theoretical framework has evolved. CAMS now focuses exclusively on <strong>thermodynamic principles, entropy flows, and phase transitions</strong> as the fundamental description of societal dynamics. The neuroscience analogy has been abandoned in favor of pure thermodynamic analysis.</p>
                 </div>
 
@@ -1125,9 +1171,9 @@ V̄(t)  = (1/8) Σ V_i(t)
 
 <footer class="footer">
     <nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
-        <a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a>
-        <a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a>
-        <a href="results.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Results</a>
+        <a href="index.html" style="color: #2F6F7D;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a>
+        <a href="explore.html" style="color: #2F6F7D;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a>
+        <a href="results.html" style="color: #2F6F7D;text-decoration:none;font-size:0.9em;font-weight:600;">Results</a>
     </nav>
     <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
     <p style="margin-top: 8px; font-size: 0.8em; opacity: 0.5;"><a href="grok.html" style="color: inherit;">grok</a></p>

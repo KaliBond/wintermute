@@ -60,7 +60,7 @@
 
         /* Hero — dark full-bleed panel, bleeds to card edges */
         .home-hero {
-            background: linear-gradient(150deg, #1a0533 0%, #2d1065 60%, #3b1580 100%);
+            background: #F0E9D2;
             margin: -30px -30px 36px;
             padding: 60px 40px 52px;
             text-align: center;
@@ -73,8 +73,8 @@
             position: absolute;
             inset: 0;
             background-image:
-                linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+                linear-gradient(rgba(27,42,51,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(27,42,51,0.05) 1px, transparent 1px);
             background-size: 48px 48px;
             pointer-events: none;
         }
@@ -83,13 +83,13 @@
             content: '';
             position: absolute;
             bottom: 0; left: 0; right: 0; height: 40px;
-            background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.06));
+            background: linear-gradient(to bottom, transparent, rgba(27,42,51,0.04));
             pointer-events: none;
         }
         .home-hero h1 {
             font-size: 2.8em;
             font-weight: 700;
-            color: #fff;
+            color: #1B2A33;
             letter-spacing: -0.025em;
             margin: 0 0 28px;
             position: relative;
@@ -98,12 +98,12 @@
         .pull-quote {
             font-size: 1.22em;
             font-style: italic;
-            color: rgba(255,255,255,0.88);
+            color: #2F4651;
             line-height: 1.65;
             max-width: 52ch;
             margin: 0 auto;
             padding: 22px 0 0;
-            border-top: 1px solid rgba(255,255,255,0.22);
+            border-top: 1px solid rgba(27,42,51,0.22);
             position: relative;
             z-index: 1;
             text-align: center;
@@ -139,16 +139,16 @@
         .resource-tile {
             display: block;
             padding: 16px 18px;
-            background: #fff;
-            border: 1px solid #e0e0e0;
+            background: #FBF8EF;
+            border: 1px solid #DAD2B8;
             border-radius: 8px;
             text-decoration: none;
             color: inherit;
             transition: border-color .15s, box-shadow .15s;
         }
         .resource-tile:hover {
-            border-color: #5b21b6;
-            box-shadow: 0 2px 12px rgba(91,33,182,.10);
+            border-color: #2F6F7D;
+            box-shadow: 0 2px 12px rgba(47,111,125,.12);
         }
         .resource-tile .rt-label {
             font-size: 0.72em;
@@ -182,14 +182,14 @@
             gap: 14px;
             align-items: flex-start;
             padding: 13px 16px;
-            background: #faf8ff;
-            border: 1px solid #e2daf5;
+            background: #FBF8EF;
+            border: 1px solid #DAD2B8;
             border-radius: 8px;
             text-decoration: none;
             color: inherit;
             transition: border-color .15s;
         }
-        .news-item:hover { border-color: #7c3aed; }
+        .news-item:hover { border-color: #2F6F7D; }
         .news-item .ni-title {
             font-size: 0.95em;
             font-weight: 600;
@@ -210,7 +210,7 @@
             justify-content: center;
             margin: 28px 0 0;
             padding-top: 24px;
-            border-top: 1px solid #eee;
+            border-top: 1px solid #DAD2B8;
         }
         .cta-row a {
             display: inline-block;
@@ -223,20 +223,20 @@
         }
         .cta-row a:hover { opacity: .85; }
         .cta-primary {
-            background: #5b21b6;
+            background: #2F6F7D;
             color: #fff;
         }
         .cta-secondary {
-            background: #fff;
-            color: #5b21b6;
-            border: 1px solid #5b21b6;
+            background: transparent;
+            color: #2F6F7D;
+            border: 1px solid #2F6F7D;
         }
 
         /* ── Divider ─────────────────────────────────────────────── */
         .section-divider {
             margin: 28px 0;
             border: 0;
-            border-top: 1px solid #eee;
+            border-top: 1px solid #DAD2B8;
         }
 
         @media (max-width: 600px) {
@@ -291,7 +291,7 @@
             <a href="mindscapes.html" class="nav-link">Mindscapes</a>
             <a href="faq.html" class="nav-link">FAQ</a>
             <a href="contact.html" class="nav-link">Contact</a>
-            <a href="framework/index.html" class="nav-link" style="color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework ↗</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework ↗</a>
         </div>
         <div class="nav-actions">
             <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
@@ -353,26 +353,6 @@
             <p>When these nodes are well-coupled, societies tend to be resilient. When they decouple, stress rises faster than capacity, coordination breaks down, and the system becomes brittle. CAMS makes these hidden dynamics legible — often years or decades before they become obvious.</p>
         </div>
 
-        <!-- ── Validation stats ───────────────────────────────────── -->
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:4px 0 28px;">
-            <div style="text-align:center;padding:14px 10px;background:#fff;border:1px solid #e0e0e0;border-radius:8px;">
-                <div style="font-size:1.45em;font-weight:700;color:#1f77b4;line-height:1;">75–90%</div>
-                <div style="font-size:0.76em;color:#666;margin-top:5px;line-height:1.4;">Ensemble hindcast accuracy across tested societies</div>
-            </div>
-            <div style="text-align:center;padding:14px 10px;background:#fff;border:1px solid #e0e0e0;border-radius:8px;">
-                <div style="font-size:1.45em;font-weight:700;color:#1f77b4;line-height:1;">r = −0.958</div>
-                <div style="font-size:0.76em;color:#666;margin-top:5px;line-height:1.4;">Entropy–health correlation in validated datasets</div>
-            </div>
-            <div style="text-align:center;padding:14px 10px;background:#fff;border:1px solid #e0e0e0;border-radius:8px;">
-                <div style="font-size:1.45em;font-weight:700;color:#1f77b4;line-height:1;">45</div>
-                <div style="font-size:0.76em;color:#666;margin-top:5px;line-height:1.4;">Historical series across 38 societies, 1800–2025</div>
-            </div>
-            <div style="text-align:center;padding:14px 10px;background:#fff;border:1px solid #e0e0e0;border-radius:8px;">
-                <div style="font-size:1.45em;font-weight:700;color:#1f77b4;line-height:1;">r = 0.78</div>
-                <div style="font-size:0.76em;color:#666;margin-top:5px;line-height:1.4;">Seshat cross-validation, Latium/Rome (Apr 2026)</div>
-            </div>
-        </div>
-
         <!-- ── Why Neural Nations ─────────────────────────────────── -->
         <hr class="section-divider">
         <div style="margin-bottom:28px;">
@@ -383,7 +363,7 @@
         </div>
 
         <!-- ── Keplerian note ─────────────────────────────────────── -->
-        <div style="padding:16px 20px;background:#f0f4f8;border-left:4px solid #1f77b4;border-radius:0 8px 8px 0;margin-bottom:28px;">
+        <div style="padding:16px 20px;background:#EEF2F2;border-left:4px solid #1f77b4;border-radius:0 8px 8px 0;margin-bottom:28px;">
             <div style="font-size:0.72em;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#1f77b4;margin-bottom:8px;">A note on method</div>
             <p style="margin:0 0 8px;font-size:0.9em;line-height:1.7;color:#333;">
                 CAMS is a <strong>sampling instrument calibrated empirically</strong>, not a theory derived from first principles. Kepler mapped planetary orbits accurately before Newton explained why they moved that way. CAMS works analogously: it fits observed societal behaviour with consistent retrodictive accuracy, but does not yet have the underlying derivation a mature scientific theory requires.
@@ -421,11 +401,11 @@
 
         <!-- ── Additional quick links ─────────────────────────────── -->
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;font-size:0.88em;">
-            <a href="test.html" style="color:#5b21b6;font-weight:600;text-decoration:none;padding:5px 12px;border:1px solid #c4b5fd;border-radius:5px;background:#faf5ff;">Nation State Diagnostic →</a>
-            <a href="cams-failure-modes.html" style="color:#5b21b6;font-weight:600;text-decoration:none;padding:5px 12px;border:1px solid #c4b5fd;border-radius:5px;background:#faf5ff;">Failure Modes Map →</a>
-            <a href="validation.html" style="color:#5b21b6;font-weight:600;text-decoration:none;padding:5px 12px;border:1px solid #c4b5fd;border-radius:5px;background:#faf5ff;">Validation &amp; Limits →</a>
-            <a href="https://cams-advanced-analysis.streamlit.app" target="_blank" style="color:#5b21b6;font-weight:600;text-decoration:none;padding:5px 12px;border:1px solid #c4b5fd;border-radius:5px;background:#faf5ff;">Live Dashboard ↗</a>
-            <a href="https://github.com/KaliBond/wintermute" target="_blank" style="color:#5b21b6;font-weight:600;text-decoration:none;padding:5px 12px;border:1px solid #c4b5fd;border-radius:5px;background:#faf5ff;">GitHub ↗</a>
+            <a href="test.html" style="color:#2F6F7D;font-weight:600;text-decoration:none;padding:5px 12px;border:1px solid #B9D2D6;border-radius:5px;background:#F0E9D2;">Nation State Diagnostic →</a>
+            <a href="cams-failure-modes.html" style="color:#2F6F7D;font-weight:600;text-decoration:none;padding:5px 12px;border:1px solid #B9D2D6;border-radius:5px;background:#F0E9D2;">Failure Modes Map →</a>
+            <a href="validation.html" style="color:#2F6F7D;font-weight:600;text-decoration:none;padding:5px 12px;border:1px solid #B9D2D6;border-radius:5px;background:#F0E9D2;">Validation &amp; Limits →</a>
+            <a href="https://cams-advanced-analysis.streamlit.app" target="_blank" style="color:#2F6F7D;font-weight:600;text-decoration:none;padding:5px 12px;border:1px solid #B9D2D6;border-radius:5px;background:#F0E9D2;">Live Dashboard ↗</a>
+            <a href="https://github.com/KaliBond/wintermute" target="_blank" style="color:#2F6F7D;font-weight:600;text-decoration:none;padding:5px 12px;border:1px solid #B9D2D6;border-radius:5px;background:#F0E9D2;">GitHub ↗</a>
         </div>
 
         <!-- ── What's New ─────────────────────────────────────────── -->
@@ -446,7 +426,7 @@
                     <div class="ni-desc">First independent test of CAMS against the Seshat Historical Database. Strong alignment on 35 Natural Geographic Areas over 5,500 years. Latium/Rome overlap: r&nbsp;=&nbsp;0.78.</div>
                 </div>
             </a>
-            <div class="news-item" style="background:#f5f9ff;border-color:#dce8f5;">
+            <div class="news-item" style="background:#F2EDD7;border-color:#DAD2B8;">
                 <div style="flex-shrink:0;font-size:1.3em;line-height:1;margin-top:1px;">⚙️</div>
                 <div>
                     <div class="ni-title">New Tools Live</div>
@@ -462,7 +442,7 @@
         <!-- ── Closing + CTAs ─────────────────────────────────────── -->
         <hr class="section-divider" style="margin-top:32px;">
         <div style="margin:28px auto;max-width:58ch;text-align:center;">
-            <p style="font-size:1.08em;line-height:1.8;color:#5b21b6;margin:0;font-style:italic;font-weight:500;">This is not another theory about why societies rise and fall — it is a measurement system.</p>
+            <p style="font-size:1.08em;line-height:1.8;color:#2F6F7D;margin:0;font-style:italic;font-weight:500;">This is not another theory about why societies rise and fall — it is a measurement system.</p>
         </div>
 
         <div class="cta-row">
@@ -472,7 +452,7 @@
         </div>
 
         <!-- ── Badges + bio ───────────────────────────────────────── -->
-        <div style="margin-top:32px;padding-top:24px;border-top:1px solid #eee;">
+        <div style="margin-top:32px;padding-top:24px;border-top:1px solid #DAD2B8;">
             <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:18px;">
                 <a href="https://github.com/KaliBond/wintermute" target="_blank"><img src="https://img.shields.io/github/stars/KaliBond/wintermute?style=flat-square&logo=github&label=Stars" alt="GitHub Stars"></a>
                 <a href="https://github.com/KaliBond/wintermute/commits" target="_blank"><img src="https://img.shields.io/github/last-commit/KaliBond/wintermute?style=flat-square&label=Last+commit" alt="Last Commit"></a>

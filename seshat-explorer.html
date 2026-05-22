@@ -63,12 +63,12 @@
     --green: #2ca02c;
     --orange: #d97706;
     --red: #d62728;
-    --purple: #764ba2;
+    --purple: #2F6F7D;
     --grey: #888;
     --amber: #b8860b;
     --bg: #f9f9f9;
     --card-bg: #fff;
-    --border: #e0e0e0;
+    --border: #DAD2B8;
     --text: #1a1a1a;
     --muted: #555;
     }
@@ -182,7 +182,7 @@
             <a href="mindscapes.html" class="nav-link">Mindscapes</a>
             <a href="faq.html" class="nav-link">FAQ</a>
             <a href="contact.html" class="nav-link">Contact</a>
-            <a href="framework/index.html" class="nav-link" style="color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework ↗</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework ↗</a>
         </div>
         <div class="nav-actions">
             <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
@@ -823,7 +823,7 @@ function renderSparkGrid() {
     const spcMax = Math.max(...d.spc.filter(v=>v!==null)).toFixed(2);
     const isCams = nga === 'Latium';
     const div = document.createElement('div');
-    div.style.cssText = `background:#fff;border:1px solid ${isCams?'#1f77b4':'#e0e0e0'};border-radius:6px;padding:8px 10px;cursor:pointer;`;
+    div.style.cssText = `background:#fff;border:1px solid ${isCams?'#1f77b4':'#DAD2B8'};border-radius:6px;padding:8px 10px;cursor:pointer;`;
     div.innerHTML = `
       <div style="font-size:0.8em;font-weight:600;color:${isCams?'#1f77b4':'#333'};margin-bottom:3px;">${nga}${isCams?' ★':''}</div>
       <div style="font-size:0.75em;color:#888;">${formatYear(d.tmin)} – ${formatYear(d.tmax)}</div>

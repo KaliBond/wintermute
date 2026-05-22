@@ -96,7 +96,7 @@
     cursor: pointer;
     min-width: 160px;
     }
-    .controls-inner select:focus { outline: none; border-color: #764ba2; }
+    .controls-inner select:focus { outline: none; border-color: #2F6F7D; }
     .slider-group {
     display: flex;
     align-items: center;
@@ -106,13 +106,13 @@
     }
     .slider-group input[type=range] {
     flex: 1;
-    accent-color: #764ba2;
+    accent-color: #2F6F7D;
     cursor: pointer;
     }
     .year-display {
     font-size: 1.6rem;
     font-weight: 700;
-    color: #764ba2;
+    color: #2F6F7D;
     min-width: 58px;
     text-align: right;
     font-variant-numeric: tabular-nums;
@@ -121,9 +121,9 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    border: 2px solid #764ba2;
+    border: 2px solid #2F6F7D;
     background: white;
-    color: #764ba2;
+    color: #2F6F7D;
     font-size: 0.9rem;
     cursor: pointer;
     display: flex;
@@ -132,7 +132,7 @@
     transition: background 0.15s, color 0.15s;
     flex-shrink: 0;
     }
-    .play-btn:hover, .play-btn.playing { background: #764ba2; color: white; }
+    .play-btn:hover, .play-btn.playing { background: #2F6F7D; color: white; }
     /* ── Metric gauges ─────────────────────────────────────────── */
     .gauge-grid {
     display: grid;
@@ -220,7 +220,7 @@
     /* ── Charts ────────────────────────────────────────────────── */
     .chart-wrap { position: relative; height: 260px; }
     /* ── Phase guide ───────────────────────────────────────────── */
-    .phase-guide { background: #faf8ff; border-radius: 10px; padding: 16px; font-size: 0.83rem; }
+    .phase-guide { background: #FBF8EF; border-radius: 10px; padding: 16px; font-size: 0.83rem; }
     .phase-guide-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 12px; }
     .phase-row { display: flex; gap: 10px; margin-bottom: 10px; }
     .phase-arrow { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
@@ -275,7 +275,7 @@
             <a href="mindscapes.html" class="nav-link">Mindscapes</a>
             <a href="faq.html" class="nav-link">FAQ</a>
             <a href="contact.html" class="nav-link">Contact</a>
-            <a href="framework/index.html" class="nav-link" style="color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework ↗</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework ↗</a>
         </div>
         <div class="nav-actions">
             <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
@@ -345,7 +345,7 @@
         <div id="loadStatus" style="font-size:0.78rem; color:#aaa; align-self:flex-end; padding-bottom:3px;"></div>
         <div style="align-self:flex-end; padding-bottom:3px; text-align:right;">
             <div style="font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:#888; margin-bottom:2px;">Z Rank</div>
-            <div style="font-size:1rem; font-weight:700; color:#764ba2;">
+            <div style="font-size:1rem; font-weight:700; color:#2F6F7D;">
                 <span id="zRankNum">—</span><span style="color:#ccc; font-weight:400; font-size:0.85rem;"> / </span><span id="zRankOf" style="color:#aaa; font-weight:500;">—</span>
             </div>
         </div>
@@ -359,7 +359,7 @@
         <div class="gauge-grid">
             <div class="gauge-card">
                 <div class="gauge-label">A* Mythic Abstraction</div>
-                <div class="gauge" id="gaugeA"><span id="valueA" class="gauge-value" style="color:#764ba2">—</span></div>
+                <div class="gauge" id="gaugeA"><span id="valueA" class="gauge-value" style="color:#2F6F7D">—</span></div>
                 <div class="gauge-sub">Mean Abstraction<br>Lore + Archive</div>
             </div>
             <div class="gauge-card">
@@ -404,9 +404,9 @@
             <div class="ground-row">
                 <div class="ground-row-header">
                     <span class="ground-row-label">Mythic Layer (Lore + Archive)</span>
-                    <span id="mythicValue" class="ground-row-val" style="color:#764ba2">—</span>
+                    <span id="mythicValue" class="ground-row-val" style="color:#2F6F7D">—</span>
                 </div>
-                <div class="bar-bg"><div id="mythicBar" class="bar-fill" style="width:0%; background:#764ba2;"></div></div>
+                <div class="bar-bg"><div id="mythicBar" class="bar-fill" style="width:0%; background:#2F6F7D;"></div></div>
             </div>
             <div class="ground-row">
                 <div class="ground-row-header">
@@ -445,7 +445,7 @@
                 <div class="phase-row"><span class="phase-arrow" style="color:#27ae60">↗</span><div><strong>Vital &amp; Grounded:</strong> <span>High A*C, positive K–S. Expansive, confident, integrated culture.</span></div></div>
                 <div class="phase-row"><span class="phase-arrow" style="color:#e67e22">⬆</span><div><strong>Brilliant but Fragile:</strong> <span>High A*C, negative K–S. Peak culture over eroding substrate.</span></div></div>
                 <div class="phase-row"><span class="phase-arrow" style="color:#c0392b">↙</span><div><strong>Decoupled &amp; Anxious:</strong> <span>Low A*C, negative K–S. Institutional collapse, entropy spike.</span></div></div>
-                <div class="phase-row"><span class="phase-arrow" style="color:#764ba2">◆</span><div><strong>Nascent / Transitional:</strong> <span>Low A*C, positive K–S. System rebuilding or early-stage.</span></div></div>
+                <div class="phase-row"><span class="phase-arrow" style="color:#2F6F7D">◆</span><div><strong>Nascent / Transitional:</strong> <span>Low A*C, positive K–S. System rebuilding or early-stage.</span></div></div>
             </div>
         </div>
     </div>
@@ -528,7 +528,7 @@ function setGauge(id, value, max, color) {
 // ── Render ────────────────────────────────────────────────────────────────────
 function renderMetrics(m) {
     document.getElementById('valueA').textContent = m.aStar.toFixed(1);
-    setGauge('gaugeA', m.aStar, 10, '#764ba2');
+    setGauge('gaugeA', m.aStar, 10, '#2F6F7D');
 
     document.getElementById('valueC').textContent = m.c.toFixed(1);
     setGauge('gaugeC', m.c, 10, '#2980b9');
@@ -645,7 +645,7 @@ function updateCharts(trend) {
     } else {
         charts.phase = new Chart(document.getElementById('phaseChart'), {
             type:'scatter',
-            data:{ datasets:[{ data:phasePoints, pointBackgroundColor:'#764ba2', pointRadius:3, pointBorderWidth:0 }] },
+            data:{ datasets:[{ data:phasePoints, pointBackgroundColor:'#2F6F7D', pointRadius:3, pointBorderWidth:0 }] },
             options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
                 scales:scales('A*·C (Symbolic Richness)', 'K–S (Thermodynamic Surplus)', -8, 8) }
         });
