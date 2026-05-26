@@ -373,6 +373,24 @@ Cross-layer coupling:     Λ(t)   = mean B&#7522;&#11388; over cross-layer edges
     </div>
 
     <div class="card">
+        <p class="section-label">Reporting Scripts</p>
+        <p style="line-height: 1.7;"><strong><code>sybond_report_exporter.py</code></strong> — Generates a fully-structured 10-section Sybond Report in Markdown from a CAMS ensemble mean CSV. Supports blank templates and data-filled reports using the v3.2-R working kernel operators (V<sub>i</sub>, σ<sub>i</sub>, V̄, σ<sub>V</sub>, Library Attractor proxy η<sub>loop</sub>). Accepts flexible column aliases; handles both mean and uncertainty-envelope CSVs.</p>
+        <div class="formula-block"># Blank template
+python sybond_report_exporter.py --blank --society France --sybond-name Marianne --output France_template.md
+
+# Data-filled report
+python sybond_report_exporter.py \
+    --mean-csv France_CAMS_ensemble_mean.csv \
+    --envelope-csv France_CAMS_envelope.csv \
+    --society France --sybond-name Marianne \
+    --output France_Sybond_Report.md</div>
+        <p style="font-size: 0.88em; color: #666; margin-top: 12px;">Requires <code>pandas</code>. Column names are resolved via flexible aliases (e.g. <em>coherence / c / c_i</em> all map to C). Node names are canonicalised automatically from common synonyms.</p>
+        <p style="margin-top: 14px;">
+            <a href="https://github.com/KaliBond/wintermute/blob/main/sybond_report_exporter.py" target="_blank" class="btn">View on GitHub</a>
+        </p>
+    </div>
+
+    <div class="card">
         <p class="section-label">Full Technical Documentation</p>
         <p style="line-height: 1.7;">Everything — raw formulas, Python implementation (<code>cams_framework_v2_1.py</code>, <code>cams_engine.py</code>), validation reports, reproducibility notes — lives in the open repository.</p>
         <p style="margin-top: 16px;">
