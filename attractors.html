@@ -961,6 +961,44 @@ body.att-grain::before {
 .tweaks-row .field {
     display: flex; align-items: center; justify-content: space-between;
 }
+.tweaks-row .tw-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink);
+    font-weight: 600;
+    background: var(--paper-card-2);
+    border: 1px solid var(--border);
+    padding: 1px 7px;
+    border-radius: 3px;
+    min-width: 32px;
+    text-align: center;
+    letter-spacing: 0.02em;
+}
+.tw-presets { display: flex; gap: 4px; margin-top: 6px; }
+.tw-presets button {
+    flex: 1;
+    appearance: none;
+    background: var(--paper-card-2);
+    border: 1px solid var(--border);
+    color: var(--ink-2);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 10.5px;
+    font-weight: 500;
+    padding: 4px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.12s cubic-bezier(.2,.7,.2,1);
+}
+.tw-presets button:hover {
+    color: var(--ink);
+    border-color: var(--border-2);
+    background: var(--paper-card);
+}
+.tw-presets button.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--paper-card);
+}
 </style>
 
 <!-- Google Analytics -->
@@ -1113,7 +1151,10 @@ body.att-grain::before {
     <div>
         <div class="att-section-header">
             <h2 class="att-section-h">Canonical attractor states</h2>
-            <button class="att-section-toggle" id="states-toggle" aria-expanded="false">Show overlay <span class="chev">▾</span></button>
+            <div style="display:flex; align-items:center; gap:8px;">
+                <button class="att-section-toggle" id="open-tweaks" aria-expanded="false">Tweaks <span class="chev">▾</span></button>
+                <button class="att-section-toggle" id="states-toggle" aria-expanded="false">Show overlay <span class="chev">▾</span></button>
+            </div>
         </div>
         <p class="att-section-blurb">Reference topology from the CAMS v3.2-R formalism — five canonical attractor shapes. Toggle on to overlay the schematic curves on the live nation data.</p>
         <div class="att-states-grid" id="att-states" hidden><!-- injected --></div>
@@ -1147,8 +1188,29 @@ body.att-grain::before {
         <button class="close" id="tweaks-close" aria-label="Close">×</button>
     </header>
     <div class="tweaks-row">
-        <label>Nation smoothing</label>
-        <input id="tw-smoothing" type="range" min="0" max="12" step="1" value="5">
+        <div class="field">
+            <label>Trajectory smoothing</label>
+            <span class="tw-val" id="tw-smoothing-val">14</span>
+        </div>
+        <input id="tw-smoothing" type="range" min="0" max="30" step="1" value="14">
+        <div class="tw-presets" id="tw-smoothing-presets">
+            <button data-preset="0">None</button>
+            <button data-preset="6">Soft</button>
+            <button data-preset="14">Smooth</button>
+            <button data-preset="22">Silk</button>
+        </div>
+    </div>
+    <div class="tweaks-row">
+        <div class="field">
+            <label>Curve tension</label>
+            <span class="tw-val" id="tw-tension-val">0.50</span>
+        </div>
+        <input id="tw-tension" type="range" min="0" max="1" step="0.05" value="0.5">
+        <div class="tw-presets" id="tw-tension-presets">
+            <button data-preset="0">Sharp</button>
+            <button data-preset="0.5">Natural</button>
+            <button data-preset="0.85">Loose</button>
+        </div>
     </div>
     <div class="tweaks-row">
         <label>Line weight</label>
@@ -1191,7 +1253,8 @@ body.att-grain::before {
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "lineWeight": 2.5,
   "density": 3500,
-  "smoothing": 5,
+  "smoothing": 14,
+  "tension": 0.5,
   "glow": true,
   "markers": true,
   "rotate": false,
@@ -1411,10 +1474,11 @@ const STATE = {
    points so nation trajectories read as smooth curves while the
    per-year markers remain at the original data points.
    ──────────────────────────────────────────────────────────────── */
-function catmullSmooth(xs, ys, zs, subdivisions) {
+function catmullSmooth(xs, ys, zs, subdivisions, tension) {
     if (!subdivisions || subdivisions < 2 || xs.length < 2) {
         return { xs: xs.slice(), ys: ys.slice(), zs: zs.slice() };
     }
+    const s = (typeof tension === 'number') ? tension : 0.5;
     const n = xs.length;
     const ox = [], oy = [], oz = [];
     for (let i = 0; i < n - 1; i++) {
@@ -1422,14 +1486,14 @@ function catmullSmooth(xs, ys, zs, subdivisions) {
         const i1 = i;
         const i2 = i + 1;
         const i3 = Math.min(n - 1, i + 2);
-        for (let s = 0; s < subdivisions; s++) {
-            const t  = s / subdivisions;
+        for (let k = 0; k < subdivisions; k++) {
+            const t  = k / subdivisions;
             const t2 = t * t;
             const t3 = t2 * t;
-            const c0 = -0.5*t3 +    t2 - 0.5*t;
-            const c1 =  1.5*t3 - 2.5*t2       + 1;
-            const c2 = -1.5*t3 +  2.0*t2 + 0.5*t;
-            const c3 =  0.5*t3 -  0.5*t2;
+            const c0 = -s*t3 + 2*s*t2 - s*t;
+            const c1 = (2 - s)*t3 + (s - 3)*t2 + 1;
+            const c2 = (s - 2)*t3 + (3 - 2*s)*t2 + s*t;
+            const c3 = s*t3 - s*t2;
             ox.push(c0*xs[i0] + c1*xs[i1] + c2*xs[i2] + c3*xs[i3]);
             oy.push(c0*ys[i0] + c1*ys[i1] + c2*ys[i2] + c3*ys[i3]);
             oz.push(c0*zs[i0] + c1*zs[i1] + c2*zs[i2] + c3*zs[i3]);
@@ -1526,7 +1590,8 @@ function buildTraces() {
         // Main trace — lines for archetypes, smoothed line + markers for nations
         if (isNation) {
             const sub = STATE.tweaks.smoothing | 0;
-            const smooth = catmullSmooth(path.xs, path.ys, path.zs, sub);
+            const tension = (typeof STATE.tweaks.tension === 'number') ? STATE.tweaks.tension : 0.5;
+            const smooth = catmullSmooth(path.xs, path.ys, path.zs, sub, tension);
             // Smooth line through the points
             traces.push({
                 type: 'scatter3d', mode: 'lines',
@@ -1547,6 +1612,12 @@ function buildTraces() {
                 name: t.label,
                 text: t.years.map(y => `${t.label} · ${y}`),
                 hovertemplate: '<b>%{text}</b><br>M %{x:.2f}   Y %{y:.2f}   Λ %{z:.2f}<extra></extra>',
+                hoverlabel: {
+                    bgcolor: '#0a0f14',
+                    bordercolor: t.hex,
+                    font: { family: 'JetBrains Mono, monospace', size: 13, color: '#e4ecf3' },
+                    align: 'left'
+                },
                 showlegend: false
             });
         } else {
@@ -1559,6 +1630,12 @@ function buildTraces() {
                     `<b>${t.label}</b><br>` +
                     `M %{x:.2f}   Y %{y:.2f}   Λ %{z:.2f}` +
                     `<extra></extra>`,
+                hoverlabel: {
+                    bgcolor: '#0a0f14',
+                    bordercolor: t.hex,
+                    font: { family: 'JetBrains Mono, monospace', size: 13, color: '#e4ecf3' },
+                    align: 'left'
+                },
                 showlegend: false
             });
         }
@@ -1640,6 +1717,14 @@ function buildLayout() {
         },
         margin: { t: 8, b: 8, l: 0, r: 0 },
         showlegend: false,
+        hovermode: 'closest',
+        hoverlabel: {
+            bgcolor: '#0a0f14',
+            bordercolor: '#4FB8C9',
+            font: { family: 'JetBrains Mono, monospace', size: 13, color: '#e4ecf3' },
+            align: 'left',
+            namelength: -1
+        },
         annotations: []
     };
 }
@@ -1921,6 +2006,7 @@ const tweakControls = {
     lineWeight: document.getElementById('tw-lineweight'),
     density:    document.getElementById('tw-density'),
     smoothing:  document.getElementById('tw-smoothing'),
+    tension:    document.getElementById('tw-tension'),
     glow:       document.getElementById('tw-glow'),
     markers:    document.getElementById('tw-markers'),
     rotate:     document.getElementById('tw-rotate'),
@@ -1940,6 +2026,17 @@ function applyTweaks() {
     tweakControls.lineWeight.value = STATE.tweaks.lineWeight;
     tweakControls.density.value    = STATE.tweaks.density;
     tweakControls.smoothing.value  = STATE.tweaks.smoothing;
+    tweakControls.tension.value    = STATE.tweaks.tension;
+    const smv = document.getElementById('tw-smoothing-val');
+    const tnv = document.getElementById('tw-tension-val');
+    if (smv) smv.textContent = STATE.tweaks.smoothing;
+    if (tnv) tnv.textContent = Number(STATE.tweaks.tension).toFixed(2);
+    document.querySelectorAll('#tw-smoothing-presets button').forEach(b => {
+        b.classList.toggle('active', +b.dataset.preset === +STATE.tweaks.smoothing);
+    });
+    document.querySelectorAll('#tw-tension-presets button').forEach(b => {
+        b.classList.toggle('active', Math.abs(+b.dataset.preset - +STATE.tweaks.tension) < 0.001);
+    });
     tweakControls.glow.classList.toggle('on', !!STATE.tweaks.glow);
     tweakControls.markers.classList.toggle('on', !!STATE.tweaks.markers);
     tweakControls.rotate.classList.toggle('on', !!STATE.tweaks.rotate);
@@ -1951,6 +2048,7 @@ function applyTweaks() {
 
 tweakControls.lineWeight.addEventListener('input', e => setTweak('lineWeight', +e.target.value));
 tweakControls.smoothing.addEventListener('input',  e => setTweak('smoothing',  +e.target.value));
+tweakControls.tension.addEventListener('input',    e => setTweak('tension',    +e.target.value));
 tweakControls.density.addEventListener('change', e => {
     setTweak('density', +e.target.value);
     STATE.cached.clear();
@@ -1958,6 +2056,12 @@ tweakControls.density.addEventListener('change', e => {
 });
 ['glow','markers','rotate','grain'].forEach(k => {
     tweakControls[k].addEventListener('click', () => setTweak(k, !STATE.tweaks[k]));
+});
+document.querySelectorAll('#tw-smoothing-presets button').forEach(b => {
+    b.addEventListener('click', () => setTweak('smoothing', +b.dataset.preset));
+});
+document.querySelectorAll('#tw-tension-presets button').forEach(b => {
+    b.addEventListener('click', () => setTweak('tension', +b.dataset.preset));
 });
 
 /* Canonical attractor states — collapse / expand */
@@ -1988,8 +2092,20 @@ window.addEventListener('message', (ev) => {
     if (d.type === '__activate_edit_mode') tweaksEl.classList.add('open');
     if (d.type === '__deactivate_edit_mode') tweaksEl.classList.remove('open');
 });
+document.getElementById('open-tweaks').addEventListener('click', () => {
+    const open = tweaksEl.classList.toggle('open');
+    const btn = document.getElementById('open-tweaks');
+    btn.setAttribute('aria-expanded', String(open));
+    if (open) {
+        window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    } else {
+        window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');
+    }
+});
 document.getElementById('tweaks-close').addEventListener('click', () => {
     tweaksEl.classList.remove('open');
+    const ot = document.getElementById('open-tweaks');
+    if (ot) ot.setAttribute('aria-expanded', 'false');
     window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');
 });
 window.parent.postMessage({ type: '__edit_mode_available' }, '*');
