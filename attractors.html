@@ -860,10 +860,17 @@ body.att-grain::before {
 }
 @media (max-width: 640px) {
     .att-hero { padding: 24px 18px 0; }
-    .att-states, .att-stage, .att-below, .att-footer { padding-left: 18px; padding-right: 18px; }
+    .att-states, .att-stage, .att-below, .att-footer { padding-left: 12px; padding-right: 12px; }
     .att-states-grid { grid-template-columns: repeat(2, 1fr); }
-    .att-toolbar { padding: 10px 12px; }
-    .att-axislegend { padding: 10px 12px; font-size: 10px; }
+    .att-toolbar { padding: 8px 10px; gap: 6px; }
+    .att-toolbar-group { flex-wrap: wrap; gap: 3px; }
+    .att-toolbar-label { width: 100%; margin-bottom: 2px; }
+    .att-chip { font-size: 10.5px; padding: 4px 7px; }
+    .att-toolbar-mode button { font-size: 10.5px; padding: 4px 8px; }
+    .att-plotwrap { min-height: 400px; }
+    #plot { min-height: 340px; }
+    .att-axislegend { padding: 8px 10px; font-size: 9.5px; gap: 10px; }
+    .tweaks-panel { right: 10px; bottom: 10px; width: calc(100vw - 20px); max-width: 320px; }
 }
 
 .att-section-blurb {
@@ -1453,6 +1460,8 @@ if (typeof window !== 'undefined' && window.CAMS_NATIONS) {
 /* ────────────────────────────────────────────────────────────────
    STATE
    ──────────────────────────────────────────────────────────────── */
+const IS_MOBILE = window.matchMedia('(max-width: 640px)').matches;
+
 const STATE = {
     // Default: Australia visible at first load; the rest are togglable from
     // the chip strip above the plot.
@@ -1462,7 +1471,10 @@ const STATE = {
     hovered: null,                              // currently hovered id
     solo: null,                                 // clicked-to-solo id
     mode: 'all',                                // 'all' | 'solo'  (hover behaviour)
-    tweaks: { ...TWEAK_DEFAULTS },
+    tweaks: {
+        ...TWEAK_DEFAULTS,
+        smoothing: IS_MOBILE ? 6 : TWEAK_DEFAULTS.smoothing
+    },
     cached: new Map()                           // id -> integrated path
 };
 
@@ -1738,7 +1750,7 @@ function render() {
 
     Plotly.react('plot', traces, layout, {
         responsive: true,
-        displayModeBar: true,
+        displayModeBar: !IS_MOBILE,
         modeBarButtonsToRemove: ['hoverClosest3d'],
         toImageButtonOptions: {
             format: 'png',
