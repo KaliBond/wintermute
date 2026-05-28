@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Norway — The Story That Built a Country · Aha! Map · Neural Nations</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network/standalone/umd/vis-network.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style type="text/css">
+        /* --- CORE STYLES --- */
+        body, html { font-family: 'Inter', sans-serif; margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #f0f2f5; }
+        #cldContainer { position: relative; width: 100%; height: 100vh; display: flex; flex-direction: column; }
+        #cldNetwork { flex-grow: 1; border: 1px solid #d1d5db; background-color: #ffffff; width: 100%; height: 100%; }
+
+        /* UI Elements */
+        #modelTitleDisplay { position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold; color: #1F2937; background-color: rgba(255, 255, 255, 0.9); padding: 10px 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); z-index: 10; pointer-events: auto; cursor: help; border-bottom: 2px dashed #3B82F6; }
+        #titlePopover { position: absolute; top: 75px; left: 20px; background: #1F2937; color: white; padding: 8px 12px; border-radius: 6px; font-size: 14px; display: none; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.2); max-width: 300px; pointer-events: none; }
+        
+        .action-btn { position: absolute; bottom: 20px; z-index: 25; padding: 10px 18px; font-size: 14px; font-weight: 500; border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        
+        /* Button Positioning */
+        #saveButton { left: 20px; background-color: #2563EB; color: white; }
+        #saveButton:hover { background-color: #1D4ED8; }
+        
+        #loadNewButton { left: 140px; background-color: #fff; color: #374151; }
+        #loadNewButton:hover { background-color: #f9fafb; }
+
+        /* New Button: Save Map Data (JSON) */
+        #saveDataButton { left: 285px; background-color: #10B981; color: white; }
+        #saveDataButton:hover { background-color: #059669; }
+
+        /* Legends */
+        .legend-container { 
+            position: fixed; 
+            right: 20px; 
+            width: 280px; 
+            background: rgba(255,255,255,0.96); 
+            border-radius: 8px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+            max-height: 42px; 
+            overflow: hidden; 
+            z-index: 20; 
+            transition: max-height 0.3s ease; 
+            border: 1px solid #e5e7eb; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .legend-container.expanded { 
+            max-height: 50vh; 
+            z-index: 100; 
+        }
+
+        #legend { top: 20px; }
+        #archetypeLegend { top: 75px; }
+        
+        .legend-header { padding: 12px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; background: #fff; border-bottom: 1px solid #eee; }
+        .legend-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex-grow: 1; }
+        .legend-list li { padding: 8px 12px; border-bottom: 1px solid #f3f4f6; font-size: 13px; cursor: pointer; border-left: 3px solid transparent; }
+        .legend-list li:hover { background-color: #eff6ff; }
+        
+        /* Dragging visuals */
+        .legend-list li.dragging { opacity: 0.5; background: #e5e7eb; }
+
+        /* Description Box */
+        #descPanel { position: fixed; right: 20px; bottom: 80px; width: 280px; background: #fff; padding: 16px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 30; display: none; max-height: 300px; overflow-y: auto; font-size: 14px; line-height: 1.5; border: 1px solid #ddd; }
+        #descPanel strong { display: block; margin-bottom: 6px; color: #1E40AF; font-size: 15px; }
+
+        /* Tooltips */
+        .tooltip { position: absolute; background: rgba(255,255,255,0.98); border: 1px solid #ccc; padding: 10px; border-radius: 6px; font-size: 13px; display: none; z-index: 1000; pointer-events: none; max-width: 250px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); line-height: 1.4; }
+        #canvasTooltip { background: rgba(17, 24, 39, 0.95); color: white; border: none; }
+        #helperTooltip {
+            position: absolute; bottom: 70px; left: 20px;
+            background: rgba(0,0,0,0.6); color: white;
+            padding: 8px 12px; border-radius: 20px;
+            font-size: 12px; pointer-events: none; z-index: 5;
+        }
+
+        /* MODALS */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; }
+        .modal-box { background: white; padding: 25px; border-radius: 8px; width: 600px; max-width: 90%; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .modal-box textarea { width: 100%; height: 250px; padding: 12px; font-family: monospace; border: 1px solid #ccc; border-radius: 4px; background: #f9fafb; }
+        .modal-box button { padding: 12px 18px; background: #2563EB; color: white; border: none; font-weight: bold; cursor: pointer; font-size: 15px; border-radius: 6px; }
+        .modal-box button:hover { background: #1D4ED8; }
+        .modal-box button.secondary { background: #E5E7EB; color: #374151; }
+        .modal-box button.secondary:hover { background: #D1D5DB; }
+        
+        /* Save Modal Specifics */
+        #filenameInput { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; margin: 5px 0 15px 0; box-sizing: border-box;}
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework &#8599;</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="framework/index.html">Framework &#8599;</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+    <div id="cldContainer">
+        <div id="modelTitleDisplay">Aha! Map v1.2</div>
+        <div id="titlePopover"></div>
+        <button id="saveButton" class="action-btn">Save Map</button>
+        <button id="loadNewButton" class="action-btn">Load Map Data</button>
+        <button id="saveDataButton" class="action-btn">Save Map Data</button>
+        
+        <div id="helperTooltip">Step 1: Click edge to select (Red)<br>Step 2: Drag mouse to curve</div>
+        <div id="cldNetwork"></div>
+        
+        <div id="legend" class="legend-container">
+            <div class="legend-header" onclick="toggleLegend('legend')">Feedback Loops &#9660;</div>
+            <ul id="loopList" class="legend-list"></ul>
+        </div>
+        <div id="archetypeLegend" class="legend-container">
+            <div class="legend-header" onclick="toggleLegend('archetypeLegend')">Archetypes &#9660;</div>
+            <ul id="archetypeList" class="legend-list"></ul>
+        </div>
+        
+        <div id="descPanel"></div>
+        <div id="mainTooltip" class="tooltip"></div>
+        <div id="canvasTooltip" class="tooltip"></div>
+    </div>
+
+    <div id="inputModal" class="modal-overlay" style="display: none;"> <div class="modal-box">
+            <h2 style="margin:0; color:#111827;">Load Map Data</h2>
+            <p style="margin:0; color:#6B7280; font-size:14px;">Paste the JSON from Gemini below:</p>
+            <textarea id="jsonInput" placeholder='{ "nodes": [...], "edges": [...] }' spellcheck="false">{
+  "metadata": {
+    "topic": "The Story That Built a Country v2",
+    "narrative_title": "Revised map: the conserved story, the bounded commons, and the untested capacity for renunciation"
+  },
+  "nodes": [
+    {
+      "id": "n1",
+      "label": "Lore (the Norge Story)",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": 0,
+      "y": -40,
+      "description": "The shared cultural self-understanding of Norway: the egalitarian smallholder commonwealth, the maritime nation, the people of the fjords with no feudal aristocracy worth the name. By the data, the single most conserved node in the 147-year record — lowest volatility of all eight. The blueprint the whole society is built from. The panel's caution: this is real and powerful but ordinary, not mystical — it works through the choices people make under pressure, not through some indestructible national spirit. [n1]"
+    },
+    {
+      "id": "n2",
+      "label": "Hands Integration",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": -260,
+      "y": 160,
+      "description": "The integration of the working class into the national settlement — labour as constituent author of the story rather than problem to be managed. Hands rose 67 percent across the record and sat dead-last only 5 of 147 years, the photographic negative of Britain. The bottom-up egalitarian Lore made a society of equals buildable; Hands integration is that buildability realised. [n2]"
+    },
+    {
+      "id": "n3",
+      "label": "Social Settlement (Nordic Model)",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": 0,
+      "y": 240,
+      "description": "The comprehensive high-trust, high-tax, high-equality welfare state — the Nordic model — that the integrated working class and the egalitarian Lore together made possible. Per Esping-Andersen, a structurally distinct social-democratic regime built on universalism and de-commodification, not merely a generous version of a liberal welfare state. The settlement is what the story builds when labour is a partner. [n3]"
+    },
+    {
+      "id": "n4",
+      "label": "Intergenerational Trust",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": 280,
+      "y": 60,
+      "description": "The deep social trust — across classes and across generations, including the unborn — that the egalitarian Lore and the social settlement together produce. The precondition for the sovereign wealth fund: only a society that trusts itself across generations can make and keep a thousand-year promise about shared wealth. The asset that makes long-horizon collective commitments possible. [n4]"
+    },
+    {
+      "id": "n5",
+      "label": "The Fund (commons principle)",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": 280,
+      "y": 260,
+      "description": "The Government Pension Fund Global — the largest sovereign wealth fund on earth, roughly 2.2 trillion dollars — built on the principle that the oil belongs to all generations including the unborn, and only the real return may be spent. Per Karl, the rare escape from the resource curse that almost no petrostate managed. The panel's revision: its egalitarianism is genuine but bounded by nationality — internally a true commons, externally a global capital-holder (see n15). [n5]"
+    },
+    {
+      "id": "n6",
+      "label": "Petroleum Flow",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 2.5,
+      "x": 520,
+      "y": 180,
+      "description": "The oil and gas economy — the circulation of petroleum capital and energy since Ekofisk in 1969. Simultaneously the strongest single contributor to modern Norwegian system health and the most volatile node in the entire record (volatility 5.20, more than two and a half times the conserved Lore). Semi-exogenous: its swings track the global oil price Norway does not control. In 2026, also Europe's main gas supply — a genuine geopolitical entanglement, not a simple license to extract. [n6]"
+    },
+    {
+      "id": "n7",
+      "label": "Welfare Funding",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": 140,
+      "y": 400,
+      "description": "The fiscal capacity that sustains the social settlement — the fund's permitted spending (the real return) channelled into the welfare state and the maintenance of Hands integration. The mechanism by which oil wealth becomes shared social outcome. The genuine structural distinction the panel preserved: the welfare is funded by returns, while the fund's capital is still topped by ongoing extraction. [n7]"
+    },
+    {
+      "id": "n8",
+      "label": "System Resilience",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": -300,
+      "y": -180,
+      "description": "The demonstrated capacity to collapse completely and recover fully — the deepest feature of the record. The 1940 occupation drove aggregate Node Value to 0.8; by 1945 the system had recovered to 105. The 1988–93 banking crisis fell to ~60 and snapped back to 110. The panel's sharpest point: this is resilience against EXTERNAL shocks — a different capacity from the renunciation the oil transition requires (see n17). [n8]"
+    },
+    {
+      "id": "n9",
+      "label": "External Shock",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 2.5,
+      "x": -540,
+      "y": -60,
+      "description": "Acute disruptions from outside the system: the 1880s emigration crisis, the Nazi occupation of 1940, the 1988–93 banking crisis, the 2014 oil-price crash. Exogenous in origin. Crucially, an external shock provides a clear enemy — a 'them' against the 'us' — which clarifies the resistance choice and unites the society. This is precisely what the internal contradiction of the oil transition lacks: there is no occupier to resist. [n9]"
+    },
+    {
+      "id": "n10",
+      "label": "Ecological Self-Image",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": -160,
+      "y": -300,
+      "description": "The component of the Norge story that understands Norway as the nation of the clean fjord, the returning salmon, the unspoiled mountain — the ecological self-image central to the modern Lore. Genuine and deeply held. The panel's warning, via Stoknes: the stronger and more sincere this self-image, the more effective it can become as a tool of dissonance-reduction (see n16) — the clean image can either drive the reckoning or anaesthetise it. [n10]"
+    },
+    {
+      "id": "n11",
+      "label": "Carbon Dependency",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": 520,
+      "y": -80,
+      "description": "The structural dependence of the modern Norwegian settlement on extracting and exporting hydrocarbons — making Norway, per capita, one of the largest carbon exporters in the world. The cleanest national self-image in Europe resting on one of the dirtiest national exports. Not simple hypocrisy — the Norwegians are unusually honest about it — but a real physical and moral constraint approaching on a civilisational timescale. [n11]"
+    },
+    {
+      "id": "n12",
+      "label": "Ecological-Economic Tension",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": 200,
+      "y": -240,
+      "description": "The widening contradiction between the Ecological Self-Image (which says the carbon must stay in the ground) and the Carbon Dependency (which funds the society). The map's central live question, and the panel's gravest finding: this tension may DRIVE the transition (e18) or be ABSORBED by green self-justification (e27) without resolving the dependency. The outcome between driving and absorbing is genuinely undetermined. [n12]"
+    },
+    {
+      "id": "n13",
+      "label": "Post-Oil Transition Capacity",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": -120,
+      "y": 420,
+      "description": "The capacity to carry the society through the end of the oil economy — to fund the settlement by means other than carbon and to extend the Norge story to a post-oil chapter tellable as continuation. The leverage variable of the next century. The panel's revision: this capacity is gated not by resilience (n8, proven) but by renunciation (n17, untested) — the willingness to give up a present good before being forced to. [n13]"
+    },
+    {
+      "id": "n14",
+      "label": "Resistance Choices / Exile Continuity",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": -480,
+      "y": -300,
+      "description": "NEW in v2 (Fell & Marple's revision, mechanising R3). The concrete mechanism by which conserved Lore produces resilience: the individual choices people make under pressure — exile over collaboration, the teachers' refusal to teach the new ideology, the merchant fleet sailing for the Allies — plus the institutional continuity those choices preserved (the government-in-exile, the gold, the legal order brought home in 1945). Not mystical resurrection of a spirit, but the determination of which way people jump, and the apparatus they keep intact while jumping. [n14]"
+    },
+    {
+      "id": "n15",
+      "label": "Global Capital Position",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": 540,
+      "y": 380,
+      "description": "NEW in v2 (Warshawski & Marple's revision, bounding R2). The external face of the Fund: a global capital-holder owning roughly 1.5 percent of every listed company on earth, its returns drawn from the same global capitalism that produces inequality everywhere. The Norge story's egalitarianism is genuine internally (across Norwegian generations) but stops at the water's edge — the fund benefits from a global inequality the domestic story would deplore. Like the lady of the manor, generous within her circle and indifferent to the next parish. [n15]"
+    },
+    {
+      "id": "n16",
+      "label": "Green Self-Justification",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": 360,
+      "y": -360,
+      "description": "NEW in v2 (Marple, Morse & Warshawski's revision; the green comfort-blindfold). The dissonance-reduction mechanism by which the clean self-image relieves the discomfort of the carbon contradiction WITHOUT changing the behaviour — feeling ecological while extracting. Per Stoknes, the psychological process that lets a society hold a contradiction indefinitely. The Norwegian analogue of the British symbolic-satisfaction trap: the clean story as anaesthetic rather than spur. [n16]"
+    },
+    {
+      "id": "n17",
+      "label": "Renunciation Capacity (untested)",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 2.5,
+      "x": -360,
+      "y": 440,
+      "description": "NEW in v2 (Fell's revision; the central caution). The capacity to voluntarily give up a present good — oil revenue — before being forced to. Distinct from System Resilience (n8): resilience recovers from shocks done TO the society; renunciation surrenders a good the society possesses. Norway has proven resilience abundantly across two near-total collapses; it has not tested renunciation at all. The Lore MIGHT supply it (e22), but the occupation precedent does not transfer cleanly — there is no external enemy to unite against in giving up one's own oil. Marked exogenous-uncertain: the decisive unknown of the Norwegian century. [n17]"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "n1",
+      "to": "n2",
+      "color": { "color": "#1E40AF" },
+      "width": 6,
+      "label": "Egalitarian story makes integration buildable\n+\nLag: Years",
+      "description": "The bottom-up egalitarian Norge story is what made Hands Integration possible: you cannot build a society of equals on a story about hierarchy. The Lore is upstream of the social settlement. This is the foundational link that distinguishes Norway from Britain, where the absence of such a story left the working class permanently unintegrated. [e1]"
+    },
+    {
+      "id": "e2",
+      "from": "n2",
+      "to": "n3",
+      "color": { "color": "#1E40AF" },
+      "width": 6,
+      "label": "Integrated labour builds the social settlement\n+\nLag: Years",
+      "description": "An integrated working class — labour as constituent partner rather than managed underclass — is what makes the comprehensive welfare state buildable. Per Esping-Andersen, the worker–middle-class coalition is the mechanism that makes the high-tax social-democratic settlement politically durable. [e2]"
+    },
+    {
+      "id": "e3",
+      "from": "n3",
+      "to": "n4",
+      "color": { "color": "#1E40AF" },
+      "width": 5,
+      "label": "Shared settlement deepens trust\n+\nLag: Years",
+      "description": "The high-trust, high-equality social settlement deepens Intergenerational Trust — a society that delivers broadly and fairly across classes builds the cross-class and cross-generational confidence that makes long-horizon collective commitments credible. The settlement and the trust reinforce each other. [e3]"
+    },
+    {
+      "id": "e4",
+      "from": "n4",
+      "to": "n1",
+      "color": { "color": "#1E40AF" },
+      "width": 5,
+      "label": "Trust renews the story\n+\nLag: Years",
+      "description": "Deep Intergenerational Trust renews and reinforces the Lore — a society that trusts itself across generations continually re-authors the shared story that produced the trust, keeping the Norge story alive as lived reality. The reinforcing core of Norwegian coherence. [e4]"
+    },
+    {
+      "id": "e5",
+      "from": "n4",
+      "to": "n5",
+      "color": { "color": "#1E40AF" },
+      "width": 6,
+      "label": "Trust makes the commons-fund possible\n+\nLag: Years",
+      "description": "Intergenerational Trust is the precondition for the Fund: only a society that trusts itself across generations, including the unborn, can make and keep a promise that the present may spend only the real return on shared wealth. Per Karl, most petrostates lacked this trust and were captured by whoever controlled the oil. The trust is what made the commons principle keepable. [e5]"
+    },
+    {
+      "id": "e6",
+      "from": "n5",
+      "to": "n1",
+      "color": { "color": "#1E40AF" },
+      "width": 4,
+      "label": "The fund embodies and confirms the story\n+\nLag: Years",
+      "description": "The Fund embodies the Norge story as fiscal architecture — the egalitarian commons made into a spending rule — and in doing so confirms the Lore. The fund is daily proof that, for Norwegians, the wealth of the country genuinely belongs to the whole people across generations. The internal egalitarianism the panel affirmed as real. [e6]"
+    },
+    {
+      "id": "e7",
+      "from": "n6",
+      "to": "n5",
+      "color": { "color": "#1E40AF" },
+      "width": 6,
+      "label": "Petroleum fills the fund (the fuel inside the frame)\n+\nLag: Years",
+      "description": "Petroleum Flow is what fills the Fund. The panel's revision (Morse): this edge brings the oil inside the frame honestly. The fund that embodies the egalitarian-ecological story is, to this day, topped by hydrocarbon extraction. The Oil-Welfare Engine (R4) looks self-sustaining only because this fuel-feed is drawn at its edge — but in 2026 the engine still runs on extraction, not on returns alone. [e7]"
+    },
+    {
+      "id": "e8",
+      "from": "n5",
+      "to": "n7",
+      "color": { "color": "#1E40AF" },
+      "width": 5,
+      "label": "Fund returns sustain welfare funding\n+\nLag: Years",
+      "description": "The Fund's permitted spending — the real return on accumulated petroleum wealth — sustains Welfare Funding, channelling oil wealth into the settlement across generations rather than in a single boom. The genuine structural distinction the panel preserved: welfare funded by returns, capital topped by extraction. [e8]"
+    },
+    {
+      "id": "e9",
+      "from": "n7",
+      "to": "n3",
+      "color": { "color": "#1E40AF" },
+      "width": 5,
+      "label": "Funding sustains the settlement\n+\nLag: Years",
+      "description": "Welfare Funding sustains the Social Settlement — the modern Nordic model depends on the fiscal capacity that oil wealth, channelled through the fund, provides. The pre-oil settlement existed on a smaller scale; the modern comprehensive version depends on this funding to a degree the earlier one did not. The dependency the cautionary tale turns on. [e9]"
+    },
+    {
+      "id": "e10",
+      "from": "n7",
+      "to": "n2",
+      "color": { "color": "#1E40AF" },
+      "width": 4,
+      "label": "Funding maintains integration\n+\nLag: Years",
+      "description": "Welfare Funding helps maintain Hands Integration — the oil-funded welfare settlement underwrites the broad prosperity that keeps the working class integrated. The post-2014 data shows Hands dipping during the oil-price crash before recovering, evidence that modern integration depends partly on oil-funded welfare and could be strained by a disorderly transition. [e10]"
+    },
+    {
+      "id": "e11",
+      "from": "n1",
+      "to": "n14",
+      "color": { "color": "#1E40AF" },
+      "width": 6,
+      "label": "The story determines which way people jump\n+\nLag: Days",
+      "description": "REVISED in v2 (mechanising R3). The conserved Lore determines the Resistance Choices people make under pressure — exile over collaboration, refusal over compliance. When the occupation came, a society without the shared self-understanding would have produced more Quislings and fewer exiles. The Lore is not a mystical shield; it is the accumulated set of expectations about how one's neighbours will behave under pressure, and it determined that most Norwegians jumped toward the exiled state rather than the collaborationist one. [e11]"
+    },
+    {
+      "id": "e12",
+      "from": "n9",
+      "to": "n8",
+      "color": { "color": "#991B1B" },
+      "width": 5,
+      "label": "Shock damages the system\n−\nLag: Days",
+      "description": "External Shock damages System Resilience in the immediate term — the occupation, the banking crisis, the oil-price crash each drove the system down sharply. The negative polarity reflects the immediate damage. But because resilience is rebuilt through the resistance-choices mechanism (R3), the damage is recovered rather than permanent. [e12]"
+    },
+    {
+      "id": "e13",
+      "from": "n8",
+      "to": "n1",
+      "color": { "color": "#1E40AF" },
+      "width": 4,
+      "label": "Surviving shocks confirms the story\n+\nLag: Years",
+      "description": "Each demonstrated recovery — surviving the occupation, the banking crisis, the oil crash — confirms and strengthens the Lore. The story Norwegians tell about themselves includes the story of having survived; each survival is woven back into the conserved self-understanding, deepening the resilience that produced it. [e13]"
+    },
+    {
+      "id": "e14",
+      "from": "n1",
+      "to": "n10",
+      "color": { "color": "#1E40AF" },
+      "width": 5,
+      "label": "The story includes the clean-nature self-image\n+\nLag: Years",
+      "description": "The Lore includes and sustains the Ecological Self-Image — the nation of the clean fjord, the returning salmon, the unspoiled mountain. The ecological self-understanding is a genuine and central part of the modern Norge story, not a recent overlay. [e14]"
+    },
+    {
+      "id": "e15",
+      "from": "n6",
+      "to": "n11",
+      "color": { "color": "#1E40AF" },
+      "width": 6,
+      "label": "Petroleum economy is carbon dependency\n+\nLag: Years",
+      "description": "Petroleum Flow is, physically, Carbon Dependency — the oil and gas that fund the society are extracted and exported to be burned, making Norway one of the largest per-capita carbon exporters in the world. The strength of the Flow node is, materially, the depth of the carbon dependency. [e15]"
+    },
+    {
+      "id": "e16",
+      "from": "n10",
+      "to": "n12",
+      "color": { "color": "#1E40AF" },
+      "width": 5,
+      "label": "Clean self-image generates the tension\n+\nLag: Years",
+      "description": "The Ecological Self-Image generates the Ecological-Economic Tension: the stronger and more sincere the clean-nature story, the sharper the contradiction with the carbon economy that funds the society living it. A society that did not believe in its own ecological image would feel no tension; Norway's tension is a function of how genuinely it holds the image. [e16]"
+    },
+    {
+      "id": "e17",
+      "from": "n11",
+      "to": "n12",
+      "color": { "color": "#1E40AF" },
+      "width": 5,
+      "label": "Carbon dependency intensifies the tension\n+\nLag: Years",
+      "description": "Carbon Dependency intensifies the Ecological-Economic Tension as the climate consequences of hydrocarbons become more visible and the world's willingness to buy them declines. The deeper the dependency and the clearer its consequences, the more acute the contradiction between what the society sells and what its story values. [e17]"
+    },
+    {
+      "id": "e18",
+      "from": "n12",
+      "to": "n13",
+      "color": { "color": "#1E40AF" },
+      "width": 5,
+      "label": "Tension drives the transition (the fundamental path)\n+\nLag: Years",
+      "description": "The Ecological-Economic Tension drives the development of Post-Oil Transition Capacity — the recognised contradiction creates the imperative to find means other than carbon to fund the settlement. The FUNDAMENTAL response to the tension. The panel's warning: this driving path competes directly with the green self-justification that would relieve the tension symptomatically instead (e27), and the contest between them is undetermined. [e18]"
+    },
+    {
+      "id": "e19",
+      "from": "n13",
+      "to": "n6",
+      "color": { "color": "#991B1B" },
+      "width": 4,
+      "label": "Transition reduces petroleum dependence\n−\nLag: Years",
+      "description": "Realised Post-Oil Transition Capacity reduces dependence on Petroleum Flow — diversifying into renewables, maritime technology, and the deployment of fund capital away from hydrocarbons. The negative polarity reflects that successful transition deliberately winds down the petroleum dependence. The fund's role as the world's largest transition-backer is the early move; the question is whether it scales before the oil ends. [e19]"
+    },
+    {
+      "id": "e20",
+      "from": "n13",
+      "to": "n1",
+      "color": { "color": "#1E40AF" },
+      "width": 4,
+      "label": "Successful transition extends the story\n+\nLag: Decades",
+      "description": "A successful Post-Oil Transition extends and renews the Lore — a transition tellable as continuation of the Norge story (the egalitarian-ecological commons finding a post-carbon form) rather than as rupture would weave the transition into the conserved self-understanding, just as the survival of the occupation was woven in. Per Stoknes, the transition succeeds if it can be told as identity-consistent rather than as sacrifice. [e20]"
+    },
+    {
+      "id": "e21",
+      "from": "n13",
+      "to": "n7",
+      "color": { "color": "#991B1B" },
+      "width": 4,
+      "label": "Transition must replace oil-funded welfare\n−\nLag: Decades",
+      "description": "Post-Oil Transition Capacity must, to succeed, replace the oil-derived component of Welfare Funding with non-carbon sources — the fund's accumulated capital, renewable revenues, a diversified base. The negative polarity reflects the substitution. The hard fiscal core of the transition, and the reason it cannot be deferred indefinitely. [e21]"
+    },
+    {
+      "id": "e22",
+      "from": "n1",
+      "to": "n17",
+      "color": { "color": "#1E40AF" },
+      "width": 4,
+      "label": "The story MIGHT supply renunciation (unproven)\n+\nLag: Decades",
+      "description": "REVISED in v2 (Fell's central caution). The conserved Lore might supply the Renunciation Capacity the transition requires — but this is the map's great unproven extrapolation. The Lore demonstrably supplies resilience-against-shock; whether it also supplies the willingness to renounce a present good is untested, because the occupation precedent does not transfer cleanly: resistance had an external enemy to unite against, renunciation has none. The thinness of this edge (the gap between proven resilience and untested renunciation) is the decisive uncertainty of the Norwegian century. [e22]"
+    },
+    {
+      "id": "e23",
+      "from": "n14",
+      "to": "n8",
+      "color": { "color": "#1E40AF" },
+      "width": 6,
+      "label": "Resistance choices preserve the system for rebuilding\n+\nLag: Years",
+      "description": "NEW in v2 (mechanising R3). The Resistance Choices — exile over collaboration, the preserved fleet and gold and legal order, the refusal to comply — are what preserved System Resilience through the occupation. The institutions were rebuilt fast after 1945 not by mystical resurrection but because the apparatus had been kept intact in exile and the population had jumped the right way. This is the ordinary, testable mechanism behind the seemingly impossible 1940-to-1945 recovery. [e23]"
+    },
+    {
+      "id": "e24",
+      "from": "n5",
+      "to": "n15",
+      "color": { "color": "#1E40AF" },
+      "width": 4,
+      "label": "The fund is also a global capital-holder\n+\nLag: Years",
+      "description": "NEW in v2 (bounding R2). The Fund generates a Global Capital Position — ownership of roughly 1.5 percent of every listed company on earth, returns drawn from global equities (tech, banking, mining) rather than Norwegian cooperatives. The same institution that embodies the internal commons is, externally, one of the largest holders of global capital. The two faces of the fund are the same instrument seen from inside and outside. [e24]"
+    },
+    {
+      "id": "e25",
+      "from": "n15",
+      "to": "n1",
+      "color": { "color": "#991B1B" },
+      "width": 3,
+      "label": "External-capital reality bounds the egalitarian story\n−\nLag: Years",
+      "description": "NEW in v2 (Warshawski & Marple's revision). The Global Capital Position marks the outer boundary of the Norge story's egalitarianism: the fund benefits from the global inequality the domestic story would deplore, and this contradiction sits as a standing minor strain within the otherwise-conserved Lore. The negative polarity reflects that the larger and more globally-extractive the external position, the harder it is to sustain the egalitarian self-understanding as a universal value rather than a national privilege. Genuinely kind within the circle; the circle is the point. [e25]"
+    },
+    {
+      "id": "e26",
+      "from": "n12",
+      "to": "n16",
+      "color": { "color": "#1E40AF" },
+      "width": 5,
+      "label": "Rising tension triggers self-justification\n+\nLag: Months",
+      "description": "NEW in v2 (the green comfort-blindfold). Rising Ecological-Economic Tension triggers Green Self-Justification — as the discomfort of the carbon contradiction grows, the society reaches for the dissonance-reducing reassurance that it is, after all, a climate leader (the fund backs the transition, the carbon tax is high, the gas displaced Russian supply). The discomfort calls forth its own anaesthetic. [e26]"
+    },
+    {
+      "id": "e27",
+      "from": "n16",
+      "to": "n12",
+      "color": { "color": "#991B1B" },
+      "width": 5,
+      "label": "Self-justification relieves tension without resolving it\n−\nLag: Months",
+      "description": "NEW in v2 (the green comfort-blindfold; the panel's gravest finding). Green Self-Justification relieves the Ecological-Economic Tension WITHOUT changing the carbon dependency — the society feels ecological while continuing to extract. The negative polarity reflects the relief. This balancing action competes directly with the fundamental transition path (e18): every unit of tension absorbed by self-justification is a unit not driving the actual transition. The clean story as anaesthetic rather than spur. [e27]"
+    },
+    {
+      "id": "e28",
+      "from": "n10",
+      "to": "n16",
+      "color": { "color": "#1E40AF" },
+      "width": 4,
+      "label": "Stronger clean self-image, more effective self-justification\n+\nLag: Years",
+      "description": "NEW in v2 (Stoknes's mechanism). The stronger and more sincere the Ecological Self-Image, the more effective Green Self-Justification becomes — paradoxically, the genuineness of the clean self-image is what makes the dissonance-reduction work. A society that truly believes in its ecological identity has the most powerful materials for reassuring itself that it need not change. The clean story's sincerity is the source of both its potential to drive the reckoning and its power to absorb it. [e28]"
+    },
+    {
+      "id": "e29",
+      "from": "n17",
+      "to": "n13",
+      "color": { "color": "#1E40AF" },
+      "width": 5,
+      "label": "Renunciation capacity enables genuine transition\n+\nLag: Decades",
+      "description": "NEW in v2 (Fell's revision). Renunciation Capacity — the willingness to give up the oil revenue before being forced to — is what enables genuine Post-Oil Transition Capacity. This is the true gate on the transition: not resilience (recovering from a shock done to the society) but renunciation (surrendering a good the society possesses). The transition does not happen because Norway is resilient; it happens only if Norway can renounce, and that capacity is untested. [e29]"
+    },
+    {
+      "id": "e30",
+      "from": "n9",
+      "to": "n14",
+      "color": { "color": "#1E40AF" },
+      "width": 4,
+      "label": "External enemy clarifies the resistance choice\n+\nLag: Days",
+      "description": "NEW in v2 (Fell's external-enemy distinction). An External Shock clarifies the Resistance Choices by providing a clear enemy — a 'them' against the 'us'. You know which way to jump when there is an occupier. The negative damage of the shock (e12) and this clarifying effect operate together: the enemy is destructive and unifying at once. The contrast that matters: the oil transition is an internal contradiction with no external enemy, so this clarifying mechanism is unavailable to it — the reason Lore-driven cohesion may be less effective against the transition than against the occupation. [e30]"
+    }
+  ],
+  "loops": [
+    {
+      "id": "R1",
+      "name": "The Story Engine",
+      "type": "R",
+      "description": "Lore makes Hands Integration buildable (e1), which builds the Social Settlement (e2), which deepens Intergenerational Trust (e3), which renews the Lore (e4). The reinforcing core of Norwegian coherence — the bottom-up virtuous circle by which the conserved story continually rebuilds the society that sustains the story. The engine that took Norway from the poorest periphery of Europe to one of the most coherent societies in the record. [R1]",
+      "nodeIds": ["n1", "n2", "n3", "n4"],
+      "edgeIds": ["e1", "e2", "e3", "e4"]
+    },
+    {
+      "id": "R2",
+      "name": "The Commons Loop (bounded)",
+      "type": "R",
+      "description": "Intergenerational Trust makes the Fund possible (e5), the Fund embodies the Lore (e6), the Lore builds integration (e1) and the settlement (e2) that deepens the trust governing the fund (e3). The reinforcing loop by which the egalitarian story and its fiscal embodiment reinforce each other. The panel's revision: this loop describes the genuine INTERNAL egalitarianism; the fund's external face (n15, Global Capital Position) marks the boundary where the egalitarianism stops — bounded by nationality. [R2]",
+      "nodeIds": ["n4", "n5", "n1", "n2", "n3"],
+      "edgeIds": ["e5", "e6", "e1", "e2", "e3"]
+    },
+    {
+      "id": "R3",
+      "name": "The Resilience Loop (mechanised)",
+      "type": "R",
+      "description": "The conserved Lore determines the Resistance Choices people make under pressure (e11), those choices and the institutional continuity they preserve produce System Resilience (e23), and each survived shock is woven back into the Lore (e13). The reinforcing loop that explains the two great recoveries — 1945 from near-zero, 1993 from the banking trough. The panel's revision: this is not mystical survival of a national spirit but the ordinary, testable mechanism of how people jump under pressure and what apparatus they keep intact while jumping. [R3]",
+      "nodeIds": ["n1", "n14", "n8"],
+      "edgeIds": ["e11", "e23", "e13"]
+    },
+    {
+      "id": "R4",
+      "name": "The Oil-Welfare Engine",
+      "type": "R",
+      "description": "The Fund's returns sustain Welfare Funding (e8), which sustains the Social Settlement (e9), which deepens Intergenerational Trust (e3), which keeps the Fund possible (e5). The reinforcing loop of the modern success. The panel's revision (Morse): this loop looks self-sustaining, but it is PRESENTLY fed by ongoing extraction (e7, petroleum filling the fund) — the 'oil outside the loop' framing is the post-transition aspiration (returns-only funding), not the 2026 reality. The engine still runs on the oil. [R4]",
+      "nodeIds": ["n5", "n7", "n3", "n4"],
+      "edgeIds": ["e8", "e9", "e3", "e5"]
+    },
+    {
+      "id": "B1",
+      "name": "The Limits-to-Growth Constraint",
+      "type": "B",
+      "description": "Petroleum Flow is Carbon Dependency (e15), which intensifies the Ecological-Economic Tension (e17), which drives Post-Oil Transition Capacity (e18), which reduces Petroleum Flow (e19). The balancing loop the success generated within itself: the oil economy creates the constraint that ultimately demands the oil economy wind down. A Limits to Growth dynamic on a civilisational timescale — but one that only operates if the tension drives the transition rather than being absorbed by self-justification (B2). [B1]",
+      "nodeIds": ["n6", "n11", "n12", "n13"],
+      "edgeIds": ["e15", "e17", "e18", "e19"]
+    },
+    {
+      "id": "R6",
+      "name": "The Clean-Story Reckoning",
+      "type": "R",
+      "description": "Lore sustains the Ecological Self-Image (e14), which generates the Ecological-Economic Tension (e16), which drives Post-Oil Transition Capacity (e18), which extends and renews the Lore (e20). A reinforcing loop: the story's own ecological component forces the reckoning with the carbon foundation, and a successful transition is woven back into the story. The hope — but the panel notes its premise (that the tension drives the transition) is contested by the green self-justification loop (B2). [R6]",
+      "nodeIds": ["n1", "n10", "n12", "n13"],
+      "edgeIds": ["e14", "e16", "e18", "e20"]
+    },
+    {
+      "id": "R5",
+      "name": "The Transition Bypass (gated on renunciation)",
+      "type": "R",
+      "description": "The conserved Lore MIGHT supply the Renunciation Capacity (e22), which enables genuine Post-Oil Transition Capacity (e29), which extends the Lore by becoming part of the story (e20). REVISED in v2 (Fell's central caution): the keystone hope, now correctly gated. The map's optimism rests on the unproven extrapolation that the Lore which supplies resilience also supplies renunciation — but resilience recovers from shocks done TO the society while renunciation surrenders a good it possesses, and only the first is tested. The thinness of e22 is the decisive unknown. [R5]",
+      "nodeIds": ["n1", "n17", "n13"],
+      "edgeIds": ["e22", "e29", "e20"]
+    },
+    {
+      "id": "B2",
+      "name": "The Green Self-Justification Trap",
+      "type": "B",
+      "description": "NEW in v2 (the green comfort-blindfold; the panel's gravest addition). Rising Ecological-Economic Tension triggers Green Self-Justification (e26), which relieves the tension without resolving the carbon dependency (e27). A balancing loop that homeostatically absorbs the tension whenever it rises — the clean self-image as anaesthetic. It competes directly with the transition-driving loops (B1, R6): every unit of tension absorbed here is a unit not driving the genuine transition. Whether the system transitions or merely justifies depends on which loop dominates, and the data leaves this undetermined. [B2]",
+      "nodeIds": ["n12", "n16"],
+      "edgeIds": ["e26", "e27"]
+    }
+  ],
+  "archetypes": [
+    {
+      "id": "arch1",
+      "name": "Success to the Successful",
+      "description": "The reinforcing loops R1 (Story Engine), R2 (Commons Loop), R3 (Resilience Loop), and R4 (Oil-Welfare Engine) compound across 147 years to produce escalating success: the conserved story builds integration, integration builds the settlement, the settlement deepens trust, trust builds the fund, the fund funds the settlement, and each survived shock — through the now-mechanised resistance-choices pathway — strengthens the story. Norway is the record's clearest case of virtuous reinforcement, taking it from the poorest periphery of Europe to one of the strongest systems in the dataset. The archetype's caution, sharpened in v2: the same compounding bound the modern settlement to the petroleum that fuels it (R4 is extraction-fed), and the internal commons it built is bounded externally by the fund's global-capital position.",
+      "nodeIds": ["n1", "n2", "n3", "n4", "n5", "n7", "n8", "n14"],
+      "edgeIds": ["e1", "e2", "e3", "e4", "e5", "e6", "e8", "e9", "e11", "e13", "e23"]
+    },
+    {
+      "id": "arch2",
+      "name": "Limits to Growth",
+      "description": "The petroleum-funded success generated, within itself, the constraint that limits it: the carbon dependency and the ecological-economic tension captured in B1 and R6. The growth engine that built the modern settlement runs on an export the society's own story says must end. The constraint is moral and physical, not financial. The archetype identifies that the highest-leverage response is the Post-Oil Transition Capacity — but v2 marks that this capacity is gated on renunciation (R5, e22), an unproven extrapolation from the resilience record, not a guaranteed output of the conserved Lore.",
+      "nodeIds": ["n1", "n6", "n10", "n11", "n12", "n13", "n17"],
+      "edgeIds": ["e14", "e15", "e16", "e17", "e18", "e19", "e20", "e22", "e29"]
+    },
+    {
+      "id": "arch3",
+      "name": "Shifting the Burden (Green Self-Justification)",
+      "description": "NEW in v2 (the panel's fourth revision). The classic Shifting the Burden structure applied to the carbon contradiction: the Ecological-Economic Tension can be addressed by a fundamental solution (genuine transition, e18) or relieved by a symptomatic one (green self-justification, e26–e27). The symptomatic solution is faster and easier — the clean self-image readily reassures the society it is already a climate leader — and reliance on it (B2) atrophies the pressure that would drive the fundamental fix. The stronger the sincere ecological self-image (e28), the more powerful the symptomatic relief, so the very genuineness of the Norge story's green component is what most threatens to absorb the tension rather than resolve it. The defining risk inside even the orderly-transition scenario.",
+      "nodeIds": ["n10", "n11", "n12", "n13", "n16"],
+      "edgeIds": ["e17", "e18", "e26", "e27", "e28"]
+    }
+  ]
+}</textarea>
+            <button onclick="parseAndRun()">VISUALIZE MODEL</button>
+        </div>
+    </div>
+
+    <div id="saveModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 450px;">
+            <h2 id="saveModalTitle" style="margin:0; color:#111827;">Save Map</h2>
+            <p style="margin:0; color:#6B7280; font-size:14px;">Enter a filename:</p>
+            <input type="text" id="filenameInput" value="model">
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button class="secondary" onclick="document.getElementById('saveModal').style.display='none'">Cancel</button>
+                <button id="confirmSaveBtn">Download</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // GLOBAL STATE
+        let nodes, edges, network;
+        let feedbackLoops = [], systemArchetypes = [], loopLabelPositions = [];
+        let originalNodeStyles = {}, originalEdgeStyles = {};
+        let currentSaveMode = 'html';
+        
+        // INTERACTION STATE
+        let draggedLabel = null;
+        let dragOffset = {x:0, y:0};
+        
+        // RECURVE STATE
+        let activeEdgeForRecurve = null;
+        let isRecurvingEdge = false;
+        
+        let lastMouseX = 0, lastMouseY = 0;
+        let draggedItem = null;
+
+        // --- 0. AUTO-LOADER ---
+        window.addEventListener('load', () => {
+             const preloaded = document.getElementById('jsonInput').value;
+             if(preloaded && preloaded.trim().length > 0 && preloaded.trim() !== "undefined") {
+                 parseAndRun();
+             } else {
+                 document.getElementById('inputModal').style.display = 'flex';
+             }
+        });
+
+        function colorToRgba(colorInput, alpha) {
+            let r = 128, g = 128, b = 128;
+            alpha = Math.max(0, Math.min(1, alpha));
+
+            if (typeof colorInput === 'string') {
+                const s = colorInput.toLowerCase().trim();
+                if (s.startsWith('#')) {
+                    if (s.length === 4) {
+                        r = parseInt(s[1] + s[1], 16);
+                        g = parseInt(s[2] + s[2], 16);
+                        b = parseInt(s[3] + s[3], 16);
+                    } else if (s.length === 7) {
+                        r = parseInt(s.substring(1, 3), 16);
+                        g = parseInt(s.substring(3, 5), 16);
+                        b = parseInt(s.substring(5, 7), 16);
+                    }
+                } else if (s.startsWith('rgb')) {
+                    const parts = s.match(/[\d.]+/g);
+                    if (parts && parts.length >= 3) {
+                        r = parseInt(parts[0]);
+                        g = parseInt(parts[1]);
+                        b = parseInt(parts[2]);
+                    }
+                }
+            }
+            return `rgba(${r},${g},${b},${alpha})`;
+        }
+
+        function parseAndRun() {
+            const input = document.getElementById('jsonInput').value;
+            if(!input) return alert("Please paste JSON data.");
+
+            try {
+                let clean = input.replace(/```json/gi, '').replace(/```/g, '');
+                const start = clean.indexOf('{');
+                const end = clean.lastIndexOf('}');
+                if (start === -1 || end === -1) throw new Error("No JSON found.");
+                
+                const data = JSON.parse(clean.substring(start, end + 1));
+                
+                document.getElementById('inputModal').style.display = 'none';
+
+                if(data.metadata) {
+                    const titleEl = document.getElementById('modelTitleDisplay');
+                    const popoverEl = document.getElementById('titlePopover');
+                    if(data.metadata.topic) {
+                        titleEl.innerText = data.metadata.topic;
+                        document.title = data.metadata.topic;
+                    }
+                    if(data.metadata.narrative_title) {
+                        popoverEl.innerText = data.metadata.narrative_title;
+                        titleEl.onmouseenter = () => popoverEl.style.display = 'block';
+                        titleEl.onmouseleave = () => popoverEl.style.display = 'none';
+                    }
+                }
+
+                initEngine(data);
+
+            } catch(e) {
+                alert("Error parsing JSON: " + e.message);
+            }
+        }
+
+        document.getElementById('loadNewButton').addEventListener('click', () => {
+             document.getElementById('jsonInput').value = '';
+             document.getElementById('inputModal').style.display = 'flex';
+        });
+
+        document.getElementById('saveButton').addEventListener('click', () => {
+            if (!network || !nodes || !edges) {
+                alert("No model to save. Please load data first.");
+                return;
+            }
+            currentSaveMode = 'html';
+            document.getElementById('saveModalTitle').innerText = "Save Map (HTML)";
+            document.getElementById('filenameInput').value = (document.title || "model");
+            document.getElementById('saveModal').style.display = 'flex';
+            document.getElementById('filenameInput').focus();
+        });
+
+        document.getElementById('saveDataButton').addEventListener('click', () => {
+            if (!network || !nodes || !edges) {
+                alert("No model data to save.");
+                return;
+            }
+            currentSaveMode = 'json';
+            document.getElementById('saveModalTitle').innerText = "Save Map Data (JSON)";
+            document.getElementById('filenameInput').value = (document.title || "model");
+            document.getElementById('saveModal').style.display = 'flex';
+            document.getElementById('filenameInput').focus();
+        });
+
+        document.getElementById('confirmSaveBtn').addEventListener('click', () => {
+             try {
+                let filename = document.getElementById('filenameInput').value || "model";
+                
+                const currentPositions = network.getPositions();
+                const d = { 
+                    metadata: { 
+                        topic: document.title,
+                        narrative_title: document.getElementById('titlePopover').textContent
+                    },
+                    nodes: nodes.get().map(n => {
+                        const pos = currentPositions[n.id];
+                        return {
+                            ...n,
+                            x: pos ? Math.round(pos.x) : n.x,
+                            y: pos ? Math.round(pos.y) : n.y
+                        };
+                    }),
+                    edges: edges.get().map(e => ({
+                        ...e, 
+                        title: undefined,
+                        smooth: (e.smooth && e.smooth.roundness !== undefined) ? e.smooth : undefined
+                    })),
+                    loops: feedbackLoops,
+                    archetypes: systemArchetypes
+                };
+                const jsonString = JSON.stringify(d, null, 2);
+
+                if (currentSaveMode === 'json') {
+                    if (!filename.toLowerCase().endsWith('.json')) filename += '.json';
+                    downloadFile(jsonString, filename, 'application/json');
+                } else {
+                    if (!filename.toLowerCase().endsWith('.html')) filename += '.html';
+
+                    const clone = document.documentElement.cloneNode(true);
+                    clone.querySelector('#cldNetwork').innerHTML = ''; 
+                    clone.querySelectorAll('.tooltip').forEach(el => el.style.display = 'none');
+                    clone.querySelectorAll('.legend-container').forEach(el => el.classList.remove('expanded'));
+                    clone.querySelector('#descPanel').style.display = 'none';
+                    clone.querySelector('#inputModal').style.display = 'flex'; 
+                    clone.querySelector('#saveModal').style.display = 'none'; 
+                    clone.querySelector('#jsonInput').textContent = jsonString;
+
+                    const fileContent = "<!DOCTYPE html>\n" + clone.outerHTML;
+                    downloadFile(fileContent, filename, 'text/html');
+                }
+
+                document.getElementById('saveModal').style.display = 'none';
+
+            } catch (err) {
+                alert("Error saving file: " + err.message);
+                console.error(err);
+            }
+        });
+
+        function downloadFile(content, filename, contentType) {
+            const blob = new Blob([content], {type: contentType});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); 
+            a.href = url; 
+            a.download = filename; 
+            a.style.display = 'none';
+            document.body.appendChild(a); 
+            a.click();
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 100);
+        }
+
+        function initEngine(data) {
+            const hasPositions = data.nodes && data.nodes.some(n => n.x !== undefined && n.y !== undefined);
+
+            const nodeData = (data.nodes || []).map(n => {
+                let label = n.label || "";
+                const tag = `[${n.id}]`;
+                if (!label.includes(tag)) {
+                    label = label ? `${label} ${tag}` : tag;
+                }
+                return {
+                    ...n, 
+                    label: label,
+                    x: n.x ? Number(n.x) : undefined, 
+                    y: n.y ? Number(n.y) : undefined
+                };
+            });
+            
+            const edgeData = (data.edges || []).map(e => {
+                let smooth = { enabled: true, type: "cubicBezier", roundness: 0.3 };
+                if (e.smooth && e.smooth.roundness !== undefined) {
+                    smooth = e.smooth; 
+                }
+                
+                let label = e.label || "";
+                const tag = `[${e.id}]`;
+                if (!label.includes(tag)) {
+                    label = label ? `${label} ${tag}` : tag;
+                }
+
+                return {...e, label: label, from:String(e.from), to:String(e.to), title:undefined, smooth: smooth};
+            });
+
+            nodes = new vis.DataSet(nodeData);
+            edges = new vis.DataSet(edgeData);
+            
+            feedbackLoops = (data.loops || []).map((l, i) => ({...l, internalId: `loop-${i}`}));
+            systemArchetypes = data.archetypes || [];
+
+            const container = document.getElementById('cldNetwork');
+            const options = {
+                autoResize: true, height: '100%', width: '100%',
+                nodes: { 
+                    shape: 'ellipse', size: 25, 
+                    font: { size: 13, face: 'Inter', color: '#1F2937', multi: 'html' },
+                    widthConstraint: { maximum: 160 }, borderWidth: 2,
+                    color: { background: '#DBEAFE', border: '#3B82F6', highlight: { background: '#BFDBFE', border: '#2563EB' } },
+                    shadow: { enabled: true, size:4, x:2, y:2, color: 'rgba(0,0,0,0.08)'} 
+                },
+                edges: { 
+                    width: 2.5, arrows: { to: { enabled: true, scaleFactor: 0.7 } },
+                    smooth: { enabled: true, type: "cubicBezier", roundness: 0.3 },
+                    font: { align: 'middle', multi: true, face: 'Inter', size: 12, color: '#4B5563', background: 'rgba(255,255,255,0.75)', strokeWidth: 0 },
+                    chosen: {
+                        edge: function(values, id, selected, hovering) {
+                            values.color = '#e11d48'; 
+                            values.width = values.width * 1.5;
+                            values.shadow = { enabled: true, color: 'rgba(225, 29, 72, 0.4)', size: 10 };
+                        }
+                    }
+                },
+                physics: {
+                    enabled: !hasPositions,
+                    stabilization: { enabled: !hasPositions, iterations: 1000, fit: true },
+                    barnesHut: { gravitationalConstant: -2000, centralGravity: 0.3, springLength: 95 }
+                },
+                interaction: { 
+                    hover: true, dragNodes: true, zoomView: true, 
+                    selectConnectedEdges: false 
+                }
+            };
+
+            nodes.forEach(n => originalNodeStyles[n.id] = { color: {...(n.color||options.nodes.color)}, borderWidth: n.borderWidth||2 });
+            edges.forEach(e => originalEdgeStyles[e.id] = { color: {...(e.color||options.edges.color)}, width: e.width||2.5, smooth: e.smooth });
+
+            if(network) network.destroy();
+            network = new vis.Network(container, { nodes, edges }, options);
+            
+            if(!hasPositions) {
+                network.on("stabilizationIterationsDone", () => network.setOptions({ physics: false }));
+            }
+
+            renderLists();
+            setupInteractions();
+            setupListSorting(); 
+        }
+
+        function setupInteractions() {
+            const canvas = document.querySelector('canvas');
+            const tt = document.getElementById('mainTooltip');
+            const ctt = document.getElementById('canvasTooltip');
+
+            network.on("click", function(params) {
+                const networkPos = params.pointer.canvas; 
+
+                const hit = loopLabelPositions.find(l => (networkPos.x-l.x)**2 + (networkPos.y-l.y)**2 < l.r**2);
+                if(hit) {
+                    selectLoop(hit.loop);
+                    return; 
+                }
+
+                if (params.nodes.length === 0) { 
+                    if (params.edges.length > 0) { 
+                        const clickedEdgeId = params.edges[0];
+                        activeEdgeForRecurve = (activeEdgeForRecurve === clickedEdgeId) ? null : clickedEdgeId;
+                        if(activeEdgeForRecurve) {
+                            network.selectEdges([activeEdgeForRecurve]);
+                            resetHighlights(false); 
+                        } else {
+                            network.selectEdges([]);
+                        }
+                    } else { 
+                        activeEdgeForRecurve = null;
+                        network.selectEdges([]);
+                        resetHighlights();
+                    }
+                } else {
+                    activeEdgeForRecurve = null;
+                    network.selectEdges([]);
+                }
+            });
+
+            if(canvas) {
+                canvas.addEventListener('mousedown', function(event) {
+                    const rect = canvas.getBoundingClientRect();
+                    const netPos = network.canvas.DOMtoCanvas({x: event.clientX-rect.left, y: event.clientY-rect.top});
+                    
+                    const hit = loopLabelPositions.find(l => (netPos.x-l.x)**2 + (netPos.y-l.y)**2 < l.r**2);
+                    if(hit) {
+                        draggedLabel = hit.loop;
+                        dragOffset = {x: netPos.x - hit.x, y: netPos.y - hit.y};
+                        network.setOptions({interaction:{dragNodes:false, dragView:false}}); 
+                        canvas.style.cursor = 'grabbing';
+                        event.preventDefault();
+                        return;
+                    }
+
+                    if (activeEdgeForRecurve && !isRecurvingEdge) {
+                        isRecurvingEdge = true;
+                        document.addEventListener('mousemove', handleMouseMoveOnDocumentForRecurve);
+                        document.addEventListener('mouseup', handleMouseUpOnDocumentForRecurve, { once: true });
+                        network.setOptions({ interaction: { dragNodes: false, dragView: false } }); 
+                        event.preventDefault();
+                    }
+                });
+
+                canvas.addEventListener('mousemove', (e) => {
+                    lastMouseX = e.clientX;
+                    lastMouseY = e.clientY;
+
+                    if(draggedLabel) {
+                        const rect = canvas.getBoundingClientRect();
+                        const netPos = network.canvas.DOMtoCanvas({x: e.clientX-rect.left, y: e.clientY-rect.top});
+                        draggedLabel.lx = netPos.x - dragOffset.x;
+                        draggedLabel.ly = netPos.y - dragOffset.y;
+                        network.redraw(); 
+                        return;
+                    }
+
+                    const rect = canvas.getBoundingClientRect();
+                    const netPos = network.canvas.DOMtoCanvas({x: e.clientX-rect.left, y: e.clientY-rect.top});
+                    const hit = loopLabelPositions.find(l => (netPos.x-l.x)**2 + (netPos.y-l.y)**2 < l.r**2);
+                    
+                    if(hit) {
+                        canvas.style.cursor = 'pointer';
+                        ctt.innerHTML = `<strong>${hit.loop.name}</strong><p style="margin:5px 0 0">${hit.loop.description}</p>`;
+                        ctt.style.left = (e.clientX+15)+'px'; ctt.style.top = (e.clientY+15)+'px';
+                        ctt.style.display = 'block';
+                    } else {
+                         ctt.style.display = 'none';
+                    }
+                });
+
+                canvas.addEventListener('mouseup', () => {
+                    if(draggedLabel) {
+                        draggedLabel = null;
+                        network.setOptions({interaction:{dragNodes:true, dragView:true}});
+                        canvas.style.cursor = 'default';
+                    }
+                });
+            }
+
+            function handleMouseMoveOnDocumentForRecurve(event) {
+                if (!isRecurvingEdge || !activeEdgeForRecurve) return;
+
+                const rect = canvas.getBoundingClientRect();
+                const mousePos = network.canvas.DOMtoCanvas({ x: event.clientX - rect.left, y: event.clientY - rect.top });
+                const edge = edges.get(activeEdgeForRecurve);
+                if (!edge) { handleMouseUpOnDocumentForRecurve(); return; }
+
+                const positions = network.getPositions([edge.from, edge.to]);
+                const fromPos = positions[edge.from];
+                const toPos = positions[edge.to];
+                if (!fromPos || !toPos) { handleMouseUpOnDocumentForRecurve(); return;}
+
+                const midX = (fromPos.x + toPos.x) / 2;
+                const midY = (fromPos.y + toPos.y) / 2;
+                const dxMouse = mousePos.x - midX;
+                const dyMouse = mousePos.y - midY;
+
+                const edgeDx = toPos.x - fromPos.x;
+                const edgeDy = toPos.y - fromPos.y;
+                const edgeLength = Math.sqrt(edgeDx*edgeDx + edgeDy*edgeDy);
+                if (edgeLength < 1) return;
+
+                const orientation = (edgeDx * dyMouse) - (edgeDy * dxMouse);
+                const newCurveType = orientation >= 0 ? 'curvedCCW' : 'curvedCW';
+
+                const distFromMid = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+                const scaleFactor = 0.8; 
+                let newRoundness = Math.max(0.0, Math.min(1.0, (distFromMid / edgeLength) * scaleFactor));
+
+                edges.update({
+                    id: activeEdgeForRecurve,
+                    smooth: { type: newCurveType, roundness: newRoundness, enabled: true }
+                });
+                
+                if(originalEdgeStyles[activeEdgeForRecurve]) {
+                    originalEdgeStyles[activeEdgeForRecurve].smooth = { type: newCurveType, roundness: newRoundness, enabled: true };
+                }
+            }
+
+            function handleMouseUpOnDocumentForRecurve() {
+                if (!isRecurvingEdge) return;
+                isRecurvingEdge = false;
+                document.removeEventListener('mousemove', handleMouseMoveOnDocumentForRecurve);
+                network.setOptions({ interaction: { dragNodes: true, dragView: true } });
+            }
+
+            network.on("afterDrawing", (ctx) => {
+                loopLabelPositions = [];
+                ctx.font = "bold 13px Inter"; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                feedbackLoops.forEach(l => {
+                    if(!l.lx) {
+                        const pos = network.getPositions(l.nodeIds);
+                        let x=0,y=0,c=0; for(let k in pos){x+=pos[k].x; y+=pos[k].y; c++;}
+                        if(c){l.lx=x/c; l.ly=y/c;}
+                    }
+                    if(l.lx) {
+                        ctx.fillStyle = l.type==='R' ? 'rgba(190, 24, 93, 0.9)' : 'rgba(30, 64, 175, 0.9)';
+                        ctx.beginPath(); ctx.arc(l.lx, l.ly, 18, 0, 2*Math.PI); ctx.fill();
+                        ctx.strokeStyle = 'white'; ctx.lineWidth = 1; ctx.stroke();
+                        ctx.fillStyle = 'white'; ctx.fillText(l.id, l.lx, l.ly+1);
+                        loopLabelPositions.push({loop: l, x: l.lx, y: l.ly, r: 18});
+                    }
+                });
+            });
+
+            network.on("hoverNode", (p) => {
+                const n = nodes.get(p.node);
+                if(n.description) {
+                    const dom = network.canvas.canvasToDOM(network.getPositions([p.node])[p.node]);
+                    tt.innerHTML = n.description.replace(/\n/g, '<br>');
+                    tt.style.left = (dom.x + 20) + 'px'; tt.style.top = (dom.y + 20) + 'px';
+                    tt.style.display = 'block';
+                }
+            });
+            network.on("blurNode", () => tt.style.display = 'none');
+
+            network.on("hoverEdge", (p) => {
+                const e = edges.get(p.edge);
+                if(e.description) {
+                    tt.innerHTML = e.description.replace(/\n/g, '<br>');
+                    tt.style.left = (lastMouseX + 15) + 'px';
+                    tt.style.top = (lastMouseY + 15) + 'px';
+                    tt.style.display = 'block';
+                }
+            });
+            network.on("blurEdge", () => tt.style.display = 'none');
+        }
+
+        function setupListSorting() {
+            const list = document.getElementById('loopList');
+            
+            list.addEventListener('dragstart', (e) => {
+                if(e.target.tagName === 'LI') {
+                    draggedItem = e.target;
+                    setTimeout(() => draggedItem.classList.add('dragging'), 0);
+                }
+            });
+
+            list.addEventListener('dragend', () => {
+                if(draggedItem) draggedItem.classList.remove('dragging');
+                draggedItem = null;
+            });
+
+            list.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                const afterElement = getDragAfterElement(list, e.clientY);
+                const current = document.querySelector('.dragging');
+                if (afterElement == null) {
+                    list.appendChild(current);
+                } else {
+                    list.insertBefore(current, afterElement);
+                }
+            });
+
+            list.addEventListener('drop', () => {
+                const newOrder = [];
+                list.querySelectorAll('li').forEach(li => {
+                    const loop = feedbackLoops.find(l => l.internalId === li.dataset.id);
+                    if(loop) newOrder.push(loop);
+                });
+                feedbackLoops = newOrder;
+                renderLists();
+            });
+        }
+
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('li:not(.dragging)')];
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+
+        function renderLists() {
+            const ll = document.getElementById('loopList'); ll.innerHTML = '';
+            feedbackLoops.forEach(l => {
+                const li = document.createElement('li');
+                li.setAttribute('draggable', true);
+                li.dataset.id = l.internalId;
+
+                const col = l.type==='R'?'#be185d':'#1e40af';
+                let nameDisplay = l.name;
+                
+                if (!nameDisplay.startsWith(l.id)) {
+                    nameDisplay = `<span style="font-weight:bold; color:${col}">${l.id}</span>: ${nameDisplay}`;
+                } else {
+                    nameDisplay = nameDisplay.replace(l.id, `<span style="font-weight:bold; color:${col}">${l.id}</span>`);
+                }
+
+                li.innerHTML = nameDisplay;
+                li.onclick = (e) => { e.stopPropagation(); selectLoop(l); };
+                ll.appendChild(li);
+            });
+            const al = document.getElementById('archetypeList'); al.innerHTML = '';
+            systemArchetypes.forEach(a => {
+                const li = document.createElement('li'); li.textContent = a.name;
+                li.onclick = (e) => { e.stopPropagation(); selectArch(a); };
+                al.appendChild(li);
+            });
+        }
+
+        function selectLoop(l) {
+            highlight(l);
+            const box = document.getElementById('descPanel');
+            box.innerHTML = `<strong>${l.name}</strong>${l.description.replace(/\n/g,'<br>')}`;
+            box.style.display='block';
+            if(!document.getElementById('legend').classList.contains('expanded')) toggleLegend('legend');
+        }
+
+        function selectArch(a) {
+            highlight(a);
+            const box = document.getElementById('descPanel');
+            box.innerHTML = `<strong>${a.name}</strong>${a.description.replace(/\n/g,'<br>')}`;
+            box.style.display='block';
+            if(!document.getElementById('archetypeLegend').classList.contains('expanded')) toggleLegend('archetypeLegend');
+        }
+
+        function highlight(item) {
+            if (!item || !item.nodeIds || !item.edgeIds) {
+                resetHighlights(true);
+                return;
+            }
+
+            resetHighlights(false); 
+
+            const ns = new Set(item.nodeIds || []), es = new Set(item.edgeIds || []);
+            const nodesToUpdate = [];
+            const edgesToUpdate = [];
+            const highlightColor = '#e11d48'; 
+            const dimOpacity = 0.15;
+
+            nodes.forEach(n => {
+                const originalStyle = originalNodeStyles[n.id];
+                if (!originalStyle) return;
+
+                if (ns.has(n.id)) {
+                    nodesToUpdate.push({
+                        id: n.id,
+                        opacity: 1.0,
+                        color: JSON.parse(JSON.stringify(originalStyle.color)),
+                        borderWidth: (originalStyle.borderWidth || 2) * 1.7
+                    });
+                } else {
+                    nodesToUpdate.push({
+                        id: n.id,
+                        opacity: dimOpacity,
+                        color: {
+                            background: colorToRgba(originalStyle.color?.background, dimOpacity * 0.5),
+                            border: colorToRgba(originalStyle.color?.border, dimOpacity),
+                            highlight: { background: colorToRgba(originalStyle.color?.highlight?.background, dimOpacity * 0.5), border: colorToRgba(originalStyle.color?.highlight?.border, dimOpacity) },
+                            hover: { background: colorToRgba(originalStyle.color?.hover?.background, dimOpacity * 0.5), border: colorToRgba(originalStyle.color?.hover?.border, dimOpacity) }
+                        },
+                        borderWidth: (originalStyle.borderWidth || 2),
+                        font: {
+                            color: colorToRgba(nodes.get(n.id).font?.color || '#1F2937', dimOpacity)
+                        }
+                    });
+                }
+            });
+
+            edges.forEach(e => {
+                const originalStyle = originalEdgeStyles[e.id];
+                if (!originalStyle) return;
+                const defaultWidth = 2.5;
+
+                if (es.has(e.id)) {
+                    edgesToUpdate.push({
+                        id: e.id,
+                        width: (originalStyle.width || defaultWidth) * 1.8,
+                        color: { color: highlightColor, highlight: highlightColor, hover: highlightColor },
+                        font: {
+                            color: '#000000',
+                            background: 'rgba(255, 255, 255, 0.9)'
+                        },
+                        opacity: 1.0,
+                        smooth: JSON.parse(JSON.stringify(originalStyle.smooth || {}))
+                    });
+                } else {
+                    const dimmedColor = colorToRgba(originalStyle.color?.color, dimOpacity * 0.8);
+                    edgesToUpdate.push({
+                        id: e.id,
+                        width: (originalStyle.width || defaultWidth) * 0.8,
+                        color: { color: dimmedColor, highlight: dimmedColor, hover: dimmedColor },
+                        font: {
+                            color: colorToRgba(edges.get(e.id).font?.color || '#4B5563', dimOpacity * 0.5),
+                            background: 'rgba(255, 255, 255, 0.2)'
+                        },
+                        opacity: dimOpacity,
+                        smooth: JSON.parse(JSON.stringify(originalStyle.smooth || {}))
+                    });
+                }
+            });
+
+            nodes.update(nodesToUpdate);
+            edges.update(edgesToUpdate);
+        }
+
+        function resetHighlights(fullReset = true) {
+            const nodeUpdates = nodes.get().map(n => {
+                const s = originalNodeStyles[n.id] || { color: '#DBEAFE', borderWidth: 2 };
+                return { 
+                    id: n.id, 
+                    opacity: 1, 
+                    color: s.color, 
+                    borderWidth: s.borderWidth,
+                    font: { color: '#1F2937' } 
+                };
+            });
+            const edgeUpdates = edges.get().map(e => {
+                const s = originalEdgeStyles[e.id] || { color: '#4B5563', width: 2.5 };
+                return { 
+                    id: e.id, 
+                    opacity: 1, 
+                    color: s.color, 
+                    width: s.width,
+                    font: { color: '#4B5563', background: 'rgba(255,255,255,0.75)' } 
+                };
+            });
+
+            nodes.update(nodeUpdates);
+            edges.update(edgeUpdates);
+
+            if(fullReset) {
+                document.getElementById('descPanel').style.display='none';
+                document.querySelectorAll('.legend-container').forEach(l => l.classList.remove('expanded'));
+            }
+        }
+
+        window.toggleLegend = (id) => {
+            const el = document.getElementById(id);
+            const exp = el.classList.contains('expanded');
+            document.querySelectorAll('.legend-container').forEach(l => l.classList.remove('expanded'));
+            document.getElementById('descPanel').style.display = 'none';
+            if(!exp) el.classList.add('expanded');
+        }
+    </script>
+</body>
+</html>
