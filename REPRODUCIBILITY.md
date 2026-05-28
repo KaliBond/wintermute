@@ -135,6 +135,26 @@ def test_usa_1861_reproducibility():
 assert test_usa_1861_reproducibility(), "USA 1861 validation failed"
 ```
 
+## v2.3 Canonical Pipeline (current)
+
+All datasets in `data/v2.3/` are produced by `cams_framework_v2_3.py`.
+
+**Node Value:** `V_i = C + K + (A / 2) - S`
+
+**Bond Strength (pairwise):** `Bij = sqrt(max(Vi + 8, 0) * max(Vj + 8, 0)) / 32`
+
+**Per-node Bond Strength** in CSV outputs is the mean of Bij across all other
+nodes in the same society-year.
+
+To reproduce any v2.3 dataset from raw scores:
+
+    python cams_framework_v2_3.py <raw_scores.csv> <output.csv>
+
+See `data/v2.3/README.md` for full instructions.
+The v2.0 pipeline (used for `data/cleaned/`) is documented below for reference.
+
+---
+
 ## 🔄 **Algorithmic Reproducibility**
 
 ### **Neural Network Parameters**
