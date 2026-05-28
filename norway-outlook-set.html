@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Norway — Outlook Set 2026–2036 · Neural Nations</title>
+    <meta name="description" content="Four structurally distinct trajectories for Norway 2026–2036: Orderly Transition, Deferred Transition, Disorderly Shock, and the Exemplary Transition. Tested against the $2.2T fund, the Progress Party surge, and Norway's role as Europe's gas supplier.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/norway-outlook-set">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neuralnations.org/norway-outlook-set">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:title" content="Norway — Outlook Set 2026–2036 · Neural Nations">
+    <meta property="og:description" content="Four structurally distinct trajectories from the present CAMS configuration. The question: can the conserved Lore carry Norway through the end of the oil economy that funds its modern expression?">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Norway — Outlook Set 2026–2036 · Neural Nations">
+    <meta name="twitter:description" content="Orderly Transition · Deferred Transition · Disorderly Shock · Exemplary Transition. CAMS v3.2, verified against May 2026 data.">
+    <link rel="stylesheet" href="style.css">
+    <style>
+    .story-meta { font-size:0.82em; color:#888; letter-spacing:0.04em; line-height:1.8; }
+
+    /* Scenario cards */
+    .scenario-card {
+        border-radius:10px;
+        padding:26px 28px;
+        margin-bottom:20px;
+        border: 2px solid #DAD2B8;
+        background: #FBF8EF;
+    }
+    .scenario-card.s1 { border-color:#2F6F7D; }
+    .scenario-card.s2 { border-color:#D98B2B; }
+    .scenario-card.s3 { border-color:#6b7280; }
+    .scenario-card.s4 { border-color:#5F7A3A; }
+
+    .scenario-header { display:flex; align-items:flex-start; gap:16px; margin-bottom:18px; }
+    .scenario-num {
+        flex-shrink:0; width:40px; height:40px; border-radius:50%;
+        display:flex; align-items:center; justify-content:center;
+        font-family:'JetBrains Mono',monospace; font-weight:700; font-size:1em; color:#fff;
+    }
+    .s1 .scenario-num { background:#2F6F7D; }
+    .s2 .scenario-num { background:#D98B2B; }
+    .s3 .scenario-num { background:#6b7280; }
+    .s4 .scenario-num { background:#5F7A3A; }
+
+    .scenario-title { font-size:1.12em; font-weight:700; color:#1B2A33; margin-bottom:4px; }
+    .scenario-subtitle { font-size:0.82em; color:#888; font-style:italic; }
+
+    .scenario-body p {
+        font-size:0.97em; line-height:1.82; color:#1B2A33; margin-bottom:1em;
+    }
+    .scenario-body p:last-child { margin:0; }
+    .scenario-body strong { color:#1B2A33; }
+
+    /* Node table */
+    .node-table {
+        width:100%; border-collapse:collapse;
+        font-size:0.84em; margin:18px 0;
+        border:1px solid #DAD2B8; border-radius:6px; overflow:hidden;
+    }
+    .node-table th {
+        background:#1B2A33; color:#F5F1E4;
+        padding:8px 12px; text-align:left;
+        font-family:'JetBrains Mono',monospace; font-size:0.82em;
+        font-weight:600; letter-spacing:0.04em;
+    }
+    .node-table td {
+        padding:7px 12px; border-bottom:1px solid #EDE8D8;
+        color:#1B2A33;
+    }
+    .node-table tr:last-child td { border-bottom:none; }
+    .node-table tr.total-row td {
+        font-weight:700; background:#F0E9D2; border-top:2px solid #DAD2B8;
+    }
+    .dir-up { color:#2F6F7D; font-weight:600; }
+    .dir-down { color:#C84C3E; font-weight:600; }
+    .dir-stable { color:#888; }
+
+    /* Indicator list */
+    .indicator-list {
+        margin:14px 0 0;
+        padding:0;
+        list-style:none;
+    }
+    .indicator-list li {
+        font-size:0.88em; line-height:1.7; color:#444;
+        padding:5px 0 5px 20px;
+        position:relative;
+        border-bottom:1px solid #EDE8D8;
+    }
+    .indicator-list li:last-child { border:none; }
+    .indicator-list li::before {
+        content:'→';
+        position:absolute; left:0; color:#2F6F7D;
+        font-weight:700;
+    }
+    .indicator-label {
+        font-size:0.72em; font-weight:700; text-transform:uppercase;
+        letter-spacing:0.1em; color:#888; margin:14px 0 6px;
+    }
+
+    /* Probability table */
+    .prob-table {
+        width:100%; border-collapse:collapse; font-size:0.88em;
+        margin:16px 0;
+    }
+    .prob-table th {
+        background:#1B2A33; color:#F5F1E4;
+        padding:9px 14px; text-align:left;
+        font-size:0.82em; letter-spacing:0.04em;
+    }
+    .prob-table td { padding:8px 14px; border-bottom:1px solid #EDE8D8; color:#1B2A33; }
+    .prob-table tr:last-child td { border:none; }
+    .prob-table tr:nth-child(even) td { background:#FBF8EF; }
+
+    .framing-box {
+        background:#F0E9D2; border-left:4px solid #2F6F7D;
+        border-radius:0 8px 8px 0; padding:18px 22px; margin-bottom:20px;
+    }
+    .framing-box h3 { font-size:0.95em; font-weight:700; color:#2F6F7D; margin:0 0 10px; }
+    .framing-box p { font-size:0.93em; line-height:1.8; color:#1B2A33; margin-bottom:0.8em; }
+    .framing-box p:last-child { margin:0; }
+    .framing-box strong { color:#1B2A33; }
+
+    .note-card {
+        background:#1B2A33; color:#F5F1E4; border-radius:8px;
+        padding:22px 26px; margin-top:4px;
+        font-size:0.95em; line-height:1.82;
+    }
+    .note-card p { margin-bottom:1em; }
+    .note-card p:last-child { margin:0; }
+    .note-card strong { color:#fff; }
+    .note-card em { color:#DAD2B8; font-style:italic; }
+
+    .companion-strip { display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+    .companion-strip a {
+        display:inline-block; padding:7px 14px; border:1px solid #DAD2B8;
+        border-radius:6px; font-size:0.85em; color:#2F6F7D;
+        text-decoration:none; background:#FBF8EF; font-weight:600;
+    }
+    .companion-strip a:hover { background:#F0E9D2; }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle active">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework &#8599;</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="framework/index.html">Framework &#8599;</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="hero-section">
+        <h1>Norway &mdash; Outlook Set 2026&ndash;2036</h1>
+        <p class="hero-subtitle">Four structurally distinct trajectories the CAMS geometry permits from the present configuration</p>
+    </div>
+
+    <div class="card">
+        <p class="story-meta">
+            Kingdom of Norway &middot; CAMS v3.2 &mdash; Ensemble Mean (5-scorer) &middot; Contemporary state verified May 2026<br>
+            Companion to <a href="norway-arc-story.html" style="color:#2F6F7D;">The Story</a> &middot; <a href="norway-arc-map.html" style="color:#2F6F7D;">The Map</a> &middot; <a href="norway-detective-panel.html" style="color:#2F6F7D;">Detective Panel</a>
+        </p>
+        <p style="font-size:0.97em; line-height:1.8; color:#1B2A33; margin-top:16px;">Four structurally distinct trajectories the CAMS geometry permits from the present configuration, read through the loops of the Story-That-Built-a-Country Map. Each is tested against the actual political and economic state of mid-2026 &mdash; the $2.2-trillion fund now the largest single backer of the global energy transition, the Progress Party&rsquo;s surge to second place, the Labour minority government&rsquo;s vow to continue oil and gas exploration, and Norway&rsquo;s new role as Europe&rsquo;s main gas supplier. The question every scenario addresses is the one the data poses: can the conserved Lore carry the country through the end of the oil economy that funds its modern expression?</p>
+    </div>
+
+    <!-- Framing -->
+    <div class="card" style="margin-top:18px;">
+        <h2 style="font-size:1.05em; font-weight:700; color:#1B2A33; margin:0 0 16px;">The Framing: The Transition Is the Whole Question</h2>
+
+        <p style="font-size:0.97em; line-height:1.82; color:#1B2A33; margin-bottom:1em;">Unlike the British, American, or German outlook sets &mdash; each of which turns on a decline to be managed or arrested &mdash; the Norwegian outlook set turns on a transition to be navigated. The data is unambiguous that Norway in 2026 is strong: aggregate Node Value of 97, near the top of its 147-year record, Lore conserved, Hands integrated, the fund vast. The system is not in trouble. The question is entirely about the foundation.</p>
+
+        <div class="framing-box">
+            <h3>The fund has become the transition&rsquo;s largest backer</h3>
+            <p>The most consequential fact in the 2026 data is that the Government Pension Fund Global &mdash; built entirely from oil revenue, now worth roughly $2.2 trillion and owning about 1.5 percent of every listed company on earth &mdash; has become the single largest financial backer of the global energy transition. This is the map&rsquo;s Transition Bypass loop (R5) materialising in real economic data: the conserved Lore&rsquo;s commons-principle, encoded in the fund, is already routing oil wealth toward the infrastructure designed to make oil obsolete. The bypass is not hypothetical; it is partially built.</p>
+        </div>
+
+        <div class="framing-box" style="border-color:#D98B2B;">
+            <h3 style="color:#D98B2B;">The political system has split on the transition</h3>
+            <p>The September 2025 election returned Labour (St&oslash;re) as a minority government on 28 percent, governing through a left bloc including the Greens and the Reds who push to end exploration &mdash; while the far-right Progress Party (Listhaug) doubled its vote to second place on a platform of tax-cutting and oil-friendly continuity. St&oslash;re has vowed to continue oil and gas exploration while cutting emissions: the tightrope. The political channel for the transition is therefore contested between a left that wants to accelerate it and a populist right that wants to defer it.</p>
+        </div>
+
+        <div class="framing-box" style="border-color:#6b7280;">
+            <h3 style="color:#6b7280;">Norway has become Europe&rsquo;s energy security</h3>
+            <p>Since the disruption of Russian gas flows, Norway has become Europe&rsquo;s main supplier of natural gas. Norway&rsquo;s continued extraction is now framed not merely as national income but as European energy security, which strengthens every argument for deferring the transition and gives the oil-friendly position a moral cover it did not previously have. The transition is no longer only a Norwegian choice; it is entangled with the energy security of a continent.</p>
+        </div>
+    </div>
+
+    <!-- Scenario 1 -->
+    <div class="scenario-card s1">
+        <div class="scenario-header">
+            <div class="scenario-num">1</div>
+            <div>
+                <div class="scenario-title">The Orderly Transition</div>
+                <div class="scenario-subtitle">The highest-probability trajectory, and the one the conserved Lore most supports</div>
+            </div>
+        </div>
+
+        <table class="node-table">
+            <thead><tr><th>Node</th><th>2026 NV</th><th>2036 Projected</th><th>Direction</th></tr></thead>
+            <tbody>
+                <tr><td>Helm</td><td>13.5</td><td>13&ndash;15</td><td class="dir-stable">Stable, steering the transition</td></tr>
+                <tr><td>Shield</td><td>7.1</td><td>8&ndash;10</td><td class="dir-up">Modest rise (NATO frontier, European security)</td></tr>
+                <tr><td>Lore</td><td>11.6</td><td>12&ndash;14</td><td class="dir-up">Strengthened &mdash; transition told as continuity</td></tr>
+                <tr><td>Stewards</td><td>13.9</td><td>14&ndash;15</td><td class="dir-stable">Strong, managing the shift</td></tr>
+                <tr><td>Craft</td><td>11.4</td><td>12&ndash;14</td><td class="dir-up">Renewables, maritime tech, diversification</td></tr>
+                <tr><td>Hands</td><td>11.0</td><td>11&ndash;13</td><td class="dir-stable">Maintained through funded transition</td></tr>
+                <tr><td>Archive</td><td>14.9</td><td>14&ndash;15</td><td class="dir-stable">Conserved, as ever</td></tr>
+                <tr><td>Flow</td><td>13.8</td><td>11&ndash;13</td><td class="dir-down">Deliberately reduced petroleum, rising renewable</td></tr>
+                <tr class="total-row"><td>Total NV</td><td>97</td><td>96&ndash;107</td><td class="dir-up">The ascent continues, foundation shifts</td></tr>
+            </tbody>
+        </table>
+
+        <div class="scenario-body">
+            <p>The transition is navigated the way the fund was built: slowly, by consensus, told as a continuation of the <em>Norge</em> story rather than a rupture from it. The fund continues its trajectory as the transition&rsquo;s largest backer, deploying its commons-capital into renewable infrastructure while the spending rule continues to fund the welfare settlement from accumulated returns rather than fresh extraction. Petroleum Flow declines gradually and deliberately &mdash; exploration winds down over a decade or two, production tapers, and the revenue gap is filled by the fund&rsquo;s returns and a diversifying productive base (offshore wind, maritime technology, the industrial competences the oil economy built, redirected).</p>
+            <p>Crucially, the transition is woven into the Lore. The story Norway tells about itself extends to include the post-oil chapter &mdash; the egalitarian-ecological commonwealth that used its oil wisely and then, characteristically, led the way out of oil. This is the map&rsquo;s R5 (Transition Bypass) and R6 (Clean-Story Reckoning) operating as designed.</p>
+        </div>
+
+        <div class="indicator-label">Early indicators (next 24 months)</div>
+        <ul class="indicator-list">
+            <li>The fund continuing and expanding its role as the largest backer of the energy transition</li>
+            <li>Exploration licensing rounds winding down rather than expanding, even under continued-production rhetoric</li>
+            <li>Renewable and maritime-technology investment scaling as a share of the productive base</li>
+            <li>The transition being narrated politically as continuity of the <em>Norge</em> story rather than as sacrifice</li>
+            <li>Hands integration holding as the funded transition protects employment</li>
+        </ul>
+    </div>
+
+    <!-- Scenario 2 -->
+    <div class="scenario-card s2">
+        <div class="scenario-header">
+            <div class="scenario-num">2</div>
+            <div>
+                <div class="scenario-title">The Deferred Transition (Petrostate Drift)</div>
+                <div class="scenario-subtitle">Elevated probability; the populist surge and European energy security defer the reckoning</div>
+            </div>
+        </div>
+
+        <table class="node-table">
+            <thead><tr><th>Node</th><th>2026 NV</th><th>2036 Projected</th><th>Direction</th></tr></thead>
+            <tbody>
+                <tr><td>Helm</td><td>13.5</td><td>12&ndash;14</td><td class="dir-stable">Stable but avoiding the hard choice</td></tr>
+                <tr><td>Shield</td><td>7.1</td><td>8&ndash;11</td><td class="dir-up">Rising (European energy-security role)</td></tr>
+                <tr><td>Lore</td><td>11.6</td><td>10&ndash;12</td><td class="dir-down">Strained &mdash; the clean-story tension grows</td></tr>
+                <tr><td>Stewards</td><td>13.9</td><td>13&ndash;14</td><td class="dir-stable">Stable</td></tr>
+                <tr><td>Craft</td><td>11.4</td><td>10&ndash;12</td><td class="dir-down">Petroleum-locked, under-diversified</td></tr>
+                <tr><td>Hands</td><td>11.0</td><td>11&ndash;13</td><td class="dir-stable">Maintained by continued oil revenue</td></tr>
+                <tr><td>Archive</td><td>14.9</td><td>14&ndash;15</td><td class="dir-stable">Conserved</td></tr>
+                <tr><td>Flow</td><td>13.8</td><td>13&ndash;16</td><td class="dir-up">High &mdash; continued extraction, deferred wind-down</td></tr>
+                <tr class="total-row"><td>Total NV</td><td>97</td><td>96&ndash;105</td><td class="dir-stable">Strong but increasingly exposed</td></tr>
+            </tbody>
+        </table>
+
+        <div class="scenario-body">
+            <p>The transition is deferred &mdash; not abandoned, but pushed out, year after year, by the combination of three forces visible in the 2026 data. The Progress Party&rsquo;s surge makes oil-friendly continuity politically rewarded rather than punished. Europe&rsquo;s dependence on Norwegian gas gives continued extraction the moral cover of allied energy security. And St&oslash;re&rsquo;s tightrope &mdash; continue exploration while cutting emissions &mdash; becomes, in practice, mostly the first half.</p>
+            <p>The cost accumulates invisibly as growing Ecological-Economic Tension (the B1/R6 nodes). The Lore strains as the gap widens between the clean self-image and the deferred reckoning. Norway becomes, gradually, the thing it always insisted it was not: a petrostate that talks about transition while extracting. The system does not decline &mdash; the data stays strong &mdash; but it becomes progressively more exposed to a permanent fall in the world&rsquo;s willingness to buy hydrocarbons, arriving on someone else&rsquo;s timetable rather than Norway&rsquo;s.</p>
+        </div>
+
+        <div class="indicator-label">Early indicators (next 24 months)</div>
+        <ul class="indicator-list">
+            <li>Progress Party influence growing; oil-friendly policy rewarded electorally toward the 2029 election</li>
+            <li>Exploration licensing rounds continuing or expanding under energy-security justification</li>
+            <li>Under-investment in diversification relative to continued petroleum reliance</li>
+            <li>The clean-story tension becoming a visible feature of Norwegian public debate (the Lore straining)</li>
+            <li>Norway&rsquo;s European gas-supplier role deepening, entangling extraction with allied security</li>
+        </ul>
+    </div>
+
+    <!-- Scenario 3 -->
+    <div class="scenario-card s3">
+        <div class="scenario-header">
+            <div class="scenario-num">3</div>
+            <div>
+                <div class="scenario-title">The Disorderly Shock</div>
+                <div class="scenario-subtitle">Lower probability, but the risk that deferral runs into a forced transition</div>
+            </div>
+        </div>
+
+        <table class="node-table">
+            <thead><tr><th>Node</th><th>2026 NV</th><th>2036 Projected</th><th>Direction</th></tr></thead>
+            <tbody>
+                <tr><td>Helm</td><td>13.5</td><td>9&ndash;12</td><td class="dir-down">Strained by sudden fiscal adjustment</td></tr>
+                <tr><td>Shield</td><td>7.1</td><td>7&ndash;10</td><td class="dir-stable">Volatile</td></tr>
+                <tr><td>Lore</td><td>11.6</td><td>10&ndash;13</td><td class="dir-stable">Tested &mdash; but this is what Lore is for</td></tr>
+                <tr><td>Stewards</td><td>13.9</td><td>10&ndash;13</td><td class="dir-down">Strained by rapid reallocation</td></tr>
+                <tr><td>Craft</td><td>11.4</td><td>7&ndash;11</td><td class="dir-down">Petroleum collapse, slow diversification</td></tr>
+                <tr><td>Hands</td><td>11.0</td><td>7&ndash;11</td><td class="dir-down">At risk &mdash; the integration tested</td></tr>
+                <tr><td>Archive</td><td>14.9</td><td>13&ndash;15</td><td class="dir-stable">Conserved through the shock</td></tr>
+                <tr><td>Flow</td><td>13.8</td><td>6&ndash;11</td><td class="dir-down">Sharp petroleum collapse</td></tr>
+                <tr class="total-row"><td>Total NV</td><td>97</td><td>78&ndash;98</td><td class="dir-down">A trough &mdash; and then the test of recovery</td></tr>
+            </tbody>
+        </table>
+
+        <div class="scenario-body">
+            <p>The transition is forced rather than chosen. A permanent, rapid fall in global hydrocarbon demand &mdash; faster decarbonisation elsewhere, a technology shift, a collapse in the oil price that does not recover &mdash; arrives before Norway has diversified, most likely after a period of deferral. The Flow node falls sharply; the petroleum-dependent component of Craft and Hands contracts; the system drops into a trough comparable to the 2014 dip or the early-1990s banking crisis.</p>
+            <p>And here the Norwegian data says something the other nations&rsquo; data cannot. Norway has been here before &mdash; twice, far worse. The 1940 occupation drove the system to near-zero; the 1988&ndash;93 banking crisis halved it. Both were fully recovered, because the conserved Lore is the blueprint from which the institutions rebuild. The fund, even in a shock, remains &mdash; $2.2 trillion of accumulated capital is an enormous buffer no other petrostate possesses. The disorderly shock is the bad scenario, but it is survivable in a way the same shock would not be for a society without Norway&rsquo;s Lore and Norway&rsquo;s fund.</p>
+        </div>
+
+        <div class="indicator-label">Early indicators (next 24 months)</div>
+        <ul class="indicator-list">
+            <li>Sustained rather than cyclical decline in global hydrocarbon demand or price</li>
+            <li>Deferral (Scenario 2) continuing without diversification as the demand outlook weakens</li>
+            <li>Growing gap between the fund&rsquo;s transition-backing and the domestic economy&rsquo;s continued petroleum reliance</li>
+            <li>Early signs of strain in petroleum-dependent regions and employment</li>
+        </ul>
+    </div>
+
+    <!-- Scenario 4 -->
+    <div class="scenario-card s4">
+        <div class="scenario-header">
+            <div class="scenario-num">4</div>
+            <div>
+                <div class="scenario-title">The Exemplary Transition (The Story Completes Itself)</div>
+                <div class="scenario-subtitle">Lower probability, the highest aspiration; Norway leads the world out of oil</div>
+            </div>
+        </div>
+
+        <table class="node-table">
+            <thead><tr><th>Node</th><th>2026 NV</th><th>2036 Projected</th><th>Direction</th></tr></thead>
+            <tbody>
+                <tr><td>Helm</td><td>13.5</td><td>14&ndash;16</td><td class="dir-up">Strong, globally credible</td></tr>
+                <tr><td>Shield</td><td>7.1</td><td>8&ndash;10</td><td class="dir-stable">Stable</td></tr>
+                <tr><td>Lore</td><td>11.6</td><td>14&ndash;16</td><td class="dir-up">Triumphant &mdash; the story completes</td></tr>
+                <tr><td>Stewards</td><td>13.9</td><td>15&ndash;16</td><td class="dir-up">Exemplary</td></tr>
+                <tr><td>Craft</td><td>11.4</td><td>14&ndash;16</td><td class="dir-up">Renewable-industrial leadership</td></tr>
+                <tr><td>Hands</td><td>11.0</td><td>13&ndash;15</td><td class="dir-up">Fully maintained through the transition</td></tr>
+                <tr><td>Archive</td><td>14.9</td><td>15&ndash;16</td><td class="dir-stable">Conserved and renewed</td></tr>
+                <tr><td>Flow</td><td>13.8</td><td>13&ndash;15</td><td class="dir-stable">Transformed &mdash; renewable, not fossil</td></tr>
+                <tr class="total-row"><td>Total NV</td><td>97</td><td>106&ndash;120</td><td class="dir-up">A new zenith &mdash; the 1974 peak surpassed</td></tr>
+            </tbody>
+        </table>
+
+        <div class="scenario-body">
+            <p>Norway does not merely navigate the transition; it leads it, and in doing so writes the next chapter of the <em>Norge</em> story as triumphantly as the fund wrote the last one. The fund&rsquo;s role as the world&rsquo;s largest transition-backer becomes deliberate national strategy: the commons-capital built from oil is consciously deployed to make oil obsolete, and Norway becomes the society that proved a petrostate could become a clean-energy leader without losing its equality, its welfare settlement, or its working-class integration.</p>
+            <p>This is the scenario in which all of the map&rsquo;s hopeful loops fire together: R5 (Transition Bypass) and R6 (Clean-Story Reckoning) drive the transition, R1 (Story Engine) and R2 (Commons Loop) sustain the social settlement through it, and R3 (Resilience Loop) provides the confidence that the society can take the risk. The aggregate climbs past the 1974 zenith to a new high, because the resolution of the one unresolved tension in the system &mdash; the fossil foundation &mdash; removes the ceiling the tension imposed.</p>
+        </div>
+
+        <div class="indicator-label">Early indicators (next 24 months)</div>
+        <ul class="indicator-list">
+            <li>The fund&rsquo;s transition-backing becoming explicit national strategy rather than emergent portfolio effect</li>
+            <li>Political consensus forming across the centre that the transition is the <em>Norge</em> story&rsquo;s next chapter</li>
+            <li>Diversification investment accelerating ahead of, not behind, petroleum decline</li>
+            <li>Norway positioning to export transition competences (offshore wind, maritime decarbonisation) as the next national industry</li>
+            <li>The Lore visibly incorporating the transition as continuity rather than contesting it as rupture</li>
+        </ul>
+    </div>
+
+    <!-- Summary Probability Map -->
+    <div class="card" style="margin-top:4px;">
+        <h2 style="font-size:1.05em; font-weight:700; color:#1B2A33; margin:0 0 16px;">Summary Probability Map</h2>
+        <table class="prob-table">
+            <thead><tr><th>Scenario</th><th>Probability</th><th>Trend</th><th>Key Dynamic</th></tr></thead>
+            <tbody>
+                <tr><td><strong>1 &mdash; Orderly Transition</strong></td><td>High</td><td>Stable</td><td>R5 + R6 fire gradually; Lore carries it</td></tr>
+                <tr><td><strong>2 &mdash; Deferred Transition</strong></td><td>Medium-high</td><td>Rising near-term</td><td>FrP surge + European gas security defer the reckoning</td></tr>
+                <tr><td><strong>3 &mdash; Disorderly Shock</strong></td><td>Medium-low</td><td>Rising if deferral persists</td><td>Deferral runs into forced transition</td></tr>
+                <tr><td><strong>4 &mdash; Exemplary Transition</strong></td><td>Low-medium</td><td>Depends on deliberate choice</td><td>All hopeful loops fire; story completes</td></tr>
+            </tbody>
+        </table>
+
+        <p style="font-size:0.92em; line-height:1.8; color:#1B2A33; margin-top:10px;">The structurally honest summary: Norway is the rare society whose central challenge is not decline but the navigation of a transition out of the very success that made it. Whether it is navigated merely adequately (Scenario One) or exemplarily (Scenario Four) &mdash; whether Norway survives the end of oil or leads the world through it &mdash; depends on a deliberate choice the system is capable of making but has not yet committed to.</p>
+    </div>
+
+    <!-- Note for the Independent-Minded Reader -->
+    <div class="note-card" style="margin-top:18px;">
+        <p><strong>A Note for the Independent-Minded Reader</strong></p>
+        <p>Two framings of Norway should be resisted. The first is the cynical reading that treats Norway as a hypocritical petrostate hiding behind green rhetoric. The data does not support cynicism: the fund really is the largest backer of the global energy transition, the commons-principle really is encoded in fiscal architecture no other petrostate matched, and Norwegian honesty about the tension is itself unusual and valuable.</p>
+        <p>The second framing to resist is the complacent one that treats Norway&rsquo;s strength as self-sustaining &mdash; that mistakes the current high reading for a foundation rather than a transition-point. The most volatile node funds the most stable settlement, and that is not a stable arrangement on a civilisational timescale.</p>
+        <p style="margin:0;"><em>The independent-minded reading is that Norway is running, right now, the most interesting experiment in the developed world: whether a society can use the wealth from a dying industry to fund its own succession, and whether deep social cohesion (the conserved Lore) is the asset that makes such a succession possible where financial wealth alone would not be.</em></p>
+    </div>
+
+    <div class="card" style="margin-top:18px;">
+        <p style="font-size:0.85em; color:#888; margin-bottom:12px;">Companion pages:</p>
+        <div class="companion-strip">
+            <a href="norway-arc-story.html">Norway &mdash; The Story</a>
+            <a href="norway-arc-map.html">Norway &mdash; Aha! Map</a>
+            <a href="norway-detective-panel.html">Norway &mdash; Detective Panel</a>
+            <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+        </div>
+        <p style="font-size:0.78em; color:#999; margin-top:20px; border-top:1px solid #DAD2B8; padding-top:14px;"><em>Outlook Set generated via CAMS v3.2 Ensemble Mean (5-scorer) &middot; Neural Nations &middot; Contemporary political and economic state verified against May 2026 data &middot; Companion to &ldquo;The Story That Built a Country&rdquo;</em></p>
+    </div>
+
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>

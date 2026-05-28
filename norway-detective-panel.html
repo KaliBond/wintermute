@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Norway — Detective Panel · The Story That Built a Country · Neural Nations</title>
+    <meta name="description" content="A detective panel stress-tests the seven loops of the Norway CAMS map — Fell, Morse, Marple, and Warshawski interrogate the Lore thesis, the fund's egalitarianism, the oil-welfare engine, and the central hope of resilience-to-renunciation.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/norway-detective-panel">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neuralnations.org/norway-detective-panel">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:title" content="Norway — Detective Panel · Neural Nations">
+    <meta property="og:description" content="Fell, Morse, Marple, and Warshawski interrogate the loop structure of the Story-That-Built-a-Country Map. Five revisions enumerated. The locked room shown to be genuinely locked.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Norway — Detective Panel · Neural Nations">
+    <meta name="twitter:description" content="A panel of detectives stress-tests the Norway CAMS map. Does the Lore thesis survive? Is the fund a genuine commons? Can resilience transfer to renunciation?">
+    <link rel="stylesheet" href="style.css">
+    <style>
+    .story-meta { font-size:0.82em; color:#888; letter-spacing:0.04em; line-height:1.8; }
+    .story-divider { text-align:center; color:#DAD2B8; font-size:1.2em; letter-spacing:0.4em; margin:2em 0; }
+
+    /* Detective cards */
+    .detective-grid {
+        display:grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap:14px;
+        margin:20px 0;
+    }
+    .detective-card {
+        background:#FBF8EF;
+        border:1px solid #DAD2B8;
+        border-radius:8px;
+        padding:16px 18px;
+    }
+    .detective-name {
+        font-size:0.95em; font-weight:700; color:#2F6F7D;
+        margin-bottom:4px;
+    }
+    .detective-role {
+        font-size:0.78em; color:#888; font-style:italic; margin-bottom:8px;
+    }
+    .detective-specialty {
+        font-size:0.84em; color:#1B2A33; line-height:1.65;
+    }
+
+    /* Loop section headers */
+    .loop-header {
+        display:flex; align-items:flex-start; gap:14px;
+        margin:0 0 16px;
+    }
+    .loop-badge {
+        flex-shrink:0;
+        font-family:'JetBrains Mono',monospace;
+        font-size:0.72em; font-weight:700;
+        background:#1B2A33; color:#fff;
+        padding:4px 9px; border-radius:4px;
+        letter-spacing:0.05em; margin-top:3px;
+    }
+    .loop-title { font-size:1.05em; font-weight:700; color:#1B2A33; line-height:1.4; }
+    .loop-subtitle { font-size:0.82em; color:#888; font-style:italic; margin-top:3px; }
+
+    /* Dialogue */
+    .dialogue { margin-bottom:0; }
+    .dialogue-line {
+        display:flex; gap:10px; align-items:flex-start;
+        margin-bottom:10px; font-size:0.95em; line-height:1.75; color:#1B2A33;
+    }
+    .speaker {
+        flex-shrink:0; min-width:100px;
+        font-weight:700; color:#2F6F7D;
+        font-size:0.88em; padding-top:1px;
+    }
+    .speaker.warshawski { color:#C84C3E; }
+    .speaker.marple { color:#5F7A3A; }
+    .speaker.morse { color:#6E5DBE; }
+    .speech { flex:1; }
+    .speech em { font-style:italic; color:#555; }
+    .speech strong { color:#1B2A33; }
+
+    /* Revision box */
+    .revision-box {
+        background:#F0E9D2;
+        border-left:4px solid #D98B2B;
+        border-radius:0 8px 8px 0;
+        padding:14px 18px;
+        margin-top:18px;
+        font-size:0.88em;
+        line-height:1.7;
+        color:#1B2A33;
+    }
+    .revision-label {
+        font-size:0.72em; font-weight:700; text-transform:uppercase;
+        letter-spacing:0.1em; color:#D98B2B; margin-bottom:6px;
+    }
+
+    /* Final revisions list */
+    .final-revision {
+        display:flex; gap:14px; align-items:flex-start;
+        margin-bottom:16px;
+    }
+    .rev-num {
+        flex-shrink:0; width:28px; height:28px;
+        border-radius:50%; background:#D98B2B; color:#fff;
+        display:flex; align-items:center; justify-content:center;
+        font-family:'JetBrains Mono',monospace; font-weight:700;
+        font-size:0.82em;
+    }
+    .rev-body { flex:1; font-size:0.95em; line-height:1.75; color:#1B2A33; }
+    .rev-body strong { color:#1B2A33; }
+    .rev-loops {
+        display:inline-block; font-size:0.72em; font-family:'JetBrains Mono',monospace;
+        background:#1B2A33; color:#fff; padding:2px 7px; border-radius:3px;
+        margin-left:6px; vertical-align:middle;
+    }
+
+    .companion-strip { display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+    .companion-strip a {
+        display:inline-block; padding:7px 14px; border:1px solid #DAD2B8;
+        border-radius:6px; font-size:0.85em; color:#2F6F7D;
+        text-decoration:none; background:#FBF8EF; font-weight:600;
+    }
+    .companion-strip a:hover { background:#F0E9D2; }
+
+    .verdict-card {
+        background:#1B2A33; color:#F5F1E4;
+        border-radius:8px; padding:22px 26px; margin-top:4px;
+    }
+    .verdict-card p { font-size:0.97em; line-height:1.8; margin-bottom:1em; }
+    .verdict-card p:last-child { margin:0; }
+    .verdict-card em { color:#DAD2B8; font-style:italic; }
+    .verdict-card strong { color:#fff; }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle active">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework &#8599;</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="framework/index.html">Framework &#8599;</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="hero-section">
+        <h1>The Story That Built a Country &mdash; Investigation</h1>
+        <p class="hero-subtitle">Detective Panel &mdash; Stress-Test of the Seven Loops</p>
+    </div>
+
+    <div class="card">
+        <p class="story-meta">
+            Kingdom of Norway &middot; 1880&ndash;2026 &middot; CAMS v3.2 &mdash; Ensemble Mean (5-scorer)<br>
+            Companion to <a href="norway-arc-story.html" style="color:#2F6F7D;">The Story</a> &middot; <a href="norway-arc-map.html" style="color:#2F6F7D;">The Map</a>
+        </p>
+
+        <p style="font-size:0.97em; line-height:1.8; color:#1B2A33; margin-top:16px;">A fresh panel of detectives, drawn at random and sorted alphabetically, convened to interrogate the loop structure of the Story-That-Built-a-Country Map and its central thesis: that Norway&rsquo;s coherence lives in a conserved Lore that built the society, survived the occupation, and is the asset that can carry the country through the end of oil. Their brief is adversarial &mdash; to find where the story flatters its subject, where the data is doing less work than the prose claims, and where the hopeful reading of the transition rests on assertion rather than evidence.</p>
+    </div>
+
+    <!-- The Panel -->
+    <div class="card" style="margin-top:18px;">
+        <h2 style="font-size:1.05em; font-weight:700; color:#1B2A33; margin:0 0 18px;">The Panel</h2>
+        <div class="detective-grid">
+            <div class="detective-card">
+                <div class="detective-name">Dr. Gideon Fell</div>
+                <div class="detective-role">Lexicographer, lay theologian, solver of impossible crimes</div>
+                <div class="detective-specialty">The large, wheezing, deeply learned amateur who distrusts the too-elegant solution and loves the locked room precisely because it looks impossible. <strong>Specialty:</strong> the explanation that seems to defy mechanism; the question of how a thing was actually done rather than how it is romantically said to have been done.</div>
+            </div>
+            <div class="detective-card">
+                <div class="detective-name" style="color:#6E5DBE;">Inspector Morse</div>
+                <div class="detective-role">Thames Valley, Oxford</div>
+                <div class="detective-specialty">Irascible, melancholic, crossword-minded, suspicious of his own first answers and everyone else&rsquo;s certainties. <strong>Specialty:</strong> the false solution that fits too neatly; the buried resentment under the respectable surface; the case that is not what the comfortable account says it is.</div>
+            </div>
+            <div class="detective-card">
+                <div class="detective-name" style="color:#5F7A3A;">Miss Jane Marple</div>
+                <div class="detective-role">St. Mary Mead</div>
+                <div class="detective-specialty">The elderly spinster who knows that human nature is the same in a village and a kingdom, and who solves crimes by analogy to people she has known. <strong>Specialty:</strong> seeing the universal pattern in the particular; refusing to be impressed by scale or reputation; the village parallel that punctures the grand narrative.</div>
+            </div>
+            <div class="detective-card">
+                <div class="detective-name" style="color:#C84C3E;">V. I. Warshawski</div>
+                <div class="detective-role">Private investigator, Chicago</div>
+                <div class="detective-specialty">The working PI who follows the money and distrusts institutions that describe themselves in noble terms, because she has seen what they do when no one is watching. <strong>Specialty:</strong> the financial structure under the moral story; who actually holds the power; the <em>cui bono</em> the official account omits.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Convening -->
+    <div class="card" style="margin-top:18px;">
+        <h2 style="font-size:1.05em; font-weight:700; color:#1B2A33; margin:0 0 18px;">Convening</h2>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker">FELL</span>
+                <span class="speech"><em>(settling heavily, wheezing)</em> A locked-room problem, this one. Here is a society that in 1940 fell to an aggregate of nearly zero &mdash; institutions destroyed, government in exile, a collaborator in the chair &mdash; and five years later stands at one of the highest readings in its entire history. By every mechanical account that should be impossible. You cannot rebuild a state from rubble in five years. And yet it happened. The map&rsquo;s solution is: the Lore survived, and the institutions were rebuilt from the story. I find that solution beautiful. Which is precisely why I distrust it. Beautiful solutions to impossible problems are usually concealing a trick.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker morse">MORSE</span>
+                <span class="speech">I distrust it for a different reason. It&rsquo;s too flattering. Every nation likes to be told that its soul is indestructible &mdash; that the tanks rolled in but the <em>spirit</em> endured. It&rsquo;s the kind of thing a country puts on a war memorial. The question I&rsquo;d ask is whether &ldquo;conserved Lore&rdquo; is doing any explanatory work at all, or whether it&rsquo;s just a noble name for something more ordinary.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker warshawski">WARSHAWSKI</span>
+                <span class="speech">And I&rsquo;d follow the money, because there&rsquo;s an enormous amount of it in this story and the map treats it as almost incidental. Two-point-two trillion dollars. The largest pool of capital on earth. The map says the fund &ldquo;embodies the Norge story.&rdquo; Maybe. Or maybe the story is what a very rich country tells itself to feel good about being very rich. I want to know which.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech"><em>(mildly)</em> It reminds me of old Mrs. Bantry&rsquo;s garden, which everyone admired for its natural beauty, when in fact three gardeners worked on it daily. The most natural-seeming things are often the most carefully tended. I should like to know who Norway&rsquo;s gardeners are.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- R1 / R3 -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge">R1 &amp; R3</span>
+            <div>
+                <div class="loop-title">The Story Engine &amp; The Resilience Loop</div>
+                <div class="loop-subtitle">Lore makes integration buildable &rarr; settlement &rarr; trust &rarr; renews Lore. And: conserved Lore is the blueprint for recovery from shock.</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker">FELL</span>
+                <span class="speech">Let us take the locked room directly. The 1940-to-1945 recovery. The map&rsquo;s R3 says: the Lore survived the occupation because you cannot occupy a story, and the institutions were rebuilt from the surviving blueprint. Now &mdash; how was it <em>actually</em> done? Because I can think of a more mechanical explanation that the map omits. The institutions were not rebuilt from a story. They were rebuilt because the government-in-exile in London kept the entire administrative apparatus, the merchant fleet, the gold reserves, and the legal continuity intact abroad, and brought them home in 1945. The Norwegian state did not die in 1940 and resurrect from cultural memory. It relocated, kept functioning, and returned. That is a far more ordinary explanation, and it may be the true one.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker morse">MORSE</span>
+                <span class="speech">That&rsquo;s the crack in the locked room, yes. The map romanticises a relocation as a resurrection.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">FELL</span>
+                <span class="speech">And yet &mdash; <em>(wheezing, leaning forward)</em> &mdash; note what the more ordinary explanation requires. Why did the merchant fleet sail for the Allies rather than impound itself in neutral ports? Why did the administrative class go into exile rather than collaborate, when the collaborationist option was right there and Quisling took it? Why did the teachers refuse, en masse, to teach the new ideology, and accept the camps instead? The relocation of the state was <em>itself</em> an expression of something that had to be conserved for the relocation to happen at all. A society without the shared self-understanding would have produced more Quislings and fewer exiles. So the ordinary explanation does not eliminate the Lore &mdash; it shows the Lore operating through the choices of the people who relocated the state rather than as some mystical resurrection. The map is right about the mechanism but sloppy about how it works. The Lore did not rebuild the institutions from nothing; it determined which way people jumped when the occupation came, and most of them jumped toward the exiled state rather than the collaborationist one.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech">That is exactly it. In the village, when the bank failed, it was not the building that mattered but whether people still trusted each other enough to start again. Some villages did and some did not, and the difference was not in their buildings. The map should say plainly: the Lore is not magic. It is the accumulated set of expectations about how one&rsquo;s neighbours will behave under pressure. The Norwegians, under the worst pressure, behaved as their story said they would. That is testable, ordinary, and far more convincing than &ldquo;you cannot occupy a story.&rdquo;</span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revision identified &mdash; R3</div>
+            R3 should specify the <em>mechanism</em> by which conserved Lore produces resilience &mdash; not mystical survival of a national spirit, but the determination of individual choices under pressure (exile over collaboration, refusal over compliance) plus the institutional continuity those choices preserved (government-in-exile, the fleet). The map currently asserts the resilience; it should mechanise it.
+        </div>
+    </div>
+
+    <!-- R2 -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge">R2</span>
+            <div>
+                <div class="loop-title">The Commons Loop &amp; The Question of the Fund</div>
+                <div class="loop-subtitle">Trust &rarr; fund &rarr; embodies Lore &rarr; integration &rarr; settlement &rarr; trust.</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker warshawski">WARSHAWSKI</span>
+                <span class="speech">My turn, because this is where the money is. The map says intergenerational trust made the fund possible, and the fund embodies the story. I&rsquo;ve spent my career watching institutions that describe themselves in noble terms, and I want to test this one hard. Here&rsquo;s my problem. The fund owns 1.5 percent of every listed company on earth. It made $247 billion in a single year &mdash; more than the entire GDP of most countries. The map treats this as the egalitarian commons-principle encoded in fiscal architecture. But there&rsquo;s another reading: the fund is a vast, globally-extractive financial instrument that happens to be owned by a small rich country, and the &ldquo;commons story&rdquo; is the moral cover that makes Norwegians comfortable with being among the wealthiest people on earth while the fund&rsquo;s returns come from the same global capitalism that produces inequality everywhere else.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker morse">MORSE</span>
+                <span class="speech">The fund made its money in 2025 on tech, banking, and mining stocks. Not on Norwegian fishing cooperatives. On global equities. So whose commons is it, exactly?</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker warshawski">WARSHAWSKI</span>
+                <span class="speech">That&rsquo;s the question. The map&rsquo;s R2 says the fund &ldquo;embodies the story.&rdquo; But the story is egalitarian and the fund is a global capital-holder that benefits from global inequality. Those aren&rsquo;t obviously the same thing. The fund is egalitarian <em>internally</em> &mdash; the wealth is shared among Norwegians across generations &mdash; and that&rsquo;s real. But it&rsquo;s not egalitarian <em>externally</em>. It&rsquo;s 1.5 percent of global capital, owned by 0.07 percent of the world&rsquo;s population. The map should be honest that the <em>Norge</em> story&rsquo;s egalitarianism stops at the water&rsquo;s edge.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">FELL</span>
+                <span class="speech">A fair point, and the map&rsquo;s own data gives it teeth. The fund exited Caterpillar and five Israeli banks in 2025 on human-rights grounds, and the U.S. State Department was &ldquo;very troubled.&rdquo; So the fund does apply the commons-ethic outward, sometimes. But selectively, and at the margin.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker warshawski">WARSHAWSKI</span>
+                <span class="speech">Selectively is the word. It divests from the most egregious cases to maintain the moral story, while holding the other 6,995 companies. That&rsquo;s not hypocrisy exactly &mdash; it&rsquo;s better than most sovereign funds &mdash; but the map shouldn&rsquo;t launder it into pure virtue. The commons-principle is real <em>for Norwegians</em> and partial-to-cosmetic <em>for everyone else</em>.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech">It is like the lady of the manor who is unfailingly generous to her own village and quite indifferent to the next parish. Genuinely kind, within her circle. The circle is the point.</span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revision identified &mdash; R2</div>
+            R2 should distinguish the fund&rsquo;s <em>internal</em> egalitarianism (real, intergenerational, the genuine encoding of the <em>Norge</em> story among Norwegians) from its <em>external</em> position (a global capital-holder benefiting from the global inequality the domestic story would deplore). The commons-principle is bounded by nationality. The map currently presents the fund as unambiguous embodiment of an egalitarian story; the honest version notes the boundary.
+        </div>
+    </div>
+
+    <!-- R4 -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge">R4</span>
+            <div>
+                <div class="loop-title">The Oil-Welfare Engine</div>
+                <div class="loop-subtitle">Fund returns &rarr; welfare &rarr; settlement &rarr; trust &rarr; fund.</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker morse">MORSE</span>
+                <span class="speech">This is the loop I think the map gets most right and states most carefully &mdash; the oil-welfare engine, with petroleum feeding it from outside. But I have one query. The map says petroleum Flow &ldquo;feeds the loop from outside&rdquo; and is therefore not strictly <em>in</em> the reinforcing cycle. That&rsquo;s a convenient framing. It lets the virtuous loop spin cleanly while the dirty fuel sits politely outside the diagram. Is that honest, or is it a way of keeping the oil at arm&rsquo;s length from the story?</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker warshawski">WARSHAWSKI</span>
+                <span class="speech">It&rsquo;s the same move the country makes. &ldquo;The fund is clean; the oil is just where the money came from.&rdquo; Arm&rsquo;s length.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker morse">MORSE</span>
+                <span class="speech">Precisely. The data says petroleum has been the strongest single contributor to modern system health <em>and</em> the most volatile node. You can&rsquo;t put the strongest contributor &ldquo;outside&rdquo; the engine and call the engine self-sustaining. The engine runs on the oil. If the oil stops, the map&rsquo;s own e7 &mdash; petroleum fills the fund &mdash; stops, and the loop runs only on accumulated returns. The map should be clearer that R4 is <em>currently</em> fed by extraction, not only by returns, and that the &ldquo;outside the loop&rdquo; framing describes the aspiration (a fund that runs on returns alone) more than the present (a fund still topped by extraction).</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">FELL</span>
+                <span class="speech">Though in fairness, the spending rule does mean the <em>welfare</em> is funded by returns, not directly by extraction. The oil fills the capital; the returns fund the spending. That is a genuine structural distinction, not a dodge.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker morse">MORSE</span>
+                <span class="speech">Genuine, yes. But the capital is still being added to by extraction. The day extraction stops, the fund stops growing from oil and grows only from returns &mdash; which is fine if it&rsquo;s big enough, but it means the &ldquo;engine&rdquo; has been running on a fuel the map keeps politely outside the frame. I want it inside the frame, labelled honestly.</span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revision identified &mdash; R4</div>
+            R4 should state explicitly that the loop is <em>presently</em> fed by ongoing extraction (e7), and that the &ldquo;petroleum outside the loop&rdquo; framing represents the post-transition aspiration (returns-only funding) rather than the 2026 reality. The distinction between extraction-fed capital and return-funded spending is real and should be kept &mdash; but the loop should not be allowed to look self-sustaining while extraction continues.
+        </div>
+    </div>
+
+    <!-- B1 / R6 -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge">B1 &amp; R6</span>
+            <div>
+                <div class="loop-title">The Limits-to-Growth Constraint &amp; The Clean-Story Reckoning</div>
+                <div class="loop-subtitle">Carbon dependency &rarr; tension &rarr; transition &rarr; reduces oil. And: clean self-image &rarr; tension &rarr; transition &rarr; renews Lore.</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech">Now we come to the part that troubles me most, and it is not in the loops themselves but in their hopefulness. The map says the tension between the clean story and the dirty foundation &ldquo;drives the transition.&rdquo; It assumes the tension produces action. But in my experience, tension between what people believe and what they do most often produces not action but <em>accommodation</em>. People are remarkably good at living with their contradictions. The vicar who preaches charity and is unkind to his curate does not usually reform; he simply stops noticing the gap. Why should a nation be different?</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker morse">MORSE</span>
+                <span class="speech">This is the strongest objection on the table. The map&rsquo;s B1 and R6 both assume the contradiction is generative &mdash; that the clean story, embarrassed by the dirty foundation, drives the transition. But the same data supports the opposite: that the clean story provides <em>cover</em> for the dirty foundation, letting Norwegians feel ecological while extracting. The story doesn&rsquo;t drive the transition; it anaesthetises the guilt that might otherwise drive it. That&rsquo;s the British &ldquo;comfort blindfold&rdquo; wearing a green coat.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker warshawski">WARSHAWSKI</span>
+                <span class="speech">And the 2026 politics support Morse, not the map. The Progress Party doubled its vote on a keep-extracting platform. Europe&rsquo;s begging for the gas. St&oslash;re&rsquo;s &ldquo;continue exploration while cutting emissions&rdquo; is the accommodation, not the reckoning. Where&rsquo;s the evidence the tension is actually driving transition rather than just being managed?</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">FELL</span>
+                <span class="speech">The evidence the map points to is the fund&rsquo;s transition-backing &mdash; the largest in the world. That&rsquo;s not nothing.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker warshawski">WARSHAWSKI</span>
+                <span class="speech">It&rsquo;s portfolio diversification by a fund that owns everything. Of course the world&rsquo;s largest investor is the largest investor in transition infrastructure &mdash; it&rsquo;s the largest investor in <em>everything</em>. The map reads intention into what might just be index-tracking. Tangen himself said it&rsquo;s a near-index fund. You can&rsquo;t call owning 1.5 percent of the solar industry a moral choice when you own 1.5 percent of the oil industry too.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker morse">MORSE</span>
+                <span class="speech">That&rsquo;s the sharpest cut of the day. The fund&rsquo;s transition-backing may be an artefact of its size, not a sign of intent. The map should not lean on it as evidence the reckoning is underway.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech">So the question the map cannot answer is the only question that matters: is the tension driving a transition, or is the story comfortably absorbing the tension so that no transition is needed? The map assumes the first. The data is equally consistent with the second. An honest map holds both open.</span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revision identified &mdash; B1 / R6</div>
+            B1 and R6 are built on the assumption that the ecological-economic tension <em>drives</em> the transition. The panel establishes that the same data supports the opposite &mdash; that the clean story may <em>absorb</em> the tension (a green comfort-blindfold), providing moral cover for continued extraction rather than pressure to stop. The map needs an explicit balancing loop in which the Lore&rsquo;s clean self-image <em>relieves</em> the tension without resolving the dependency &mdash; the Norwegian version of the British symbolic-satisfaction trap. The transition-driving loops (B1, R6) and a new tension-absorbing loop should both be present, with the outcome genuinely undetermined.
+        </div>
+    </div>
+
+    <!-- R5 -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge">R5</span>
+            <div>
+                <div class="loop-title">The Transition Bypass &amp; The Central Hope</div>
+                <div class="loop-subtitle">Conserved Lore powers transition &rarr; transition extends Lore.</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker">FELL</span>
+                <span class="speech">The keystone. The map&rsquo;s hope rests entirely on R5: the same Lore that survived the occupation will power the transition out of oil. I have spent the session defending the Lore against the charge of being mystical, so let me now turn on it. Even granting that the Lore is real and mechanically explicable &mdash; the question is whether the <em>occupation</em> precedent transfers to the <em>transition</em>. They are not the same kind of problem.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker morse">MORSE</span>
+                <span class="speech">Go on.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">FELL</span>
+                <span class="speech">The occupation was an <em>external</em> enemy. The whole society could unite against it &mdash; the Lore had a clear object, a &ldquo;them&rdquo; against the &ldquo;us.&rdquo; Exile over collaboration was a clear binary. But the transition is an <em>internal</em> contradiction. There is no occupier. The enemy, if there is one, is the society&rsquo;s own prosperity, its own oil, its own comfort. The Lore that unites a people against an external enemy may be useless &mdash; may even be counterproductive &mdash; against an internal contradiction, because there is no &ldquo;them&rdquo; to jump away from. You cannot exile yourself from your own oil revenue.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker warshawski">WARSHAWSKI</span>
+                <span class="speech">That&rsquo;s right. Resistance and renunciation are different muscles. Norway proved it can resist. It hasn&rsquo;t proven it can renounce.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech">The boy who is brave in a fight is not always the man who can give up drink. They are different virtues, and having the first is no guarantee of the second.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">FELL</span>
+                <span class="speech">So R5 &mdash; the transition bypass &mdash; rests on an analogy that may not hold. The map cites the occupation recovery and the banking-crisis recovery as evidence the Lore can carry the country through the oil transition. But both of those were recoveries from <em>external shocks</em> &mdash; an invasion, a financial crisis that arrived from outside the system&rsquo;s control. The oil transition is not a shock to recover <em>from</em>; it is a comfort to renounce. The map&rsquo;s central hope conflates resilience-against-shock with willingness-to-renounce-success, and those are different capacities. Norway has demonstrated the first abundantly. It has not yet demonstrated the second at all.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker morse">MORSE</span>
+                <span class="speech">Which is the whole case, isn&rsquo;t it. The map&rsquo;s optimism is an extrapolation from the wrong precedent.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">FELL</span>
+                <span class="speech"><em>(wheezing, settling back)</em> Not the wrong precedent. An <em>incomplete</em> one. The Lore is real; the resilience is real; the recoveries are real. But they are evidence of one capacity, and the transition requires a second capacity the data does not yet speak to. The honest map says: here is overwhelming evidence Norway can recover from anything done <em>to</em> it, and no evidence yet about whether it can give up something good <em>for</em> itself. The first is the strongest case in the record. The second is genuinely unknown.</span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revision identified &mdash; R5</div>
+            R5 (the central hope) rests on an analogy between past recoveries and the coming transition that may not hold: the recoveries were from <em>external shocks</em> (occupation, banking crisis) and demonstrate resilience-against-adversity; the transition requires <em>voluntary renunciation</em> of a present good (oil revenue) and demonstrates a different capacity the data has not tested. The map should distinguish these two capacities explicitly and mark the transition-capacity as genuinely unproven, rather than extrapolating it from the resilience record.
+        </div>
+    </div>
+
+    <!-- Cross-Loop Synthesis -->
+    <div class="card" style="margin-top:18px;">
+        <h2 style="font-size:1.05em; font-weight:700; color:#1B2A33; margin:0 0 18px;">Cross-Loop Synthesis</h2>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker morse">MORSE</span>
+                <span class="speech">Let&rsquo;s total it up.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">FELL</span>
+                <span class="speech">Five findings, and they sharpen rather than demolish the map. First &mdash; the resilience is real but its mechanism is ordinary, not mystical: the Lore worked through individual choices under pressure and the institutional continuity those choices preserved, not through some indestructible national spirit. The map should mechanise R3.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker warshawski">WARSHAWSKI</span>
+                <span class="speech">Second &mdash; the fund&rsquo;s egalitarianism is real but bounded by nationality. Internally a genuine commons; externally a global capital-holder benefiting from the inequality the story deplores. R2 should mark the boundary.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker morse">MORSE</span>
+                <span class="speech">Third &mdash; the oil-welfare engine is presently fed by extraction, and the map&rsquo;s &ldquo;oil outside the loop&rdquo; framing describes the aspiration, not the 2026 reality. R4 should bring the fuel inside the frame.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech">Fourth, and gravest &mdash; the map assumes the clean-story/dirty-foundation tension <em>drives</em> the transition, when the same data supports the opposite: that the clean story <em>absorbs</em> the tension, a green comfort-blindfold providing cover for continued extraction. The map needs the tension-absorbing loop alongside the tension-driving ones, with the outcome open.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">FELL</span>
+                <span class="speech">And fifth &mdash; the central hope, R5, rests on the wrong half of an analogy. Norway has proven it can recover from shocks done to it; it has not proven it can renounce a good it possesses. Resilience and renunciation are different capacities. The map&rsquo;s optimism extrapolates from the first to the second without warrant.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker morse">MORSE</span>
+                <span class="speech">So does the central thesis survive?</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">FELL</span>
+                <span class="speech"><em>(wheezing, settling back)</em> It survives, and I&rsquo;ll say why, having spent the day attacking it. The thesis is that Norway&rsquo;s coherence lives in a conserved Lore that built the society and may carry it through the transition. Everything we have found refines that thesis without overturning it. The Lore is real &mdash; we have only insisted it is ordinary rather than magical. The fund is a genuine commons &mdash; we have only bounded it by nationality. The success is real &mdash; we have only brought the oil inside the frame. And the hope is genuine &mdash; we have only insisted it rests on an untested capacity rather than a proven one. The map is not wrong. It is <em>too confident</em>. It has told the story of a society that has succeeded at everything it has attempted, and assumed that the next thing it attempts will therefore also succeed. But the next thing is different in kind from everything that came before, and the map&rsquo;s own data cannot tell us whether the society that is supremely good at resilience is also good at renunciation.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech">Which is, when you think about it, the most interesting thing one could possibly say about Norway. Not that it will succeed, and not that it will fail. But that it is about to attempt something it has never attempted before, with assets that are perfectly suited to a different task, and that nobody &mdash; not the map, not the data, not the Norwegians themselves &mdash; yet knows whether the assets transfer.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">FELL</span>
+                <span class="speech"><em>(wheezing contentedly)</em> A locked room after all. We have not solved it. We have only shown that it is genuinely locked &mdash; that the answer is not yet in the room. Which is the honest place to leave it.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Verdict -->
+    <div class="verdict-card" style="margin-top:18px;">
+        <p>The central thesis survives, refined and made less confident. The locked room is shown to be genuinely locked: the decisive question &mdash; whether a society supremely good at resilience is also good at renunciation &mdash; is not answerable from the historical data.</p>
+        <p style="margin:0;"><em>Neural Nations &middot; CAMS v3.2 Ensemble Mean (5-scorer) &middot; Detective Panel v1.0</em></p>
+    </div>
+
+    <!-- Final Revisions -->
+    <div class="card" style="margin-top:18px;">
+        <h2 style="font-size:1.05em; font-weight:700; color:#1B2A33; margin:0 0 20px;">Revisions Recommended by the Panel</h2>
+
+        <div class="final-revision">
+            <span class="rev-num">1</span>
+            <div class="rev-body"><strong>Mechanise R3 (Resilience Loop).</strong> Specify that conserved Lore produces resilience through ordinary, testable mechanisms &mdash; the determination of individual choices under pressure (exile over collaboration, refusal over compliance) and the institutional continuity those choices preserved (government-in-exile, the fleet) &mdash; not through mystical survival of a national spirit. <span class="rev-loops">R3 &mdash; Fell, Marple</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">2</span>
+            <div class="rev-body"><strong>Bound the fund&rsquo;s egalitarianism by nationality in R2.</strong> Distinguish the fund&rsquo;s genuine <em>internal</em> intergenerational egalitarianism (the real <em>Norge</em> story) from its <em>external</em> position as a global capital-holder benefiting from the global inequality the domestic story would deplore. The commons-principle stops at the water&rsquo;s edge. <span class="rev-loops">R2 &mdash; Warshawski, Marple</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">3</span>
+            <div class="rev-body"><strong>Bring the oil inside the frame in R4.</strong> State explicitly that the oil-welfare engine is <em>presently</em> fed by ongoing extraction (e7), and that the &ldquo;petroleum outside the loop&rdquo; framing represents the post-transition aspiration (returns-only funding), not the 2026 reality. Keep the genuine distinction between extraction-fed capital and return-funded spending. <span class="rev-loops">R4 &mdash; Morse, Fell</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">4</span>
+            <div class="rev-body"><strong>Add a tension-absorbing loop (the green comfort-blindfold).</strong> The map assumes the ecological-economic tension <em>drives</em> the transition (B1, R6). Add the opposing balancing loop in which the Lore&rsquo;s clean self-image <em>relieves</em> the tension without resolving the dependency &mdash; providing moral cover for continued extraction, the Norwegian analogue of the British symbolic-satisfaction trap. Leave the outcome between driving and absorbing genuinely undetermined. <span class="rev-loops">B1/R6 &mdash; Marple, Morse, Warshawski</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">5</span>
+            <div class="rev-body"><strong>Distinguish resilience from renunciation in R5.</strong> The central hope extrapolates from past recoveries (resilience against <em>external shocks</em>) to the coming transition (voluntary <em>renunciation</em> of a present good). These are different capacities; Norway has proven the first abundantly and the second not at all. Mark the transition-capacity as genuinely unproven rather than extrapolated from the resilience record. <span class="rev-loops">R5 &mdash; Fell, Warshawski, Marple</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">6</span>
+            <div class="rev-body"><strong>Add the external-enemy / internal-contradiction distinction.</strong> The Lore united Norway against external enemies (occupation) with a clear &ldquo;them.&rdquo; The transition is an internal contradiction with no &ldquo;them&rdquo; to unite against. The map should note that Lore-driven cohesion may be less effective against an internal contradiction than against an external threat &mdash; possibly even counterproductive. <span class="rev-loops">R5/structural &mdash; Fell</span></div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:18px;">
+        <p style="font-size:0.85em; color:#888; margin-bottom:12px;">Companion pages:</p>
+        <div class="companion-strip">
+            <a href="norway-arc-story.html">Norway &mdash; The Story</a>
+            <a href="norway-arc-map.html">Norway &mdash; Aha! Map</a>
+            <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+        </div>
+    </div>
+
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>
