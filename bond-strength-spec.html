@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bond Strength — Canonical Specification | Neural Nations</title>
     <meta name="description" content="Canonical definition of CAMS Bond Strength (v2.3). Single authoritative specification covering formula, scale, interpretation, worked example, and version history.">
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a1a; line-height: 1.7; margin: 0; background: #fff; }
         .page-container { max-width: 860px; margin: 0 auto; padding: 48px 24px 80px; }
@@ -46,16 +55,72 @@
     </style>
 </head>
 <body>
-
-<!-- ============================================================
-  NOTE TO EDITOR (remove before publishing):
-  Sections marked [CONFIRM FORMULA] require you to verify the
-  exact mathematical expression against your working papers.
-  The structure, narrative, and scale values are correct from
-  the audit findings. The formula placeholders use the Laplacian/
-  Fiedler formulation described in Paper 1 — confirm and fill in
-  any coefficients or normalisation constants before publishing.
-  ============================================================ -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link active">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
 
 <div class="page-container">
 
@@ -141,16 +206,11 @@
     <p>For each pair of nodes (<em>i</em>, <em>j</em>), compute the pairwise edge weight:</p>
 
     <div class="formula-block">
-        <!-- [CONFIRM FORMULA] Verify the exact edge-weight expression from Paper 1 -->
-        <div class="eq">w<sub>ij</sub> = √(V<sub>i</sub> · V<sub>j</sub>) &nbsp; for V<sub>i</sub>, V<sub>j</sub> &gt; 0</div>
+        <div class="eq">B<sub>ij</sub> = √(max(V<sub>i</sub> + 8, 0) · max(V<sub>j</sub> + 8, 0)) / 32</div>
         <div style="font-size: 0.8em; color: #666; margin-top: 10px;">
-            w<sub>ij</sub> = 0 where either node value is zero or negative
+            +8 shift handles negative node values &nbsp;|&nbsp; /32 normalises to approximately [0, 1]
         </div>
     </div>
-
-    <p>This produces an 8×8 symmetric adjacency matrix <strong>W</strong>. The geometric mean is used
-    because it penalises imbalance: a strong node paired with a collapsed node produces a weak bond,
-    not an average one.</p>
 
     <h3>Step 3 — Per-node Bond Strength</h3>
 
@@ -340,49 +400,39 @@
 
     <div class="callout callout-amber">
         <div class="callout-label">Why this matters</div>
-        Bond Strength has been defined differently at different stages of the CAMS development.
-        If you are working from downloaded CSVs, older working papers, or the Scale Invariance
-        supplementary report, check which formulation those files used before comparing values
-        to current outputs.
+        Bond Strength has been defined differently at different stages of CAMS development.
+        If you are working from downloaded CSVs, check which formula produced them before
+        comparing values to current v2.3 outputs.
     </div>
 
-    <h3>v2.3 — Laplacian / Fiedler formulation <span class="version-badge badge-canonical">Current</span></h3>
-    <p>Described on this page. Introduced formally in Paper 1. Replaces the bounded [0,1]
-    formulation as the canonical specification. Scale: unbounded positive real; healthy range
-    approximately 18–40 for stable societies.</p>
+    <h3>v2.3 — Geometric mean with +8 shift <span class="version-badge badge-canonical">Current</span></h3>
+    <p>The formula on this page: <code>Bij = sqrt(max(Vi+8,0) * max(Vj+8,0)) / 32</code>.
+    Per-node Bond Strength is the mean of Bij across all other nodes in the same society-year.
+    Scale: approximately [0, 1]. Implemented in <code>cams_framework_v2_3.py</code>.
+    All datasets in <code>data/v2.3/</code> use this formula.</p>
 
-    <h3>v2.1 — Bounded geometric formulation <span class="version-badge badge-superseded">Superseded</span></h3>
+    <h3>v2.0 — Weighted Coherence/Abstraction formula <span class="version-badge badge-superseded">Superseded</span></h3>
     <div class="superseded-box">
-        <p>The v2.1 formulation defined pairwise bond strength as a normalised geometric transform
-        of node values, bounded in [0,1]. This gave a clean, interpretable scale but lost information
-        about the magnitude of network degradation — a society with a Bond Strength of 0.3 under
-        this formulation might be in mild stress or near collapse, depending on the absolute level
-        of node values.</p>
-        <p>This formulation is <strong>not compatible</strong> with v2.3 values. CSV files from
-        the v2.1 phase of the project carry a <code>bond_strength_v21</code> column header to
-        distinguish them. The v2.1 implementation is archived at
-        <code>archive/v2.1-neural-network/</code> in the repository.</p>
+        <p>The v2.0 formulation in <code>cams_scoring_engine.py</code> computed pairwise bond
+        strength as a weighted average of raw scores dampened by stress:</p>
+        <pre>Bond = [(C_a + C_b) * 0.6 + (A_a + A_b) * 0.4] / (1 + avg_stress)</pre>
+        <p>Per-node Bond Strength was then the mean of pairwise bonds across all other nodes.
+        This formula operated on raw Coherence and Abstraction scores rather than derived Node
+        Values, making it sensitive to scoring scale in ways the v2.3 formula is not.
+        All datasets in <code>data/cleaned/</code> were produced by this formula.
+        Values are <strong>not comparable</strong> to v2.3 output — the scales differ
+        significantly (v2.0 typical range 8–16; v2.3 typical range 0.35–0.80).</p>
     </div>
 
-    <h3>Scale Invariance page derived quantity <span class="version-badge badge-archived">See note</span></h3>
+    <h3>Spectral / Fiedler extension <span class="version-badge badge-archived">Separate module</span></h3>
     <div class="superseded-box">
-        <p>The Scale Invariance supplementary page and the 2026 Scale Invariance Report PDF use
-        a Bond Strength variant that is per-node rather than network-level, and is reported on
-        a scale that reflects the absolute node value magnitudes of each specific dataset.
-        These values are not directly comparable to the canonical Fiedler value. They remain
-        valid as a relative measure within a single dataset but should not be interpreted
-        using the reference ranges on this page. The Scale Invariance page will be updated
-        to cross-reference this specification.</p>
-    </div>
-
-    <h3>Research Diary — independently scored Bond Strength <span class="version-badge badge-archived">See note</span></h3>
-    <div class="superseded-box">
-        <p>Some diary entries describe a protocol in which Bond Strength was scored directly
-        by each LLM assessor alongside the four node-level metrics, rather than being computed
-        from node values. This was an experimental cross-check. In the canonical v2.3 pipeline,
-        Bond Strength is <em>always derived</em> from node values via the Laplacian formula —
-        it is not an independently scored variable. Directly scored Bond Strength values
-        from the diary entries are not included in the canonical CSV outputs.</p>
+        <p><code>cams_spectral.py</code> implements a full spectral pipeline using the same
+        pairwise formula as a building block: graph Laplacian, Fiedler vector, and algebraic
+        connectivity λ₂. The Fiedler value gives a single scalar per society-year summarising
+        whole-network cohesion. It is a network-level measure, distinct from the per-node
+        Bond Strength in the CSVs. It is not a replacement for v2.3 — it is an extension
+        for advanced coordination analysis. See the
+        <a href="cams-coordination.html">Coordination Diagram</a> page.</p>
     </div>
 
 
@@ -433,5 +483,6 @@
     </div>
 
 </div>
+<script src="nav.js"></script>
 </body>
 </html>
