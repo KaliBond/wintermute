@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Soft Landing Investigation — Detective Panel · Neural Nations</title>
+    <meta name="description" content="Father Brown, Cordelia Gray, Poirot, and Wimsey stress-test the six loops of the Soft Landing Map — the Continuity Engine, the Absorption Trap, the Comfort Blindfold, and the hard question of what Reform, Your Party, and Scottish independence actually mean for the model. Six revisions enumerated.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/uk-detective-panel">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neuralnations.org/uk-detective-panel">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:title" content="The Soft Landing Investigation — Detective Panel · Neural Nations">
+    <meta property="og:description" content="Father Brown, Gray, Poirot, and Wimsey interrogate the loop structure of the UK Soft Landing Map. The thesis survives, in a harder form. Six revisions enumerated.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Soft Landing Investigation — Detective Panel · Neural Nations">
+    <meta name="twitter:description" content="A panel of detectives stress-tests the UK CAMS map. The strength and the weakness are the same thing — but that thing is less flattering than the map admits.">
+    <link rel="stylesheet" href="style.css">
+    <style>
+    .story-meta { font-size:0.82em; color:#888; letter-spacing:0.04em; line-height:1.8; }
+    .story-divider { text-align:center; color:#DAD2B8; font-size:1.2em; letter-spacing:0.4em; margin:2em 0; }
+
+    .detective-grid {
+        display:grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap:14px;
+        margin:20px 0;
+    }
+    .detective-card {
+        background:#FBF8EF;
+        border:1px solid #DAD2B8;
+        border-radius:8px;
+        padding:16px 18px;
+    }
+    .detective-name {
+        font-size:0.95em; font-weight:700; color:#2F6F7D;
+        margin-bottom:4px;
+    }
+    .detective-role {
+        font-size:0.78em; color:#888; font-style:italic; margin-bottom:8px;
+    }
+    .detective-specialty {
+        font-size:0.84em; color:#1B2A33; line-height:1.65;
+    }
+
+    .loop-header {
+        display:flex; align-items:flex-start; gap:14px;
+        margin:0 0 16px;
+    }
+    .loop-badge {
+        flex-shrink:0;
+        font-family:'JetBrains Mono',monospace;
+        font-size:0.72em; font-weight:700;
+        background:#1B2A33; color:#fff;
+        padding:4px 9px; border-radius:4px;
+        letter-spacing:0.05em; margin-top:3px;
+    }
+    .loop-title { font-size:1.05em; font-weight:700; color:#1B2A33; line-height:1.4; }
+    .loop-subtitle { font-size:0.82em; color:#888; font-style:italic; margin-top:3px; }
+
+    .dialogue { margin-bottom:0; }
+    .dialogue-line {
+        display:flex; gap:10px; align-items:flex-start;
+        margin-bottom:10px; font-size:0.95em; line-height:1.75; color:#1B2A33;
+    }
+    .speaker {
+        flex-shrink:0; min-width:110px;
+        font-weight:700; color:#2F6F7D;
+        font-size:0.88em; padding-top:1px;
+    }
+    .speaker.gray   { color:#5F7A3A; }
+    .speaker.poirot { color:#6E5DBE; }
+    .speaker.wimsey { color:#C84C3E; }
+    .speech { flex:1; }
+    .speech em { font-style:italic; color:#555; }
+    .speech strong { color:#1B2A33; }
+
+    .revision-box {
+        background:#F0E9D2;
+        border-left:4px solid #D98B2B;
+        border-radius:0 8px 8px 0;
+        padding:14px 18px;
+        margin-top:18px;
+        font-size:0.88em;
+        line-height:1.7;
+        color:#1B2A33;
+    }
+    .revision-label {
+        font-size:0.72em; font-weight:700; text-transform:uppercase;
+        letter-spacing:0.1em; color:#D98B2B; margin-bottom:6px;
+    }
+
+    .final-revision {
+        display:flex; gap:14px; align-items:flex-start;
+        margin-bottom:16px;
+    }
+    .rev-num {
+        flex-shrink:0; width:28px; height:28px;
+        border-radius:50%; background:#D98B2B; color:#fff;
+        display:flex; align-items:center; justify-content:center;
+        font-family:'JetBrains Mono',monospace; font-weight:700;
+        font-size:0.82em;
+    }
+    .rev-body { flex:1; font-size:0.95em; line-height:1.75; color:#1B2A33; }
+    .rev-body strong { color:#1B2A33; }
+    .rev-loops {
+        display:inline-block; font-size:0.72em; font-family:'JetBrains Mono',monospace;
+        background:#1B2A33; color:#fff; padding:2px 7px; border-radius:3px;
+        margin-left:6px; vertical-align:middle;
+    }
+
+    .companion-strip { display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+    .companion-strip a {
+        display:inline-block; padding:7px 14px; border:1px solid #DAD2B8;
+        border-radius:6px; font-size:0.85em; color:#2F6F7D;
+        text-decoration:none; background:#FBF8EF; font-weight:600;
+    }
+    .companion-strip a:hover { background:#F0E9D2; }
+
+    .verdict-card {
+        background:#1B2A33; color:#F5F1E4;
+        border-radius:8px; padding:22px 26px; margin-top:4px;
+    }
+    .verdict-card p { font-size:0.97em; line-height:1.8; margin-bottom:1em; }
+    .verdict-card p:last-child { margin:0; }
+    .verdict-card em { color:#DAD2B8; font-style:italic; }
+    .verdict-card strong { color:#fff; }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle active">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework &#8599;</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="framework/index.html">Framework &#8599;</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="hero-section">
+        <h1>The Soft Landing Investigation</h1>
+        <p class="hero-subtitle">Detective Panel &mdash; Stress-Test of the Six Loops</p>
+    </div>
+
+    <div class="card">
+        <p class="story-meta">
+            United Kingdom &middot; 1880&ndash;2026 &middot; CAMS v3.2 &mdash; Ensemble Mean (5-scorer)<br>
+            Companion to <a href="uk-arc-story.html" style="color:#2F6F7D;">The Art of the Soft Landing</a> &middot; <a href="uk-arc-map.html" style="color:#2F6F7D;">The Map</a>
+        </p>
+
+        <p style="font-size:0.97em; line-height:1.8; color:#1B2A33; margin-top:16px;">A fresh panel of noteworthy detectives, selected by random draw and sorted alphabetically, convened to interrogate the loop structure of the Soft Landing Map and its central thesis: that the British genius for absorbing shock is the same mechanism that absorbs the pressure for renewal. Their brief is adversarial &mdash; to find where the thesis is too neat, where the data is doing less work than the prose claims, and where the contemporary pressures (Reform, Your Party, Scottish independence) expose the model&rsquo;s limits.</p>
+    </div>
+
+    <!-- The Panel -->
+    <div class="card" style="margin-top:18px;">
+        <h2 style="font-size:1.05em; font-weight:700; color:#1B2A33; margin:0 0 18px;">The Panel</h2>
+        <div class="detective-grid">
+            <div class="detective-card">
+                <div class="detective-name">Father Brown</div>
+                <div class="detective-role">Catholic priest, Essex</div>
+                <div class="detective-specialty">Understands evil and self-deception from the inside, through the confessional rather than the laboratory. <strong>Specialty:</strong> the motive the respectable explanation is constructed to conceal; the comfortable lie a society tells itself.</div>
+            </div>
+            <div class="detective-card">
+                <div class="detective-name" style="color:#5F7A3A;">Cordelia Gray</div>
+                <div class="detective-role">Pryde&rsquo;s Detective Agency</div>
+                <div class="detective-specialty">The working investigator without independent means, who notices what the genteel overlook because she has had to live closer to the ground. <strong>Specialty:</strong> the class dimension the establishment analysis edits out.</div>
+            </div>
+            <div class="detective-card">
+                <div class="detective-name" style="color:#6E5DBE;">Hercule Poirot</div>
+                <div class="detective-role">Formerly Belgian police, of Whitehaven Mansions</div>
+                <div class="detective-specialty">Order, method, the little grey cells, the psychology of the deed. <strong>Specialty:</strong> the pattern that repeats because the same psychology produces it each time; the assumption hiding in plain sight.</div>
+            </div>
+            <div class="detective-card">
+                <div class="detective-name" style="color:#C84C3E;">Lord Peter Wimsey</div>
+                <div class="detective-role">Piccadilly, and Balliol before that</div>
+                <div class="detective-specialty">The aristocratic amateur who knows the British establishment from within because he is of it, and can therefore see its self-flattery for what it is. <strong>Specialty:</strong> the way the English ruling order describes its retreats as victories.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Convening -->
+    <div class="card" style="margin-top:18px;">
+        <h2 style="font-size:1.05em; font-weight:700; color:#1B2A33; margin:0 0 18px;">Convening</h2>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker poirot">POIROT</span>
+                <span class="speech">Six loops. Twelve nodes. The arithmetic, I have confirmed, is sound &mdash; the polarities close, the loops are correctly signed. So we do not check the sums. We check whether the story the sums tell is the true story, or merely a <em>satisfying</em> one. And I will say at the outset: a thesis this elegant &mdash; that the strength and the weakness are the same thing &mdash; is precisely the kind of thesis that flatters its author. We must be suspicious of elegance.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker wimsey">WIMSEY</span>
+                <span class="speech">Quite. There&rsquo;s nothing the English establishment enjoys more than being told that its failures are actually a subtle form of wisdom. &ldquo;Managed decline&rdquo; &mdash; what a marvellously comfortable phrase. It turns losing into a skill. I should know; I was raised to it.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">FATHER BROWN</span>
+                <span class="speech">And yet the comfortable phrase may still be true. The question is not whether it comforts, but whether it conceals. Let us see what it conceals.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- R1 -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge">R1</span>
+            <div>
+                <div class="loop-title">The Continuity Engine</div>
+                <div class="loop-subtitle">System Stress &rarr; Archive Absorptive Capacity &rarr; Soft Landing &rarr; Constitutional Continuity &rarr; replenished Archive. The reinforcing core.</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker wimsey">WIMSEY</span>
+                <span class="speech">I want to test the central claim that the Archive is the hero of this story. The map says the unwritten constitution, the common law, the Crown-in-Parliament, the permanent civil service are the great shock-absorber. Very flattering to my class, who staffed all of it. But here is my difficulty. The map treats the Archive as a single thing with a single virtue &mdash; flexibility-without-rupture. Is it not at least possible that what the data is calling &ldquo;Archive stability&rdquo; is something less admirable? Namely, the simple fact that the people who ran the institutions in 1880 and the people who run them in 2026 are drawn from the same narrow stratum, educated at the same schools, holding the same assumptions? The &ldquo;stability&rdquo; may not be constitutional genius. It may be the stickiness of a class that never lets go.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker gray">GRAY</span>
+                <span class="speech">That is exactly the thing I&rsquo;d want on the table, and I&rsquo;d put it harder than Lord Peter does, if he&rsquo;ll forgive me. The map calls the Archive the lowest-volatility node and treats that as the system&rsquo;s strength. But look at it from underneath. The Archive is stable because it has never had to accommodate the people at the bottom. The Hands node sits at 7.0 for 147 years; the Archive sits near the top for 147 years. Those aren&rsquo;t two facts. They&rsquo;re the same fact. The Archive is stable <em>because</em> the working class was never let into the room where the Archive is kept. The continuity the gentlemen admire is the continuity of their own exclusion of everyone else.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker poirot">POIROT</span>
+                <span class="speech">Mademoiselle Gray has identified something the map states but does not fully confront. The map notes that Archive is highest and Hands is lowest across 147 years. It treats these as separate findings &mdash; the conserved node, the unintegrated node. But if they are causally linked &mdash; if the Archive&rsquo;s stability is <em>purchased by</em> the Hands exclusion &mdash; then R1, the Continuity Engine, is not a neutral shock-absorber. It is a mechanism for preserving a particular distribution of power. The map needs an explicit causal link: the Hands Integration Deficit feeds Archive Absorptive Capacity, positive &mdash; the deficit feeds the stability. An integrated working class would have destabilised the Archive. The exclusion is what kept it calm.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">FATHER BROWN</span>
+                <span class="speech">That is the concealed motive. The map says the system absorbs shock to preserve continuity. The truth beneath is that the system preserves a continuity that was always the continuity of some people and not others. The soft landing is soft for whom? I have given absolution to enough comfortable men to know that the most dangerous self-deception is the one that describes a self-interested arrangement as a general good.</span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revision identified &mdash; R1</div>
+            Add a causal link from Hands Integration Deficit to Archive Absorptive Capacity (positive). The Archive&rsquo;s stability is not a separate finding from the Hands exclusion &mdash; it is purchased by it. An integrated working class would have destabilised the Archive. The map treats these as two facts; they are one mechanism. The Continuity Engine is not a neutral absorber; it is a defended class settlement experienced as resilience.
+        </div>
+    </div>
+
+    <!-- B1 -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge">B1</span>
+            <div>
+                <div class="loop-title">The Absorption Trap</div>
+                <div class="loop-subtitle">Renewal Pressure &rarr; Soft Landing &rarr; absorbs Renewal Pressure. The cautionary heart.</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker poirot">POIROT</span>
+                <span class="speech">This is the loop the entire thesis depends upon, so it must bear the most weight. The claim is that the same mechanism absorbs both threatening shock and renewing pressure, because it cannot tell them apart. Now &mdash; I do not believe this. I do not believe the mechanism <em>cannot</em> tell them apart. I believe it can tell them apart perfectly well, and absorbs the renewing pressure <em>deliberately</em>, because the renewing pressure threatens the people the mechanism serves. The map&rsquo;s framing &mdash; &ldquo;the absorber does not distinguish&rdquo; &mdash; is too innocent. It makes the absorption sound like an accident of design. Poirot suggests it is not an accident. It is the function.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker gray">GRAY</span>
+                <span class="speech">&ldquo;The mechanism cannot distinguish renewal from threat&rdquo; &mdash; that lets everyone off the hook. It makes the 147-year exclusion of the working class sound like an unfortunate side-effect of an otherwise admirable resilience. But every time the renewal pressure built &mdash; 1926, 1945, 1979 &mdash; there were specific people who made specific decisions to absorb it, and those people knew exactly what they were absorbing. The General Strike wasn&rsquo;t dissipated by an impersonal constitutional mechanism. It was broken, deliberately, by a government that understood precisely what was at stake. The map&rsquo;s passive voice &mdash; &ldquo;the pressure was absorbed&rdquo; &mdash; hides the hand that did the absorbing.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker wimsey">WIMSEY</span>
+                <span class="speech">I must, reluctantly, defend the map a little here &mdash; not because Miss Gray is wrong about the hand, but because the hand may believe its own innocence. I have sat in those rooms. The men who broke the General Strike, who managed the Attlee settlement back toward the centre, who deindustrialised the North in the eighties &mdash; many of them genuinely believed they were preserving something precious rather than defending something selfish. The self-deception Father Brown describes is real, and it means the absorption can be <em>both</em> deliberate in its mechanism and innocent in its self-understanding. That is worse, not better. A villain who knows he is a villain can repent. A class that mistakes its self-interest for statesmanship cannot.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">FATHER BROWN</span>
+                <span class="speech">Just so. The map&rsquo;s error is not that it is wrong about the absorption. It is that it grants the absorber the innocence the absorber grants himself. The truthful version of B1 keeps the mechanism and removes the innocence.</span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revision identified &mdash; B1</div>
+            Remove the innocence from B1. The absorption of renewal pressure is not a blind side-effect of a mechanism that &ldquo;cannot distinguish&rdquo; &mdash; it is a defended class interest experienced as resilience and enacted with awareness of what is at stake. The passive voice of the original framing (&ldquo;the pressure was absorbed&rdquo;) conceals the hand that did the absorbing. Keep the loop; reframe the mechanism.
+        </div>
+    </div>
+
+    <!-- R2 / R3 -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge">R2 &amp; R3</span>
+            <div>
+                <div class="loop-title">The Descending Ratchet &amp; The Financialisation Substitution</div>
+                <div class="loop-subtitle">The ratchet settles the system lower each cycle; financialisation hollows Craft and keeps Hands unintegrated.</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker gray">GRAY</span>
+                <span class="speech">These two I think the map gets substantially right, and I want to say so, because an honest panel credits what works. The financialisation story is the true story of my lifetime. The recovery of the eighties was real and it was built on the City and on selling off the productive economy and breaking the unions that gave working people a voice. The map&rsquo;s R3 &mdash; financialisation hollows Craft, weak Craft keeps Hands unintegrated &mdash; that is exactly what happened, and the data showing Craft down thirty-seven percent and never recovering is the receipt.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker poirot">POIROT</span>
+                <span class="speech">I agree the loop is sound, but I wish to test one number. The map makes much of the 1997 high-water mark &mdash; the Blair recovery &mdash; as the last time the system reached a Node Value above thirteen. But was 1997 a genuine recovery, or was it the <em>peak of the illusion</em> &mdash; the moment when the financialised economy looked healthiest precisely because it was most inflated, eleven years before 2008 revealed what it was built on? If 1997 was the top of a bubble rather than a genuine recovery, then the map&rsquo;s &ldquo;ratchet&rdquo; is too kind. It implies each peak is a real if diminishing achievement. The truth may be that the last two &ldquo;peaks&rdquo; were not achievements at all but the visible phase of the next collapse.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker wimsey">WIMSEY</span>
+                <span class="speech">A shrewd point. The English have always been good at looking most prosperous just before the bill arrives. 1914. 1929. 1997. There&rsquo;s a pattern there that the ratchet metaphor, with its image of orderly descent, rather softens.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker poirot">POIROT</span>
+                <span class="speech">Then the map should distinguish a genuine recovery from an inflationary one. Not every rise in the Configuration Level is the same kind of rise. R3 captures the financialisation; it does not yet capture that financialisation produces <em>false peaks</em> that flatter the ratchet and precede the collapse that unmasks them.</span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revision identified &mdash; R2 / R3</div>
+            Distinguish genuine recovery from inflationary false peaks. The 1997 high-water mark may have been the top of a financialisation bubble rather than a genuine system recovery &mdash; visible health built on what 2008 revealed. The ratchet metaphor implies each peak is a real achievement; it should allow that some peaks are illusory, presaging the collapse that unmasks them. The pattern (1914, 1929, 1997) is itself a signal worth naming.
+        </div>
+    </div>
+
+    <!-- B2 -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge">B2</span>
+            <div>
+                <div class="loop-title">The Comfort Blindfold</div>
+                <div class="loop-subtitle">Adequate configuration sustains visible continuity, which suppresses civic recognition of the descent.</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker">FATHER BROWN</span>
+                <span class="speech">This loop I understand better than the others, because it is the mechanism of all spiritual sloth. The institutions function, therefore the people do not examine. The trains run, the courts sit, the King is crowned, therefore all must be well. It is the great anaesthetic. And I will add the thing the map omits: the Comfort Blindfold is not merely passive. It is actively maintained. The institutions <em>advertise</em> their continuity. The coronations, the state openings, the wigs and the maces and the Black Rod knocking on the door &mdash; these are not neutral survivals. They are a continuous performance of stability, designed, consciously or not, to reassure the population that nothing fundamental is wrong. The pageantry is the blindfold being tied tighter.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker wimsey">WIMSEY</span>
+                <span class="speech">God, that&rsquo;s true, and I&rsquo;ve never quite seen it. The whole apparatus of British ceremonial &mdash; which I was brought up to find moving, and still do &mdash; functions as a kind of reassurance machine. &ldquo;Look how old we are, look how continuous, look how unbroken.&rdquo; And the older and more continuous the performance, the less anyone asks whether the substance beneath it is eroding. The blindfold is made of velvet and ermine.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker gray">GRAY</span>
+                <span class="speech">And it works best on the people it serves least. The pageantry reassures the country that the system is sound while the system delivers a Hands node of 7.0. The people at the bottom are asked to take pride in a continuity that has never included them. That&rsquo;s the cruelest part of the blindfold &mdash; it recruits its victims into admiring the thing that excludes them.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker poirot">POIROT</span>
+                <span class="speech">So the map&rsquo;s B2 requires an addition: a node or edge for <em>Ceremonial Performance</em>, which actively strengthens the Comfort Blindfold rather than merely allowing it. The continuity does not only suppress recognition by functioning. It suppresses recognition by <em>performing</em> its functioning. This is the British innovation the map has not yet named.</span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revision identified &mdash; B2</div>
+            Add a Ceremonial Performance mechanism strengthening the Comfort Blindfold. The pageantry &mdash; coronations, state openings, wigs and maces &mdash; is an active reassurance machine, not a passive institutional survival. It suppresses civic recognition not by functioning but by <em>performing</em> its functioning. The map&rsquo;s B2 currently treats the blindfold as passively sustained by adequate performance; it is in fact actively tightened by ceremonial display. The blindfold is made of velvet and ermine.
+        </div>
+    </div>
+
+    <!-- B3 / Contemporary -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge">B3</span>
+            <div>
+                <div class="loop-title">The Renewal Bypass &amp; The Contemporary Pressures</div>
+                <div class="loop-subtitle">Civic Recognition builds a bypass that channels renewal pressure to action. Currently inactive. Tested against: Reform, Your Party, Scottish independence.</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker wimsey">WIMSEY</span>
+                <span class="speech">Now we come to the live question, because the map says the Renewal Bypass is the only escape and is currently inactive &mdash; and yet here is 2026, with three great surges of renewal pressure all at once. Reform on the right, the Corbyn party on the left, the Scots wanting out altogether. Does the panel believe these are the bypass activating? Or are they merely three new things for the absorber to absorb?</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker gray">GRAY</span>
+                <span class="speech">Three things to be absorbed. I&rsquo;d stake my agency on it. Look at what&rsquo;s already happened to the Corbyn party &mdash; Your Party, they call it. Two hundred and fifty thousand people in a day, and within months it&rsquo;s fracturing into factions, Corbyn against Sultana, the consideration figures falling. That&rsquo;s not the bypass. That&rsquo;s the Absorption Trap working in real time, exactly as the map predicts. The left renewal pressure built, sought an outlet, and the outlet is being dissipated before it can consolidate &mdash; not even by the establishment this time, but by the British left&rsquo;s own inability to hold together, which is itself a kind of learned helplessness the long exclusion produced.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">FATHER BROWN</span>
+                <span class="speech">And Reform?</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker gray">GRAY</span>
+                <span class="speech">That one&rsquo;s more dangerous to the map&rsquo;s thesis, and I think the map half-sees it. Reform is drawing its strength from exactly the people the Hands node represents &mdash; the de-industrialised towns, the places the financialisation left behind. For the first time the renewal pressure has found a vehicle that might not be absorbable, because it&rsquo;s not asking to be let into the room. It&rsquo;s threatening to burn the room down. But here&rsquo;s what worries me: even if Reform wins, does it actually raise the Hands node? Or does it just give the excluded the <em>feeling</em> of inclusion &mdash; the symbolic act, the immigration crackdown, the flag &mdash; while leaving the material deficit exactly where it was? A populism that feeds the grievance without feeding the people is just another soft landing wearing an angrier face.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker poirot">POIROT</span>
+                <span class="speech">This is the most important observation of our investigation. Mademoiselle Gray has identified that the absorber may have learned a new technique. The old soft landing absorbed renewal pressure by dissipating it &mdash; the General Strike broken, the Attlee settlement managed back. The new soft landing may absorb renewal pressure by <em>appearing to satisfy it</em> &mdash; by giving the excluded a populist government that performs their inclusion while delivering nothing material. This would be a soft landing disguised as a renewal. The map does not yet contain this possibility. It should: an edge from Symbolic Acts to Renewal Pressure, negative, operating in parallel with the genuine absorption &mdash; the pressure relieved by performance rather than substance.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker wimsey">WIMSEY</span>
+                <span class="speech">Good Lord. So Farage might be the softest landing of all &mdash; the one that makes the excluded feel included while changing nothing. And the Scots?</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">FATHER BROWN</span>
+                <span class="speech">The Scots are the one pressure that cannot be absorbed by performance, because they are not asking for inclusion. They are asking to leave. You cannot give a man the feeling of leaving. He either leaves or he does not. That is why the territorial rupture is the one scenario where the absorber genuinely meets its limit &mdash; not because the pressure is greater, but because it cannot be satisfied symbolically. A referendum is not a feeling. It is a door.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker poirot">POIROT</span>
+                <span class="speech">And this is why the map is correct to treat the Scottish question as structurally different from the other two. The Reform pressure and the Your Party pressure both seek inclusion in the British system, and inclusion-seeking pressure can be absorbed by the performance of inclusion. The Scottish pressure seeks exit, and exit cannot be performed. It is the only one of the three that the velvet blindfold cannot cover.</span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revisions identified &mdash; B3 / contemporary</div>
+            <strong>Add a symbolic-satisfaction absorption channel.</strong> A populist government may absorb renewal pressure by performing inclusion &mdash; the symbolic act, the flag, the immigration crackdown &mdash; while leaving the material Hands deficit untouched. This is a soft landing disguised as renewal; the Empty Pulpit map already names this mechanism and B3 should import it. <strong>Separately:</strong> mark inclusion-pressure as absorbable and exit-pressure as non-absorbable. Reform and Your Party seek inclusion and can be absorbed by performed satisfaction; Scottish independence seeks exit and cannot. The structural distinction among the three contemporary pressures matters for the model&rsquo;s predictive value.
+        </div>
+    </div>
+
+    <!-- Cross-Loop Synthesis -->
+    <div class="card" style="margin-top:18px;">
+        <h2 style="font-size:1.05em; font-weight:700; color:#1B2A33; margin:0 0 18px;">Cross-Loop Synthesis &mdash; What the Map Misses</h2>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker poirot">POIROT</span>
+                <span class="speech">Let us assemble what we have found. First &mdash; Mademoiselle Gray&rsquo;s and Father Brown&rsquo;s finding &mdash; the map grants the absorption an innocence it does not deserve. The Archive&rsquo;s stability is not a neutral virtue; it is purchased by the exclusion of the Hands node, and the absorption of renewal pressure is not a blind side-effect but a defended interest. The map needs an explicit causal link: the Hands Integration Deficit <em>feeds</em> Archive stability. Exclusion is the price of the calm.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker poirot">POIROT</span>
+                <span class="speech">Second &mdash; Father Brown&rsquo;s finding &mdash; the Comfort Blindfold is actively maintained through Ceremonial Performance, not merely passively sustained by functioning institutions. The pageantry is a reassurance machine. Third &mdash; my own finding &mdash; not every peak in the Configuration Level is a genuine recovery. The financialisation produces false peaks that flatter the ratchet and precede collapses. Fourth &mdash; Mademoiselle Gray&rsquo;s most important finding &mdash; the absorber may have learned to absorb renewal pressure by <em>performing satisfaction</em> rather than dissipating the pressure. The map needs the symbolic-relief mechanism. Fifth &mdash; the collective finding &mdash; Reform and Your Party seek inclusion and can be absorbed by performed satisfaction; Scottish independence seeks exit and cannot.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker wimsey">WIMSEY</span>
+                <span class="speech">And the verdict on the central thesis? That the strength and the weakness are the same thing?</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker poirot">POIROT</span>
+                <span class="speech">The thesis survives &mdash; but in a harder form than the map states it. It is not that the British system has an admirable resilience with an unfortunate side-effect. It is that the British system has a <em>class settlement</em> &mdash; the exclusion of the Hands node &mdash; which it has defended for 147 years through a machinery of absorption that it experiences as resilience and performs as continuity. The strength and the weakness are indeed the same thing. But that thing is not &ldquo;the genius for the soft landing.&rdquo; That thing is the successful, century-and-a-half-long management of a class that was never allowed in. The soft landing is what the management feels like from above.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker gray">GRAY</span>
+                <span class="speech">From below, it feels like being managed.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">FATHER BROWN</span>
+                <span class="speech">Which is the truest description of the British genius anyone has yet offered. Not the absorption of shock. The management of the excluded, so skilfully that they are taught to admire the institutions that exclude them. That is the sin the comfortable phrase conceals. And like all the deepest sins, it does not feel like one to those who commit it. They feel only that they are preserving something fine.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Verdict -->
+    <div class="verdict-card" style="margin-top:18px;">
+        <p>The central thesis survives &mdash; in a harder and less flattering form. The strength and the weakness are indeed the same thing, but that thing is not &ldquo;the genius for the soft landing.&rdquo; It is the successful management, across 147 years, of a class that was never allowed in. The soft landing is what that management feels like from above. From below, it feels like being managed.</p>
+        <p>The absorber has learned a new technique: the old soft landing dissipated renewal pressure; the new one may <em>perform satisfaction</em> while leaving the material deficit untouched. A populism that gives the excluded the feeling of inclusion is the softest landing of all &mdash; and the most self-concealing.</p>
+        <p>The only pressure that cannot be absorbed by performance is the one that seeks exit rather than inclusion. A referendum is not a feeling. It is a door.</p>
+        <p style="margin:0;"><em>Neural Nations &middot; CAMS v3.2 Ensemble Mean (5-scorer) &middot; Detective Panel v1.0</em></p>
+    </div>
+
+    <!-- Final Revisions -->
+    <div class="card" style="margin-top:18px;">
+        <h2 style="font-size:1.05em; font-weight:700; color:#1B2A33; margin:0 0 20px;">Revisions Recommended by the Panel</h2>
+
+        <div class="final-revision">
+            <span class="rev-num">1</span>
+            <div class="rev-body"><strong>Add a causal link from Hands Integration Deficit to Archive Absorptive Capacity (positive).</strong> The Archive&rsquo;s stability is purchased by the exclusion of the working class; these are not two findings but one mechanism. An integrated working class would have destabilised the Archive. The Continuity Engine is not a neutral absorber; it is a defended class settlement experienced as constitutional genius. <span class="rev-loops">R1 &mdash; Gray, Poirot, Father Brown</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">2</span>
+            <div class="rev-body"><strong>Remove the innocence from B1.</strong> The absorption of renewal pressure is a defended class interest enacted with awareness of what is at stake, not a blind side-effect of a mechanism that &ldquo;cannot distinguish.&rdquo; The passive voice (&ldquo;the pressure was absorbed&rdquo;) conceals the hand that did the absorbing. The self-deception is real &mdash; the absorbers believe their own innocence &mdash; but the mechanism is not innocent. Keep the loop; reframe the prose. <span class="rev-loops">B1 &mdash; Poirot, Gray, Wimsey</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">3</span>
+            <div class="rev-body"><strong>Add a Ceremonial Performance mechanism to B2.</strong> The pageantry &mdash; coronations, state openings, Black Rod, wigs and maces &mdash; is an active reassurance machine that tightens the Comfort Blindfold, not a passive institutional survival. The continuity performs itself. The blindfold is made of velvet and ermine and is deliberately applied. <span class="rev-loops">B2 &mdash; Father Brown, Wimsey, Poirot</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">4</span>
+            <div class="rev-body"><strong>Distinguish genuine recovery from inflationary false peaks in R3.</strong> The 1997 high-water mark may have been the visible peak of a financialisation bubble rather than a genuine recovery &mdash; 2008 as the reveal. Not every rise in Configuration Level is the same kind of rise. The pattern (prosperity just before the bill arrives: 1914, 1929, 1997) is a structural signal worth naming. <span class="rev-loops">R2/R3 &mdash; Poirot, Wimsey</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">5</span>
+            <div class="rev-body"><strong>Add a symbolic-satisfaction absorption channel.</strong> A populist government may absorb renewal pressure by performing inclusion &mdash; the symbolic act, the flag, the crackdown &mdash; while leaving the material Hands deficit untouched. This is a soft landing disguised as renewal; the absorber has learned a new technique. Import the symbolic-relief mechanism from the <a href="usa-empty-pulpit-detective-panel.html" style="color:#2F6F7D;">Empty Pulpit map</a>; Britain may be adopting the American method. <span class="rev-loops">B3/contemporary &mdash; Gray, Poirot</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">6</span>
+            <div class="rev-body"><strong>Mark inclusion-pressure as absorbable and exit-pressure as non-absorbable.</strong> Reform and Your Party both seek inclusion in the British system and can be absorbed by performed satisfaction; Scottish independence seeks exit and cannot be satisfied symbolically. A referendum is not a feeling &mdash; it is a door. The structural distinction among the three contemporary pressures is the most important near-term variable in the model. <span class="rev-loops">B3/contemporary &mdash; collective</span></div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:18px;">
+        <p style="font-size:0.85em; color:#888; margin-bottom:12px;">Companion pages:</p>
+        <div class="companion-strip">
+            <a href="uk-arc-story.html">UK &mdash; The Art of the Soft Landing</a>
+            <a href="uk-arc-map.html">UK &mdash; Aha! Map</a>
+            <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+        </div>
+        <p style="font-size:0.78em; color:#999; margin-top:20px; border-top:1px solid #DAD2B8; padding-top:14px;"><em>Detective Panel transcript closes here. The central thesis survives, in a harder and less flattering form. Six revisions enumerated. &middot; Neural Nations &middot; CAMS v3.2 Ensemble Mean (5-scorer)</em></p>
+    </div>
+
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>
