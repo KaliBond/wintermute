@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unique Perspectives on the Empty Pulpit · Neural Nations</title>
+    <meta name="description" content="Ten thinkers whose published work illuminates, anticipates, or contests the Empty Pulpit analysis — Wolin, Schmitt, Arendt, Lasch, Edelman, Streeck, Gurri, Turchin, Tainter, Mearsheimer.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/usa-empty-pulpit-perspectives">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neuralnations.org/usa-empty-pulpit-perspectives">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:title" content="Unique Perspectives on the Empty Pulpit · Neural Nations">
+    <meta property="og:description" content="Ten thinkers whose work illuminates, anticipates, or contests the Empty Pulpit analysis — spanning Lore collapse, decisionism, available masses, and the Praetorian condition.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Unique Perspectives on the Empty Pulpit · Neural Nations">
+    <meta name="twitter:description" content="Ten thinkers whose work illuminates the terrain of Lore collapse, decisionist governance, available masses, and the Praetorian condition.">
+    <link rel="stylesheet" href="style.css">
+    <style>
+    .story-meta { font-size:0.82em; color:#888; letter-spacing:0.04em; line-height:1.8; }
+    .story-body p { font-size:1.01em; line-height:1.85; margin-bottom:1.2em; color:#1B2A33; }
+    .story-body em { font-style:italic; }
+    .story-body strong { color:#1B2A33; }
+    .thinker-card {
+        margin-bottom: 6px;
+        border-left: 4px solid #DAD2B8;
+        padding-left: 18px;
+    }
+    .thinker-card.active { border-left-color: #2F6F7D; }
+    .thinker-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        cursor: pointer;
+        padding: 14px 0;
+        user-select: none;
+    }
+    .thinker-num {
+        flex-shrink: 0;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #2F6F7D;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'JetBrains Mono', monospace;
+        font-weight: 700;
+        font-size: 0.85em;
+    }
+    .thinker-title { font-size:1.05em; font-weight:700; color:#1B2A33; }
+    .thinker-subtitle { font-size:0.82em; color:#888; margin-top:2px; font-style:italic; }
+    .thinker-body {
+        display: none;
+        padding-bottom: 16px;
+    }
+    .thinker-body.open { display: block; }
+    .thinker-body p { font-size:0.95em; line-height:1.8; margin-bottom:1em; color:#1B2A33; }
+    .thinker-body strong { color:#1B2A33; }
+    .connection-box {
+        background: rgba(47,111,125,0.07);
+        border: 1px solid #DAD2B8;
+        border-radius: 6px;
+        padding: 12px 16px;
+        margin: 10px 0;
+        font-size:0.9em;
+        line-height:1.7;
+        color:#1B2A33;
+    }
+    .connection-box strong { color:#2F6F7D; }
+    .works-list { font-size:0.83em; color:#666; font-style:italic; margin-bottom:10px; }
+    .companion-strip { display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+    .companion-strip a {
+        display:inline-block; padding:7px 14px; border:1px solid #DAD2B8;
+        border-radius:6px; font-size:0.85em; color:#2F6F7D;
+        text-decoration:none; background:#FBF8EF; font-weight:600;
+    }
+    .companion-strip a:hover { background:#F0E9D2; }
+    .expand-all-btn {
+        display:inline-block; padding:6px 14px; border:1px solid #2F6F7D;
+        border-radius:6px; font-size:0.82em; color:#2F6F7D; background:#FBF8EF;
+        cursor:pointer; font-weight:600; margin-bottom:16px;
+    }
+    .expand-all-btn:hover { background:#F0E9D2; }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="nz-arc-map.html">New Zealand &mdash; Arc Map</a>
+                    <a href="nz-arc-story.html">New Zealand &mdash; Institutional Arc</a>
+                    <a href="argentina-cams-map.html">Argentina &mdash; Arc Map</a>
+                    <a href="argentina-cams-story.html">Argentina &mdash; CAMS Story</a>
+                    <a href="germany-arc-map.html">Germany &mdash; Arc Map</a>
+                    <a href="germany-arc-story.html">Germany &mdash; Arc Story</a>
+                    <a href="canada-arc-map.html">Canada &mdash; Arc Map</a>
+                    <a href="canada-arc-story.html">Canada &mdash; The Border Tribe</a>
+                    <a href="attractors.html">Attractors</a>
+                    <a href="the-empty-pulpit.html">USA &mdash; The Empty Pulpit</a>
+                    <a href="usa-outlook-set.html">USA &mdash; Outlook Set 2026&ndash;2036</a>
+                    <a href="the-empty-pulpit-map.html">USA &mdash; Empty Pulpit Map</a>
+                    <a href="usa-empty-pulpit-perspectives.html">USA &mdash; More</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="nz-arc-map.html">New Zealand &mdash; Arc Map</a>
+        <a href="nz-arc-story.html">New Zealand &mdash; Institutional Arc</a>
+        <a href="argentina-cams-map.html">Argentina &mdash; Arc Map</a>
+        <a href="argentina-cams-story.html">Argentina &mdash; CAMS Story</a>
+        <a href="germany-arc-map.html">Germany &mdash; Arc Map</a>
+        <a href="germany-arc-story.html">Germany &mdash; Arc Story</a>
+        <a href="canada-arc-map.html">Canada &mdash; Arc Map</a>
+        <a href="canada-arc-story.html">Canada &mdash; The Border Tribe</a>
+        <a href="attractors.html">Attractors</a>
+        <a href="the-empty-pulpit.html">USA &mdash; The Empty Pulpit</a>
+        <a href="usa-outlook-set.html">USA &mdash; Outlook Set 2026&ndash;2036</a>
+        <a href="the-empty-pulpit-map.html">USA &mdash; Empty Pulpit Map</a>
+        <a href="usa-empty-pulpit-perspectives.html">USA &mdash; More</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="hero-section">
+        <h1>Unique Perspectives on the Empty Pulpit</h1>
+        <p class="hero-subtitle">Scholars Whose Framings Illuminate, Anticipate, or Contest the Analysis</p>
+    </div>
+
+    <div class="card">
+        <p class="story-meta">
+            Ten thinkers selected for distinctiveness of framing rather than orthodoxy of position — spanning the political spectrum because the structural phenomenon they illuminate is not a partisan one.<br>
+            Companion to <a href="the-empty-pulpit.html" style="color:#2F6F7D;">The Empty Pulpit</a> &middot; <a href="the-empty-pulpit-map.html" style="color:#2F6F7D;">Empty Pulpit Map</a> &middot; <a href="usa-outlook-set.html" style="color:#2F6F7D;">USA Outlook Set</a><br>
+            Neural Nations &middot; CAMS v3.2
+        </p>
+        <div class="companion-strip" style="margin-top:14px;">
+            <a href="the-empty-pulpit.html">&#8592; The Empty Pulpit</a>
+            <a href="usa-outlook-set.html">Outlook Set &rarr;</a>
+            <a href="the-empty-pulpit-map.html">Empty Pulpit Map (v2) &rarr;</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <button class="expand-all-btn" id="expand-all-btn" onclick="toggleAll()">Expand all thinkers</button>
+
+        <!-- 1. WOLIN -->
+        <div class="thinker-card" id="tc1">
+            <div class="thinker-header" onclick="toggle(1)">
+                <div class="thinker-num">1</div>
+                <div>
+                    <div class="thinker-title">Sheldon Wolin &mdash; Inverted Totalitarianism</div>
+                    <div class="thinker-subtitle">Democracy Incorporated (2008) &middot; Politics and Vision (1960/2004)</div>
+                </div>
+            </div>
+            <div class="thinker-body" id="tb1">
+                <p class="works-list">Key works: <em>Democracy Incorporated: Managed Democracy and the Specter of Inverted Totalitarianism</em> (2008); <em>Politics and Vision</em> (1960, revised 2004)</p>
+                <p>Wolin argued, more than a decade before the current configuration became visible to mainstream commentators, that the United States was developing a <em>new form</em> of totalitarianism — one that inverted the classical fascist model on every important axis. Where classical totalitarianism mobilised mass populations behind a charismatic leader and a state ideology, inverted totalitarianism <em>demobilises</em> mass populations, leaving them politically passive while corporate-state fusion captures the operational state. Where classical totalitarianism abolished elections, inverted totalitarianism manages them — preserving the form while neutralising the substance.</p>
+                <p>Wolin's argument was that the country had been moving in this direction since at least the 1980s, through the joint operation of corporate consolidation, security-state expansion after 9/11, the financialisation of the economy, and the gradual hollowing of the institutions that historically produced democratic citizenship.</p>
+                <div class="connection-box">
+                    <strong>Connection to the map:</strong> Wolin's inverted totalitarianism is the regime form that emerges from the Praetorian Stabilisation scenario. The high Shield, low Lore, low Helm configuration is precisely the structural signature his framework predicted. The R2 loop (Praetorian Self-Reinforcement) is the operating mechanism Wolin's framework requires.
+                </div>
+                <p><strong>What he adds:</strong> the recognition that this configuration is not necessarily a failure-state. It is a <em>regime type</em>, with its own internal logic, capable of considerable durability. The Outlook Set may underestimate how long Scenario One can persist.</p>
+            </div>
+        </div>
+
+        <!-- 2. SCHMITT -->
+        <div class="thinker-card" id="tc2">
+            <div class="thinker-header" onclick="toggle(2)">
+                <div class="thinker-num">2</div>
+                <div>
+                    <div class="thinker-title">Carl Schmitt &mdash; Political Theology and Decisionism</div>
+                    <div class="thinker-subtitle">Political Theology (1922) &middot; The Concept of the Political (1932)</div>
+                </div>
+            </div>
+            <div class="thinker-body" id="tb2">
+                <p class="works-list">Key works: <em>Political Theology</em> (1922); <em>The Concept of the Political</em> (1932); <em>Legality and Legitimacy</em> (1932)</p>
+                <p>Schmitt — and the inclusion of a thinker who became a Nazi requires acknowledging that his political conduct was indefensible while recognising that his diagnostic precision about the conditions that produced fascism was unmatched in his generation — argued that the foundational political act is the <em>decision</em>, and specifically the decision about the exception. <em>"He is sovereign who decides on the exception."</em> Ordinary law operates inside the structure of legitimate authority; the question of what to do when the legitimate authority itself is contested, or when novel emergencies arise that ordinary procedure cannot address, is the question of sovereignty.</p>
+                <p>Schmitt's framework explains why decisionist governance emerges when legitimate institutional process loses its capacity to settle anything. The act of decision — the pardon, the executive order, the deployment, the dismissal — does not require institutional support. It requires only the will to act and the operational capacity to make the act stick.</p>
+                <div class="connection-box">
+                    <strong>Connection to the map:</strong> Schmitt is the theorist of n8 (Decisionist Authority). The Symbolic Acts node and the loops connecting it to Lore erosion (R1) and Archive drawdown (R3) operate through the mechanism Schmitt identified. Decisionist authority is not a defective form of legitimate authority — it is a different form, with its own logic.
+                </div>
+                <p><strong>What he adds:</strong> the recognition that the empty pulpit creates the structural opening for which Schmitt's framework was designed. The contemporary American moment is the application of Schmitt's analysis under conditions Schmitt himself did not foresee — not in service of a totalitarian project but as the operational mode that emerges when no totalitarian or restorative project is sufficiently coherent to capture the available mass.</p>
+            </div>
+        </div>
+
+        <!-- 3. ARENDT -->
+        <div class="thinker-card" id="tc3">
+            <div class="thinker-header" onclick="toggle(3)">
+                <div class="thinker-num">3</div>
+                <div>
+                    <div class="thinker-title">Hannah Arendt &mdash; Atomisation and the Available Mass</div>
+                    <div class="thinker-subtitle">The Origins of Totalitarianism (1951) &middot; On Revolution (1963)</div>
+                </div>
+            </div>
+            <div class="thinker-body" id="tb3">
+                <p class="works-list">Key works: <em>The Origins of Totalitarianism</em> (1951); <em>The Human Condition</em> (1958); <em>On Revolution</em> (1963)</p>
+                <p>Arendt's analysis of the conditions that made totalitarianism possible centred on the destruction of the intermediate institutions of civic life — the parties, the unions, the churches, the local associations, the professional bodies — that had previously connected individuals to political life. In their absence, what remained was <em>atomised mass</em> — populations of individuals related to each other only through the state and through mass media, lacking the social fabric that had previously produced citizens capable of resisting capture by ideological movements.</p>
+                <p>Crucially, Arendt distinguished <em>mass</em> from <em>people</em>. A people is a population organised through shared institutions of civic life capable of collective political action; a mass is a population deprived of these institutions and therefore available for whatever political project arrives with sufficient organisational capacity to absorb it.</p>
+                <div class="connection-box">
+                    <strong>Connection to the map:</strong> Arendt is the theorist of n5 (Mass Availability). Her framework specifies what produces availability — not stress alone, but the destruction of intermediate institutions that would otherwise allow the stressed population to address its conditions through collective action rather than through capture by symbolic offers. The Empty Pulpit's Lore collapse is, in Arendt's vocabulary, the destruction of the interpretive intermediate institution that turned populations into peoples.
+                </div>
+                <p><strong>What she adds:</strong> the diagnostic that the cure for available mass is not better symbolic offers but the rebuilding of intermediate institutions. This is the substantive content of what the map calls Civic Renewal Capacity. Available mass remains available even after the immediate crisis passes — the rebuilding of civic institutions takes generations, and susceptibility to capture persists across the rebuilding period.</p>
+            </div>
+        </div>
+
+        <!-- 4. LASCH -->
+        <div class="thinker-card" id="tc4">
+            <div class="thinker-header" onclick="toggle(4)">
+                <div class="thinker-num">4</div>
+                <div>
+                    <div class="thinker-title">Christopher Lasch &mdash; The Revolt of the Elites</div>
+                    <div class="thinker-subtitle">The Revolt of the Elites and the Betrayal of Democracy (1995)</div>
+                </div>
+            </div>
+            <div class="thinker-body" id="tb4">
+                <p class="works-list">Key works: <em>The Revolt of the Elites and the Betrayal of Democracy</em> (1995); <em>The True and Only Heaven</em> (1991); <em>The Culture of Narcissism</em> (1979)</p>
+                <p>Lasch's title was an inversion of Ortega y Gasset's <em>The Revolt of the Masses</em>. Where Ortega had argued that the threat to democracy came from the mass population mobilised against elite culture, Lasch argued — and the empirical record has supported him — that the actual threat came from the elite revolting against the mass. The professional-managerial class had, by the 1990s, <em>seceded</em> from the national project in ways that hollowed out the common civic vocabulary the country had previously shared.</p>
+                <p>This secession was not primarily ideological. It was institutional and geographic: elite educational institutions selecting on national rather than local belonging, professional careers requiring multi-city mobility, gated-community residential patterns, separate media diets, separate vocabularies, separate moral and aesthetic worlds.</p>
+                <div class="connection-box">
+                    <strong>Connection to the map:</strong> Lasch reframes the entire diagnostic. The empty pulpit is not the result of the mass losing trust in legitimate elite narrative. It is the result of the elite having abandoned the cultural common ground that would have allowed its narrative to be legitimate. The Lore collapse is downstream of the elite revolt. Civic renewal cannot be performed by elite actors trying to rebuild trust in their own institutions — it requires rebuilding cross-class civic vocabulary.
+                </div>
+                <p><strong>What he adds:</strong> the most precise diagnosis of why contemporary opposition mobilisation (R4) fragments rather than builds Lore. The vocabularies the elite cultural left and the populist right speak are <em>both</em> elite-secession products. Neither speaks the cross-class vocabulary that built Lore in earlier periods. R4 will continue to operate as a fragmenting force until the elite secession itself is reversed.</p>
+            </div>
+        </div>
+
+        <!-- 5. EDELMAN -->
+        <div class="thinker-card" id="tc5">
+            <div class="thinker-header" onclick="toggle(5)">
+                <div class="thinker-num">5</div>
+                <div>
+                    <div class="thinker-title">Murray Edelman &mdash; The Symbolic Uses of Politics</div>
+                    <div class="thinker-subtitle">The Symbolic Uses of Politics (1964) &middot; Constructing the Political Spectacle (1988)</div>
+                </div>
+            </div>
+            <div class="thinker-body" id="tb5">
+                <p class="works-list">Key works: <em>The Symbolic Uses of Politics</em> (1964); <em>Constructing the Political Spectacle</em> (1988); <em>The Politics of Misinformation</em> (2001)</p>
+                <p>Edelman argued that the actual operation of politics is overwhelmingly symbolic rather than substantive. Politicians do not primarily allocate material resources; they perform reassurance. Mass publics do not primarily evaluate policies; they receive symbolic confirmations of identity and grievance. The political system functions not by solving problems but by <em>processing emotional states through symbolic gesture</em>.</p>
+                <p>Edelman distinguished <em>condensation symbols</em> (gestures that compress complex emotional and political meanings into single acts) from <em>referential symbols</em> (substantive policy outputs), and argued that contemporary mass democracy operates predominantly through the former. The pardon, the rally, the executive order signed in front of cameras — these are not deficient policy. They are the actual product of the system.</p>
+                <div class="connection-box">
+                    <strong>Connection to the map:</strong> Edelman is the theorist of n6 (Symbolic Acts) and the B1 Symbolic Relief Valve loop. His framework specifies the mechanism by which symbolic acts produce real political effects without requiring substantive institutional support. The map's R3 Archive Drawdown is, in Edelman's framework, the collapse of the substrate that previously made symbolic governance somewhat accountable.
+                </div>
+                <p><strong>What he adds:</strong> symbolic governance is not a failure-mode of democratic politics. It is the operating mode of democratic politics at scale. The current configuration is distinctive not because it has become symbolic but because the symbolic acts are no longer constrained by an institutional substrate that requires them to track substantive outcomes.</p>
+            </div>
+        </div>
+
+        <!-- 6. STREECK -->
+        <div class="thinker-card" id="tc6">
+            <div class="thinker-header" onclick="toggle(6)">
+                <div class="thinker-num">6</div>
+                <div>
+                    <div class="thinker-title">Wolfgang Streeck &mdash; Democratic Decay Through Capitalism</div>
+                    <div class="thinker-subtitle">Buying Time (2014) &middot; How Will Capitalism End? (2016)</div>
+                </div>
+            </div>
+            <div class="thinker-body" id="tb6">
+                <p class="works-list">Key works: <em>Buying Time: The Delayed Crisis of Democratic Capitalism</em> (2014); <em>How Will Capitalism End?</em> (2016); <em>Critical Encounters</em> (2020)</p>
+                <p>Streeck has produced the most systematic account of the long-arc structural collapse the Empty Pulpit Map registers as completed in 2026. His argument: democratic capitalism is internally contradictory, and the contradictions have been progressively externalised since the 1970s in a sequence of structural crises — inflation in the 1970s, fiscal crisis in the 1980s–90s, private indebtedness in the 1990s–2000s, sovereign indebtedness post-2008, and finally legitimacy crisis in the 2010s–present.</p>
+                <p>Each crisis has been managed by transferring the burden onto a different load-bearing institution. By 2026 the load has reached the only institution that remains unburdened: the legitimacy of the political order itself. There is nowhere further for the contradiction to be displaced.</p>
+                <div class="connection-box">
+                    <strong>Connection to the map:</strong> Streeck provides the long-arc context the map itself does not include. The current low readings on Helm, Lore, Stewards, Hands, Craft, and Flow are not the result of recent events but the cumulative outcome of a structural process operating for half a century. Praetorian Stabilisation is, in Streeck's framework, the regime form that emerges when legitimacy crisis can no longer be displaced and must be lived with.
+                </div>
+                <p><strong>What he adds:</strong> the warning that there is no return to the pre-crisis configuration. Renewal, if it occurs, will not restore the prior configuration — it will produce something genuinely new. The Outlook Set's Scenario Four understates how different from prior configurations the renewed form will have to be.</p>
+            </div>
+        </div>
+
+        <!-- 7. GURRI -->
+        <div class="thinker-card" id="tc7">
+            <div class="thinker-header" onclick="toggle(7)">
+                <div class="thinker-num">7</div>
+                <div>
+                    <div class="thinker-title">Martin Gurri &mdash; The Revolt of the Public</div>
+                    <div class="thinker-subtitle">The Revolt of the Public and the Crisis of Authority (2014)</div>
+                </div>
+            </div>
+            <div class="thinker-body" id="tb7">
+                <p class="works-list">Key works: <em>The Revolt of the Public and the Crisis of Authority in the New Millennium</em> (2014)</p>
+                <p>Gurri, a former CIA analyst who studied open-source intelligence, was among the first to identify that the information-environment transformation since the early 2000s had not merely changed <em>how</em> elite narrative was transmitted, but had broken the elite <em>monopoly on narrative transmission</em>. The 5th Wave of information — the post-2010 environment of social media, mobile devices, algorithmic feeds, and viral asymmetric communication — produced a structural condition in which any elite claim could be countered by aggregated public response, but no aggregated public response had the institutional structure to itself become legitimate elite narrative.</p>
+                <p>The result was <em>symmetric delegitimation</em>: elite narrative lost its monopoly position but no successor narrative was institutionally available to replace it. Authority became radically distributed at exactly the moment when the substantive complexity of governance required <em>more</em> coordination capacity than the previous configuration had provided.</p>
+                <div class="connection-box">
+                    <strong>Connection to the map:</strong> Gurri is the theorist of the missing node the Detective Panel identified — Information Environment Coherence. The Lore collapse is causally connected to the information-environment transformation Gurri describes. The empty pulpit is not just an institutional failure; it is a <em>medium</em> failure.
+                </div>
+                <p><strong>What he adds:</strong> B2 Renewal cannot operate through the existing information environment, because that environment is structurally hostile to the kind of slow, accumulative, cross-cutting narrative-building that produced Lore in earlier periods. Renewal will require either new media institutions operating on different principles, or transformation of existing platforms in ways current platform economics do not incentivise.</p>
+            </div>
+        </div>
+
+        <!-- 8. TURCHIN -->
+        <div class="thinker-card" id="tc8">
+            <div class="thinker-header" onclick="toggle(8)">
+                <div class="thinker-num">8</div>
+                <div>
+                    <div class="thinker-title">Peter Turchin &mdash; Structural-Demographic Cliodynamics</div>
+                    <div class="thinker-subtitle">Ages of Discord (2016) &middot; End Times (2023)</div>
+                </div>
+            </div>
+            <div class="thinker-body" id="tb8">
+                <p class="works-list">Key works: <em>Secular Cycles</em> (with Sergey Nefedov, 2009); <em>Ages of Discord</em> (2016); <em>End Times</em> (2023)</p>
+                <p>Turchin's project is the closest methodological cousin to the CAMS framework itself: quantitative historical analysis with explicit predictive claims. His structural-demographic theory identifies recurrent patterns in which inequality, elite overproduction, and immiseration of the productive classes combine to produce political instability with predictable timing. In 2010, Turchin published a paper in <em>Nature</em> predicting that the United States would enter a period of major political instability in the 2020s. The prediction was empirically confirmed.</p>
+                <div class="connection-box">
+                    <strong>Connection to the map:</strong> Turchin's framework provides the most rigorous quantitative grounding for taking the Empty Pulpit Map seriously as more than a snapshot. The R3 Archive Drawdown loop and R4 Polarisation Engine map onto Turchin's specific mechanisms — elite overproduction producing factional competition, immiseration producing mass susceptibility — with considerable precision.
+                </div>
+                <p><strong>What he adds:</strong> temporal location within a longer cycle. Turchin's framework suggests the trough is approximately where 2026 sits, with structural reorganisation likely to begin in the late 2020s or 2030s. Cliodynamics also adds a warning: troughs of comparable depth have historically resolved through internal conflict more often than through deliberate renewal.</p>
+            </div>
+        </div>
+
+        <!-- 9. TAINTER -->
+        <div class="thinker-card" id="tc9">
+            <div class="thinker-header" onclick="toggle(9)">
+                <div class="thinker-num">9</div>
+                <div>
+                    <div class="thinker-title">Joseph Tainter &mdash; Diminishing Returns on Complexity</div>
+                    <div class="thinker-subtitle">The Collapse of Complex Societies (1988)</div>
+                </div>
+            </div>
+            <div class="thinker-body" id="tb9">
+                <p class="works-list">Key works: <em>The Collapse of Complex Societies</em> (1988); <em>Drilling Down</em> (with Tadeusz Patzek, 2012)</p>
+                <p>Tainter, an archaeologist of complex societies, identified a structural mechanism present in every major civilisational collapse he studied: <em>diminishing marginal returns on institutional complexity</em>. Societies respond to problems by adding institutional capacity. The early capacity additions produce substantial returns; subsequent additions produce decreasing returns; eventually marginal additions produce negative returns. At that point, the society's complexity itself becomes the burden it cannot afford, and either reorganises at lower complexity or collapses.</p>
+                <div class="connection-box">
+                    <strong>Connection to the map:</strong> Tainter is the theorist of why the R1 Decisionist Spiral and R3 Archive Drawdown operate as reinforcing rather than balancing loops. Each Symbolic Act draws on institutional capital and produces diminishing returns; each Archive drawdown removes capacity the next response cycle would have required. The Federal Devolution scenario is the cleanest example of the Tainter pattern: rather than restoring federal Helm, the system reorganises at lower complexity by routing around the failed centre.
+                </div>
+                <p><strong>What he adds:</strong> renewal scenarios that propose to address the problem through <em>more</em> institutional capacity will fail. The path through diminishing returns is not more complexity but <em>reorganisation at lower complexity</em>, often through deliberate simplification that the society's invested constituencies cannot accept. Federal Devolution may be not a failure-mode but the <em>successful</em> historical response to diminishing-returns conditions.</p>
+            </div>
+        </div>
+
+        <!-- 10. MEARSHEIMER -->
+        <div class="thinker-card" id="tc10">
+            <div class="thinker-header" onclick="toggle(10)">
+                <div class="thinker-num">10</div>
+                <div>
+                    <div class="thinker-title">John Mearsheimer &mdash; The Tragedy of Great Power Politics</div>
+                    <div class="thinker-subtitle">The Tragedy of Great Power Politics (2001) &middot; The Great Delusion (2018)</div>
+                </div>
+            </div>
+            <div class="thinker-body" id="tb10">
+                <p class="works-list">Key works: <em>The Tragedy of Great Power Politics</em> (2001); <em>Why Leaders Lie</em> (2011); <em>The Great Delusion</em> (2018)</p>
+                <p>Mearsheimer, the leading contemporary realist in international relations, has made the most rigorous case that the United States' post-Cold War foreign policy has been operating on assumptions that the underlying material conditions no longer support. The unipolar moment ended approximately 2008; the country has spent the subsequent fifteen years operating as if it had not ended, generating crises in Ukraine, Taiwan, and the Middle East that are predictable consequences of trying to maintain hegemonic foreign policy under multipolar material conditions.</p>
+                <p>Mearsheimer's specific contributions on Russia and China have been controversial enough that mainstream foreign policy discourse has often refused to engage them. The structural reading: these countries are not pursuing US-style ideological projects of global transformation; they are pursuing security and influence within their own regions, in ways realists would have predicted and which would have been recognised as legitimate by US policymakers operating before the unipolar amnesia of the 1990s.</p>
+                <div class="connection-box">
+                    <strong>Connection to the map:</strong> Mearsheimer is the theorist of the missing node the Detective Panel identified — Imperial/Hegemonic Project Status. The Empty Pulpit's domestic Lore was sustained, for seventy years, by a shared national project that operated through alliance leadership, military presence, monetary hegemony, and ideological universalism. The decline of these external supports is causally connected to the decline of domestic Lore in ways that purely domestic analysis cannot capture.
+                </div>
+                <p><strong>What he adds:</strong> renewal scenarios that do not include serious recalibration of the country's external posture will fail. The domestic Lore the renewal would need to produce was historically sustained by the external project the country can no longer afford to operate. Renewal Through Reckoning requires what Mearsheimer's framework explicitly demands: honest acknowledgement that the unipolar moment is over.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SYNTHESIS -->
+    <div class="card" style="border-left:4px solid #2F6F7D;">
+        <p class="section-label" style="color:#2F6F7D;">Synthesis — What the Ten Frameworks Collectively Say</p>
+        <div class="story-body">
+            <p><strong>The configuration is long in formation.</strong> Wolin, Streeck, Lasch identify the structural drift toward the current condition beginning in the 1970s–80s. The 2026 reading is not the start of the problem; it is approximately where the problem becomes structurally unavoidable.</p>
+            <p><strong>The configuration is genuinely new.</strong> Wolin's inverted totalitarianism, Schmitt's decisionism, Edelman's symbolic governance, and Gurri's information revolt collectively describe a regime form that has no clean historical precedent. Analogies to Weimar, late Rome, or other classical decline cases will mislead more than they illuminate.</p>
+            <p><strong>The configuration has predictable mechanics.</strong> Turchin and Tainter provide the strongest evidence that the present moment is structurally locatable — within a long cycle that has happened before, with mechanisms that operate consistently. This is the strongest reason to take the CAMS approach seriously and to extend it.</p>
+            <p><strong>The mass is not at fault.</strong> Arendt, Lasch agree on this point with unusual convergence across the political spectrum. The contemporary American political conversation has the diagnostic backwards.</p>
+            <p><strong>The external dimension is not optional.</strong> Mearsheimer's specific contribution — that domestic renewal requires acknowledgement of changed international conditions — is the dimension the contemporary mainstream conversation is least equipped to receive.</p>
+            <p><strong>Renewal is possible but conditional.</strong> Streeck's warning that renewal will not restore the prior configuration is the most important single qualifier. The frameworks collectively suggest that what is needed is not the recovery of the 1990s configuration but the construction of something the country has not previously been.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <p class="section-label">Full Empty Pulpit Series</p>
+        <div class="companion-strip">
+            <a href="the-empty-pulpit.html">&#8592; The Empty Pulpit</a>
+            <a href="usa-outlook-set.html">Outlook Set: 2026–2036 &rarr;</a>
+            <a href="the-empty-pulpit-map.html">Empty Pulpit Map v2 &rarr;</a>
+        </div>
+        <p style="font-size:0.78em; color:#999; margin-top:20px; border-top:1px solid #DAD2B8; padding-top:14px;"><em>Unique Perspectives generated via CAMS v3.2 &middot; Neural Nations &middot; Companion to The Empty Pulpit story, map, outlook set</em></p>
+    </div>
+</div>
+
+<footer class="footer">
+    <nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a>
+        <a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a>
+        <a href="the-empty-pulpit.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">The Empty Pulpit</a>
+        <a href="usa-outlook-set.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Outlook Set</a>
+    </nav>
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+<script src="nav.js"></script>
+<script>
+function toggle(n) {
+    const body = document.getElementById('tb' + n);
+    const card = document.getElementById('tc' + n);
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    card.classList.toggle('active', !isOpen);
+}
+function toggleAll() {
+    const btn = document.getElementById('expand-all-btn');
+    const allBodies = document.querySelectorAll('.thinker-body');
+    const allCards = document.querySelectorAll('.thinker-card');
+    const anyOpen = Array.from(allBodies).some(b => b.classList.contains('open'));
+    allBodies.forEach(b => b.classList.toggle('open', !anyOpen));
+    allCards.forEach(c => c.classList.toggle('active', !anyOpen));
+    btn.textContent = anyOpen ? 'Expand all thinkers' : 'Collapse all thinkers';
+}
+</script>
+</body>
+</html>
