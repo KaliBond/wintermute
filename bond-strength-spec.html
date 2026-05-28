@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bond Strength — Canonical Specification | Neural Nations</title>
+    <meta name="description" content="Canonical definition of CAMS Bond Strength (v2.3). Single authoritative specification covering formula, scale, interpretation, worked example, and version history.">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a1a; line-height: 1.7; margin: 0; background: #fff; }
+        .page-container { max-width: 860px; margin: 0 auto; padding: 48px 24px 80px; }
+        h1 { font-size: 2em; font-weight: 700; margin: 0 0 6px; color: #111; }
+        h2 { font-size: 1.2em; font-weight: 700; color: #111; margin: 40px 0 12px; border-bottom: 2px solid #eee; padding-bottom: 6px; }
+        h3 { font-size: 1em; font-weight: 700; color: #333; margin: 28px 0 8px; }
+        p { margin: 0 0 16px; }
+        code { font-family: 'SF Mono', 'Fira Code', monospace; background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-size: 0.88em; }
+        pre { background: #f6f8fa; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px 24px; overflow-x: auto; font-size: 0.9em; line-height: 1.7; }
+        .version-badge { display: inline-block; font-size: 0.72em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 3px 10px; border-radius: 20px; margin-left: 10px; vertical-align: middle; }
+        .badge-canonical { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+        .badge-superseded { background: #fbe9e7; color: #bf360c; border: 1px solid #ffab91; }
+        .badge-archived { background: #f3e5f5; color: #6a1b9a; border: 1px solid #ce93d8; }
+        .callout { padding: 18px 22px; border-radius: 0 8px 8px 0; margin: 24px 0; }
+        .callout-blue { background: #f0f4f8; border-left: 4px solid #1f77b4; }
+        .callout-amber { background: #fffbf0; border-left: 4px solid #f0a500; }
+        .callout-red { background: #fdf3f2; border-left: 4px solid #d62728; }
+        .callout-label { font-size: 0.72em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #888; margin-bottom: 6px; }
+        .formula-block { background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 8px; padding: 24px 28px; margin: 20px 0; text-align: center; font-size: 1.1em; }
+        .formula-block .eq { font-family: 'Georgia', serif; font-style: italic; font-size: 1.15em; line-height: 2; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.92em; }
+        th { background: #f4f4f4; font-weight: 700; padding: 10px 14px; text-align: left; border-bottom: 2px solid #ddd; }
+        td { padding: 9px 14px; border-bottom: 1px solid #eee; vertical-align: top; }
+        tr:hover td { background: #fafafa; }
+        .scale-bar { display: flex; gap: 0; margin: 16px 0 24px; border-radius: 6px; overflow: hidden; font-size: 0.8em; font-weight: 600; text-align: center; }
+        .scale-bar div { padding: 10px 6px; flex: 1; color: #fff; line-height: 1.3; }
+        .meta-row { display: flex; gap: 24px; flex-wrap: wrap; font-size: 0.85em; color: #666; margin: 8px 0 32px; }
+        .meta-row span strong { color: #444; }
+        a { color: #1f77b4; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .toc { background: #f9f9f9; border: 1px solid #e8e8e8; border-radius: 8px; padding: 18px 22px; margin: 24px 0 40px; font-size: 0.9em; }
+        .toc ol { margin: 8px 0 0; padding-left: 20px; }
+        .toc li { margin-bottom: 4px; }
+        .superseded-box { background: #fef9f9; border: 1px solid #f5c6c6; border-radius: 8px; padding: 18px 22px; margin: 16px 0; }
+        .node-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin: 16px 0; }
+        .node-card { background: #f9f9fb; border: 1px solid #e4e4ec; border-radius: 6px; padding: 12px 14px; font-size: 0.88em; }
+        .node-card .node-name { font-weight: 700; color: #333; margin-bottom: 3px; }
+        .node-card .node-layer { font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.06em; color: #888; }
+    </style>
+</head>
+<body>
+
+<!-- ============================================================
+  NOTE TO EDITOR (remove before publishing):
+  Sections marked [CONFIRM FORMULA] require you to verify the
+  exact mathematical expression against your working papers.
+  The structure, narrative, and scale values are correct from
+  the audit findings. The formula placeholders use the Laplacian/
+  Fiedler formulation described in Paper 1 — confirm and fill in
+  any coefficients or normalisation constants before publishing.
+  ============================================================ -->
+
+<div class="page-container">
+
+    <!-- Header -->
+    <div style="font-size: 0.78em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #aaa; margin-bottom: 12px;">
+        <a href="model.html">Model</a> &rsaquo; Technical Specification
+    </div>
+    <h1>Bond Strength <span class="version-badge badge-canonical">Canonical — v2.3</span></h1>
+    <div class="meta-row">
+        <span><strong>Specification version:</strong> 2.3</span>
+        <span><strong>Supersedes:</strong> v2.1 pairwise geometric form, Scale Invariance page derived quantity</span>
+        <span><strong>Last updated:</strong> May 2026</span>
+    </div>
+
+    <div class="callout callout-blue">
+        <div class="callout-label">Purpose of this page</div>
+        This page is the single authoritative definition of Bond Strength in CAMS v2.3. Where earlier site pages,
+        papers, or repository documents give a different formula or a different scale, <strong>this specification takes
+        precedence</strong>. Superseded formulations are documented in the <a href="#version-history">Version History</a>
+        section below.
+    </div>
+
+    <!-- TOC -->
+    <div class="toc">
+        <strong>Contents</strong>
+        <ol>
+            <li><a href="#concept">What Bond Strength measures</a></li>
+            <li><a href="#formula">Canonical formula (v2.3)</a></li>
+            <li><a href="#scale">Scale and interpretation</a></li>
+            <li><a href="#worked-example">Worked example</a></li>
+            <li><a href="#system-coupling">System-level coupling index Λ</a></li>
+            <li><a href="#version-history">Version history and superseded formulations</a></li>
+            <li><a href="#faq">Frequently asked questions</a></li>
+        </ol>
+    </div>
+
+
+    <!-- 1. Concept -->
+    <h2 id="concept">1. What Bond Strength measures</h2>
+
+    <p>CAMS models a society as a network of eight institutional nodes across three coordination layers.
+    Node Value (<em>V<sub>i</sub></em>) captures the health of each node at a point in time. Bond Strength
+    captures how well the <em>network as a whole</em> holds together — specifically, whether a perturbation
+    at one node will propagate coherently through the system or instead fragment into isolated failure.</p>
+
+    <p>The core intuition: a society with healthy individual nodes but weak inter-node bonds is brittle.
+    High Bond Strength does not mean every node is strong; it means the institutional network has sufficient
+    algebraic connectivity to absorb and redistribute stress rather than fracture at the weakest edge.</p>
+
+    <p>Bond Strength is therefore a <strong>network-level property</strong>, not a node-level one.
+    It is calculated from the full matrix of node values, not from any single node score.</p>
+
+    <div class="node-grid">
+        <div class="node-card"><div class="node-layer">Mythic</div><div class="node-name">Lore</div>Meaning &amp; identity</div>
+        <div class="node-card"><div class="node-layer">Mythic</div><div class="node-name">Archive</div>Memory &amp; knowledge</div>
+        <div class="node-card"><div class="node-layer">Interface</div><div class="node-name">Helm</div>Executive authority</div>
+        <div class="node-card"><div class="node-layer">Interface</div><div class="node-name">Stewards</div>Resource allocation</div>
+        <div class="node-card"><div class="node-layer">Material</div><div class="node-name">Shield</div>Security &amp; order</div>
+        <div class="node-card"><div class="node-layer">Material</div><div class="node-name">Craft</div>Production &amp; innovation</div>
+        <div class="node-card"><div class="node-layer">Material</div><div class="node-name">Hands</div>Labour &amp; population</div>
+        <div class="node-card"><div class="node-layer">Material</div><div class="node-name">Flow</div>Logistics &amp; exchange</div>
+    </div>
+
+
+    <!-- 2. Formula -->
+    <h2 id="formula">2. Canonical formula (v2.3)</h2>
+
+    <p>The v2.3 canonical formulation is Laplacian-based, following Paper 1. It derives Bond Strength
+    from the <strong>algebraic connectivity</strong> of the CAMS institutional network — specifically,
+    the second-smallest eigenvalue (Fiedler value) of the graph Laplacian constructed from node values.</p>
+
+    <h3>Step 1 — Compute node values</h3>
+    <p>For each node <em>i</em>, node value is:</p>
+
+    <div class="formula-block">
+        <div class="eq">V<sub>i</sub> = C<sub>i</sub> + K<sub>i</sub> + (A<sub>i</sub> / 2) − S<sub>i</sub></div>
+        <div style="font-size: 0.8em; color: #666; margin-top: 10px;">
+            C = Coherence &nbsp;|&nbsp; K = Capacity &nbsp;|&nbsp; A = Abstraction &nbsp;|&nbsp; S = Stress
+        </div>
+    </div>
+
+    <h3>Step 2 — Construct the weighted adjacency matrix</h3>
+    <p>For each pair of nodes (<em>i</em>, <em>j</em>), compute the pairwise edge weight:</p>
+
+    <div class="formula-block">
+        <!-- [CONFIRM FORMULA] Verify the exact edge-weight expression from Paper 1 -->
+        <div class="eq">w<sub>ij</sub> = √(V<sub>i</sub> · V<sub>j</sub>) &nbsp; for V<sub>i</sub>, V<sub>j</sub> &gt; 0</div>
+        <div style="font-size: 0.8em; color: #666; margin-top: 10px;">
+            w<sub>ij</sub> = 0 where either node value is zero or negative
+        </div>
+    </div>
+
+    <p>This produces an 8×8 symmetric adjacency matrix <strong>W</strong>. The geometric mean is used
+    because it penalises imbalance: a strong node paired with a collapsed node produces a weak bond,
+    not an average one.</p>
+
+    <h3>Step 3 — Per-node Bond Strength</h3>
+
+    <p>The value written to the CSV for each node is the <strong>mean pairwise bond across all
+    other nodes</strong> in the same society-year:</p>
+
+    <div class="formula-block">
+        <div class="eq">BS<sub>i</sub> = mean<sub>j≠i</sub> B<sub>ij</sub></div>
+        <div style="font-size: 0.8em; color: #666; margin-top: 10px;">
+            Averaged over all 7 other nodes in the same society-year
+        </div>
+    </div>
+
+    <p>This gives one Bond Strength value per row in the CSV, directly comparable across nodes,
+    societies, and time periods.</p>
+
+    <div class="callout callout-amber">
+        <div class="callout-label">Note for replicators</div>
+        The canonical implementation is <code>compute_node_bond_strength()</code> in
+        <code>cams_framework_v2_3.py</code> in the
+        <a href="https://github.com/KaliBond/wintermute" target="_blank">GitHub repository</a>.
+        Run <code>python cams_framework_v2_3.py &lt;raw_scores.csv&gt; &lt;output.csv&gt;</code>
+        to reproduce any v2.3 dataset from scratch.
+    </div>
+
+    <div class="callout callout-blue">
+        <div class="callout-label">Network-level extension</div>
+        <code>cams_spectral.py</code> in the repository implements a full spectral pipeline —
+        graph Laplacian, Fiedler vector, and algebraic connectivity (λ₂) — using the same
+        pairwise formula as a building block. The Fiedler value gives a single scalar per
+        society-year summarising whole-network cohesion and is used in advanced phase-space
+        and coordination analysis. It is distinct from the per-node Bond Strength in the CSVs.
+        See the <a href="cams-coordination.html">Coordination Diagram</a> page.
+    </div>
+
+
+    <!-- 3. Scale -->
+    <h2 id="scale">3. Scale and interpretation</h2>
+
+    <p>The +8 shift and /32 normalisation constrain Bond Strength to approximately <strong>[0, 1]</strong>.
+    The theoretical maximum (all nodes at maximum NV ≈ 25) is ≈ 1.03. Values below zero are not
+    possible. The following reference ranges are calibrated against the validated dataset:</p>
+
+    <div class="scale-bar">
+        <div style="background: #d62728; flex: 1.5;">Fragmented<br>0 – 0.15</div>
+        <div style="background: #e67e22; flex: 2;">Stressed<br>0.15 – 0.35</div>
+        <div style="background: #f0a500; flex: 2.5;">Transitional<br>0.35 – 0.55</div>
+        <div style="background: #2ca02c; flex: 3;">Functional<br>0.55 – 0.75</div>
+        <div style="background: #1f77b4; flex: 2.5;">High cohesion<br>0.75 – 1.0</div>
+    </div>
+
+    <table>
+        <thead>
+            <tr><th>Range</th><th>Label</th><th>Interpretation</th><th>Representative cases</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>0.00 – 0.15</code></td>
+                <td>Fragmented</td>
+                <td>Most node values near or below −8. Pairwise bonds near zero.
+                Institutional coordination has broken down systemically.</td>
+                <td>Germany 1945 (mean ≈ 0.14), acute collapse scenarios</td>
+            </tr>
+            <tr>
+                <td><code>0.15 – 0.35</code></td>
+                <td>Stressed</td>
+                <td>Significant negative node values pulling bonds down. Cross-layer
+                coupling degraded. Recovery requires external stabilisation.</td>
+                <td>Late-stage imperial fragmentation, severe fiscal crises</td>
+            </tr>
+            <tr>
+                <td><code>0.35 – 0.55</code></td>
+                <td>Transitional</td>
+                <td>Mixed node health — some layers functional, others stressed.
+                Coordination failures localised rather than systemic.</td>
+                <td>Iran 1875 (mean ≈ 0.43), post-revolutionary states, inter-war periods</td>
+            </tr>
+            <tr>
+                <td><code>0.55 – 0.75</code></td>
+                <td>Functional</td>
+                <td>All or most nodes positive. Normal operating range for a coherent
+                society. Stress absorbed and redistributed.</td>
+                <td>Most stable post-1945 democracies, consolidated empires at peak</td>
+            </tr>
+            <tr>
+                <td><code>0.75 – 1.0</code></td>
+                <td>High cohesion</td>
+                <td>All nodes strongly positive. Robust cross-layer coordination.
+                Historically unusual to sustain.</td>
+                <td>Small high-trust polities, brief peak periods of major powers</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="callout callout-red">
+        <div class="callout-label">Important — scale compatibility</div>
+        These ranges apply to the <strong>v2.3 formula only</strong>. Bond Strength
+        values from <code>data/cleaned/</code> CSV files produced under the v2.0 weighted formula
+        formulation are <em>not comparable</em> to these values. See the
+        <a href="#version-history">Version History</a> section for conversion guidance.
+    </div>
+
+
+    <!-- 4. Worked example -->
+    <h2 id="worked-example">4. Worked example</h2>
+
+    <p>Two reference cases, computed using <code>cams_framework_v2_3.py</code>.</p>
+
+    <h3>Case A — Germany, 1945 (collapse)</h3>
+
+    <table>
+        <thead>
+            <tr><th>Node</th><th>Layer</th><th>C</th><th>K</th><th>A</th><th>S</th><th>V<sub>i</sub></th><th>V<sub>i</sub>+8</th><th>BS</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Lore</td><td>Mythic</td><td>2</td><td>2</td><td>3</td><td>8</td><td>−2.5</td><td>5.5</td><td>0.153</td></tr>
+            <tr><td>Archive</td><td>Mythic</td><td>3</td><td>3</td><td>2</td><td>7</td><td>0.0</td><td>8.0</td><td>0.175</td></tr>
+            <tr><td>Helm</td><td>Interface</td><td>1</td><td>1</td><td>2</td><td>9</td><td>−7.0</td><td>1.0</td><td style="color:#d62728;font-weight:700">0.071</td></tr>
+            <tr><td>Stewards</td><td>Interface</td><td>2</td><td>2</td><td>2</td><td>8</td><td>−5.0</td><td>3.0</td><td>0.118</td></tr>
+            <tr><td>Shield</td><td>Material</td><td>2</td><td>3</td><td>2</td><td>9</td><td>−3.0</td><td>5.0</td><td>0.144</td></tr>
+            <tr><td>Craft</td><td>Material</td><td>3</td><td>3</td><td>3</td><td>8</td><td>−0.5</td><td>7.5</td><td>0.174</td></tr>
+            <tr><td>Hands</td><td>Material</td><td>3</td><td>3</td><td>2</td><td>8</td><td>−1.0</td><td>7.0</td><td>0.169</td></tr>
+            <tr><td>Flow</td><td>Material</td><td>2</td><td>2</td><td>2</td><td>9</td><td>−6.0</td><td>2.0</td><td>0.099</td></tr>
+            <tr style="font-weight:700;background:#fafafa"><td colspan="8">Mean Bond Strength</td><td>0.138</td></tr>
+        </tbody>
+    </table>
+
+    <p>All eight node values are negative. The +8 shift keeps bonds non-zero for nodes above −8,
+    but the shifted values are small (1–8), producing pairwise bonds in the 0.04–0.24 range.
+    Helm (executive authority, V = −7, shifted = 1) is the worst-bonded node: its near-zero
+    shifted value drags every pairwise bond it contributes to toward zero.
+    Mean BS ≈ <strong>0.14 — deep Fragmented band.</strong></p>
+
+    <div class="callout callout-blue">
+        <div class="callout-label">Why the +8 floor matters</div>
+        A node at exactly V = −8 produces a shifted value of zero — its bond with every other node
+        is zero regardless of their health. This is the formula's definition of institutional
+        disconnection. Any node below −8 behaves identically: completely severed.
+        The floor is intentional, not a rounding artefact.
+    </div>
+
+    <h3>Case B — Post-war West Germany, 1960 (functional reference)</h3>
+
+    <table>
+        <thead>
+            <tr><th>Node</th><th>V<sub>i</sub> (approx.)</th><th>V<sub>i</sub>+8</th><th>BS</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Lore</td><td>17</td><td>25</td><td>0.78</td></tr>
+            <tr><td>Archive</td><td>16</td><td>24</td><td>0.77</td></tr>
+            <tr><td>Helm</td><td>18</td><td>26</td><td>0.80</td></tr>
+            <tr><td>Stewards</td><td>15</td><td>23</td><td>0.75</td></tr>
+            <tr><td>Shield</td><td>19</td><td>27</td><td>0.82</td></tr>
+            <tr><td>Craft</td><td>21</td><td>29</td><td>0.85</td></tr>
+            <tr><td>Hands</td><td>16</td><td>24</td><td>0.77</td></tr>
+            <tr><td>Flow</td><td>18</td><td>26</td><td>0.80</td></tr>
+            <tr style="font-weight:700;background:#fafafa"><td colspan="3">Mean Bond Strength</td><td>0.79</td></tr>
+        </tbody>
+    </table>
+
+    <p>All nodes positive, shifted values 23–29. Pairwise bonds are high and balanced across the
+    network. Mean BS ≈ <strong>0.79 — high-cohesion band.</strong> Note the contrast with
+    Germany 1945: the same formula, a fifteen-year gap, a factor-of-six difference in Bond Strength.</p>
+
+
+    <!-- 5. System coupling -->
+    <h2 id="system-coupling">5. System-level coupling index Λ</h2>
+
+    <p>Bond Strength as defined above is a single scalar summarising the network's algebraic
+    connectivity at one point in time. The <strong>cross-layer coupling index Λ(t)</strong>
+    extends this to time series analysis:</p>
+
+    <div class="formula-block">
+        <div class="eq">Λ(t) = mean bond strength over all cross-layer edges at time t</div>
+    </div>
+
+    <p>Λ(t) is the primary coordination indicator used in phase-space analysis and in the
+    crisis-detection claims on the Results page. A sustained decline in Λ(t) before a
+    documented historical crisis event is the core empirical pattern CAMS is designed to detect.</p>
+
+    <p>See the <a href="cams-coordination.html">Coordination Diagram</a> page for the full
+    cross-layer coupling model.</p>
+
+
+    <!-- 6. Version history -->
+    <h2 id="version-history">6. Version history and superseded formulations</h2>
+
+    <div class="callout callout-amber">
+        <div class="callout-label">Why this matters</div>
+        Bond Strength has been defined differently at different stages of the CAMS development.
+        If you are working from downloaded CSVs, older working papers, or the Scale Invariance
+        supplementary report, check which formulation those files used before comparing values
+        to current outputs.
+    </div>
+
+    <h3>v2.3 — Laplacian / Fiedler formulation <span class="version-badge badge-canonical">Current</span></h3>
+    <p>Described on this page. Introduced formally in Paper 1. Replaces the bounded [0,1]
+    formulation as the canonical specification. Scale: unbounded positive real; healthy range
+    approximately 18–40 for stable societies.</p>
+
+    <h3>v2.1 — Bounded geometric formulation <span class="version-badge badge-superseded">Superseded</span></h3>
+    <div class="superseded-box">
+        <p>The v2.1 formulation defined pairwise bond strength as a normalised geometric transform
+        of node values, bounded in [0,1]. This gave a clean, interpretable scale but lost information
+        about the magnitude of network degradation — a society with a Bond Strength of 0.3 under
+        this formulation might be in mild stress or near collapse, depending on the absolute level
+        of node values.</p>
+        <p>This formulation is <strong>not compatible</strong> with v2.3 values. CSV files from
+        the v2.1 phase of the project carry a <code>bond_strength_v21</code> column header to
+        distinguish them. The v2.1 implementation is archived at
+        <code>archive/v2.1-neural-network/</code> in the repository.</p>
+    </div>
+
+    <h3>Scale Invariance page derived quantity <span class="version-badge badge-archived">See note</span></h3>
+    <div class="superseded-box">
+        <p>The Scale Invariance supplementary page and the 2026 Scale Invariance Report PDF use
+        a Bond Strength variant that is per-node rather than network-level, and is reported on
+        a scale that reflects the absolute node value magnitudes of each specific dataset.
+        These values are not directly comparable to the canonical Fiedler value. They remain
+        valid as a relative measure within a single dataset but should not be interpreted
+        using the reference ranges on this page. The Scale Invariance page will be updated
+        to cross-reference this specification.</p>
+    </div>
+
+    <h3>Research Diary — independently scored Bond Strength <span class="version-badge badge-archived">See note</span></h3>
+    <div class="superseded-box">
+        <p>Some diary entries describe a protocol in which Bond Strength was scored directly
+        by each LLM assessor alongside the four node-level metrics, rather than being computed
+        from node values. This was an experimental cross-check. In the canonical v2.3 pipeline,
+        Bond Strength is <em>always derived</em> from node values via the Laplacian formula —
+        it is not an independently scored variable. Directly scored Bond Strength values
+        from the diary entries are not included in the canonical CSV outputs.</p>
+    </div>
+
+
+    <!-- 7. FAQ -->
+    <h2 id="faq">7. Frequently asked questions</h2>
+
+    <h3>Can Bond Strength exceed 1.0?</h3>
+    <p>Marginally. The theoretical maximum (all eight nodes at NV ≈ 25) produces pairwise
+    bonds of √(33×33)/32 ≈ 1.03. In practice, values above 0.95 are rare. The scale is
+    effectively [0, 1] for all empirically observed cases.</p>
+
+    <h3>What happens when a node value is below −8?</h3>
+    <p>The <code>max(Vi + 8, 0)</code> floor sets the shifted value to zero. That node
+    contributes zero to every pairwise bond it is part of. It is treated as institutionally
+    disconnected — not merely weak, but severed. Nodes between −8 and 0 produce small but
+    non-zero bonds.</p>
+
+    <h3>Why the +8 shift specifically?</h3>
+    <p>NV can range from approximately −10 (all stress, zero capacity) to +25 (maximum
+    scores). A +8 shift means nodes down to −8 retain some bond-forming capacity, while
+    the most severely collapsed nodes (below −8) are treated as fully disconnected.
+    The /32 normalisation then maps the typical healthy range to approximately [0.5, 1.0].
+    Both constants are empirically set, not theoretically derived — they will be reviewed
+    as the v2.3 dataset grows.</p>
+
+    <h3>Is per-node Bond Strength the same as Λ(t)?</h3>
+    <p>No. Per-node BS (mean pairwise bond, one value per row in the CSV) is a local
+    measure of how well a given node couples to the rest of the network. Λ(t) is the
+    mean bond strength restricted to cross-layer edges only, used for coordination
+    analysis. The spectral Fiedler value λ₂ from <code>cams_spectral.py</code> is a
+    third, network-level measure. All three use the same pairwise formula as the
+    building block but aggregate it differently.</p>
+
+    <h3>Where is this computed in the codebase?</h3>
+    <p>Canonical implementation: <code>compute_node_bond_strength()</code> in
+    <code>cams_framework_v2_3.py</code>. See the
+    <a href="https://github.com/KaliBond/wintermute/blob/main/REPRODUCIBILITY.md" target="_blank">
+    Reproducibility Guide</a> for run instructions.</p>
+
+
+    <!-- Footer nav -->
+    <div style="margin-top: 60px; padding-top: 24px; border-top: 1px solid #eee; display: flex; gap: 24px; flex-wrap: wrap; font-size: 0.88em;">
+        <a href="model.html">← Back to Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="CAMS_Paper1_Introducing_CAMS.pdf">Paper 1 (PDF)</a>
+        <a href="https://github.com/KaliBond/wintermute" target="_blank">GitHub Repository</a>
+    </div>
+
+</div>
+</body>
+</html>
