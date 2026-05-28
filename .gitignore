@@ -135,3 +135,7 @@ logs/
 exports/*.csv
 exports/*.json
 !exports/.gitkeep
+
+# v2.3 smoke test / temp outputs
+*_test_tmp.csv
+*_warn_test.csv
