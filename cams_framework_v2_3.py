@@ -123,7 +123,7 @@ def compute_derived_columns(df: pd.DataFrame) -> pd.DataFrame:
 
     df["Bond Strength"] = (
         df.groupby(["Society", "Year"], group_keys=False)
-        .apply(_group_bs)
+        .apply(_group_bs, include_groups=False)
     )
 
     return df
