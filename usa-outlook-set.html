@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USA Outlook Set: 2026–2036 · Neural Nations</title>
+    <meta name="description" content="Four structurally distinct trajectories the CAMS geometry permits from the present empty-pulpit configuration. CAMS v3.2 ensemble analysis — 2026–2036 scenarios.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/usa-outlook-set">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neuralnations.org/usa-outlook-set">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:title" content="USA Outlook Set: 2026–2036 · Neural Nations">
+    <meta property="og:description" content="Four structurally distinct trajectories the CAMS geometry permits from the present empty-pulpit configuration. Not predictions — system-geometry paths.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="USA Outlook Set: 2026–2036 · Neural Nations">
+    <meta name="twitter:description" content="Four structurally distinct trajectories the CAMS geometry permits from the present empty-pulpit configuration.">
+    <link rel="stylesheet" href="style.css">
+    <style>
+    .story-meta {
+        font-size: 0.82em;
+        color: #888;
+        letter-spacing: 0.04em;
+        margin: 4px 0 0;
+        line-height: 1.8;
+    }
+    .story-body p {
+        font-size: 1.01em;
+        line-height: 1.85;
+        margin-bottom: 1.2em;
+        color: #1B2A33;
+    }
+    .story-body em { font-style: italic; }
+    .scenario-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 16px;
+    }
+    .scenario-num {
+        flex-shrink: 0;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.1em;
+        font-family: 'JetBrains Mono', monospace;
+        color: #fff;
+    }
+    .scenario-title { font-size: 1.15em; font-weight: 700; color: #1B2A33; }
+    .scenario-prob { font-size: 0.8em; color: #888; margin-top: 3px; font-style: italic; }
+    .node-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.875em;
+        margin: 16px 0;
+    }
+    .node-table th {
+        background: #1B2A33;
+        color: #F5F1E4;
+        padding: 7px 10px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 0.82em;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+    }
+    .node-table td {
+        padding: 7px 10px;
+        border-bottom: 1px solid #DAD2B8;
+        vertical-align: middle;
+    }
+    .node-table tr:nth-child(even) td { background: rgba(245,241,228,0.5); }
+    .node-table tr.total-row td { font-weight: 700; background: rgba(47,111,125,0.08); }
+    .dir-up { color: #2F6F7D; font-weight: 600; }
+    .dir-down { color: #C84C3E; font-weight: 600; }
+    .dir-stable { color: #888; }
+    .indicator-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .indicator-list li {
+        padding: 7px 0 7px 20px;
+        border-bottom: 1px solid #F0E9D2;
+        font-size: 0.9em;
+        color: #1B2A33;
+        line-height: 1.6;
+        position: relative;
+    }
+    .indicator-list li::before {
+        content: '→';
+        position: absolute;
+        left: 0;
+        color: #2F6F7D;
+        font-weight: 700;
+    }
+    .indicator-list li:last-child { border-bottom: none; }
+    .companion-strip {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+    }
+    .companion-strip a {
+        display: inline-block;
+        padding: 7px 14px;
+        border: 1px solid #DAD2B8;
+        border-radius: 6px;
+        font-size: 0.85em;
+        color: #2F6F7D;
+        text-decoration: none;
+        background: #FBF8EF;
+        font-weight: 600;
+    }
+    .companion-strip a:hover { background: #F0E9D2; }
+    .prob-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.875em;
+        margin: 16px 0;
+    }
+    .prob-table th {
+        background: #2F6F7D;
+        color: white;
+        padding: 8px 12px;
+        text-align: left;
+        font-size: 0.82em;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+    }
+    .prob-table td { padding: 9px 12px; border-bottom: 1px solid #DAD2B8; font-size: 0.9em; }
+    .prob-table tr:nth-child(even) td { background: rgba(245,241,228,0.5); }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="nz-arc-map.html">New Zealand &mdash; Arc Map</a>
+                    <a href="nz-arc-story.html">New Zealand &mdash; Institutional Arc</a>
+                    <a href="argentina-cams-map.html">Argentina &mdash; Arc Map</a>
+                    <a href="argentina-cams-story.html">Argentina &mdash; CAMS Story</a>
+                    <a href="germany-arc-map.html">Germany &mdash; Arc Map</a>
+                    <a href="germany-arc-story.html">Germany &mdash; Arc Story</a>
+                    <a href="canada-arc-map.html">Canada &mdash; Arc Map</a>
+                    <a href="canada-arc-story.html">Canada &mdash; The Border Tribe</a>
+                    <a href="attractors.html">Attractors</a>
+                    <a href="the-empty-pulpit.html">USA &mdash; The Empty Pulpit</a>
+                    <a href="usa-outlook-set.html">USA &mdash; Outlook Set 2026&ndash;2036</a>
+                    <a href="the-empty-pulpit-map.html">USA &mdash; Empty Pulpit Map</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="nz-arc-map.html">New Zealand &mdash; Arc Map</a>
+        <a href="nz-arc-story.html">New Zealand &mdash; Institutional Arc</a>
+        <a href="argentina-cams-map.html">Argentina &mdash; Arc Map</a>
+        <a href="argentina-cams-story.html">Argentina &mdash; CAMS Story</a>
+        <a href="germany-arc-map.html">Germany &mdash; Arc Map</a>
+        <a href="germany-arc-story.html">Germany &mdash; Arc Story</a>
+        <a href="canada-arc-map.html">Canada &mdash; Arc Map</a>
+        <a href="canada-arc-story.html">Canada &mdash; The Border Tribe</a>
+        <a href="attractors.html">Attractors</a>
+        <a href="the-empty-pulpit.html">USA &mdash; The Empty Pulpit</a>
+        <a href="usa-outlook-set.html">USA &mdash; Outlook Set 2026&ndash;2036</a>
+        <a href="the-empty-pulpit-map.html">USA &mdash; Empty Pulpit Map</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="hero-section">
+        <h1>USA Outlook Set: 2026&ndash;2036</h1>
+        <p class="hero-subtitle">Four structurally distinct trajectories the CAMS geometry permits from the present empty-pulpit configuration. These are not predictions. They are the system-geometry paths the data makes available.</p>
+    </div>
+
+    <div class="card">
+        <p class="story-meta">
+            Companion to <a href="the-empty-pulpit.html" style="color:#2F6F7D;">The Empty Pulpit</a> and the <a href="the-empty-pulpit-map.html" style="color:#2F6F7D;">Empty Pulpit Map</a><br>
+            Neural Nations &middot; CAMS v3.2 &mdash; Ensemble Mean (5-scorer)
+        </p>
+        <div class="story-body" style="margin-top:16px;">
+            <p>The temptation in present conditions is to choose the scenario that confirms what one already believes is going to happen, and to dismiss the others as implausible. The CAMS data does not support this approach. It supports a different one: each of the four scenarios below is reachable from the 2026 configuration through changes in specific nodes and loops that can be observed in advance. The forecasting question is not <em>which scenario will happen</em>, because that overdetermines the data. The forecasting question is <em>which scenarios is the system geometry currently moving toward, and what would have to change for that direction to shift</em>.</p>
+            <p>The four scenarios are presented in order of present-trajectory probability (highest to lowest) based on the loop activity the 2026 reading shows. This ordering may shift quickly as conditions change.</p>
+        </div>
+    </div>
+
+    <!-- SCENARIO 1 -->
+    <div class="card" style="border-left: 4px solid #C84C3E;">
+        <div class="scenario-header">
+            <div class="scenario-num" style="background:#C84C3E;">1</div>
+            <div>
+                <div class="scenario-title">Praetorian Stabilisation</div>
+                <div class="scenario-prob">Most likely trajectory at present-trajectory loop activity</div>
+            </div>
+        </div>
+
+        <p style="font-size:0.8em;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin:0 0 8px;">Node Signature 2036</p>
+        <table class="node-table">
+            <thead><tr><th>Node</th><th>2026 NV</th><th>2036 Projected</th><th>Direction</th></tr></thead>
+            <tbody>
+                <tr><td>Helm</td><td>0.4</td><td>2–4</td><td class="dir-up">Mild recovery, durably low</td></tr>
+                <tr><td>Shield</td><td>10.7</td><td>11–12</td><td class="dir-up">Holding or rising</td></tr>
+                <tr><td>Lore</td><td>0.6</td><td>1–3</td><td class="dir-up">Partial recovery, fragmented</td></tr>
+                <tr><td>Stewards</td><td>3.6</td><td>3–4</td><td class="dir-stable">Stable depleted</td></tr>
+                <tr><td>Craft</td><td>4.2</td><td>4–5</td><td class="dir-stable">Stable depleted</td></tr>
+                <tr><td>Hands</td><td>4.2</td><td>4–5</td><td class="dir-stable">Stable depleted, high stress</td></tr>
+                <tr><td>Archive</td><td>6.0</td><td>3–4</td><td class="dir-down">Continued drawdown</td></tr>
+                <tr><td>Flow</td><td>3.2</td><td>3–4</td><td class="dir-stable">Stable depleted</td></tr>
+                <tr class="total-row"><td><strong>Total NV</strong></td><td><strong>32.9</strong></td><td><strong>31–41</strong></td><td><strong>Low-equilibrium plateau</strong></td></tr>
+            </tbody>
+        </table>
+
+        <div class="story-body">
+            <p>The Praetorian configuration persists, but stabilises. The mass pardons, the executive orders, the federal deployments become routine rather than exceptional — they are still happening but they no longer dominate the news cycle because they have become the operating norm. Successive administrations of either party govern through symbolic acts because the institutional channels have not been rebuilt and no incoming executive has the capacity to rebuild them faster than the conditions they inherit demand decisionist response. Shield Authority expands quietly into new domestic domains and stops being remarked upon.</p>
+            <p>The Archive continues to be drawn down through partisan use of courts and regulatory channels, but slowly enough that the legacy institutions still function for routine purposes. Civic life thins. Local elections become more important and less consequential. The republic continues to exist in a form that the founders would not recognise but that the citizens of 2036 will have grown up inside and will largely accept as normal.</p>
+            <p><strong>Why this is the most likely:</strong> The R1, R2, R3, and R4 reinforcing loops are all currently active, and the B2 Renewal loop is not. In the absence of a deliberate civic intervention or a sufficiently severe external shock, the loops the system is actually running will continue to produce their characteristic output. Each loop's individual cycle time is short — months to a few years — while the renewal loop's cycle time is decades.</p>
+        </div>
+
+        <p style="font-size:0.8em;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin:16px 0 8px;">Early Indicators (next 18 months)</p>
+        <ul class="indicator-list">
+            <li>Continued executive orders citing emergency or national-security framings in domains previously governed by ordinary statute</li>
+            <li>Decisions of federal courts where the practical effect is non-compliance regardless of the legal outcome</li>
+            <li>Expansion of federal agent presence in domestic civilian contexts presented as routine rather than exceptional</li>
+            <li>Decline in routine federal-press briefings; replacement by direct executive communication to mass audiences</li>
+            <li>Press, academic, and civic organisations adjusting operating practices toward what the security environment permits</li>
+            <li>Continued draw-down of inspector-general capacity and regulatory enforcement</li>
+        </ul>
+    </div>
+
+    <!-- SCENARIO 2 -->
+    <div class="card" style="border-left: 4px solid #D98B2B;">
+        <div class="scenario-header">
+            <div class="scenario-num" style="background:#D98B2B;">2</div>
+            <div>
+                <div class="scenario-title">Mass Formation Capture</div>
+                <div class="scenario-prob">Lower probability than Praetorian Stabilisation but elevated and rising</div>
+            </div>
+        </div>
+
+        <p style="font-size:0.8em;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin:0 0 8px;">Node Signature 2036</p>
+        <table class="node-table">
+            <thead><tr><th>Node</th><th>2026 NV</th><th>2036 Projected</th><th>Direction</th></tr></thead>
+            <tbody>
+                <tr><td>Helm</td><td>0.4</td><td>7–10</td><td class="dir-up">Sharp recovery — subordinated to capture</td></tr>
+                <tr><td>Shield</td><td>10.7</td><td>12–14</td><td class="dir-up">Expanded, fused to executive</td></tr>
+                <tr><td>Lore</td><td>0.6</td><td>8–11</td><td class="dir-up">Apparent recovery — coercively unified</td></tr>
+                <tr><td>Stewards</td><td>3.6</td><td>2–4</td><td class="dir-down">Purged, rebuilt to loyalty criteria</td></tr>
+                <tr><td>Craft</td><td>4.2</td><td>4–6</td><td class="dir-up">Partially mobilised</td></tr>
+                <tr><td>Hands</td><td>4.2</td><td>7–9</td><td class="dir-up">Captured: low stress, high mobilisation</td></tr>
+                <tr><td>Archive</td><td>6.0</td><td>1–3</td><td class="dir-down">Substantially defeated</td></tr>
+                <tr><td>Flow</td><td>3.2</td><td>3–4</td><td class="dir-stable">Stable depleted</td></tr>
+                <tr class="total-row"><td><strong>Total NV</strong></td><td><strong>32.9</strong></td><td><strong>44–61</strong></td><td><strong>Higher aggregate, far lower legitimacy</strong></td></tr>
+            </tbody>
+        </table>
+
+        <div class="story-body">
+            <p>A coherence-offer succeeds in capturing the available mass durably. The captured mass is high-mobilisation, low-stress (because narratively anchored), and committed to the project that captures it. Lore rises sharply because there is now a working dominant narrative — but it is coercively unified, not deliberatively built. Archive falls sharply because the legal-institutional constraints that previously limited executive action are either subordinated or replaced.</p>
+            <p><strong>Why this scenario is elevated:</strong> Mass Availability and Coherence Demand are both at historical extremes. The conditions under which a capture event occurs are present. What is currently absent is a sufficiently disciplined and durable coherence-offer. This scenario can be captured from either political direction — left-populist or technocratic-authoritarian capture produces the same node signature with different political content.</p>
+        </div>
+
+        <p style="font-size:0.8em;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin:16px 0 8px;">Early Indicators (next 24 months)</p>
+        <ul class="indicator-list">
+            <li>Emergence of a coherent ideological cadre operating across multiple agencies with shared narrative discipline</li>
+            <li>Successful party purges or replacement of senior civil servants on loyalty rather than competence criteria</li>
+            <li>Press and academic environments shifting toward openly aligned with executive narrative</li>
+            <li>Mass mobilisation events combining emotional intensity with sustained organisational follow-through</li>
+            <li>External crisis providing object of unified national response (war, economic collapse, attack)</li>
+            <li>Dismantling of Archive constraints through constitutional amendment, court-packing, or sustained non-compliance</li>
+        </ul>
+    </div>
+
+    <!-- SCENARIO 3 -->
+    <div class="card" style="border-left: 4px solid #6b7280;">
+        <div class="scenario-header">
+            <div class="scenario-num" style="background:#6b7280;">3</div>
+            <div>
+                <div class="scenario-title">Federal Devolution</div>
+                <div class="scenario-prob">Lower probability but increasing as Helm and Archive decline</div>
+            </div>
+        </div>
+
+        <p style="font-size:0.8em;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin:0 0 8px;">Node Signature 2036</p>
+        <table class="node-table">
+            <thead><tr><th>Node</th><th>2026 NV</th><th>2036 Projected</th><th>Direction</th></tr></thead>
+            <tbody>
+                <tr><td>Helm (federal)</td><td>0.4</td><td>1–2</td><td class="dir-down">Continued degradation</td></tr>
+                <tr><td>Helm (state median)</td><td>—</td><td>6–8</td><td class="dir-up">State executive capacity diverges</td></tr>
+                <tr><td>Shield (federal)</td><td>10.7</td><td>8–10</td><td class="dir-down">Contested authority</td></tr>
+                <tr><td>Lore (national)</td><td>0.6</td><td>0–2</td><td class="dir-down">National narrative effectively dead</td></tr>
+                <tr><td>Lore (regional)</td><td>—</td><td>5–9</td><td class="dir-up">Regional narratives diverge sharply</td></tr>
+                <tr><td>Archive</td><td>6.0</td><td>4–6</td><td class="dir-stable">Held at state level, eroding federally</td></tr>
+                <tr><td>Hands</td><td>4.2</td><td>5–7</td><td class="dir-up">Stress varies sharply by region</td></tr>
+                <tr class="total-row"><td><strong>Federal Total NV</strong></td><td><strong>32.9</strong></td><td><strong>20–30</strong></td><td><strong>Federal-level continued decline</strong></td></tr>
+                <tr class="total-row"><td><strong>State median Total NV</strong></td><td><strong>—</strong></td><td><strong>55–75</strong></td><td><strong>State-level divergent recovery</strong></td></tr>
+            </tbody>
+        </table>
+
+        <div class="story-body">
+            <p>The federal Helm cannot recover because no national coherence-offer can capture a sufficiently large fraction of the available mass. But the absence of federal coherence does not produce uniform decline — it produces regional divergence. States with intact institutional capacity increasingly operate as functional polities while the federal level continues to degrade. California governs as California. Texas governs as Texas. The federal government continues to exist and perform certain irreducible functions, but the substance of governance devolves to the states by default rather than by decision.</p>
+            <p><strong>Why this scenario has rising probability:</strong> The federal Helm node has declined from 11.9 in 2015 to 0.4 in 2026. If continued, recovery to a level capable of effective national governance becomes increasingly implausible on a 10-year horizon. The cost of routing around it through state-level governance is comparatively low for larger states.</p>
+        </div>
+
+        <p style="font-size:0.8em;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin:16px 0 8px;">Early Indicators (next 36 months)</p>
+        <ul class="indicator-list">
+            <li>State-level coalitions taking on functions historically federal — climate, immigration, AI regulation, criminal justice</li>
+            <li>State attorneys-general becoming the primary venue for constitutional litigation</li>
+            <li>Divergence in regulatory frameworks across states sufficient that interstate commerce requires state-by-state compliance</li>
+            <li>State-level security capacity expanding to substitute for federal functions perceived as absent</li>
+            <li>Major employers and universities beginning to navigate federal-state divergence operationally</li>
+        </ul>
+    </div>
+
+    <!-- SCENARIO 4 -->
+    <div class="card" style="border-left: 4px solid #2F6F7D;">
+        <div class="scenario-header">
+            <div class="scenario-num" style="background:#2F6F7D;">4</div>
+            <div>
+                <div class="scenario-title">Renewal Through Reckoning</div>
+                <div class="scenario-prob">Lowest current probability — the only scenario the geometry presents as a recovery</div>
+            </div>
+        </div>
+
+        <p style="font-size:0.8em;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin:0 0 8px;">Node Signature 2036</p>
+        <table class="node-table">
+            <thead><tr><th>Node</th><th>2026 NV</th><th>2036 Projected</th><th>Direction</th></tr></thead>
+            <tbody>
+                <tr><td>Helm</td><td>0.4</td><td>6–9</td><td class="dir-up">Substantial recovery through reform</td></tr>
+                <tr><td>Shield</td><td>10.7</td><td>8–10</td><td class="dir-down">Deliberate reduction in scope</td></tr>
+                <tr><td>Lore</td><td>0.6</td><td>7–10</td><td class="dir-up">New plural-deliberative configuration</td></tr>
+                <tr><td>Stewards</td><td>3.6</td><td>7–9</td><td class="dir-up">Rebuilt with explicit durability attention</td></tr>
+                <tr><td>Craft</td><td>4.2</td><td>8–11</td><td class="dir-up">Industrial-base renewal</td></tr>
+                <tr><td>Hands</td><td>4.2</td><td>8–11</td><td class="dir-up">Integration and stress reduction</td></tr>
+                <tr><td>Archive</td><td>6.0</td><td>7–9</td><td class="dir-up">Replenished through deliberate work</td></tr>
+                <tr><td>Flow</td><td>3.2</td><td>7–10</td><td class="dir-up">Substrate renewal as policy focus</td></tr>
+                <tr class="total-row"><td><strong>Total NV</strong></td><td><strong>32.9</strong></td><td><strong>58–79</strong></td><td><strong>Genuine recovery to 1990s-era levels</strong></td></tr>
+            </tbody>
+        </table>
+
+        <div class="story-body">
+            <p>A civic project arises that is durable, cross-partisan in the technical sense that it operates outside the existing partisan logic, and capable of working at the substrate level rather than the symbolic level. This project does not begin with a charismatic leader. It begins with civic actors — religious leaders, civic-organisation founders, educators, regional press, professional associations, technologically-savvy networks — recognising that the empty pulpit cannot be filled by any administration and undertaking the slow patient work of refilling it themselves.</p>
+            <p>This work takes a generation. By 2036 the early stages are visible but the recovery is incomplete. By 2046 the substrate is meaningfully rebuilt. Renewal Through Reckoning has been the actual American historical pattern in earlier crises — the post-Civil War amendments, the Progressive Era, the New Deal, the civil rights legislative architecture, the post-Watergate reforms. The pattern has worked before. Whether it can work again depends on whether the institutional substrate has been depleted past the point of hosting it.</p>
+            <p><strong>Why this scenario has the lowest current probability:</strong> The B2 Renewal Path loop is presently inactive. The activation threshold is high: the work is slow, rewards are delayed, non-partisan action is invisible to the partisan media environment, and the institutional capacity to host renewal has itself been depleted.</p>
+        </div>
+
+        <p style="font-size:0.8em;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin:16px 0 8px;">Early Indicators (next 24 months)</p>
+        <ul class="indicator-list">
+            <li>Civic projects with multi-year operating horizons, durable funding independent of political cycles, explicit non-partisan structures</li>
+            <li>Religious and civic-religious leadership taking up the empty pulpit explicitly</li>
+            <li>New press and information institutions with demonstrably superior truth-tracking models</li>
+            <li>Successful deliberative process experiments at substantial scale (Citizens' Assemblies, structured cross-partisan projects)</li>
+            <li>Technology platforms designed for deliberation rather than engagement gaining sustainable user bases</li>
+            <li>Significant donor capital shifting from political cycle investment to institutional substrate investment</li>
+        </ul>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="card">
+        <p class="section-label">Summary Probability Map</p>
+        <p style="font-size:0.88em; color:#555; margin-bottom:14px;">Given the present configuration of the six loops in the <a href="the-empty-pulpit-map.html" style="color:#2F6F7D;">Empty Pulpit Map</a>:</p>
+        <table class="prob-table">
+            <thead><tr><th>Scenario</th><th>Current Probability</th><th>Trend</th><th>Leverage Required</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Praetorian Stabilisation</strong></td><td>High</td><td>Stable to rising</td><td>Default — no shift required</td></tr>
+                <tr><td><strong>Mass Formation Capture</strong></td><td>Medium</td><td>Rising</td><td>Disciplined coherence-offer + external object</td></tr>
+                <tr><td><strong>Federal Devolution</strong></td><td>Medium-low</td><td>Rising</td><td>Continued Helm decline + state capacity</td></tr>
+                <tr><td><strong>Renewal Through Reckoning</strong></td><td>Low</td><td>Stable at low</td><td>Civic mobilisation outside partisan structures</td></tr>
+            </tbody>
+        </table>
+        <div class="story-body" style="margin-top:16px;">
+            <p>The first three scenarios represent different forms of the structural drift the geometry currently produces. The fourth requires deliberate activation of capacity that is presently latent. The probability of the fourth scenario is determined entirely by whether and how soon that activation occurs. The probability of the other three rises with each year the activation does not occur.</p>
+            <p>The data does not say which scenario will happen. The data says that one of them will, and that the speed at which the underlying configuration is moving toward the first three is faster than the speed at which the fourth is currently being prepared.</p>
+        </div>
+    </div>
+
+    <div class="card" style="background:#FBF8EF; border-left:4px solid #2F6F7D;">
+        <p class="section-label" style="color:#2F6F7D;">The Common Global Interest Note</p>
+        <div class="story-body">
+            <p>The United States is a 330-million-person society with the world's largest economy, dominant currency, most extensive military presence, and the institutional architecture that has anchored the post-1945 international order. Each of the four scenarios above has international consequences that compound the domestic structural change.</p>
+            <p>Praetorian Stabilisation produces a US foreign policy increasingly conducted by symbolic act rather than institutional process — unpredictable, transactional, less constrained by treaty or precedent. Mass Formation Capture produces a US foreign policy organised around the captured movement's defining oppositions. Federal Devolution produces a US foreign policy that increasingly cannot speak with a single voice. Renewal Through Reckoning is the only scenario that produces a US foreign policy capable of acting as a reliable partner in the kind of multi-decade common-interest projects — climate, public health, AI governance, nuclear non-proliferation — that the actual problems of the next half-century require.</p>
+            <p>The empty pulpit is an American problem in its proximate cause and a global problem in its consequences.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <p class="section-label">Companion Pieces</p>
+        <div class="companion-strip">
+            <a href="the-empty-pulpit.html">&#8592; The Empty Pulpit</a>
+            <a href="the-empty-pulpit-map.html">Empty Pulpit Map (CLD) &rarr;</a>
+        </div>
+        <p style="font-size:0.78em; color:#999; margin-top:20px; border-top:1px solid #DAD2B8; padding-top:14px;"><em>Outlook Set generated via CAMS v3.2 Ensemble Mean (5-scorer) &middot; Neural Nations &middot; Companion to "The Empty Pulpit" and "Empty Pulpit Map" CLD</em></p>
+    </div>
+</div>
+
+<footer class="footer">
+    <nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a>
+        <a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a>
+        <a href="datasets.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Datasets</a>
+        <a href="the-empty-pulpit.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">The Empty Pulpit</a>
+    </nav>
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+<script src="nav.js"></script>
+</body>
+</html>

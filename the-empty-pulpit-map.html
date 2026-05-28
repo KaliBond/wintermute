@@ -1,10 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Argentina CAMS 1950–2026: The Thermodynamic Freeze Attractor</title>
-    <!-- SWAPPED CDN TO JSDELIVR FOR BETTER RELIABILITY -->
+    <title>Aha! Map v1.2</title>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network/standalone/umd/vis-network.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style type="text/css">
@@ -14,7 +13,8 @@
         #cldNetwork { flex-grow: 1; border: 1px solid #d1d5db; background-color: #ffffff; width: 100%; height: 100%; }
 
         /* UI Elements */
-        #modelTitleDisplay { position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold; color: #1F2937; background-color: rgba(255, 255, 255, 0.9); padding: 10px 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); z-index: 10; pointer-events: none; }
+        #modelTitleDisplay { position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold; color: #1F2937; background-color: rgba(255, 255, 255, 0.9); padding: 10px 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); z-index: 10; pointer-events: auto; cursor: help; border-bottom: 2px dashed #3B82F6; }
+        #titlePopover { position: absolute; top: 75px; left: 20px; background: #1F2937; color: white; padding: 8px 12px; border-radius: 6px; font-size: 14px; display: none; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.2); max-width: 300px; pointer-events: none; }
         
         .action-btn { position: absolute; bottom: 20px; z-index: 25; padding: 10px 18px; font-size: 14px; font-weight: 500; border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         
@@ -54,7 +54,7 @@
         #legend { top: 20px; }
         #archetypeLegend { top: 75px; }
         
-        .legend-header { padding: 12px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; background: #fff; border-bottom: 1px solid #DAD2B8; }
+        .legend-header { padding: 12px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; background: #fff; border-bottom: 1px solid #eee; }
         .legend-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex-grow: 1; }
         .legend-list li { padding: 8px 12px; border-bottom: 1px solid #f3f4f6; font-size: 13px; cursor: pointer; border-left: 3px solid transparent; }
         .legend-list li:hover { background-color: #eff6ff; }
@@ -88,98 +88,12 @@
         /* Save Modal Specifics */
         #filenameInput { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; margin: 5px 0 15px 0; box-sizing: border-box;}
     </style>
-<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<nav class="navbar" id="navbar">
-    <div class="nav-container">
-        <a href="index.html" class="nav-logo">
-            <span class="nav-logo-badge">NN</span>
-            <span class="nav-logo-text">Neural Nations</span>
-        </a>
-        <div class="nav-menu">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="start-here.html" class="nav-link">Start Here</a>
-            <a href="model.html" class="nav-link">Model</a>
-            <a href="datasets.html" class="nav-link">Datasets</a>
-            <a href="explore.html" class="nav-link">Explore</a>
-            <div class="nav-dropdown">
-                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
-                <div class="nav-dropdown-menu">
-                    <a href="results.html">Results at a Glance</a>
-                    <a href="validation.html">Validation &amp; Limits</a>
-                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
-                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
-                    <a href="cams-failure-modes.html">Failure Modes Map</a>
-                    <a href="failure-modes-story.html">Failure Modes Story</a>
-                    <a href="nz-arc-map.html">New Zealand &mdash; Arc Map</a>
-                    <a href="nz-arc-story.html">New Zealand &mdash; Institutional Arc</a>
-                    <a href="argentina-cams-map.html">Argentina &mdash; Arc Map</a>
-                    <a href="argentina-cams-story.html">Argentina &mdash; CAMS Story</a>
-                    <a href="germany-arc-map.html">Germany &mdash; Arc Map</a>
-                    <a href="germany-arc-story.html">Germany &mdash; Arc Story</a>
-                    <a href="canada-arc-map.html">Canada &mdash; Arc Map</a>
-                    <a href="canada-arc-story.html">Canada &mdash; The Border Tribe</a>
-                    <a href="attractors.html">Attractors</a>
-                    <a href="the-empty-pulpit.html">USA &mdash; The Empty Pulpit</a>
-                    <a href="usa-outlook-set.html">USA &mdash; Outlook Set 2026&ndash;2036</a>
-                    <a href="the-empty-pulpit-map.html">USA &mdash; Empty Pulpit Map</a>
-                </div>
-            </div>
-            <a href="research-diary.html" class="nav-link">Research Diary</a>
-            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
-            <a href="faq.html" class="nav-link">FAQ</a>
-            <a href="contact.html" class="nav-link">Contact</a>
-            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework ↗</a>
-        </div>
-        <div class="nav-actions">
-            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
-                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
-            </a>
-            <a href="newsletter.html" class="nav-btn-newsletter">
-                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
-            </a>
-            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </div>
-    <div class="nav-mobile" id="nav-mobile">
-        <a href="index.html">Home</a>
-        <a href="start-here.html">Start Here</a>
-        <a href="model.html">Model</a>
-        <a href="datasets.html">Datasets</a>
-        <a href="explore.html">Explore</a>
-        <a href="research-diary.html">Research Diary</a>
-        <a href="mindscapes.html">Mindscapes</a>
-        <a href="faq.html">FAQ</a>
-        <a href="contact.html">Contact</a>
-        <a href="framework/index.html">Framework ↗</a>
-        <hr class="mobile-divider">
-        <div class="mobile-section-title">Insights</div>
-        <a href="results.html">Results at a Glance</a>
-        <a href="validation.html">Validation &amp; Limits</a>
-        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
-        <a href="escalation-archetypes.html">Escalation Archetypes</a>
-        <a href="cams-failure-modes.html">Failure Modes Map</a>
-        <a href="failure-modes-story.html">Failure Modes Story</a>
-        <a href="nz-arc-map.html">New Zealand &mdash; Arc Map</a>
-        <a href="nz-arc-story.html">New Zealand &mdash; Institutional Arc</a>
-        <a href="argentina-cams-map.html">Argentina &mdash; Arc Map</a>
-        <a href="argentina-cams-story.html">Argentina &mdash; CAMS Story</a>
-        <a href="germany-arc-map.html">Germany &mdash; Arc Map</a>
-        <a href="germany-arc-story.html">Germany &mdash; Arc Story</a>
-        <a href="canada-arc-map.html">Canada &mdash; Arc Map</a>
-        <a href="canada-arc-story.html">Canada &mdash; The Border Tribe</a>
-        <a href="attractors.html">Attractors</a>
-                    <a href="the-empty-pulpit.html">USA &mdash; The Empty Pulpit</a>
-                    <a href="usa-outlook-set.html">USA &mdash; Outlook Set 2026&ndash;2036</a>
-                    <a href="the-empty-pulpit-map.html">USA &mdash; Empty Pulpit Map</a>
-    </div>
-</nav>
 
     <div id="cldContainer">
-        <div id="modelTitleDisplay">Argentina CAMS 1950–2026: The Thermodynamic Freeze Attractor</div>
+        <div id="modelTitleDisplay">Aha! Map v1.2</div>
+        <div id="titlePopover"></div>
         <button id="saveButton" class="action-btn">Save Map</button>
         <button id="loadNewButton" class="action-btn">Load Map Data</button>
         <button id="saveDataButton" class="action-btn">Save Map Data</button>
@@ -188,11 +102,11 @@
         <div id="cldNetwork"></div>
         
         <div id="legend" class="legend-container">
-            <div class="legend-header" onclick="toggleLegend('legend')">Feedback Loops ▼</div>
+            <div class="legend-header" onclick="toggleLegend('legend')">Feedback Loops &#9660;</div>
             <ul id="loopList" class="legend-list"></ul>
         </div>
         <div id="archetypeLegend" class="legend-container">
-            <div class="legend-header" onclick="toggleLegend('archetypeLegend')">Archetypes ▼</div>
+            <div class="legend-header" onclick="toggleLegend('archetypeLegend')">Archetypes &#9660;</div>
             <ul id="archetypeList" class="legend-list"></ul>
         </div>
         
@@ -201,388 +115,400 @@
         <div id="canvasTooltip" class="tooltip"></div>
     </div>
 
-    <!-- Input/Load Modal -->
-    <div id="inputModal" class="modal-overlay" style="display: none;"> <!-- Default to flex so it shows on load if empty -->
-        <div class="modal-box">
+    <div id="inputModal" class="modal-overlay" style="display: none;"> <div class="modal-box">
             <h2 style="margin:0; color:#111827;">Load Map Data</h2>
             <p style="margin:0; color:#6B7280; font-size:14px;">Paste the JSON from Gemini below:</p>
-            <textarea id="jsonInput" placeholder="{" spellcheck="false">{
+            <textarea id="jsonInput" placeholder='{ "nodes": [...], "edges": [...] }' spellcheck="false">{
   "metadata": {
-    "topic": "Argentina CAMS 1950-2026: The Thermodynamic Freeze Attractor"
+    "topic": "The Empty Pulpit",
+    "narrative_title": "Lore collapse, Shield persistence, and the decisionist substitute"
   },
   "nodes": [
     {
       "id": "n1",
-      "label": "System Mean V̄",
+      "label": "Lore Capacity",
       "shape": "box",
       "color": { "background": "#CCFBF1", "border": "#14B8A6" },
-      "borderWidth": 2.5,
-      "x": 0,
-      "y": 0,
-      "description": "The aggregate Node Value across all eight CAMS nodes — the system's overall cognitive health score. Argentina's V̄ oscillates between near-zero (1955, 1975, 2001) and a ceiling of ~10.8 (1950) that has never been re-attained. In 2026 it stands at 5.11, well below the crisis threshold of 12. [n1]"
+      "borderWidth": 1,
+      "x": -300,
+      "y": -100,
+      "description": "The institutional capacity to produce, transmit, and metabolise shared narrative — the press, the academy, civic religion, the bipartisan consensus apparatus, the common interpretive framework that turns events into shared meaning. In the 2026 reading this stock has fallen to Node Value 0.6, the lowest in 127 years of US data. Lore Capacity is the substrate of democratic deliberation; without it, deliberation becomes performance and coercion is what is left. [n1]"
     },
     {
       "id": "n2",
-      "label": "Helm (Executive Coherence)",
+      "label": "Helm Coherence",
       "shape": "box",
       "color": { "background": "#CCFBF1", "border": "#14B8A6" },
       "borderWidth": 1,
-      "x": -350,
-      "y": -200,
-      "description": "The governance and leadership node — the capacity of Argentina's executive institutions to set direction, maintain legitimacy, and coordinate the other nodes. Helm has ranged from 11.2 (1950 Perón peak) to -0.8 (1975 pre-coup), demonstrating the most extreme volatility of any node. In 2026 it sits at V=4.0, chronically sub-critical. [n2]"
+      "x": -150,
+      "y": -260,
+      "description": "The executive function's capacity to operate coherently within and through the rest of the institutional architecture: working with Stewards, respecting Archive, addressing Hands through Lore. In the 2026 reading Helm sits at 0.4, the second-lowest in the dataset. A degraded Helm does not stop governing — it governs differently, through decisionist symbolic acts rather than through institutional process. [n2]"
     },
     {
       "id": "n3",
-      "label": "Shield (Coercive-Legal Anchor)",
+      "label": "Shield Authority",
       "shape": "box",
       "color": { "background": "#CCFBF1", "border": "#14B8A6" },
       "borderWidth": 1,
-      "x": -350,
-      "y": 200,
-      "description": "Military, police, and judicial institutions — the node that enforces order and maintains system connectivity even when other nodes collapse. Shield is Argentina's most stable node across 76 years, consistently the last to fall and first to anchor recovery. In 2026 it stands at V=5.0, the system's only positive anchor. [n3]"
+      "x": 200,
+      "y": -200,
+      "description": "The security and enforcement apparatus broadly understood: federal agencies with coercive powers, the surveillance infrastructure, the federalised police functions, the legally privileged spaces of national-security exception. In 2026 Shield holds at 10.7 — seventeen times the Lore reading. Shield is the only institutional node currently operating at near-historical norms, which means it now defines reality by default rather than by mandate. [n3]"
     },
     {
       "id": "n4",
-      "label": "Flow (Material-Normative Integration)",
+      "label": "Archive Stock",
       "shape": "box",
       "color": { "background": "#CCFBF1", "border": "#14B8A6" },
       "borderWidth": 1,
-      "x": 350,
-      "y": -200,
-      "description": "The material economy's alignment with normative meaning — whether the flow of goods, currency, and resources carries legitimate social meaning. Argentina's most volatile economic node: V=-2.0 in 2001 (currency collapse), V=10.0 in 2007 (commodity boom), V=1.8 in 2026 (chronic crisis). [n4]"
+      "x": 0,
+      "y": 0,
+      "description": "The inherited legal-institutional memory: the Constitution, the federal courts, the surviving regulatory and professional norms, the legacy institutions still operating on the older legitimacy. At Node Value 6.0 in 2026, Archive is the country's highest-functioning institutional capacity after Shield, and is the working capital the entire system is currently drawing down. Archive can be drawn down faster than it can be replenished. [n4]"
     },
     {
       "id": "n5",
-      "label": "Hands (Motivational Labor)",
+      "label": "Mass Availability",
       "shape": "box",
       "color": { "background": "#CCFBF1", "border": "#14B8A6" },
       "borderWidth": 1,
-      "x": 350,
-      "y": 200,
-      "description": "The capacity of Argentine workers to find meaning and motivation in productive labor — the node most sensitive to repression, hyperinflation, and despair. Collapsed to -0.5 during the military dictatorship's violence, to 0.0 in 2001, and remains chronically depressed at V=0.5 in 2026. [n5]"
+      "x": -50,
+      "y": 280,
+      "description": "The structural state of the Hands node when Lore is absent: a stressed, narratively unanchored population that has been told for thirty years that the institutions which used to interpret its experience now despise it. Available Mass is not captured mass — it is the precondition for capture. The current reading (Hands at 4.2, Stress at 7.0) describes a mass that is structurally susceptible to whichever coherence-offer arrives first with sufficient confidence. [n5]"
     },
     {
       "id": "n6",
-      "label": "Lore (Normative-Narrative Capacity)",
-      "shape": "box",
-      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
-      "borderWidth": 1,
-      "x": -180,
-      "y": -340,
-      "description": "Argentina's meaning-making infrastructure — the stories, values, and cultural frameworks that give collective life coherence. Peaked at V=12.0 in 1984 with democratic re-founding; decayed to V=3.0 in 2026. Paradoxically persists through cultural output (tango, football, literature) even when material nodes have collapsed. [n6]"
-    },
-    {
-      "id": "n7",
-      "label": "Archive (Institutional Memory)",
-      "shape": "box",
-      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
-      "borderWidth": 1,
-      "x": 180,
-      "y": -340,
-      "description": "The capacity to encode, transmit, and act on collective historical memory — the slow loop that theoretically allows Argentina to learn from its own collapse cycles. Reached V=11.0 in 1984; degraded to V=1.5 in 2026, meaning institutional memory of past catastrophes is increasingly inaccessible to current decision-makers. [n7]"
-    },
-    {
-      "id": "n8",
-      "label": "Oscillation Depth",
-      "shape": "ellipse",
-      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
-      "borderWidth": 1,
-      "x": 0,
-      "y": -250,
-      "description": "The amplitude of each collapse-recovery cycle — how far V̄ falls and how high it recovers. Troughs have deepened from 2.8 (1955) to 1.9 (2001); peaks have declined from 10.8 (1950) to 9.1 (2007). This secular degradation of the oscillation envelope is the system's ratchet toward permanent freeze. [n8]"
-    },
-    {
-      "id": "n9",
-      "label": "Recovery Capacity",
+      "label": "Symbolic Acts",
       "shape": "ellipse",
       "color": { "background": "#DBEAFE", "border": "#3B82F6" },
       "borderWidth": 1,
       "x": 200,
-      "y": 0,
-      "description": "The system's ability to rebuild institutional coherence after each collapse — a function of remaining Bond Strength, Archive integrity, and exogenous resource injection. Each cycle depletes recovery capacity: the 2003-2026 recovery (V̄ max ~9.1) never reached 1950 levels, and the 2024-2026 recovery (V̄ max ~5.3) is the weakest on record. [n9]"
+      "y": 50,
+      "description": "Mass pardons, executive orders that exceed statutory scope, dismissals of inspectors general, federal deployments into cities, agency reorganisations away from statutory missions. Each is unappealable, immediate, and addressed past the institutional intermediaries to the mass directly. Symbolic Acts function as emergency Lore injections — concentrated assertions of story when ordinary narrative channels can no longer carry one. [n6]"
+    },
+    {
+      "id": "n7",
+      "label": "Coherence Demand",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": -300,
+      "y": 200,
+      "description": "The latent population-level demand for a working interpretive framework: an account of who we are, what is happening, what is right and what is wrong. Coherence Demand rises with Mass Stress and falls when Lore Capacity is delivering working narrative. When Lore fails and Stress rises, Coherence Demand becomes the energy that whichever coherence-offer can capture. [n7]"
+    },
+    {
+      "id": "n8",
+      "label": "Decisionist Authority",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": 380,
+      "y": -50,
+      "description": "The emergent capacity of the executive to govern through symbolic act rather than institutional process. Decisionist Authority rises when Helm cannot govern through ordinary channels and Symbolic Acts begin filling the gap. It is a real form of authority that produces real political effects, but it does not rebuild the institutional substrate it bypasses. The substitution is one-directional. [n8]"
+    },
+    {
+      "id": "n9",
+      "label": "Praetorian Reach",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": 380,
+      "y": 200,
+      "description": "The expanding scope of Shield activity into domains previously governed by Helm, Lore, Stewards, or Archive: federal agents in city policing, surveillance in domestic political life, security exceptions in regulatory processes, military presence in civilian contexts. Praetorian Reach grows when other nodes fail and recedes only when they recover — which they cannot do while Shield is performing their functions for them. [n9]"
     },
     {
       "id": "n10",
-      "label": "Exogenous Entropy Injection",
+      "label": "Counter-Narrative Mobilisation",
       "shape": "ellipse",
       "color": { "background": "#DBEAFE", "border": "#3B82F6" },
-      "borderWidth": 2.5,
-      "x": 0,
-      "y": 340,
-      "description": "External energy sources that prevent absolute system collapse — commodity export revenues (soy, lithium), IMF liquidity, cultural exports, remittances, and foreign investment. This is the structural reason Argentina never fully dies: the external world continuously subsidises its frozen equilibrium. Without this, the Thermodynamic Freeze would become terminal. [n10]"
+      "borderWidth": 1,
+      "x": -350,
+      "y": 50,
+      "description": "The reactive coherence-offers arising in opposition to Decisionist Authority: legal mobilisation through the courts, oppositional media framings, protest movements, alternative civic projects. Each is rational in its own terms. Collectively they intensify the politicisation of the Archive (because they fight through it) and the fragmentation of Lore (because they replace shared narrative with competing partial ones). [n10]"
     },
     {
       "id": "n11",
-      "label": "Kappa (Criticality Index)",
+      "label": "External Shock Pressure",
       "shape": "ellipse",
       "color": { "background": "#DBEAFE", "border": "#3B82F6" },
-      "borderWidth": 1,
-      "x": -200,
-      "y": 0,
-      "description": "The system's fracture risk — the rate-weighted dispersion across nodes. Paradoxically low in 2026 (0.22-0.28) not because the system is healthy but because all nodes are declining together (omega compressed). Spiked to 0.65-0.75 in 2001 (EXTREME tier), the highest recorded Argentine value. [n11]"
+      "borderWidth": 2.5,
+      "x": 480,
+      "y": -260,
+      "description": "Acute disruptions from outside the system: economic shocks, foreign-policy crises, climate events, technological disruptions, pandemic-class biological events. Shocks are exogenous in origin but their cost to the system depends entirely on the institutional capacity available when they arrive. The current configuration metabolises shocks poorly because the metabolising institutions are precisely the ones that have collapsed. [n11]"
     },
     {
       "id": "n12",
-      "label": "Cultural Slow-Loop (eta_loop)",
+      "label": "Civic Renewal Capacity",
       "shape": "ellipse",
       "color": { "background": "#DBEAFE", "border": "#3B82F6" },
       "borderWidth": 1,
-      "x": 0,
-      "y": 150,
-      "description": "The product of Archive and Lore connectivity that keeps the system's Laplacian positive — the 'poetry threshold' that Argentina consistently clears even in deep freeze. Estimated at 20-25 in 2026, well above the 0.6 survival threshold. Borges, Cortázar, Maradona, Messi: cultural nodes continue producing meaning when political-economic nodes have frozen. [n12]"
+      "x": -50,
+      "y": 400,
+      "description": "The latent capacity of citizens, in plural and deliberately, to undertake the patient work of rebuilding the institutional substrate that decisionism has been substituting for. This is the leverage variable of the entire system. Renewal cannot be performed by any administration, any party, or the security apparatus. It can only be performed by civic actors operating outside the partisan logic that structures every other actor's choices. [n12]"
     }
   ],
   "edges": [
     {
       "id": "e1",
-      "from": "n2",
-      "to": "n1",
-      "width": 5,
-      "lag": 1,
-      "color": { "color": "#1E40AF" },
-      "label": "Helm anchors V̄\n+\nLag: 1 year",
-      "description": "When Helm rises, the system's mean Node Value rises — executive coherence is the primary driver of aggregate system health. The 1955 and 1975 coups show the inverse: Helm collapse (to negative V) drags V̄ below 3.0 within one year. The 2003-07 Kirchner recovery shows the upside: Helm rising from -0.5 to 9.5 drove V̄ from 2.0 to 8.5. [e1]"
+      "from": "n1",
+      "to": "n7",
+      "color": { "color": "#991B1B" },
+      "width": 6,
+      "label": "Lore satisfies coherence demand\n−\nLag: Years",
+      "description": "Working Lore Capacity directly reduces Coherence Demand by supplying the interpretive framework the population uses to metabolise events. When Lore is functioning, demand is low because supply is meeting it. When Lore collapses, demand does not disappear — it becomes available to whichever alternative supply arrives first. The link is the foundational health-of-deliberation measure of the entire diagram. [e1]"
     },
     {
       "id": "e2",
-      "from": "n4",
-      "to": "n1",
-      "width": 5,
-      "lag": 0,
+      "from": "n1",
+      "to": "n2",
       "color": { "color": "#1E40AF" },
-      "label": "Flow drives system V̄\n+\nLag: 0 years",
-      "description": "Flow is the most contemporaneously sensitive node — currency collapse (2001: V=-2.0) immediately suppresses V̄ to its historic low of 1.93. Conversely, the commodity boom of 2003-08 pushed Flow to V=10.0, driving the strongest recovery gradient in Argentine history. Flow is the system's economic heartbeat. [e2]"
+      "width": 5,
+      "label": "Lore supports executive function\n+\nLag: Years",
+      "description": "Helm coherence depends on Lore Capacity: an executive that can speak through a working narrative apparatus governs differently from one that cannot. When Lore collapses, Helm loses its primary interface with the population and is forced into decisionist substitutes. The historical pattern across the dataset is that Helm declines follow Lore declines with a lag of three to seven years. [e2]"
     },
     {
       "id": "e3",
-      "from": "n3",
-      "to": "n1",
-      "width": 3,
-      "lag": 0,
-      "color": { "color": "#1E40AF" },
-      "label": "Shield as floor\n+\nLag: 0 years",
-      "description": "Shield's structural stability prevents V̄ from reaching absolute zero — it is the system's permanent floor. In every collapse (1955, 1975, 1982, 1989, 2001), Shield was the last node to fall and the one that maintained minimum institutional connectivity. Its V=5.0 in 2026 is what keeps the frozen system above terminal collapse. [e3]"
+      "from": "n2",
+      "to": "n6",
+      "color": { "color": "#991B1B" },
+      "width": 5,
+      "label": "Strong Helm reduces decree-based action\n−\nLag: Months",
+      "description": "A functioning Helm operating through institutional process has less need to govern by Symbolic Act. The negative polarity reflects the inverse relation: as Helm Coherence degrades, the executive's available toolkit narrows toward symbolic decree, and the frequency and scope of Symbolic Acts rises. This is the structural pressure producing the contemporary decree-heavy governance pattern. [e3]"
     },
     {
       "id": "e4",
-      "from": "n1",
-      "to": "n9",
-      "width": 4,
-      "lag": 2,
+      "from": "n7",
+      "to": "n6",
       "color": { "color": "#1E40AF" },
-      "label": "Health enables recovery\n+\nLag: 2 years",
-      "description": "Higher system V̄ builds the institutional substrate required for recovery — more functioning nodes means more cross-node coherence and Bond Strength accumulation. But this relationship has a ceiling: Argentina's V̄ has never returned to 1950 levels, meaning each recovery cycle starts from a lower base. [e4]"
+      "width": 6,
+      "label": "Demand pulls symbolic supply\n+\nLag: Months",
+      "description": "Unmet Coherence Demand creates direct political pressure for Symbolic Acts: the population's narrative hunger pulls decisionist supply from the executive. This is the demand-side pressure behind the contemporary pattern of mass pardons, executive orders, and high-visibility federal interventions. The acts function because the demand is present, not because the underlying institutional capacity has been restored. [e4]"
     },
     {
       "id": "e5",
-      "from": "n9",
-      "to": "n1",
-      "width": 4,
-      "lag": 1,
-      "color": { "color": "#1E40AF" },
-      "label": "Recovery rebuilds V̄\n+\nLag: 1 year",
-      "description": "Recovery capacity, when deployed, raises V̄ — the post-coup rebuilds (1956-58, 1983-86, 2003-07) show this mechanism clearly. But each cycle depletes the recovery substrate: the 2024-26 stabilization reaches only V̄=5.3, the weakest post-crisis peak in 76 years. The recovery loop is progressively losing power. [e5]"
+      "from": "n6",
+      "to": "n7",
+      "color": { "color": "#991B1B" },
+      "width": 5,
+      "label": "Symbolic acts temporarily relieve demand\n−\nLag: Weeks",
+      "description": "Symbolic Acts do reduce Coherence Demand in the short term: the mass pardon, the dramatic executive order, the federal deployment each provide a brief surge of felt coherence that absorbs the demand pressure. The relief is real and is the reason the mechanism functions politically. The relief is also short-lived and does not address the underlying Lore Capacity that produced the demand. [e5]"
     },
     {
       "id": "e6",
-      "from": "n1",
+      "from": "n6",
       "to": "n8",
-      "width": 3,
-      "lag": 0,
-      "color": { "color": "#991B1B" },
-      "label": "Collapse deepens amplitude\n-\nLag: 0 years",
-      "description": "Each time V̄ falls, it increases oscillation depth — the distance between the peak and trough of each cycle widens over time (peaks declining: 10.8→9.1; troughs deepening: 2.8→1.9). This is the ratchet mechanism: collapses are more destructive than recoveries are reconstructive. [e6]"
+      "color": { "color": "#1E40AF" },
+      "width": 6,
+      "label": "Acts build decisionist authority\n+\nLag: Months",
+      "description": "Each Symbolic Act successfully delivered increases the structural Decisionist Authority of the executive: the demonstrated capacity to govern past institutional intermediaries directly to the mass. This authority is real and compounds with use. It is also a different kind of authority from the rule-based legitimacy it is replacing, and the substitution is one-directional. [e6]"
     },
     {
       "id": "e7",
       "from": "n8",
-      "to": "n9",
-      "width": 4,
-      "lag": 3,
+      "to": "n1",
       "color": { "color": "#991B1B" },
-      "label": "Depth erodes recovery\n-\nLag: 3 years",
-      "description": "Deeper oscillations permanently erode recovery capacity — each catastrophic trough (1955, 1975, 1989, 2001) destroys institutional substrates (competent civil servants, functional enterprises, social trust) that cannot be rebuilt within a single recovery cycle. The 2001 trough was so deep that Argentina's 2024-26 recovery is still the weakest on record. [e7]"
+      "width": 5,
+      "label": "Decisionism erodes narrative substrate\n−\nLag: Years",
+      "description": "Growing Decisionist Authority further erodes Lore Capacity by making the institutional channels of narrative production look slow, compromised, and unnecessary by comparison. Why wait for the press, the courts, the deliberative process when the executive can simply declare? Each successful decisionist act demonstrates that the slow channels are dispensable, accelerating their atrophy. [e7]"
     },
     {
       "id": "e8",
-      "from": "n10",
-      "to": "n9",
-      "width": 5,
-      "lag": 1,
-      "color": { "color": "#1E40AF" },
-      "label": "External subsidy enables recovery\n+\nLag: 1 year",
-      "description": "Commodity booms, IMF programs, and cultural exports provide the exogenous energy that makes recovery possible without fundamental structural change. The 1990s Convertibilidad, the 2003-11 soy boom, and current lithium revenues are all external entropy injections. Without this, Argentina's oscillation attractor would terminate. [e8]"
+      "from": "n8",
+      "to": "n4",
+      "color": { "color": "#991B1B" },
+      "width": 6,
+      "label": "Decisionism draws down Archive\n−\nLag: Years",
+      "description": "Decisionist Authority operates by drawing on Archive legitimacy without replenishing it: the constitutional framework, the institutional precedent, the inherited norms supply the legitimacy capital that the symbolic acts spend. Each draw is rational individually. The cumulative draw across many acts depletes the Archive at a rate the institution cannot regenerate, which is the deep cost of decisionist governance. [e8]"
     },
     {
       "id": "e9",
-      "from": "n10",
-      "to": "n1",
-      "width": 3,
-      "lag": 1,
+      "from": "n6",
+      "to": "n9",
       "color": { "color": "#1E40AF" },
-      "label": "External energy lifts floor\n+\nLag: 1 year",
-      "description": "External resources directly raise the system's floor — they fund the minimum institutional maintenance (salaries, services, security) that keeps V̄ above terminal values. This is why Argentina never fully collapses despite structural dysfunction: the global commodity system continuously provides life support. [e9]"
+      "width": 5,
+      "label": "Symbolic acts expand Shield scope\n+\nLag: Months",
+      "description": "Symbolic Acts frequently involve or invoke the security apparatus: deployments, dismissals, surveillance authorities, enforcement priorities. Each expansion increases Praetorian Reach into domains previously governed by other nodes. The expansion is rarely formally reversed even when the immediate act ends, because the operational capacity built for it persists. [e9]"
     },
     {
       "id": "e10",
-      "from": "n6",
-      "to": "n12",
-      "width": 3,
-      "lag": 2,
+      "from": "n3",
+      "to": "n9",
       "color": { "color": "#1E40AF" },
-      "label": "Lore feeds slow-loop\n+\nLag: 2 years",
-      "description": "Argentina's narrative capacity — its cultural production of meaning — continuously feeds the slow cultural loop that maintains lambda-2 above zero. Even when political and economic nodes are frozen, tango, football, and literature sustain the identity networks that prevent total social dissolution. [e10]"
+      "width": 6,
+      "label": "Shield capacity enables reach\n+\nLag: Months",
+      "description": "Shield Authority's structural strength (NV 10.7 in 2026) provides the operational capacity that Praetorian Reach exercises. A weaker Shield could not perform the expanded functions even when the political environment created demand for them. The high Shield value is what makes the Praetorian configuration practically available rather than merely theoretical. [e10]"
     },
     {
       "id": "e11",
-      "from": "n7",
-      "to": "n12",
-      "width": 3,
-      "lag": 2,
-      "color": { "color": "#1E40AF" },
-      "label": "Archive feeds slow-loop\n+\nLag: 2 years",
-      "description": "Institutional memory of past collapses theoretically enables avoidance learning — the Argentine archive of 1955, 1975, 1989, 2001 should inform current governance. But with Archive V=1.5 in 2026, this signal is nearly inaudible: the slow loop persists culturally but not institutionally. [e11]"
+      "from": "n9",
+      "to": "n1",
+      "color": { "color": "#991B1B" },
+      "width": 4,
+      "label": "Praetorian reach suppresses Lore renewal\n−\nLag: Years",
+      "description": "Expanded Praetorian Reach actively suppresses the conditions under which Lore Capacity could rebuild: chilled press, surveilled civic organisations, security-vetted academic environments, normalised exception-spaces. The chilling effect operates without explicit censorship — the operational presence of the security apparatus in narrative-producing spaces is sufficient to shift what gets said, by whom, with what confidence. [e11]"
     },
     {
       "id": "e12",
-      "from": "n12",
-      "to": "n1",
-      "width": 2,
-      "lag": 5,
-      "color": { "color": "#1E40AF" },
-      "label": "Cultural loop sustains minimum V̄\n+\nLag: 5 years",
-      "description": "The cultural slow-loop maintains the system above absolute zero — it is why Argentina's lambda-2 stays positive even in Thermodynamic Freeze. This is the 'poetry threshold' mechanism: a society can survive institutional collapse if it retains cultural connectivity. Argentina proves this is possible across decades. [e12]"
+      "from": "n9",
+      "to": "n2",
+      "color": { "color": "#991B1B" },
+      "width": 4,
+      "label": "Praetorian reach atrophies Helm\n−\nLag: Years",
+      "description": "When the security apparatus performs functions that should belong to Helm — interpretation, deterrence, coordination — the executive function atrophies in those domains. Helm is a use-it-or-lose-it capacity. The longer Shield substitutes for it, the less Helm can be restored to those functions when the political environment eventually permits it. [e12]"
     },
     {
       "id": "e13",
-      "from": "n2",
-      "to": "n11",
-      "width": 4,
-      "lag": 1,
-      "color": { "color": "#991B1B" },
-      "label": "Helm collapse spikes kappa\n-\nLag: 1 year",
-      "description": "When Helm collapses toward or below zero, it creates extreme rate dispersion — different nodes decay at radically different speeds, spiking kappa toward CRITICAL/EXTREME. The 2001 'five presidents in two weeks' event drove kappa to 0.65-0.75. Current Helm at V=4.0 keeps kappa suppressed to 0.22-0.28. [e13]"
+      "from": "n5",
+      "to": "n7",
+      "color": { "color": "#1E40AF" },
+      "width": 5,
+      "label": "Mass availability magnifies demand\n+\nLag: Months",
+      "description": "A stressed, narratively unanchored mass produces sustained high Coherence Demand: the structural condition of Mass Availability is precisely the condition of unmet narrative need. The demand is not adaptive — it is symptomatic — and the longer it goes unmet by legitimate Lore, the more readily it is captured by illegitimate alternatives. [e13]"
     },
     {
       "id": "e14",
-      "from": "n11",
-      "to": "n8",
-      "width": 3,
-      "lag": 0,
+      "from": "n6",
+      "to": "n5",
       "color": { "color": "#1E40AF" },
-      "label": "High kappa triggers collapse\n+\nLag: 0 years",
-      "description": "When kappa crosses the CRITICAL threshold (~0.42+), the system fractures — nodes desynchronize and the weakest links (Flow, Hands, Archive) collapse faster than Shield can compensate. Each of Argentina's five major crises (1955, 1975, 1982, 1989, 2001) was preceded by kappa crossing into WARNING/CRITICAL tier. [e14]"
+      "width": 5,
+      "label": "Symbolic acts capture mass briefly\n+\nLag: Weeks",
+      "description": "Successful Symbolic Acts produce visible alignment of segments of the mass with the executive: rallies, polling shifts, identity confirmation. The capture is real but partial and unstable — each act captures a subset of the available mass and leaves others unaffected or repelled, producing the oscillating fragmentary cohesion the dataset registers. [e14]"
     },
     {
       "id": "e15",
-      "from": "n3",
-      "to": "n2",
-      "width": 3,
-      "lag": 2,
-      "color": { "color": "#991B1B" },
-      "label": "Shield overwhelm displaces Helm\n-\nLag: 2 years",
-      "description": "When Shield V significantly exceeds Helm V (the Praetorian Condition), military institutions displace civilian governance — as in 1966-68, 1976-82, and intermittently throughout the oscillation cycle. This relationship is the mechanism of Argentina's coups: Shield stability in a Helm collapse creates the political space for military intervention. [e15]"
+      "from": "n5",
+      "to": "n10",
+      "color": { "color": "#1E40AF" },
+      "width": 4,
+      "label": "Availability also fuels opposition\n+\nLag: Months",
+      "description": "Mass Availability is not directional: the same narrative hunger that pulls Symbolic Acts from the executive also pulls Counter-Narrative Mobilisation from the opposition. The mass available for capture by decisionist authority is also the mass available for capture by oppositional movements, which is why the contemporary period registers as polarised rather than dominated by a single capture. [e15]"
     },
     {
       "id": "e16",
-      "from": "n5",
+      "from": "n10",
       "to": "n4",
-      "width": 3,
-      "lag": 1,
-      "color": { "color": "#1E40AF" },
-      "label": "Labor motivation drives Flow\n+\nLag: 1 year",
-      "description": "When Hands collapses (motivational extinction through repression, hyperinflation, despair), economic productivity falls and Flow decouples from the material economy. The 1976-82 military period shows this in reverse: Hands at -0.5 (torture/disappearance) while Flow held at 5.0, revealing that Argentina's economy can function without motivated labor — but only temporarily. [e16]"
+      "color": { "color": "#991B1B" },
+      "width": 5,
+      "label": "Counter-mobilisation also draws Archive\n−\nLag: Years",
+      "description": "Opposition mobilisation through the courts, the regulatory state, and the institutional press also draws on Archive legitimacy without replenishing it: each lawsuit, each injunction, each impeachment proceeding spends institutional capital. The opposition is fighting for the right values through the available channels and the cumulative effect of those channels being used as partisan battlefields is the further politicisation of the Archive itself. [e16]"
     },
     {
       "id": "e17",
+      "from": "n10",
+      "to": "n1",
+      "color": { "color": "#991B1B" },
+      "width": 3,
+      "label": "Counter-narratives fragment Lore\n−\nLag: Years",
+      "description": "Counter-Narrative Mobilisation, by producing oppositional partial narratives where shared Lore used to exist, further fragments the country's interpretive substrate. Each side speaks past the other, with the result that the institutional capacity for cross-cutting consensus continues to degrade even when the substance of one side's claims is correct. The structural cost is independent of the substantive merit. [e17]"
+    },
+    {
+      "id": "e18",
       "from": "n4",
-      "to": "n5",
-      "width": 2,
-      "lag": 1,
+      "to": "n2",
       "color": { "color": "#1E40AF" },
-      "label": "Material collapse demotivates\n+\nLag: 1 year",
-      "description": "Flow collapse (currency crisis, hyperinflation, default) destroys worker motivation — when material coordination fails, Hands V collapses in its wake. The 1989 hyperinflation and 2001 default both show V_Hands following V_Flow down with a one-year lag. Argentina's chronically low Hands (0.5 in 2026) reflects the accumulated scar tissue of repeated Flow collapses. [e17]"
+      "width": 4,
+      "label": "Archive frames executive scope\n+\nLag: Years",
+      "description": "Archive Stock — operating constitutional norms, surviving institutional precedent, court rulings that still bind — supplies the framework within which Helm can coherently operate. As Archive depletes, the framework attenuates, and Helm's available scope of coherent action narrows even when its formal authority does not. The link is the slow constitutional substrate beneath visible governance. [e18]"
+    },
+    {
+      "id": "e19",
+      "from": "n11",
+      "to": "n7",
+      "color": { "color": "#1E40AF" },
+      "width": 5,
+      "label": "Shocks spike coherence demand\n+\nLag: Weeks",
+      "description": "External Shocks — economic crises, foreign-policy emergencies, climate events — produce immediate spikes in Coherence Demand as the population requires interpretation of what has happened and what is to be done. Shocks arriving in a high-Lore-Capacity environment are metabolised through ordinary deliberation. Shocks arriving in the current empty-pulpit configuration arrive into the vacuum and find whatever coherence-offer is closest to hand. [e19]"
+    },
+    {
+      "id": "e20",
+      "from": "n12",
+      "to": "n1",
+      "color": { "color": "#1E40AF" },
+      "width": 6,
+      "label": "Renewal rebuilds narrative substrate\n+\nLag: Decades",
+      "description": "Civic Renewal Capacity, when activated, directly rebuilds Lore Capacity through the patient work of replenishing the institutional substrate of shared narrative: durable civic organisations, restored press economics, reformed academic legitimacy, new shared-vocabulary projects. The lag is long because substrate-building always is, but the link is the principal recovery mechanism the diagram contains. [e20]"
+    },
+    {
+      "id": "e21",
+      "from": "n11",
+      "to": "n12",
+      "color": { "color": "#1E40AF" },
+      "width": 3,
+      "label": "Shocks eventually force reckoning\n+\nLag: Years",
+      "description": "Sufficiently severe External Shocks tend, eventually, to mobilise Civic Renewal Capacity that lower-intensity conditions cannot. The 1930s Depression, the 1960s civil rights moment, the post-Watergate reform period each followed this pattern. Shock-driven renewal arrives late and at high cost, but it does arrive — provided the institutional architecture required to host it has not been so depleted that hosting becomes impossible. [e21]"
+    },
+    {
+      "id": "e22",
+      "from": "n7",
+      "to": "n12",
+      "color": { "color": "#1E40AF" },
+      "width": 4,
+      "label": "Unmet demand eventually mobilises citizens\n+\nLag: Years",
+      "description": "Sustained unmet Coherence Demand — narrative hunger that has not been satisfied by Symbolic Acts or institutional Lore — eventually mobilises Civic Renewal Capacity directly through the lived experience of the empty pulpit becoming unbearable. This is the slow demand-side pathway to renewal that does not require an external shock. The lag is years rather than decades because the demand pressure is already present and the activation threshold is lower than shock-driven mobilisation requires. [e22]"
     }
   ],
   "loops": [
     {
       "id": "R1",
-      "name": "The Collapse Spiral",
+      "name": "The Decisionist Spiral",
       "type": "R",
-      "description": "Helm collapse reduces V̄, which deepens oscillation amplitude, which erodes recovery capacity, which further reduces V̄. This is the dominant reinforcing loop that converts each Argentine crisis into a deeper-than-expected catastrophe. Once triggered (kappa crossing CRITICAL), this loop drives the system to its trough in 1-3 years. Visible in 1953-55, 1972-75, 1987-89, 1999-2001. [R1]",
-      "nodeIds": ["n2", "n1", "n8", "n9"],
-      "edgeIds": ["e1", "e6", "e7", "e5"]
+      "description": "Coherence Demand pulls Symbolic Acts from the executive, which build Decisionist Authority, which further erodes Lore Capacity, which raises Coherence Demand. The loop reinforces with each cycle, and the dataset shows it operating across the last decade. Once entered, this spiral cannot be exited by the executive that is performing it — only by a structural intervention from outside the executive-mass dyad. [R1]",
+      "nodeIds": ["n1", "n7", "n6", "n8"],
+      "edgeIds": ["e1", "e4", "e6", "e7"]
     },
     {
       "id": "R2",
-      "name": "The Flow-Hands Death Spiral",
+      "name": "The Praetorian Self-Reinforcement",
       "type": "R",
-      "description": "Flow collapse demotivates labor (Hands), which reduces productive output, which further collapses Flow. This is the Argentina-specific vicious cycle that turns currency crises into social crises: the 2001 default destroyed Flow, which destroyed Hands motivation, which prevented economic recovery for three years. Operating at low intensity chronically in 2026. [R2]",
-      "nodeIds": ["n4", "n5"],
-      "edgeIds": ["e16", "e17"]
+      "description": "Symbolic Acts expand Praetorian Reach, which suppresses Lore Capacity renewal, which raises Coherence Demand, which pulls further Symbolic Acts. Each cycle deepens the substitution of Shield for the narrative-producing nodes and reduces the conditions under which those nodes could be restored. This is the structural mechanism by which Praetorian configurations become metastable rather than self-correcting. [R2]",
+      "nodeIds": ["n6", "n9", "n1", "n7"],
+      "edgeIds": ["e9", "e11", "e1", "e4"]
+    },
+    {
+      "id": "B1",
+      "name": "Symbolic Relief Valve",
+      "type": "B",
+      "description": "Coherence Demand pulls Symbolic Acts which temporarily relieve Coherence Demand. This is the balancing mechanism the current configuration depends on — and the reason decisionist governance persists rather than collapsing. The valve works, briefly, each time. The fact that it works is what allows the deeper R1 and R2 spirals to keep operating: visible short-term relief masks structural long-term erosion. [B1]",
+      "nodeIds": ["n7", "n6"],
+      "edgeIds": ["e4", "e5"]
     },
     {
       "id": "R3",
-      "name": "The Praetorian Amplifier",
+      "name": "The Archive Drawdown",
       "type": "R",
-      "description": "Helm collapse reduces V̄, which spikes kappa, which deepens oscillation depth — creating the institutional vacuum that Shield exploits to displace Helm via coup. The coup itself temporarily stabilises kappa (by imposing order) but then collapses Hands (through repression), restarting the cycle at a lower base. Argentina's coup mechanism is a reinforcing loop that resets without healing. [R3]",
-      "nodeIds": ["n2", "n11", "n8", "n3"],
-      "edgeIds": ["e13", "e14", "e6", "e15"]
+      "description": "Decisionist Authority draws down Archive, which weakens the framing that supports Helm Coherence, which forces further reliance on Symbolic Acts that build more Decisionist Authority and draw more Archive. The dataset's clearest warning signal: this loop is reinforcing in both directions and is currently running downward. Each year the loop operates, the institutional capital required for any future recovery is reduced. [R3]",
+      "nodeIds": ["n8", "n4", "n2", "n6"],
+      "edgeIds": ["e8", "e18", "e3", "e6"]
     },
     {
-      "id": "B4",
-      "name": "The Commodity Life-Support Loop",
-      "type": "B",
-      "description": "When V̄ falls toward crisis, external entropy injection (commodity revenues, IMF) activates recovery capacity, which raises V̄ toward a new (lower) equilibrium — preventing terminal collapse but not enabling genuine recovery. This balancing loop is why Argentina neither dies nor thrives: the global economy subsidises its oscillation indefinitely. [B4]",
-      "nodeIds": ["n10", "n9", "n1"],
-      "edgeIds": ["e8", "e5", "e9"]
+      "id": "R4",
+      "name": "The Polarisation Engine",
+      "type": "R",
+      "description": "Symbolic Acts mobilise Counter-Narrative response, which further fragments Lore Capacity and draws down Archive through partisan use of institutional channels, which raises Coherence Demand and pulls more Symbolic Acts. The loop describes how oppositional mobilisation, however justified in its substance, structurally accelerates the empty-pulpit condition it opposes. The political logic is irresistible; the structural cost is severe. [R4]",
+      "nodeIds": ["n6", "n5", "n10", "n1", "n7"],
+      "edgeIds": ["e14", "e15", "e17", "e1", "e4"]
     },
     {
-      "id": "B5",
-      "name": "The Shield Anchor",
+      "id": "B2",
+      "name": "The Renewal Path",
       "type": "B",
-      "description": "Shield's structural stability prevents V̄ from reaching absolute zero — when all other nodes collapse, Shield's persistence (V=5.0 across every trough) maintains minimum institutional connectivity and provides the platform from which recovery begins. This balancing loop has prevented every Argentine collapse from becoming permanent — so far. [B5]",
-      "nodeIds": ["n3", "n1"],
-      "edgeIds": ["e3"]
-    },
-    {
-      "id": "B6",
-      "name": "The Poetry Threshold",
-      "type": "B",
-      "description": "Lore and Archive feed the cultural slow-loop (eta_loop), which maintains lambda-2 above zero, which keeps V̄ from reaching absolute zero even in Thermodynamic Freeze. This is why Argentina produces world-class culture — Borges, Cortázar, Maradona, Messi — even during institutional collapse: cultural connectivity is the last circuit to go dark. [B6]",
-      "nodeIds": ["n6", "n7", "n12", "n1"],
-      "edgeIds": ["e10", "e11", "e12"]
-    },
-    {
-      "id": "B7",
-      "name": "The Recovery Ceiling",
-      "type": "B",
-      "description": "Higher V̄ builds recovery capacity, which raises V̄ further — but this loop has a hard ceiling set by the cumulative depletion of each oscillation cycle. The ceiling has dropped with each cycle: 10.8 (1950) → 9.1 (2007) → 5.3 (2025). The recovery capacity loop is progressively weakening relative to the collapse spiral, explaining why Argentina is approaching permanent freeze. [B7]",
-      "nodeIds": ["n1", "n9"],
-      "edgeIds": ["e4", "e5"]
+      "description": "Civic Renewal Capacity rebuilds Lore Capacity, which reduces Coherence Demand, which (through sustained unmet hunger over time) further mobilises Civic Renewal Capacity — but in the reverse direction: when Lore is recovering and demand is falling, the activation pressure for further renewal also falls. This is the leverage loop of the entire diagram. It operates slowly, requires deliberate civic action outside partisan structures, and is the only path the geometry permits for exiting the Praetorian configuration short of catastrophic shock. The loop is presently inactive in the unfavourable direction (e22 firing weakly because the activation threshold has not been crossed). [B2]",
+      "nodeIds": ["n12", "n1", "n7"],
+      "edgeIds": ["e20", "e1", "e22"]
     }
   ],
   "archetypes": [
     {
       "id": "arch1",
-      "name": "Limits to Growth — Recovery Ceiling",
-      "description": "Each recovery cycle hits a ceiling determined by the cumulative damage of previous collapses. The growth engine (recovery capacity, commodity booms, institutional rebuilding) is progressively constrained by the limiting factor: depleted institutional substrate that cannot be rebuilt within a single cycle. Argentina's peak V̄ declining from 10.8 to 9.1 to 5.3 across 76 years is the textbook Limits to Growth signature. The leverage point is not more recovery effort but removal of the limiting factor — which requires structural institutional reform across multiple generations.",
-      "nodeIds": ["n1", "n9", "n8", "n10"],
-      "edgeIds": ["e4", "e5", "e7", "e8", "e6"]
+      "name": "Shifting the Burden",
+      "description": "Symbolic Acts operate as the symptomatic solution to the problem of governing without functioning Lore. The fundamental solution would be Civic Renewal rebuilding the Lore substrate over time, but the symptomatic solution's short-term effectiveness (B1) atrophies the conditions under which the fundamental solution could operate. The loops R1, R2, R3, R4, B1, and B2 jointly express this archetype: B1 is the working symptomatic relief, R1 through R4 are the side effects compounding across decades, and B2 is the fundamental solution path the system geometry preserves but does not currently activate.",
+      "nodeIds": ["n1", "n2", "n4", "n5", "n6", "n7", "n8", "n9", "n10", "n12"],
+      "edgeIds": ["e1", "e3", "e4", "e5", "e6", "e7", "e8", "e9", "e11", "e14", "e15", "e17", "e18", "e20", "e22"]
     },
     {
       "id": "arch2",
-      "name": "Shifting the Burden — Commodity Dependency",
-      "description": "Argentina repeatedly addresses the symptom (institutional collapse, fiscal crisis) with the quick fix (commodity revenues, IMF bailouts, austerity) rather than the fundamental solution (institutional reform, Lore reconstruction, Archive restoration). Each bailout relieves the pressure for structural change, atrophying the fundamental solution further. The system becomes progressively more dependent on external entropy injection, making each subsequent crisis more dangerous because the fundamental capacity for self-repair has weakened.",
-      "nodeIds": ["n10", "n9", "n1", "n6", "n7"],
-      "edgeIds": ["e8", "e9", "e5", "e10", "e11", "e12"]
-    },
-    {
-      "id": "arch3",
-      "name": "Oscillation Attractor — The Argentine Constant",
-      "description": "Argentina is the canonical Oscillation attractor in the CAMS dataset: 8 complete collapse-recovery cycles in 76 years, each deepening the trough and lowering the recovery ceiling, converging toward Thermodynamic Freeze as the long-run equilibrium. The system is neither dying (Shield anchor, cultural slow-loop, external subsidies prevent it) nor recovering (oscillation depth erosion, Recovery Ceiling archetype prevent it). It is oscillating toward a frozen point from which no internal mechanism can escape.",
-      "nodeIds": ["n1", "n2", "n3", "n8", "n9", "n11"],
-      "edgeIds": ["e1", "e3", "e6", "e7", "e13", "e14", "e15"]
+      "name": "Drift to Low Performance",
+      "description": "The system geometry permits a slow ratcheting downward in which each cycle of the reinforcing loops establishes a new baseline that becomes the reference point for the next cycle. What would have been a constitutional crisis in 2010 becomes routine in 2026. What was unthinkable in 2020 becomes precedent in 2025. The drift operates through the interaction of R1, R2, R3, and R4 with the absent B2: as long as Civic Renewal Capacity remains unactivated, the reinforcing loops collectively establish ever-lower performance norms across all eight CAMS nodes except Shield.",
+      "nodeIds": ["n1", "n2", "n4", "n5", "n6", "n7", "n8", "n9", "n10"],
+      "edgeIds": ["e1", "e3", "e4", "e6", "e7", "e8", "e9", "e11", "e14", "e15", "e17", "e18"]
     }
   ]
 }</textarea>
@@ -590,7 +516,6 @@
         </div>
     </div>
 
-    <!-- Save Modal (Shared) -->
     <div id="saveModal" class="modal-overlay">
         <div class="modal-box" style="max-width: 450px;">
             <h2 id="saveModalTitle" style="margin:0; color:#111827;">Save Map</h2>
@@ -608,7 +533,7 @@
         let nodes, edges, network;
         let feedbackLoops = [], systemArchetypes = [], loopLabelPositions = [];
         let originalNodeStyles = {}, originalEdgeStyles = {};
-        let currentSaveMode = 'html'; // 'html' or 'json'
+        let currentSaveMode = 'html';
         
         // INTERACTION STATE
         let draggedLabel = null;
@@ -619,7 +544,7 @@
         let isRecurvingEdge = false;
         
         let lastMouseX = 0, lastMouseY = 0;
-        let draggedItem = null; // For list sorting
+        let draggedItem = null;
 
         // --- 0. AUTO-LOADER ---
         window.addEventListener('load', () => {
@@ -631,9 +556,8 @@
              }
         });
 
-        // --- HELPER FOR COLOR CONVERSION (from v6.2) ---
         function colorToRgba(colorInput, alpha) {
-            let r = 128, g = 128, b = 128; // Default to gray if parsing fails
+            let r = 128, g = 128, b = 128;
             alpha = Math.max(0, Math.min(1, alpha));
 
             if (typeof colorInput === 'string') {
@@ -660,7 +584,6 @@
             return `rgba(${r},${g},${b},${alpha})`;
         }
 
-        // --- 1. DATA PARSING ---
         function parseAndRun() {
             const input = document.getElementById('jsonInput').value;
             if(!input) return alert("Please paste JSON data.");
@@ -675,9 +598,18 @@
                 
                 document.getElementById('inputModal').style.display = 'none';
 
-                if(data.metadata && data.metadata.topic) {
-                    document.getElementById('modelTitleDisplay').innerText = data.metadata.topic;
-                    document.title = data.metadata.topic;
+                if(data.metadata) {
+                    const titleEl = document.getElementById('modelTitleDisplay');
+                    const popoverEl = document.getElementById('titlePopover');
+                    if(data.metadata.topic) {
+                        titleEl.innerText = data.metadata.topic;
+                        document.title = data.metadata.topic;
+                    }
+                    if(data.metadata.narrative_title) {
+                        popoverEl.innerText = data.metadata.narrative_title;
+                        titleEl.onmouseenter = () => popoverEl.style.display = 'block';
+                        titleEl.onmouseleave = () => popoverEl.style.display = 'none';
+                    }
                 }
 
                 initEngine(data);
@@ -692,9 +624,6 @@
              document.getElementById('inputModal').style.display = 'flex';
         });
 
-        // --- SAVE FUNCTIONALITY ---
-        
-        // 1. Save HTML Button
         document.getElementById('saveButton').addEventListener('click', () => {
             if (!network || !nodes || !edges) {
                 alert("No model to save. Please load data first.");
@@ -707,7 +636,6 @@
             document.getElementById('filenameInput').focus();
         });
 
-        // 2. Save JSON Button
         document.getElementById('saveDataButton').addEventListener('click', () => {
             if (!network || !nodes || !edges) {
                 alert("No model data to save.");
@@ -720,15 +648,16 @@
             document.getElementById('filenameInput').focus();
         });
 
-        // 3. Confirm Save Action
         document.getElementById('confirmSaveBtn').addEventListener('click', () => {
              try {
                 let filename = document.getElementById('filenameInput').value || "model";
                 
-                // Get Data
                 const currentPositions = network.getPositions();
                 const d = { 
-                    metadata: { topic: document.title },
+                    metadata: { 
+                        topic: document.title,
+                        narrative_title: document.getElementById('titlePopover').textContent
+                    },
                     nodes: nodes.get().map(n => {
                         const pos = currentPositions[n.id];
                         return {
@@ -748,12 +677,9 @@
                 const jsonString = JSON.stringify(d, null, 2);
 
                 if (currentSaveMode === 'json') {
-                    // --- SAVE JSON ---
                     if (!filename.toLowerCase().endsWith('.json')) filename += '.json';
                     downloadFile(jsonString, filename, 'application/json');
-
                 } else {
-                    // --- SAVE HTML ---
                     if (!filename.toLowerCase().endsWith('.html')) filename += '.html';
 
                     const clone = document.documentElement.cloneNode(true);
@@ -792,15 +718,12 @@
             }, 100);
         }
 
-        // --- 2. ENGINE INITIALIZATION ---
         function initEngine(data) {
             const hasPositions = data.nodes && data.nodes.some(n => n.x !== undefined && n.y !== undefined);
 
-            // MODIFIED: Append [ID] to node labels (without hardcoded 'n')
             const nodeData = (data.nodes || []).map(n => {
                 let label = n.label || "";
-                const tag = `[${n.id}]`; // Corrected: uses pure ID
-                // Prevent duplicate appending if data is re-loaded
+                const tag = `[${n.id}]`;
                 if (!label.includes(tag)) {
                     label = label ? `${label} ${tag}` : tag;
                 }
@@ -812,7 +735,6 @@
                 };
             });
             
-            // MODIFIED: Append [ID] to edge labels (without hardcoded 'e')
             const edgeData = (data.edges || []).map(e => {
                 let smooth = { enabled: true, type: "cubicBezier", roundness: 0.3 };
                 if (e.smooth && e.smooth.roundness !== undefined) {
@@ -820,8 +742,7 @@
                 }
                 
                 let label = e.label || "";
-                const tag = `[${e.id}]`; // Corrected: uses pure ID
-                // Prevent duplicate appending and ensure ID is visible
+                const tag = `[${e.id}]`;
                 if (!label.includes(tag)) {
                     label = label ? `${label} ${tag}` : tag;
                 }
@@ -883,13 +804,11 @@
             setupListSorting(); 
         }
 
-        // --- 3. CUSTOM INTERACTION LOGIC ---
         function setupInteractions() {
             const canvas = document.querySelector('canvas');
             const tt = document.getElementById('mainTooltip');
             const ctt = document.getElementById('canvasTooltip');
 
-            // --- CLICK (SELECTION) ---
             network.on("click", function(params) {
                 const networkPos = params.pointer.canvas; 
 
@@ -920,7 +839,6 @@
                 }
             });
 
-            // --- MOUSE DOWN (START DRAG) ---
             if(canvas) {
                 canvas.addEventListener('mousedown', function(event) {
                     const rect = canvas.getBoundingClientRect();
@@ -981,8 +899,6 @@
                 });
             }
 
-
-            // --- RECURVE HELPERS ---
             function handleMouseMoveOnDocumentForRecurve(event) {
                 if (!isRecurvingEdge || !activeEdgeForRecurve) return;
 
@@ -1030,8 +946,6 @@
                 network.setOptions({ interaction: { dragNodes: true, dragView: true } });
             }
 
-
-            // --- STANDARD VIS.JS EVENTS ---
             network.on("afterDrawing", (ctx) => {
                 loopLabelPositions = [];
                 ctx.font = "bold 13px Inter"; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
@@ -1074,7 +988,6 @@
             network.on("blurEdge", () => tt.style.display = 'none');
         }
 
-        // --- 4. LIST SORTING & RENDERING (UPDATED) ---
         function setupListSorting() {
             const list = document.getElementById('loopList');
             
@@ -1102,15 +1015,12 @@
             });
 
             list.addEventListener('drop', () => {
-                // REORDER DATA ARRAY
                 const newOrder = [];
                 list.querySelectorAll('li').forEach(li => {
                     const loop = feedbackLoops.find(l => l.internalId === li.dataset.id);
                     if(loop) newOrder.push(loop);
                 });
                 feedbackLoops = newOrder;
-                
-                // NO RESEQUENCING - Just redraw to ensure consistency
                 renderLists();
             });
         }
@@ -1172,7 +1082,6 @@
             if(!document.getElementById('archetypeLegend').classList.contains('expanded')) toggleLegend('archetypeLegend');
         }
 
-        // --- UPDATED HIGHLIGHT FUNCTION (v6.2 logic) ---
         function highlight(item) {
             if (!item || !item.nodeIds || !item.edgeIds) {
                 resetHighlights(true);
@@ -1187,7 +1096,6 @@
             const highlightColor = '#e11d48'; 
             const dimOpacity = 0.15;
 
-            // --- Process Nodes ---
             nodes.forEach(n => {
                 const originalStyle = originalNodeStyles[n.id];
                 if (!originalStyle) return;
@@ -1217,7 +1125,6 @@
                 }
             });
 
-            // --- Process Edges ---
             edges.forEach(e => {
                 const originalStyle = originalEdgeStyles[e.id];
                 if (!originalStyle) return;
@@ -1255,7 +1162,6 @@
             edges.update(edgesToUpdate);
         }
 
-        // --- UPDATED RESET HIGHLIGHTS ---
         function resetHighlights(fullReset = true) {
             const nodeUpdates = nodes.get().map(n => {
                 const s = originalNodeStyles[n.id] || { color: '#DBEAFE', borderWidth: 2 };
@@ -1295,6 +1201,5 @@
             if(!exp) el.classList.add('expanded');
         }
     </script>
-<script src="nav.js"></script>
 </body>
 </html>
