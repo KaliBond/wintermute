@@ -1,3 +1,7 @@
+> **⚠️ IMPORTANT — VERSION NOTICE**: This document describes the v2.1 neural-network implementation of CAMS. The neural-network hypothesis has been falsified (December 2025). The current canonical specification is **CAMS v2.3** — a thermodynamically motivated coordination formalism. Legacy artefacts from the v2.1 phase are preserved in `archive/v2.1-neural-network/` for audit and replication purposes. For the v2.3 framework specification, see the [Model page](https://neuralnations.org/model) and the CAMS paper series on the [Explore page](https://neuralnations.org/explore).
+
+---
+
 # Reproducibility Guide
 ## CAMS Framework v2.1 Scientific Reproducibility
 

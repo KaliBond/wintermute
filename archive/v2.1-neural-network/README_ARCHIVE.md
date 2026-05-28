@@ -1,0 +1,1 @@
+These files document the v2.1 neural-network phase of CAMS (2023–2024). This hypothesis was tested and falsified; see the Research Diary for the relevant entries. The canonical framework from v2.2 onwards is a thermodynamically motivated coordination formalism. These files are preserved for audit and replication purposes only.
