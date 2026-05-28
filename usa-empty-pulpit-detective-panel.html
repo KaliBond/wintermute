@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Empty Pulpit Investigation — Detective Panel · Neural Nations</title>
+    <meta name="description" content="Columbo, Dupin, Holmes, and Marple stress-test the six loops of the Empty Pulpit Map — decisionist spiral, praetorian self-reinforcement, archive drawdown, polarisation engine, and the conditional renewal path. Twelve revisions enumerated.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/usa-empty-pulpit-detective-panel">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neuralnations.org/usa-empty-pulpit-detective-panel">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:title" content="The Empty Pulpit Investigation — Detective Panel · Neural Nations">
+    <meta property="og:description" content="Columbo, Dupin, Holmes, and Marple interrogate the loop structure of the Empty Pulpit Map. Twelve revisions enumerated. The map survives, with qualifications.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Empty Pulpit Investigation — Detective Panel · Neural Nations">
+    <meta name="twitter:description" content="A panel of detectives stress-tests the six loops of the 2026 USA CAMS map. Twelve revisions enumerated.">
+    <link rel="stylesheet" href="style.css">
+    <style>
+    .story-meta { font-size:0.82em; color:#888; letter-spacing:0.04em; line-height:1.8; }
+    .story-divider { text-align:center; color:#DAD2B8; font-size:1.2em; letter-spacing:0.4em; margin:2em 0; }
+
+    /* Detective cards */
+    .detective-grid {
+        display:grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap:14px;
+        margin:20px 0;
+    }
+    .detective-card {
+        background:#FBF8EF;
+        border:1px solid #DAD2B8;
+        border-radius:8px;
+        padding:16px 18px;
+    }
+    .detective-name {
+        font-size:0.95em; font-weight:700; color:#2F6F7D;
+        margin-bottom:4px;
+    }
+    .detective-role {
+        font-size:0.78em; color:#888; font-style:italic; margin-bottom:8px;
+    }
+    .detective-specialty {
+        font-size:0.84em; color:#1B2A33; line-height:1.65;
+    }
+
+    /* Loop section headers */
+    .loop-header {
+        display:flex; align-items:flex-start; gap:14px;
+        margin:0 0 16px;
+    }
+    .loop-badge {
+        flex-shrink:0;
+        font-family:'JetBrains Mono',monospace;
+        font-size:0.72em; font-weight:700;
+        background:#1B2A33; color:#fff;
+        padding:4px 9px; border-radius:4px;
+        letter-spacing:0.05em; margin-top:3px;
+    }
+    .loop-title { font-size:1.05em; font-weight:700; color:#1B2A33; line-height:1.4; }
+    .loop-subtitle { font-size:0.82em; color:#888; font-style:italic; margin-top:3px; }
+
+    /* Dialogue */
+    .dialogue { margin-bottom:0; }
+    .dialogue-line {
+        display:flex; gap:10px; align-items:flex-start;
+        margin-bottom:10px; font-size:0.95em; line-height:1.75; color:#1B2A33;
+    }
+    .speaker {
+        flex-shrink:0; min-width:100px;
+        font-weight:700; color:#2F6F7D;
+        font-size:0.88em; padding-top:1px;
+    }
+    .speaker.dupin  { color:#6E5DBE; }
+    .speaker.holmes { color:#C84C3E; }
+    .speaker.marple { color:#5F7A3A; }
+    .speech { flex:1; }
+    .speech em { font-style:italic; color:#555; }
+    .speech strong { color:#1B2A33; }
+
+    /* Revision box */
+    .revision-box {
+        background:#F0E9D2;
+        border-left:4px solid #D98B2B;
+        border-radius:0 8px 8px 0;
+        padding:14px 18px;
+        margin-top:18px;
+        font-size:0.88em;
+        line-height:1.7;
+        color:#1B2A33;
+    }
+    .revision-label {
+        font-size:0.72em; font-weight:700; text-transform:uppercase;
+        letter-spacing:0.1em; color:#D98B2B; margin-bottom:6px;
+    }
+
+    /* Final revisions list */
+    .final-revision {
+        display:flex; gap:14px; align-items:flex-start;
+        margin-bottom:16px;
+    }
+    .rev-num {
+        flex-shrink:0; width:28px; height:28px;
+        border-radius:50%; background:#D98B2B; color:#fff;
+        display:flex; align-items:center; justify-content:center;
+        font-family:'JetBrains Mono',monospace; font-weight:700;
+        font-size:0.82em;
+    }
+    .rev-body { flex:1; font-size:0.95em; line-height:1.75; color:#1B2A33; }
+    .rev-body strong { color:#1B2A33; }
+    .rev-loops {
+        display:inline-block; font-size:0.72em; font-family:'JetBrains Mono',monospace;
+        background:#1B2A33; color:#fff; padding:2px 7px; border-radius:3px;
+        margin-left:6px; vertical-align:middle;
+    }
+
+    .companion-strip { display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+    .companion-strip a {
+        display:inline-block; padding:7px 14px; border:1px solid #DAD2B8;
+        border-radius:6px; font-size:0.85em; color:#2F6F7D;
+        text-decoration:none; background:#FBF8EF; font-weight:600;
+    }
+    .companion-strip a:hover { background:#F0E9D2; }
+
+    .verdict-card {
+        background:#1B2A33; color:#F5F1E4;
+        border-radius:8px; padding:22px 26px; margin-top:4px;
+    }
+    .verdict-card p { font-size:0.97em; line-height:1.8; margin-bottom:1em; }
+    .verdict-card p:last-child { margin:0; }
+    .verdict-card em { color:#DAD2B8; font-style:italic; }
+    .verdict-card strong { color:#fff; }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle active">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework &#8599;</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="framework/index.html">Framework &#8599;</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="hero-section">
+        <h1>The Empty Pulpit Investigation</h1>
+        <p class="hero-subtitle">Detective Panel &mdash; Stress-Test of the Six Loops</p>
+    </div>
+
+    <div class="card">
+        <p class="story-meta">
+            United States &middot; 2026 &middot; CAMS v3.2 &mdash; Ensemble Mean (5-scorer)<br>
+            Companion to <a href="the-empty-pulpit.html" style="color:#2F6F7D;">The Empty Pulpit</a> &middot; <a href="the-empty-pulpit-map.html" style="color:#2F6F7D;">The Map</a> &middot; <a href="usa-outlook-set.html" style="color:#2F6F7D;">Outlook Set 2026&ndash;2036</a>
+        </p>
+
+        <p style="font-size:0.97em; line-height:1.8; color:#1B2A33; margin-top:16px;">A panel of four noteworthy detectives, selected by random draw and sorted alphabetically, convened to interrogate the loop structure of the Empty Pulpit Map. Their brief: not to endorse the loops but to find their weaknesses, surface their unstated assumptions, and identify what the map&rsquo;s geometry misses. One or two detectives respond at each stage, varying through the investigation.</p>
+    </div>
+
+    <!-- The Panel -->
+    <div class="card" style="margin-top:18px;">
+        <h2 style="font-size:1.05em; font-weight:700; color:#1B2A33; margin:0 0 18px;">The Panel</h2>
+        <div class="detective-grid">
+            <div class="detective-card">
+                <div class="detective-name">Lt. Columbo</div>
+                <div class="detective-role">LAPD Homicide, retired</div>
+                <div class="detective-specialty">Patient, indirect, deceptively casual. Asks the question the analyst hoped no one would ask. <strong>Specialty:</strong> surfacing the missing assumption that the whole argument depends on.</div>
+            </div>
+            <div class="detective-card">
+                <div class="detective-name" style="color:#6E5DBE;">C. Auguste Dupin</div>
+                <div class="detective-role">Paris, of independent means</div>
+                <div class="detective-specialty">Pure analytical ratiocination, the methodological pioneer Holmes himself credits. <strong>Specialty:</strong> what the <em>form</em> of the argument must imply, whether or not the argument has admitted it.</div>
+            </div>
+            <div class="detective-card">
+                <div class="detective-name" style="color:#C84C3E;">Sherlock Holmes</div>
+                <div class="detective-role">221B Baker Street</div>
+                <div class="detective-specialty">Empirical observation, deduction from evidence, blunt rejection of speculation. <strong>Specialty:</strong> demanding the data behind any claim and rejecting the speculative leap that bridges where the data does not yet reach.</div>
+            </div>
+            <div class="detective-card">
+                <div class="detective-name" style="color:#5F7A3A;">Miss Jane Marple</div>
+                <div class="detective-role">St. Mary Mead</div>
+                <div class="detective-specialty">Pattern recognition from human nature, parallels from parish life that turn out to be devastatingly precise. <strong>Specialty:</strong> noticing what real people actually do under the structural conditions the model describes.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Convening -->
+    <div class="card" style="margin-top:18px;">
+        <h2 style="font-size:1.05em; font-weight:700; color:#1B2A33; margin:0 0 18px;">Convening</h2>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker holmes">HOLMES</span>
+                <span class="speech">Six loops. Twelve nodes. The map is internally consistent &mdash; I have checked the polarities and they do close as claimed. So our work is not arithmetic. Our work is whether the loops correspond to anything actual, and whether they have left anything out.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech">It reminds me, Mr Holmes, of poor Mr Henderson&rsquo;s will. Watertight in every clause, witnessed by the vicar, executed precisely &mdash; and entirely beside the point of what Mr Henderson had actually been trying to do. A document can be perfectly consistent and quite useless.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker holmes">HOLMES</span>
+                <span class="speech">Just so. We proceed.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- R1 -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge">R1</span>
+            <div>
+                <div class="loop-title">The Decisionist Spiral</div>
+                <div class="loop-subtitle">Coherence Demand &rarr; Symbolic Acts &rarr; Decisionist Authority &rarr; Lore erosion &rarr; more Coherence Demand. Closed reinforcing loop, currently active.</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker">COLUMBO</span>
+                <span class="speech">I have to say, I&rsquo;m a little bit confused by something here, and maybe you can help me out. This loop says the Symbolic Acts erode Lore Capacity over time. That&rsquo;s edge e7, the long one. But Lore is at zero-point-six. It&rsquo;s already gone. So what exactly is the act eroding? You see what I mean? The loop describes a process, but the process needs something to operate on, and the thing has already collapsed. Is this loop maybe describing what happened from 2016 to 2024, but not what&rsquo;s happening now?</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker holmes">HOLMES</span>
+                <span class="speech">A genuine objection. The loop&rsquo;s dynamics presuppose a Lore stock above some operational floor. Below that floor &mdash; and we appear to be there &mdash; the link e7 has nothing to act upon, and the loop&rsquo;s contribution to further degradation must be re-specified. The map does not currently distinguish <em>operating range</em> from <em>collapsed range</em>. It should.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">COLUMBO</span>
+                <span class="speech">And another thing. The loop assumes the executive is one thing &mdash; like there&rsquo;s a single agent at n8 making the symbolic acts. But administrations change. Trump issues pardons. The next president pardons a different set. The loop is being run by different hands every four years, with different targets, addressed to different segments of the available mass. Does the loop actually compound across administrations, or does each administration reset the dynamic?</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker holmes">HOLMES</span>
+                <span class="speech">A point Columbo and I would both press. The map treats the loop as a continuous process; the political reality is discrete and adversarial. Each administration draws its own Symbolic Acts from its own segment of Coherence Demand. The aggregate erosion may well be cumulative, but the mechanism the map describes &mdash; a single executive accumulating decisionist authority over time &mdash; is closer to one specific scenario (the Capture case) than to the general dynamic.</span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revision identified &mdash; R1</div>
+            Distinguish <em>operating range</em> from <em>collapsed range</em> on Lore and Helm nodes. Below the operational floor the loop&rsquo;s erosion links have nothing to act upon; above-floor and below-floor dynamics are structurally different and should be separately specified. The loop&rsquo;s continuous-process framing also masks its discrete, administration-to-administration character.
+        </div>
+    </div>
+
+    <!-- R2 -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge">R2</span>
+            <div>
+                <div class="loop-title">The Praetorian Self-Reinforcement</div>
+                <div class="loop-subtitle">Symbolic Acts expand Praetorian Reach, which suppresses Lore renewal, which raises Coherence Demand, which pulls more Symbolic Acts. Closed reinforcing loop.</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker dupin">DUPIN</span>
+                <span class="speech">The loop, as constructed, treats <em>le Bouclier</em> &mdash; the Shield &mdash; as a unitary node. This is convenient for diagrammatic purposes and false to the structure of the institution. Within the American security apparatus there are at least seven distinct agencies with rivalrous mandates, factional politics, and conflicting institutional cultures. The FBI does not desire what ICE desires. The DEA does not coordinate with the NSA. The Pentagon and the intelligence community have spent fifty years contesting each other&rsquo;s domain. When the map says <em>Praetorian Reach expands</em>, the question is <em>whose</em> Praetorian Reach?</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker dupin">DUPIN</span>
+                <span class="speech">The deeper implication is this: if Shield is plural, then internal Shield competition acts as a balancing force on Praetorian Reach that the map does not capture. A unitary Shield could indeed expand without limit; a plural Shield is constrained by its own factional dynamics. The 2026 reading of 10.7 may reflect aggregate institutional integrity, but the operational reach is moderated by intra-Shield rivalry the map elides.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">COLUMBO</span>
+                <span class="speech">Just one more thing on this. If Shield is at ten-point-seven and Helm is at zero-point-four, who&rsquo;s giving Shield its orders? Because the way the map has it, Symbolic Acts come from Helm &mdash; but Helm is the node that&rsquo;s flatlined. So either the symbolic acts aren&rsquo;t actually coming from Helm in any operationally meaningful sense, in which case the loop is mislabelled, or they are coming from Helm, in which case Helm is more functional than its Node Value suggests. Which one is it?</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker dupin">DUPIN</span>
+                <span class="speech">An excellent question, my friend. The resolution is that the formal-institutional Helm has collapsed &mdash; the Cabinet process, the policy councils, the working alignment between executive and Stewards &mdash; while the personal-decisionist Helm has not. The signature of the present moment is precisely that <em>governance is occurring through a Helm that does not function institutionally</em>. The map&rsquo;s Helm node conflates these. It should distinguish institutional Helm from personalist Helm, because the loop&rsquo;s dynamics depend on which one is doing the acting.</span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revisions identified &mdash; R2</div>
+            <strong>Disaggregate Shield</strong> into factional sub-nodes or add a moderating link reflecting intra-Shield competition — a plural Shield is self-constrained in ways the unitary node does not show. <strong>Separately:</strong> distinguish <em>institutional Helm</em> (collapsed) from <em>personalist Helm</em> (active) — governance through a collapsed institutional Helm is the actual mode of the present moment, and the loop&rsquo;s dynamics depend on which Helm is acting.
+        </div>
+    </div>
+
+    <!-- B1 -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge">B1</span>
+            <div>
+                <div class="loop-title">The Symbolic Relief Valve</div>
+                <div class="loop-subtitle">Coherence Demand pulls Symbolic Acts which temporarily reduce Coherence Demand. The short-cycle balancing that masks the long-cycle reinforcing spirals.</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech">This loop puzzles me, gentlemen. The map says Symbolic Acts reduce Coherence Demand briefly, in the weeks-lag range. In my experience of village affairs &mdash; and forgive me for the parallel, but it is precise &mdash; when the squire made a dramatic gesture, half the parish was relieved and half was newly furious. The relieved half went quiet, but the furious half mobilised. Net coherence demand in the village did not fall. It re-distributed.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech">If that pattern holds for the United States, then B1 is not a balancing loop at all. It is a <em>redistribution</em> loop. The relief that the captured segment of the mass feels is offset by the intensified hunger of the un-captured segment, who watch the symbolic act and find their own narrative absence sharpened by contrast.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker holmes">HOLMES</span>
+                <span class="speech">Miss Marple has located a substantive error in the model. The Coherence Demand node is treated as a scalar. It should be a vector &mdash; disaggregated across population segments, with the Symbolic Act reducing demand in one segment while elevating it in another. The aggregate may be net unchanged; the polarisation cost is the difference. This is also, I think, why R4 (the Polarisation Engine) operates so forcefully alongside B1 in the current period. They are mechanically coupled in a way the map separates.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech">Quite so, Mr Holmes. And there is something else. The relief that B1 produces is purchased against the legitimacy of the Archive each time it operates. The relieved segment feels relief partly because the symbolic act tells them the law was wrong about them. So the half-life of B1&rsquo;s relief is short &mdash; but the half-life of the Archive damage it does is long. The valve releases pressure in the present at the cost of structural durability the next pressure cycle will need.</span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revision identified &mdash; B1</div>
+            Reformulate Coherence Demand as a <em>vector</em>, disaggregated across population segments. The B1 relief valve operates by redistribution rather than net reduction &mdash; each Symbolic Act reduces demand in one segment while amplifying it in another. The aggregate may be stable while the polarisation cost accumulates. B1 and R4 are mechanically coupled and should be represented as such.
+        </div>
+    </div>
+
+    <!-- R3 -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge">R3</span>
+            <div>
+                <div class="loop-title">The Archive Drawdown</div>
+                <div class="loop-subtitle">Decisionist Authority draws down Archive, which weakens Helm&rsquo;s frame, which forces further Symbolic Acts, which build more Decisionist Authority.</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker">COLUMBO</span>
+                <span class="speech">I want to ask the panel something, because this one bothers me. The map says both sides are drawing down the Archive. The executive draws it down by acting past it. The opposition draws it down by fighting through it. Both rational, both depleting. Now &mdash; here&rsquo;s what I don&rsquo;t get. If the Archive is being used vigorously by both sides, isn&rsquo;t that a sign that the Archive is still legitimate enough to be worth fighting over? Wouldn&rsquo;t a truly depleted Archive be one that nobody bothered with anymore?</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker dupin">DUPIN</span>
+                <span class="speech">This is the paradox the map only partially registers. The Archive&rsquo;s depletion is not measured by <em>use</em> but by <em>erosion of the shared premise of use</em>. So long as both sides operate as if the Archive&rsquo;s rulings will be obeyed &mdash; even when fighting bitterly over which rulings &mdash; the Archive retains its operational stock. The depletion accelerates at the precise moment when one or both sides stop accepting unfavourable rulings as binding. The map&rsquo;s link e8 (Decisionist Authority drawing down Archive) needs a threshold structure: drawdown is mild until non-compliance becomes routine, at which point the Archive collapses suddenly rather than gradually.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">COLUMBO</span>
+                <span class="speech">So the Archive is fine until it isn&rsquo;t.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker dupin">DUPIN</span>
+                <span class="speech">The Archive is fine until the day a court issues an order and the executive simply declines to obey it without consequence. After that day, the Archive&rsquo;s Node Value is a historical artefact; the operating reality is something else. The map does not capture this threshold structure. It should.</span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revision identified &mdash; R3</div>
+            Add a threshold structure to Archive drawdown. Depletion is mild under routine contested use; it accelerates suddenly at the point of normalised non-compliance with unfavourable rulings. The Archive is operationally intact until the compliance premise is broken &mdash; then it collapses discontinuously. The map&rsquo;s gradual drawdown framing misses this cliff structure.
+        </div>
+    </div>
+
+    <!-- R4 -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge">R4</span>
+            <div>
+                <div class="loop-title">The Polarisation Engine</div>
+                <div class="loop-subtitle">Symbolic Acts mobilise Counter-Narrative, which fragments Lore and draws down Archive, which raises Coherence Demand, pulling further Symbolic Acts.</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker holmes">HOLMES</span>
+                <span class="speech">This loop is the one I find most analytically suspect. It treats Counter-Narrative Mobilisation as if it can only fragment Lore &mdash; as if oppositional mobilisation cannot build shared narrative. The historical record contradicts this. The civil rights movement was Counter-Narrative Mobilisation par excellence, and it produced one of the most successful Lore-building episodes in the country&rsquo;s history. The labour movement of the 1930s &mdash; likewise. The abolitionist movement before the Civil War &mdash; likewise. So why is contemporary Counter-Narrative Mobilisation in the United States structurally different, that it should fragment rather than build?</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech">I believe I can answer Mr Holmes, if he will allow me. In each of the cases he mentions, the opposition spoke in a moral vocabulary the establishment was obliged to recognise. The civil rights movement spoke Christian language to a Christian country. The labour movement spoke the language of dignity and bread to populations who could not pretend not to understand it. The opposition mobilised the <em>shared</em> moral vocabulary against the establishment&rsquo;s failure to live up to it. That is what built Lore.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech">The contemporary counter-narratives, on both sides, increasingly speak in vocabularies the opposition does not share. The progressive identitarian vocabulary is unintelligible to the populist right. The populist right&rsquo;s restoration vocabulary is unintelligible to the educated centre. When mobilisation speaks a language the opposition cannot translate, it cannot build the cross-cutting Lore that previous mobilisations built. It can only fragment.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker holmes">HOLMES</span>
+                <span class="speech">A precise and correct diagnosis. The map&rsquo;s R4 should specify the condition: <em>Counter-Narrative Mobilisation fragments Lore in the absence of a shared moral vocabulary; it builds Lore in the presence of one.</em> This is not a small revision. It identifies the specific cultural condition required for opposition mobilisation to be restorative rather than destructive, and that condition is presently absent.</span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revision identified &mdash; R4</div>
+            Specify the cultural condition for R4&rsquo;s polarity. Counter-Narrative Mobilisation fragments Lore in the <em>absence</em> of a shared moral vocabulary; it builds Lore in the <em>presence</em> of one. The direction of R4&rsquo;s effect is not fixed &mdash; it depends on whether the mobilisation can speak a language its opponents are structurally obliged to recognise. That condition is presently absent. The map should mark this conditionality explicitly.
+        </div>
+    </div>
+
+    <!-- B2 -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge">B2</span>
+            <div>
+                <div class="loop-title">The Renewal Path</div>
+                <div class="loop-subtitle">Civic Renewal Capacity rebuilds Lore, which (via the long pathway of sustained unmet demand) maintains the activation of further Civic Renewal Capacity.</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech">This loop, gentlemen, is the one I worry about. It is the only escape the map permits. And I have spent quite a long life observing village renewal projects, parish councils, and well-meaning curates who arrived to revive Mr Henderson&rsquo;s village, and I will tell you that the link the map calls e22 &mdash; <em>unmet demand mobilises citizens</em> &mdash; is the single most contested link in the entire historical record. Unmet demand mobilises citizens <em>sometimes</em>. Other times, and more often, unmet demand mobilises citizens to capture by whoever offers coherence, however false. Or it mobilises citizens to despair, withdrawal, and the consoling private life. Or to drink. Or to the wrong gods.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech">The map treats e22 as a positive link with a years-lag. It is more accurate to call it a <em>probabilistic</em> link with a wide variance. The activation occurs only under specific cultural pre-conditions that I am not certain are present.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker dupin">DUPIN</span>
+                <span class="speech">Mademoiselle Marple has identified the operational weakness in B2 with characteristic precision. I would add the formal observation: the loop closes through a sequence of three causal links, each of which is contestable. The probability of the loop <em>as a whole</em> operating is the product of the probabilities of each link operating, which is necessarily lower than the probability of any single link. The map&rsquo;s presentation of B2 as a balancing loop conceals that it is, more accurately, a balancing <em>possibility</em> &mdash; a path that exists but whose activation requires conditions outside the loop&rsquo;s own dynamics.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker dupin">DUPIN</span>
+                <span class="speech">The map should mark B2 as conditional and identify the meta-conditions for its activation explicitly. These are likely to include: the presence of civic actors with cultural authority outside the partisan media environment; the availability of a shared moral vocabulary at least in nascent form; a generational cohort with sufficient cohesion to undertake multi-decade work; and institutional infrastructure capable of hosting the renewal effort. In the present moment, the meta-conditions are partially present, not absent. But the loop&rsquo;s geometric appearance in the map overstates its operational availability.</span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revision identified &mdash; B2</div>
+            Mark B2 as <em>conditional</em> rather than geometric. The loop&rsquo;s operation requires meta-conditions outside its own dynamics: civic actors with cultural authority outside partisan media; a shared moral vocabulary in at least nascent form; generational cohesion for multi-decade work; and institutional hosting capacity. The link <em>unmet demand mobilises citizens</em> (e22) is a wide-variance probabilistic link, not a positive causal arrow. The loop&rsquo;s geometric presence overstates its operational availability.
+        </div>
+    </div>
+
+    <!-- Cross-Loop Synthesis -->
+    <div class="card" style="margin-top:18px;">
+        <h2 style="font-size:1.05em; font-weight:700; color:#1B2A33; margin:0 0 18px;">Cross-Loop Synthesis &mdash; What the Six Loops Collectively Miss</h2>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker holmes">HOLMES</span>
+                <span class="speech">We have stress-tested each loop in turn. The structural question remains: what does the loop set, considered as a whole, fail to capture?</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker dupin">DUPIN</span>
+                <span class="speech">I observe three structural absences. First: there is no international node. The United States is not a closed system. Its domestic Lore was sustained for seventy years partly by its imperial-hegemonic role &mdash; the shared national project of leading the liberal order, the shared moral vocabulary of opposition to communism and then to terrorism. The decline of that role is a major contributing factor to Lore collapse, and it is exogenous to the map as constructed. A more complete model would include a node for Imperial Coherence or Hegemonic Project Status, exogenous to domestic dynamics but causally linked to several of them.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker dupin">DUPIN</span>
+                <span class="speech">Second: there is no generational structure. The loops operate as if the populations involved are continuous. They are not. Each loop cycle runs through a population that is replaced approximately every thirty years through demographic turnover. The 2016&ndash;2026 cohort that lived through the Lore collapse is not the same cohort that will be operating the system in 2036&ndash;2046. Their experience of the collapse will be different from the experience of those who remember the pre-collapse configuration. Whether this generational turnover accelerates or decelerates renewal is not specified.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker dupin">DUPIN</span>
+                <span class="speech">Third: there is no information-technology node. The collapse of Lore is mechanically related to the transformation of the information environment over the same period. The map locates the dysfunction in the producing institutions (press, academy, civic culture) and not in the medium of transmission (platforms, algorithms, attention economies). This may understate the contribution of the medium to the institutional collapse. A more complete map would include a node for Information Environment Coherence and its links to Lore Capacity.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech">I would add a fourth, Monsieur Dupin. There is no node for <em>fear</em>. The map describes a stressed mass, a degraded executive, an expanded security apparatus. It does not describe what the population is actually feeling, which in my observation is fear &mdash; fear of economic precarity, fear of cultural displacement, fear of the future, fear of one another. The Symbolic Acts work, when they work, partly because they speak directly to fear and offer the relief of someone being punished. The loops describe the structural mechanism. They do not describe the affective substrate on which the mechanism operates.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">COLUMBO</span>
+                <span class="speech">Yeah, and one more thing &mdash; sorry to keep saying that &mdash; there&rsquo;s no place on the map for ordinary life continuing. The map describes systemic collapse, but for most people most of the time, life keeps going. They go to work, they raise kids, they go to baseball games, they pay taxes. The system the map describes can be in collapse and the daily life can be largely intact at the same time. That&rsquo;s actually a big part of why the collapse can continue &mdash; because the daily failure isn&rsquo;t visible enough to motivate the renewal the map says is needed.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Verdict -->
+    <div class="verdict-card" style="margin-top:18px;">
+        <p>We have not refuted the map. The six loops correspond, with the qualifications noted, to real dynamics in the system. The aggregate diagnosis &mdash; that the United States in 2026 is operating in an unprecedented structural configuration in which Lore and Helm have collapsed while Shield persists &mdash; is supported by the data and is not a partisan claim.</p>
+        <p>The map is more <em>suggestive</em> than <em>predictive</em>. It identifies the geometry of the present moment, not the trajectory. The scenarios in the outlook set therefore depend less on which loops are active and more on the meta-conditions the loops themselves do not specify &mdash; the presence or absence of shared moral vocabulary, the activation of civic actors outside the partisan logic, the affective state of the population, the international environment.</p>
+        <p>The map is a diagnostic instrument; it is not an oracle. Its value lies in clarifying what is to be observed in the period ahead. Its limit lies in the residual indeterminacy of the affective, generational, international, and informational conditions that the loops operate within. The map is a way of seeing. The seeing is the contribution.</p>
+        <p style="margin:0;"><em>Neural Nations &middot; CAMS v3.2 Ensemble Mean (5-scorer) &middot; Detective Panel v1.0</em></p>
+    </div>
+
+    <!-- Final Revisions -->
+    <div class="card" style="margin-top:18px;">
+        <h2 style="font-size:1.05em; font-weight:700; color:#1B2A33; margin:0 0 20px;">Revisions Recommended by the Panel</h2>
+
+        <div class="final-revision">
+            <span class="rev-num">1</span>
+            <div class="rev-body"><strong>Distinguish operating range from collapsed range</strong> on Lore and Helm nodes. Below-floor dynamics differ from above-floor dynamics &mdash; the loop&rsquo;s erosion links have nothing to act upon once the stock has already collapsed. The map should specify which of its links are active in the collapsed regime and which are not. <span class="rev-loops">R1 &mdash; Columbo</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">2</span>
+            <div class="rev-body"><strong>Disaggregate Shield into factional sub-nodes</strong> or add a moderating link reflecting intra-Shield competition. The seven-agency plurality of the American security apparatus is self-constraining in ways a unitary Shield node does not capture. Internal rivalry moderates the Praetorian Reach the map treats as unbounded. <span class="rev-loops">R2 &mdash; Dupin</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">3</span>
+            <div class="rev-body"><strong>Distinguish institutional Helm from personalist Helm.</strong> Governance through a collapsed institutional Helm and active personalist Helm is the actual operating mode of the 2026 moment. The map&rsquo;s Helm node conflates these; the loop&rsquo;s dynamics depend on which one is doing the acting, and in the present moment the answer is: both, in different registers simultaneously. <span class="rev-loops">R2 &mdash; Dupin, Columbo</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">4</span>
+            <div class="rev-body"><strong>Reformulate Coherence Demand as a vector,</strong> disaggregated across population segments. The B1 relief valve operates by redistribution, not net reduction &mdash; a Symbolic Act reduces demand in one segment while elevating it in another. The aggregate is stable while polarisation accumulates. B1 and R4 are mechanically coupled and the map should represent this coupling. <span class="rev-loops">B1 &mdash; Marple, Holmes</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">5</span>
+            <div class="rev-body"><strong>Add a threshold structure to Archive drawdown.</strong> Depletion is mild under routine contested use; it accelerates suddenly at the point of normalised non-compliance with unfavourable rulings. The Archive collapses discontinuously, not gradually. The relevant threshold &mdash; the day an executive declines to obey a court order without consequence &mdash; should be explicitly represented. <span class="rev-loops">R3 &mdash; Dupin</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">6</span>
+            <div class="rev-body"><strong>Specify the cultural condition for R4&rsquo;s polarity.</strong> Counter-Narrative Mobilisation fragments Lore in the <em>absence</em> of a shared moral vocabulary and builds Lore in the <em>presence</em> of one. Historical cases (civil rights, labour, abolition) mobilised the shared vocabulary against the establishment&rsquo;s failure to honour it. Contemporary polarised vocabularies cannot cross the partisan translation barrier. The map should mark this conditionality. <span class="rev-loops">R4 &mdash; Holmes, Marple</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">7</span>
+            <div class="rev-body"><strong>Mark B2 as conditional rather than geometric.</strong> Identify the meta-conditions for its activation explicitly: civic actors with cultural authority outside partisan media; a shared moral vocabulary at least in nascent form; a generational cohort with multi-decade cohesion; institutional infrastructure capable of hosting the renewal effort. The link <em>unmet demand mobilises citizens</em> is a wide-variance probabilistic link. <span class="rev-loops">B2 &mdash; Marple, Dupin</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">8</span>
+            <div class="rev-body"><strong>Add an exogenous node for Imperial / Hegemonic Project Status.</strong> Domestic Lore was sustained for seventy years partly by the shared national project of leading the liberal order; its decline is a major contributing factor to Lore collapse and is currently absent from the map. The node is exogenous to domestic dynamics but causally linked to Lore Capacity and Coherence Demand. <span class="rev-loops">Cross-loop &mdash; Dupin</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">9</span>
+            <div class="rev-body"><strong>Add a node for Information Environment Coherence.</strong> The collapse of Lore is mechanically related to the transformation of the information environment (platforms, algorithms, attention economies) over the same period. The map locates the dysfunction in the producing institutions and not in the medium of transmission. The medium&rsquo;s contribution to institutional collapse is currently underweighted. <span class="rev-loops">Cross-loop &mdash; Dupin</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">10</span>
+            <div class="rev-body"><strong>Add a node for population affect &mdash; specifically fear.</strong> The map describes the structural mechanism but not the affective substrate on which the mechanism operates. Symbolic Acts work partly because they address fear directly and offer the relief of punishment. Fear of economic precarity, cultural displacement, and one another is the fuel the loop runs on; it should be named. <span class="rev-loops">Cross-loop &mdash; Marple</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">11</span>
+            <div class="rev-body"><strong>Acknowledge the daily-life buffer.</strong> Systemic collapse is compatible with intact daily life for most people most of the time. The buffer reduces the visibility of failure and thereby reduces the motivation for the civic renewal B2 requires. The map describes the structural collapse without noting that the collapse can proceed invisibly from the vantage point of ordinary life &mdash; which is precisely what makes it self-sustaining. <span class="rev-loops">Cross-loop &mdash; Columbo</span></div>
+        </div>
+
+        <div class="final-revision">
+            <span class="rev-num">12</span>
+            <div class="rev-body"><strong>Note the generational structure.</strong> The loops operate across a population that is replaced through demographic turnover on an approximately thirty-year cycle. The cohort that lived through the Lore collapse will be progressively replaced by cohorts who did not experience the pre-collapse configuration. Whether generational turnover accelerates or decelerates renewal is unspecified and should be examined. <span class="rev-loops">Cross-loop &mdash; Dupin</span></div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:18px;">
+        <p style="font-size:0.85em; color:#888; margin-bottom:12px;">Companion pages:</p>
+        <div class="companion-strip">
+            <a href="the-empty-pulpit.html">The Empty Pulpit</a>
+            <a href="the-empty-pulpit-map.html">Empty Pulpit &mdash; Aha! Map</a>
+            <a href="usa-outlook-set.html">Outlook Set 2026&ndash;2036</a>
+            <a href="usa-empty-pulpit-perspectives.html">USA &mdash; More (Perspectives)</a>
+            <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+        </div>
+        <p style="font-size:0.78em; color:#999; margin-top:20px; border-top:1px solid #DAD2B8; padding-top:14px;"><em>Detective Panel generated via CAMS v3.2 Ensemble Mean (5-scorer) &middot; Neural Nations &middot; Map survives stress-test, with qualifications &middot; Twelve revisions enumerated &middot; Companion to &lsquo;The Empty Pulpit&rsquo; story and map</em></p>
+    </div>
+
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>
