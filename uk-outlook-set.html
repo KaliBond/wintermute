@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK — Outlook Set 2026–2036 · Neural Nations</title>
+    <meta name="description" content="Four structurally distinct trajectories for the UK 2026–2036: The Absorption Holds, The Populist Capture, The Territorial Rupture, and The Renewal Bypass. Tested against the Reform surge, Your Party, and Scottish independence.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/uk-outlook-set">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neuralnations.org/uk-outlook-set">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:title" content="UK — Outlook Set 2026–2036 · Neural Nations">
+    <meta property="og:description" content="Four structurally distinct trajectories from the present CAMS configuration. The question: will the British system absorb its three simultaneous renewal pressures, as it has absorbed every previous surge across 147 years?">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="UK — Outlook Set 2026–2036 · Neural Nations">
+    <meta name="twitter:description" content="The Absorption Holds · The Populist Capture · The Territorial Rupture · The Renewal Bypass. CAMS v3.2, verified against May 2026 polling and electoral data.">
+    <link rel="stylesheet" href="style.css">
+    <style>
+    .story-meta { font-size:0.82em; color:#888; letter-spacing:0.04em; line-height:1.8; }
+
+    .scenario-card {
+        border-radius:10px;
+        padding:26px 28px;
+        margin-bottom:20px;
+        border: 2px solid #DAD2B8;
+        background: #FBF8EF;
+    }
+    .scenario-card.s1 { border-color:#2F6F7D; }
+    .scenario-card.s2 { border-color:#D98B2B; }
+    .scenario-card.s3 { border-color:#6b7280; }
+    .scenario-card.s4 { border-color:#5F7A3A; }
+
+    .scenario-header { display:flex; align-items:flex-start; gap:16px; margin-bottom:18px; }
+    .scenario-num {
+        flex-shrink:0; width:40px; height:40px; border-radius:50%;
+        display:flex; align-items:center; justify-content:center;
+        font-family:'JetBrains Mono',monospace; font-weight:700; font-size:1em; color:#fff;
+    }
+    .s1 .scenario-num { background:#2F6F7D; }
+    .s2 .scenario-num { background:#D98B2B; }
+    .s3 .scenario-num { background:#6b7280; }
+    .s4 .scenario-num { background:#5F7A3A; }
+
+    .scenario-title { font-size:1.12em; font-weight:700; color:#1B2A33; margin-bottom:4px; }
+    .scenario-subtitle { font-size:0.82em; color:#888; font-style:italic; }
+
+    .scenario-body p {
+        font-size:0.97em; line-height:1.82; color:#1B2A33; margin-bottom:1em;
+    }
+    .scenario-body p:last-child { margin:0; }
+    .scenario-body strong { color:#1B2A33; }
+
+    .node-table {
+        width:100%; border-collapse:collapse;
+        font-size:0.84em; margin:18px 0;
+        border:1px solid #DAD2B8; border-radius:6px; overflow:hidden;
+    }
+    .node-table th {
+        background:#1B2A33; color:#F5F1E4;
+        padding:8px 12px; text-align:left;
+        font-family:'JetBrains Mono',monospace; font-size:0.82em;
+        font-weight:600; letter-spacing:0.04em;
+    }
+    .node-table td {
+        padding:7px 12px; border-bottom:1px solid #EDE8D8;
+        color:#1B2A33;
+    }
+    .node-table tr:last-child td { border-bottom:none; }
+    .node-table tr.total-row td {
+        font-weight:700; background:#F0E9D2; border-top:2px solid #DAD2B8;
+    }
+    .dir-up { color:#2F6F7D; font-weight:600; }
+    .dir-down { color:#C84C3E; font-weight:600; }
+    .dir-stable { color:#888; }
+
+    .indicator-list {
+        margin:14px 0 0;
+        padding:0;
+        list-style:none;
+    }
+    .indicator-list li {
+        font-size:0.88em; line-height:1.7; color:#444;
+        padding:5px 0 5px 20px;
+        position:relative;
+        border-bottom:1px solid #EDE8D8;
+    }
+    .indicator-list li:last-child { border:none; }
+    .indicator-list li::before {
+        content:'→';
+        position:absolute; left:0; color:#2F6F7D;
+        font-weight:700;
+    }
+    .indicator-label {
+        font-size:0.72em; font-weight:700; text-transform:uppercase;
+        letter-spacing:0.1em; color:#888; margin:14px 0 6px;
+    }
+
+    .prob-table {
+        width:100%; border-collapse:collapse; font-size:0.88em;
+        margin:16px 0;
+    }
+    .prob-table th {
+        background:#1B2A33; color:#F5F1E4;
+        padding:9px 14px; text-align:left;
+        font-size:0.82em; letter-spacing:0.04em;
+    }
+    .prob-table td { padding:8px 14px; border-bottom:1px solid #EDE8D8; color:#1B2A33; }
+    .prob-table tr:last-child td { border:none; }
+    .prob-table tr:nth-child(even) td { background:#FBF8EF; }
+
+    .framing-box {
+        background:#F0E9D2; border-left:4px solid #2F6F7D;
+        border-radius:0 8px 8px 0; padding:18px 22px; margin-bottom:20px;
+    }
+    .framing-box h3 { font-size:0.95em; font-weight:700; color:#2F6F7D; margin:0 0 10px; }
+    .framing-box p { font-size:0.93em; line-height:1.8; color:#1B2A33; margin-bottom:0.8em; }
+    .framing-box p:last-child { margin:0; }
+    .framing-box strong { color:#1B2A33; }
+
+    .note-card {
+        background:#1B2A33; color:#F5F1E4; border-radius:8px;
+        padding:22px 26px; margin-top:4px;
+        font-size:0.95em; line-height:1.82;
+    }
+    .note-card p { margin-bottom:1em; }
+    .note-card p:last-child { margin:0; }
+    .note-card strong { color:#fff; }
+    .note-card em { color:#DAD2B8; font-style:italic; }
+
+    .companion-strip { display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+    .companion-strip a {
+        display:inline-block; padding:7px 14px; border:1px solid #DAD2B8;
+        border-radius:6px; font-size:0.85em; color:#2F6F7D;
+        text-decoration:none; background:#FBF8EF; font-weight:600;
+    }
+    .companion-strip a:hover { background:#F0E9D2; }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle active">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework &#8599;</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="framework/index.html">Framework &#8599;</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="hero-section">
+        <h1>UK &mdash; Outlook Set 2026&ndash;2036</h1>
+        <p class="hero-subtitle">Four structurally distinct trajectories the CAMS geometry permits from the present configuration, read through the loops of the Soft Landing Map</p>
+    </div>
+
+    <div class="card">
+        <p class="story-meta">
+            United Kingdom &middot; 2026 &middot; CAMS v3.2 &mdash; Ensemble Mean (5-scorer)<br>
+            Companion to <a href="uk-arc-story.html" style="color:#2F6F7D;">The Art of the Soft Landing</a> &middot; <a href="uk-arc-map.html" style="color:#2F6F7D;">The Map</a> &middot; <a href="uk-detective-panel.html" style="color:#2F6F7D;">Detective Panel</a>
+        </p>
+
+        <p style="font-size:0.97em; line-height:1.8; color:#1B2A33; margin-top:16px;">Four structurally distinct trajectories the CAMS geometry permits from the present configuration, read through the loops of the Soft Landing Map. Each is tested against the actual political state of mid-2026 &mdash; the Reform surge, the Your Party experiment, the Scottish independence question &mdash; treating each of these not as isolated news but as renewal-pressure phenomena the system must either absorb or be changed by.</p>
+    </div>
+
+    <!-- Framing -->
+    <div class="card" style="margin-top:18px;">
+        <h2 style="font-size:1.05em; font-weight:700; color:#1B2A33; margin:0 0 18px;">The Framing: Three Pressures, One Question</h2>
+
+        <p style="font-size:0.97em; line-height:1.82; color:#1B2A33; margin-bottom:18px;">The Soft Landing Map identifies the central British dynamic as the absorption of renewal pressure by the same institutional machinery that absorbs threatening shock. The map&rsquo;s loops &mdash; the Continuity Engine (R1), the Absorption Trap (B1), the Descending Ratchet (R2), the Financialisation Substitution (R3), the Comfort Blindfold (B2), and the latent Renewal Bypass (B3) &mdash; were derived from 147 years of data ending in a 2026 configuration of aggregate Node Value 85, down from the 1880 zenith of 120, with the Hands integration deficit unchanged since the founding. Three simultaneous surges of renewal pressure now face the system &mdash; each from a different quarter, each expressing in its own vocabulary the same underlying structural fact.</p>
+
+        <div class="framing-box">
+            <h3>The Reform UK Surge</h3>
+            <p>As of mid-2026, Reform leads Westminster polling at roughly 24 to 26 percent, having made sweeping local-election gains, while its leader carries a net favourability of around minus thirty-seven. This is the right-populist channel for the renewal pressure: a demand, expressed through anti-immigration and anti-establishment vocabulary, from precisely the de-industrialised, dispersed working-class regions whose discontent the Hands integration deficit has been generating for 147 years. Reform is, in the map&rsquo;s terms, renewal pressure seeking an outlet &mdash; the same pressure the General Strike and the Winter of Discontent expressed, in a new political form.</p>
+        </div>
+
+        <div class="framing-box">
+            <h3>The Your Party Experiment</h3>
+            <p>Launched by Corbyn and Sultana in 2025, registered as a socialist party, it drew 250,000 membership requests in its first 24 hours &mdash; and then fractured almost immediately into the factional conflict that saw Corbyn win the internal CEC elections in February 2026 while consideration figures fell from 18 percent to around 12 percent. This is the left channel for the same renewal pressure: a demand for public ownership, redistribution, and the integration of the working class that the Labour Party has structurally declined to carry. Your Party is renewal pressure seeking a different outlet &mdash; and its early fracture is the Absorption Trap operating in real time, the institutional machinery of the existing order dissipating the pressure before it could consolidate.</p>
+        </div>
+
+        <div class="framing-box" style="margin-bottom:0;">
+            <h3>The Scottish Independence Question</h3>
+            <p>The May 2026 Holyrood election returned the SNP near a majority on John Swinney&rsquo;s explicit platform of treating a majority as a mandate for a second referendum &mdash; though on a declining vote share, with the pro-independence position holding but not surging. This is the territorial channel: a demand to exit the British system altogether rather than reform it from within, expressed by the one part of the United Kingdom that has a constitutional mechanism (however contested) for doing so. Scottish independence is renewal pressure that has given up on renewing the British system and seeks instead to leave it.</p>
+            <p>Three pressures, three vocabularies, one structural origin. The question the four scenarios below address is the same question the map poses: will the British system absorb these pressures, as it has absorbed every previous surge across 147 years, or will one of them prove non-absorbable and force the renewal &mdash; or the rupture &mdash; that the soft landing has always prevented?</p>
+        </div>
+    </div>
+
+    <!-- S1 -->
+    <div class="scenario-card s1" style="margin-top:24px;">
+        <div class="scenario-header">
+            <div class="scenario-num">S1</div>
+            <div>
+                <div class="scenario-title">The Absorption Holds</div>
+                <div class="scenario-subtitle">The highest-probability trajectory on present loop activity</div>
+            </div>
+        </div>
+
+        <table class="node-table">
+            <thead>
+                <tr>
+                    <th>Node</th>
+                    <th>2026 NV</th>
+                    <th>2036 Projected</th>
+                    <th>Direction</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Helm</td><td>9.5</td><td>8&ndash;10</td><td><span class="dir-stable">Volatile but recovering from Brexit nadir</span></td></tr>
+                <tr><td>Shield</td><td>11.7</td><td>10&ndash;12</td><td><span class="dir-stable">Stable</span></td></tr>
+                <tr><td>Lore</td><td>10.5</td><td>9&ndash;11</td><td><span class="dir-stable">Stable, fragmented</span></td></tr>
+                <tr><td>Stewards</td><td>12.0</td><td>11&ndash;12</td><td><span class="dir-stable">Stable</span></td></tr>
+                <tr><td>Craft</td><td>9.5</td><td>9&ndash;10</td><td><span class="dir-stable">Stable &mdash; depleted</span></td></tr>
+                <tr><td>Hands</td><td>7.0</td><td>6&ndash;8</td><td><span class="dir-stable">Unchanged &mdash; the 147-year constant holds</span></td></tr>
+                <tr><td>Archive</td><td>14.5</td><td>14&ndash;15</td><td><span class="dir-stable">Conserved, as ever</span></td></tr>
+                <tr><td>Flow</td><td>10.5</td><td>9&ndash;11</td><td><span class="dir-stable">Stable</span></td></tr>
+                <tr class="total-row"><td><strong>Total NV</strong></td><td><strong>85</strong></td><td><strong>80&ndash;88</strong></td><td><span class="dir-stable">The plateau continues</span></td></tr>
+            </tbody>
+        </table>
+
+        <div class="scenario-body">
+            <p>The system does what it has done for 147 years. The Reform surge crests and is absorbed: either Reform enters government in coalition and is domesticated by the responsibilities of office (the Archive flexing to accommodate a new party as it accommodated Labour in the 1920s), or the right-of-centre vote re-fragments &mdash; the early signs of a Restore Britain challenge on Reform&rsquo;s right, and the deeply negative favourability of its leader, both point to this &mdash; and the established parties recover enough to continue. Your Party completes its fracture and dwindles to a parliamentary handful, its renewal pressure dissipated into the factional history of the British left exactly as the SDP, Respect, and Change UK before it. The SNP wins its majority, declares its mandate, is refused a referendum by a Westminster government of whatever colour, and the independence question settles once more into the managed stalemate that has held since 2014 &mdash; a grievance perpetually live and perpetually unresolved, which is itself a form of soft landing.</p>
+
+            <p>Ten years on, the system is intact, the Archive undiminished, the Hands node still at 7.0, and the aggregate has drifted neither sharply up nor sharply down. The managed decline continues, dignified and unremarked.</p>
+
+            <p>Every loop in the map favours this outcome. The Continuity Engine (R1) is the strongest reinforcing structure in the system and is currently running. The Absorption Trap (B1) is already visibly operating on Your Party. The Comfort Blindfold (B2) keeps Civic Recognition low precisely because the institutions continue to function visibly. The Renewal Bypass (B3) &mdash; the only loop that could produce a different outcome &mdash; remains inactive, gated on a Civic Recognition that the Comfort Blindfold suppresses. The default trajectory of the system as mapped is absorption, and absorption is what 147 years of data predicts.</p>
+        </div>
+
+        <div class="indicator-label">Early indicators (next 24 months)</div>
+        <ul class="indicator-list">
+            <li>Reform either entering a governing arrangement and moderating, or losing ground to right-fragmentation (Restore Britain) and re-establishment recovery</li>
+            <li>Your Party continuing to shed consideration share and MPs, completing its fracture</li>
+            <li>A Westminster refusal of any Scottish referendum mandate, met by SNP grievance rather than constitutional crisis</li>
+            <li>No fundamental reform of the productive economy, regional rebalancing, or working-class integration entering serious legislative play</li>
+            <li>The Archive (courts, civil service, constitutional convention) continuing to absorb each shock without visible strain</li>
+        </ul>
+    </div>
+
+    <!-- S2 -->
+    <div class="scenario-card s2">
+        <div class="scenario-header">
+            <div class="scenario-num">S2</div>
+            <div>
+                <div class="scenario-title">The Populist Capture</div>
+                <div class="scenario-subtitle">Elevated probability &mdash; the right-channel renewal pressure succeeds where it has historically been absorbed</div>
+            </div>
+        </div>
+
+        <table class="node-table">
+            <thead>
+                <tr>
+                    <th>Node</th>
+                    <th>2026 NV</th>
+                    <th>2036 Projected</th>
+                    <th>Direction</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Helm</td><td>9.5</td><td>11&ndash;13</td><td><span class="dir-up">&#8593; Sharp recovery &mdash; decisive populist executive</span></td></tr>
+                <tr><td>Shield</td><td>11.7</td><td>12&ndash;14</td><td><span class="dir-up">&#8593; Strengthened, politically aligned</span></td></tr>
+                <tr><td>Lore</td><td>10.5</td><td>8&ndash;11</td><td><span class="dir-down">&#8595; Contested, majoritarian</span></td></tr>
+                <tr><td>Stewards</td><td>12.0</td><td>7&ndash;10</td><td><span class="dir-down">&#8595; Purged, politicised</span></td></tr>
+                <tr><td>Craft</td><td>9.5</td><td>9&ndash;11</td><td><span class="dir-stable">Partial protectionist revival</span></td></tr>
+                <tr><td>Hands</td><td>7.0</td><td>8&ndash;10</td><td><span class="dir-up">&#8593; Partially captured &mdash; the deficit finally moves, conditionally</span></td></tr>
+                <tr><td>Archive</td><td>14.5</td><td>9&ndash;12</td><td><span class="dir-down">&#8595; Significantly strained &mdash; the conserved node finally tested</span></td></tr>
+                <tr><td>Flow</td><td>10.5</td><td>8&ndash;10</td><td><span class="dir-down">&#8595; Reduced &mdash; finance constrained by populist economics</span></td></tr>
+                <tr class="total-row"><td><strong>Total NV</strong></td><td><strong>85</strong></td><td><strong>82&ndash;91</strong></td><td><span class="dir-stable">Higher aggregate, strained Archive</span></td></tr>
+            </tbody>
+        </table>
+
+        <div class="scenario-body">
+            <p>Reform, or a Reform-Conservative arrangement, enters government and does not get domesticated. Instead, it governs as a genuine populist project &mdash; and the most consequential thing it does, in the map&rsquo;s terms, is partially address the Hands integration deficit that the system has ignored for 147 years. This is the uncomfortable structural insight the data forces: the right-populist surge is drawing its energy from precisely the unintegrated working-class regions whose discontent the system has generated and absorbed for a century and a half. A populist government that delivers genuine material attention to those regions &mdash; industrial policy, immigration restriction framed as labour protection, regional investment &mdash; could move the Hands node upward for the first time in the dataset&rsquo;s history.</p>
+
+            <p>The cost, in the map&rsquo;s terms, is borne by the Archive. A populist project that overrides judicial constraints, politicises the civil service, and treats constitutional convention as an obstacle would draw down the conserved node &mdash; the one node that has held for 147 years &mdash; in a way no previous British government has. The system would become more responsive to its long-ignored working class and less constrained by the institutional continuity that has been its defining strength. Whether this is renewal or damage depends entirely on where one stands; the data registers it as both simultaneously.</p>
+
+            <p>Reform&rsquo;s polling lead is real and sustained. The renewal pressure it channels is the oldest and deepest in the system. And the British absorptive mechanism, for the first time, faces a pressure arising from the one node it never integrated &mdash; which means the usual absorption may not work, because the pressure is not asking to be accommodated within the existing settlement but to overturn the settlement that excluded it.</p>
+
+            <p>Farage&rsquo;s net favourability of minus thirty-seven is the single strongest counter-indicator. A movement whose leader is viewed unfavourably by two-thirds of the country has a low ceiling. The right may fragment. And the Archive&rsquo;s absorptive capacity is formidable: the most likely populist outcome remains domestication (Scenario One) rather than capture.</p>
+        </div>
+
+        <div class="indicator-label">Early indicators (next 24 months)</div>
+        <ul class="indicator-list">
+            <li>Reform sustaining or growing its lead despite leadership unfavourability; successful broadening beyond the leader</li>
+            <li>A Reform or Reform-Conservative government actually forming after the next general election</li>
+            <li>Genuine industrial and regional policy aimed at the de-industrialised working class, not merely immigration rhetoric</li>
+            <li>Open conflict between the executive and the judiciary, civil service, or constitutional conventions &mdash; the Archive being tested rather than deferred to</li>
+            <li>Movement in the material conditions of the regions that have carried the Hands deficit</li>
+        </ul>
+    </div>
+
+    <!-- S3 -->
+    <div class="scenario-card s3">
+        <div class="scenario-header">
+            <div class="scenario-num">S3</div>
+            <div>
+                <div class="scenario-title">The Territorial Rupture</div>
+                <div class="scenario-subtitle">Lower probability &mdash; but the one pressure with a constitutional exit mechanism. Node signature applies to rest-of-UK (rUK) after Scottish departure.</div>
+            </div>
+        </div>
+
+        <table class="node-table">
+            <thead>
+                <tr>
+                    <th>Node</th>
+                    <th>2026 NV</th>
+                    <th>2036 Projected (rUK)</th>
+                    <th>Direction</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Helm</td><td>9.5</td><td>6&ndash;9</td><td><span class="dir-down">&#8595; Destabilised by constitutional crisis</span></td></tr>
+                <tr><td>Shield</td><td>11.7</td><td>9&ndash;11</td><td><span class="dir-down">&#8595; Reduced &mdash; loss of Scottish bases, nuclear question</span></td></tr>
+                <tr><td>Lore</td><td>10.5</td><td>7&ndash;10</td><td><span class="dir-down">&#8595; Identity crisis &mdash; &ldquo;Britain&rdquo; without Scotland</span></td></tr>
+                <tr><td>Stewards</td><td>12.0</td><td>9&ndash;11</td><td><span class="dir-down">&#8595; Disrupted by disaggregation</span></td></tr>
+                <tr><td>Craft</td><td>9.5</td><td>8&ndash;10</td><td><span class="dir-down">&#8595; Regionally variable</span></td></tr>
+                <tr><td>Hands</td><td>7.0</td><td>6&ndash;8</td><td><span class="dir-stable">Unchanged in rUK &mdash; the deficit travels</span></td></tr>
+                <tr><td>Archive</td><td>14.5</td><td>10&ndash;13</td><td><span class="dir-down">&#8595; The unwritten constitution forced into the open</span></td></tr>
+                <tr><td>Flow</td><td>10.5</td><td>9&ndash;11</td><td><span class="dir-stable">London-centric, partially insulated</span></td></tr>
+                <tr class="total-row"><td><strong>Total NV</strong></td><td><strong>85</strong></td><td><strong>72&ndash;85</strong></td><td><span class="dir-down">&#8595; rUK reorganises at lower complexity</span></td></tr>
+            </tbody>
+        </table>
+
+        <div class="scenario-body">
+            <p>The Scottish independence question, unlike the Reform and Your Party pressures, has a constitutional mechanism for becoming non-absorbable: a referendum, or a unilateral assertion of mandate, that the absorptive machinery cannot dissipate because it operates outside the Westminster system&rsquo;s capacity to settle. If the SNP&rsquo;s mandate strategy succeeds &mdash; whether through an agreed referendum, a de facto plebiscite election, or a sustained legitimacy crisis that makes continued refusal untenable &mdash; and Scotland departs, the British system experiences the one thing it has avoided for 147 years: a rupture rather than a soft landing.</p>
+
+            <p>The departure of Scotland would force the unwritten constitution into the open. The Archive &mdash; the conserved node, the source of all the soft landings &mdash; derives its absorptive power precisely from being unwritten, flexible, never tested to destruction. A territorial secession tests it to destruction. The rest of the UK would have to renegotiate what &ldquo;Britain&rdquo; means without Scotland, what the monarchy&rsquo;s territorial basis is, what the nuclear deterrent&rsquo;s home is, what the union of 1707 was for. This is the scenario in which the soft-landing mechanism finally meets a pressure it cannot absorb &mdash; not because the pressure is larger than previous ones, but because it has an exit that the others lack.</p>
+
+            <p>Scottish independence has been a managed stalemate since 2014 precisely because the British system is so good at absorbing it. Westminster can refuse a referendum; the SNP&rsquo;s vote share is declining even as its seat count holds; the 2014 result still stands; the economic case remains contested. The most likely outcome remains the managed grievance of Scenario One. But the probability is not negligible, and unlike the other pressures, this one has a structural route to becoming non-absorbable. Note: Scenarios Two and Three are coupled &mdash; a Reform-led Westminster government may accelerate Scottish departure by making the union less attractive to Scottish voters.</p>
+        </div>
+
+        <div class="indicator-label">Early indicators (next 24 months)</div>
+        <ul class="indicator-list">
+            <li>SNP majority converted into sustained constitutional pressure rather than absorbed grievance</li>
+            <li>Westminster refusal producing a legitimacy crisis rather than a settling</li>
+            <li>Pro-independence polling moving durably above 50 percent rather than oscillating around it</li>
+            <li>A Reform-led Westminster government (Scenario Two) accelerating Scottish departure by making the union less attractive</li>
+            <li>The unwritten constitution being invoked, tested, or forced toward codification</li>
+        </ul>
+    </div>
+
+    <!-- S4 -->
+    <div class="scenario-card s4">
+        <div class="scenario-header">
+            <div class="scenario-num">S4</div>
+            <div>
+                <div class="scenario-title">The Renewal Bypass</div>
+                <div class="scenario-subtitle">Lowest current probability &mdash; the only scenario that arrests the descent rather than continuing or rupturing it</div>
+            </div>
+        </div>
+
+        <table class="node-table">
+            <thead>
+                <tr>
+                    <th>Node</th>
+                    <th>2026 NV</th>
+                    <th>2036 Projected</th>
+                    <th>Direction</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Helm</td><td>9.5</td><td>11&ndash;13</td><td><span class="dir-up">&#8593; Recovered through deliberate reform</span></td></tr>
+                <tr><td>Shield</td><td>11.7</td><td>11&ndash;13</td><td><span class="dir-up">&#8593; Stable</span></td></tr>
+                <tr><td>Lore</td><td>10.5</td><td>12&ndash;14</td><td><span class="dir-up">&#8593; Renewed civic vocabulary</span></td></tr>
+                <tr><td>Stewards</td><td>12.0</td><td>13&ndash;15</td><td><span class="dir-up">&#8593; Rebuilt for durability</span></td></tr>
+                <tr><td>Craft</td><td>9.5</td><td>12&ndash;14</td><td><span class="dir-up">&#8593; Genuine productive-economy revival</span></td></tr>
+                <tr><td>Hands</td><td>7.0</td><td>11&ndash;14</td><td><span class="dir-up">&#8593; The 147-year deficit finally closed</span></td></tr>
+                <tr><td>Archive</td><td>14.5</td><td>14&ndash;16</td><td><span class="dir-up">&#8593; Preserved and deliberately modernised</span></td></tr>
+                <tr><td>Flow</td><td>10.5</td><td>11&ndash;13</td><td><span class="dir-up">&#8593; Rebalanced from finance toward production</span></td></tr>
+                <tr class="total-row"><td><strong>Total NV</strong></td><td><strong>85</strong></td><td><strong>95&ndash;110</strong></td><td><span class="dir-up">&#8593; Genuine recovery toward 1997 levels and beyond</span></td></tr>
+            </tbody>
+        </table>
+
+        <div class="scenario-body">
+            <p>The renewal pressure &mdash; from whichever channel &mdash; is recognised, named, and routed through a deliberately constructed bypass that prevents the absorptive mechanism from dissipating it. This requires the one thing the Comfort Blindfold suppresses: Civic Recognition that the managed decline is a choice repeatedly made, not a fate suffered, and that the genius for the soft landing is also the mechanism of the long descent.</p>
+
+            <p>In this scenario, the political energy currently fragmenting across Reform, Your Party, and the SNP is recognised by some actor &mdash; a reforming government, a cross-party constitutional convention, a civic movement &mdash; as expressing a single underlying demand: the integration of the working class and the rebuilding of the productive economy that the financialisation substitution hollowed out. Rather than absorbing this demand into another managed settling, the system uses the Archive&rsquo;s adaptive flexibility to install durable structural change: genuine industrial strategy, regional rebalancing, constitutional modernisation that channels rather than dissipates the territorial and class pressures. The Hands node moves for the first time in 147 years, and stays moved, because the productive-economy base that would sustain it is rebuilt alongside.</p>
+
+            <p>Because the Renewal Bypass loop (B3) is gated on Civic Recognition, and the Comfort Blindfold (B2) keeps recognition low precisely because the institutions never visibly fail. The British system is too good at the soft landing to be frightened into renewal, and too comfortable to choose it deliberately. The historical base rate is discouraging: every previous surge of renewal pressure across 147 years was absorbed. The Attlee settlement came closest and was managed back. There is no British precedent for the deliberate, non-absorbed renewal this scenario requires.</p>
+
+            <p>And yet it remains possible, because the renewal pressure in 2026 is arriving through three channels simultaneously rather than one, which is historically unusual and may exceed the absorptive capacity in aggregate even though no single channel would. The productive-economy hollowing has reached a point (Craft at 9.5, down 37 percent) where its costs are becoming visible in daily life in ways that may thin the Comfort Blindfold. And the Archive is strong enough (14.5) to host a deliberate renewal if one were attempted &mdash; the institutional capacity for the bypass exists; only the recognition that would activate it is missing.</p>
+        </div>
+
+        <div class="indicator-label">What it would take</div>
+        <ul class="indicator-list">
+            <li>A constitutional convention &mdash; cross-party or civic &mdash; that channels territorial and populist pressures into durable reform rather than managed grievance</li>
+            <li>An industrial strategy serious enough to rebuild Craft and move Hands: regional investment, productive-economy revival, restoration of organised labour voice</li>
+            <li>Civic recognition, at scale, that distinguishes the genuine British achievement (continuity, resilience, the avoided collapse) from its hidden cost (the absorbed renewal, the unmoved Hands node, the long descent)</li>
+            <li>The recognition is the gate; everything else is downstream of it</li>
+        </ul>
+    </div>
+
+    <!-- Probability table -->
+    <div class="card" style="margin-top:18px;">
+        <h2 style="font-size:1.05em; font-weight:700; color:#1B2A33; margin:0 0 16px;">Summary Probability Map</h2>
+        <table class="prob-table">
+            <thead>
+                <tr>
+                    <th>Scenario</th>
+                    <th>Current Probability</th>
+                    <th>Trend</th>
+                    <th>Key Pressure Channel</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>S1 — The Absorption Holds</strong></td><td>High</td><td>Stable</td><td>All three absorbed</td></tr>
+                <tr><td><strong>S2 — The Populist Capture</strong></td><td>Medium</td><td>Rising</td><td>Reform / right channel</td></tr>
+                <tr><td><strong>S3 — The Territorial Rupture</strong></td><td>Medium-low</td><td>Rising</td><td>Scottish independence</td></tr>
+                <tr><td><strong>S4 — The Renewal Bypass</strong></td><td>Low</td><td>Stable at low</td><td>Cross-channel recognition</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:0.88em; line-height:1.75; color:#555; margin-top:12px;">S2 and S3 are structurally coupled: a Reform-led government (S2) may accelerate Scottish departure (S3). The first scenario is the default the geometry produces and 147 years of data predict. The simultaneity of the three pressures is historically unusual; the productive-economy hollowing has reached a level where the Comfort Blindfold is thinner than it has been.</p>
+    </div>
+
+    <!-- Note card -->
+    <div class="note-card" style="margin-top:18px;">
+        <p><strong>A Note for the Independent-Minded Reader</strong></p>
+        <p>It is worth resisting two lazy readings of the present British moment. The first is the declinist reading that treats Reform, Your Party, and Scottish independence as symptoms of a society falling apart. The data does not support this: the British system is more structurally intact than the German or American systems analysed in companion pieces, with the strongest Archive in the CAMS record and no approach to a collapse threshold. The second lazy reading is the complacent one that treats these pressures as mere noise to be managed, business as usual, the system absorbing as it always has. This reading mistakes the soft landing for health.</p>
+        <p>The independent-minded reading is the harder one: that these three pressures are the system&rsquo;s own 147-year-old structural failure &mdash; the unintegrated working class, the hollowed productive base &mdash; finally generating enough discontent to seek multiple simultaneous outlets, and that the British genius for absorption, which will probably dissipate all three, is the very thing that has prevented the resolution of the failure for a century and a half. The pressures are not the disease. They are the symptom of a disease the system is too good at managing to ever cure.</p>
+        <p><em>Outlook Set generated via CAMS v3.2 Ensemble Mean (5-scorer) &middot; Neural Nations &middot; Contemporary political state verified against May 2026 polling and electoral data &middot; Companion to &lsquo;The Art of the Soft Landing&rsquo; story and map</em></p>
+    </div>
+
+    <div class="card" style="margin-top:18px;">
+        <p style="font-size:0.85em; color:#888; margin-bottom:12px;">Companion pages:</p>
+        <div class="companion-strip">
+            <a href="uk-arc-story.html">The Art of the Soft Landing</a>
+            <a href="uk-arc-map.html">UK &mdash; Aha! Map</a>
+            <a href="uk-detective-panel.html">UK &mdash; Detective Panel</a>
+            <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+        </div>
+    </div>
+
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>
