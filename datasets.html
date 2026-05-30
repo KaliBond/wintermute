@@ -307,6 +307,9 @@
             <strong>2. Triple-AI scoring.</strong> GPT-4, Grok, and Gemini each independently assign 1–10 values for Coherence, Capacity, Stress, and Abstraction per node per time-step.<br>
             <strong>3. Ensemble average.</strong> The three scores are averaged to produce the final CAMS matrix.<br>
             <strong>4. Validation.</strong> Ensemble reliability (r &gt; 0.7 across models) and inter-rater agreement are documented in the repository: <code>DATASET_VALIDATION_SUMMARY.md</code>, <code>CAMS_Validation_Formulation.md</code>.
+            <div style="margin-top:12px; padding:10px 14px; background:#fffbf0; border-left:3px solid #D98B2B; border-radius:0 6px 6px 0; font-size:0.88em;">
+                <strong>Formal validation of the ensemble approach:</strong> The Wright Thesis — that ensemble variance reduces by exactly 1/√N and SNR improves by √5 — has been confirmed against CAMS Germany and USA data (1880–2026). Crucially, inter-rater disagreement is structured and historiographically meaningful, not random noise. See <a href="ensemble-validation.html" style="color:#1f77b4; font-weight:600;">Ensemble Validation →</a>
+            </div>
         </div>
 
         <div style="margin: 16px 0; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">

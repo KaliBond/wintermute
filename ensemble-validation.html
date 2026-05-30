@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
+    <title>Ensemble Validation — CAMS v2.3 | Neural Nations</title>
+    <meta name="description" content="CAMS ensemble scoring validation: the Wright Thesis confirmed with qualifications. Variance reduction, SNR improvement, contestation index, and κ-uncertainty bounds — Germany and USA 1880–2026.">
+    <meta name="keywords" content="CAMS, ensemble scoring, Wright thesis, variance reduction, SNR, contestation index, Neural Nations">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/ensemble-validation">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neuralnations.org/ensemble-validation">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:title" content="Ensemble Validation — CAMS v2.3">
+    <meta property="og:description" content="The Wright Thesis confirmed with qualifications: ensemble mean is optimal, but disagreement measures epistemic ambiguity — not rater sloppiness.">
+    <meta property="og:image" content="https://neuralnations.org/ENSEMBLE_VALIDATION/ensemble_comprehensive_summary.png">
+
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+
+    <style>
+    .part-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: #2F6F7D;
+        margin: 0 0 6px;
+    }
+    .part-title {
+        font-size: 1.45em;
+        font-weight: 700;
+        color: #1B2A33;
+        margin: 0 0 18px;
+        line-height: 1.3;
+    }
+    .finding-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px;
+        margin: 20px 0;
+    }
+    .finding-card {
+        padding: 14px 16px;
+        border-radius: 8px;
+        background: #F5F1E4;
+        border-left: 4px solid #2F6F7D;
+    }
+    .finding-card.amber { border-left-color: #D98B2B; }
+    .finding-card.red   { border-left-color: #C84C3E; }
+    .finding-card.moss  { border-left-color: #5F7A3A; }
+    .finding-card strong {
+        display: block;
+        font-size: 1.5em;
+        color: #1B2A33;
+        font-family: 'JetBrains Mono', monospace;
+        margin-bottom: 4px;
+    }
+    .finding-card span {
+        font-size: 0.85em;
+        color: #555;
+        line-height: 1.5;
+    }
+    .fig-block {
+        margin: 28px 0;
+        border: 1px solid #DAD2B8;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #FBF8EF;
+    }
+    .fig-block img {
+        width: 100%;
+        display: block;
+    }
+    .fig-caption {
+        padding: 10px 16px;
+        font-size: 0.82em;
+        color: #666;
+        border-top: 1px solid #DAD2B8;
+        line-height: 1.6;
+    }
+    .fig-caption strong { color: #1B2A33; }
+    .callout {
+        padding: 16px 20px;
+        border-radius: 0 8px 8px 0;
+        margin: 20px 0;
+        line-height: 1.7;
+        font-size: 0.95em;
+    }
+    .callout-teal   { background: #f0f7f8; border-left: 4px solid #2F6F7D; }
+    .callout-amber  { background: #fffbf0; border-left: 4px solid #D98B2B; }
+    .callout-red    { background: #fdf3f2; border-left: 4px solid #C84C3E; }
+    .callout-moss   { background: #f4f7f0; border-left: 4px solid #5F7A3A; }
+    .callout-label  {
+        font-size: 0.7em;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #888;
+        margin-bottom: 6px;
+    }
+    .download-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 10px;
+        margin-top: 16px;
+    }
+    .download-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 14px;
+        background: #F5F1E4;
+        border: 1px solid #DAD2B8;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #1B2A33;
+        font-size: 0.88em;
+        font-weight: 600;
+        transition: background 0.15s;
+    }
+    .download-item:hover { background: #EDE9D8; }
+    .download-item .dl-icon {
+        font-size: 1.3em;
+        flex-shrink: 0;
+    }
+    .download-item .dl-meta {
+        font-size: 0.78em;
+        font-weight: 400;
+        color: #888;
+        display: block;
+    }
+    .stat-row {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin: 16px 0;
+    }
+    .stat-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 14px;
+        border-radius: 20px;
+        font-size: 0.85em;
+        font-weight: 600;
+    }
+    .pill-teal   { background: #e6f2f4; color: #2F6F7D; border: 1px solid #b3d9e0; }
+    .pill-amber  { background: #fef6e7; color: #b8721a; border: 1px solid #f0d090; }
+    .pill-red    { background: #fdf0ef; color: #C84C3E; border: 1px solid #f0b8b3; }
+    .pill-moss   { background: #f0f5e8; color: #5F7A3A; border: 1px solid #b8d090; }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+        <hr class="menu-divider">
+        <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="hero-section">
+        <h1>Ensemble Validation</h1>
+        <p class="hero-subtitle">Testing the Wright Thesis Against CAMS v2.3 Scoring — Germany &amp; USA, 1880–2026</p>
+    </div>
+
+    <!-- Key findings summary figure -->
+    <div class="fig-block" style="margin-bottom: 32px;">
+        <img src="ENSEMBLE_VALIDATION/ensemble_comprehensive_summary.png"
+             alt="CAMS Ensemble Analysis: Testing the Wright et al. Thesis — comprehensive summary chart">
+        <div class="fig-caption">
+            <strong>Summary.</strong> Variance reduction exactly equals 1/√N (observed = 0.447, theory = 0.447).
+            SNR improves by √5 across Germany and USA. Ensemble mean is unbiased.
+            Uncertainty correlates positively with Stress (r = 0.53–0.78) and negatively with Node Value (r = −0.75):
+            disagreement reflects contested history, not rater noise.
+        </div>
+    </div>
+
+    <!-- Stat pills -->
+    <div class="card" style="padding: 18px 24px;">
+        <div class="stat-row">
+            <span class="stat-pill pill-teal">N = 5 raters · Germany &amp; USA</span>
+            <span class="stat-pill pill-moss">Variance reduction: exactly 1/√N ✓</span>
+            <span class="stat-pill pill-moss">SNR improvement: exactly √5 ✓</span>
+            <span class="stat-pill pill-moss">Ensemble mean unbiased ✓</span>
+            <span class="stat-pill pill-amber">Cross-node uncertainty r = 0.56–0.82</span>
+            <span class="stat-pill pill-amber">Lag-1 autocorrelation r ≈ 0.82</span>
+        </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════
+         PART I
+    ═══════════════════════════════════════════════ -->
+    <div class="card">
+        <p class="part-label">Part I</p>
+        <h2 class="part-title">The Wright Thesis: Confirmed with Qualifications</h2>
+
+        <p style="line-height:1.8;">The core statistical claim holds precisely. With N = 5 raters, ensemble variance reduces by exactly 1/√N — the observed SEM is 0.447 against a theoretical 0.447. Signal-to-noise ratio improves by √5 = 2.236×: Germany moves from SNR 19.2 (single rater) to 42.9 (ensemble); USA from 35.8 to 80.0. The ensemble mean is effectively unbiased (Germany bias = +0.014, USA = −0.062). Simulated ensemble correlation with ground truth exceeds any individual rater, and the mean outperforms the median and trimmed estimators in every test.</p>
+
+        <div class="finding-grid">
+            <div class="finding-card">
+                <strong>2.236×</strong>
+                <span>SNR improvement (exactly √5) — Germany and USA</span>
+            </div>
+            <div class="finding-card">
+                <strong>0.447</strong>
+                <span>Observed SEM = 1/√5 · SD — matches theory exactly</span>
+            </div>
+            <div class="finding-card moss">
+                <strong>±0.014 / −0.062</strong>
+                <span>Ensemble mean bias — Germany / USA (effectively zero)</span>
+            </div>
+            <div class="finding-card moss">
+                <strong>Mean &gt; Median</strong>
+                <span>Ensemble mean is optimal aggregator in all tests</span>
+            </div>
+        </div>
+
+        <div class="callout callout-amber">
+            <div class="callout-label">Qualification — the noise is not idiosyncratic</div>
+            Cross-node uncertainty correlation is r = 0.56 (Germany) and r = 0.82 (USA) — far above the &lt;0.3 expected for uncorrelated rater noise. Uncertainty is strongly autoregressive (lag-1 r ≈ 0.82) and rises with Stress (r = 0.78) while falling with Node Value (r = −0.75). Ensemble disagreement therefore measures <strong>epistemic ambiguity about genuinely contested history</strong>, not rater sloppiness. The Wright Thesis holds as a statistical fact; its interpretation requires this caveat.
+        </div>
+
+        <div class="fig-block">
+            <img src="ENSEMBLE_VALIDATION/fig1_node_value_rater_envelope_uncertainty.png"
+                 alt="System Node Value with Rater Envelope and Uncertainty vs Stress — Germany and USA">
+            <div class="fig-caption">
+                <strong>Fig. 1.</strong> System Node Value with rater envelope (shaded band = 1 SEM) and uncertainty vs System Stress — Germany (left) and USA (right). Crisis periods highlighted. Rater spread widens precisely during historically contested years.
+            </div>
+        </div>
+
+        <div class="fig-block">
+            <img src="ENSEMBLE_VALIDATION/fig2_snr_distribution_uncertainty_signal.png"
+                 alt="Signal-to-Noise Ratio over time, SNR distribution comparison, Uncertainty vs Signal Magnitude">
+            <div class="fig-caption">
+                <strong>Fig. 2.</strong> Top: SNR over time — Germany (blue) and USA (green), with low-SNR threshold marked. Bottom-left: SNR distribution showing Germany's lower SNR reflects genuine historical contestation, not inferior data. Bottom-right: uncertainty vs signal magnitude, confirming the negative correlation between rater consensus and Node Value.
+            </div>
+        </div>
+
+        <div class="fig-block">
+            <img src="ENSEMBLE_VALIDATION/fig3_node_value_corrected_uncertainty_stress.png"
+                 alt="Corrected Node Value Envelope and Uncertainty vs Stress — Germany and USA">
+            <div class="fig-caption">
+                <strong>Fig. 3.</strong> USA envelope corrected for inter-rater calibration (right). Germany (left) remains unchanged. Uncertainty rises monotonically with System Stress in both cases (r = 0.53–0.78), confirming that high-disagreement periods are structurally stressful periods.
+            </div>
+        </div>
+
+        <div class="fig-block">
+            <img src="ENSEMBLE_VALIDATION/fig4_wright_thesis_variance_snr_bias.png"
+                 alt="CAMS Ensemble Analysis: full Wright Thesis dashboard — variance reduction, SNR, ensemble bias test">
+            <div class="fig-caption">
+                <strong>Fig. 4.</strong> Full Wright Thesis dashboard. Top row: variance reduction (observed = theory), SNR improvement (≈√N), cross-node uncertainty correlation. Middle: uncertainty vs Stress regressions. Bottom: SNR by crisis vs peace period, ensemble bias test (mean bias ≈ 0). Key findings inset confirms all primary claims.
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════
+         PART II
+    ═══════════════════════════════════════════════ -->
+    <div class="card">
+        <p class="part-label">Part II</p>
+        <h2 class="part-title">Robustness &amp; Optimal Aggregation</h2>
+
+        <p style="line-height:1.8;">Diminishing returns set in after N = 3 raters. The marginal SNR gain from adding a fourth or fifth rater is minimal, though the fifth rater still contributes to bias reduction. Crisis detection F1 improves modestly with ensemble size (Germany +0.003, USA +0.007 at N = 5 vs single rater) — the benefit is real but not transformative for already-strong detectors. Node-level analysis reveals systematic patterns: <strong>Hands</strong> and <strong>Helm</strong> are the most contested nodes in both countries; <strong>Archive</strong> and <strong>Lore</strong> show highest inter-rater consensus.</p>
+
+        <div class="finding-grid">
+            <div class="finding-card amber">
+                <strong>N = 3</strong>
+                <span>Diminishing returns begin — optimal rater number for most use cases</span>
+            </div>
+            <div class="finding-card">
+                <strong>+0.003 / +0.007</strong>
+                <span>Crisis detection F1 gain (Germany / USA) from 1→5 raters</span>
+            </div>
+            <div class="finding-card amber">
+                <strong>Hands · Helm</strong>
+                <span>Most contested nodes — highest rater uncertainty in both countries</span>
+            </div>
+            <div class="finding-card moss">
+                <strong>Archive · Lore</strong>
+                <span>Highest consensus nodes — lowest inter-rater SEM</span>
+            </div>
+        </div>
+
+        <div class="callout callout-teal">
+            <div class="callout-label">Aggregation verdict</div>
+            The ensemble mean is the optimal aggregator across all tests. Median and trimmed mean offer no measurable advantage and should not replace the mean. Per <code>cams_framework_v2_3.py</code>, the ensemble mean remains the canonical estimator; the SEM envelope is the confidence qualifier.
+        </div>
+
+        <div class="fig-block">
+            <img src="ENSEMBLE_VALIDATION/fig5_robustness_crisis_detection_node_patterns.png"
+                 alt="Robustness curves, crisis detection F1, temporal autocorrelation, node-level uncertainty and SNR">
+            <div class="fig-caption">
+                <strong>Fig. 5.</strong> Top row: robustness curve (correlation vs N raters), diminishing returns after N=3, optimal aggregation comparison. Middle: crisis detection F1 scores, temporal autocorrelation of uncertainty by lag. Bottom: node-level uncertainty and SNR — Germany (left) and USA (right). Hands and Helm consistently show widest rater spread.
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════
+         PART III
+    ═══════════════════════════════════════════════ -->
+    <div class="card">
+        <p class="part-label">Part III</p>
+        <h2 class="part-title">CAMS Signature Detection &amp; Contestation</h2>
+
+        <p style="line-height:1.8;">The <strong>Contestation Index</strong> — normalised ensemble SEM — is validated as a new CAMS diagnostic. Its peaks match known historiographical battlegrounds with high precision. Germany's index peaks at 1921–1923 (Weimar hyperinflation and institutional collapse) and 1930–1932 (Nazi ascent), while the USA peaks at 1929–1933 (Great Depression) and 2008–2009 (GFC). These are exactly the periods where historical interpretation is most contested in the scholarly literature.</p>
+
+        <div class="callout callout-red">
+            <div class="callout-label">κ reliability warning</div>
+            The κ criticality index shows dramatically widened confidence bounds during crisis years.
+            In Germany 1933: κ = 17.25 [13.19, 24.91].
+            In USA 2020: κ = 8.55 [7.66, 9.66].
+            The wide bounds in contested periods mean <strong>κ is a less reliable early-warning signal precisely when history is most ambiguous</strong>. This does not invalidate κ — it correctly identifies when to hedge the call.
+        </div>
+
+        <div class="finding-grid">
+            <div class="finding-card amber">
+                <strong>1921–1923</strong>
+                <span>Germany contestation peak — Weimar hyperinflation &amp; collapse</span>
+            </div>
+            <div class="finding-card amber">
+                <strong>1930–1932</strong>
+                <span>Germany contestation peak — Nazi ascent</span>
+            </div>
+            <div class="finding-card amber">
+                <strong>1929–1933</strong>
+                <span>USA contestation peak — Great Depression</span>
+            </div>
+            <div class="finding-card amber">
+                <strong>2008–2009</strong>
+                <span>USA contestation peak — Global Financial Crisis</span>
+            </div>
+            <div class="finding-card red">
+                <strong>κ = 17.25 [13–25]</strong>
+                <span>Germany 1933 — wide bounds signal contested historiography</span>
+            </div>
+            <div class="finding-card moss">
+                <strong>99.56% → 99.89%</strong>
+                <span>Executive Decoupling detection — single rater → ensemble</span>
+            </div>
+        </div>
+
+        <p style="line-height:1.8; margin-top: 16px;">In the CAMS phase space, high Stress + low V̄ + high σ_V reliably predicts high uncertainty. Executive Decoupling detection improves from 99.56% (single rater) to 99.89% (ensemble) with 79% variance reduction — a practically meaningful gain for a high-stakes diagnostic.</p>
+
+        <div class="fig-block">
+            <img src="ENSEMBLE_VALIDATION/fig6_contestation_phase_space_criticality_signature.png"
+                 alt="Historical Contestation Index, Phase Space, κ Criticality with bounds, Signature Detection">
+            <div class="fig-caption">
+                <strong>Fig. 6.</strong> Top row: Historical Contestation Index time series (Germany and USA), phase space coloured by uncertainty. Middle: κ criticality with 90% confidence bounds — note widening during 1933 and crisis periods generally. Bottom: uncertainty vs System Health (left), uncertainty vs Node Dispersion (right), signature detection comparison (ensemble vs single rater).
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════
+         OPERATIONAL IMPLICATIONS
+    ═══════════════════════════════════════════════ -->
+    <div class="card" style="border-left: 4px solid #2F6F7D;">
+        <h2 style="margin-top:0;">Operational Implications for CAMS</h2>
+
+        <p style="line-height:1.8;">These findings do not revise the CAMS framework — they refine how its outputs should be reported and qualified.</p>
+
+        <div class="callout callout-teal" style="margin-top: 20px;">
+            <div class="callout-label">Rule 1 — Canonical estimator</div>
+            The <strong>ensemble mean remains the canonical estimator</strong> for all CAMS node values. No alternative aggregator (median, trimmed mean) improves on it. This confirms current practice in <code>cams_framework_v2_3.py</code>.
+        </div>
+
+        <div class="callout callout-moss">
+            <div class="callout-label">Rule 2 — Envelope as confidence qualifier</div>
+            The <strong>SEM envelope must be reported alongside all diagnostics</strong>, not treated as optional metadata. High-SEM periods change the interpretation of all derived quantities (κ, EDEWS, Contestation Index, Executive Decoupling).
+        </div>
+
+        <div class="callout callout-amber">
+            <div class="callout-label">Rule 3 — Amber reliability threshold</div>
+            When the <strong>Contestation Index exceeds 0.7</strong>, all κ thresholds and Executive Decoupling calls should carry an <em>amber reliability warning</em>. The signal is still meaningful, but the confidence bounds are wide enough that binary pass/fail calls are misleading. Report as a range, not a point estimate.
+        </div>
+
+        <div class="callout callout-red">
+            <div class="callout-label">What the ensemble does not do</div>
+            The ensemble does <strong>not</strong> merely cancel random noise. Ensemble disagreement is structured, autocorrelated, and historiographically meaningful. A high-SEM period is not a data quality problem — it is a finding. <em>The model is telling you that historians disagree here, and so should you.</em>
+        </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════
+         DOWNLOADS
+    ═══════════════════════════════════════════════ -->
+    <div class="card">
+        <h2 style="margin-top:0;">Downloads</h2>
+        <p style="color:#555; font-size:0.92em; margin-bottom: 4px;">Full analysis paper and figures from the Kimi ensemble validation run, 2026-05-29.</p>
+
+        <div class="download-grid">
+            <a href="ENSEMBLE_VALIDATION/CAMS_Ensemble_Validation_2026.pdf" class="download-item" target="_blank">
+                <span class="dl-icon">📄</span>
+                <span>
+                    CAMS Ensemble Validation 2026
+                    <span class="dl-meta">Full analysis paper · PDF</span>
+                </span>
+            </a>
+            <a href="ENSEMBLE_VALIDATION/ensemble_comprehensive_summary.png" class="download-item" target="_blank">
+                <span class="dl-icon">📊</span>
+                <span>
+                    Comprehensive Summary Chart
+                    <span class="dl-meta">Wright Thesis dashboard · PNG</span>
+                </span>
+            </a>
+            <a href="ENSEMBLE_VALIDATION/fig1_node_value_rater_envelope_uncertainty.png" class="download-item" target="_blank">
+                <span class="dl-icon">🖼</span>
+                <span>
+                    Fig 1 — Node Value &amp; Rater Envelope
+                    <span class="dl-meta">Germany &amp; USA · PNG</span>
+                </span>
+            </a>
+            <a href="ENSEMBLE_VALIDATION/fig2_snr_distribution_uncertainty_signal.png" class="download-item" target="_blank">
+                <span class="dl-icon">🖼</span>
+                <span>
+                    Fig 2 — SNR &amp; Uncertainty vs Signal
+                    <span class="dl-meta">Distribution analysis · PNG</span>
+                </span>
+            </a>
+            <a href="ENSEMBLE_VALIDATION/fig3_node_value_corrected_uncertainty_stress.png" class="download-item" target="_blank">
+                <span class="dl-icon">🖼</span>
+                <span>
+                    Fig 3 — Corrected Envelope &amp; Stress
+                    <span class="dl-meta">Calibration corrected · PNG</span>
+                </span>
+            </a>
+            <a href="ENSEMBLE_VALIDATION/fig4_wright_thesis_variance_snr_bias.png" class="download-item" target="_blank">
+                <span class="dl-icon">🖼</span>
+                <span>
+                    Fig 4 — Wright Thesis Full Dashboard
+                    <span class="dl-meta">Variance, SNR, bias test · PNG</span>
+                </span>
+            </a>
+            <a href="ENSEMBLE_VALIDATION/fig5_robustness_crisis_detection_node_patterns.png" class="download-item" target="_blank">
+                <span class="dl-icon">🖼</span>
+                <span>
+                    Fig 5 — Robustness &amp; Node Patterns
+                    <span class="dl-meta">Crisis detection, node-level SNR · PNG</span>
+                </span>
+            </a>
+            <a href="ENSEMBLE_VALIDATION/fig6_contestation_phase_space_criticality_signature.png" class="download-item" target="_blank">
+                <span class="dl-icon">🖼</span>
+                <span>
+                    Fig 6 — Contestation &amp; Phase Space
+                    <span class="dl-meta">κ criticality, signature detection · PNG</span>
+                </span>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a>
+        <a href="model.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Model</a>
+        <a href="validation.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Validation</a>
+        <a href="results.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Results</a>
+        <a href="research-diary.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Research Diary</a>
+    </nav>
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+
+<script src="nav.js"></script>
+</body>
+</html>
