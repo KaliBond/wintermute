@@ -6,7 +6,7 @@
 
     <!-- Primary SEO -->
     <title>Open Datasets — Neural Nations</title>
-    <meta name="description" content="44,215 CAMS records across 40 societies and 49 historical series. Freely downloadable. Scoring methodology, validation reports, and GitHub repository.">
+    <meta name="description" content="41,519 CAMS records across 43 societies and 50 historical series. Freely downloadable. Scored by GPT + Grok + Gemini ensemble. Scoring methodology, validation reports, and GitHub repository.">
     <meta name="keywords" content="CAMS, Neural Nations, civilisational complexity, institutional analysis, Kari McKern">
     <meta name="author" content="Kari McKern">
     <meta name="robots" content="index, follow">
@@ -263,11 +263,11 @@
     <div class="card">
         <div class="hero-stat-row">
             <div class="hero-stat">
-                <div class="num">45</div>
-                <div class="lbl">Series (38 distinct entities)</div>
+                <div class="num">50</div>
+                <div class="lbl">Series (43 distinct societies)</div>
             </div>
             <div class="hero-stat">
-                <div class="num">39,351</div>
+                <div class="num">41,519</div>
                 <div class="lbl">Node-year records</div>
             </div>
             <div class="hero-stat">
@@ -279,7 +279,7 @@
                 <div class="lbl">Time span covered</div>
             </div>
         </div>
-        <p style="font-size:0.85em; color:#666; margin: -8px 0 20px; text-align:center;">28 datasets fully validated (Stress-column pass) · 8 further datasets undergoing quality review</p>
+        <p style="font-size:0.85em; color:#666; margin: -8px 0 20px; text-align:center;">33 datasets fully validated (Stress-column pass) · 8 further datasets undergoing quality review</p>
 
         <p style="font-size:0.72em;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#999;margin:0 0 10px;">Validation results</p>
         <div class="validation-strip">
@@ -292,8 +292,8 @@
                 <div class="vsl">Entropy–health correlation in validated datasets</div>
             </div>
             <div class="vstat">
-                <div class="vsv">45</div>
-                <div class="vsl">Historical series across 38 societies, 1800–2025</div>
+                <div class="vsv">50</div>
+                <div class="vsl">Historical series across 43 societies, 5 CE–2026</div>
             </div>
             <div class="vstat">
                 <div class="vsv">r = 0.78</div>
@@ -307,8 +307,11 @@
             <strong>2. Triple-AI scoring.</strong> GPT-4, Grok, and Gemini each independently assign 1–10 values for Coherence, Capacity, Stress, and Abstraction per node per time-step.<br>
             <strong>3. Ensemble average.</strong> The three scores are averaged to produce the final CAMS matrix.<br>
             <strong>4. Validation.</strong> Ensemble reliability (r &gt; 0.7 across models) and inter-rater agreement are documented in the repository: <code>DATASET_VALIDATION_SUMMARY.md</code>, <code>CAMS_Validation_Formulation.md</code>.
-            <div style="margin-top:12px; padding:10px 14px; background:#fffbf0; border-left:3px solid #D98B2B; border-radius:0 6px 6px 0; font-size:0.88em;">
-                <strong>Formal validation of the ensemble approach:</strong> The Wright Thesis — that ensemble variance reduces by exactly 1/√N and SNR improves by √5 — has been confirmed against CAMS Germany and USA data (1880–2026). Crucially, inter-rater disagreement is structured and historiographically meaningful, not random noise. See <a href="ensemble-validation.html" style="color:#1f77b4; font-weight:600;">Ensemble Validation →</a>
+            <div style="margin-top:12px; padding:14px 18px; background:#fffbf0; border-left:3px solid #D98B2B; border-radius:0 8px 8px 0; font-size:0.88em; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+                <div>
+                    <strong>Formal validation of the ensemble approach:</strong> The Wright Thesis — that ensemble variance reduces by exactly 1/√N and SNR improves by √5 — has been confirmed against CAMS Germany and USA data (1880–2026). Crucially, inter-rater disagreement is structured and historiographically meaningful, not random noise.
+                </div>
+                <a href="ensemble-validation.html" style="flex-shrink:0; display:inline-block; padding:7px 16px; background:#D98B2B; color:#fff; font-weight:700; font-size:0.92em; border-radius:6px; text-decoration:none; white-space:nowrap;">Ensemble Validation Report →</a>
             </div>
         </div>
 
