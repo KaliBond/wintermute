@@ -607,6 +607,39 @@
 
         <p style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #DAD2B8; font-size: 0.88em; color: #888; line-height: 1.7;"><strong>Project implication:</strong> The Stewards / legitimacy node is now established as the master early-warning variable in the CAMS framework. All claims verified against source CSVs; outstanding dependencies listed in §4.9 for the next cycle. &nbsp;&middot;&nbsp; <a href="CAMS_Paper4_Entropy_Flows_Collapse_Signatures.pdf" target="_blank" style="color:#2ca02c;">Download PDF</a> &nbsp;&middot;&nbsp; <a href="datasets.html" style="color:#1f77b4;">Datasets</a></p>
     </div>
+
+    <div class="card" style="margin-top: 20px; border-left: 4px solid #2F6F7D;">
+        <h2 style="font-size: 1.2em; margin-bottom: 4px;">Session Summary: Nation Database Expansion &amp; Tool Integration</h2>
+        <p style="color: #888; font-size: 0.88em; margin-bottom: 20px;"><strong>Participants:</strong> Kari Freyr McKern + Claude Sonnet 4.6 &nbsp;&middot;&nbsp; 31 May 2026 &nbsp;&middot;&nbsp; <strong>Context:</strong> Canonical ENS+ENV dataset consolidation; 5 new nations added across all tools; CAMS Cognitive Affect Blob deployed to dashboards.</p>
+
+        <h3 style="font-size: 0.95em; font-weight: 700; color: #1a1a2e; margin: 20px 0 8px;">1. Data/Nations Repository</h3>
+        <p style="font-size: 0.92em; line-height: 1.8; color: #444;">Canonical <code>data/nations/</code> directory created: 19 nations &times; 2 files (ENS + ENV) = 38 CSVs. Sources are the CAMNATIONS5 ensemble mean and inter-rater uncertainty envelope for each nation. Annual coverage (&gt;40 KB) for Australia, Chile, China, Colombia, Germany, Iran, Norway, Poland, Russia, UK. Five-year snapshot coverage for Argentina, Canada, France, India, Japan, Sweden, Thailand, T&uuml;rkiye, USA. All files UTF-8 encoded; T&uuml;rkiye encoding corrected from mojibake.</p>
+
+        <h3 style="font-size: 0.95em; font-weight: 700; color: #1a1a2e; margin: 20px 0 8px;">2. Five New Nations Added</h3>
+        <ul style="margin: 8px 0 12px 20px; line-height: 1.9; color: #444; font-size: 0.92em;">
+            <li><strong>Colombia</strong> 1875&ndash;2026 (annual, 152yr) &mdash; endemic conflict arc, 2016 peace accord recovery visible in Helm/Flow</li>
+            <li><strong>United States</strong> 1900&ndash;2026 (5-yr snapshots) &mdash; superpower arc, Y falling sharply post-2015</li>
+            <li><strong>T&uuml;rkiye</strong> 1875&ndash;2026 (5-yr) &mdash; Ottoman decline, Atat&uuml;rk modernisation leap, post-2016 Helm re-centralisation</li>
+            <li><strong>India (cam5)</strong> 1875&ndash;2026 (5-yr) &mdash; colonial era low capacity, 1947 inflection, liberalisation 1991, Archive consistently strong</li>
+            <li><strong>Japan (cam5)</strong> 1875&ndash;2026 (5-yr) &mdash; Meiji leap, 1945 catastrophe, post-war miracle, Lost Decade plateau</li>
+        </ul>
+
+        <h3 style="font-size: 0.95em; font-weight: 700; color: #1a1a2e; margin: 20px 0 8px;">3. Tool Integration</h3>
+        <ul style="margin: 8px 0 12px 20px; line-height: 1.9; color: #444; font-size: 0.92em;">
+            <li><strong>cams_index.json:</strong> 5 new <code>(cam5 ensemble)</code> entries &rarr; all societies instantly available in CAMS Interpreter and Zeitgeist Detector dropdowns, including the Cognitive Affect Blob.</li>
+            <li><strong>attractors-nations.js:</strong> 5 new 3D phase-space trajectories (B0, xs/ys/zs via ROLL=5 smoothing) added to the Attractor Space viewer. Chile and Poland also added earlier this session.</li>
+            <li><strong>Telescopes:</strong> <code>telescope_1.html</code> and <code>telescope_2.html</code> both receive full <code>DATA</code> + <code>SOCIETY_META</code> injections for all 5 nations &mdash; computed from ENS CSV including dominant/weakest node, praetorian, cog_gap, sk, ms, mk per year.</li>
+            <li><strong>datasets.html:</strong> Download links (View + CSV) added for all new ENS+ENV pairs; Colombia, USA, T&uuml;rkiye, India, Japan in correct regional sections; Australia ENV gap filled; intro text updated to 19 nations.</li>
+        </ul>
+
+        <h3 style="font-size: 0.95em; font-weight: 700; color: #1a1a2e; margin: 20px 0 8px;">4. CAMS Cognitive Affect Blob</h3>
+        <p style="font-size: 0.92em; line-height: 1.8; color: #444;">Animated organic blob deployed to both primary dashboards, translating CAMS metrics into 10 affective state signatures (Grounded, Anxious, Mythic Drift, Amnesic Reaction, Aggrieved, Manic, Dissociated, Exhausted, Fearful Control, Paranoid). Blob deformation rules: size &larr; V&#772;, jaggedness &larr; stress &sigma;, tilt &larr; cog_gap, pulse speed &larr; fast-loop, glow &larr; &Gamma;&#772; (abstraction drift), dark core &larr; Hands/Stewards stress. Persistent RAF loop &mdash; no time reset on year change. In-session bug fixes: Zeitgeist jank on year scrub resolved; Interpreter live refresh on slider move wired via <code>refreshBlobIfActive()</code>.</p>
+
+        <h3 style="font-size: 0.95em; font-weight: 700; color: #1a1a2e; margin: 20px 0 8px;">5. Explore Page Audit</h3>
+        <p style="font-size: 0.92em; line-height: 1.8; color: #444;">All 38 internal links and 9 PDFs referenced from <a href="explore.html" style="color:#1f77b4;">neuralnations.org/explore</a> verified present and resolving. No broken links.</p>
+
+        <p style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #DAD2B8; font-size: 0.88em; color: #888; line-height: 1.7;"><strong>Net change:</strong> Dataset coverage expanded from 14 to 19 nations with matched ENS+ENV pairs. All five new nations propagated across every live tool simultaneously. Archive node capacity and Craft execution both up &mdash; the infrastructure now supports dynamic blob-based reading for any of 19 nations across the full historical record. &nbsp;&middot;&nbsp; <a href="datasets.html" style="color:#1f77b4;">Datasets</a> &nbsp;&middot;&nbsp; <a href="https://github.com/KaliBond/wintermute" target="_blank" style="color:#1f77b4;">GitHub</a></p>
+    </div>
 </div>
 
 <footer class="footer">
