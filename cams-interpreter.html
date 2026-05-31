@@ -633,6 +633,26 @@ function buildNodeTable() {
 function updateSlider(i, dim, val) {
     document.getElementById(`v${i}${dim}`).textContent = parseFloat(val).toFixed(1);
     updateVi(i);
+    refreshBlobIfActive();
+}
+
+function refreshBlobIfActive() {
+    if (!lastResults) return;
+    if (!document.getElementById('tab-spectral').classList.contains('active')) return;
+    const nodes = NODE_NAMES.map((_,i) => ({
+        C: getSlider(i,'C'), K: getSlider(i,'K'),
+        S: getSlider(i,'S'), A: getSlider(i,'A')
+    }));
+    const ops = computeNodeOperators(nodes);
+    const { Bi, Bt } = computeCoupling(ops);
+    ops.forEach((o,i) => { o.Bi = Bi[i]; });
+    lastResults.ops  = ops;
+    lastResults.Vbar = ops.reduce((s,o) => s+o.Vi, 0) / 8;
+    lastResults.sigV = Math.sqrt(ops.map(o=>o.Vi).reduce((s,v) => s+(v-lastResults.Vbar)**2, 0)/8);
+    lastResults.Gbar = ops.reduce((s,o) => s+o.Gi, 0) / 8;
+    lastResults.Bt   = Bt;
+    lastResults.Bi   = Bi;
+    renderCognitiveSig();
 }
 
 function getSlider(i, dim) {
@@ -1358,11 +1378,14 @@ function destroyChart(id) {
     if (charts[id]) { charts[id].destroy(); delete charts[id]; }
 }
 
-let _blobRaf  = null;
-let _blobTime = 0;
+let _blobRaf    = null;
+let _blobTime   = 0;
+let _blobCanvas = null;
+let _blobP      = null;
 
 function stopBlobAnim() {
     if (_blobRaf) { cancelAnimationFrame(_blobRaf); _blobRaf = null; }
+    _blobP = null;
 }
 
 const AFFECT_STATES = [
@@ -1506,21 +1529,21 @@ function drawBlob(canvas, p, t) {
     }
 }
 
-function startBlobAnim(canvas, p) {
-    stopBlobAnim();
-    _blobTime = 0;
+function setBlobParams(canvas, p) {
+    _blobCanvas = canvas;
+    _blobP = p;
+    if (_blobRaf) return; // loop already running — params picked up next frame
     let last = null;
     function frame(ts) {
-        if (last !== null) _blobTime += (ts - last) * p.speed * 0.001;
+        if (last !== null && _blobP) _blobTime += (ts - last) * _blobP.speed * 0.001;
         last = ts;
-        drawBlob(canvas, p, _blobTime);
-        _blobRaf = requestAnimationFrame(frame);
+        if (_blobP && _blobCanvas) drawBlob(_blobCanvas, _blobP, _blobTime);
+        _blobRaf = _blobP ? requestAnimationFrame(frame) : null;
     }
     _blobRaf = requestAnimationFrame(frame);
 }
 
 function renderCognitiveSig() {
-    stopBlobAnim();
     if (!lastResults) return;
     const r = lastResults;
     const affect = classifyAffect(r);
@@ -1528,7 +1551,7 @@ function renderCognitiveSig() {
     const Cr=r.ops[4], Ha=r.ops[5], Ar=r.ops[6], Fl=r.ops[7];
     const stressAvg = r.ops.reduce((s,o)=>s+o.S,0)/8;
 
-    startBlobAnim(document.getElementById('blob-canvas'), {
+    setBlobParams(document.getElementById('blob-canvas'), {
         color:   affect.color,
         baseR:   Math.max(55, Math.min(125, 55 + r.Vbar * 6)),
         jagg:    Math.min(1, stressAvg / 8),

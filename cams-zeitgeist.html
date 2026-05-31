@@ -721,9 +721,23 @@ function togglePlay() {
 }
 
 // ── CAMS Cognitive Affect Map ─────────────────────────────────────────────────
-let _blobRaf  = null;
-let _blobTime = 0;
-function stopBlobAnim() { if (_blobRaf) { cancelAnimationFrame(_blobRaf); _blobRaf = null; } }
+let _blobRaf    = null;
+let _blobTime   = 0;
+let _blobCanvas = null;
+let _blobP      = null;
+function stopBlobAnim() { if (_blobRaf) { cancelAnimationFrame(_blobRaf); _blobRaf = null; } _blobP = null; }
+function setBlobParams(canvas, p) {
+    _blobCanvas = canvas; _blobP = p;
+    if (_blobRaf) return;
+    let last = null;
+    function frame(ts) {
+        if (last !== null && _blobP) _blobTime += (ts - last) * _blobP.speed * 0.001;
+        last = ts;
+        if (_blobP && _blobCanvas) drawBlob(_blobCanvas, _blobP, _blobTime);
+        _blobRaf = _blobP ? requestAnimationFrame(frame) : null;
+    }
+    _blobRaf = requestAnimationFrame(frame);
+}
 
 const NODE_ORDER_OPS = ['Helm','Shield','Lore','Stewards','Craft','Hands','Archive','Flow'];
 
@@ -805,17 +819,6 @@ function drawBlob(canvas, p, t) {
     }
 }
 
-function startBlobAnim(canvas, p) {
-    stopBlobAnim(); _blobTime = 0;
-    let last = null;
-    function frame(ts) {
-        if (last !== null) _blobTime += (ts - last) * p.speed * 0.001;
-        last = ts; drawBlob(canvas, p, _blobTime);
-        _blobRaf = requestAnimationFrame(frame);
-    }
-    _blobRaf = requestAnimationFrame(frame);
-}
-
 function pengCard(cls, raw, meaning) {
     return `<div class="peng-card ${cls}"><p class="peng-raw">${raw}</p><p class="peng-meaning">${meaning}</p></div>`;
 }
@@ -867,14 +870,13 @@ function pengHelm(H) {
 }
 
 function renderCogSig(yearData) {
-    stopBlobAnim();
     const r = yearDataToR(yearData);
     const affect = classifyAffect(r);
     const H=r.ops[0], Sh=r.ops[1], Lo=r.ops[2], St=r.ops[3];
     const Ha=r.ops[5], Ar=r.ops[6];
     const stressAvg = r.ops.reduce((s,o) => s+o.S, 0) / 8;
 
-    startBlobAnim(document.getElementById('blob-canvas'), {
+    setBlobParams(document.getElementById('blob-canvas'), {
         color:   affect.color,
         baseR:   Math.max(42, Math.min(100, 42 + r.Vbar * 5)),
         jagg:    Math.min(1, stressAvg / 8),
