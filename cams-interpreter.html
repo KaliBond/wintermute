@@ -238,6 +238,29 @@
     .bond-pair-val { min-width: 40px; text-align: right; font-weight: 700; color: #5a3580; font-size: 0.85rem; }
     .spectral-panel { background: #f8f5ff; border-radius: 10px; padding: 16px; margin-top: 16px; }
     .spectral-panel h4 { margin: 0 0 10px 0; color: #5a3580; }
+    /* ── Cognitive Signature tab ─────────────────────────────────────── */
+    .cog-sig-wrap { display:flex; flex-direction:column; align-items:center; gap:18px; }
+    #blob-canvas { display:block; }
+    .affect-state-name { font-size:2rem; font-weight:800; letter-spacing:-0.025em; line-height:1.1; margin:0; }
+    .affect-analogue { font-size:0.9rem; color:#777; font-style:italic; margin:5px 0 0; }
+    .affect-chips { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:10px; }
+    .affect-chip { padding:3px 11px; border-radius:14px; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; }
+    .chip-trust { background:#f0eaf7; color:#5a3580; }
+    .chip-bal   { background:#f5f1e4; color:#6b5728; }
+    .chip-path  { background:#fef3c7; color:#92400e; }
+    .cog-meter-wrap { width:100%; max-width:480px; }
+    .cog-meter-label { font-size:0.74rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:#999; display:flex; justify-content:space-between; margin-bottom:6px; }
+    .cog-meter-track { width:100%; height:8px; background:#f0eaf7; border-radius:4px; position:relative; overflow:visible; }
+    .cog-meter-pip   { position:absolute; left:50%; top:-3px; width:2px; height:14px; background:#ccc; transform:translateX(-50%); border-radius:1px; z-index:2; }
+    .cog-meter-fill  { position:absolute; top:0; height:100%; border-radius:4px; }
+    .cog-meter-note  { font-size:0.79rem; color:#aaa; text-align:center; margin:5px 0 0; }
+    .peng-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:10px; width:100%; }
+    .peng-card { border-radius:10px; padding:12px 14px; border-left:4px solid #e0d8f0; background:#f8f5ff; }
+    .peng-card.peng-ok     { border-color:#2F6F7D; background:#f0f8f9; }
+    .peng-card.peng-warn   { border-color:#D98B2B; background:#fdf8f0; }
+    .peng-card.peng-danger { border-color:#C84C3E; background:#fdf3f2; }
+    .peng-raw     { font-family:'JetBrains Mono','Courier New',monospace; font-size:0.72rem; color:#bbb; margin:0 0 4px; }
+    .peng-meaning { font-size:0.87rem; font-weight:600; color:#1B2A33; margin:0; line-height:1.45; }
     /* Node Detail tab */
     .node-detail-select { padding: 8px 14px; border-radius: 8px; border: 1px solid #ddd; font-size: 0.95rem; margin-bottom: 16px; }
     .detail-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
@@ -460,7 +483,7 @@
     <div class="card" id="results-card" style="display:none;">
         <div class="tab-bar">
             <button class="tab-btn active" onclick="switchTab('reconstruction', this)">Reconstruction</button>
-            <button class="tab-btn" onclick="switchTab('spectral', this)">Spectral</button>
+            <button class="tab-btn" onclick="switchTab('spectral', this)">Cognitive Signature</button>
             <button class="tab-btn" onclick="switchTab('operators', this)">Operators</button>
             <button class="tab-btn" onclick="switchTab('bond-network', this)">Bond Network</button>
             <button class="tab-btn" onclick="switchTab('node-detail', this)">Node Detail</button>
@@ -471,19 +494,20 @@
             <div id="reconstruction-content"></div>
         </div>
 
-        <!-- Tab 2: Spectral -->
+        <!-- Tab 2: Cognitive Signature -->
         <div class="tab-panel" id="tab-spectral">
-            <div id="stat-cards-row" class="stat-cards-row"></div>
-            <h3 class="section-title">Node Vitality (V_i)</h3>
-            <div class="chart-wrap"><canvas id="chart-vi"></canvas></div>
-            <h3 class="section-title">Mean C / K / S / A Profile (Radar)</h3>
-            <div class="chart-wrap" style="max-width:380px;"><canvas id="chart-radar"></canvas></div>
-            <h3 class="section-title">Bond Strength per Node (B_i)</h3>
-            <div class="chart-wrap"><canvas id="chart-bi"></canvas></div>
-            <h3 class="section-title">Affect per Node (α_i)</h3>
-            <div class="chart-wrap"><canvas id="chart-alpha"></canvas></div>
-            <h3 class="section-title">Full Operator Table</h3>
-            <div id="op-table-container"></div>
+            <div class="cog-sig-wrap">
+                <div style="text-align:center;">
+                    <p class="section-title" style="margin-bottom:2px;">CAMS Cognitive Affect Map</p>
+                    <p style="font-size:0.8rem;color:#bbb;margin:0;font-style:italic;">What the system feels like under stress — a structural translation</p>
+                </div>
+                <canvas id="blob-canvas" width="300" height="300"></canvas>
+                <div style="text-align:center;" id="affect-header-block">
+                    <p style="color:#bbb;font-size:0.9rem;padding:8px 0;">Run Analyse to generate the cognitive signature.</p>
+                </div>
+                <div class="cog-meter-wrap" id="cog-meter-block"></div>
+                <div class="peng-grid" id="peng-grid"></div>
+            </div>
         </div>
 
         <!-- Tab 3: Operators -->
@@ -532,7 +556,7 @@
                     <div id="bond-pairs-list"></div>
                 </div>
                 <div class="spectral-panel">
-                    <h4>Spectral Analysis</h4>
+                    <h4>Coupling Health</h4>
                     <div id="spectral-panel-content"></div>
                 </div>
             </div>
@@ -948,8 +972,9 @@ function switchTab(tabId, btn) {
     document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('tab-'+tabId).classList.add('active');
+    if (tabId !== 'spectral') stopBlobAnim();
     if (!lastResults) return;
-    if (tabId==='spectral')     renderSpectral();
+    if (tabId==='spectral')     renderCognitiveSig();
     if (tabId==='operators')    renderOperators();
     if (tabId==='bond-network') renderBondNetwork();
     if (tabId==='node-detail')  renderNodeDetail();
@@ -1328,124 +1353,280 @@ function renderReconstruction() {
     `;
 }
 
-// ── Tab 2: Spectral ───────────────────────────────────────────────────────────
+// ── Tab 2: Cognitive Signature ────────────────────────────────────────────────
 function destroyChart(id) {
     if (charts[id]) { charts[id].destroy(); delete charts[id]; }
 }
 
-function renderSpectral() {
-    if (!lastResults) { document.getElementById('stat-cards-row').innerHTML = '<p style="color:#888;font-size:0.9rem;padding:12px 0">Click <strong>Analyse</strong> to generate charts.</p>'; return; }
+let _blobRaf  = null;
+let _blobTime = 0;
+
+function stopBlobAnim() {
+    if (_blobRaf) { cancelAnimationFrame(_blobRaf); _blobRaf = null; }
+}
+
+const AFFECT_STATES = [
+    { id:'paranoid',
+      name:'Paranoid',
+      analogue:'Threat everywhere — dissent becomes treason',
+      pathology:'Shield hypertrophy + Lore capture',
+      trust:'Corroded', cogbal:'Reactive lock', color:'#991B1B',
+      test:(r,ops) => ops[1].C > 7 && ops[2].C < 4 },
+    { id:'fearful-control',
+      name:'Fearful Control',
+      analogue:'Fear hardening into enforcement',
+      pathology:'Shield-Helm dominance',
+      trust:'Brittle', cogbal:'Command over trust', color:'#DC2626',
+      test:(r,ops) => ops[1].C > 6 && ops[0].C > 6 },
+    { id:'exhausted',
+      name:'Exhausted',
+      analogue:'Depleted, demoralised, withdrawn',
+      pathology:'Systemic capacity collapse',
+      trust:'Collapsed', cogbal:'Inertia', color:'#6B7280',
+      test:(r,ops) => r.Vbar < 3.5 && r.Bt < 0.35 },
+    { id:'dissociated',
+      name:'Dissociated',
+      analogue:'Prefers dreaming to doing',
+      pathology:'Abstraction drift',
+      trust:'Frayed', cogbal:'Ungrounded abstraction', color:'#7C3AED',
+      test:(r,ops) => r.Gbar > 2.0 && r.ops.reduce((s,o)=>s+o.C,0)/8 < 4 },
+    { id:'manic',
+      name:'Manic',
+      analogue:'Motion without integration',
+      pathology:'Fast-loop overrun, bond fragmentation',
+      trust:'Strained', cogbal:'Reactive overdrive', color:'#D97706',
+      test:(r,ops,fV,sV) => fV > 8 && r.Bt < 0.4 && (fV - sV) > 3 },
+    { id:'aggrieved',
+      name:'Aggrieved',
+      analogue:'The social body feels cheated',
+      pathology:'Hands-Stewards stress convergence',
+      trust:'Eroded', cogbal:'Survival mode', color:'#B45309',
+      test:(r,ops) => ops[5].S > 6.5 && ops[3].S > 6.5 },
+    { id:'amnesic',
+      name:'Amnesic Reaction',
+      analogue:'Acts without learning',
+      pathology:'Archive failure + impulsive Helm',
+      trust:'Hollow', cogbal:'Reflex over memory', color:'#78716C',
+      test:(r,ops) => ops[6].Vi < 3 && ops[0].A > 6 },
+    { id:'mythic-drift',
+      name:'Mythic Drift',
+      analogue:'Story replaces reality',
+      pathology:'Lore collapse + abstraction inflation',
+      trust:'Enchanted', cogbal:'Narrative substitution', color:'#8B5CF6',
+      test:(r,ops) => ops[2].Vi < 3 && r.Gbar > 1.5 },
+    { id:'anxious',
+      name:'Anxious',
+      analogue:'Hypervigilant, scanning for danger',
+      pathology:'Fast-loop dominance, Shield rising',
+      trust:'Fragile', cogbal:'Reactive lean', color:'#F97316',
+      test:(r,ops,fV,sV) => (fV - sV) > 2 && ops[1].C > 5 },
+    { id:'grounded',
+      name:'Grounded',
+      analogue:'Calm, trusting, capable',
+      pathology:'None dominant',
+      trust:'Strong', cogbal:'Integrated', color:'#059669',
+      test:() => true }
+];
+
+function classifyAffect(r) {
+    const H=r.ops[0],Lo=r.ops[2],St=r.ops[3],Ha=r.ops[5],Ar=r.ops[6];
+    const slowV = (Lo.Vi + Ar.Vi + St.Vi) / 3;
+    const fastV  = (H.Vi + r.ops[1].Vi + r.ops[7].Vi + Ha.Vi + r.ops[4].Vi) / 5;
+    const cog_gap = slowV - fastV;
+    for (const s of AFFECT_STATES) {
+        if (s.test(r, r.ops, fastV, slowV)) return { ...s, slowV, fastV, cog_gap };
+    }
+    return { ...AFFECT_STATES[AFFECT_STATES.length-1], slowV, fastV, cog_gap };
+}
+
+function blobR(theta, p, t) {
+    const tilt    = p.tiltX * Math.cos(theta) * 0.14;
+    const jag     = p.jagg * (0.55*Math.sin(3*theta + t*0.45) + 0.30*Math.sin(7*theta - t*0.62) + 0.15*Math.sin(2*theta + t*0.22)) * 0.20;
+    const breathe = 0.025 * Math.sin(t * 0.85);
+    return p.baseR * (1 + tilt + jag + breathe);
+}
+
+function drawBlob(canvas, p, t) {
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const cx = W/2, cy = H/2;
+    ctx.clearRect(0, 0, W, H);
+
+    const N = 80;
+    const pts = [];
+    for (let k=0; k<N; k++) {
+        const theta = (k/N) * Math.PI * 2;
+        const r = blobR(theta, p, t);
+        pts.push({ x: cx + r*Math.cos(theta), y: cy + r*Math.sin(theta) });
+    }
+
+    // Glow for abstraction drift
+    if (p.glow > 0.05) {
+        ctx.save();
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur  = p.glow * 44;
+        ctx.beginPath(); ctx.arc(cx, cy, p.baseR * 0.55, 0, Math.PI*2);
+        ctx.fillStyle = p.color + '00'; ctx.fill();
+        ctx.restore();
+    }
+
+    // Smooth closed curve via quadratic bezier through midpoints
+    const mids = pts.map((pt,i) => {
+        const nxt = pts[(i+1)%N];
+        return { x:(pt.x+nxt.x)/2, y:(pt.y+nxt.y)/2 };
+    });
+    ctx.beginPath();
+    ctx.moveTo(mids[N-1].x, mids[N-1].y);
+    for (let k=0; k<N; k++) ctx.quadraticCurveTo(pts[k].x, pts[k].y, mids[k].x, mids[k].y);
+    ctx.closePath();
+
+    const grd = ctx.createRadialGradient(cx - p.baseR*0.14, cy - p.baseR*0.12, 0, cx, cy, p.baseR*1.05);
+    grd.addColorStop(0,   p.color + 'ee');
+    grd.addColorStop(0.6, p.color + 'cc');
+    grd.addColorStop(1,   p.color + '99');
+
+    ctx.globalAlpha = p.opacity;
+    ctx.fillStyle = grd;
+    ctx.fill();
+    ctx.strokeStyle = p.color + '55';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+
+    // Dense dark core — Stewards/Hands stress (grievance, scarcity)
+    if (p.core > 0.12) {
+        const cr  = p.baseR * 0.28 * p.core;
+        const gcr = ctx.createRadialGradient(cx, cy + p.baseR*0.18, 0, cx, cy + p.baseR*0.18, cr);
+        gcr.addColorStop(0, 'rgba(0,0,0,0.28)');
+        gcr.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.globalAlpha = p.opacity;
+        ctx.beginPath(); ctx.arc(cx, cy + p.baseR*0.18, cr, 0, Math.PI*2);
+        ctx.fillStyle = gcr; ctx.fill();
+        ctx.globalAlpha = 1;
+    }
+}
+
+function startBlobAnim(canvas, p) {
+    stopBlobAnim();
+    _blobTime = 0;
+    let last = null;
+    function frame(ts) {
+        if (last !== null) _blobTime += (ts - last) * p.speed * 0.001;
+        last = ts;
+        drawBlob(canvas, p, _blobTime);
+        _blobRaf = requestAnimationFrame(frame);
+    }
+    _blobRaf = requestAnimationFrame(frame);
+}
+
+function renderCognitiveSig() {
+    stopBlobAnim();
+    if (!lastResults) return;
     const r = lastResults;
+    const affect = classifyAffect(r);
+    const H=r.ops[0], Sh=r.ops[1], Lo=r.ops[2], St=r.ops[3];
+    const Cr=r.ops[4], Ha=r.ops[5], Ar=r.ops[6], Fl=r.ops[7];
+    const stressAvg = r.ops.reduce((s,o)=>s+o.S,0)/8;
 
-    // Stat cards
-    document.getElementById('stat-cards-row').innerHTML = [
-        ['V̄',    r.Vbar.toFixed(2)],
-        ['σ_V',  r.sigV.toFixed(2)],
-        ['B(t)', r.Bt.toFixed(3)],
-        ['λ₂',   fmt(r.lam2)],
-        ['R(t)', isFinite(r.Rt)?r.Rt.toFixed(2):'∞'],
-        ['δ_B',  r.dB.toFixed(3)],
-        ['Ṽ',    r.Vtilde.toFixed(2)],
-        ['D̃',    r.Dtilde.toFixed(2)],
-    ].map(([l,v])=>`<div class="stat-card"><div class="sc-label">${l}</div><div class="sc-value">${v}</div></div>`).join('');
-
-    // V_i bar chart
-    destroyChart('vi');
-    charts['vi'] = new Chart(document.getElementById('chart-vi'), {
-        type: 'bar',
-        data: {
-            labels: NODE_NAMES,
-            datasets: [{
-                label: 'V_i',
-                data: r.ops.map(o=>o.Vi),
-                backgroundColor: NODE_NAMES.map(n=>NODE_COLORS[n]),
-                borderRadius: 6,
-            }]
-        },
-        options: { plugins:{legend:{display:false}}, scales:{y:{min:0,title:{display:true,text:'V_i'}}}, responsive:true }
+    startBlobAnim(document.getElementById('blob-canvas'), {
+        color:   affect.color,
+        baseR:   Math.max(55, Math.min(125, 55 + r.Vbar * 6)),
+        jagg:    Math.min(1, stressAvg / 8),
+        tiltX:   Math.max(-1, Math.min(1, affect.cog_gap / 4)),
+        glow:    Math.max(0, Math.min(1, (r.Gbar - 1.0) / 2.0)),
+        core:    Math.max(0, Math.min(1, (Ha.S + St.S - 10) / 8)),
+        opacity: Math.max(0.45, Math.min(0.92, 0.5 + (Ar.Vi + Lo.Vi) / 28)),
+        speed:   0.55 + Math.max(0, -affect.cog_gap / 3) * 0.35 + affect.fastV * 0.025,
     });
 
-    // Radar
-    destroyChart('radar');
-    const meanC = r.ops.reduce((s,o)=>s+o.C,0)/8;
-    const meanK = r.ops.reduce((s,o)=>s+o.K,0)/8;
-    const meanS = r.ops.reduce((s,o)=>s+o.S,0)/8;
-    const meanA = r.ops.reduce((s,o)=>s+o.A,0)/8;
-    charts['radar'] = new Chart(document.getElementById('chart-radar'), {
-        type: 'radar',
-        data: {
-            labels: ['Coherence','Capacity','Stress','Abstraction'],
-            datasets: [{
-                label: 'Mean',
-                data: [meanC, meanK, meanS, meanA],
-                backgroundColor: 'rgba(118,75,162,0.15)',
-                borderColor: '#2F6F7D',
-                pointBackgroundColor: '#2F6F7D',
-                borderWidth: 2,
-            }]
-        },
-        options: { scales:{r:{min:0,max:10,ticks:{stepSize:2}}}, plugins:{legend:{display:false}}, responsive:true }
-    });
+    document.getElementById('affect-header-block').innerHTML = `
+        <p class="affect-state-name" style="color:${affect.color}">${affect.name}</p>
+        <p class="affect-analogue">${affect.analogue}</p>
+        <div class="affect-chips">
+            <span class="affect-chip chip-trust">Trust: ${affect.trust}</span>
+            <span class="affect-chip chip-bal">Balance: ${affect.cogbal}</span>
+            <span class="affect-chip chip-path">Pattern: ${affect.pathology}</span>
+        </div>`;
 
-    // B_i bar
-    destroyChart('bi');
-    charts['bi'] = new Chart(document.getElementById('chart-bi'), {
-        type: 'bar',
-        data: {
-            labels: NODE_NAMES,
-            datasets: [{
-                label: 'B_i',
-                data: r.Bi,
-                backgroundColor: NODE_NAMES.map(n=>NODE_COLORS[n]),
-                borderRadius: 6,
-            }]
-        },
-        options: { plugins:{legend:{display:false}}, scales:{y:{title:{display:true,text:'Bond Strength'}}}, responsive:true }
-    });
+    const cogFrac = Math.max(-1, Math.min(1, affect.cog_gap / 5));
+    const pct = (Math.abs(cogFrac) * 50).toFixed(1);
+    const cogColor = cogFrac >= 0 ? '#2F6F7D' : '#D98B2B';
+    const fillStyle = cogFrac >= 0 ? `left:50%;width:${pct}%` : `right:50%;width:${pct}%`;
+    const cogNote = affect.cog_gap < -2 ? 'Reaction has outrun reflection.'
+                  : affect.cog_gap >  2 ? 'Reflection leading — deliberation pacing action.'
+                  : 'Slow and fast loops near balance.';
+    document.getElementById('cog-meter-block').innerHTML = `
+        <div class="cog-meter-label">
+            <span>⟵ Reactive</span>
+            <span style="color:${cogColor};font-weight:800;">cog_gap = ${affect.cog_gap.toFixed(2)}</span>
+            <span>Reflective ⟶</span>
+        </div>
+        <div class="cog-meter-track">
+            <div class="cog-meter-fill" style="${fillStyle};background:${cogColor};"></div>
+            <div class="cog-meter-pip"></div>
+        </div>
+        <p class="cog-meter-note">${cogNote}</p>`;
 
-    // Alpha bar
-    destroyChart('alpha');
-    charts['alpha'] = new Chart(document.getElementById('chart-alpha'), {
-        type: 'bar',
-        data: {
-            labels: NODE_NAMES,
-            datasets: [{
-                label: 'α_i',
-                data: r.ops.map(o=>o.ai),
-                backgroundColor: r.ops.map(o=>o.ai>=0?'rgba(39,174,96,0.7)':'rgba(192,57,43,0.7)'),
-                borderRadius: 6,
-            }]
-        },
-        options: {
-            plugins:{legend:{display:false}},
-            scales:{y:{title:{display:true,text:'α_i (affect)'}}},
-            responsive:true
-        }
-    });
+    document.getElementById('peng-grid').innerHTML = [
+        pengShield(Sh), pengBond(r.Bt), pengGamma(r.Gbar),
+        pengArchiveLore(Ar, Lo), pengHandsStewards(Ha, St), pengHelm(H),
+    ].join('');
+}
 
-    // Full operator table
-    const rows = NODE_NAMES.map((n,i)=>{
-        const o = r.ops[i];
-        return `<tr>
-            <td><span class="node-dot" style="background:${NODE_COLORS[n]}"></span>${n}</td>
-            <td class="${viColorClass(o.Vi)}">${o.Vi.toFixed(2)}</td>
-            <td>${o.ai.toFixed(2)}</td>
-            <td>${o.mui.toFixed(2)}</td>
-            <td>${o.gi.toFixed(2)}</td>
-            <td>${o.Gi.toFixed(2)}</td>
-            <td>${o.Si.toFixed(2)}</td>
-            <td>${o.Bi.toFixed(3)}</td>
-        </tr>`;
-    }).join('');
-    document.getElementById('op-table-container').innerHTML = `
-        <table class="op-table">
-            <thead><tr>
-                <th style="text-align:left;">Node</th>
-                <th>V_i</th><th>α_i</th><th>μ_i</th>
-                <th>γ_i</th><th>Γ_i</th><th>Σ_i</th><th>B_i</th>
-            </tr></thead>
-            <tbody>${rows}</tbody>
-        </table>`;
+function pengCard(cls, raw, meaning) {
+    return `<div class="peng-card ${cls}"><p class="peng-raw">${raw}</p><p class="peng-meaning">${meaning}</p></div>`;
+}
+
+function pengShield(Sh) {
+    const raw = `Shield  C=${Sh.C.toFixed(1)}  K=${Sh.K.toFixed(1)}  S=${Sh.S.toFixed(1)}`;
+    if (Sh.C > 7.5) return pengCard('peng-danger', raw, 'Fear load critical. The security apparatus is operating autonomously. Rule by default — enforcement substitutes for trust.');
+    if (Sh.C > 6 && Sh.S > 5) return pengCard('peng-warn', raw, 'Shield under pressure and expanding. Threat-response is crowding out deliberation.');
+    if (Sh.C > 6) return pengCard('peng-warn', raw, 'Security sector coherent and assertive. Influence over governance is growing.');
+    if (Sh.S > 7) return pengCard('peng-danger', raw, 'Military apparatus itself under acute strain. Breakdown risk — not just overreach.');
+    return pengCard('peng-ok', raw, 'Shield operating within institutional bounds. Security is not dominating the system.');
+}
+
+function pengBond(Bt) {
+    const raw = `Bond  B(t) = ${Bt.toFixed(3)}`;
+    if (Bt < 0.2)  return pengCard('peng-danger', raw, 'Trust climate collapsed. Cooperation now requires coercion — institutional bonds are gone.');
+    if (Bt < 0.35) return pengCard('peng-warn',   raw, 'Trust climate brittle. Coordination is costly and fragile. Small shocks are enough to fracture cooperation.');
+    if (Bt < 0.5)  return pengCard('peng-warn',   raw, 'Trust is functional but not robust. The system cooperates under stability — stress will strain it quickly.');
+    return pengCard('peng-ok', raw, 'Trust climate strong. Institutions are mutually reinforcing. The system can absorb shocks without disintegrating.');
+}
+
+function pengGamma(Gbar) {
+    const raw = `Abstraction drift  Γ̄ = ${Gbar.toFixed(3)}`;
+    if (Gbar > 2.5) return pengCard('peng-danger', raw, 'Severe abstraction drift. The system is imagining solutions faster than it can enact them. Symbolic language has detached from material reality.');
+    if (Gbar > 1.5) return pengCard('peng-warn',   raw, 'Abstraction drift. Plans, narratives, and ideologies are outrunning institutional capacity to deliver.');
+    if (Gbar > 0.8) return pengCard('peng-ok',     raw, 'Moderate abstraction — ideas are in productive tension with execution.');
+    return pengCard('peng-ok', raw, 'Low abstraction. The system is concrete and operational. Risk: ideological stagnation if novelty emerges.');
+}
+
+function pengArchiveLore(Ar, Lo) {
+    const avg = (Ar.Vi + Lo.Vi) / 2;
+    const raw = `Archive Vi=${Ar.Vi.toFixed(2)}  Lore Vi=${Lo.Vi.toFixed(2)}`;
+    if (avg < 3) return pengCard('peng-danger', raw, 'Epistemic infrastructure failing. Institutional memory is dissolving — the society no longer knows what it knows.');
+    if (avg < 5) return pengCard('peng-warn',   raw, 'Archive and Lore under strain. Legitimacy is thinning — official accounts are losing grounded meaning.');
+    if (avg < 7) return pengCard('peng-ok',     raw, 'Knowledge infrastructure holding. The cultural and epistemic base is intact.');
+    return pengCard('peng-ok', raw, 'Epistemic wealth. Archive and Lore robust — institutional memory deep, knowledge production alive.');
+}
+
+function pengHandsStewards(Ha, St) {
+    const raw = `Hands S=${Ha.S.toFixed(1)}  Stewards S=${St.S.toFixed(1)}`;
+    if (Ha.S > 7 && St.S > 7) return pengCard('peng-danger', raw, 'Both mass population and propertied class are under existential stress simultaneously. Cross-class grievance at revolutionary threshold.');
+    if (Ha.S > 7)  return pengCard('peng-danger', raw, 'Mass population under severe strain. Social withdrawal, demoralisation, collapse of civic participation. The social body feels abandoned.');
+    if (St.S > 7)  return pengCard('peng-warn',   raw, 'Property-owning classes under acute threat. Capital hoarding, flight, and political destabilisation are the predictable response.');
+    if ((Ha.S + St.S)/2 > 5.5) return pengCard('peng-warn', raw, 'Elevated material stress across both mass and elite strata. The society is managing — but not thriving.');
+    return pengCard('peng-ok', raw, 'Material stress contained. The social body carries its load without acute grievance.');
+}
+
+function pengHelm(H) {
+    const raw = `Helm  C=${H.C.toFixed(1)}  K=${H.K.toFixed(1)}  S=${H.S.toFixed(1)}`;
+    if (H.C < 4 && H.S > 6) return pengCard('peng-danger', raw, 'Executive legitimacy has collapsed under stress. The centre cannot hold — governance is paralysed or captured.');
+    if (H.C < 4) return pengCard('peng-warn',   raw, 'Low executive legitimacy. Governing mandate has eroded. Fragmentation is the path of least resistance.');
+    if (H.S > 7) return pengCard('peng-warn',   raw, 'Executive under acute pressure. Panic-based decisions, short-termism, resort to coercion. The top of the system is in survival mode.');
+    if (H.C > 7 && H.K > 7) return pengCard('peng-ok', raw, 'Executive coherent and capable. Governance is legitimate and operationally strong. The centre is holding.');
+    return pengCard('peng-ok', raw, 'Executive functioning within normal bounds. Legitimacy and capacity adequate for current conditions.');
 }
 
 // ── Tab 3: Operators ──────────────────────────────────────────────────────────
