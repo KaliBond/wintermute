@@ -175,6 +175,29 @@
     color: #aaa;
     line-height: 1.4;
     }
+    /* ── Cognitive Affect Map ──────────────────────────────────── */
+    .cog-sig-wrap { display:flex; flex-direction:column; align-items:center; gap:16px; }
+    #blob-canvas { display:block; }
+    .affect-state-name { font-size:1.8rem; font-weight:800; letter-spacing:-0.025em; line-height:1.1; margin:0; }
+    .affect-analogue { font-size:0.88rem; color:#777; font-style:italic; margin:4px 0 0; }
+    .affect-chips { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:8px; }
+    .affect-chip { padding:3px 11px; border-radius:14px; font-size:0.70rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; }
+    .chip-trust { background:#f0eaf7; color:#5a3580; }
+    .chip-bal   { background:#f5f1e4; color:#6b5728; }
+    .chip-path  { background:#fef3c7; color:#92400e; }
+    .cog-meter-wrap { width:100%; max-width:440px; }
+    .cog-meter-label { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:#999; display:flex; justify-content:space-between; margin-bottom:6px; }
+    .cog-meter-track { width:100%; height:7px; background:#f0eaf7; border-radius:4px; position:relative; overflow:visible; }
+    .cog-meter-pip   { position:absolute; left:50%; top:-3px; width:2px; height:13px; background:#ccc; transform:translateX(-50%); border-radius:1px; z-index:2; }
+    .cog-meter-fill  { position:absolute; top:0; height:100%; border-radius:4px; }
+    .cog-meter-note  { font-size:0.78rem; color:#aaa; text-align:center; margin:5px 0 0; }
+    .peng-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; width:100%; }
+    .peng-card { border-radius:10px; padding:11px 13px; border-left:4px solid #e0d8f0; background:#f8f5ff; }
+    .peng-card.peng-ok     { border-color:#2F6F7D; background:#f0f8f9; }
+    .peng-card.peng-warn   { border-color:#D98B2B; background:#fdf8f0; }
+    .peng-card.peng-danger { border-color:#C84C3E; background:#fdf3f2; }
+    .peng-raw     { font-family:'JetBrains Mono','Courier New',monospace; font-size:0.70rem; color:#bbb; margin:0 0 3px; }
+    .peng-meaning { font-size:0.85rem; font-weight:600; color:#1B2A33; margin:0; line-height:1.4; }
     /* ── 2-col panels ──────────────────────────────────────────── */
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
     @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
@@ -342,34 +365,19 @@
 
 <div class="container" style="padding-top:16px;">
 
-    <!-- Metric gauges -->
+    <!-- Cognitive Affect Map -->
     <div class="card" style="padding:20px;">
-        <div class="gauge-grid">
-            <div class="gauge-card">
-                <div class="gauge-label">A* Mythic Abstraction</div>
-                <div class="gauge" id="gaugeA"><span id="valueA" class="gauge-value" style="color:#2F6F7D">—</span></div>
-                <div class="gauge-sub">Mean Abstraction<br>Lore + Archive</div>
+        <div class="cog-sig-wrap">
+            <div style="text-align:center;">
+                <p style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin:0 0 2px;">CAMS Cognitive Affect Map</p>
+                <p style="font-size:0.78rem;color:#bbb;margin:0;font-style:italic;">What the system feels like under stress — a structural translation</p>
             </div>
-            <div class="gauge-card">
-                <div class="gauge-label">C System Coherence</div>
-                <div class="gauge" id="gaugeC"><span id="valueC" class="gauge-value" style="color:#2980b9">—</span></div>
-                <div class="gauge-sub">Alignment Across<br>All Nodes</div>
+            <canvas id="blob-canvas" width="260" height="260"></canvas>
+            <div id="affect-header-block" style="text-align:center;">
+                <p style="color:#bbb;font-size:0.9rem;">Loading…</p>
             </div>
-            <div class="gauge-card">
-                <div class="gauge-label">K–S Thermodynamic Surplus</div>
-                <div class="gauge" id="gaugeKS"><span id="valueKS" class="gauge-value" style="color:#27ae60">—</span></div>
-                <div class="gauge-sub">Capacity Minus Stress<br>Free Energy</div>
-            </div>
-            <div class="gauge-card">
-                <div class="gauge-label">Λ(t) Layer Coherence</div>
-                <div class="gauge" id="gaugeLambda"><span id="valueLambda" class="gauge-value" style="color:#1abc9c">—</span></div>
-                <div class="gauge-sub">Mythic↔Material<br>Grounding</div>
-            </div>
-            <div class="gauge-card">
-                <div class="gauge-label">Z Zeitgeist Index</div>
-                <div class="gauge" id="gaugeZ"><span id="valueZ" class="gauge-value" style="color:#d946ef">—</span></div>
-                <div class="gauge-sub">A*·C·(K–S)<br>Cultural Vitality</div>
-            </div>
+            <div class="cog-meter-wrap" id="cog-meter-block"></div>
+            <div class="peng-grid" id="peng-grid"></div>
         </div>
     </div>
 
@@ -515,24 +523,6 @@ function setGauge(id, value, max, color) {
 
 // ── Render ────────────────────────────────────────────────────────────────────
 function renderMetrics(m) {
-    document.getElementById('valueA').textContent = m.aStar.toFixed(1);
-    setGauge('gaugeA', m.aStar, 10, '#2F6F7D');
-
-    document.getElementById('valueC').textContent = m.c.toFixed(1);
-    setGauge('gaugeC', m.c, 10, '#2980b9');
-
-    const ksColor = m.kMinusS >= 0 ? '#27ae60' : '#c0392b';
-    const ksEl = document.getElementById('valueKS');
-    ksEl.textContent = (m.kMinusS >= 0 ? '+' : '') + m.kMinusS.toFixed(1);
-    ksEl.style.color = ksColor;
-    setGauge('gaugeKS', m.kMinusS + 10, 20, ksColor);
-
-    document.getElementById('valueLambda').textContent = m.lambda.toFixed(2);
-    setGauge('gaugeLambda', m.lambda, 1.2, '#1abc9c');
-
-    document.getElementById('valueZ').textContent = m.z.toFixed(2);
-    setGauge('gaugeZ', m.z, 5, '#d946ef');
-
     // Grounding bars
     document.getElementById('mythicBar').style.width   = `${Math.min(100,(m.mythicHealth/20)*100)}%`;
     document.getElementById('mythicValue').textContent = m.mythicHealth.toFixed(1);
@@ -695,6 +685,7 @@ function updateDashboard() {
     const m  = calcZeitgeist(yearData);
     const cl = classifyZeitgeist(m);
     renderMetrics(m);
+    renderCogSig(yearData);
     renderPhenomenology(m, cl);
     renderNodeContrib(yearData);
     renderZRank(yearData);
@@ -727,6 +718,205 @@ function togglePlay() {
             updateDashboard();
         }, 350);
     }
+}
+
+// ── CAMS Cognitive Affect Map ─────────────────────────────────────────────────
+let _blobRaf  = null;
+let _blobTime = 0;
+function stopBlobAnim() { if (_blobRaf) { cancelAnimationFrame(_blobRaf); _blobRaf = null; } }
+
+const NODE_ORDER_OPS = ['Helm','Shield','Lore','Stewards','Craft','Hands','Archive','Flow'];
+
+function yearDataToR(yearData) {
+    const ops = NODE_ORDER_OPS.map(name => {
+        const d = yearData.find(r => r.node === name) || { c:5, k:5, s:5, a:5, bond:1 };
+        const Vi = d.c + d.k - d.s + 0.5 * d.a;
+        return { C: d.c, K: d.k, S: d.s, A: d.a, Vi };
+    });
+    const Vbar = ops.reduce((s,o) => s+o.Vi, 0) / ops.length;
+    const Gbar = ops.reduce((s,o) => s + o.A/(o.C+0.001), 0) / ops.length;
+    const rawBt = yearData.reduce((s,d) => s + (d.bond||0), 0) / yearData.length;
+    const Bt = Math.min(1, rawBt / 4); // normalise to ~[0,1]
+    return { ops, Vbar, Gbar, Bt };
+}
+
+const AFFECT_STATES = [
+    { id:'paranoid',      name:'Paranoid',          analogue:'Threat everywhere — dissent becomes treason',  pathology:'Shield hypertrophy + Lore capture',     trust:'Corroded',   cogbal:'Reactive lock',        color:'#991B1B', test:(r,ops)        => ops[1].C > 7   && ops[2].C < 4 },
+    { id:'fearful',       name:'Fearful Control',   analogue:'Fear hardening into enforcement',              pathology:'Shield-Helm dominance',                  trust:'Brittle',    cogbal:'Command over trust',   color:'#DC2626', test:(r,ops)        => ops[1].C > 6   && ops[0].C > 6 },
+    { id:'exhausted',     name:'Exhausted',          analogue:'Depleted, demoralised, withdrawn',            pathology:'Systemic capacity collapse',              trust:'Collapsed',  cogbal:'Inertia',             color:'#6B7280', test:(r,ops)        => r.Vbar < 3.5   && r.Bt < 0.35 },
+    { id:'dissociated',   name:'Dissociated',        analogue:'Prefers dreaming to doing',                   pathology:'Abstraction drift',                       trust:'Frayed',     cogbal:'Ungrounded abstraction',color:'#7C3AED', test:(r,ops)       => r.Gbar > 2.0   && ops.reduce((s,o)=>s+o.C,0)/8 < 4 },
+    { id:'manic',         name:'Manic',              analogue:'Motion without integration',                  pathology:'Fast-loop overrun, bond fragmentation',   trust:'Strained',   cogbal:'Reactive overdrive',   color:'#D97706', test:(r,ops,fV,sV) => fV > 8 && r.Bt < 0.4 && (fV-sV) > 3 },
+    { id:'aggrieved',     name:'Aggrieved',          analogue:'The social body feels cheated',               pathology:'Hands-Stewards stress convergence',       trust:'Eroded',     cogbal:'Survival mode',        color:'#B45309', test:(r,ops)        => ops[5].S > 6.5 && ops[3].S > 6.5 },
+    { id:'amnesic',       name:'Amnesic Reaction',   analogue:'Acts without learning',                       pathology:'Archive failure + impulsive Helm',         trust:'Hollow',     cogbal:'Reflex over memory',   color:'#78716C', test:(r,ops)        => ops[6].Vi < 3  && ops[0].A > 6 },
+    { id:'mythic-drift',  name:'Mythic Drift',       analogue:'Story replaces reality',                      pathology:'Lore collapse + abstraction inflation',    trust:'Enchanted',  cogbal:'Narrative substitution',color:'#8B5CF6', test:(r,ops)       => ops[2].Vi < 3  && r.Gbar > 1.5 },
+    { id:'anxious',       name:'Anxious',            analogue:'Hypervigilant, scanning for danger',          pathology:'Fast-loop dominance, Shield rising',       trust:'Fragile',    cogbal:'Reactive lean',        color:'#F97316', test:(r,ops,fV,sV) => (fV-sV) > 2 && ops[1].C > 5 },
+    { id:'grounded',      name:'Grounded',           analogue:'Calm, trusting, capable',                     pathology:'None dominant',                            trust:'Strong',     cogbal:'Integrated',           color:'#059669', test:() => true }
+];
+
+function classifyAffect(r) {
+    const H=r.ops[0],Lo=r.ops[2],St=r.ops[3],Ha=r.ops[5],Ar=r.ops[6];
+    const slowV = (Lo.Vi + Ar.Vi + St.Vi) / 3;
+    const fastV  = (H.Vi + r.ops[1].Vi + r.ops[7].Vi + Ha.Vi + r.ops[4].Vi) / 5;
+    const cog_gap = slowV - fastV;
+    for (const s of AFFECT_STATES) {
+        if (s.test(r, r.ops, fastV, slowV)) return { ...s, slowV, fastV, cog_gap };
+    }
+    return { ...AFFECT_STATES[AFFECT_STATES.length-1], slowV:0, fastV:0, cog_gap:0 };
+}
+
+function blobR(theta, p, t) {
+    const tilt    = p.tiltX * Math.cos(theta) * 0.14;
+    const jag     = p.jagg * (0.55*Math.sin(3*theta+t*0.45) + 0.30*Math.sin(7*theta-t*0.62) + 0.15*Math.sin(2*theta+t*0.22)) * 0.20;
+    const breathe = 0.025 * Math.sin(t * 0.85);
+    return p.baseR * (1 + tilt + jag + breathe);
+}
+
+function drawBlob(canvas, p, t) {
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height, cx = W/2, cy = H/2;
+    ctx.clearRect(0, 0, W, H);
+    const N = 80;
+    const pts = [];
+    for (let k=0; k<N; k++) {
+        const theta = (k/N) * Math.PI * 2;
+        const r = blobR(theta, p, t);
+        pts.push({ x: cx + r*Math.cos(theta), y: cy + r*Math.sin(theta) });
+    }
+    if (p.glow > 0.05) {
+        ctx.save(); ctx.shadowColor = p.color; ctx.shadowBlur = p.glow * 44;
+        ctx.beginPath(); ctx.arc(cx, cy, p.baseR*0.55, 0, Math.PI*2);
+        ctx.fillStyle = p.color + '00'; ctx.fill(); ctx.restore();
+    }
+    const mids = pts.map((pt,i) => { const nxt = pts[(i+1)%N]; return { x:(pt.x+nxt.x)/2, y:(pt.y+nxt.y)/2 }; });
+    ctx.beginPath();
+    ctx.moveTo(mids[N-1].x, mids[N-1].y);
+    for (let k=0; k<N; k++) ctx.quadraticCurveTo(pts[k].x, pts[k].y, mids[k].x, mids[k].y);
+    ctx.closePath();
+    const grd = ctx.createRadialGradient(cx-p.baseR*0.14, cy-p.baseR*0.12, 0, cx, cy, p.baseR*1.05);
+    grd.addColorStop(0, p.color+'ee'); grd.addColorStop(0.6, p.color+'cc'); grd.addColorStop(1, p.color+'99');
+    ctx.globalAlpha = p.opacity; ctx.fillStyle = grd; ctx.fill();
+    ctx.strokeStyle = p.color+'55'; ctx.lineWidth = 1.5; ctx.stroke(); ctx.globalAlpha = 1;
+    if (p.core > 0.12) {
+        const cr = p.baseR*0.28*p.core;
+        const gcr = ctx.createRadialGradient(cx, cy+p.baseR*0.18, 0, cx, cy+p.baseR*0.18, cr);
+        gcr.addColorStop(0, 'rgba(0,0,0,0.28)'); gcr.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.globalAlpha = p.opacity; ctx.beginPath(); ctx.arc(cx, cy+p.baseR*0.18, cr, 0, Math.PI*2);
+        ctx.fillStyle = gcr; ctx.fill(); ctx.globalAlpha = 1;
+    }
+}
+
+function startBlobAnim(canvas, p) {
+    stopBlobAnim(); _blobTime = 0;
+    let last = null;
+    function frame(ts) {
+        if (last !== null) _blobTime += (ts - last) * p.speed * 0.001;
+        last = ts; drawBlob(canvas, p, _blobTime);
+        _blobRaf = requestAnimationFrame(frame);
+    }
+    _blobRaf = requestAnimationFrame(frame);
+}
+
+function pengCard(cls, raw, meaning) {
+    return `<div class="peng-card ${cls}"><p class="peng-raw">${raw}</p><p class="peng-meaning">${meaning}</p></div>`;
+}
+function pengShield(Sh) {
+    const raw = `Shield  C=${Sh.C.toFixed(1)}  K=${Sh.K.toFixed(1)}  S=${Sh.S.toFixed(1)}`;
+    if (Sh.C > 7.5) return pengCard('peng-danger', raw, 'Fear load critical. The security apparatus is operating autonomously. Rule by default — enforcement substitutes for trust.');
+    if (Sh.C > 6 && Sh.S > 5) return pengCard('peng-warn', raw, 'Shield under pressure and expanding. Threat-response is crowding out deliberation.');
+    if (Sh.C > 6)   return pengCard('peng-warn', raw, 'Security sector coherent and assertive. Influence over governance is growing.');
+    if (Sh.S > 7)   return pengCard('peng-danger', raw, 'Military apparatus itself under acute strain. Breakdown risk — not just overreach.');
+    return pengCard('peng-ok', raw, 'Shield operating within institutional bounds. Security is not dominating the system.');
+}
+function pengBond(Bt) {
+    const raw = `Bond  B(t) ≈ ${Bt.toFixed(3)}`;
+    if (Bt < 0.2)  return pengCard('peng-danger', raw, 'Trust climate collapsed. Cooperation now requires coercion — institutional bonds are gone.');
+    if (Bt < 0.35) return pengCard('peng-warn',   raw, 'Trust climate brittle. Coordination is costly and fragile. Small shocks fracture cooperation.');
+    if (Bt < 0.5)  return pengCard('peng-warn',   raw, 'Trust is functional but not robust. The system cooperates under stability — stress will strain it quickly.');
+    return pengCard('peng-ok', raw, 'Trust climate strong. Institutions are mutually reinforcing. The system can absorb shocks without disintegrating.');
+}
+function pengGamma(Gbar) {
+    const raw = `Abstraction drift  Γ̄ = ${Gbar.toFixed(3)}`;
+    if (Gbar > 2.5) return pengCard('peng-danger', raw, 'Severe abstraction drift. The system is imagining solutions faster than it can enact them. Symbolic language has detached from material reality.');
+    if (Gbar > 1.5) return pengCard('peng-warn',   raw, 'Abstraction drift. Plans, narratives, and ideologies are outrunning institutional capacity to deliver.');
+    if (Gbar > 0.8) return pengCard('peng-ok',     raw, 'Moderate abstraction — ideas are in productive tension with execution.');
+    return pengCard('peng-ok', raw, 'Low abstraction. The system is concrete and operational. Risk: ideological stagnation if novelty emerges.');
+}
+function pengArchiveLore(Ar, Lo) {
+    const avg = (Ar.Vi + Lo.Vi) / 2;
+    const raw = `Archive Vi=${Ar.Vi.toFixed(2)}  Lore Vi=${Lo.Vi.toFixed(2)}`;
+    if (avg < 3) return pengCard('peng-danger', raw, 'Epistemic infrastructure failing. Institutional memory is dissolving — the society no longer knows what it knows.');
+    if (avg < 5) return pengCard('peng-warn',   raw, 'Archive and Lore under strain. Legitimacy is thinning — official accounts are losing grounded meaning.');
+    if (avg < 7) return pengCard('peng-ok',     raw, 'Knowledge infrastructure holding. The cultural and epistemic base is intact.');
+    return pengCard('peng-ok', raw, 'Epistemic wealth. Archive and Lore robust — institutional memory deep, knowledge production alive.');
+}
+function pengHandsStewards(Ha, St) {
+    const raw = `Hands S=${Ha.S.toFixed(1)}  Stewards S=${St.S.toFixed(1)}`;
+    if (Ha.S > 7 && St.S > 7) return pengCard('peng-danger', raw, 'Both mass population and propertied class are under existential stress simultaneously. Cross-class grievance at revolutionary threshold.');
+    if (Ha.S > 7)  return pengCard('peng-danger', raw, 'Mass population under severe strain. Social withdrawal, demoralisation, collapse of civic participation. The social body feels abandoned.');
+    if (St.S > 7)  return pengCard('peng-warn',   raw, 'Property-owning classes under acute threat. Capital hoarding, flight, and political destabilisation are the predictable response.');
+    if ((Ha.S + St.S)/2 > 5.5) return pengCard('peng-warn', raw, 'Elevated material stress across both mass and elite strata. The society is managing — but not thriving.');
+    return pengCard('peng-ok', raw, 'Material stress contained. The social body carries its load without acute grievance.');
+}
+function pengHelm(H) {
+    const raw = `Helm  C=${H.C.toFixed(1)}  K=${H.K.toFixed(1)}  S=${H.S.toFixed(1)}`;
+    if (H.C < 4 && H.S > 6) return pengCard('peng-danger', raw, 'Executive legitimacy has collapsed under stress. The centre cannot hold — governance is paralysed or captured.');
+    if (H.C < 4) return pengCard('peng-warn',   raw, 'Low executive legitimacy. Governing mandate has eroded. Fragmentation is the path of least resistance.');
+    if (H.S > 7) return pengCard('peng-warn',   raw, 'Executive under acute pressure. Panic-based decisions, short-termism, resort to coercion. The top of the system is in survival mode.');
+    if (H.C > 7 && H.K > 7) return pengCard('peng-ok', raw, 'Executive coherent and capable. Governance is legitimate and operationally strong. The centre is holding.');
+    return pengCard('peng-ok', raw, 'Executive functioning within normal bounds. Legitimacy and capacity adequate for current conditions.');
+}
+
+function renderCogSig(yearData) {
+    stopBlobAnim();
+    const r = yearDataToR(yearData);
+    const affect = classifyAffect(r);
+    const H=r.ops[0], Sh=r.ops[1], Lo=r.ops[2], St=r.ops[3];
+    const Ha=r.ops[5], Ar=r.ops[6];
+    const stressAvg = r.ops.reduce((s,o) => s+o.S, 0) / 8;
+
+    startBlobAnim(document.getElementById('blob-canvas'), {
+        color:   affect.color,
+        baseR:   Math.max(42, Math.min(100, 42 + r.Vbar * 5)),
+        jagg:    Math.min(1, stressAvg / 8),
+        tiltX:   Math.max(-1, Math.min(1, affect.cog_gap / 4)),
+        glow:    Math.max(0, Math.min(1, (r.Gbar - 1.0) / 2.0)),
+        core:    Math.max(0, Math.min(1, (Ha.S + St.S - 10) / 8)),
+        opacity: Math.max(0.45, Math.min(0.92, 0.5 + (Ar.Vi + Lo.Vi) / 28)),
+        speed:   0.55 + Math.max(0, -affect.cog_gap / 3) * 0.35 + affect.fastV * 0.025,
+    });
+
+    document.getElementById('affect-header-block').innerHTML = `
+        <p class="affect-state-name" style="color:${affect.color}">${affect.name}</p>
+        <p class="affect-analogue">${affect.analogue}</p>
+        <div class="affect-chips">
+            <span class="affect-chip chip-trust">Trust: ${affect.trust}</span>
+            <span class="affect-chip chip-bal">Balance: ${affect.cogbal}</span>
+            <span class="affect-chip chip-path">Pattern: ${affect.pathology}</span>
+        </div>`;
+
+    const cogFrac = Math.max(-1, Math.min(1, affect.cog_gap / 5));
+    const pct = (Math.abs(cogFrac) * 50).toFixed(1);
+    const cogColor = cogFrac >= 0 ? '#2F6F7D' : '#D98B2B';
+    const fillStyle = cogFrac >= 0 ? `left:50%;width:${pct}%` : `right:50%;width:${pct}%`;
+    const cogNote = affect.cog_gap < -2 ? 'Reaction has outrun reflection.'
+                  : affect.cog_gap >  2 ? 'Reflection leading — deliberation pacing action.'
+                  : 'Slow and fast loops near balance.';
+    document.getElementById('cog-meter-block').innerHTML = `
+        <div class="cog-meter-label">
+            <span>⟵ Reactive</span>
+            <span style="color:${cogColor};font-weight:800;">cog_gap = ${affect.cog_gap.toFixed(2)}</span>
+            <span>Reflective ⟶</span>
+        </div>
+        <div class="cog-meter-track">
+            <div class="cog-meter-fill" style="${fillStyle};background:${cogColor};"></div>
+            <div class="cog-meter-pip"></div>
+        </div>
+        <p class="cog-meter-note">${cogNote}</p>`;
+
+    document.getElementById('peng-grid').innerHTML = [
+        pengShield(Sh), pengBond(r.Bt), pengGamma(r.Gbar),
+        pengArchiveLore(Ar, Lo), pengHandsStewards(Ha, St), pengHelm(H),
+    ].join('');
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
