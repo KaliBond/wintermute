@@ -331,10 +331,10 @@
 </nav>
 
 <!-- Hero -->
-<div class="container">
-    <div class="hero-section" style="padding: 28px 0 6px 0;">
-        <h1 style="color:white; font-size:2.2rem; margin-bottom:6px;">Ξ Zeitgeist Detector</h1>
-        <p style="color:rgba(255,255,255,0.82); font-size:0.97rem; margin:0 auto; max-width:700px; line-height:1.6;">Mythic-material grounding across 45 societies. Tracks A*·C·(K–S) — the composite signal of symbolic richness, systemic coherence, and thermodynamic surplus — as a measure of civilisational vitality and phenomenological texture.</p>
+<div style="background:linear-gradient(135deg,#1B2A33 0%,#2F6F7D 100%); padding:36px 24px 32px;">
+    <div style="max-width:1200px; margin:0 auto; text-align:center;">
+        <h1 style="color:#fff; font-size:2.2rem; margin:0 0 10px; letter-spacing:-0.01em;">Ξ Zeitgeist Detector</h1>
+        <p style="color:rgba(255,255,255,0.80); font-size:0.97rem; margin:0 auto; max-width:700px; line-height:1.65;">Mythic-material grounding across 45 societies. Tracks A*·C·(K–S) — the composite signal of symbolic richness, systemic coherence, and thermodynamic surplus — as a measure of civilisational vitality and phenomenological texture.</p>
     </div>
 </div>
 
@@ -364,6 +364,37 @@
 </div>
 
 <div class="container" style="padding-top:16px;">
+
+    <!-- Metric gauges -->
+    <div class="card" style="padding:20px;">
+        <div class="gauge-grid">
+            <div class="gauge-card">
+                <div class="gauge-label">A* Mythic Abstraction</div>
+                <div class="gauge" id="gaugeA"><span id="valueA" class="gauge-value" style="color:#2F6F7D">—</span></div>
+                <div class="gauge-sub">Mean Abstraction<br>Lore + Archive</div>
+            </div>
+            <div class="gauge-card">
+                <div class="gauge-label">C System Coherence</div>
+                <div class="gauge" id="gaugeC"><span id="valueC" class="gauge-value" style="color:#2980b9">—</span></div>
+                <div class="gauge-sub">Alignment Across<br>All Nodes</div>
+            </div>
+            <div class="gauge-card">
+                <div class="gauge-label">K–S Thermodynamic Surplus</div>
+                <div class="gauge" id="gaugeKS"><span id="valueKS" class="gauge-value" style="color:#27ae60">—</span></div>
+                <div class="gauge-sub">Capacity Minus Stress<br>Free Energy</div>
+            </div>
+            <div class="gauge-card">
+                <div class="gauge-label">Λ(t) Layer Coherence</div>
+                <div class="gauge" id="gaugeLambda"><span id="valueLambda" class="gauge-value" style="color:#1abc9c">—</span></div>
+                <div class="gauge-sub">Mythic↔Material<br>Grounding</div>
+            </div>
+            <div class="gauge-card">
+                <div class="gauge-label">Z Zeitgeist Index</div>
+                <div class="gauge" id="gaugeZ"><span id="valueZ" class="gauge-value" style="color:#d946ef">—</span></div>
+                <div class="gauge-sub">A*·C·(K–S)<br>Cultural Vitality</div>
+            </div>
+        </div>
+    </div>
 
     <!-- Cognitive Affect Map -->
     <div class="card" style="padding:20px;">
@@ -523,6 +554,25 @@ function setGauge(id, value, max, color) {
 
 // ── Render ────────────────────────────────────────────────────────────────────
 function renderMetrics(m) {
+    // Gauges
+    document.getElementById('valueA').textContent = m.aStar.toFixed(1);
+    setGauge('gaugeA', m.aStar, 10, '#2F6F7D');
+
+    document.getElementById('valueC').textContent = m.c.toFixed(1);
+    setGauge('gaugeC', m.c, 10, '#2980b9');
+
+    const ksColor = m.kMinusS >= 0 ? '#27ae60' : '#c0392b';
+    const ksEl = document.getElementById('valueKS');
+    ksEl.textContent = (m.kMinusS >= 0 ? '+' : '') + m.kMinusS.toFixed(1);
+    ksEl.style.color = ksColor;
+    setGauge('gaugeKS', m.kMinusS + 10, 20, ksColor);
+
+    document.getElementById('valueLambda').textContent = m.lambda.toFixed(2);
+    setGauge('gaugeLambda', m.lambda, 1.2, '#1abc9c');
+
+    document.getElementById('valueZ').textContent = m.z.toFixed(2);
+    setGauge('gaugeZ', m.z, 5, '#d946ef');
+
     // Grounding bars
     document.getElementById('mythicBar').style.width   = `${Math.min(100,(m.mythicHealth/20)*100)}%`;
     document.getElementById('mythicValue').textContent = m.mythicHealth.toFixed(1);
