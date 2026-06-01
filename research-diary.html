@@ -279,7 +279,7 @@
     <div class="card">
         <h2>📔 About This Research Diary</h2>
         <p style="font-size:0.85em; color:#4A5560; line-height:1.65; background:#F0E9D2; border-left:3px solid #DAD2B8; border-radius:0 6px 6px 0; padding:10px 16px; margin-bottom:18px;">
-    <strong>Reading note:</strong> This diary is a chronological research log. Dataset sizes, society counts, and version labels reflect the state of the project at the time each entry was written. Current canonical figures — 45 series, 38 societies, 39,351 records, CAMS v2.3 — are on the <a href="datasets.html" style="color: #2F6F7D;">Datasets</a> and <a href="model.html" style="color: #2F6F7D;">Model</a> pages.
+    <strong>Reading note:</strong> This diary is a chronological research log. Dataset sizes, society counts, and version labels reflect the state of the project at the time each entry was written. Current canonical figures — 50 series, 43 societies, 41,519 records, CAMS v2.3 — are on the <a href="datasets.html" style="color: #2F6F7D;">Datasets</a> and <a href="model.html" style="color: #2F6F7D;">Model</a> pages.
 </p>
         <p>This research diary documents the ongoing development and validation of the Complex Adaptive Model of Societies (CAMS) framework. Each entry captures key insights, breakthroughs, methodological developments, and empirical findings in the journey to understand societies as thermodynamic Complex Adaptive Systems with measurable physical characteristics.</p>
 
@@ -307,6 +307,56 @@
 
     <!-- Research Diary Entries -->
     <div id="diary-entries">
+
+        <div class="diary-entry research-milestone">
+            <div class="entry-header">
+                <h3>Nation Database Expansion — Five New Societies, Tool Integration, and Site Updates</h3>
+                <div>
+                    <span class="entry-type">Milestone</span>
+                    <span class="entry-date">2026-06-01</span>
+                </div>
+            </div>
+            <div class="entry-content">
+                <p>A full dataset expansion and tool-integration pass carried out 31 May – 1 June 2026. Five new cam5 ensemble nations were added to every CAMS tool and the public datasets page. Several site issues were fixed and pages updated.</p>
+
+                <h3>Five New cam5 Ensemble Nations</h3>
+                <p>Colombia, United States, Türkiye, India (cam5), and Japan (cam5) were ingested from the CAMICAN INC ensemble pipeline and standardised into the <code>data/nations/</code> repository alongside the earlier 14 nations. Each nation has a matched ensemble-mean file (<code>_ENS.csv</code>) and an inter-rater envelope file (<code>_ENV.csv</code>). Colombia is annual (1875–2026, 152 years); the remaining four are five-year snapshots. Files under 40 KB were flagged as sparse/snapshot resolution.</p>
+
+                <h3>Tool Integration — All Five Instruments Updated</h3>
+                <ul>
+                    <li><strong>cams_index.json</strong> — five new society blocks appended; file grew from 1,281 KB to 1,326 KB.</li>
+                    <li><strong>attractors-nations.js</strong> — B₀ values computed (Colombia 13.84, USA 27.74, Türkiye 19.67, India 21.07, Japan 33.25); rolling-mean xs/ys/zs series injected. A missing-comma syntax error that silenced all nation chips on <a href="attractors.html" style="color:#2F6F7D;">/attractors</a> was identified and fixed immediately after the push.</li>
+                    <li><strong>attractors.html</strong> — NAT_COLORS, NAT_TAG, and NAT_NOTES entries added for each new nation.</li>
+                    <li><strong>telescope_1.html / telescope_2.html</strong> — full DATA + SOCIETY_META injection for all five nations (both files now ~1.6–1.8 MB).</li>
+                    <li><strong>cams-telescope/cams-data.js</strong> — four nations added (USA was already present); telescope now has 14 societies. The React app auto-discovers nations from <code>Object.keys(DATA)</code> — no further changes required.</li>
+                </ul>
+
+                <h3>Datasets Page — Credentials Updated</h3>
+                <p>The <a href="datasets.html" style="color:#2F6F7D;">Datasets</a> page was refreshed: series count 45 → 50, distinct societies 38 → 43, node-year records 39,351 → 41,519, validated datasets 28 → 33. The Ensemble Validation link was promoted from inline text to a prominent amber button. The "New Datasets — May 2026" section was extended with cards for all five new nations across three regions (Americas, Europe, Asia-Pacific).</p>
+
+                <h3>Site Updates</h3>
+                <p><strong>war.html</strong> — the standard Neural Nations nav (with Insights dropdown, GitHub, Newsletter, mobile hamburger) was added; the page had been live without site navigation.</p>
+                <p><strong>Zeitgeist Detector</strong> — three fixes applied to <a href="cams-zeitgeist.html" style="color:#2F6F7D;">/cams-zeitgeist</a>: (1) the hero section now has a dark teal gradient background so the white heading text is legible; (2) the five gauge cards (A*, C, K–S, Λ(t), Z) were restored after being inadvertently replaced in a prior commit; (3) the CAMS Cognitive Affect Blob animation is now positioned directly below the gauge row.</p>
+                <p><strong>Corpus stats</strong> — the "About This Research Diary" reading note and the Datasets page meta-description were updated to reflect the new canonical figures: 50 series, 43 societies.</p>
+
+                <p style="margin-top:16px;font-weight:600;color:#1B2A33;">Kari McKern &nbsp;·&nbsp; <span style="font-weight:400;color:#888;">co-developed with Claude Sonnet 4.6</span></p>
+
+                <div class="tags">
+                    <span class="tag">#colombia</span>
+                    <span class="tag">#usa</span>
+                    <span class="tag">#turkey</span>
+                    <span class="tag">#india</span>
+                    <span class="tag">#japan</span>
+                    <span class="tag">#cam5</span>
+                    <span class="tag">#datasets</span>
+                    <span class="tag">#tool-integration</span>
+                    <span class="tag">#attractors</span>
+                    <span class="tag">#telescope</span>
+                    <span class="tag">#zeitgeist</span>
+                    <span class="tag">#site-maintenance</span>
+                </div>
+            </div>
+        </div>
 
         <div class="diary-entry research-milestone">
             <div class="entry-header">
