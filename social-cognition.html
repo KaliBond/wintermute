@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Social Cognition in Real Time — Eight Sub-Brains — Neural Nations</title>
-    <meta name="description" content="Watch a society think. The eight CAMS nodes rendered as sub-brains, each firing on its ESCH activation σ = A·C·(K−S). Play the timeline and see the distributed institutional mind coordinate, desynchronise, and go dark. Germany 1880–2026, Argentina 1950–2026.">
+    <meta name="description" content="Watch a society think. The eight CAMS nodes rendered as sub-brains, each firing on its ESCH activation σ = A·C·(K−S). Play the timeline and see the distributed institutional mind coordinate, desynchronise, and go dark. 15 nations, 1800–2026.">
     <meta name="keywords" content="extended social cognition, ESCH, CAMS, distributed cognition, sigma activation, Neural Nations, Kari McKern, social cognition real time">
     <meta name="author" content="Kari McKern">
     <meta name="robots" content="index, follow">
@@ -44,10 +44,13 @@
     .instrument { background: #131c24; border: 1px solid #243038; border-radius: 16px; padding: 0; overflow: hidden; box-shadow: 0 12px 40px rgba(19,28,36,0.28); }
     .inst-bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid #243038; background: #0f161c; }
     .inst-title { font: 700 0.72rem ui-monospace, monospace; letter-spacing: 0.12em; text-transform: uppercase; color: #6FB3C0; }
-    .soc-switch { display: flex; gap: 6px; }
+    .inst-nations { display: flex; overflow-x: auto; gap: 6px; padding: 10px 20px; border-bottom: 1px solid #243038; scrollbar-width: thin; scrollbar-color: #2c3a44 transparent; }
+    .inst-nations::-webkit-scrollbar { height: 3px; }
+    .inst-nations::-webkit-scrollbar-thumb { background: #2c3a44; border-radius: 2px; }
+    .soc-switch { display: contents; }
     .soc-switch button, .sc-play {
-        font: 600 0.82rem -apple-system, sans-serif; padding: 7px 14px; border-radius: 18px; cursor: pointer;
-        border: 1px solid #2c3a44; background: #1a242c; color: #C9D4D8; transition: .14s;
+        font: 600 0.82rem -apple-system, sans-serif; padding: 6px 14px; border-radius: 18px; cursor: pointer;
+        border: 1px solid #2c3a44; background: #1a242c; color: #C9D4D8; transition: .14s; white-space: nowrap; flex-shrink: 0;
     }
     .soc-switch button.on { background: #6FB3C0; color: #0f161c; border-color: #6FB3C0; }
     .soc-switch button:hover, .sc-play:hover { border-color: #6FB3C0; color: #EDE7D4; }
@@ -170,7 +173,7 @@
 
     <div class="card" style="padding:34px 32px 30px;">
         <div class="sc-hero">
-            <div class="sc-eyebrow">Neural Nations · CAMS v3.2-R · Explore</div>
+            <div class="sc-eyebrow">Neural Nations · CAMS v3.2-R · 15 Societies · Explore</div>
             <h1>Social Cognition in Real Time</h1>
             <p class="sc-sub">A society is a mind it cannot see. The eight CAMS nodes are its exteriorised cognitive functions — eight sub-brains, each thinking its own thought. Here they are wired back together and set running. Play the timeline and watch the distributed mind coordinate, strain, desynchronise, and go dark.</p>
         </div>
@@ -185,12 +188,25 @@
     <div class="instrument">
         <div class="inst-bar">
             <span class="inst-title">⛓ Distributed Mind · ESCH activation field</span>
-            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-                <div class="soc-switch">
-                    <button data-sc-soc="Germany" class="on">Germany 1880–2026</button>
-                    <button data-sc-soc="Argentina">Argentina 1950–2026</button>
-                </div>
-                <button class="sc-play" id="sc-play">▶&nbsp; Play timeline</button>
+            <button class="sc-play" id="sc-play">▶&nbsp; Play timeline</button>
+        </div>
+        <div class="inst-nations">
+            <div class="soc-switch">
+                <button data-sc-soc="Germany"   class="on">Germany</button>
+                <button data-sc-soc="Argentina">Argentina</button>
+                <button data-sc-soc="Australia">Australia</button>
+                <button data-sc-soc="Canada">Canada</button>
+                <button data-sc-soc="Chile">Chile</button>
+                <button data-sc-soc="China">China</button>
+                <button data-sc-soc="Colombia">Colombia</button>
+                <button data-sc-soc="France">France</button>
+                <button data-sc-soc="India">India</button>
+                <button data-sc-soc="Iran">Iran</button>
+                <button data-sc-soc="Japan">Japan</button>
+                <button data-sc-soc="Norway">Norway</button>
+                <button data-sc-soc="Poland">Poland</button>
+                <button data-sc-soc="Russia">Russia</button>
+                <button data-sc-soc="Sweden">Sweden</button>
             </div>
         </div>
         <div id="sc-fallback"></div>

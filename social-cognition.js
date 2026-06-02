@@ -11,8 +11,21 @@
   "use strict";
 
   const SOCIETIES = {
-    Germany:   { csv: "data/germany_cams5_ensemble_mean.csv", open: 1933 },
-    Argentina: { csv: "data/argentina_cams5_ensemble_1950_2026.csv", open: 1976 },
+    Germany:   { csv: "data/germany_cams5_ensemble_mean.csv",          open: 1933 },
+    Argentina: { csv: "data/argentina_cams5_ensemble_1950_2026.csv",   open: 1976 },
+    Australia: { csv: "data/nations/Australia_ENS.csv",                open: 1942 },
+    Canada:    { csv: "data/nations/Canada_ENS.csv",                   open: 1929 },
+    Chile:     { csv: "data/nations/Chile_ENS.csv",                    open: 1973 },
+    China:     { csv: "data/nations/China_ENS.csv",                    open: 1950 },
+    Colombia:  { csv: "data/nations/Colombia_ENS.csv",                 open: 1948 },
+    France:    { csv: "data/nations/France_ENS.csv",                   open: 1940 },
+    India:     { csv: "data/nations/India_ENS.csv",                    open: 1950 },
+    Iran:      { csv: "data/nations/Iran_ENS.csv",                     open: 1980 },
+    Japan:     { csv: "data/nations/Japan_ENS.csv",                    open: 1945 },
+    Norway:    { csv: "data/nations/Norway_ENS.csv",                   open: 1940 },
+    Poland:    { csv: "data/nations/Poland_ENS.csv",                   open: 1939 },
+    Russia:    { csv: "data/nations/Russia_ENS.csv",                   open: 1917 },
+    Sweden:    { csv: "data/nations/Sweden_ENS.csv",                   open: 1940 },
   };
   const ORDER = ["Helm", "Shield", "Flow", "Hands", "Craft", "Stewards", "Lore", "Archive"];
   const IDENT = {
