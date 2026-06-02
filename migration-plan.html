@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Migration Plan — Shared Nav &amp; Footer — Neural Nations</title>
+    <meta name="description" content="A handoff plan for Claude Code: collapse the duplicated navbar and footer across the Neural Nations site into a single source of truth by extending nav.js — zero build step, no framework rewrite.">
+    <meta name="robots" content="noindex, follow">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+
+    <style>
+    .mp { max-width: 820px; margin: 0 auto; }
+
+    .mp-hero {
+        background: #131c24; color: #F5F1E4; margin: -30px -30px 30px; padding: 46px 40px 40px;
+        border-radius: 15px 15px 0 0; position: relative; overflow: hidden;
+    }
+    .mp-hero::before { content:''; position:absolute; inset:0;
+        background-image: linear-gradient(rgba(245,241,228,0.045) 1px,transparent 1px), linear-gradient(90deg, rgba(245,241,228,0.045) 1px,transparent 1px);
+        background-size: 40px 40px; pointer-events:none; }
+    .mp-hero .eyebrow { font: 700 0.72rem ui-monospace, monospace; letter-spacing:0.16em; text-transform:uppercase; color:#6FB3C0; margin-bottom:14px; position:relative; }
+    .mp-hero h1 { color:#F5F1E4; text-align:left; font-size:2.3rem; line-height:1.1; letter-spacing:-0.025em; margin:0 0 16px; position:relative; }
+    .mp-hero p { color:#C9D4D8; font-size:1.06rem; line-height:1.7; max-width:62ch; margin:0; position:relative; }
+    .mp-hero .chips { display:flex; gap:8px; flex-wrap:wrap; margin-top:20px; position:relative; }
+    .mp-hero .chip { font:600 0.74rem ui-monospace,monospace; padding:5px 12px; border-radius:20px; border:1px solid rgba(245,241,228,0.22); color:#C9D4D8; }
+    .mp-hero .chip.go { background:#6FB3C0; color:#0f161c; border-color:#6FB3C0; }
+
+    .tl-dr { background:#F4EEDD; border:1px solid #E3DAC0; border-left:3px solid #2F6F7D; border-radius:0 10px 10px 0; padding:18px 24px; margin:0 0 14px; }
+    .tl-dr .lab { font:700 0.66rem ui-monospace,monospace; letter-spacing:0.14em; text-transform:uppercase; color:#2F6F7D; margin-bottom:8px; }
+    .tl-dr p { margin:0; font-size:1.0rem; line-height:1.7; color:#2c3a43; }
+    .tl-dr code { background:#fff; border:1px solid #E3DAC0; border-radius:4px; padding:1px 6px; font-size:0.86em; }
+
+    .meta-row { display:flex; flex-wrap:wrap; gap:10px; margin:18px 0 4px; }
+    .meta-pill { font:600 0.8rem -apple-system,sans-serif; background:#FBF8EF; border:1px solid #E3DAC0; border-radius:8px; padding:8px 14px; color:#36424b; }
+    .meta-pill b { color:#1B2A33; }
+
+    h2.phase { font-size:1.32rem; color:#1B2A33; letter-spacing:-0.01em; margin:8px 0 4px; display:flex; align-items:baseline; gap:12px; }
+    h2.phase .pn { font:800 0.82rem ui-monospace,monospace; color:#fff; background:#2F6F7D; border-radius:7px; padding:4px 9px; letter-spacing:0.04em; }
+    .phase-goal { color:#55606a; line-height:1.65; margin:0 0 14px; font-size:0.98rem; }
+
+    .step { font-size:1.0rem; line-height:1.74; color:#28333b; margin:0 0 12px; }
+    .step b { color:#1B2A33; }
+    ul.clean { list-style:none; padding:0; margin:6px 0 14px; }
+    ul.clean li { position:relative; padding:7px 0 7px 30px; border-bottom:1px solid #EFE8D6; font-size:0.96rem; line-height:1.6; color:#36424b; }
+    ul.clean li:last-child { border-bottom:none; }
+    ul.clean li::before { content:''; position:absolute; left:6px; top:14px; width:8px; height:8px; border-radius:2px; background:#6FB3C0; }
+
+    /* file label + code */
+    .file { display:flex; align-items:center; gap:8px; margin:16px 0 0; font:700 0.78rem ui-monospace,monospace; color:#2F6F7D; }
+    .file .tag { background:#1B2A33; color:#6FB3C0; padding:2px 8px; border-radius:5px; font-size:0.72rem; letter-spacing:0.04em; }
+    .file.new .tag { background:#1f7a52; color:#d6ffe9; }
+    pre.code { background:#131c24; color:#dbe6ea; border-radius:10px; padding:16px 18px; overflow-x:auto; margin:8px 0 16px; font:500 0.82rem/1.6 ui-monospace,'SF Mono',Menlo,monospace; border:1px solid #243038; }
+    pre.code .c { color:#6f828d; }
+    pre.code .k { color:#6FB3C0; }
+    pre.code .s { color:#d9b08c; }
+    pre.code .f { color:#e0c46f; }
+    pre.code .del { color:#e0796f; }
+    pre.code .add { color:#7fd4a8; }
+
+    .accept { background:#EEF5F4; border:1px solid #cfe2e0; border-radius:10px; padding:14px 18px 14px 18px; margin:6px 0 6px; }
+    .accept .lab { font:700 0.66rem ui-monospace,monospace; letter-spacing:0.1em; text-transform:uppercase; color:#1f8a5b; margin-bottom:8px; display:flex; align-items:center; gap:7px; }
+    .accept ul { margin:0; padding-left:20px; }
+    .accept li { font-size:0.92rem; line-height:1.6; color:#2c4a3f; margin-bottom:4px; }
+
+    .warn { background:#FBEFE9; border:1px solid #E8C4B4; border-radius:10px; padding:14px 18px; margin:14px 0; font-size:0.94rem; line-height:1.65; color:#7c3a1f; }
+    .warn b { color:#9a3b1a; }
+
+    .note { background:#F4EEDD; border-radius:10px; padding:13px 17px; margin:14px 0; font-size:0.92rem; line-height:1.62; color:#4a4636; }
+
+    /* inventory table */
+    .inv { width:100%; border-collapse:collapse; margin:10px 0 6px; font-size:0.9rem; }
+    .inv th { background:#1B2A33; color:#F5F1E4; text-align:left; padding:8px 12px; font-weight:600; }
+    .inv td { padding:7px 12px; border-bottom:1px solid #E3DAC0; color:#36424b; }
+    .inv tr:nth-child(even) td { background:#F4EEDD; }
+    .inv code { font-size:0.86em; color:#1B2A33; }
+    .inv .y { color:#1f8a5b; font-weight:700; }
+    .inv .n { color:#b06; font-weight:700; }
+
+    .seq { counter-reset:s; margin:8px 0 14px; padding:0; list-style:none; }
+    .seq li { position:relative; padding:10px 0 10px 44px; border-bottom:1px solid #EFE8D6; font-size:0.97rem; line-height:1.6; }
+    .seq li::before { counter-increment:s; content:counter(s); position:absolute; left:8px; top:9px; width:26px; height:26px; border-radius:7px; background:#1B2A33; color:#F5F1E4; font:700 0.82rem ui-monospace,monospace; display:flex; align-items:center; justify-content:center; }
+
+    .divider { height:1px; background:linear-gradient(90deg,#E3DAC0,transparent); margin:34px 0 26px; }
+    .section-label { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:#2F6F7D; margin:0 0 10px; }
+
+    @media (max-width:600px){ .mp-hero{margin:-20px -20px 24px;padding:34px 22px 30px;} .mp-hero h1{font-size:1.7rem;} h2.phase{font-size:1.15rem;} }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="mathematical-backbone.html">Mathematical Backbone</a>
+                    <a href="social-cognition.html">Social Cognition · Real Time</a>
+                    <a href="argentina-puzzle.html">The Puzzle of Argentina</a>
+                    <hr class="menu-divider">
+                    <a href="attractors.html">Attractors</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="model.html">Model</a>
+        <a href="mathematical-backbone.html">Mathematical Backbone</a>
+        <a href="social-cognition.html">Social Cognition · Real Time</a>
+        <a href="argentina-puzzle.html">The Puzzle of Argentina</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="faq.html">FAQ</a>
+    </div>
+</nav>
+
+<div class="container" style="max-width:900px;">
+    <div class="card" style="padding:30px;">
+        <article class="mp">
+            <div class="mp-hero">
+                <div class="eyebrow">Engineering Handoff · for Claude Code</div>
+                <h1>Migration Plan: One Nav, One Footer</h1>
+                <p>Collapse the navbar and footer — currently hand-copied into every page and already drifting out of sync — into a single source of truth by <strong>extending the existing <code style="color:#6FB3C0">nav.js</code></strong>. No framework. No build step. No rewrite of page content. Ship incrementally; the site stays live the whole way.</p>
+                <div class="chips">
+                    <span class="chip">Static HTML</span>
+                    <span class="chip">Zero build</span>
+                    <span class="chip">Extends nav.js</span>
+                    <span class="chip go">~1–2 hrs · low risk</span>
+                </div>
+            </div>
+
+            <div class="tl-dr">
+                <div class="lab">TL;DR for the agent</div>
+                <p>Create <code>site-chrome.js</code> holding one <code>SITE</code> config (links, dropdown, CTAs, footer) and a render function that injects the navbar + footer into <code>&lt;div id="site-nav"&gt;</code> / <code>&lt;div id="site-footer"&gt;</code> mount points. Active link is derived from <code>location.pathname</code> — no per-page flags. Then, page by page, delete the duplicated <code>&lt;nav&gt;</code>/<code>&lt;footer&gt;</code> markup and drop in the two mount divs. Keep <code>nav.js</code>'s behaviour, but call it <em>after</em> render. Validate links, active states, and mobile menu after each page.</p>
+            </div>
+
+            <div class="meta-row">
+                <span class="meta-pill"><b>Scope:</b> nav + footer chrome only</span>
+                <span class="meta-pill"><b>Touches:</b> ~12 root *.html + 2 new/edited JS</span>
+                <span class="meta-pill"><b>Excludes:</b> <code>handover/</code>, <code>epub-handoff/</code>, page bodies</span>
+                <span class="meta-pill"><b>Rollback:</b> git revert per page</span>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- ── Problem ─────────────────────────────────────── -->
+            <p class="section-label">Why</p>
+            <p class="step">Every page carries three hand-maintained copies of the chrome: the desktop <code>.nav-menu</code>, the <code>.nav-dropdown-menu</code>, and the <code>.nav-mobile</code> list — plus a footer. They have <b>already drifted</b>: the Insights dropdown lists Mathematical Backbone / Social Cognition / Argentina on new pages but not on <code>index.html</code>, <code>model.html</code>, <code>attractors.html</code>, <code>start-here.html</code>. Some links point at pages that don't exist in every deploy. One edit currently means ~12 manual edits; the fix makes it one.</p>
+
+            <p class="section-label" style="margin-top:18px;">Inventory the agent will encounter</p>
+            <table class="inv">
+                <thead><tr><th>File</th><th>Has navbar</th><th>Has footer</th><th>Action</th></tr></thead>
+                <tbody>
+                    <tr><td><code>index.html</code></td><td class="y">yes</td><td class="y">yes</td><td>migrate</td></tr>
+                    <tr><td><code>start-here.html</code></td><td class="y">yes</td><td class="y">yes</td><td>migrate</td></tr>
+                    <tr><td><code>model.html</code></td><td class="y">yes</td><td class="y">yes</td><td>migrate</td></tr>
+                    <tr><td><code>mathematical-backbone.html</code></td><td class="y">yes</td><td class="y">yes</td><td>migrate</td></tr>
+                    <tr><td><code>social-cognition.html</code></td><td class="y">yes</td><td class="y">yes</td><td>migrate</td></tr>
+                    <tr><td><code>argentina-puzzle.html</code></td><td class="y">yes</td><td class="y">yes</td><td>migrate</td></tr>
+                    <tr><td><code>attractors.html</code></td><td class="y">yes</td><td class="y">yes</td><td>migrate</td></tr>
+                    <tr><td><code>research-diary.html</code></td><td class="y">yes</td><td class="y">yes</td><td>migrate</td></tr>
+                    <tr><td><code>aha-maps.html</code>, <code>usa-empty-pulpit-…html</code></td><td class="y">yes</td><td class="y">yes</td><td>migrate</td></tr>
+                    <tr><td><code>handover/**</code>, <code>epub-handoff/**</code></td><td>copies</td><td>copies</td><td class="n">skip</td></tr>
+                </tbody>
+            </table>
+            <div class="note"><b>First action:</b> run <code>grep -rl 'class="navbar"' --include=*.html .</code> from the repo root to produce the authoritative list, minus <code>handover/</code> and <code>epub-handoff/</code>. Trust that list over this table — this project is a partial working copy; the real repo has more pages (<code>datasets</code>, <code>explore</code>, <code>validation</code>, <code>cams-zeitgeist</code>, <code>faq</code>, <code>contact</code>, <code>newsletter</code>, <code>results</code>).</div>
+
+            <div class="divider"></div>
+
+            <!-- ── PHASE 0 ─────────────────────────────────────── -->
+            <h2 class="phase"><span class="pn">0</span> Branch &amp; baseline</h2>
+            <p class="phase-goal">Make the work reversible and capture a visual baseline before touching anything.</p>
+            <ul class="seq">
+                <li>Create a branch: <code>git checkout -b chrome-single-source</code>.</li>
+                <li>Build the authoritative page list (grep above). Save it to <code>MIGRATION_PAGES.txt</code>.</li>
+                <li>Screenshot the navbar + footer of <code>index.html</code> and one Insights page at desktop and mobile widths — this is the visual diff target.</li>
+                <li>Note the current active-state convention: <code>class="nav-link active"</code> and <code>class="nav-dropdown-toggle active"</code>.</li>
+            </ul>
+
+            <!-- ── PHASE 1 ─────────────────────────────────────── -->
+            <h2 class="phase"><span class="pn">1</span> Author <code>site-chrome.js</code> — the single source</h2>
+            <p class="phase-goal">One config object describes the entire chrome. Editing this file is the only place nav/footer ever change again.</p>
+            <div class="file new"><span class="tag">NEW</span> site-chrome.js</div>
+<pre class="code"><span class="c">// Neural Nations — single source of truth for navbar + footer.</span>
+<span class="c">// Edit THIS object; every page updates. No build step.</span>
+<span class="k">const</span> <span class="f">SITE</span> = {
+  brand: { label: <span class="s">'Neural Nations'</span>, badge: <span class="s">'NN'</span>, href: <span class="s">'index.html'</span> },
+  <span class="c">// primary === top-level links, in order</span>
+  primary: [
+    { label: <span class="s">'Home'</span>,          href: <span class="s">'index.html'</span> },
+    { label: <span class="s">'Start Here'</span>,    href: <span class="s">'start-here.html'</span> },
+    { label: <span class="s">'Model'</span>,         href: <span class="s">'model.html'</span> },
+    { label: <span class="s">'Datasets'</span>,      href: <span class="s">'datasets.html'</span> },
+    { label: <span class="s">'Explore'</span>,       href: <span class="s">'explore.html'</span> },
+  ],
+  insights: {                        <span class="c">// the dropdown</span>
+    label: <span class="s">'Insights'</span>,
+    items: [
+      { label: <span class="s">'Mathematical Backbone'</span>,       href: <span class="s">'mathematical-backbone.html'</span> },
+      { label: <span class="s">'Social Cognition · Real Time'</span>, href: <span class="s">'social-cognition.html'</span> },
+      { label: <span class="s">'The Puzzle of Argentina'</span>,     href: <span class="s">'argentina-puzzle.html'</span> },
+      { divider: <span class="k">true</span> },
+      { label: <span class="s">'Zeitgeist Detector'</span>,  href: <span class="s">'cams-zeitgeist.html'</span> },
+      { label: <span class="s">'Results at a Glance'</span>,  href: <span class="s">'results.html'</span> },
+      { label: <span class="s">'Validation &amp; Limits'</span>,  href: <span class="s">'validation.html'</span> },
+      { label: <span class="s">'Attractors'</span>,          href: <span class="s">'attractors.html'</span> },
+    ],
+  },
+  trailing: [                        <span class="c">// links after the dropdown</span>
+    { label: <span class="s">'Research Diary'</span>, href: <span class="s">'research-diary.html'</span> },
+    { label: <span class="s">'Mindscapes'</span>,     href: <span class="s">'mindscapes.html'</span> },
+    { label: <span class="s">'FAQ'</span>,            href: <span class="s">'faq.html'</span> },
+    { label: <span class="s">'Contact'</span>,        href: <span class="s">'contact.html'</span> },
+  ],
+  ctas: {
+    github:     <span class="s">'https://github.com/KaliBond/wintermute'</span>,
+    newsletter: <span class="s">'newsletter.html'</span>,
+  },
+  footerLinks: [
+    { label: <span class="s">'Home'</span>, href: <span class="s">'index.html'</span> },
+    { label: <span class="s">'Model'</span>, href: <span class="s">'model.html'</span> },
+    { label: <span class="s">'Mathematical Backbone'</span>, href: <span class="s">'mathematical-backbone.html'</span> },
+    { label: <span class="s">'Datasets'</span>, href: <span class="s">'datasets.html'</span> },
+  ],
+  footerNote: <span class="s">'© 2026 Kari McKern — Neural Nations CAMS Research. Open science.'</span>,
+};</pre>
+
+            <div class="note">Keep the <b>exact class names</b> the current markup uses (<code>navbar</code>, <code>nav-container</code>, <code>nav-logo</code>, <code>nav-menu</code>, <code>nav-link</code>, <code>nav-dropdown</code>, <code>nav-dropdown-menu</code>, <code>menu-divider</code>, <code>nav-actions</code>, <code>nav-btn-github</code>, <code>nav-btn-newsletter</code>, <code>nav-hamburger</code>, <code>nav-mobile</code>, <code>footer</code>) so <code>style.css</code> and <code>nav.js</code> keep working untouched.</div>
+
+            <p class="step" style="margin-top:16px;">Add the render function in the same file. It builds the same DOM the pages hand-write today, and marks the active link by comparing each <code>href</code> to the current filename:</p>
+<pre class="code"><span class="k">function</span> <span class="f">currentPage</span>() {
+  <span class="k">const</span> f = location.pathname.split(<span class="s">'/'</span>).pop() || <span class="s">'index.html'</span>;
+  <span class="k">return</span> f === <span class="s">''</span> ? <span class="s">'index.html'</span> : f;
+}
+<span class="k">function</span> <span class="f">renderChrome</span>() {
+  <span class="k">const</span> here = <span class="f">currentPage</span>();
+  <span class="k">const</span> isActive = (href) =&gt; href === here;
+  <span class="k">const</span> inDropdown = SITE.insights.items.some(i =&gt; i.href === here);
+
+  <span class="c">// ...build innerHTML strings for: nav-menu, dropdown, nav-mobile, footer...</span>
+  <span class="c">// add class 'active' to the matching nav-link; if inDropdown,</span>
+  <span class="c">// add 'active' to the .nav-dropdown-toggle too (matches current convention).</span>
+
+  <span class="k">const</span> navMount = document.getElementById(<span class="s">'site-nav'</span>);
+  <span class="k">const</span> footMount = document.getElementById(<span class="s">'site-footer'</span>);
+  <span class="k">if</span> (navMount)  navMount.innerHTML  = navHTML;
+  <span class="k">if</span> (footMount) footMount.innerHTML = footerHTML;
+}</pre>
+            <div class="accept">
+                <div class="lab">✓ Acceptance — Phase 1</div>
+                <ul>
+                    <li><code>renderChrome()</code> called on a scratch page produces markup byte-compatible with an existing page's nav (diff the outerHTML).</li>
+                    <li>Active class lands on the correct link for <code>model.html</code>, and on the dropdown toggle for an Insights page.</li>
+                </ul>
+            </div>
+
+            <!-- ── PHASE 2 ─────────────────────────────────────── -->
+            <h2 class="phase"><span class="pn">2</span> Wire render → behaviour in <code>nav.js</code></h2>
+            <p class="phase-goal">nav.js already handles dropdown toggle + hamburger. It must now run <em>after</em> the chrome is injected, since the elements won't exist until render.</p>
+            <div class="file"><span class="tag">EDIT</span> nav.js</div>
+<pre class="code"><span class="c">// At the very top of nav.js, wrap the existing IIFE body in initNav()…</span>
+<span class="k">function</span> <span class="f">initNav</span>() {
+  <span class="c">// ← existing dropdown + hamburger code, unchanged</span>
+}
+<span class="c">// Boot: render chrome first (if present), then bind behaviour.</span>
+<span class="k">if</span> (<span class="k">typeof</span> renderChrome === <span class="s">'function'</span>) <span class="f">renderChrome</span>();
+<span class="f">initNav</span>();</pre>
+            <div class="warn"><b>Load order matters.</b> On every page, load <code>site-chrome.js</code> <u>before</u> <code>nav.js</code>:<br><code>&lt;script src="site-chrome.js"&gt;&lt;/script&gt;</code> then <code>&lt;script src="nav.js"&gt;&lt;/script&gt;</code>. Both go at end of <code>&lt;body&gt;</code>, before any page-specific scripts.</div>
+
+            <!-- ── PHASE 3 ─────────────────────────────────────── -->
+            <h2 class="phase"><span class="pn">3</span> Convert pages — one at a time</h2>
+            <p class="phase-goal">For each file in <code>MIGRATION_PAGES.txt</code>, swap hand-written chrome for mount points. Do <b>one page</b>, verify, commit, repeat — never bulk-edit blindly.</p>
+            <ul class="seq">
+                <li>Delete the entire <code>&lt;nav class="navbar"&gt;…&lt;/nav&gt;</code> block. Replace with: <code>&lt;div id="site-nav"&gt;&lt;/div&gt;</code></li>
+                <li>Delete the entire <code>&lt;footer class="footer"&gt;…&lt;/footer&gt;</code> block. Replace with: <code>&lt;div id="site-footer"&gt;&lt;/div&gt;</code></li>
+                <li>Ensure the two script tags are present at end of body (Phase 2 order). Most pages already load <code>nav.js</code> — just add <code>site-chrome.js</code> before it.</li>
+                <li>Open the page. Confirm nav + footer render, the correct link is active, the dropdown opens, the hamburger works on mobile.</li>
+                <li><code>git commit -m "chrome: migrate &lt;page&gt;"</code> — one commit per page for clean rollback.</li>
+            </ul>
+            <div class="note">A <code>&lt;noscript&gt;</code> block with the core links can sit inside <code>#site-nav</code> as a graceful fallback. See Phase 5 for the SEO consideration.</div>
+
+            <!-- ── PHASE 4 ─────────────────────────────────────── -->
+            <h2 class="phase"><span class="pn">4</span> Reconcile the link list</h2>
+            <p class="phase-goal">Now that links live in one place, make them correct once.</p>
+            <ul class="clean">
+                <li>Cross-check every <code>href</code> in <code>SITE</code> against files that exist in the real repo. Flag any that 404.</li>
+                <li>Decide the canonical Insights ordering and trailing-link set — this is the version every page now inherits.</li>
+                <li>Remove links to pages that were deleted; add any page missing from the menu.</li>
+            </ul>
+
+            <!-- ── PHASE 5 ─────────────────────────────────────── -->
+            <h2 class="phase"><span class="pn">5</span> Validate</h2>
+            <p class="phase-goal">Prove the migration is invisible to users and complete.</p>
+            <div class="accept">
+                <div class="lab">✓ Acceptance — whole migration</div>
+                <ul>
+                    <li><b>Visual:</b> nav + footer pixel-match the Phase 0 baseline on desktop and mobile.</li>
+                    <li><b>Active state:</b> every page highlights its own primary link; Insights pages highlight the dropdown toggle.</li>
+                    <li><b>Behaviour:</b> dropdown open/close, outside-click + Escape, hamburger toggle all work (nav.js unchanged).</li>
+                    <li><b>Links:</b> zero 404s from the menu; run a link checker across the built site.</li>
+                    <li><b>No duplication left:</b> <code>grep -rl 'class="navbar"' --include=*.html . | grep -v handover</code> returns <em>only</em> pages that still need migrating (ideally none).</li>
+                    <li><b>Console:</b> no errors on any migrated page.</li>
+                </ul>
+            </div>
+            <div class="warn"><b>SEO note (one decision needed).</b> JS-injected nav links may not be seen by some crawlers. The footer links and an up-to-date <code>sitemap.xml</code> keep all pages discoverable, so internal-link equity is preserved via the footer. If nav links must be crawlable, either (a) keep a static <code>&lt;noscript&gt;</code> link list inside <code>#site-nav</code>, or (b) keep the footer chrome static and only de-duplicate the navbar. Recommendation: ship JS nav + static footer link list + sitemap — best effort/value ratio.</div>
+
+            <!-- ── PHASE 6 ─────────────────────────────────────── -->
+            <h2 class="phase"><span class="pn">6</span> Land &amp; document</h2>
+            <ul class="clean">
+                <li>Open a PR; include before/after screenshots and the empty-grep proof.</li>
+                <li>Add a short <code>handover/chrome-single-source/HANDOVER.md</code> (matches your existing handover convention) describing how to add a nav link: "edit <code>SITE</code> in <code>site-chrome.js</code>, nothing else."</li>
+                <li>Merge. Future nav/footer changes are a one-line edit.</li>
+            </ul>
+
+            <div class="divider"></div>
+            <p class="section-label">Out of scope (explicitly)</p>
+            <ul class="clean">
+                <li>No framework, bundler, or package.json — the site stays openable as flat files.</li>
+                <li>Page bodies, figures, CSV loaders (<code>argentina-figure.js</code>, <code>social-cognition.js</code>, <code>backbone-worked-example.js</code>) are untouched.</li>
+                <li><code>handover/</code> and <code>epub-handoff/</code> snapshots stay frozen.</li>
+                <li>Shared <code>&lt;head&gt;</code>/SEO templating is a separate, optional follow-up — not this plan.</li>
+            </ul>
+        </article>
+    </div>
+
+    <div class="card" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;">
+        <div style="font-size:0.92em;color:#55606a;max-width:46ch;">This plan is self-contained — hand the URL or file to Claude Code and it can execute phase by phase.</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a href="index.html" style="color:#2F6F7D;font-weight:600;text-decoration:none;padding:9px 16px;border:1px solid #B9D2D6;border-radius:8px;background:#F0E9D2;">← Home</a>
+            <a href="https://github.com/KaliBond/wintermute" target="_blank" style="color:#fff;font-weight:600;text-decoration:none;padding:9px 16px;border-radius:8px;background:#1B2A33;">Repo ↗</a>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html" style="color:#2F6F7D;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a>
+        <a href="model.html" style="color:#2F6F7D;text-decoration:none;font-size:0.9em;font-weight:600;">Model</a>
+        <a href="mathematical-backbone.html" style="color:#2F6F7D;text-decoration:none;font-size:0.9em;font-weight:600;">Backbone</a>
+    </nav>
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Internal engineering handoff.</p>
+</footer>
+
+<script src="nav.js"></script>
+</body>
+</html>
