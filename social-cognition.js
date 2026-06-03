@@ -26,6 +26,7 @@
     Poland:    { csv: "data/nations/Poland_ENS.csv" },
     Russia:    { csv: "data/nations/Russia_ENS.csv" },
     Sweden:    { csv: "data/nations/Sweden_ENS.csv" },
+    USA:       { csv: "data/nations/USA_ENS.csv" },
   };
   const ORDER = ["Helm", "Shield", "Flow", "Hands", "Craft", "Stewards", "Lore", "Archive"];
   const IDENT = {
