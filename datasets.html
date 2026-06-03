@@ -303,7 +303,7 @@
 
         <div class="method-box">
             <strong>Methodology — how the scores are produced:</strong><br>
-            <strong>1. Blinding.</strong> Each historical node is scored without reference to outcome — scorers do not know the terminal state of the society.<br>
+            <strong>1. Blinding.</strong> Each node is scored using only information available in that historical moment — the scorer assesses function at that year without reference to what came next. Scorers are trained on historical text that may implicitly contain outcome information; this limitation is acknowledged openly in the methodology documentation.<br>
             <strong>2. Triple-AI scoring.</strong> GPT-4, Grok, and Gemini each independently assign 1–10 values for Coherence, Capacity, Stress, and Abstraction per node per time-step.<br>
             <strong>3. Ensemble average.</strong> The three scores are averaged to produce the final CAMS matrix.<br>
             <strong>4. Validation.</strong> Ensemble reliability (r &gt; 0.7 across models) and inter-rater agreement are documented in the repository: <code>DATASET_VALIDATION_SUMMARY.md</code>, <code>CAMS_Validation_Formulation.md</code>.
