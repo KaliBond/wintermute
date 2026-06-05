@@ -1,9 +1,9 @@
 /* ================================================================
    CAMS · Compare — comparative dashboard for any two societies.
    Drives every chart off the REAL compute kernel (cams-compute.js)
-   applied to the REAL ensemble data (cams-data.js). No fabricated
-   indices: every series is V̄, σ_V, κ, λ₂, B(t), V_i, C/K/S/A or
-   an attractor label straight out of computeAll().
+   applied to the REAL ensemble data. No fabricated indices: every
+   series is V̄, σ_V, κ, λ₂, B(t), V_i, C/K/S/A or an attractor
+   label straight out of computeAll().
    ================================================================ */
 
 const NODES_CMP = ['Helm','Shield','Lore','Stewards','Craft','Hands','Archive','Flow'];
@@ -18,11 +18,9 @@ const NODE_LAYER_CMP = {
   Craft:'Material', Hands:'Material', Flow:'Material',
 };
 
-// Mode (measure) colors from the design system
 const MODE_HEX = { C:'#2F7ECC', K:'#2E8B6B', S:'#C84C3E', A:'#8A5BB8' };
 const MODE_NAME = { C:'Coherence', K:'Capacity', S:'Stress', A:'Abstraction' };
 
-// Attractor basin colors (match the Guide)
 const ATTRACTOR_HEX = {
   'Re-synchronisation':'#5C8C72',
   'Oscillation':'#C29A28',
@@ -31,7 +29,6 @@ const ATTRACTOR_HEX = {
   'Thermodynamic Freeze':'#8B2E22',
 };
 
-// κ tier thresholds (v3.2-R)
 const KAPPA_TIERS = [
   { name:'NOMINAL',  max:0.30, hex:'#5C8C72' },
   { name:'WATCH',    max:0.35, hex:'#7BAE96' },
@@ -44,15 +41,14 @@ function kappaTierHex(k){
   return '#8B2E22';
 }
 
-// Two fixed comparison identities: A = teal, B = ochre.
-const COL_A = '#1C8C99';   // society A (teal)
-const COL_B = '#CC7A1F';   // society B (ochre)
+const COL_A = '#1C8C99';
+const COL_B = '#CC7A1F';
 const COL_A_FILL = 'rgba(28,140,153,0.10)';
 const COL_B_FILL = 'rgba(204,122,31,0.10)';
 
 const INK = '#1B2A33', INK5 = '#5A6E78', GRID = 'rgba(90,110,120,0.16)';
 
-/* ---------- Series computation over the kernel ---------- */
+/* ---------- Series computation ---------- */
 
 const seriesCache = {};
 function computeSeries(soc){
@@ -64,13 +60,13 @@ function computeSeries(soc){
     soc, years,
     meanV:[], sigmaV:[], kappa:[], kappaTier:[], lambda2:[], Bagg:[],
     helmV:[], attractor:[], alarm:[], tau:[], epsilon:[],
-    nodes:{}, // node -> { Vi:[], C:[], K:[], S:[], A:[] }
+    nodes:{},
   };
   NODES_CMP.forEach(n => out.nodes[n] = { Vi:[], C:[], K:[], S:[], A:[] });
 
   years.forEach(yr => {
     const snap = byYear[yr];
-    const matrix = NODES_CMP.map(n => snap[n]); // [C,K,S,A] each
+    const matrix = NODES_CMP.map(n => snap[n]);
     const r = computeAll(matrix);
     out.meanV.push(r.meanV);
     out.sigmaV.push(r.sigmaV);
@@ -94,7 +90,6 @@ function computeSeries(soc){
   return out;
 }
 
-// value at a given year (or null)
 function atYear(series, key, yr){
   if(!series) return null;
   const i = series.years.indexOf(yr);
@@ -108,7 +103,6 @@ function nodeAtYear(series, node, yr){
   const nd = series.nodes[node];
   return { Vi:nd.Vi[i], C:nd.C[i], K:nd.K[i], S:nd.S[i], A:nd.A[i] };
 }
-// nearest available year <= or closest
 function nearestYear(series, yr){
   if(!series || !series.years.length) return null;
   return series.years.reduce((a,b)=> Math.abs(b-yr) < Math.abs(a-yr) ? b : a);
@@ -125,7 +119,6 @@ function fmt(v, d=2){
   return (+v).toFixed(d);
 }
 
-// vertical "current year" rule
 const yearRulePlugin = {
   id:'yearRule',
   afterDraw(chart){

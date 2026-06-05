@@ -1,5 +1,5 @@
-﻿/* ================================================================
-   CAMS Â· Compare â€” rendering + UI wiring (part 2)
+/* ================================================================
+   CAMS · Compare — rendering + UI wiring (part 2)
    ================================================================ */
 
 /* ---------- Stat banner ---------- */
@@ -17,18 +17,18 @@ function renderBanner(){
     const aHex = has ? (ATTRACTOR_HEX[att]||INK5) : INK5;
     return `
       <div class="cmp-soc-card">
-        <div class="cmp-soc-name" style="color:${col}">${series ? series.soc : 'â€”'}</div>
+        <div class="cmp-soc-name" style="color:${col}">${series ? series.soc : '—'}</div>
         ${ has ? `
         <div class="cmp-stat-row">
-          <div class="cmp-stat"><div class="cmp-sv" style="color:${col}">${fmt(v,1)}</div><div class="cmp-sl">VÌ„ mean value</div></div>
-          <div class="cmp-stat"><div class="cmp-sv">${fmt(sv,1)}</div><div class="cmp-sl">Ïƒ_V spread</div></div>
-          <div class="cmp-stat"><div class="cmp-sv" style="color:${kHex}">${fmt(k,2)}</div><div class="cmp-sl">Îº criticality</div></div>
-          <div class="cmp-stat"><div class="cmp-sv">${fmt(l2,2)}</div><div class="cmp-sl">Î»â‚‚ connectivity</div></div>
+          <div class="cmp-stat"><div class="cmp-sv" style="color:${col}">${fmt(v,1)}</div><div class="cmp-sl">V&#772; mean value</div></div>
+          <div class="cmp-stat"><div class="cmp-sv">${fmt(sv,1)}</div><div class="cmp-sl">σ_V spread</div></div>
+          <div class="cmp-stat"><div class="cmp-sv" style="color:${kHex}">${fmt(k,2)}</div><div class="cmp-sl">κ criticality</div></div>
+          <div class="cmp-stat"><div class="cmp-sv">${fmt(l2,2)}</div><div class="cmp-sl">λ₂ connectivity</div></div>
         </div>
         <div class="cmp-att" style="border-color:${aHex}">
           <span class="cmp-att-dot" style="background:${aHex}"></span>
           <span class="cmp-att-name">${att}</span>
-          <span class="cmp-att-alarm">alarm Â· ${al}</span>
+          <span class="cmp-att-alarm">alarm · ${al}</span>
         </div>` : `<div class="cmp-nodata">no data for ${YEAR}</div>` }
       </div>`;
   };
@@ -40,13 +40,9 @@ function renderBanner(){
 function renderOverview(){
   const sa = computeSeries(SOC_A), sb = computeSeries(SOC_B);
   makeLine('c-health', [ dsA(sa,'meanV'), dsB(sb,'meanV') ],
-    { scales:{ y:{ title:{ display:true, text:'VÌ„(t)  mean node value', color:INK5, font:{ size:10 } } } } });
-
-  // Îº chart â€” clean two-line comparison (kernel Îº spans ~1â€“4 on this data,
-  // so the 0.3â€“0.6 tier shading from the calibration table isn't drawn here;
-  // tier labels live in the banner instead).
+    { scales:{ y:{ title:{ display:true, text:'V̄(t)  mean node value', color:INK5, font:{ size:10 } } } } });
   makeLine('c-kappa', [ dsA(sa,'kappa'), dsB(sb,'kappa') ],
-    { scales:{ y:{ min:0, title:{ display:true, text:'Îº(t)  cognitive criticality', color:INK5, font:{ size:10 } } } } });
+    { scales:{ y:{ min:0, title:{ display:true, text:'κ(t)  cognitive criticality', color:INK5, font:{ size:10 } } } } });
   renderSoulGrid();
 }
 
@@ -59,10 +55,10 @@ function renderSoulGrid(){
     const ny = nearestYear(series, YEAR);
     const cards = NODES_CMP.map(node=>{
       const d = nodeAtYear(series, node, ny);
-      if(!d) return `<div class="nc"><div class="nc-t">${node}</div><div class="nc-nd">â€”</div></div>`;
+      if(!d) return `<div class="nc"><div class="nc-t">${node}</div><div class="nc-nd">—</div></div>`;
       const viHex = d.Vi>8 ? '#2E8B6B' : d.Vi>3 ? '#2F7ECC' : d.Vi>-1 ? '#D98B2B' : '#C84C3E';
       const bars = ['C','K','S','A'].map(m=>
-        `<div class="nbr"><span class="nbl">${m}</span><span class="nbo"><span class="nbi" style="width:${d[m]/10*100}%;background:${MODE_HEX[m]}"></span></span></div>`).join('');
+        `<div class="nbr"><span class="nbl">${m}</span><span class="nbo"><span class="nbi" style="width:${Math.max(0,Math.min(100,d[m]/10*100))}%;background:${MODE_HEX[m]}"></span></span></div>`).join('');
       return `<div class="nc">
         <div class="nc-layer" style="background:${NODE_HEX_CMP[node]}"></div>
         <div class="nc-t">${node}</div>
@@ -71,14 +67,14 @@ function renderSoulGrid(){
       </div>`;
     }).join('');
     return `<div class="soul-col">
-      <div class="soul-head" style="color:${col}">${soc} <span>Â· ${ny ?? 'â€”'}</span></div>
+      <div class="soul-head" style="color:${col}">${soc} <span>· ${ny != null ? ny : '—'}</span></div>
       <div class="ng">${cards}</div>
     </div>`;
   }).join('');
   g.innerHTML = blocks;
 }
 
-/* ---------- Node Ã— metric grid tab ---------- */
+/* ---------- Node x metric grid tab ---------- */
 let NODE_METRIC = 'Vi';
 function renderNodeGrid(){
   const con = document.getElementById('nc-container');
@@ -99,17 +95,17 @@ function renderNodeGrid(){
   });
 }
 
-/* ---------- Coordination tab (Î»â‚‚ + bond) ---------- */
+/* ---------- Coordination tab ---------- */
 function renderCoordination(){
   const sa = computeSeries(SOC_A), sb = computeSeries(SOC_B);
   makeLine('c-lambda', [ dsA(sa,'lambda2'), dsB(sb,'lambda2') ],
-    { scales:{ y:{ min:0, title:{ display:true, text:'Î»â‚‚  algebraic connectivity', color:INK5, font:{ size:10 } } } } });
+    { scales:{ y:{ min:0, title:{ display:true, text:'λ₂  algebraic connectivity', color:INK5, font:{ size:10 } } } } });
   makeLine('c-bond', [
     Object.assign({ label:SOC_A, data:lineData(sa,'Bagg'), borderColor:COL_A, backgroundColor:COL_A_FILL, fill:true }, LINE_BASE),
     Object.assign({ label:SOC_B, data:lineData(sb,'Bagg'), borderColor:COL_B, backgroundColor:COL_B_FILL, fill:true }, LINE_BASE),
   ], { scales:{ y:{ min:0, max:1, title:{ display:true, text:'B(t)  aggregate bond strength', color:INK5, font:{ size:10 } } } } });
   makeLine('c-tau', [ dsA(sa,'tau'), dsB(sb,'tau') ],
-    { scales:{ y:{ title:{ display:true, text:'Ï„ = KÌ„ / SÌ„  capacity-to-stress', color:INK5, font:{ size:10 } } } } });
+    { scales:{ y:{ title:{ display:true, text:'τ = K̄ / S̄  capacity-to-stress', color:INK5, font:{ size:10 } } } } });
 }
 
 /* ---------- Phase space tab ---------- */
@@ -128,13 +124,12 @@ function phaseScatter(id, soc, col){
     data:{ datasets:[{ data:pts, backgroundColor:colors, pointRadius:3, borderColor:'rgba(0,0,0,0.18)', borderWidth:0.5 }] },
     options: baseOpts({
       scales:{
-        x:{ type:'linear', title:{ display:true, text:'VÌ„(t)', color:INK5, font:{ size:10 } } },
-        y:{ title:{ display:true, text:'Ïƒ_V', color:INK5, font:{ size:10 } } },
+        x:{ type:'linear', title:{ display:true, text:'V̄(t)', color:INK5, font:{ size:10 } } },
+        y:{ title:{ display:true, text:'σ_V', color:INK5, font:{ size:10 } } },
       },
-      plugins:{ tooltip:{ callbacks:{ label:(c)=>` ${c.raw.yr}: VÌ„=${fmt(c.raw.x,1)}, Ïƒ=${fmt(c.raw.y,1)} Â· ${c.raw.att}` } } },
+      plugins:{ tooltip:{ callbacks:{ label:(c)=>` ${c.raw.yr}: V̄=${fmt(c.raw.x,1)}, σ=${fmt(c.raw.y,1)} · ${c.raw.att}` } } },
     }),
   });
-  // mark current year
   const cy = series.years.indexOf(YEAR) >= 0 ? YEAR : nearestYear(series, YEAR);
   const i = series.years.indexOf(cy);
   if(i>=0){
@@ -148,7 +143,6 @@ function phaseScatter(id, soc, col){
 function renderPhase(){
   phaseScatter('c-ps-a', SOC_A, COL_A);
   phaseScatter('c-ps-b', SOC_B, COL_B);
-  // basin legend
   const lg = document.getElementById('basin-legend');
   if(lg){
     lg.innerHTML = Object.entries(ATTRACTOR_HEX).map(([name,hex])=>
@@ -159,20 +153,17 @@ function renderPhase(){
 /* ---------- Divergence + structural events tab ---------- */
 function renderDivergence(){
   const sa = computeSeries(SOC_A), sb = computeSeries(SOC_B);
-  // build aligned diff over intersection years
   const yset = sa && sb ? sa.years.filter(y=> sb.years.indexOf(y)>=0) : [];
   const diff = (key)=> yset.map(y=>({ x:y, y: atYear(sa,key,y) - atYear(sb,key,y) }));
   makeLine('c-div-v', [
-    Object.assign({ label:'Î”VÌ„', data:diff('meanV'), borderColor:'#2F6F7D', backgroundColor:'rgba(47,111,125,0.08)', fill:true }, LINE_BASE),
-  ], { scales:{ y:{ title:{ display:true, text:`Î”VÌ„  (${SOC_A} âˆ’ ${SOC_B})`, color:INK5, font:{ size:10 } } } } });
+    Object.assign({ label:'ΔV̄', data:diff('meanV'), borderColor:'#2F6F7D', backgroundColor:'rgba(47,111,125,0.08)', fill:true }, LINE_BASE),
+  ], { scales:{ y:{ title:{ display:true, text:'ΔV̄  (' + SOC_A + ' − ' + SOC_B + ')', color:INK5, font:{ size:10 } } } } });
   makeLine('c-div-k', [
-    Object.assign({ label:'Î”Îº', data:diff('kappa'), borderColor:'#C84C3E', backgroundColor:'rgba(200,76,62,0.08)', fill:true }, LINE_BASE),
-  ], { scales:{ y:{ title:{ display:true, text:`Î”Îº  (${SOC_A} âˆ’ ${SOC_B})`, color:INK5, font:{ size:10 } } } } });
-
+    Object.assign({ label:'Δκ', data:diff('kappa'), borderColor:'#C84C3E', backgroundColor:'rgba(200,76,62,0.08)', fill:true }, LINE_BASE),
+  ], { scales:{ y:{ title:{ display:true, text:'Δκ  (' + SOC_A + ' − ' + SOC_B + ')', color:INK5, font:{ size:10 } } } } });
   renderEvents();
 }
 
-// structural events = years where the attractor label changes
 function structuralEvents(series){
   if(!series) return [];
   const ev = [];
@@ -190,13 +181,13 @@ function renderEvents(){
     const series = computeSeries(soc);
     const ev = structuralEvents(series);
     el.previousElementSibling && (el.previousElementSibling.style.color = col);
-    if(!ev.length){ el.innerHTML = `<div class="ev-empty">No attractor transitions â€” ${soc} holds one basin across its record.</div>`; return; }
+    if(!ev.length){ el.innerHTML = `<div class="ev-empty">No attractor transitions — ${soc} holds one basin across its record.</div>`; return; }
     el.innerHTML = ev.map(e=>{
       const toHex = ATTRACTOR_HEX[e.to] || INK5;
       return `<div class="er">
         <div class="ey">${e.year}</div>
         <div class="et"><span style="color:${ATTRACTOR_HEX[e.from]||INK5}">${e.from}</span>
-          <span class="ev-arrow">â†’</span>
+          <span class="ev-arrow">→</span>
           <span style="color:${toHex};font-weight:600">${e.to}</span></div>
       </div>`;
     }).join('');
@@ -214,33 +205,31 @@ const RENDERERS = {
 let ACTIVE_TAB = 'overview';
 function renderActive(){
   renderBanner();
-  (RENDERERS[ACTIVE_TAB] || (()=>{}))();
+  (RENDERERS[ACTIVE_TAB] || (function(){}))();
 }
 
-/* ---------- Year-rule refresh without full rebuild ---------- */
 function refreshYearRules(){
   Object.values(charts).forEach(c=>{ if(c && c.config){ c.config._yearRule = YEAR; c.update('none'); }});
 }
 
-/* ---------- Wiring ---------- */
+/* ---------- Wiring (called after DATA is loaded) ---------- */
 function initCompare(){
-  // populate society selects
-  const socs = Object.keys(DATA);
+  const socs = Object.keys(DATA).sort();
   const selA = document.getElementById('sel-a'), selB = document.getElementById('sel-b');
-  socs.forEach(s=>{
-    selA.insertAdjacentHTML('beforeend', `<option value="${s}" ${s===SOC_A?'selected':''}>${s}</option>`);
-    selB.insertAdjacentHTML('beforeend', `<option value="${s}" ${s===SOC_B?'selected':''}>${s}</option>`);
+  socs.forEach(function(s){
+    selA.insertAdjacentHTML('beforeend', '<option value="' + s + '"' + (s===SOC_A?' selected':'') + '>' + s + '</option>');
+    selB.insertAdjacentHTML('beforeend', '<option value="' + s + '"' + (s===SOC_B?' selected':'') + '>' + s + '</option>');
   });
-  const { lo, hi } = xRange();
+  const range = xRange();
   const slider = document.getElementById('yr-slider');
-  slider.min = lo; slider.max = hi; slider.value = Math.min(YEAR, hi);
+  slider.min = range.lo; slider.max = range.hi; slider.value = Math.min(YEAR, range.hi);
   YEAR = +slider.value;
   document.getElementById('yr-disp').textContent = YEAR;
 
-  selA.addEventListener('change', e=>{ SOC_A = e.target.value; resyncRange(); renderActive(); });
-  selB.addEventListener('change', e=>{ SOC_B = e.target.value; resyncRange(); renderActive(); });
+  selA.addEventListener('change', function(e){ SOC_A = e.target.value; resyncRange(); renderActive(); });
+  selB.addEventListener('change', function(e){ SOC_B = e.target.value; resyncRange(); renderActive(); });
 
-  slider.addEventListener('input', e=>{
+  slider.addEventListener('input', function(e){
     YEAR = +e.target.value;
     document.getElementById('yr-disp').textContent = YEAR;
     renderBanner();
@@ -248,30 +237,30 @@ function initCompare(){
     if(ACTIVE_TAB==='phase'){ renderPhase(); } else { refreshYearRules(); }
   });
 
-  document.querySelectorAll('.tab').forEach(t=> t.addEventListener('click', ()=>{
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-    document.querySelectorAll('.tp').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(function(t){ t.addEventListener('click', function(){
+    document.querySelectorAll('.tab').forEach(function(x){ x.classList.remove('active'); });
+    document.querySelectorAll('.tp').forEach(function(x){ x.classList.remove('active'); });
     t.classList.add('active');
     ACTIVE_TAB = t.dataset.tab;
     document.getElementById('tab-'+ACTIVE_TAB).classList.add('active');
     renderActive();
-  }));
+  }); });
 
-  document.querySelectorAll('.mb').forEach(b=> b.addEventListener('click', ()=>{
-    document.querySelectorAll('.mb').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.mb').forEach(function(b){ b.addEventListener('click', function(){
+    document.querySelectorAll('.mb').forEach(function(x){ x.classList.remove('active'); });
     b.classList.add('active');
     NODE_METRIC = b.dataset.m;
     renderNodeGrid();
-  }));
+  }); });
 
   renderActive();
 }
+
 function resyncRange(){
-  const { lo, hi } = xRange();
+  const range = xRange();
   const slider = document.getElementById('yr-slider');
-  slider.min = lo; slider.max = hi;
-  if(YEAR < lo){ YEAR = lo; } if(YEAR > hi){ YEAR = hi; }
+  slider.min = range.lo; slider.max = range.hi;
+  if(YEAR < range.lo){ YEAR = range.lo; } if(YEAR > range.hi){ YEAR = range.hi; }
   slider.value = YEAR;
   document.getElementById('yr-disp').textContent = YEAR;
 }
-
