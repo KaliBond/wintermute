@@ -152,7 +152,7 @@ function baseOpts(extra){
       },
     },
     scales:{
-      x:{ type:'linear', ticks:{ color:INK5, maxTicksLimit:8, font:{ family:"'JetBrains Mono',monospace", size:10 }, callback:function(v){ return Math.round(v); } },
+      x:{ type:'linear', ticks:{ color:INK5, maxTicksLimit:8, font:{ family:"'JetBrains Mono',monospace", size:10 }, callback:function(v){ return String(Math.round(v)); } },
           grid:{ color:GRID }, border:{ color:'#C9BE9E' } },
       y:{ ticks:{ color:INK5, maxTicksLimit:6, font:{ family:"'JetBrains Mono',monospace", size:10 } },
           grid:{ color:GRID }, border:{ color:'#C9BE9E' } },
