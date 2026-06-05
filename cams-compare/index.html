@@ -170,6 +170,8 @@ footer a{ color:var(--accent-teal); text-decoration:none; }
 
 <div id="app" style="display:none">
 
+  <div id="init-err" style="display:none;background:#fff0f0;color:#c00;padding:12px 24px;font-family:monospace;font-size:13px;border-bottom:1px solid #fcc;"></div>
+
   <div class="cmp-controls">
     <div class="cg"><span class="dot-a"></span><label>Society A</label>
       <select id="sel-a"></select></div>
@@ -283,29 +285,48 @@ footer a{ color:var(--accent-teal); text-decoration:none; }
   <a href="/explore.html">Explore all tools</a>
 </footer>
 
-<script src="https://unpkg.com/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="../cams-telescope/cams-compute.js"></script>
 <script src="ens-loader.js"></script>
 <script src="compare-app.js"></script>
 <script src="compare-render.js"></script>
 <script>
+  function showErr(msg) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    var el = document.getElementById('init-err');
+    if (el) { el.textContent = msg; el.style.display = 'block'; }
+    console.error('[compare]', msg);
+  }
   function setNames() {
     ['lg-a1','lg-a2','lg-a3'].forEach(function(id){ var e=document.getElementById(id); if(e) e.textContent=SOC_A; });
     ['lg-b1','lg-b2','lg-b3'].forEach(function(id){ var e=document.getElementById(id); if(e) e.textContent=SOC_B; });
     ['ps-a-name','ev-a-name'].forEach(function(id){ var e=document.getElementById(id); if(e) e.textContent=SOC_A; });
     ['ps-b-name','ev-b-name'].forEach(function(id){ var e=document.getElementById(id); if(e) e.textContent=SOC_B; });
   }
+  if (typeof Chart === 'undefined') {
+    showErr('Chart.js failed to load from CDN.');
+  }
+  if (typeof computeAll === 'undefined') {
+    showErr('cams-compute.js failed to load.');
+  }
   loadAllENS().then(function(d) {
+    var n = Object.keys(d).length;
+    if (n === 0) { showErr('ENS data loaded but no nations parsed — check CSV paths.'); return; }
     window.DATA = d;
     document.getElementById('loading').style.display = 'none';
     document.getElementById('app').style.display = 'block';
-    initCompare();
-    setNames();
-    document.getElementById('sel-a').addEventListener('change', setNames);
-    document.getElementById('sel-b').addEventListener('change', setNames);
+    try {
+      initCompare();
+      setNames();
+      document.getElementById('sel-a').addEventListener('change', setNames);
+      document.getElementById('sel-b').addEventListener('change', setNames);
+    } catch(e) {
+      showErr('initCompare failed: ' + e.message);
+    }
   }).catch(function(err) {
-    document.getElementById('loading').textContent = 'Data load failed: ' + err.message;
-    console.error('loadAllENS failed:', err);
+    document.getElementById('loading').textContent = 'Data load error: ' + err.message;
+    console.error('[compare] loadAllENS failed:', err);
   });
 </script>
 </body>
