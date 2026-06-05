@@ -272,14 +272,14 @@ function Sidebar({ nations, selected, onSelect }) {
         React.createElement('div', { style: S.markS }, 'Interpreter'),
       ),
     ),
-    React.createElement('h5', { style: S.navH }, 'Datasets'),
+    React.createElement('h5', { style: S.navH }, 'Select Society'),
     ...nations.map(n =>
       React.createElement('div', { key: n, onClick: () => onSelect(n), style: S.navA(n === selected) },
         React.createElement('span', { style: S.dot(SOC_COLORS[n] || '#888') }),
         React.createElement('span', null, n),
       )
     ),
-    React.createElement('div', { style: { marginTop: 20, fontSize: 11, color: 'var(--ink-300)' } }, `${nations.length} societies loaded`),
+    React.createElement('div', { style: { marginTop: 12, fontSize: 11, color: 'var(--ink-300)', lineHeight: 1.5 } }, `${nations.length} societies · use year slider to navigate`),
   );
 }
 
