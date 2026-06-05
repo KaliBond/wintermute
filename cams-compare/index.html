@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAMS Compare — Neural Nations</title>
+<meta name="description" content="Two societies, one kernel. Select any two nations and scrub the year slider — V̄, κ, λ₂, phase space, and structural events computed live from the CAMS v3.2-R ensemble.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://neuralnations.org/cams-compare/">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-ESZ16XVVNN');
+</script>
+
+<link rel="stylesheet" href="../cams-telescope/colors_and_type.css">
+<link rel="stylesheet" href="../style.css">
+<style>
+  *{ box-sizing:border-box; margin:0; }
+  html,body{ background:var(--paper-1); color:var(--ink-900); font-family:var(--font-sans); min-height:100vh; }
+
+  /* ---------- Header ---------- */
+  .cmp-header{ padding:20px 28px 16px; border-bottom:1px solid var(--paper-3); background:var(--paper-0); }
+  .cmp-header h1{ font-family:'Fraunces',serif; font-weight:300; font-size:34px; letter-spacing:-.015em; color:var(--ink-900); }
+  .cmp-header h1 b{ font-weight:600; }
+  .cmp-sub{ font-family:var(--font-sans); font-size:12px; color:var(--ink-500); letter-spacing:.02em; margin-top:4px; }
+  .cmp-badges{ display:flex; gap:6px; flex-wrap:wrap; margin-top:12px; }
+  .cmp-badge{ font-family:var(--font-mono); font-size:10px; letter-spacing:.06em; color:var(--ink-500);
+    border:1px solid var(--paper-3); border-radius:999px; padding:3px 10px; background:var(--paper-1); }
+
+  /* ---------- Controls ---------- */
+  .cmp-controls{ display:flex; flex-wrap:wrap; gap:22px; align-items:center; padding:12px 28px;
+    background:var(--paper-2); border-bottom:1px solid var(--paper-3); }
+  .cg{ display:flex; align-items:center; gap:8px; }
+  .cg label{ font-family:var(--font-sans); font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-500); font-weight:700; }
+  select{ background:var(--paper-0); border:1px solid var(--paper-3); color:var(--ink-900);
+    border-radius:4px; padding:5px 10px; font-size:13px; font-family:var(--font-sans); cursor:pointer; }
+  select:focus{ outline:none; border-color:var(--accent-teal); }
+  .dot-a,.dot-b{ width:9px; height:9px; border-radius:50%; }
+  .dot-a{ background:#1C8C99; } .dot-b{ background:#CC7A1F; }
+  input[type=range]{ width:200px; cursor:pointer; accent-color:var(--accent-teal); }
+  #yr-disp{ font-family:var(--font-mono); font-size:17px; font-weight:700; color:var(--accent-teal); min-width:48px; text-align:center; }
+  .cmp-vs{ font-family:'Fraunces',serif; font-style:italic; color:var(--ink-500); font-size:15px; }
+
+  /* ---------- Tabs ---------- */
+  .tab-bar{ display:flex; gap:0; padding:0 22px; background:var(--paper-1); border-bottom:1px solid var(--paper-3); overflow-x:auto; }
+  .tab{ padding:11px 18px; font-size:11px; font-weight:600; cursor:pointer; border-bottom:2px solid transparent;
+    color:var(--ink-500); text-transform:uppercase; letter-spacing:.07em; white-space:nowrap; transition:.15s; }
+  .tab:hover{ color:var(--ink-900); }
+  .tab.active{ color:var(--accent-teal); border-bottom-color:var(--accent-teal); }
+
+  #main{ padding:20px 24px 60px; max-width:1280px; margin:0 auto; }
+  .tp{ display:none; } .tp.active{ display:block; }
+
+  /* ---------- Grid + cards ---------- */
+  .g2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .g3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+  @media(max-width:900px){ .g2,.g3{ grid-template-columns:1fr; } }
+  .card{ background:var(--paper-0); border:1px solid var(--paper-3); border-radius:6px; padding:14px 16px; }
+  .card h3{ font-family:var(--font-sans); font-size:11px; font-weight:700; color:var(--ink-500);
+    text-transform:uppercase; letter-spacing:.07em; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+  .card h3 .dot{ width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+  .layer-tag{ margin-left:auto; font-family:var(--font-mono); font-size:9px; letter-spacing:.05em; color:var(--ink-300);
+    text-transform:none; font-weight:400; }
+  .cw{ position:relative; height:248px; }
+  .cw-lg{ position:relative; height:300px; }
+  .cw-sm{ position:relative; height:170px; }
+  .leg{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom:6px; }
+  .li{ display:flex; align-items:center; gap:6px; font-size:11.5px; color:var(--ink-500); font-family:var(--font-sans); }
+  .ls{ width:18px; height:3px; border-radius:2px; }
+
+  /* ---------- Stat banner ---------- */
+  #cmp-banner{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:18px; }
+  @media(max-width:900px){ #cmp-banner{ grid-template-columns:1fr; } }
+  .cmp-soc-card{ background:var(--paper-0); border:1px solid var(--paper-3); border-radius:6px; padding:14px 16px; }
+  .cmp-soc-name{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin-bottom:10px; }
+  .cmp-stat-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  .cmp-stat{ text-align:left; }
+  .cmp-sv{ font-family:var(--font-mono); font-size:22px; font-weight:700; color:var(--ink-900); font-variant-numeric:tabular-nums; }
+  .cmp-sl{ font-family:var(--font-sans); font-size:9.5px; color:var(--ink-500); text-transform:uppercase; letter-spacing:.04em; margin-top:3px; line-height:1.3; }
+  .cmp-att{ display:flex; align-items:center; gap:8px; margin-top:12px; padding:7px 11px;
+    border:1px solid; border-radius:4px; background:var(--paper-1); }
+  .cmp-att-dot{ width:9px; height:9px; border-radius:50%; }
+  .cmp-att-name{ font-family:var(--font-sans); font-weight:600; font-size:13px; color:var(--ink-900); }
+  .cmp-att-alarm{ margin-left:auto; font-family:var(--font-mono); font-size:10px; color:var(--ink-500); letter-spacing:.04em; }
+  .cmp-nodata{ font-family:var(--font-mono); font-size:12px; color:var(--ink-300); padding:14px 0; }
+
+  /* ---------- Soul grid ---------- */
+  #soul-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media(max-width:900px){ #soul-grid{ grid-template-columns:1fr; } }
+  .soul-head{ font-family:'Fraunces',serif; font-weight:600; font-size:15px; margin-bottom:10px; }
+  .soul-head span{ font-family:var(--font-mono); font-size:11px; color:var(--ink-300); font-weight:400; }
+  .ng{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+  @media(max-width:600px){ .ng{ grid-template-columns:repeat(2,1fr); } }
+  .nc{ background:var(--paper-1); border:1px solid var(--paper-3); border-radius:5px; padding:8px 9px 10px; position:relative; overflow:hidden; }
+  .nc-layer{ position:absolute; top:0; left:0; width:3px; height:100%; }
+  .nc-t{ font-family:var(--font-sans); font-size:11px; font-weight:600; color:var(--ink-700); margin-bottom:7px; padding-left:3px; }
+  .nc-nd{ color:var(--ink-300); font-family:var(--font-mono); font-size:11px; }
+  .nc-bars{ display:flex; flex-direction:column; gap:3px; padding-left:3px; }
+  .nbr{ display:flex; align-items:center; gap:5px; }
+  .nbl{ font-family:var(--font-mono); font-size:9px; color:var(--ink-500); width:9px; }
+  .nbo{ flex:1; background:rgba(27,42,51,0.07); border-radius:2px; height:4px; }
+  .nbi{ display:block; height:4px; border-radius:2px; }
+  .nc-vi{ font-family:var(--font-mono); font-size:16px; font-weight:700; margin-top:6px; padding-left:3px; font-variant-numeric:tabular-nums; }
+
+  /* ---------- Metric selector ---------- */
+  .mb-sel{ display:flex; gap:7px; flex-wrap:wrap; margin-bottom:14px; }
+  .mb{ font-family:var(--font-sans); padding:5px 12px; border-radius:4px; font-size:11px; cursor:pointer;
+    border:1px solid var(--paper-3); background:var(--paper-0); color:var(--ink-500); text-transform:uppercase; letter-spacing:.05em; transition:.15s; font-weight:600; }
+  .mb.active,.mb:hover{ border-color:var(--accent-teal); color:var(--accent-teal); background:var(--paper-1); }
+
+  /* ---------- Basin legend ---------- */
+  #basin-legend{ display:flex; gap:16px; flex-wrap:wrap; margin-top:4px; }
+  .bl-item{ display:flex; align-items:center; gap:6px; font-size:11.5px; color:var(--ink-700); font-family:var(--font-sans); }
+  .bl-dot{ width:9px; height:9px; border-radius:50%; }
+  .help{ font-family:var(--font-serif); font-size:13px; color:var(--ink-500); line-height:1.5; margin-bottom:10px; text-wrap:pretty; }
+
+  /* ---------- Events ---------- */
+  .ev-list{ font-size:13px; margin-top:6px; }
+  .er{ display:flex; align-items:baseline; gap:11px; padding:7px 0; border-bottom:1px solid var(--paper-2); }
+  .er:last-child{ border-bottom:none; }
+  .ey{ font-family:var(--font-mono); font-weight:700; font-size:12px; color:var(--ink-500); min-width:38px; }
+  .et{ font-family:var(--font-sans); font-size:12.5px; color:var(--ink-700); }
+  .ev-arrow{ color:var(--ink-300); margin:0 3px; }
+  .ev-empty{ font-family:var(--font-serif); font-style:italic; font-size:12.5px; color:var(--ink-500); padding:6px 0; }
+
+  /* ---------- Loading ---------- */
+  #loading{ display:flex; align-items:center; justify-content:center; height:40vh;
+    font-family:var(--font-mono); font-size:13px; color:var(--ink-500); }
+
+  footer{ text-align:center; padding:18px; font-size:11px; color:var(--ink-500);
+    font-family:var(--font-sans); border-top:1px solid var(--paper-3); }
+  footer a{ color:var(--accent-teal); text-decoration:none; }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="nav-brand" href="/">Neural Nations</a>
+  <ul class="nav-links">
+    <li><a href="/explore.html">Explore</a></li>
+    <li><a href="/cams-telescope/">Telescope</a></li>
+    <li><a href="/cams-interpreter/">Interpreter</a></li>
+    <li><a href="/cams-compare/" class="active">Compare</a></li>
+    <li><a href="/datasets.html">Datasets</a></li>
+  </ul>
+</nav>
+
+<div class="cmp-header">
+  <h1>CAMS <b>Compare</b></h1>
+  <div class="cmp-sub">Two societies, one kernel — every series computed live from the 8×4 ensemble matrix via the CAMS v3.2-R compute kernel.</div>
+  <div class="cmp-badges">
+    <span class="cmp-badge">v3.2-R KERNEL</span>
+    <span class="cmp-badge">19 NATIONS</span>
+    <span class="cmp-badge">REAL ENSEMBLE DATA</span>
+    <span class="cmp-badge">κ · λ₂ · V̄ · ATTRACTOR</span>
+  </div>
+</div>
+
+<div id="loading">Loading ensemble data…</div>
+
+<div id="app" style="display:none">
+  <div class="cmp-controls">
+    <div class="cg"><span class="dot-a"></span><label>Society A</label>
+      <select id="sel-a"></select></div>
+    <span class="cmp-vs">vs</span>
+    <div class="cg"><span class="dot-b"></span><label>Society B</label>
+      <select id="sel-b"></select></div>
+    <div class="cg" style="margin-left:auto;">
+      <label>Year</label>
+      <input type="range" id="yr-slider" min="1800" max="2026" value="2026" step="1">
+      <div id="yr-disp">2026</div>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <div class="tab active" data-tab="overview">Overview</div>
+    <div class="tab" data-tab="nodes">Node × Metric</div>
+    <div class="tab" data-tab="coordination">Coordination</div>
+    <div class="tab" data-tab="phase">Phase Space</div>
+    <div class="tab" data-tab="divergence">Divergence</div>
+  </div>
+
+  <div id="main">
+
+    <!-- OVERVIEW -->
+    <div class="tp active" id="tab-overview">
+      <div id="cmp-banner"></div>
+      <div class="g2" style="margin-bottom:18px;">
+        <div class="card">
+          <h3><span class="dot" style="background:var(--accent-teal)"></span>System health — V̄(t)</h3>
+          <div class="leg">
+            <div class="li"><span class="ls" style="background:#1C8C99"></span><span id="lg-a1"></span></div>
+            <div class="li"><span class="ls" style="background:#CC7A1F"></span><span id="lg-b1"></span></div>
+          </div>
+          <div class="cw-lg"><canvas id="c-health"></canvas></div>
+        </div>
+        <div class="card">
+          <h3><span class="dot" style="background:var(--node-helm)"></span>Cognitive criticality — κ(t)</h3>
+          <div class="help">B(t) / ω_μ(t) — bond strength against cognitive-plane dispersion. Higher = more tightly coupled around a narrowing set of shared assumptions.</div>
+          <div class="cw-lg"><canvas id="c-kappa"></canvas></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3><span class="dot" style="background:var(--node-lore)"></span>Node snapshot — C/K/S/A &amp; V_i at selected year</h3>
+        <div id="soul-grid"></div>
+      </div>
+    </div>
+
+    <!-- NODE × METRIC -->
+    <div class="tp" id="tab-nodes">
+      <div class="mb-sel">
+        <div class="mb active" data-m="Vi">Node value V_i</div>
+        <div class="mb" data-m="C">Coherence C</div>
+        <div class="mb" data-m="K">Capacity K</div>
+        <div class="mb" data-m="S">Stress S</div>
+        <div class="mb" data-m="A">Abstraction A</div>
+      </div>
+      <div class="leg" style="margin-bottom:12px;">
+        <div class="li"><span class="ls" style="background:#1C8C99"></span><span id="lg-a2"></span></div>
+        <div class="li"><span class="ls" style="background:#CC7A1F"></span><span id="lg-b2"></span></div>
+      </div>
+      <div class="g2" id="nc-container"></div>
+    </div>
+
+    <!-- COORDINATION -->
+    <div class="tp" id="tab-coordination">
+      <div class="help">Coordination structure from the coordination Laplacian L = D − W. λ₂ is algebraic connectivity (falling λ₂ = fragmenting network); B(t) is aggregate bond strength; τ is the capacity-to-stress ratio.</div>
+      <div class="card" style="margin-bottom:16px;">
+        <h3><span class="dot" style="background:var(--accent-teal)"></span>λ₂ — algebraic connectivity</h3>
+        <div class="leg">
+          <div class="li"><span class="ls" style="background:#1C8C99"></span><span id="lg-a3"></span></div>
+          <div class="li"><span class="ls" style="background:#CC7A1F"></span><span id="lg-b3"></span></div>
+        </div>
+        <div class="cw-lg"><canvas id="c-lambda"></canvas></div>
+      </div>
+      <div class="g2">
+        <div class="card"><h3><span class="dot" style="background:var(--node-craft)"></span>B(t) — bond strength</h3><div class="cw"><canvas id="c-bond"></canvas></div></div>
+        <div class="card"><h3><span class="dot" style="background:var(--node-stewards)"></span>τ — capacity / stress</h3><div class="cw"><canvas id="c-tau"></canvas></div></div>
+      </div>
+    </div>
+
+    <!-- PHASE SPACE -->
+    <div class="tp" id="tab-phase">
+      <div class="help">Each point is one year placed at its phase coordinate Φ(t) = (V̄, σ_V), coloured by the attractor basin the kernel assigns that year. The ringed point is the selected year.</div>
+      <div class="g2" style="margin-bottom:14px;">
+        <div class="card"><h3><span class="dot dot-a"></span><span id="ps-a-name">Society A</span> — phase space</h3><div class="cw-lg"><canvas id="c-ps-a"></canvas></div></div>
+        <div class="card"><h3><span class="dot dot-b"></span><span id="ps-b-name">Society B</span> — phase space</h3><div class="cw-lg"><canvas id="c-ps-b"></canvas></div></div>
+      </div>
+      <div class="card"><h3><span class="dot" style="background:var(--ink-500)"></span>Attractor basins</h3><div id="basin-legend"></div></div>
+    </div>
+
+    <!-- DIVERGENCE -->
+    <div class="tp" id="tab-divergence">
+      <div class="help">Differential series over the years both societies share, plus structural events — the years each society's attractor basin actually changes.</div>
+      <div class="g2" style="margin-bottom:16px;">
+        <div class="card"><h3><span class="dot" style="background:var(--accent-teal)"></span>ΔV̄ — health gap</h3><div class="cw"><canvas id="c-div-v"></canvas></div></div>
+        <div class="card"><h3><span class="dot" style="background:var(--node-helm)"></span>Δκ — criticality gap</h3><div class="cw"><canvas id="c-div-k"></canvas></div></div>
+      </div>
+      <div class="g2">
+        <div class="card"><h3><span class="dot" style="background:#1C8C99"></span><span id="ev-a-name">Society A</span> — structural events</h3><div class="ev-list" id="evl-a"></div></div>
+        <div class="card"><h3><span class="dot" style="background:#CC7A1F"></span><span id="ev-b-name">Society B</span> — structural events</h3><div class="ev-list" id="evl-b"></div></div>
+      </div>
+    </div>
+
+  </div><!-- /#main -->
+</div><!-- /#app -->
+
+<footer>
+  CAMS v3.2-R · Compare · 19 nations · computed live from ensemble CSV data via <code>cams-compute.js</code> ·
+  <a href="/cams-interpreter/">Interpreter</a> ·
+  <a href="/datasets.html">Datasets</a> ·
+  <a href="/explore.html">Explore all tools</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="../cams-telescope/cams-compute.js"></script>
+<script src="ens-loader.js"></script>
+<script src="compare-app.js"></script>
+<script src="compare-render.js"></script>
+<script>
+  loadAllENS().then(function(d) {
+    window.DATA = d;
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    initCompare();
+    // sync legend names
+    var setNames = function() {
+      ['lg-a1','lg-a2','lg-a3'].forEach(function(id){ var e=document.getElementById(id); if(e) e.textContent=SOC_A; });
+      ['lg-b1','lg-b2','lg-b3'].forEach(function(id){ var e=document.getElementById(id); if(e) e.textContent=SOC_B; });
+      ['ps-a-name','ev-a-name'].forEach(function(id){ var e=document.getElementById(id); if(e) e.textContent=SOC_A; });
+      ['ps-b-name','ev-b-name'].forEach(function(id){ var e=document.getElementById(id); if(e) e.textContent=SOC_B; });
+    };
+    setNames();
+    document.getElementById('sel-a').addEventListener('change', setNames);
+    document.getElementById('sel-b').addEventListener('change', setNames);
+  });
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>
