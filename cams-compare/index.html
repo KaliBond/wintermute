@@ -18,136 +18,141 @@
 </script>
 
 <link rel="stylesheet" href="../cams-telescope/colors_and_type.css">
-<link rel="stylesheet" href="../style.css">
 <style>
-  *{ box-sizing:border-box; margin:0; }
-  html,body{ background:var(--paper-1); color:var(--ink-900); font-family:var(--font-sans); min-height:100vh; }
+*{ box-sizing:border-box; margin:0; }
+html,body{ background:var(--paper-1); color:var(--ink-900); font-family:var(--font-sans); min-height:100vh; }
 
-  /* ---------- Header ---------- */
-  .cmp-header{ padding:20px 28px 16px; border-bottom:1px solid var(--paper-3); background:var(--paper-0); }
-  .cmp-header h1{ font-family:'Fraunces',serif; font-weight:300; font-size:34px; letter-spacing:-.015em; color:var(--ink-900); }
-  .cmp-header h1 b{ font-weight:600; }
-  .cmp-sub{ font-family:var(--font-sans); font-size:12px; color:var(--ink-500); letter-spacing:.02em; margin-top:4px; }
-  .cmp-badges{ display:flex; gap:6px; flex-wrap:wrap; margin-top:12px; }
-  .cmp-badge{ font-family:var(--font-mono); font-size:10px; letter-spacing:.06em; color:var(--ink-500);
-    border:1px solid var(--paper-3); border-radius:999px; padding:3px 10px; background:var(--paper-1); }
+/* ── Navbar ── */
+.navbar{ position:sticky; top:0; z-index:1000; background:#ECE6D2; border-bottom:1px solid #DAD2B8; }
+.nav-container{ max-width:1280px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:0 24px; height:52px; gap:16px; }
+.nav-logo{ display:flex; align-items:center; gap:8px; text-decoration:none; color:#1B2A33; flex-shrink:0; }
+.nav-logo-badge{ width:30px; height:30px; background:#1B2A33; color:#F5F1E4; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.72em; font-weight:700; letter-spacing:-0.03em; flex-shrink:0; }
+.nav-logo-text{ font-size:1em; font-weight:600; letter-spacing:-0.02em; }
+.nav-menu{ display:flex; align-items:center; gap:2px; }
+.nav-link{ color:#4A5560; text-decoration:none; padding:5px 11px; border-radius:8px; font-size:0.86em; font-weight:500; white-space:nowrap; }
+.nav-link:hover{ color:#1B2A33; background:rgba(27,42,51,0.06); }
+.nav-link.active{ color:#2F6F7D; background:rgba(47,111,125,0.10); font-weight:600; }
 
-  /* ---------- Controls ---------- */
-  .cmp-controls{ display:flex; flex-wrap:wrap; gap:22px; align-items:center; padding:12px 28px;
-    background:var(--paper-2); border-bottom:1px solid var(--paper-3); }
-  .cg{ display:flex; align-items:center; gap:8px; }
-  .cg label{ font-family:var(--font-sans); font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-500); font-weight:700; }
-  select{ background:var(--paper-0); border:1px solid var(--paper-3); color:var(--ink-900);
-    border-radius:4px; padding:5px 10px; font-size:13px; font-family:var(--font-sans); cursor:pointer; }
-  select:focus{ outline:none; border-color:var(--accent-teal); }
-  .dot-a,.dot-b{ width:9px; height:9px; border-radius:50%; }
-  .dot-a{ background:#1C8C99; } .dot-b{ background:#CC7A1F; }
-  input[type=range]{ width:200px; cursor:pointer; accent-color:var(--accent-teal); }
-  #yr-disp{ font-family:var(--font-mono); font-size:17px; font-weight:700; color:var(--accent-teal); min-width:48px; text-align:center; }
-  .cmp-vs{ font-family:'Fraunces',serif; font-style:italic; color:var(--ink-500); font-size:15px; }
+/* ── Header ── */
+.cmp-header{ padding:20px 28px 16px; border-bottom:1px solid var(--paper-3); background:var(--paper-0); }
+.cmp-header h1{ font-family:'Fraunces',serif; font-weight:300; font-size:34px; letter-spacing:-.015em; color:var(--ink-900); text-align:left; }
+.cmp-header h1 b{ font-weight:600; }
+.cmp-sub{ font-family:var(--font-sans); font-size:12px; color:var(--ink-500); letter-spacing:.02em; margin-top:4px; }
+.cmp-badges{ display:flex; gap:6px; flex-wrap:wrap; margin-top:12px; }
+.cmp-badge{ font-family:var(--font-mono); font-size:10px; letter-spacing:.06em; color:var(--ink-500); border:1px solid var(--paper-3); border-radius:999px; padding:3px 10px; background:var(--paper-1); }
 
-  /* ---------- Tabs ---------- */
-  .tab-bar{ display:flex; gap:0; padding:0 22px; background:var(--paper-1); border-bottom:1px solid var(--paper-3); overflow-x:auto; }
-  .tab{ padding:11px 18px; font-size:11px; font-weight:600; cursor:pointer; border-bottom:2px solid transparent;
-    color:var(--ink-500); text-transform:uppercase; letter-spacing:.07em; white-space:nowrap; transition:.15s; }
-  .tab:hover{ color:var(--ink-900); }
-  .tab.active{ color:var(--accent-teal); border-bottom-color:var(--accent-teal); }
+/* ── Controls ── */
+.cmp-controls{ display:flex; flex-wrap:wrap; gap:22px; align-items:center; padding:12px 28px; background:var(--paper-2); border-bottom:1px solid var(--paper-3); }
+.cg{ display:flex; align-items:center; gap:8px; }
+.cg label{ font-family:var(--font-sans); font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-500); font-weight:700; }
+select{ background:var(--paper-0); border:1px solid var(--paper-3); color:var(--ink-900); border-radius:4px; padding:5px 10px; font-size:13px; font-family:var(--font-sans); cursor:pointer; }
+select:focus{ outline:none; border-color:var(--accent-teal); }
+.dot-a,.dot-b{ width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+.dot-a{ background:#1C8C99; } .dot-b{ background:#CC7A1F; }
+input[type=range]{ width:200px; cursor:pointer; accent-color:var(--accent-teal); }
+#yr-disp{ font-family:var(--font-mono); font-size:17px; font-weight:700; color:var(--accent-teal); min-width:48px; text-align:center; }
+.cmp-vs{ font-family:'Fraunces',serif; font-style:italic; color:var(--ink-500); font-size:15px; }
 
-  #main{ padding:20px 24px 60px; max-width:1280px; margin:0 auto; }
-  .tp{ display:none; } .tp.active{ display:block; }
+/* ── Tabs ── */
+.tab-bar{ display:flex; gap:0; padding:0 22px; background:var(--paper-1); border-bottom:1px solid var(--paper-3); overflow-x:auto; }
+.tab{ padding:11px 18px; font-size:11px; font-weight:600; cursor:pointer; border-bottom:2px solid transparent; color:var(--ink-500); text-transform:uppercase; letter-spacing:.07em; white-space:nowrap; }
+.tab:hover{ color:var(--ink-900); }
+.tab.active{ color:var(--accent-teal); border-bottom-color:var(--accent-teal); }
 
-  /* ---------- Grid + cards ---------- */
-  .g2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-  .g3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
-  @media(max-width:900px){ .g2,.g3{ grid-template-columns:1fr; } }
-  .card{ background:var(--paper-0); border:1px solid var(--paper-3); border-radius:6px; padding:14px 16px; }
-  .card h3{ font-family:var(--font-sans); font-size:11px; font-weight:700; color:var(--ink-500);
-    text-transform:uppercase; letter-spacing:.07em; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
-  .card h3 .dot{ width:7px; height:7px; border-radius:50%; flex-shrink:0; }
-  .layer-tag{ margin-left:auto; font-family:var(--font-mono); font-size:9px; letter-spacing:.05em; color:var(--ink-300);
-    text-transform:none; font-weight:400; }
-  .cw{ position:relative; height:248px; }
-  .cw-lg{ position:relative; height:300px; }
-  .cw-sm{ position:relative; height:170px; }
-  .leg{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom:6px; }
-  .li{ display:flex; align-items:center; gap:6px; font-size:11.5px; color:var(--ink-500); font-family:var(--font-sans); }
-  .ls{ width:18px; height:3px; border-radius:2px; }
+/* ── Main ── */
+#main{ padding:20px 24px 60px; max-width:1280px; margin:0 auto; }
+.tp{ display:none; } .tp.active{ display:block; }
 
-  /* ---------- Stat banner ---------- */
-  #cmp-banner{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:18px; }
-  @media(max-width:900px){ #cmp-banner{ grid-template-columns:1fr; } }
-  .cmp-soc-card{ background:var(--paper-0); border:1px solid var(--paper-3); border-radius:6px; padding:14px 16px; }
-  .cmp-soc-name{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin-bottom:10px; }
-  .cmp-stat-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
-  .cmp-stat{ text-align:left; }
-  .cmp-sv{ font-family:var(--font-mono); font-size:22px; font-weight:700; color:var(--ink-900); font-variant-numeric:tabular-nums; }
-  .cmp-sl{ font-family:var(--font-sans); font-size:9.5px; color:var(--ink-500); text-transform:uppercase; letter-spacing:.04em; margin-top:3px; line-height:1.3; }
-  .cmp-att{ display:flex; align-items:center; gap:8px; margin-top:12px; padding:7px 11px;
-    border:1px solid; border-radius:4px; background:var(--paper-1); }
-  .cmp-att-dot{ width:9px; height:9px; border-radius:50%; }
-  .cmp-att-name{ font-family:var(--font-sans); font-weight:600; font-size:13px; color:var(--ink-900); }
-  .cmp-att-alarm{ margin-left:auto; font-family:var(--font-mono); font-size:10px; color:var(--ink-500); letter-spacing:.04em; }
-  .cmp-nodata{ font-family:var(--font-mono); font-size:12px; color:var(--ink-300); padding:14px 0; }
+/* ── Grid + cards ── */
+.g2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media(max-width:900px){ .g2{ grid-template-columns:1fr; } }
+.card{ background:var(--paper-0); border:1px solid var(--paper-3); border-radius:6px; padding:14px 16px; }
+.card h3{ font-family:var(--font-sans); font-size:11px; font-weight:700; color:var(--ink-500); text-transform:uppercase; letter-spacing:.07em; margin-bottom:12px; display:flex; align-items:center; gap:8px; text-align:left; }
+.card h3 .dot{ width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.layer-tag{ margin-left:auto; font-family:var(--font-mono); font-size:9px; letter-spacing:.05em; color:var(--ink-300); text-transform:none; font-weight:400; }
+.cw{ position:relative; height:248px; }
+.cw-lg{ position:relative; height:300px; }
+.cw-sm{ position:relative; height:170px; }
+.leg{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom:6px; }
+.li{ display:flex; align-items:center; gap:6px; font-size:11.5px; color:var(--ink-500); font-family:var(--font-sans); }
+.ls{ width:18px; height:3px; border-radius:2px; flex-shrink:0; }
 
-  /* ---------- Soul grid ---------- */
-  #soul-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-  @media(max-width:900px){ #soul-grid{ grid-template-columns:1fr; } }
-  .soul-head{ font-family:'Fraunces',serif; font-weight:600; font-size:15px; margin-bottom:10px; }
-  .soul-head span{ font-family:var(--font-mono); font-size:11px; color:var(--ink-300); font-weight:400; }
-  .ng{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
-  @media(max-width:600px){ .ng{ grid-template-columns:repeat(2,1fr); } }
-  .nc{ background:var(--paper-1); border:1px solid var(--paper-3); border-radius:5px; padding:8px 9px 10px; position:relative; overflow:hidden; }
-  .nc-layer{ position:absolute; top:0; left:0; width:3px; height:100%; }
-  .nc-t{ font-family:var(--font-sans); font-size:11px; font-weight:600; color:var(--ink-700); margin-bottom:7px; padding-left:3px; }
-  .nc-nd{ color:var(--ink-300); font-family:var(--font-mono); font-size:11px; }
-  .nc-bars{ display:flex; flex-direction:column; gap:3px; padding-left:3px; }
-  .nbr{ display:flex; align-items:center; gap:5px; }
-  .nbl{ font-family:var(--font-mono); font-size:9px; color:var(--ink-500); width:9px; }
-  .nbo{ flex:1; background:rgba(27,42,51,0.07); border-radius:2px; height:4px; }
-  .nbi{ display:block; height:4px; border-radius:2px; }
-  .nc-vi{ font-family:var(--font-mono); font-size:16px; font-weight:700; margin-top:6px; padding-left:3px; font-variant-numeric:tabular-nums; }
+/* ── Stat banner ── */
+#cmp-banner{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:18px; }
+@media(max-width:900px){ #cmp-banner{ grid-template-columns:1fr; } }
+.cmp-soc-card{ background:var(--paper-0); border:1px solid var(--paper-3); border-radius:6px; padding:14px 16px; }
+.cmp-soc-name{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin-bottom:10px; }
+.cmp-stat-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+.cmp-stat{ text-align:left; }
+.cmp-sv{ font-family:var(--font-mono); font-size:22px; font-weight:700; color:var(--ink-900); font-variant-numeric:tabular-nums; }
+.cmp-sl{ font-family:var(--font-sans); font-size:9.5px; color:var(--ink-500); text-transform:uppercase; letter-spacing:.04em; margin-top:3px; line-height:1.3; }
+.cmp-att{ display:flex; align-items:center; gap:8px; margin-top:12px; padding:7px 11px; border:1px solid; border-radius:4px; background:var(--paper-1); }
+.cmp-att-dot{ width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+.cmp-att-name{ font-family:var(--font-sans); font-weight:600; font-size:13px; color:var(--ink-900); }
+.cmp-att-alarm{ margin-left:auto; font-family:var(--font-mono); font-size:10px; color:var(--ink-500); letter-spacing:.04em; }
+.cmp-nodata{ font-family:var(--font-mono); font-size:12px; color:var(--ink-300); padding:14px 0; }
 
-  /* ---------- Metric selector ---------- */
-  .mb-sel{ display:flex; gap:7px; flex-wrap:wrap; margin-bottom:14px; }
-  .mb{ font-family:var(--font-sans); padding:5px 12px; border-radius:4px; font-size:11px; cursor:pointer;
-    border:1px solid var(--paper-3); background:var(--paper-0); color:var(--ink-500); text-transform:uppercase; letter-spacing:.05em; transition:.15s; font-weight:600; }
-  .mb.active,.mb:hover{ border-color:var(--accent-teal); color:var(--accent-teal); background:var(--paper-1); }
+/* ── Soul grid ── */
+#soul-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+@media(max-width:900px){ #soul-grid{ grid-template-columns:1fr; } }
+.soul-head{ font-family:'Fraunces',serif; font-weight:600; font-size:15px; margin-bottom:10px; }
+.soul-head span{ font-family:var(--font-mono); font-size:11px; color:var(--ink-300); font-weight:400; }
+.ng{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+@media(max-width:600px){ .ng{ grid-template-columns:repeat(2,1fr); } }
+.nc{ background:var(--paper-1); border:1px solid var(--paper-3); border-radius:5px; padding:8px 9px 10px; position:relative; overflow:hidden; }
+.nc-layer{ position:absolute; top:0; left:0; width:3px; height:100%; }
+.nc-t{ font-family:var(--font-sans); font-size:11px; font-weight:600; color:var(--ink-700); margin-bottom:7px; padding-left:3px; }
+.nc-nd{ color:var(--ink-300); font-family:var(--font-mono); font-size:11px; }
+.nc-bars{ display:flex; flex-direction:column; gap:3px; padding-left:3px; }
+.nbr{ display:flex; align-items:center; gap:5px; }
+.nbl{ font-family:var(--font-mono); font-size:9px; color:var(--ink-500); width:9px; }
+.nbo{ flex:1; background:rgba(27,42,51,0.07); border-radius:2px; height:4px; }
+.nbi{ display:block; height:4px; border-radius:2px; }
+.nc-vi{ font-family:var(--font-mono); font-size:16px; font-weight:700; margin-top:6px; padding-left:3px; font-variant-numeric:tabular-nums; }
 
-  /* ---------- Basin legend ---------- */
-  #basin-legend{ display:flex; gap:16px; flex-wrap:wrap; margin-top:4px; }
-  .bl-item{ display:flex; align-items:center; gap:6px; font-size:11.5px; color:var(--ink-700); font-family:var(--font-sans); }
-  .bl-dot{ width:9px; height:9px; border-radius:50%; }
-  .help{ font-family:var(--font-serif); font-size:13px; color:var(--ink-500); line-height:1.5; margin-bottom:10px; text-wrap:pretty; }
+/* ── Metric selector ── */
+.mb-sel{ display:flex; gap:7px; flex-wrap:wrap; margin-bottom:14px; }
+.mb{ font-family:var(--font-sans); padding:5px 12px; border-radius:4px; font-size:11px; cursor:pointer; border:1px solid var(--paper-3); background:var(--paper-0); color:var(--ink-500); text-transform:uppercase; letter-spacing:.05em; font-weight:600; }
+.mb.active,.mb:hover{ border-color:var(--accent-teal); color:var(--accent-teal); background:var(--paper-1); }
 
-  /* ---------- Events ---------- */
-  .ev-list{ font-size:13px; margin-top:6px; }
-  .er{ display:flex; align-items:baseline; gap:11px; padding:7px 0; border-bottom:1px solid var(--paper-2); }
-  .er:last-child{ border-bottom:none; }
-  .ey{ font-family:var(--font-mono); font-weight:700; font-size:12px; color:var(--ink-500); min-width:38px; }
-  .et{ font-family:var(--font-sans); font-size:12.5px; color:var(--ink-700); }
-  .ev-arrow{ color:var(--ink-300); margin:0 3px; }
-  .ev-empty{ font-family:var(--font-serif); font-style:italic; font-size:12.5px; color:var(--ink-500); padding:6px 0; }
+/* ── Basin legend ── */
+#basin-legend{ display:flex; gap:16px; flex-wrap:wrap; margin-top:4px; }
+.bl-item{ display:flex; align-items:center; gap:6px; font-size:11.5px; color:var(--ink-700); font-family:var(--font-sans); }
+.bl-dot{ width:9px; height:9px; border-radius:50%; }
+.help{ font-family:var(--font-serif); font-size:13px; color:var(--ink-500); line-height:1.5; margin-bottom:10px; }
 
-  /* ---------- Loading ---------- */
-  #loading{ display:flex; align-items:center; justify-content:center; height:40vh;
-    font-family:var(--font-mono); font-size:13px; color:var(--ink-500); }
+/* ── Structural events ── */
+.ev-list{ font-size:13px; margin-top:6px; }
+.er{ display:flex; align-items:baseline; gap:11px; padding:7px 0; border-bottom:1px solid var(--paper-2); }
+.er:last-child{ border-bottom:none; }
+.ey{ font-family:var(--font-mono); font-weight:700; font-size:12px; color:var(--ink-500); min-width:38px; }
+.et{ font-family:var(--font-sans); font-size:12.5px; color:var(--ink-700); }
+.ev-arrow{ color:var(--ink-300); margin:0 3px; }
+.ev-empty{ font-family:var(--font-serif); font-style:italic; font-size:12.5px; color:var(--ink-500); padding:6px 0; }
 
-  footer{ text-align:center; padding:18px; font-size:11px; color:var(--ink-500);
-    font-family:var(--font-sans); border-top:1px solid var(--paper-3); }
-  footer a{ color:var(--accent-teal); text-decoration:none; }
+/* ── Loading ── */
+#loading{ display:flex; align-items:center; justify-content:center; height:40vh; font-family:var(--font-mono); font-size:13px; color:var(--ink-500); }
+
+footer{ text-align:center; padding:18px; font-size:11px; color:var(--ink-500); font-family:var(--font-sans); border-top:1px solid var(--paper-3); }
+footer a{ color:var(--accent-teal); text-decoration:none; }
 </style>
 </head>
 <body>
 
 <nav class="navbar">
-  <a class="nav-brand" href="/">Neural Nations</a>
-  <ul class="nav-links">
-    <li><a href="/explore.html">Explore</a></li>
-    <li><a href="/cams-telescope/">Telescope</a></li>
-    <li><a href="/cams-interpreter/">Interpreter</a></li>
-    <li><a href="/cams-compare/" class="active">Compare</a></li>
-    <li><a href="/datasets.html">Datasets</a></li>
-  </ul>
+  <div class="nav-container">
+    <a href="/" class="nav-logo">
+      <span class="nav-logo-badge">NN</span>
+      <span class="nav-logo-text">Neural Nations</span>
+    </a>
+    <div class="nav-menu">
+      <a href="/explore.html" class="nav-link">Explore</a>
+      <a href="/cams-telescope/" class="nav-link">Telescope</a>
+      <a href="/cams-interpreter/" class="nav-link">Interpreter</a>
+      <a href="/cams-compare/" class="nav-link active">Compare</a>
+      <a href="/datasets.html" class="nav-link">Datasets</a>
+    </div>
+  </div>
 </nav>
 
 <div class="cmp-header">
@@ -164,6 +169,7 @@
 <div id="loading">Loading ensemble data…</div>
 
 <div id="app" style="display:none">
+
   <div class="cmp-controls">
     <div class="cg"><span class="dot-a"></span><label>Society A</label>
       <select id="sel-a"></select></div>
@@ -248,8 +254,8 @@
     <div class="tp" id="tab-phase">
       <div class="help">Each point is one year placed at its phase coordinate Φ(t) = (V̄, σ_V), coloured by the attractor basin the kernel assigns that year. The ringed point is the selected year.</div>
       <div class="g2" style="margin-bottom:14px;">
-        <div class="card"><h3><span class="dot dot-a"></span><span id="ps-a-name">Society A</span> — phase space</h3><div class="cw-lg"><canvas id="c-ps-a"></canvas></div></div>
-        <div class="card"><h3><span class="dot dot-b"></span><span id="ps-b-name">Society B</span> — phase space</h3><div class="cw-lg"><canvas id="c-ps-b"></canvas></div></div>
+        <div class="card"><h3><span class="dot-a"></span><span id="ps-a-name">Society A</span> — phase space</h3><div class="cw-lg"><canvas id="c-ps-a"></canvas></div></div>
+        <div class="card"><h3><span class="dot-b"></span><span id="ps-b-name">Society B</span> — phase space</h3><div class="cw-lg"><canvas id="c-ps-b"></canvas></div></div>
       </div>
       <div class="card"><h3><span class="dot" style="background:var(--ink-500)"></span>Attractor basins</h3><div id="basin-legend"></div></div>
     </div>
@@ -271,7 +277,7 @@
 </div><!-- /#app -->
 
 <footer>
-  CAMS v3.2-R · Compare · 19 nations · computed live from ensemble CSV data via <code>cams-compute.js</code> ·
+  CAMS v3.2-R · Compare · 19 nations · computed live from ensemble data via <code>cams-compute.js</code> ·
   <a href="/cams-interpreter/">Interpreter</a> ·
   <a href="/datasets.html">Datasets</a> ·
   <a href="/explore.html">Explore all tools</a>
@@ -288,18 +294,16 @@
     document.getElementById('loading').style.display = 'none';
     document.getElementById('app').style.display = 'block';
     initCompare();
-    // sync legend names
-    var setNames = function() {
+    function setNames() {
       ['lg-a1','lg-a2','lg-a3'].forEach(function(id){ var e=document.getElementById(id); if(e) e.textContent=SOC_A; });
       ['lg-b1','lg-b2','lg-b3'].forEach(function(id){ var e=document.getElementById(id); if(e) e.textContent=SOC_B; });
       ['ps-a-name','ev-a-name'].forEach(function(id){ var e=document.getElementById(id); if(e) e.textContent=SOC_A; });
       ['ps-b-name','ev-b-name'].forEach(function(id){ var e=document.getElementById(id); if(e) e.textContent=SOC_B; });
-    };
+    }
     setNames();
     document.getElementById('sel-a').addEventListener('change', setNames);
     document.getElementById('sel-b').addEventListener('change', setNames);
   });
 </script>
-<script src="../nav.js"></script>
 </body>
 </html>

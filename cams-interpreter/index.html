@@ -18,7 +18,6 @@
 </script>
 
 <link rel="stylesheet" href="../cams-telescope/colors_and_type.css">
-<link rel="stylesheet" href="../style.css">
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -27,22 +26,35 @@
 <style>
 *{box-sizing:border-box;margin:0;}
 body{background:var(--paper-1);font-family:var(--font-sans);color:var(--ink-900);min-height:100vh;}
+.navbar{position:sticky;top:0;z-index:1000;background:#ECE6D2;border-bottom:1px solid #DAD2B8;}
+.nav-container{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:52px;gap:16px;}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:#1B2A33;flex-shrink:0;}
+.nav-logo-badge{width:30px;height:30px;background:#1B2A33;color:#F5F1E4;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.72em;font-weight:700;letter-spacing:-0.03em;}
+.nav-logo-text{font-size:1em;font-weight:600;letter-spacing:-0.02em;}
+.nav-menu{display:flex;align-items:center;gap:2px;}
+.nav-link{color:#4A5560;text-decoration:none;padding:5px 11px;border-radius:8px;font-size:0.86em;font-weight:500;white-space:nowrap;}
+.nav-link:hover{color:#1B2A33;background:rgba(27,42,51,0.06);}
+.nav-link.active{color:#2F6F7D;background:rgba(47,111,125,0.10);font-weight:600;}
 </style>
 </head>
 <body>
 <nav class="navbar">
-  <a class="nav-brand" href="/">Neural Nations</a>
-  <ul class="nav-links">
-    <li><a href="/explore.html">Explore</a></li>
-    <li><a href="/cams-telescope/">Telescope</a></li>
-    <li><a href="/cams-interpreter/" class="active">Interpreter</a></li>
-    <li><a href="/cams-compare/">Compare</a></li>
-    <li><a href="/datasets.html">Datasets</a></li>
-  </ul>
+  <div class="nav-container">
+    <a href="/" class="nav-logo">
+      <span class="nav-logo-badge">NN</span>
+      <span class="nav-logo-text">Neural Nations</span>
+    </a>
+    <div class="nav-menu">
+      <a href="/explore.html" class="nav-link">Explore</a>
+      <a href="/cams-telescope/" class="nav-link">Telescope</a>
+      <a href="/cams-interpreter/" class="nav-link active">Interpreter</a>
+      <a href="/cams-compare/" class="nav-link">Compare</a>
+      <a href="/datasets.html" class="nav-link">Datasets</a>
+    </div>
+  </div>
 </nav>
 <div id="root"></div>
 <script type="text/babel" src="../cams-telescope/interpreter-signals.jsx"></script>
 <script type="text/babel" src="interpreter-app.jsx"></script>
-<script src="../nav.js"></script>
 </body>
 </html>
