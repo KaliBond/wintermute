@@ -258,11 +258,25 @@ function InputMatrix({ matrix, setMatrix }) {
 /* ── Sidebar ── */
 function Sidebar({ nations, selected, onSelect }) {
   const SOC_COLORS = {
-    Australia: 'var(--soc-australia)', China: 'var(--soc-china)', Rome: 'var(--soc-rome)',
-    USA: 'var(--soc-usa)', Germany: 'var(--soc-germany)', Italy: 'var(--soc-italy)',
-    Spain: 'var(--soc-spain)', France: '#8B6FB0', UK: 'var(--soc-uk)',
-    'South Africa': 'var(--soc-south-africa)', 'New Zealand': '#20a0b0',
-    'Russia (1800-1830)': '#c04060', 'Russia (1992-2026)': '#c04060',
+    Argentina:  '#74ACDF',
+    Australia:  'var(--soc-australia)',
+    Canada:     '#B41C1C',
+    Chile:      '#6B3A7D',
+    China:      'var(--soc-china)',
+    Colombia:   '#3D7AC5',
+    France:     '#8B6FB0',
+    Germany:    'var(--soc-germany)',
+    India:      '#E07030',
+    Iran:       '#228B60',
+    Japan:      '#CC2244',
+    Norway:     '#5074B0',
+    Poland:     '#B04050',
+    Russia:     '#c04060',
+    Sweden:     '#006DAF',
+    Thailand:   '#904070',
+    Turkiye:    '#BF2020',
+    UK:         'var(--soc-uk)',
+    USA:        'var(--soc-usa)',
   };
 
   return React.createElement('aside', { style: S.sidebar },
@@ -279,7 +293,7 @@ function Sidebar({ nations, selected, onSelect }) {
         React.createElement('span', null, n),
       )
     ),
-    React.createElement('div', { style: { marginTop: 12, fontSize: 11, color: 'var(--ink-300)', lineHeight: 1.5 } }, `${nations.length} societies · use year slider to navigate`),
+    React.createElement('div', { style: { marginTop: 12, fontSize: 11, color: 'var(--ink-300)', lineHeight: 1.5 } }, `${nations.length} societies - use year slider to navigate`),
   );
 }
 
@@ -317,33 +331,43 @@ function YearSlider({ years, year, setYear, playing, onPlay, onStop, onRoll, spe
 
 /* ── Main App ── */
 function App() {
-  const nations = React.useMemo(() => Object.keys(DATA), []);
-  const [nation, setNation] = React.useState(nations[0]);
+  const [appData, setAppData] = React.useState(null);
+  const [nation, setNation] = React.useState(null);
   const [years, setYears] = React.useState([]);
   const [year, setYear] = React.useState(null);
   const [matrix, setMatrix] = React.useState(NODES.map(() => [5,5,5,5]));
   const [tab, setTab] = React.useState('detector');
   const [playing, setPlaying] = React.useState(false);
-  const [speed, setSpeed] = React.useState(400); // ms per tick
+  const [speed, setSpeed] = React.useState(400);
   const playRef = React.useRef(false);
+
+  // Load all ENS CSV files on mount
+  React.useEffect(() => {
+    loadAllENS().then(d => {
+      setAppData(d);
+      const nations = Object.keys(d).sort();
+      if (nations.length) setNation(nations[0]);
+    });
+  }, []);
+
+  const nations = React.useMemo(() => appData ? Object.keys(appData).sort() : [], [appData]);
 
   // When nation changes, reset years
   React.useEffect(() => {
-    const yrs = Object.keys(DATA[nation] || {}).map(Number).sort((a,b) => a-b);
+    if (!appData || !nation) return;
+    const yrs = Object.keys(appData[nation] || {}).map(Number).sort((a,b) => a-b);
     setYears(yrs);
-    if (yrs.length) {
-      setYear(yrs[yrs.length - 1]);
-    }
+    if (yrs.length) setYear(yrs[yrs.length - 1]);
     setPlaying(false);
     playRef.current = false;
-  }, [nation]);
+  }, [nation, appData]);
 
   // When year changes, load matrix
   React.useEffect(() => {
-    if (!year || !DATA[nation] || !DATA[nation][year]) return;
-    const rec = DATA[nation][year];
+    if (!year || !appData || !appData[nation] || !appData[nation][year]) return;
+    const rec = appData[nation][year];
     setMatrix(NODES.map(n => rec[n] ? [...rec[n]] : [5,5,5,5]));
-  }, [nation, year]);
+  }, [nation, year, appData]);
 
   // Playback engine
   React.useEffect(() => {
@@ -353,13 +377,12 @@ function App() {
     const tick = () => {
       if (!playRef.current) return;
       setYear(prev => {
-        const yrs = Object.keys(DATA[nation] || {}).map(Number).sort((a,b) => a-b);
+        const yrs = Object.keys((appData || {})[nation] || {}).map(Number).sort((a,b) => a-b);
         const idx = yrs.indexOf(prev);
         if (idx < yrs.length - 1) {
           timer = setTimeout(tick, speed);
           return yrs[idx + 1];
         } else {
-          // cycle: wrap to start
           timer = setTimeout(tick, speed);
           return yrs[0];
         }
@@ -367,13 +390,12 @@ function App() {
     };
     timer = setTimeout(tick, speed);
     return () => clearTimeout(timer);
-  }, [playing, nation, speed]);
+  }, [playing, nation, speed, appData]);
 
   const handlePlay = () => { setPlaying(true); };
   const handleStop = () => { setPlaying(false); };
   const handleRoll = () => {
-    // Start from beginning and play
-    const yrs = Object.keys(DATA[nation] || {}).map(Number).sort((a,b) => a-b);
+    const yrs = Object.keys((appData || {})[nation] || {}).map(Number).sort((a,b) => a-b);
     if (yrs.length) setYear(yrs[0]);
     setPlaying(true);
   };
@@ -391,6 +413,8 @@ function App() {
     { id: 'bond', label: 'Bond Network' },
     { id: 'reference', label: 'Reference Tables' },
   ];
+
+  if (!appData) return React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--ink-500)' } }, 'Loading ensemble data…');
 
   return React.createElement('div', { style: S.shell },
     React.createElement(Sidebar, { nations, selected: nation, onSelect: setNation }),
