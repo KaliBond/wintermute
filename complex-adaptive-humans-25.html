@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
+    <title>CAMS: Reproducibility Across Platforms — Complex Adaptive Humans #25 · Neural Nations</title>
+    <meta name="description" content="Issue #25: Seven nations tested through Perplexity, Kimi, and Gemini independently. All three converged on identical structural diagnoses. Signal-to-noise above 8:1. Kimi's forensic audit: A−. CAMS is a reproducible observational instrument.">
+    <meta name="keywords" content="CAMS, Neural Nations, reproducibility, ensemble scoring, CAMNATIONS5, Perplexity, Kimi, Gemini, structural convergence, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/complex-adaptive-humans-25">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/complex-adaptive-humans-25">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="CAMS: Reproducibility Across Platforms — Complex Adaptive Humans #25">
+    <meta property="og:description" content="Three AI architectures. Seven nations. One answer. Perplexity, Kimi, and Gemini converged on identical structural diagnoses from the same ensemble scores. CAMS is an observational instrument, not a storytelling machine.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CAMS: Reproducibility Across Platforms — Complex Adaptive Humans #25">
+    <meta name="twitter:description" content="Perplexity. Kimi. Gemini. Three AI systems, same data, same formalism — same answer. Signal-to-noise above 8:1. Kimi's audit: A−. The Dissociative Sovereign. The Patient Archivist. The Abandoned Archive.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        { "@type": "WebSite", "name": "Neural Nations", "url": "https://neuralnations.org" },
+        { "@type": "Person", "@id": "https://neuralnations.org/#kari", "name": "Kari McKern", "url": "https://neuralnations.org/cams-project-history" }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    body { background: #F5F1E4; }
+    .article-shell { max-width: 780px; margin: 0 auto; padding: 40px 20px 80px; }
+    .back-link { font-family:'Inter',sans-serif; font-size:.82em; color:rgba(255,255,255,.75); text-decoration:none; display:inline-flex; align-items:center; gap:5px; margin-bottom:28px; transition:color .15s; }
+    .back-link:hover { color:white; }
+    .article-card { background:white; border-radius:8px; padding:64px 72px; box-shadow:0 8px 40px rgba(0,0,0,.18); }
+    .series-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#2F6F7D; margin-bottom:6px; }
+    .issue-meta { font-family:'Inter',sans-serif; font-size:.78em; color:#999; margin-bottom:28px; display:flex; align-items:center; gap:14px; }
+    .issue-badge { background:#F0E9D2; color:#2F6F7D; font-weight:600; padding:3px 10px; border-radius:20px; font-size:.9em; }
+    h1 { font-family:'Cormorant Garamond',serif; font-size:2.6em; font-weight:600; color:#1a1a2e; line-height:1.2; letter-spacing:-.02em; margin:0 0 10px; }
+    .subtitle { font-family:'Cormorant Garamond',serif; font-size:1.15em; font-style:italic; color:#555; margin:0 0 36px; }
+    .rule { border:none; border-top:1px solid #DAD2B8; margin:32px 0; }
+    .body-text { font-family:'Cormorant Garamond',serif; font-size:1.13em; line-height:1.92; color:#2c2c2c; }
+    .body-text p { margin:1.4em 0; }
+    .body-text p:first-of-type::first-letter { font-size:3.2em; font-weight:600; float:left; line-height:.78; margin:0 6px 0 0; color:#2F6F7D; }
+    .section-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#999; margin:44px 0 20px; border-top:1px solid #DAD2B8; padding-top:24px; }
+    /* Key result */
+    .key-result { background:#1a1a2e; border-radius:10px; padding:24px 28px; margin:28px 0; display:flex; align-items:center; gap:20px; }
+    .kr-icon { font-family:'Cormorant Garamond',serif; font-size:3em; font-weight:600; color:#a5f3fc; flex-shrink:0; line-height:1; }
+    .kr-body { font-family:'Cormorant Garamond',serif; font-size:1.12em; color:rgba(255,255,255,.92); line-height:1.7; }
+    .kr-body strong { color:#a5f3fc; font-weight:600; }
+    /* Setup box */
+    .setup-box { background:#F5F1E4; border:1px solid #DAD2B8; border-left:4px solid #2F6F7D; border-radius:6px; padding:16px 20px; margin:20px 0; font-family:'Inter',sans-serif; font-size:.84em; color:#374151; line-height:1.75; }
+    .setup-box strong { color:#1a1a2e; }
+    /* Tier heading */
+    .tier-heading { font-family:'Inter',sans-serif; font-size:.78em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin:24px 0 12px; display:flex; align-items:center; gap:8px; }
+    .tier-badge { display:inline-block; padding:2px 10px; border-radius:20px; font-size:.88em; }
+    .t1-badge { background:#dcfce7; color:#15803d; }
+    .t2-badge { background:#fef9c3; color:#92400e; }
+    .t3-badge { background:#fee2e2; color:#9b1c1c; }
+    /* Nation cards */
+    .nation-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
+    .nation-card { border-radius:8px; padding:16px 18px; border:1px solid #DAD2B8; }
+    .nc-uk { border-left:4px solid #15803d; background:#f0fdf4; }
+    .nc-germany { border-left:4px solid #0369a1; background:#f0f9ff; }
+    .nc-russia { border-left:4px solid #d52b1e; background:#fff7f7; }
+    .nc-sweden { border-left:4px solid #006AA7; background:#f0f7ff; }
+    .nc-thailand { border-left:4px solid #A51931; background:#fdf7fb; }
+    .nc-usa { border-left:4px solid #9b1c1c; background:#fff5f5; }
+    .nc-argentina { border-left:4px solid #74ACDF; background:#f7fbff; }
+    .nation-card .nc-country { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:#888; margin-bottom:3px; }
+    .nation-card .nc-archetype { font-family:'Cormorant Garamond',serif; font-size:1.2em; font-weight:600; font-style:italic; color:#1a1a2e; margin-bottom:6px; }
+    .nation-card .nc-desc { font-family:'Inter',sans-serif; font-size:.78em; color:#374151; line-height:1.6; }
+    /* Audit box */
+    .audit-box { background:#fafaf7; border:1px solid #DAD2B8; border-radius:8px; padding:22px 26px; margin:24px 0; }
+    .audit-box .ab-header { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+    .audit-box .ab-grade { font-family:'Cormorant Garamond',serif; font-size:2.2em; font-weight:600; color:#D98B2B; line-height:1; }
+    .audit-box .ab-title { font-family:'Inter',sans-serif; font-size:.82em; font-weight:700; color:#1a1a2e; }
+    .audit-box .ab-sub { font-family:'Inter',sans-serif; font-size:.74em; color:#888; }
+    .audit-box .ab-findings { font-family:'Inter',sans-serif; font-size:.82em; color:#374151; line-height:1.75; }
+    .audit-box .ab-findings ul { padding-left:18px; margin:8px 0; }
+    .audit-box .ab-findings li { margin:4px 0; }
+    /* Platform comparison */
+    .platform-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:20px 0; }
+    .platform-card { border-radius:7px; padding:14px 16px; border:1px solid #DAD2B8; background:#F5F1E4; text-align:center; }
+    .platform-card .pc-name { font-family:'Inter',sans-serif; font-size:.78em; font-weight:700; color:#1a1a2e; margin-bottom:6px; }
+    .platform-card .pc-role { font-family:'Inter',sans-serif; font-size:.72em; color:#888; margin-bottom:8px; font-style:italic; }
+    .platform-card .pc-verdict { font-family:'Cormorant Garamond',serif; font-size:1.08em; color:#2F6F7D; line-height:1.5; }
+    /* Stats row */
+    .stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:20px 0; }
+    .stat-card { background:#F5F1E4; border:1px solid #DAD2B8; border-radius:6px; padding:14px 16px; text-align:center; }
+    .stat-card .sc-val { font-family:'Cormorant Garamond',serif; font-size:1.9em; font-weight:600; color:#2F6F7D; }
+    .stat-card .sc-label { font-family:'Inter',sans-serif; font-size:.72em; color:#888; margin-top:3px; line-height:1.4; }
+    /* External links */
+    .ext-links { display:flex; flex-direction:column; gap:8px; margin:20px 0; }
+    .ext-link { display:flex; align-items:center; gap:10px; background:#F5F1E4; border:1px solid #DAD2B8; border-radius:6px; padding:10px 14px; text-decoration:none; transition:background .15s; }
+    .ext-link:hover { background:#EBE4D2; }
+    .ext-link .el-badge { font-family:'Inter',sans-serif; font-size:.7em; font-weight:700; padding:2px 8px; border-radius:20px; white-space:nowrap; }
+    .el-perplexity { background:#E8F4FD; color:#0369a1; }
+    .el-kimi { background:#f0fdf4; color:#15803d; }
+    .el-gemini { background:#fef9c3; color:#92400e; }
+    .el-video { background:#fee2e2; color:#9b1c1c; }
+    .ext-link .el-text { font-family:'Inter',sans-serif; font-size:.82em; color:#374151; }
+    .ext-link .el-arrow { margin-left:auto; color:#2F6F7D; font-size:.9em; }
+    /* Pull quote */
+    .pull-quote { border-left:4px solid #D98B2B; margin:32px 0; padding:8px 0 8px 24px; }
+    .pull-quote p { font-family:'Cormorant Garamond',serif; font-size:1.28em; font-style:italic; color:#374151; line-height:1.7; margin:0; }
+    /* Epiphenomenal note */
+    .epiphenomenal-box { background:#F5F1E4; border:1px solid #DAD2B8; border-radius:8px; padding:20px 24px; margin:24px 0; }
+    .epiphenomenal-box .eb-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#999; margin-bottom:8px; }
+    .epiphenomenal-box .eb-body { font-family:'Cormorant Garamond',serif; font-size:1.08em; color:#374151; line-height:1.75; }
+    /* Conclusions */
+    .conclusions { background:#1a1a2e; color:white; border-radius:10px; padding:28px 32px; margin:32px 0; }
+    .conclusions h3 { font-family:'Inter',sans-serif; font-size:.78em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#a5f3fc; margin:0 0 16px; }
+    .conclusions ul { font-family:'Inter',sans-serif; font-size:.88em; line-height:1.85; padding-left:20px; color:rgba(255,255,255,.88); margin:0; }
+    .conclusions li { margin:5px 0; }
+    /* Footer */
+    .article-footer { margin-top:52px; padding-top:28px; border-top:1px solid #DAD2B8; font-family:'Inter',sans-serif; font-size:.82em; color:#888; line-height:1.8; }
+    .article-footer strong { color:#374151; }
+    .li-btn { display:inline-flex; align-items:center; gap:6px; background:#0a66c2; color:white; padding:8px 18px; border-radius:6px; text-decoration:none; font-weight:600; font-size:.9em; margin-top:10px; transition:background .15s; }
+    .li-btn:hover { background:#004182; }
+    .nav-prev-next { display:flex; justify-content:space-between; margin-top:28px; font-family:'Inter',sans-serif; font-size:.82em; }
+    .nav-prev-next a { color:rgba(255,255,255,.75); text-decoration:none; transition:color .15s; }
+    .nav-prev-next a:hover { color:white; }
+    @media(max-width:640px){ .article-card{padding:36px 20px;} h1{font-size:2em;} .nation-grid,.platform-row,.stat-row{grid-template-columns:1fr;} }
+    @media print{ body{background:white;} .article-card{box-shadow:none;} }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo"><span class="nav-logo-badge">NN</span><span class="nav-logo-text">Neural Nations</span></a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework ↗</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank"><svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub</a>
+            <a href="newsletter.html" class="nav-btn-newsletter"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span></a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a><a href="model.html">Model</a><a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a><a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a><a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a><a href="framework/index.html">Framework ↗</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+        <hr class="menu-divider">
+        <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+<div class="article-shell">
+    <a class="back-link" href="newsletter.html">← Complex Adaptive Humans</a>
+    <div class="article-card">
+        <div class="series-label">Complex Adaptive Humans &nbsp;&middot;&nbsp; Validation Study</div>
+        <div class="issue-meta">
+            <span class="issue-badge">Issue #25</span>
+            <span>May 14, 2026</span>
+        </div>
+        <h1>CAMS: Reproducibility Across Platforms</h1>
+        <p class="subtitle">Seven nations. Three AI architectures. Independent reads from the same ensemble scores. All three arrived at the same structural diagnosis.</p>
+        <hr class="rule">
+
+        <div class="body-text">
+            <p>I have had one of those weeks that reminds me why I began this work in the first place. What started as a pass through the latest ensemble datasets ended as a rigorous demonstration of computational convergence.</p>
+
+            <p>Using the newest CAMS formulation, I took seven of the new ensemble scores and tested them through three different AI systems: Perplexity, Kimi, and Gemini. The question was simple: would distinct AI architectures, working independently from the same CAMS data, arrive at precisely the same conclusions?</p>
+        </div>
+
+        <div class="key-result">
+            <div class="kr-icon">✓</div>
+            <div class="kr-body">The answer is <strong>yes.</strong> CAMS is not a storytelling machine — it is an observational instrument. When three different systems read the same scores, apply the same formalism, and independently identify the same structural pathologies, we demonstrate reproducible pattern recognition.</div>
+        </div>
+
+        <!-- ── Setup ──────────────────────────── -->
+        <p class="section-label">The Setup: CAMNATIONS5</p>
+
+        <div class="setup-box">
+            <strong>CAMNATIONS5</strong> — five independent Claude AI agents score a nation across time, the CAMS node structure and core metrics. Because the scorers operate independently, the resulting ensemble file captures both the mean score and the standard deviation, revealing the level of disagreement between agents for each year in a separate file.<br><br>
+            That is crucial: we have the AI record what the system appears to be doing, <em>and</em> how confidently the agents converge on that reading. Statistical credibility is built into the output.
+        </div>
+
+        <div class="stat-row">
+            <div class="stat-card">
+                <div class="sc-val">5</div>
+                <div class="sc-label">Independent Claude agents scoring each nation</div>
+            </div>
+            <div class="stat-card">
+                <div class="sc-val">&gt; 8:1</div>
+                <div class="sc-label">Signal-to-noise ratio in ensemble output</div>
+            </div>
+            <div class="stat-card">
+                <div class="sc-val">7</div>
+                <div class="sc-label">Nations tested across all three AI platforms</div>
+            </div>
+        </div>
+
+        <div class="body-text">
+            <p>CAMS treats human societies as dissipative systems. Like hurricanes, organisms, or whale pods, societies maintain order by processing energy, information, labour, memory, and meaning. Different societies evolve different strategies for doing this — maritime and modular, riverine and bureaucratic, symbolic and ritual, commercial or executive command. The ensemble process captures those differences precisely, including the uncertainty around them.</p>
+        </div>
+
+        <!-- ── Perplexity ──────────────────────────── -->
+        <p class="section-label">Perplexity's Pass: The Seven-Nation Ensemble Study</p>
+
+        <div class="body-text">
+            <p>I first loaded the statistically authenticated ensemble scores into a Perplexity space equipped with the latest CAMS v3.2-R formalism. Perplexity read each nation's cognitive-affective signature and produced both quantitative node profiles and mythopoetic characterisations. The seven nations separated into three clear tiers. The poetry followed the maths.</p>
+        </div>
+
+        <div class="tier-heading"><span class="tier-badge t1-badge">Tier 1</span> The Functional System</div>
+        <div class="nation-grid" style="grid-template-columns:1fr;">
+            <div class="nation-card nc-uk">
+                <div class="nc-country">United Kingdom</div>
+                <div class="nc-archetype">"The Patient Archivist"</div>
+                <div class="nc-desc">Archive-anchored, procedurally stable, operating in a concrete-pragmatic register with positive net affect. The sole Tier 1 nation in the dataset.</div>
+            </div>
+        </div>
+
+        <div class="tier-heading"><span class="tier-badge t2-badge">Tier 2</span> The Oscillating Cluster</div>
+        <div class="nation-grid">
+            <div class="nation-card nc-germany">
+                <div class="nc-country">Germany</div>
+                <div class="nc-archetype">"The Engineer's Doubt"</div>
+                <div class="nc-desc">Functional, but oscillating around affective zero. Abstraction risk present; internal tensions visible in the envelope.</div>
+            </div>
+            <div class="nation-card nc-russia">
+                <div class="nc-country">Russia</div>
+                <div class="nc-archetype">"The Besieged Archive"</div>
+                <div class="nc-desc">Functional under pressure. Continental-defensive buffering sustains capacity under chronic high stress.</div>
+            </div>
+            <div class="nation-card nc-sweden">
+                <div class="nc-country">Sweden</div>
+                <div class="nc-archetype">"The Anxious Model"</div>
+                <div class="nc-desc">Coherent but under abstraction pressure. The model society showing signs of systemic tension.</div>
+            </div>
+            <div class="nation-card nc-thailand">
+                <div class="nc-country">Thailand</div>
+                <div class="nc-archetype">"The Gilded Shield"</div>
+                <div class="nc-desc">Buffering through Helm–Lore–Shield continuity. Stress absorbs without proportionate capacity loss.</div>
+            </div>
+        </div>
+
+        <div class="tier-heading"><span class="tier-badge t3-badge">Tier 3</span> The Fracture Zone</div>
+        <div class="nation-grid">
+            <div class="nation-card nc-usa">
+                <div class="nc-country">United States</div>
+                <div class="nc-archetype">"The Dissociative Sovereign"</div>
+                <div class="nc-desc">Praetorian Condition confirmed at 2.6:1 Shield/Helm ratio. Executive Decoupling triggered at V_Helm = 0.4. Late Abstraction Collapse mapped accurately.</div>
+            </div>
+            <div class="nation-card nc-argentina">
+                <div class="nc-country">Argentina</div>
+                <div class="nc-archetype">"The Abandoned Archive"</div>
+                <div class="nc-desc">Most uniformly collapsed node profile in the dataset. Mean V 4.11, mean NA −2.33. Deep systemic failure across the full node structure.</div>
+            </div>
+        </div>
+
+        <!-- ── Kimi audit ──────────────────────────── -->
+        <p class="section-label">Kimi's Audit: The Validator's Report</p>
+
+        <div class="body-text">
+            <p>Next, I handed the same mathematically verified ensemble scores to Kimi. I treated Kimi as a forensic reviewer — its job was not to admire the work, but to attack it. Kimi cross-checked the Perplexity report against the canonical v3.2-R formalism, testing node values, system aggregates, pathology thresholds, and dataset provenance.</p>
+
+            <p>At first, Kimi found red flags in the USA 2026 section. Some aggregates did not match the file it had loaded. Then I supplied the correct file: <code style="font-size:.9em;background:#F5F1E4;padding:1px 5px;border-radius:3px;">MARKER_USA_1900_2026_ENSEMBLE_MEAN-2.csv</code>. The corrected figures matched exactly.</p>
+        </div>
+
+        <div class="audit-box">
+            <div class="ab-header">
+                <div class="ab-grade">A−</div>
+                <div>
+                    <div class="ab-title">Kimi Validation Grade — Perplexity v3.2-R Analysis</div>
+                    <div class="ab-sub">Marked down on Helm Strength shorthand</div>
+                </div>
+            </div>
+            <div class="ab-findings">
+                <strong>Confirmed findings:</strong>
+                <ul>
+                    <li>Executive Decoupling triggered correctly at V_Helm = 0.4</li>
+                    <li>Praetorian Condition confirmed at 2.60:1 ratio (Shield/Helm)</li>
+                    <li>Late Abstraction Collapse mapped accurately</li>
+                    <li>Pathology diagnoses conceptually sound throughout</li>
+                </ul>
+                <strong>Footnote:</strong> Some trajectory language in Perplexity used "Helm Bond Strength" as shorthand for the system-mean Bond, slightly overstating the USA 2024 and Russia 2026 figures. Directional reading remained intact.
+            </div>
+        </div>
+
+        <div class="pull-quote">
+            <p>Exactly the audit needed — severe, technical, and correctable. Not a soft endorsement, but a forensic review.</p>
+        </div>
+
+        <!-- ── Gemini ──────────────────────────── -->
+        <p class="section-label">Gemini's Verdict: Completing the Triangulation</p>
+
+        <div class="body-text">
+            <p>Finally, Gemini examined the same raw CSV files, standard deviation envelopes, and CAMS v3.2-R definitions. It arrived at the same destination. The mathematics held to two decimal places. The pathology signatures triggered where the framework predicted they should. The mythopoetic layer mapped cleanly onto the computational foundation.</p>
+        </div>
+
+        <div class="platform-row">
+            <div class="platform-card">
+                <div class="pc-name">Perplexity</div>
+                <div class="pc-role">Primary analysis</div>
+                <div class="pc-verdict">Quantitative profiles + mythopoetic characterisations from ensemble scores</div>
+            </div>
+            <div class="platform-card">
+                <div class="pc-name">Kimi</div>
+                <div class="pc-role">Forensic audit</div>
+                <div class="pc-verdict">Cross-checked against v3.2-R formalism. Grade: A−. One correctable footnote.</div>
+            </div>
+            <div class="platform-card">
+                <div class="pc-name">Gemini</div>
+                <div class="pc-role">Triangulation</div>
+                <div class="pc-verdict">Same raw CSVs, same formalism, same destination. Mathematics held to two decimal places.</div>
+            </div>
+        </div>
+
+        <div class="body-text">
+            <p>Perplexity, Kimi, and Gemini did not merely "agree" in a vague conversational sense. They converged on the exact same systemic reading — the United States showing thermodynamic strain and executive decoupling; Russia showing mobilisation under pressure; the United Kingdom showing concrete-pragmatic stability; Argentina showing deep systemic collapse; the middle-tier systems showing oscillation rather than full breakdown.</p>
+        </div>
+
+        <!-- ── Epiphenomenal ──────────────────────────── -->
+        <p class="section-label">Closing Thoughts: Epiphenomenal Validation</p>
+
+        <div class="epiphenomenal-box">
+            <div class="eb-label">Via "The Modern World"</div>
+            <div class="eb-body">The comic depicts a late-stress executive regime in which Helm fragility drives Lore distortion, Shield overreach, Archive suppression, and Flow capture. The system is still producing outputs, but its feedback loops are inverted. Reality no longer corrects power; power attempts to correct reality. CAMS names this structure before the narrative catches up to it.</div>
+        </div>
+
+        <!-- ── External links ──────────────────────────── -->
+        <p class="section-label">Primary Sources</p>
+
+        <div class="ext-links">
+            <a href="https://www.perplexity.ai/spaces/cams-2026-jzMPXx_2ScmMir67SQ71MQ/8179abc4-d89b-4544-a88e-9a407573429b" target="_blank" class="ext-link">
+                <span class="el-badge el-perplexity">Perplexity</span>
+                <span class="el-text">CAMS 2026 — Seven-Nation Ensemble Study (Space)</span>
+                <span class="el-arrow">↗</span>
+            </a>
+            <a href="https://www.kimi.com/share/19e20e5c-21c2-8d58-8000-000016949604" target="_blank" class="ext-link">
+                <span class="el-badge el-kimi">Kimi</span>
+                <span class="el-text">Forensic Audit — v3.2-R Validation Report (Grade: A−)</span>
+                <span class="el-arrow">↗</span>
+            </a>
+            <a href="https://docs.google.com/document/d/19BPbc-IxJj82U5cb-z4B0a-pd2lL7ZjBCrRt6XzAyVI/edit?usp=sharing" target="_blank" class="ext-link">
+                <span class="el-badge el-gemini">Gemini</span>
+                <span class="el-text">Triangulation Report — Full Gemini Analysis (Google Docs)</span>
+                <span class="el-arrow">↗</span>
+            </a>
+            <a href="https://youtu.be/NXza-mwgyaE?si=gIPFDlO_yRT22W7g" target="_blank" class="ext-link">
+                <span class="el-badge el-video">Video</span>
+                <span class="el-text">Results walkthrough — YouTube</span>
+                <span class="el-arrow">↗</span>
+            </a>
+        </div>
+
+        <div class="conclusions">
+            <h3>What convergence establishes</h3>
+            <ul>
+                <li>Three AI architectures working independently from the same ensemble scores converged on identical structural diagnoses — not narrative agreement, but mathematical convergence</li>
+                <li>CAMNATIONS5: five independent agents, signal-to-noise above 8:1, uncertainty envelope built into every output</li>
+                <li>UK: Patient Archivist — sole Tier 1 functional system in the dataset</li>
+                <li>USA: Dissociative Sovereign — Praetorian 2.60:1, Executive Decoupling, Late Abstraction Collapse all confirmed</li>
+                <li>Argentina: Abandoned Archive — most uniformly collapsed node profile in the dataset</li>
+                <li>Kimi's A− audit: severe, technical, correctable — exactly what a reproducible instrument requires</li>
+                <li>CAMS is not a storytelling machine. It is an observational instrument. Three different systems proved it.</li>
+            </ul>
+        </div>
+
+        <div class="article-footer">
+            <strong>Complex Adaptive Humans</strong> is the Neural Nations research newsletter by Kari Freyr McKern.<br>
+            Open science &middot; CAMS framework &middot; Sydney, Australia<br><br>
+            <a href="https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/" target="_blank" class="li-btn">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                Subscribe on LinkedIn
+            </a>
+        </div>
+    </div>
+
+    <div class="nav-prev-next">
+        <a href="complex-adaptive-humans-24.html">← #24 Ensemble Datasets &amp; Mindscapes</a>
+        <span></span>
+    </div>
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>
