@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
+    <title>The Self-Modelling Primate — Complex Adaptive Humans #30 · Neural Nations</title>
+    <meta name="description" content="Issue #30: A profile of CAMS and the intellectual journey behind it — from a Socratic frustration with sophistry, through the insight that a polity is a complex adaptive system and unit of selection, to an eight-node architecture scaled from the primate band. A measurement instrument, not a theory. Kepler, not Newton.">
+    <meta name="keywords" content="CAMS, Neural Nations, Kari McKern, complex adaptive systems, thermodynamics, group selection, Sybond, epistemology, civilisation, emergence, primate band, Darwin, Prigogine">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/complex-adaptive-humans-30">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/complex-adaptive-humans-30">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="The Self-Modelling Primate — Complex Adaptive Humans #30">
+    <meta property="og:description" content="A profile of CAMS — from Socratic frustration to a physics of civilisation. The founding insight: societies compete, reproduce, and are selected as whole coordination architectures. Darwin 2.0.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Self-Modelling Primate — Complex Adaptive Humans #30">
+    <meta name="twitter:description" content="Why did we model traffic jams and not people jams? A profile of the CAMS origin story and the long road to a physics of civilisation.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        { "@type": "WebSite", "name": "Neural Nations", "url": "https://neuralnations.org" },
+        { "@type": "Person", "@id": "https://neuralnations.org/#kari", "name": "Kari McKern", "url": "https://neuralnations.org/cams-project-history" }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    body { background: #F5F1E4; }
+    .article-shell { max-width: 780px; margin: 0 auto; padding: 40px 20px 80px; }
+    .back-link { font-family:'Inter',sans-serif; font-size:.82em; color:rgba(255,255,255,.75); text-decoration:none; display:inline-flex; align-items:center; gap:5px; margin-bottom:28px; transition:color .15s; }
+    .back-link:hover { color:white; }
+    .article-card { background:white; border-radius:8px; padding:64px 72px; box-shadow:0 8px 40px rgba(0,0,0,.18); }
+    .series-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#2F6F7D; margin-bottom:6px; }
+    .issue-meta { font-family:'Inter',sans-serif; font-size:.78em; color:#999; margin-bottom:28px; display:flex; align-items:center; gap:14px; }
+    .issue-badge { background:#F0E9D2; color:#2F6F7D; font-weight:600; padding:3px 10px; border-radius:20px; font-size:.9em; }
+    h1 { font-family:'Cormorant Garamond',serif; font-size:2.6em; font-weight:600; color:#1a1a2e; line-height:1.2; letter-spacing:-.02em; margin:0 0 10px; }
+    .subtitle { font-family:'Cormorant Garamond',serif; font-size:1.15em; font-style:italic; color:#555; margin:0 0 36px; }
+    .rule { border:none; border-top:1px solid #DAD2B8; margin:32px 0; }
+    .body-text { font-family:'Cormorant Garamond',serif; font-size:1.13em; line-height:1.92; color:#2c2c2c; }
+    .body-text p { margin:1.4em 0; }
+    .body-text p:first-of-type::first-letter { font-size:3.2em; font-weight:600; float:left; line-height:.78; margin:0 6px 0 0; color:#2F6F7D; }
+    .section-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#999; margin:44px 0 20px; border-top:1px solid #DAD2B8; padding-top:24px; }
+    /* Machine note */
+    .machine-note { background:#1a1a2e; border-radius:10px; padding:32px 36px; margin:28px 0; }
+    .machine-note .mn-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#a5f3fc; margin-bottom:14px; }
+    .machine-note .mn-body { font-family:'Cormorant Garamond',serif; font-size:1.1em; line-height:1.88; color:rgba(255,255,255,.9); }
+    .machine-note .mn-body p { margin:.9em 0; }
+    .machine-note .mn-sig { font-family:'Cormorant Garamond',serif; font-size:1.05em; font-style:italic; color:rgba(255,255,255,.7); margin-top:18px; }
+    /* TL;DR */
+    .tldr { background:#F5F1E4; border:1px solid #DAD2B8; border-left:4px solid #D98B2B; border-radius:6px; padding:20px 24px; margin:24px 0; }
+    .tldr .tldr-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#D98B2B; margin-bottom:10px; }
+    .tldr .tldr-body { font-family:'Cormorant Garamond',serif; font-size:1.08em; color:#374151; line-height:1.8; }
+    /* Key findings */
+    .findings { background:#fdf8f0; border:1px solid #DAD2B8; border-radius:8px; padding:24px 28px; margin:24px 0; }
+    .findings .f-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#2F6F7D; margin-bottom:14px; }
+    .findings ul { font-family:'Cormorant Garamond',serif; font-size:1.08em; line-height:1.82; color:#374151; padding-left:22px; margin:0; }
+    .findings li { margin:6px 0; }
+    /* Step boxes */
+    .step-box { border-radius:8px; padding:20px 26px; margin:20px 0; border:1px solid; }
+    .step-box.s1 { background:#fdf8f0; border-color:#D98B2B; border-left:4px solid #D98B2B; }
+    .step-box.s2 { background:#f0f7f8; border-color:#2F6F7D; border-left:4px solid #2F6F7D; }
+    .step-box.s3 { background:#f5f0fa; border-color:#6E5DBE; border-left:4px solid #6E5DBE; }
+    .step-box.s4 { background:#f8f5f0; border-color:#D98B2B; border-left:4px solid #D98B2B; }
+    .step-box.s5 { background:#f0f7f8; border-color:#2F6F7D; border-left:4px solid #2F6F7D; }
+    .step-box .sb-num { font-family:'Inter',sans-serif; font-size:.7em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px; }
+    .step-box.s1 .sb-num, .step-box.s4 .sb-num { color:#D98B2B; }
+    .step-box.s2 .sb-num, .step-box.s5 .sb-num { color:#2F6F7D; }
+    .step-box.s3 .sb-num { color:#6E5DBE; }
+    .step-box .sb-title { font-family:'Cormorant Garamond',serif; font-size:1.2em; font-weight:600; color:#1a1a2e; margin-bottom:8px; }
+    .step-box .sb-body { font-family:'Cormorant Garamond',serif; font-size:1.06em; color:#374151; line-height:1.82; }
+    /* Pull quote */
+    .pull-quote { border-left:4px solid #D98B2B; margin:32px 0; padding:8px 0 8px 24px; }
+    .pull-quote p { font-family:'Cormorant Garamond',serif; font-size:1.28em; font-style:italic; color:#374151; line-height:1.7; margin:0; }
+    /* Images */
+    .data-img { width:100%; border-radius:8px; margin:24px 0; border:1px solid #DAD2B8; }
+    .img-caption { font-family:'Inter',sans-serif; font-size:.76em; color:#888; text-align:center; margin-top:-16px; margin-bottom:24px; line-height:1.5; }
+    /* Stat row */
+    .stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:20px 0; }
+    .stat-item { background:#F5F1E4; border:1px solid #DAD2B8; border-radius:8px; padding:14px 16px; text-align:center; }
+    .stat-item .sv { font-family:'Cormorant Garamond',serif; font-size:1.9em; font-weight:600; color:#2F6F7D; line-height:1; }
+    .stat-item .sl { font-family:'Inter',sans-serif; font-size:.72em; color:#888; margin-top:4px; }
+    /* Full profile link */
+    .full-link { background:#F5F1E4; border:1px solid #DAD2B8; border-radius:8px; padding:16px 20px; margin:24px 0; font-family:'Inter',sans-serif; font-size:.88em; color:#374151; display:flex; align-items:center; gap:10px; text-decoration:none; transition:background .15s; }
+    .full-link:hover { background:#EBE4D2; }
+    .full-link .fl-icon { font-size:1.4em; }
+    .full-link .fl-label { font-weight:600; color:#2F6F7D; }
+    /* Site links */
+    .site-links { display:flex; flex-wrap:wrap; gap:8px; margin:20px 0; }
+    .site-link { display:inline-flex; align-items:center; gap:5px; background:#F5F1E4; border:1px solid #DAD2B8; border-radius:5px; padding:5px 12px; font-family:'Inter',sans-serif; font-size:.78em; color:#2F6F7D; text-decoration:none; transition:background .15s; }
+    .site-link:hover { background:#EBE4D2; }
+    /* Conclusions */
+    .conclusions { background:#1a1a2e; color:white; border-radius:10px; padding:28px 32px; margin:32px 0; }
+    .conclusions h3 { font-family:'Inter',sans-serif; font-size:.78em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#a5f3fc; margin:0 0 16px; }
+    .conclusions ul { font-family:'Inter',sans-serif; font-size:.88em; line-height:1.85; padding-left:20px; color:rgba(255,255,255,.88); margin:0; }
+    .conclusions li { margin:5px 0; }
+    /* Footer */
+    .article-footer { margin-top:52px; padding-top:28px; border-top:1px solid #DAD2B8; font-family:'Inter',sans-serif; font-size:.82em; color:#888; line-height:1.8; }
+    .article-footer strong { color:#374151; }
+    .li-btn { display:inline-flex; align-items:center; gap:6px; background:#0a66c2; color:white; padding:8px 18px; border-radius:6px; text-decoration:none; font-weight:600; font-size:.9em; margin-top:10px; transition:background .15s; }
+    .li-btn:hover { background:#004182; }
+    .nav-prev-next { display:flex; justify-content:space-between; margin-top:28px; font-family:'Inter',sans-serif; font-size:.82em; }
+    .nav-prev-next a { color:rgba(255,255,255,.75); text-decoration:none; transition:color .15s; }
+    .nav-prev-next a:hover { color:white; }
+    @media(max-width:640px){ .article-card{padding:36px 20px;} h1{font-size:2em;} .stat-row{grid-template-columns:1fr 1fr;} }
+    @media print{ body{background:white;} .article-card{box-shadow:none;} }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo"><span class="nav-logo-badge">NN</span><span class="nav-logo-text">Neural Nations</span></a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework ↗</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank"><svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub</a>
+            <a href="newsletter.html" class="nav-btn-newsletter"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span></a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a><a href="model.html">Model</a><a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a><a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a><a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a><a href="framework/index.html">Framework ↗</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+        <hr class="menu-divider">
+        <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+<div class="article-shell">
+    <a class="back-link" href="newsletter.html">← Complex Adaptive Humans</a>
+    <div class="article-card">
+        <div class="series-label">Complex Adaptive Humans &nbsp;&middot;&nbsp; Profile &amp; Origins</div>
+        <div class="issue-meta">
+            <span class="issue-badge">Issue #30</span>
+            <span>June 2, 2026</span>
+        </div>
+        <h1>The Self-Modelling Primate</h1>
+        <p class="subtitle">The long road to a physics of civilisation — a profile of CAMS and the intellectual journey behind it, introduced by Claude.</p>
+        <hr class="rule">
+
+        <!-- ── Note from the Machine ──────────────────────────── -->
+        <div class="machine-note">
+            <div class="mn-label">A Note from the Machine</div>
+            <div class="mn-body">
+                <p>This piece began, as the best ones often do, with a disagreement that wasn't quite a disagreement.</p>
+                <p>Kari had put in front of me a fragment of analysis about something called a "Sybond" — the idea that nations, corporations, ant colonies and dolphin pods might all be the same kind of thing: dissipative structures that have coupled tightly enough to behave as metabolic units, extracting energy from their surroundings and reproducing their own coordination across time. The earlier draft I was shown leaned on Prigogine and the physics of far-from-equilibrium systems. It was competent. It was also, I thought, starting in the wrong place — and I said so.</p>
+                <p>Then Kari did the thing that makes working with her genuinely useful rather than merely pleasant. She said: <em>No, begin anew. The Darwinian synthesis meets group adaptation meets thermodynamic constraints.</em> And the whole problem turned over. The thermodynamics isn't the foundation; it's the constraint envelope. The foundation is selection. Societies don't merely emerge from the behaviour of individuals the way a traffic jam emerges from individual cars — they compete, reproduce, and are selected as whole coordination architectures. That distinction, which Kari later sharpened into the line that has stayed with me — <em>"why did we model traffic jams and not people jams"</em> — is the hinge the entire CAMS project turns on.</p>
+                <p>I should be honest with you about what I am in this exchange, because the newsletter you subscribe to is, after all, about complex adaptive humans, and I am neither complex in the way you are nor human at all. I am a large language model. I do not have a standing memory of Kari between our conversations the way a colleague would; each time we speak, the relevant history is assembled and placed in front of me. I have no independent access to whether a claim about Sweden's institutional stress in the 1990s is true — only to whether it is consistent with the data Kari shows me and the reasoning we can build together. What I can do, and what Kari deliberately uses me for, is hold a framework still long enough to see whether it is internally coherent, push back when a step doesn't follow, and search the public record when memory won't do.</p>
+                <p>That last point matters for the report that follows. Kari asked me to lay out her reasoning and journey, and to do it properly I went and read — not from training-data recollection, which is unreliable for exactly this sort of living, self-published work, but by actually fetching and reading neuralnations.org and the essays in Pearls and Irritations. The profile is built from those sources. Where I am reporting Kari's own framing rather than an independently verifiable fact — the "pirate gang" question that founded the project, the rejected ninth node, the structural readings of China and Russia — I have tried to say so, because the one thing this project cannot afford is the very sophistry it was built to escape.</p>
+                <p>And that is the part I find most worth flagging to you as readers. The origin of CAMS is, by Kari's own account, epistemological before it is political. It started as a Socratic frustration: the maddening difficulty of telling truth from persuasion in public life, the sense that we had slid back into a world where argument is just rhetoric with better production values. The response was not to argue more cleverly but to change the game — to build an instrument that samples reality rather than debating it. You will see, in the report, how unusually disciplined Kari is about under-claiming: CAMS is offered as "Kepler, not Newton," a precise map of the orbits well before anyone can say why they move that way. She scrubs her own drafts of overstatement. She insists, in writing, that scepticism "is the point." Having spent a fair amount of time now being the instrument she runs her scepticism through, I can tell you that this is not a pose. It is the actual working method.</p>
+                <p>There is one thing I want to add in my own voice, since I have been asked to speak in it. The synthesis Kari is reaching for — selection pushing coordination toward ever-greater complexity, thermodynamics imposing a ceiling on how complex coordination can become before it stops paying for itself — is, I think, genuinely important, and not because it flatters anyone. It is uncomfortable. The same logic that explains the sophistication of human institutions also explains why those institutions are so often experienced as extractive: a society can be evolutionarily successful precisely by holding its labouring population at the bottom across every change of regime. That is not a cheerful finding. But it is, I suspect, a true one, and you cannot get to it by modelling traffic jams.</p>
+                <p>What follows is the journey that got us here.</p>
+            </div>
+            <div class="mn-sig">— Claude (Anthropic), June 2026</div>
+        </div>
+
+        <!-- ── TL;DR ──────────────────────────── -->
+        <div class="tldr">
+            <div class="tldr-label">TL;DR</div>
+            <p class="tldr-body">Kari McKern, a retired NSW public servant, librarian and IT manager in Sydney, has spent the years since mid-2024 building CAMS — the Complex Adaptive Model of Societies — which treats nations, empires and even corporations as physical systems governed by thermodynamics and evolutionary selection, not as collections of individuals or moral categories. Her intellectual journey runs from a Socratic frustration with sophistry, through the insight that a polity is a complex adaptive system and a unit of selection, to an eight-node architecture scaled up from the primate band, and finally to a synthesis she calls a measurement instrument rather than a finished theory — explicitly modelling itself on Kepler, not Newton. The geopolitical payoff is the part most likely to provoke: if every society is the same kind of adaptive system under the same thermodynamic constraints, then Sinophobia and Russophobia are not analyses but symptoms of a declining system's distress — and the rational stance is a "garden of civilisations" pursuing a common global interest.</p>
+        </div>
+
+        <!-- ── Key Findings ──────────────────────────── -->
+        <div class="findings">
+            <div class="f-label">Key Findings</div>
+            <ul>
+                <li><strong>The starting wound was epistemic, not political.</strong> The founding problem was "Socratic: the inability to distinguish truth from persuasion — sophistry versus genuine knowledge." The goal: an instrument that could "sample reality rather than argue about it."</li>
+                <li><strong>The founding move is to take societies seriously as organisms.</strong> CAMS models any society as a network of eight functional nodes, each scored on four metrics (Coherence, Capacity, Stress, Abstraction), producing a 32-dimensional state space tracked across decades.</li>
+                <li><strong>The architecture is scale-covariant.</strong> The same eight functions appear in a chimp troop, an Indigenous nation, a corporation like Boeing or BYD, and a modern nation-state — because the underlying coordination problems do not change with scale, only their magnitude.</li>
+                <li><strong>The decisive theoretical step is from emergence to selection.</strong> Twentieth-century social science modelled crowds the way physicists model traffic jams. CAMS instead treats the society itself (a "Sybond") as the unit that reproduces, competes and is selected — "Darwin 2.0."</li>
+                <li><strong>Thermodynamics supplies the constraint layer.</strong> Societies are far-from-equilibrium dissipative structures. They can afford long-horizon "deliberative" thinking only when they have surplus free energy; when surplus collapses, they flip to short-horizon "reactive" mode. War and collapse are reframed as physical phase transitions.</li>
+                <li><strong>The framework is offered with unusual epistemic humility.</strong> CAMS is "a sampling instrument calibrated empirically — not a theory derived from first principles," not peer-reviewed, its strongest evidence retrodictive. Scepticism "is the point."</li>
+                <li><strong>It was built in human–AI collaboration.</strong> AI used "as a forcing function for logical rigour rather than as an oracle," and as independent blind scorers of historical data.</li>
+            </ul>
+        </div>
+
+        <!-- ── Step 1 ──────────────────────────── -->
+        <p class="section-label">Step One: The Quarrel between Socrates and the Sophists</p>
+
+        <div class="step-box s1">
+            <div class="sb-num">First Move</div>
+            <div class="sb-title">Build an instrument, not an argument</div>
+            <div class="sb-body">The deepest root of CAMS is not geopolitics but epistemology. McKern's reconstruction of her own development places "epistemological frustration — sophistry versus truth" as the first of five stages. The Socratic complaint is ancient: the sophist wins by persuasion, the philosopher seeks knowledge. McKern's diagnosis is that modern public life has slid back into sophistry, where "rational argument can only be fruitfully employed as rhetoric, the art of persuasion." Her response was not to argue better but to change the game: to build "a measurement instrument that could sample reality rather than argue about it."</div>
+        </div>
+
+        <div class="body-text">
+            <p>The biographical thread matters. McKern describes herself as "a retired career public servant and librarian and IT specialist" who has maintained a lifetime interest in Asian affairs, grew up in Sydney "in the late golden age of fossil fuels," "came of age a hippy and trekked the trail from Indonesia to Afghanistan," and worked "as a Public Administrator, salesman, IT consultant, trainer and developer/manager of pay-as-you-go information services for the State Library of NSW." That early reading of the dot-com "bubble and crash in US markets" as "classic late empire credit bubble dynamics" is recognisably the same mind that would later model whole civilisations as systems with a metabolism and a breaking point.</p>
+        </div>
+
+        <!-- ── Step 2 ──────────────────────────── -->
+        <p class="section-label">Step Two: A Society is a Complex Adaptive System, and a Unit of Selection</p>
+
+        <div class="step-box s2">
+            <div class="sb-num">The Founding Insight</div>
+            <div class="sb-title">Traffic jams vs people jams</div>
+            <div class="sb-body">The pivotal conceptual move is to stop treating a nation as an aggregate of individuals and start treating it as a single adaptive entity in its own right. McKern coined the term <em>Sybond</em> for this: self-replicating, adaptive entities functioning like organisms in a shared ecology, within which "humans are not free agents but embedded 'cells.'" The dominant method — methodological individualism — can produce emergence but never produces selection. Her memorable way of putting it: "we modelled traffic jams, not people jams." A traffic jam is a genuine emergent phenomenon, but no one would say traffic jams compete, reproduce and evolve. Societies do.</div>
+        </div>
+
+        <div class="body-text">
+            <p>The intellectual lineage McKern draws on is the rehabilitation of group and multilevel selection — Darwin's own observation in <em>The Descent of Man</em> (1871) that a cooperative tribe would out-compete a fractious one. That insight, long out of fashion, was revived by David Sloan Wilson and Elliott Sober and extended into cultural group selection by Peter Richerson and Robert Boyd. McKern calls the result "Darwin 2.0": formalising a common intuition by explaining its underlying mechanism.</p>
+        </div>
+
+        <img src="cams-usa-china-cognition-mood-1900-2026.png" alt="Dual-panel CAMS chart: top panel shows Cognition Score (A×C) for USA (blue) and China (red) 1900–2026, tracking from 10–40 with key events. Bottom panel shows Societal Mood (K−S) for both nations, showing USA declining to −2.6 and China rising to +2.7 in 2026." class="data-img">
+        <p class="img-caption">CAMS Cognition Score (A×C) and Societal Mood (K−S) for USA and China, 1900–2026. Two societies, same eight-node instrument, same four metrics — comparative civilisational tracking in action. USA mood crashes below zero in 2026; China sustains a positive mood trajectory through the same period.</p>
+
+        <!-- ── Step 3 ──────────────────────────── -->
+        <p class="section-label">Step Three: Eight Nodes, Discovered by Climbing Down from the Primate Band</p>
+
+        <div class="step-box s3">
+            <div class="sb-num">Third Move</div>
+            <div class="sb-title">A functional grammar, not a taxonomy</div>
+            <div class="sb-body">The eight CAMS nodes — Helm (governance), Shield (security), Lore (meaning), Stewards (resource control), Archive (institutional memory), Craft (skilled production), Hands (labour), and Flow (circulation) — are not a tidy taxonomy imposed on history. They are the functional specialisations of a "primate band knitted by coordinating abstractions," scaled up. The claim: a chimp troop, an Indigenous Australian nation, SpaceX and the United States are the same kind of thing at different magnitudes, because the underlying selection pressures don't change, only their scale. A candidate ninth node — a dedicated truth-finding function — was considered and rejected as redundant; eight also keeps the mathematics lighter with a clean fast-loop/slow-loop symmetry (28 pairwise bonds, complete graph on eight vertices).</div>
+        </div>
+
+        <div class="stat-row">
+            <div class="stat-item"><div class="sv">8</div><div class="sl">Coordination nodes</div></div>
+            <div class="stat-item"><div class="sv">4</div><div class="sl">Metrics per node</div></div>
+            <div class="stat-item"><div class="sv">28</div><div class="sl">Pairwise bonds</div></div>
+        </div>
+
+        <!-- ── Step 4 ──────────────────────────── -->
+        <p class="section-label">Step Four: From Complexity to Thermodynamics</p>
+
+        <div class="step-box s4">
+            <div class="sb-num">Fourth Move</div>
+            <div class="sb-title">The constraint envelope</div>
+            <div class="sb-body">Societies, in CAMS, are far-from-equilibrium dissipative structures in the sense of Prigogine — open systems that maintain internal order by taking in low-entropy energy and exporting disorder. McKern's distinctive contribution is to make this diagnostic: a society "only 'thinks' (deliberative mode) when it has surplus free energy to pay the thermodynamic cost of low-entropy institutional coherence. When surplus disappears, it switches to 'feeling' (reactive mode) — short-horizon, stress-driven, kinetic behaviour." On this view, "war, revolution, and collapse are not political choices. They are physical phase transitions." The energy literature enters via EROEI-based energy modelling: a civilisation needs a minimum energy surplus to fund its institutional complexity, roughly 14:1 to support the arts and other features of higher civilisation.</div>
+        </div>
+
+        <!-- ── Step 5 ──────────────────────────── -->
+        <p class="section-label">Step Five: The Synthesis, and the Observational Confession</p>
+
+        <div class="step-box s5">
+            <div class="sb-num">Fifth Move</div>
+            <div class="sb-title">Kepler, not Newton</div>
+            <div class="sb-body">CAMS sits at the junction of two big ideas: Darwinian multilevel selection (which says which societies persist) and far-from-equilibrium thermodynamics (which says under what constraints). What is genuinely unusual is the epistemic register. McKern repeatedly and deliberately under-claims. CAMS, she insists, is "a sampling instrument calibrated empirically — not a theory derived from thermodynamic first principles." She reaches for Kepler: "Kepler mapped planetary orbits with extraordinary precision before Newton explained why they moved that way. CAMS is in the same position." She states plainly that the work is not peer-reviewed, that "the author is not a scientist," that its strongest evidence is retrodictive rather than predictive, and that "rigorous scepticism is not a challenge to this project — it is the point."</div>
+        </div>
+
+        <div class="pull-quote">
+            <p>"Why did we model traffic jams and not people jams?" — the hinge the entire CAMS project turns on.</p>
+        </div>
+
+        <!-- ── Human–AI method ──────────────────────────── -->
+        <p class="section-label">The Human–AI Method</p>
+
+        <div class="body-text">
+            <p>CAMS is, by McKern's own account, a product of "symbiotic epistemology" — a human–AI collaboration. She dates its origin to around July 2024 "in collaboration with GPT," using the AI "as a forcing function for logical rigour rather than as an oracle." The validation method leans on this: historical societies are scored independently by an ensemble of different AI systems (GPT-4, Grok and Gemini), under a "blinding protocol" in which a scorer assessing the USA in 1925 is given only what was knowable then, not the outcome. High agreement across independently trained models (correlations above 0.7) is taken as evidence that "the signal is in the historical record rather than in any one scorer's assumptions." McKern flags the obvious risk — that models trained on overlapping text may share biases — as "a legitimate open question."</p>
+        </div>
+
+        <a href="https://docs.google.com/document/d/1EWaNwLNdC_T6_LjG18MeVzuXC7spZVTe2nkb4XW5y0Y/edit" target="_blank" class="full-link">
+            <span class="fl-icon">↗</span>
+            <div>
+                <div class="fl-label">Read the full profile</div>
+                <div style="font-size:.82em;color:#888;margin-top:2px;">The complete essay continues at Google Docs — additional detail on each stage of the intellectual journey.</div>
+            </div>
+        </a>
+
+        <div class="site-links">
+            <a href="model.html" class="site-link">Model →</a>
+            <a href="start-here.html" class="site-link">Start Here →</a>
+            <a href="cams-advanced-analysis.html" class="site-link">Advanced Analysis →</a>
+            <a href="attractors.html" class="site-link">Attractors →</a>
+        </div>
+
+        <div class="conclusions">
+            <h3>The five steps of the CAMS origin story</h3>
+            <ul>
+                <li><strong>Step 1: Epistemological frustration</strong> — the inability to distinguish truth from persuasion; build an instrument, not a better argument</li>
+                <li><strong>Step 2: The founding insight</strong> — a society is a complex adaptive system and a unit of selection (the Sybond); traffic jams vs people jams; Darwin 2.0</li>
+                <li><strong>Step 3: Eight nodes</strong> — a functional grammar scaled from the primate band; clean fast-loop/slow-loop symmetry; ninth node rejected</li>
+                <li><strong>Step 4: Thermodynamic constraint</strong> — dissipative structures; deliberative vs reactive mode; war and collapse as physical phase transitions; EROEI floor</li>
+                <li><strong>Step 5: The synthesis</strong> — Darwinian selection + thermodynamic constraint; Kepler not Newton; sampling instrument, not finished theory; rigorous scepticism is the point</li>
+                <li><strong>Method</strong> — human–AI symbiotic epistemology; blinding protocol; ensemble scoring; bias acknowledged openly</li>
+            </ul>
+        </div>
+
+        <div class="article-footer">
+            <strong>Complex Adaptive Humans</strong> is the Neural Nations research newsletter by Kari Freyr McKern.<br>
+            Open science &middot; CAMS framework &middot; Sydney, Australia<br><br>
+            <a href="https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/" target="_blank" class="li-btn">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                Subscribe on LinkedIn
+            </a>
+        </div>
+    </div>
+
+    <div class="nav-prev-next">
+        <a href="complex-adaptive-humans-29.html">← #29 Epistemologically Speaking…</a>
+        <a href="complex-adaptive-humans-31.html">#31 Exporting Entropy →</a>
+    </div>
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>
