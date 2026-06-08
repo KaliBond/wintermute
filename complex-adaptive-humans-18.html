@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
+    <title>Blind Testing, Dataset Expansion, and the Maturing of the CAMS Platform — Complex Adaptive Humans #18 · Neural Nations</title>
+    <meta name="description" content="Issue #18: 32+ societies, 30,856 records, and a blind test revealing five archetypes — from corporate fraud collapse to 425 years of indigenous memory resilience — using the same mathematics.">
+    <meta name="keywords" content="CAMS, Neural Nations, blind analysis, Enron, Theranos, SpaceX, Indigenous Australia, Māori, dataset expansion, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/complex-adaptive-humans-18">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/complex-adaptive-humans-18">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="Blind Testing, Dataset Expansion, and the Maturing of the CAMS Platform — Complex Adaptive Humans #18 · Neural Nations">
+    <meta property="og:description" content="Issue #18: Five anonymised entities. One framework. Corporate fraud collapses, indigenous trauma arcs, a deep-tech ascent — all readable from the same node-value equation.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Blind Testing, Dataset Expansion, and the Maturing of the CAMS Platform — Complex Adaptive Humans #18">
+    <meta name="twitter:description" content="The node-value equation holds across a 12-year corporate fraud arc and a 425-year indigenous timeline without modification. Five entities. One mathematics.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        { "@type": "WebSite", "name": "Neural Nations", "url": "https://neuralnations.org" },
+        { "@type": "Person", "@id": "https://neuralnations.org/#kari", "name": "Kari McKern", "url": "https://neuralnations.org/cams-project-history" }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    body { background: #F5F1E4; }
+    .article-shell { max-width: 780px; margin: 0 auto; padding: 40px 20px 80px; }
+    .back-link { font-family:'Inter',sans-serif; font-size:.82em; color:rgba(255,255,255,.75); text-decoration:none; display:inline-flex; align-items:center; gap:5px; margin-bottom:28px; transition:color .15s; }
+    .back-link:hover { color:white; }
+    .article-card { background:white; border-radius:8px; padding:64px 72px; box-shadow:0 8px 40px rgba(0,0,0,.18); }
+    .series-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#2F6F7D; margin-bottom:6px; }
+    .issue-meta { font-family:'Inter',sans-serif; font-size:.78em; color:#999; margin-bottom:28px; display:flex; align-items:center; gap:14px; }
+    .issue-badge { background:#F0E9D2; color:#2F6F7D; font-weight:600; padding:3px 10px; border-radius:20px; font-size:.9em; }
+    h1 { font-family:'Cormorant Garamond',serif; font-size:2.6em; font-weight:600; color:#1a1a2e; line-height:1.2; letter-spacing:-.02em; margin:0 0 10px; }
+    .subtitle { font-family:'Cormorant Garamond',serif; font-size:1.15em; font-style:italic; color:#555; margin:0 0 36px; }
+    .rule { border:none; border-top:1px solid #DAD2B8; margin:32px 0; }
+    .body-text { font-family:'Cormorant Garamond',serif; font-size:1.13em; line-height:1.92; color:#2c2c2c; }
+    .body-text p { margin:1.4em 0; }
+    .body-text p:first-of-type::first-letter { font-size:3.2em; font-weight:600; float:left; line-height:.78; margin:0 6px 0 0; color:#2F6F7D; }
+    .body-text blockquote { border-left:3px solid #D98B2B; margin:24px 0; padding:4px 0 4px 20px; color:#555; font-style:italic; }
+    .section-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#999; margin:44px 0 20px; border-top:1px solid #DAD2B8; padding-top:24px; }
+    /* Stats */
+    .stat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:20px 0; }
+    .stat-card { background:#F5F1E4; border:1px solid #DAD2B8; border-radius:6px; padding:14px 16px; text-align:center; }
+    .stat-card .stat-val { font-family:'Cormorant Garamond',serif; font-size:1.6em; font-weight:600; color:#1a1a2e; }
+    .stat-card .stat-label { font-family:'Inter',sans-serif; font-size:.72em; color:#888; margin-top:3px; line-height:1.4; }
+    /* Entity cards */
+    .entity-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:24px 0; }
+    .entity-card { border-radius:8px; padding:18px 20px; }
+    .e-collapse { background:#fff1f2; border:1px solid #fecdd3; border-top:3px solid #9b1c1c; }
+    .e-bleed { background:#fff7ed; border:1px solid #fed7aa; border-top:3px solid #D98B2B; }
+    .e-ascent { background:#f0fdf4; border:1px solid #bbf7d0; border-top:3px solid #15803d; }
+    .e-songline { background:#faf7ff; border:1px solid #ddd6fe; border-top:3px solid #6E5DBE; }
+    .e-treaty { background:#f0f6ff; border:1px solid #bfdbfe; border-top:3px solid #1d4ed8; }
+    .entity-card .ec-label { font-family:'Inter',sans-serif; font-size:.68em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#888; margin-bottom:4px; }
+    .entity-card .ec-archetype { font-family:'Cormorant Garamond',serif; font-size:1.15em; font-weight:600; color:#1a1a2e; margin-bottom:6px; }
+    .entity-card .ec-range { font-family:'Inter',sans-serif; font-size:.75em; color:#888; margin-bottom:8px; }
+    .entity-card .ec-memory { font-family:'Inter',sans-serif; font-size:.82em; color:#374151; line-height:1.65; }
+    .entity-card .ec-id { font-family:'Inter',sans-serif; font-size:.75em; color:#2F6F7D; margin-top:8px; font-weight:600; }
+    /* Pull quote */
+    .pull-quote { border-left:4px solid #D98B2B; margin:32px 0; padding:8px 0 8px 24px; }
+    .pull-quote p { font-family:'Cormorant Garamond',serif; font-size:1.28em; font-style:italic; color:#374151; line-height:1.7; margin:0; }
+    /* Data box */
+    .data-box { background:#F5F1E4; border:1px solid #DAD2B8; border-left:4px solid #2F6F7D; border-radius:6px; padding:16px 20px; margin:20px 0; font-family:'Inter',sans-serif; font-size:.84em; color:#374151; line-height:1.7; }
+    .data-box a { color:#2F6F7D; text-decoration:none; }
+    .data-box a:hover { text-decoration:underline; }
+    /* Milestones */
+    .milestone-box { background:#fafaf7; border:1px solid #DAD2B8; border-radius:8px; padding:20px 24px; margin:24px 0; font-family:'Inter',sans-serif; font-size:.84em; color:#374151; line-height:1.8; text-align:center; }
+    .milestone-box .mb-num { font-family:'Cormorant Garamond',serif; font-size:2em; font-weight:600; color:#2F6F7D; }
+    /* Conclusions */
+    .conclusions { background:#1a1a2e; color:white; border-radius:10px; padding:28px 32px; margin:32px 0; }
+    .conclusions h3 { font-family:'Inter',sans-serif; font-size:.78em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#a5f3fc; margin:0 0 16px; }
+    .conclusions ul { font-family:'Inter',sans-serif; font-size:.88em; line-height:1.85; padding-left:20px; color:rgba(255,255,255,.88); margin:0; }
+    .conclusions li { margin:5px 0; }
+    .conclusions .caveat { margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,.12); font-family:'Inter',sans-serif; font-size:.82em; color:rgba(255,255,255,.55); line-height:1.7; }
+    .conclusions .caveat a { color:#a5f3fc; }
+    /* Footer */
+    .article-footer { margin-top:52px; padding-top:28px; border-top:1px solid #DAD2B8; font-family:'Inter',sans-serif; font-size:.82em; color:#888; line-height:1.8; }
+    .article-footer strong { color:#374151; }
+    .li-btn { display:inline-flex; align-items:center; gap:6px; background:#0a66c2; color:white; padding:8px 18px; border-radius:6px; text-decoration:none; font-weight:600; font-size:.9em; margin-top:10px; transition:background .15s; }
+    .li-btn:hover { background:#004182; }
+    .nav-prev-next { display:flex; justify-content:space-between; margin-top:28px; font-family:'Inter',sans-serif; font-size:.82em; }
+    .nav-prev-next a { color:rgba(255,255,255,.75); text-decoration:none; transition:color .15s; }
+    .nav-prev-next a:hover { color:white; }
+    @media(max-width:640px){ .article-card{padding:36px 20px;} h1{font-size:2em;} .stat-grid,.entity-grid{grid-template-columns:1fr;} }
+    @media print{ body{background:white;} .article-card{box-shadow:none;} }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo"><span class="nav-logo-badge">NN</span><span class="nav-logo-text">Neural Nations</span></a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework ↗</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank"><svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub</a>
+            <a href="newsletter.html" class="nav-btn-newsletter"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span></a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a><a href="model.html">Model</a><a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a><a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a><a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a><a href="framework/index.html">Framework ↗</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+        <hr class="menu-divider">
+        <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+<div class="article-shell">
+    <a class="back-link" href="newsletter.html">← Complex Adaptive Humans</a>
+    <div class="article-card">
+        <div class="series-label">Complex Adaptive Humans &nbsp;&middot;&nbsp; Platform Update</div>
+        <div class="issue-meta">
+            <span class="issue-badge">Issue #18</span>
+            <span>March 12, 2026</span>
+        </div>
+        <h1>Blind Testing, Dataset Expansion, and the Maturing of the CAMS Platform</h1>
+        <p class="subtitle">Five archetypes from one equation — corporate fraud to 425 years of indigenous resilience</p>
+        <hr class="rule">
+
+        <div class="body-text">
+            <p>NeuralNations.org has become more than a site. It is now a working research platform built around the CAMS telescope: an 8-node × 4-metric framework for examining human systems as complex adaptive structures.</p>
+        </div>
+
+        <figure style="margin:28px 0 8px;">
+            <img src="neuralnations-platform-2026.png" alt="Neural Nations research platform — 32+ societies, 30,856 records, open datasets and live tools" style="width:100%;border-radius:6px;border:1px solid #DAD2B8;">
+            <figcaption style="font-family:'Inter',sans-serif;font-size:.75em;color:#999;margin-top:8px;text-align:center;">Neural Nations — a CAMS research platform. 32+ societies · 30,856 records · open datasets · live tools.</figcaption>
+        </figure>
+
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="stat-val">32+</div>
+                <div class="stat-label">Societies in open format — pre-industrial, corporate, governmental, historical</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val">30,856</div>
+                <div class="stat-label">Records across the corpus — one common analytical frame</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val">99</div>
+                <div class="stat-label">Newsletter subscribers — thank you</div>
+            </div>
+        </div>
+
+        <div class="body-text">
+            <p>The most visible change is the expanding dataset backbone. The corpus now spans pre-industrial, corporate, governmental, and historical formations within one common analytical frame. It includes Indigenous Australia in 25-year intervals, corporate cases, and a widening historical archive reaching from Rome and Byzantium to multiple Middle Eastern and contemporary state datasets. Recent additions include Finland, Germany, Norway, Sweden, Iran, the UAE, Brazil, the USA, and Australia.</p>
+
+            <p>What matters is not simply scale, but comparison. As the corpus grows, patterns become harder to dismiss as anecdote. One of the clearest continues to be the differential in Coherence × Abstraction between nodes. When Lore and Archive carry high C×A while Hands and Craft carry low C×A, symbolic legitimacy is concentrating at the top while operational reality diverges below. That is not just a political style. It is a measurable structural condition.</p>
+        </div>
+
+        <!-- ── Blind test ──────────────────────────── -->
+        <p class="section-label">Latest Blind Test</p>
+
+        <div class="body-text">
+            <p>A recent blind test brought this home sharply. Five anonymised datasets were examined using the same CAMS formulation held constant throughout. The prompt was simple: analyse the entities blind, examine the patterns and weights of cognition, and derive the "memories" encoded in each system. Only after the structural reading would the reveal occur.</p>
+        </div>
+
+        <div class="data-box">
+            <strong>Prompt:</strong> "Analyse the following entities blind, look at the patterns and weights of cognition and derive the 'memories' of each entity. After further analysis we will do a reveal and we can discuss the utility of the framework."<br><br>
+            <strong>Files:</strong>
+            Markerxwoxco1990_2004.csv &nbsp;&middot;&nbsp;
+            Markerxthe_Gem_march.csv &nbsp;&middot;&nbsp;
+            Markerxsxx_Gem_mar.csv &nbsp;&middot;&nbsp;
+            MarkerxInda.csv &nbsp;&middot;&nbsp;
+            Markerxmxnzx_Gem_feb20.csv<br><br>
+            <strong>Metric definitions:</strong>
+            Mind = Σ(A × C) per node &nbsp;&middot;&nbsp; Heart = Σ(K − S) per node
+        </div>
+
+        <!-- ── Five archetypes ──────────────────────────── -->
+        <p class="section-label">The Five Archetypes</p>
+
+        <div class="entity-grid">
+            <div class="entity-card e-collapse">
+                <div class="ec-label">Entity A — "Woxco" · 1990–2001</div>
+                <div class="ec-archetype">The Falling Tower</div>
+                <div class="ec-range">12-year corporate arc</div>
+                <div class="ec-memory">Built elaborate narrative structures (Abstraction 7.4) atop collapsing coherence (2.8) — the "Smartest Guys in the Room" syndrome. The 2000–01 phase transition shows classic node decoupling: sudden dispersion spike followed by entropic heat death (Stress 10.0 vs Capacity 3.6). The Archive filled with sophisticated instruments while Hands and Shield atrophied.</div>
+                <div class="ec-id">Likely: Corporate fraud collapse (Enron)</div>
+            </div>
+            <div class="entity-card e-bleed">
+                <div class="ec-label">Entity B — "Thex" · 2005–2018</div>
+                <div class="ec-archetype">The Long Bleed</div>
+                <div class="ec-range">14-year medical fraud arc</div>
+                <div class="ec-memory">Gradual cognitive decline — Abstraction falling from 9→0 over 14 years while maintaining narrative confidence. The 2007, 2012–2013 trauma epochs indicate regulatory/legal stress impacts. A 2010 "recovery" was a false attractor: narrative resilience without thermodynamic recovery, ending in terminal collapse (Coordination &lt;0).</div>
+                <div class="ec-id">Likely: Biotech fraud (Theranos)</div>
+            </div>
+            <div class="entity-card e-ascent">
+                <div class="ec-label">Entity C · 2010–2025</div>
+                <div class="ec-archetype">The Ascent Engine</div>
+                <div class="ec-range">Deep-tech corporate</div>
+                <div class="ec-memory">Operating at the thermodynamic limits of human organisation. Navigated a 2015 scaling crisis and entered sustained "mythic ascent" (Abstraction 9.8–10.0, 2017–2025). High coordination (V̄ &gt;17) with low internal variance (σ_V &lt;2). Strong Archive/Lore suggest knowledge codification as a competitive moat.</div>
+                <div class="ec-id">Likely: Aerospace/Deep Tech (SpaceX)</div>
+            </div>
+            <div class="entity-card e-songline">
+                <div class="ec-label">Entity D — "Inda" · 1600–2025</div>
+                <div class="ec-archetype">The Songline Carrier</div>
+                <div class="ec-range">425-year arc</div>
+                <div class="ec-memory">175 years of stable high-performance (1600–1775) with successful entropy export, then colonial impact trauma peaking at 1825. Multi-generational resilience: recovery timescale ~100 years (1975–2025 renaissance). Lore and Archive dominance indicates deep mnemonic orientation. Has not yet returned to pre-trauma coordination levels.</div>
+                <div class="ec-id">Likely: Indigenous Australian Societies</div>
+            </div>
+        </div>
+
+        <div class="entity-card e-treaty" style="margin-bottom:24px;border-radius:8px;padding:18px 20px;">
+            <div class="ec-label">Entity E — "Mxnzx" · 1770–2025</div>
+            <div class="ec-archetype">The Treaty Fragment — The Bicultural Oscillator</div>
+            <div class="ec-range">255-year arc</div>
+            <div class="ec-memory">Pre-contact stability (1770–1795) shattered by invasion and land wars (1810–1860 entropy cascade). Violent oscillation (high dispersion 1810–1900) unlike Entity D's sustained suppression, followed by artificial coordination imposed via colonial structures. The 1950–2025 phase indicates attempted integration of dual knowledge systems — Indigenous Lore + Colonial Archive.</div>
+            <div class="ec-id">Likely: Māori / Aotearoa (New Zealand)</div>
+        </div>
+
+        <figure style="margin:28px 0 8px;">
+            <img src="cams-blind-test-five-entities.png" alt="CAMS v2.1 Phase Space Trajectories — five entities: Sudden Entropic Collapse, Medical Fraud Decay, Technical Mythic Ascent, Indigenous Memory Resilience, Structural Trauma Oscillation" style="width:100%;border-radius:6px;border:1px solid #DAD2B8;">
+            <figcaption style="font-family:'Inter',sans-serif;font-size:.75em;color:#999;margin-top:8px;text-align:center;">CAMS v2.1 Phase Space Trajectories — Coordination (V̄) vs Internal Dispersion (σ_V). Five entities reveal five structurally distinct archetypes: corporate collapse, slow fraud bleed, deep-tech ascent, indigenous memory resilience, and bicultural oscillation.</figcaption>
+        </figure>
+
+        <!-- ── Discussion ──────────────────────────── -->
+        <p class="section-label">Discussion</p>
+
+        <div class="body-text">
+            <p>The node value equation holds across a 12-year corporate fraud arc and a 425-year indigenous timeline without modification.</p>
+
+            <p>The framework reads technical-engineering cultures from narrative-deceptive ones, rapid collapse from slow bleed, and suppression trauma from oscillation trauma — using the same mathematics.</p>
+        </div>
+
+        <div class="pull-quote">
+            <p>The deeper implication is that very different human systems may share a common coordination geometry. Different histories, different cultures, different elites, different myths — but the same thermodynamically constrained structural signatures.</p>
+        </div>
+
+        <div class="body-text">
+            <p>CAMS treats history as neither pure chaos nor pure destiny. It treats societies as complex adaptive systems with attractors, thresholds, and path dependencies. Like climate prediction — an estimate of where the system is most likely to roll next, not a weather report for next month.</p>
+
+            <p>The site's formal specification now makes that claim explicit, defining a society as an 8×4 state matrix and tracking crisis as a problem of layer decoupling between mythic, interface, and material domains.</p>
+
+            <p>If that holds, then social analysis can begin to move away from ideology and closer to measurement.</p>
+        </div>
+
+        <div class="data-box">
+            <strong>Blind analysis threads:</strong><br>
+            <a href="https://www.kimi.com/share/19cda3dd-6db2-84fc-8000-0000aae3c18a" target="_blank">Kimi — full blind analysis</a> &nbsp;&middot;&nbsp;
+            <a href="https://chat.deepseek.com/share/qg7txe6uj46py80cnz" target="_blank">DeepSeek — validation of results</a><br><br>
+            <strong>Structured reports:</strong> <a href="explore.html">neuralnations.org/explore</a>
+        </div>
+
+        <div class="conclusions">
+            <h3>What this issue established</h3>
+            <ul>
+                <li>The corpus now spans 32+ societies and 30,856 records across pre-industrial, corporate, governmental, and historical formations</li>
+                <li>The Coherence × Abstraction differential between Lore/Archive and Hands/Craft is a measurable structural condition, not a political style</li>
+                <li>Five anonymised entities — read blind — produced five structurally distinct archetypes: rapid collapse, slow bleed, ascent, suppression resilience, oscillation trauma</li>
+                <li>The same node-value equation holds across a 12-year fraud arc and a 425-year indigenous timeline without modification</li>
+                <li>CAMS is closer to climate reasoning than prophecy: attractors, thresholds, and path dependencies yield estimates, not forecasts</li>
+            </ul>
+            <p class="caveat">Blind analysis: <a href="https://www.kimi.com/share/19cda3dd-6db2-84fc-8000-0000aae3c18a" target="_blank">Kimi</a> · <a href="https://chat.deepseek.com/share/qg7txe6uj46py80cnz" target="_blank">DeepSeek</a>. Entity identities speculative — the structural readings were made before any reveal.</p>
+        </div>
+
+        <div class="milestone-box">
+            <div class="mb-num">99</div>
+            On the occasion of this issue — many thanks to the 99 subscribers following this work. The telescope is still being built.
+        </div>
+
+        <div class="article-footer">
+            <strong>Complex Adaptive Humans</strong> is the Neural Nations research newsletter by Kari Freyr McKern.<br>
+            Open science &middot; CAMS framework &middot; Sydney, Australia<br><br>
+            <a href="https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/" target="_blank" class="li-btn">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                Subscribe on LinkedIn
+            </a>
+        </div>
+    </div>
+
+    <div class="nav-prev-next">
+        <a href="complex-adaptive-humans-17.html">← #17 CAMS v2.3</a>
+        <span></span>
+    </div>
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>

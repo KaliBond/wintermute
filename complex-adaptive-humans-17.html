@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
+    <title>CAMS v2.3 — Complex Adaptive Humans #17 · Neural Nations</title>
+    <meta name="description" content="Issue #17: CAMS v2.3 release. A formal specification of the 8×4 state matrix, coordination phase space, and failure mode taxonomy — plus four new analytical tools: dDIG, Dyad Field, Combined Insights, and Phase-Space Attractor.">
+    <meta name="keywords" content="CAMS v2.3, Neural Nations, coordination phase space, dDIG, phase-space attractor, bond strength, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/complex-adaptive-humans-17">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/complex-adaptive-humans-17">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="CAMS v2.3 — Complex Adaptive Humans #17 · Neural Nations">
+    <meta property="og:description" content="Issue #17: CAMS v2.3 formal specification, failure mode taxonomy, and interactive dashboard with four analytical tools. Open-source, time-series optimised.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CAMS v2.3 — Complex Adaptive Humans #17">
+    <meta name="twitter:description" content="CAMS v2.3: an 8×4 state matrix, mythic–material coupling index Λ, coordination phase transitions, and four analytical tools. Free, open-source.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        { "@type": "WebSite", "name": "Neural Nations", "url": "https://neuralnations.org" },
+        { "@type": "Person", "@id": "https://neuralnations.org/#kari", "name": "Kari McKern", "url": "https://neuralnations.org/cams-project-history" }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    body { background: #F5F1E4; }
+    .article-shell { max-width: 780px; margin: 0 auto; padding: 40px 20px 80px; }
+    .back-link { font-family:'Inter',sans-serif; font-size:.82em; color:rgba(255,255,255,.75); text-decoration:none; display:inline-flex; align-items:center; gap:5px; margin-bottom:28px; transition:color .15s; }
+    .back-link:hover { color:white; }
+    .article-card { background:white; border-radius:8px; padding:64px 72px; box-shadow:0 8px 40px rgba(0,0,0,.18); }
+    .series-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#2F6F7D; margin-bottom:6px; }
+    .issue-meta { font-family:'Inter',sans-serif; font-size:.78em; color:#999; margin-bottom:28px; display:flex; align-items:center; gap:14px; }
+    .issue-badge { background:#F0E9D2; color:#2F6F7D; font-weight:600; padding:3px 10px; border-radius:20px; font-size:.9em; }
+    h1 { font-family:'Cormorant Garamond',serif; font-size:2.6em; font-weight:600; color:#1a1a2e; line-height:1.2; letter-spacing:-.02em; margin:0 0 10px; }
+    .subtitle { font-family:'Cormorant Garamond',serif; font-size:1.15em; font-style:italic; color:#555; margin:0 0 36px; }
+    .rule { border:none; border-top:1px solid #DAD2B8; margin:32px 0; }
+    .body-text { font-family:'Cormorant Garamond',serif; font-size:1.13em; line-height:1.92; color:#2c2c2c; }
+    .body-text p { margin:1.4em 0; }
+    .body-text p:first-of-type::first-letter { font-size:3.2em; font-weight:600; float:left; line-height:.78; margin:0 6px 0 0; color:#2F6F7D; }
+    .section-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#999; margin:44px 0 20px; border-top:1px solid #DAD2B8; padding-top:24px; }
+    /* Formula boxes */
+    .formula-box { background:#1a1a2e; border-radius:8px; padding:18px 22px; margin:20px 0; font-family:'JetBrains Mono','Courier New',monospace; font-size:.85em; color:#a5f3fc; line-height:1.8; overflow-x:auto; }
+    .formula-box .f-label { font-family:'Inter',sans-serif; font-size:.68em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:8px; display:block; }
+    /* Layer grid */
+    .layer-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:24px 0; }
+    .layer-card { border-radius:8px; padding:16px; text-align:center; }
+    .layer-mythic { background:#faf7ff; border:1px solid #ddd6fe; border-top:3px solid #6E5DBE; }
+    .layer-interface { background:#f0fdf4; border:1px solid #bbf7d0; border-top:3px solid #15803d; }
+    .layer-material { background:#fff7ed; border:1px solid #fed7aa; border-top:3px solid #D98B2B; }
+    .layer-card .lc-name { font-family:'Inter',sans-serif; font-size:.68em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#888; margin-bottom:8px; }
+    .layer-card .lc-nodes { font-family:'Cormorant Garamond',serif; font-size:1.1em; font-weight:600; color:#1a1a2e; margin-bottom:4px; }
+    .layer-card .lc-desc { font-family:'Inter',sans-serif; font-size:.75em; color:#666; line-height:1.5; }
+    /* Failure mode list */
+    .failure-list { list-style:none; padding:0; margin:0; }
+    .failure-list li { padding:14px 0; border-bottom:1px solid #F0E9D2; font-family:'Inter',sans-serif; font-size:.86em; line-height:1.75; color:#374151; }
+    .failure-list li:last-child { border-bottom:none; }
+    .failure-list li strong { color:#1a1a2e; display:block; margin-bottom:3px; }
+    .failure-list li .f-signal { font-family:'JetBrains Mono','Courier New',monospace; font-size:.82em; color:#9b1c1c; background:#fff1f2; padding:2px 6px; border-radius:3px; }
+    /* Dashboard tabs */
+    .tab-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:24px 0; }
+    .tab-card { border-radius:8px; padding:18px 20px; }
+    .tab-1 { background:#f0f9ff; border:1px solid #bae6fd; border-left:3px solid #0369a1; }
+    .tab-2 { background:#faf7ff; border:1px solid #ddd6fe; border-left:3px solid #6E5DBE; }
+    .tab-3 { background:#f0fdf4; border:1px solid #bbf7d0; border-left:3px solid #15803d; }
+    .tab-4 { background:#1a1a2e; border:1px solid #374151; border-left:3px solid #a5f3fc; }
+    .tab-card .tc-num { font-family:'Inter',sans-serif; font-size:.68em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#888; margin-bottom:6px; }
+    .tab-4 .tc-num { color:rgba(255,255,255,.4); }
+    .tab-card .tc-name { font-family:'Cormorant Garamond',serif; font-size:1.15em; font-weight:600; color:#1a1a2e; margin-bottom:6px; }
+    .tab-4 .tc-name { color:white; }
+    .tab-card .tc-desc { font-family:'Inter',sans-serif; font-size:.8em; color:#555; line-height:1.6; }
+    .tab-4 .tc-desc { color:rgba(255,255,255,.7); }
+    /* Data box */
+    .data-box { background:#F5F1E4; border:1px solid #DAD2B8; border-left:4px solid #2F6F7D; border-radius:6px; padding:16px 20px; margin:20px 0; font-family:'Inter',sans-serif; font-size:.84em; color:#374151; line-height:1.7; }
+    .data-box a { color:#2F6F7D; text-decoration:none; }
+    .data-box a:hover { text-decoration:underline; }
+    /* Conclusions */
+    .conclusions { background:#1a1a2e; color:white; border-radius:10px; padding:28px 32px; margin:32px 0; }
+    .conclusions h3 { font-family:'Inter',sans-serif; font-size:.78em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#a5f3fc; margin:0 0 16px; }
+    .conclusions ul { font-family:'Inter',sans-serif; font-size:.88em; line-height:1.85; padding-left:20px; color:rgba(255,255,255,.88); margin:0; }
+    .conclusions li { margin:5px 0; }
+    /* Footer */
+    .article-footer { margin-top:52px; padding-top:28px; border-top:1px solid #DAD2B8; font-family:'Inter',sans-serif; font-size:.82em; color:#888; line-height:1.8; }
+    .article-footer strong { color:#374151; }
+    .li-btn { display:inline-flex; align-items:center; gap:6px; background:#0a66c2; color:white; padding:8px 18px; border-radius:6px; text-decoration:none; font-weight:600; font-size:.9em; margin-top:10px; transition:background .15s; margin-right:8px; }
+    .li-btn:hover { background:#004182; }
+    .dash-btn { display:inline-flex; align-items:center; gap:6px; background:#2F6F7D; color:white; padding:8px 18px; border-radius:6px; text-decoration:none; font-weight:600; font-size:.9em; margin-top:10px; transition:background .15s; }
+    .dash-btn:hover { background:#1a4f5a; }
+    .nav-prev-next { display:flex; justify-content:space-between; margin-top:28px; font-family:'Inter',sans-serif; font-size:.82em; }
+    .nav-prev-next a { color:rgba(255,255,255,.75); text-decoration:none; transition:color .15s; }
+    .nav-prev-next a:hover { color:white; }
+    @media(max-width:640px){ .article-card{padding:36px 20px;} h1{font-size:2em;} .layer-grid,.tab-grid{grid-template-columns:1fr;} }
+    @media print{ body{background:white;} .article-card{box-shadow:none;} }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo"><span class="nav-logo-badge">NN</span><span class="nav-logo-text">Neural Nations</span></a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework ↗</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank"><svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub</a>
+            <a href="newsletter.html" class="nav-btn-newsletter"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span></a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a><a href="model.html">Model</a><a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a><a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a><a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a><a href="framework/index.html">Framework ↗</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+        <hr class="menu-divider">
+        <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+<div class="article-shell">
+    <a class="back-link" href="newsletter.html">← Complex Adaptive Humans</a>
+    <div class="article-card">
+        <div class="series-label">Complex Adaptive Humans &nbsp;&middot;&nbsp; Framework Release</div>
+        <div class="issue-meta">
+            <span class="issue-badge">Issue #17</span>
+            <span>February 25, 2026</span>
+        </div>
+        <h1>CAMS v2.3</h1>
+        <p class="subtitle">A formal specification, a failure mode taxonomy, and four new analytical tools</p>
+        <hr class="rule">
+
+        <div class="body-text">
+            <p>CAMS v2.3 is the latest version of the Complex Adaptive Model of Societies. The framework represents a society as a dynamic 8×4 state matrix, bridging the mythic layer (Lore and Archive) with executive interfaces (Helm and Stewards) through to the material foundations of Shield, Craft, Hands, and Flow. Effective coupling coordination between these three node types defines societal health.</p>
+
+            <p>Through precise mathematical definitions of node health, bond strengths, and coordination phase space, CAMS illuminates how societies maintain coherence or descend into crisis via layer decoupling — offering a universal lens for analysing civilisational resilience and transformation.</p>
+
+            <p>Complementing the formal model is a new interactive dashboard with four specialised analytical tools: dDIG Analysis, Dyad Field, Combined Insights, and Phase-Space Attractor. Open-source, intuitive, and optimised for time-series data.</p>
+        </div>
+
+        <!-- ── Three layers ──────────────────────────── -->
+        <p class="section-label">Three Ontological Layers</p>
+
+        <div class="layer-grid">
+            <div class="layer-card layer-mythic">
+                <div class="lc-name">Mythic</div>
+                <div class="lc-nodes">Lore · Archive</div>
+                <div class="lc-desc">Cognitive coherence and legitimacy — meaning, memory, narrative continuity</div>
+            </div>
+            <div class="layer-card layer-interface">
+                <div class="lc-name">Interface</div>
+                <div class="lc-nodes">Helm · Stewards</div>
+                <div class="lc-desc">Executive conduit — governance and resource stewardship bridging myth and matter</div>
+            </div>
+            <div class="layer-card layer-material">
+                <div class="lc-name">Material</div>
+                <div class="lc-nodes">Shield · Craft · Hands · Flow</div>
+                <div class="lc-desc">Physical and metabolic base — defence, production, labour, distribution</div>
+            </div>
+        </div>
+
+        <!-- ── Formal spec ──────────────────────────── -->
+        <p class="section-label">Concise Formal Specification</p>
+
+        <div class="body-text">
+            <p>Society S at time t is the state matrix X(t) ∈ ℝ⁸ˣ⁴ — eight nodes, four columns [C, K, S, A] scored on integers [1, 10] representing Coherence, Capacity, Stress, and Abstraction.</p>
+        </div>
+
+        <div class="formula-box">
+            <span class="f-label">Node Value</span>
+V_i(t) = C_i + K_i + (A_i / 2) − S_i      range: [−7.5, 24.0]
+
+Mean:  V̄(t) = (1/8) Σ V_i(t)
+Sigma: σ_V(t) = √((1/8) Σ (V_i − V̄)²)
+        </div>
+
+        <div class="formula-box">
+            <span class="f-label">Bond Strength — negative-domain safe</span>
+B_ij(t) = √(max(V_i + 8, 0) · max(V_j + 8, 0)) / 32      range: [0, 1]
+
+Mythic–Material coupling index (primary leading indicator):
+Λ(t) = mean B_ij over all cross-layer edges
+        </div>
+
+        <div class="formula-box">
+            <span class="f-label">Coordination Phase Space &amp; Phase Transition</span>
+Φ(t) = (V̄(t), σ_V(t))
+
+Regimes (V_θ ≈ 12, σ_θ ≈ 3.5):
+  Coherent-Capable  |  Strained-Coherent
+  Polarised-Capable |  Crisis
+
+CPT at t* when Φ enters Crisis with:
+  dσ_V/dt > 0,  dV̄/dt < 0,  Λ(t*) < 0.45
+        </div>
+
+        <div class="formula-box">
+            <span class="f-label">Dynamics — graph Laplacian diffusion + shocks</span>
+V_i(t+1) = V_i(t) + α Σ_j B_ij (V_j − V_i) + ε_i(t+1)
+
+Order parameters: ξ₁ = V̄,  ξ₂ = σ_V,  ξ₃ = Λ
+        </div>
+
+        <!-- ── Phase space output ──────────────────────────── -->
+        <figure style="margin:28px 0 8px;">
+            <img src="cams-v23-phase-space-output.png" alt="CAMS v2.3 phase-space output: Australia, Norway, Iran — coordination metrics over time and phase-space trajectories" style="width:100%;border-radius:6px;border:1px solid #DAD2B8;">
+            <figcaption style="font-family:'Inter',sans-serif;font-size:.75em;color:#999;margin-top:8px;text-align:center;">Phase-space trajectories and coordination metrics over time — Australia, Norway, Iran. Distinct attractor basins visible in each case.</figcaption>
+        </figure>
+
+        <!-- ── Failure modes ──────────────────────────── -->
+        <p class="section-label">Failure Mode Taxonomy</p>
+
+        <div class="body-text">
+            <p>Systemic failure equals layer decoupling. The signal is a falling Λ(t) — the mythic–material coupling index degrading before the Coordination Phase Transition arrives. Societies do not fail by single-node collapse but by severed bonds between layers.</p>
+        </div>
+
+        <ul class="failure-list">
+            <li>
+                <strong>Chaotic Fragmentation</strong>
+                Material layer runs without mythic coherence. <span class="f-signal">low Λ, Material ↑, Mythic ↓</span><br>
+                Example: 1891 Chilean Civil War.
+            </li>
+            <li>
+                <strong>Regime Rigidity</strong>
+                Mythic layer captures Helm and freezes Material adaptation. <span class="f-signal">Mythic high, Material stagnant</span>
+            </li>
+            <li>
+                <strong>Helm Isolation</strong>
+                Executive fragmentation or capture. <span class="f-signal">V₁ ↓, β₁ ↓</span>
+            </li>
+            <li>
+                <strong>Mythic Decoupling</strong>
+                Narrative–material gap: meaning continues while capacity collapses. <span class="f-signal">Mythic high, Material collapse</span>
+            </li>
+            <li>
+                <strong>Flow Collapse</strong>
+                Supply or currency failure cascades to Hands, Craft, and Shield. <span class="f-signal">Flow V ↓ → cascade</span>
+            </li>
+            <li>
+                <strong>Late Abstraction Collapse</strong>
+                Abstraction drops after prolonged stress accumulation. <span class="f-signal">A_i ↓ after S_i ↑ sustained</span>
+            </li>
+            <li>
+                <strong>Shield Inversion</strong>
+                Praetorian turn — coercion dominates collapsing governance and meaning. <span class="f-signal">Shield dominates Helm/Lore</span>
+            </li>
+            <li>
+                <strong>Archive Amnesia</strong>
+                Memory collapse leading to policy incoherence and narrative drift. <span class="f-signal">Archive C ↓, σ_V ↑</span>
+            </li>
+        </ul>
+
+        <!-- ── Dashboard ──────────────────────────── -->
+        <p class="section-label">The Dashboard</p>
+
+        <div class="data-box">
+            <strong>Live at:</strong> <a href="https://cams-advanced-analysis.streamlit.app/" target="_blank">cams-advanced-analysis.streamlit.app</a><br>
+            Four specialised tools · 50+ pre-loaded societies · Upload CSV for custom data<br>
+            Expected format: <code>Society, Year, Node, Coherence, Capacity, Stress, Abstraction, Bond Strength</code>
+        </div>
+
+        <div class="tab-grid">
+            <div class="tab-card tab-1">
+                <div class="tc-num">Tab 1 · dDIG Analysis</div>
+                <div class="tc-name">Directed Information Gain</div>
+                <div class="tc-desc">Computes I(X→Y|Z): how much one institutional node predicts changes in system-wide metrics. Ranks institutions by causal influence on Coherence, Capacity, Stress, or Abstraction. Normalised nDIG scores enable cross-society comparison.</div>
+            </div>
+            <div class="tab-card tab-2">
+                <div class="tc-num">Tab 2 · Dyad Field</div>
+                <div class="tc-name">Metabolic–Mythic Tension</div>
+                <div class="tc-desc">Tracks M (Metabolic Load), Y (Mythic Integration), D (Mismatch), R (Risk = D/B), and Ω (stress volatility). M–Y phase-space trajectory shows whether the system is converging or diverging. High D with weak coupling signals instability.</div>
+            </div>
+            <div class="tab-card tab-3">
+                <div class="tc-num">Tab 3 · Combined Insights</div>
+                <div class="tc-name">Unified Influence Rankings</div>
+                <div class="tc-desc">Cognitive influence (nDIG for Coherence, Capacity, Abstraction), affective influence (nDIG for Stress), and composite rankings. Heatmap and radar charts for top-5 influencers. One click for a complete institutional importance profile.</div>
+            </div>
+            <div class="tab-card tab-4">
+                <div class="tc-num">Tab 4 · Phase-Space Attractor</div>
+                <div class="tc-name">3D System Trajectory</div>
+                <div class="tc-desc">3D attractor plots in M–Y–B space. Regime detection via K-means clustering. Phase velocity measures speed of institutional change. Tight spirals = stability. Linear paths = directional change. Jumps = shocks or crises.</div>
+            </div>
+        </div>
+
+        <!-- ── Dashboard screenshot ──────────────────────────── -->
+        <figure style="margin:28px 0 32px;">
+            <img src="cams-v23-dashboard-screenshot.jpg" alt="CAMS Advanced Analysis Dashboard — Phase-Space Attractor tab showing USA 1790–2025 3D M-Y-B trajectory" style="width:100%;border-radius:6px;border:1px solid #DAD2B8;">
+            <figcaption style="font-family:'Inter',sans-serif;font-size:.75em;color:#999;margin-top:8px;text-align:center;">Dashboard Phase-Space Attractor tab: USA Maximum dataset, 1790–2025, 1248 records, 10 nodes detected. 3D M–Y–B trajectory colour-coded by year — the trajectory's compression post-2000 is visible.</figcaption>
+        </figure>
+
+        <!-- ── Universality ──────────────────────────── -->
+        <p class="section-label">Universality &amp; Falsification</p>
+
+        <div class="body-text">
+            <p>All societies obey identical (V̄, σ_V, Λ) geometry. Crisis equals mythic–material decoupling, detectable at least five years before the Coordination Phase Transition arrives.</p>
+        </div>
+
+        <div class="data-box">
+            <strong>Falsification criteria (unchanged from v2.0):</strong><br>
+            Cross-LLM concordance r &gt; 0.7 &nbsp;&middot;&nbsp;
+            Λ(t−5) AUC &gt; 0.75 &nbsp;&middot;&nbsp;
+            Universal ρ(S, K) &lt; −0.3 &nbsp;&middot;&nbsp;
+            CPT detectability ≥5 years pre-transition
+        </div>
+
+        <div class="conclusions">
+            <h3>What v2.3 introduces</h3>
+            <ul>
+                <li>Formal 8×4 state matrix representation with negative-domain-safe bond strength formula</li>
+                <li>Mythic–Material coupling index Λ(t) as the primary leading indicator — falling Λ precedes Crisis by up to 5 years</li>
+                <li>Coordination Phase Space formally defined with four regimes and precise CPT conditions</li>
+                <li>Eight failure modes taxonomised from macro coupling failures down to node-specific pathways</li>
+                <li>Interactive dashboard at cams-advanced-analysis.streamlit.app with dDIG, Dyad Field, Combined Insights, and Phase-Space Attractor</li>
+                <li>Open-source, 50+ pre-loaded societies, uploadable CSV — free to use and fork</li>
+            </ul>
+        </div>
+
+        <div class="article-footer">
+            <strong>Complex Adaptive Humans</strong> is the Neural Nations research newsletter by Kari Freyr McKern.<br>
+            Open science &middot; CAMS framework &middot; Sydney, Australia<br><br>
+            <a href="https://cams-advanced-analysis.streamlit.app/" target="_blank" class="dash-btn">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                Open Dashboard
+            </a>
+            <a href="https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/" target="_blank" class="li-btn">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                Subscribe on LinkedIn
+            </a>
+        </div>
+    </div>
+
+    <div class="nav-prev-next">
+        <a href="complex-adaptive-humans-16.html">← #16 CAMS: An Historical Telescope</a>
+        <a href="complex-adaptive-humans-18.html">#18 Blind Testing &amp; Dataset Expansion →</a>
+    </div>
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>
