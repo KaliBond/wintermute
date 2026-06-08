@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
+    <title>Ensemble Datasets, CAMS Mindscapes and a New Telescope — Complex Adaptive Humans #24 · Neural Nations</title>
+    <meta name="description" content="Issue #24: Ensemble sampling yields 75–90% hindcast accuracy. Mindscapes reports generated with zero editorial input. The CAMS Telescope delivers compact structural dossiers — typewriter-style, one society, one year, threat level included.">
+    <meta name="keywords" content="CAMS, Neural Nations, ensemble sampling, Mindscapes, CAMS Telescope, coordination diagnostics, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/complex-adaptive-humans-24">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/complex-adaptive-humans-24">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="Ensemble Datasets, CAMS Mindscapes and a New Telescope — Complex Adaptive Humans #24">
+    <meta property="og:description" content="Multiple agents, one society: ensemble scoring delivers bias-resistant estimates and uncertainty envelopes. Mindscapes: zero editorial input. The Telescope: compact structural dossier, threat level, typewriter-style.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ensemble Datasets, CAMS Mindscapes and a New Telescope — Complex Adaptive Humans #24">
+    <meta name="twitter:description" content="75–90% hindcast accuracy. Mindscapes with zero editorial input. USA 2026: THREAT LEVEL CRITICAL. The CAMS Telescope is live.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        { "@type": "WebSite", "name": "Neural Nations", "url": "https://neuralnations.org" },
+        { "@type": "Person", "@id": "https://neuralnations.org/#kari", "name": "Kari McKern", "url": "https://neuralnations.org/cams-project-history" }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    body { background: #F5F1E4; }
+    .article-shell { max-width: 780px; margin: 0 auto; padding: 40px 20px 80px; }
+    .back-link { font-family:'Inter',sans-serif; font-size:.82em; color:rgba(255,255,255,.75); text-decoration:none; display:inline-flex; align-items:center; gap:5px; margin-bottom:28px; transition:color .15s; }
+    .back-link:hover { color:white; }
+    .article-card { background:white; border-radius:8px; padding:64px 72px; box-shadow:0 8px 40px rgba(0,0,0,.18); }
+    .series-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#2F6F7D; margin-bottom:6px; }
+    .issue-meta { font-family:'Inter',sans-serif; font-size:.78em; color:#999; margin-bottom:28px; display:flex; align-items:center; gap:14px; }
+    .issue-badge { background:#F0E9D2; color:#2F6F7D; font-weight:600; padding:3px 10px; border-radius:20px; font-size:.9em; }
+    h1 { font-family:'Cormorant Garamond',serif; font-size:2.6em; font-weight:600; color:#1a1a2e; line-height:1.2; letter-spacing:-.02em; margin:0 0 10px; }
+    .subtitle { font-family:'Cormorant Garamond',serif; font-size:1.15em; font-style:italic; color:#555; margin:0 0 36px; }
+    .rule { border:none; border-top:1px solid #DAD2B8; margin:32px 0; }
+    .body-text { font-family:'Cormorant Garamond',serif; font-size:1.13em; line-height:1.92; color:#2c2c2c; }
+    .body-text p { margin:1.4em 0; }
+    .body-text p:first-of-type::first-letter { font-size:3.2em; font-weight:600; float:left; line-height:.78; margin:0 6px 0 0; color:#2F6F7D; }
+    .section-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#999; margin:44px 0 20px; border-top:1px solid #DAD2B8; padding-top:24px; }
+    /* Ensemble stats */
+    .stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:20px 0; }
+    .stat-card { background:#F5F1E4; border:1px solid #DAD2B8; border-radius:6px; padding:14px 16px; text-align:center; }
+    .stat-card .sc-val { font-family:'Cormorant Garamond',serif; font-size:1.9em; font-weight:600; color:#2F6F7D; }
+    .stat-card .sc-label { font-family:'Inter',sans-serif; font-size:.72em; color:#888; margin-top:3px; line-height:1.4; }
+    /* Pipeline steps */
+    .pipeline { background:#1a1a2e; border-radius:10px; padding:22px 28px; margin:24px 0; }
+    .pipeline h3 { font-family:'Inter',sans-serif; font-size:.75em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#a5f3fc; margin:0 0 14px; }
+    .pipeline .pipe-steps { display:flex; align-items:center; gap:0; flex-wrap:wrap; }
+    .pipe-step { font-family:'Inter',sans-serif; font-size:.8em; color:rgba(255,255,255,.88); background:rgba(255,255,255,.08); border-radius:4px; padding:6px 12px; white-space:nowrap; }
+    .pipe-arrow { font-family:'Inter',sans-serif; font-size:.9em; color:rgba(255,255,255,.35); padding:0 6px; }
+    /* Failure modes */
+    .failure-table { width:100%; border-collapse:collapse; margin:20px 0; font-family:'Inter',sans-serif; font-size:.82em; }
+    .failure-table th { background:#F5F1E4; color:#1a1a2e; font-weight:700; text-align:left; padding:8px 12px; border-bottom:2px solid #DAD2B8; font-size:.78em; letter-spacing:.05em; text-transform:uppercase; }
+    .failure-table td { padding:8px 12px; border-bottom:1px solid #EBE4D2; color:#374151; vertical-align:top; line-height:1.6; }
+    .failure-table tr:last-child td { border-bottom:none; }
+    .fm-node { font-weight:700; color:#1a1a2e; }
+    .fm-type { color:#D98B2B; font-style:italic; }
+    /* Telescope image */
+    .telescope-img { width:100%; border-radius:8px; margin:24px 0; border:1px solid #DAD2B8; }
+    .img-caption { font-family:'Inter',sans-serif; font-size:.76em; color:#888; text-align:center; margin-top:-16px; margin-bottom:24px; line-height:1.5; }
+    /* Mindscapes */
+    .mindscapes-box { background:#fafaf0; border:1px solid #DAD2B8; border-radius:8px; padding:22px 26px; margin:24px 0; }
+    .mindscapes-box .mb-badge { display:inline-flex; align-items:center; gap:6px; background:#2F6F7D; color:white; font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; padding:3px 10px; border-radius:20px; margin-bottom:10px; }
+    .mindscapes-box .mb-formula { font-family:'Inter',sans-serif; font-size:.84em; color:#374151; line-height:1.8; }
+    .mindscapes-box .mb-formula code { background:#F5F1E4; padding:2px 6px; border-radius:3px; font-size:.95em; color:#1a1a2e; }
+    /* Telescope features */
+    .tel-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:20px 0; }
+    .tel-item { background:#F5F1E4; border:1px solid #DAD2B8; border-radius:6px; padding:12px 14px; }
+    .tel-item .ti-name { font-family:'Inter',sans-serif; font-size:.78em; font-weight:700; color:#1a1a2e; margin-bottom:4px; }
+    .tel-item .ti-desc { font-family:'Inter',sans-serif; font-size:.76em; color:#555; line-height:1.6; }
+    /* Data stats */
+    .data-stat-row { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:20px 0; }
+    .data-stat { background:#F5F1E4; border:1px solid #DAD2B8; border-radius:6px; padding:10px 12px; text-align:center; }
+    .data-stat .ds-val { font-family:'Cormorant Garamond',serif; font-size:1.4em; font-weight:600; color:#2F6F7D; }
+    .data-stat .ds-label { font-family:'Inter',sans-serif; font-size:.68em; color:#888; margin-top:2px; }
+    /* Pull quote */
+    .pull-quote { border-left:4px solid #D98B2B; margin:32px 0; padding:8px 0 8px 24px; }
+    .pull-quote p { font-family:'Cormorant Garamond',serif; font-size:1.28em; font-style:italic; color:#374151; line-height:1.7; margin:0; }
+    /* Conclusions */
+    .conclusions { background:#1a1a2e; color:white; border-radius:10px; padding:28px 32px; margin:32px 0; }
+    .conclusions h3 { font-family:'Inter',sans-serif; font-size:.78em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#a5f3fc; margin:0 0 16px; }
+    .conclusions ul { font-family:'Inter',sans-serif; font-size:.88em; line-height:1.85; padding-left:20px; color:rgba(255,255,255,.88); margin:0; }
+    .conclusions li { margin:5px 0; }
+    /* Links */
+    .link-row { display:flex; flex-wrap:wrap; gap:8px; margin:16px 0; }
+    .site-link { display:inline-flex; align-items:center; gap:5px; background:#F5F1E4; border:1px solid #DAD2B8; border-radius:5px; padding:5px 12px; font-family:'Inter',sans-serif; font-size:.78em; color:#2F6F7D; text-decoration:none; transition:background .15s; }
+    .site-link:hover { background:#EBE4D2; }
+    /* Footer */
+    .article-footer { margin-top:52px; padding-top:28px; border-top:1px solid #DAD2B8; font-family:'Inter',sans-serif; font-size:.82em; color:#888; line-height:1.8; }
+    .article-footer strong { color:#374151; }
+    .li-btn { display:inline-flex; align-items:center; gap:6px; background:#0a66c2; color:white; padding:8px 18px; border-radius:6px; text-decoration:none; font-weight:600; font-size:.9em; margin-top:10px; transition:background .15s; }
+    .li-btn:hover { background:#004182; }
+    .nav-prev-next { display:flex; justify-content:space-between; margin-top:28px; font-family:'Inter',sans-serif; font-size:.82em; }
+    .nav-prev-next a { color:rgba(255,255,255,.75); text-decoration:none; transition:color .15s; }
+    .nav-prev-next a:hover { color:white; }
+    @media(max-width:640px){ .article-card{padding:36px 20px;} h1{font-size:2em;} .stat-row,.tel-grid,.data-stat-row{grid-template-columns:1fr 1fr;} }
+    @media print{ body{background:white;} .article-card{box-shadow:none;} }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo"><span class="nav-logo-badge">NN</span><span class="nav-logo-text">Neural Nations</span></a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework ↗</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank"><svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub</a>
+            <a href="newsletter.html" class="nav-btn-newsletter"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span></a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a><a href="model.html">Model</a><a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a><a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a><a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a><a href="framework/index.html">Framework ↗</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+        <hr class="menu-divider">
+        <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+<div class="article-shell">
+    <a class="back-link" href="newsletter.html">← Complex Adaptive Humans</a>
+    <div class="article-card">
+        <div class="series-label">Complex Adaptive Humans &nbsp;&middot;&nbsp; Platform &amp; Methods</div>
+        <div class="issue-meta">
+            <span class="issue-badge">Issue #24</span>
+            <span>May 6, 2026</span>
+        </div>
+        <h1>Ensemble Datasets, Mindscapes and a New Telescope</h1>
+        <p class="subtitle">Multiple agents, bias-resistant estimates, quantified uncertainty, zero editorial input — and a compact typewriter-style dossier for any society at any year.</p>
+        <hr class="rule">
+
+        <div class="body-text">
+            <p>Ensemble sampling is now central to the CAMS data pipeline. Multiple independent agents score identical society-year-node sets. The mean delivers a bias-resistant central estimate; the envelope (min/max or σ) quantifies uncertainty. Fragile nodes become visible — wide envelopes in post-2016 UK and USA data reveal exactly where the uncertainty lives. The data then feeds the telescope, and the telescope feeds Mindscapes.</p>
+        </div>
+
+        <!-- ── Ensemble stats ──────────────────────────── -->
+        <div class="stat-row">
+            <div class="stat-card">
+                <div class="sc-val">75–90%</div>
+                <div class="sc-label">Hindcast accuracy across longitudinal datasets</div>
+            </div>
+            <div class="stat-card">
+                <div class="sc-val">σ envelope</div>
+                <div class="sc-label">Quantified uncertainty — visible where historical data is contested</div>
+            </div>
+            <div class="stat-card">
+                <div class="sc-val">0</div>
+                <div class="sc-label">Human editorial interventions in Mindscapes output pipeline</div>
+            </div>
+        </div>
+
+        <!-- ── Pipeline ──────────────────────────── -->
+        <p class="section-label">The Automated Pipeline</p>
+
+        <div class="pipeline">
+            <h3>From raw scores to national-mood intelligence</h3>
+            <div class="pipe-steps">
+                <div class="pipe-step">Raw multi-agent scores</div>
+                <div class="pipe-arrow">→</div>
+                <div class="pipe-step">Ensemble mean + envelope</div>
+                <div class="pipe-arrow">→</div>
+                <div class="pipe-step">Fixed template</div>
+                <div class="pipe-arrow">→</div>
+                <div class="pipe-step">Universal scalars</div>
+                <div class="pipe-arrow">→</div>
+                <div class="pipe-step">Deterministic output</div>
+            </div>
+        </div>
+
+        <div class="body-text">
+            <p>The pipeline ingests raw multi-agent scores, aggregates to ensemble mean and envelope, and feeds a fixed, version-controlled template. Universal scalars — M(t), Y(t), Headroom, Σσ — institutional mappings, and the failure-modes diagram are generated deterministically. The result is reproducible, scalable national-mood intelligence: ensemble robustness plus template discipline converts noisy historical data into objective, forward-looking coordination diagnostics without narrative distortion.</p>
+        </div>
+
+        <!-- ── Failure modes ──────────────────────────── -->
+        <p class="section-label">Failure Mode Timescales</p>
+
+        <table class="failure-table">
+            <thead>
+                <tr><th>Node</th><th>Failure type</th><th>Timescale</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="fm-node">Helm</td>
+                    <td><span class="fm-type">Paralysis</span> — coordination ceases, factions substitute for executive function</td>
+                    <td>Years–decades</td>
+                </tr>
+                <tr>
+                    <td class="fm-node">Lore</td>
+                    <td><span class="fm-type">Normative collapse</span> — shared meaning fragments; legitimacy erodes without replacement</td>
+                    <td>Centuries</td>
+                </tr>
+                <tr>
+                    <td class="fm-node">Hands</td>
+                    <td><span class="fm-type">Motivational failure</span> — labour capacity falls; systems built on throughput stall</td>
+                    <td>Years</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ── Mindscapes ──────────────────────────── -->
+        <p class="section-label">Mindscapes — Reproducible National Mood Intelligence</p>
+
+        <div class="mindscapes-box">
+            <div class="mb-badge">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:12px;height:12px"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3"/></svg>
+                Zero editorial input
+            </div>
+            <div class="mb-formula">
+                Reports at <a href="mindscapes.html" style="color:#2F6F7D;">neuralnations.org/mindscapes</a> are generated with zero human editorial input — fully automated interpretive pipeline.<br><br>
+                <strong>Cognitive-affective operators:</strong><br>
+                <code>Cognition = Abstraction × Coherence</code><br>
+                <code>Affect = Capacity − Stress</code><br><br>
+                What emerges is structured psychohistory: national character anchored in measurable coordination fields, not narrative intuition.
+            </div>
+        </div>
+
+        <!-- ── Telescope ──────────────────────────── -->
+        <p class="section-label">The CAMS Telescope</p>
+
+        <div class="body-text">
+            <p>The CAMS Telescope is the single-society dossier: a compact, typewriter-style reading of one society at one year. It is ideal for a quick structural assessment — not discovery, but diagnosis. Load a year, read the signals.</p>
+        </div>
+
+        <img src="cams-telescope-usa-2026.png" alt="CAMS Telescope screenshot: USA 2026. Threat Level Critical. S/K ratio 1.47, Praetorian +10.30. Node network showing Shield dominant, Helm weakest. Dossier text on the right." class="telescope-img">
+        <p class="img-caption">CAMS Telescope · USA 2026 · Threat Level: Critical. S/K 1.47 · Praetorian index +10.30 · Shield dominant, Helm weakest. "No long-horizon strategy is coherent — only stimulus-response management."</p>
+
+        <div class="tel-grid">
+            <div class="tel-item">
+                <div class="ti-name">Node network + bond visualisation</div>
+                <div class="ti-desc">Spring-physics simulation of all eight nodes; bond thickness maps coordination strength; stressed nodes surface in red.</div>
+            </div>
+            <div class="tel-item">
+                <div class="ti-name">Threat level classification</div>
+                <div class="ti-desc">Nominal · Watch · Warning · Critical · Extreme — derived from S/K ratio, Praetorian index, cog_gap, and bond coherence Λ.</div>
+            </div>
+            <div class="tel-item">
+                <div class="ti-name">Power topology</div>
+                <div class="ti-desc">Dominant and weakest node identification; structural reading of where coordination energy actually lives vs where it nominally resides.</div>
+            </div>
+            <div class="tel-item">
+                <div class="ti-name">Trajectory + survival protocol</div>
+                <div class="ti-desc">S/K sparkline across all available years; attractor basin classification; forward-looking coordination prescription.</div>
+            </div>
+        </div>
+
+        <div class="link-row">
+            <a href="framework/index.html" class="site-link">CAMS Telescope →</a>
+            <a href="cams-reconstructor.html" class="site-link">CAMS Interpreter →</a>
+            <a href="mindscapes.html" class="site-link">Mindscapes →</a>
+            <a href="https://neuralnations.org/cams-telescope/guide" target="_blank" class="site-link">Technical Guide &amp; FAQ →</a>
+        </div>
+
+        <!-- ── Platform depth ──────────────────────────── -->
+        <p class="section-label">The Deeper Value</p>
+
+        <div class="body-text">
+            <p>Public analysis is trapped at the level of personality, ideology, and moral performance. CAMS moves the question underneath that surface. It asks: how is the coordination system actually behaving? Is the Helm still leading, or has power shifted to Shield, Stewards, or Lore? Is Archive still preserving memory, or has institutional forgetting become dangerous? Are Hands and Flow carrying unsustainable stress while the upper layers narrate confidence?</p>
+        </div>
+
+        <div class="pull-quote">
+            <p>CAMS does not abolish interpretation, but it disciplines it. Make the measurements, publish the assumptions, show the formulas, expose the data, and let others test the result.</p>
+        </div>
+
+        <!-- ── Dataset stats ──────────────────────────── -->
+        <p class="section-label">Open Platform — Current Scale</p>
+
+        <div class="data-stat-row">
+            <div class="data-stat"><div class="ds-val">45</div><div class="ds-label">Dataset series</div></div>
+            <div class="data-stat"><div class="ds-val">38</div><div class="ds-label">Distinct entities</div></div>
+            <div class="data-stat"><div class="ds-val">39,351</div><div class="ds-label">Node-year records</div></div>
+            <div class="data-stat"><div class="ds-val">5–2026</div><div class="ds-label">Years spanned (CE)</div></div>
+        </div>
+
+        <div class="conclusions">
+            <h3>What this update delivers</h3>
+            <ul>
+                <li>Ensemble sampling: multiple agents, bias-resistant mean, σ uncertainty envelope — fragile nodes surface explicitly</li>
+                <li>75–90% hindcast accuracy; wide post-2016 UK/USA envelopes confirm where the data is contested, not where the model fails</li>
+                <li>Automated pipeline: raw scores → ensemble → template → deterministic national-mood diagnostics, zero editorial input</li>
+                <li>Mindscapes: psychohistory grounded in Cognition (A×C) and Affect (K−S), fully reproducible</li>
+                <li>CAMS Telescope: compact dossier — node network, threat level, power topology, trajectory, survival protocol — one society, one year</li>
+                <li>USA 2026: Threat Level Critical · S/K 1.47 · Praetorian +10.30 · Shield dominant, Helm weakest</li>
+            </ul>
+        </div>
+
+        <div class="article-footer">
+            <strong>Complex Adaptive Humans</strong> is the Neural Nations research newsletter by Kari Freyr McKern.<br>
+            Open science &middot; CAMS framework &middot; Sydney, Australia<br><br>
+            <a href="https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/" target="_blank" class="li-btn">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                Subscribe on LinkedIn
+            </a>
+        </div>
+    </div>
+
+    <div class="nav-prev-next">
+        <a href="complex-adaptive-humans-23.html">← #23 CAMS in Focus</a>
+        <span></span>
+    </div>
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>
