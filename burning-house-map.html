@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aha! Map v1.1</title>
+    <!-- SWAPPED CDN TO JSDELIVR FOR BETTER RELIABILITY -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network/standalone/umd/vis-network.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style type="text/css">
+        /* --- CORE STYLES --- */
+        body, html { font-family: 'Inter', sans-serif; margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #f0f2f5; }
+        #cldContainer { position: relative; width: 100%; height: 100vh; display: flex; flex-direction: column; }
+        #cldNetwork { flex-grow: 1; border: 1px solid #d1d5db; background-color: #ffffff; width: 100%; height: 100%; }
+
+        /* UI Elements */
+        #modelTitleDisplay { position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold; color: #1F2937; background-color: rgba(255, 255, 255, 0.9); padding: 10px 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); z-index: 10; pointer-events: none; }
+        
+        .action-btn { position: absolute; bottom: 20px; z-index: 25; padding: 10px 18px; font-size: 14px; font-weight: 500; border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        
+        /* Button Positioning */
+        #saveButton { left: 20px; background-color: #2563EB; color: white; }
+        #saveButton:hover { background-color: #1D4ED8; }
+        
+        #loadNewButton { left: 140px; background-color: #fff; color: #374151; }
+        #loadNewButton:hover { background-color: #f9fafb; }
+
+        /* New Button: Save Map Data (JSON) */
+        #saveDataButton { left: 285px; background-color: #10B981; color: white; }
+        #saveDataButton:hover { background-color: #059669; }
+
+        /* Legends */
+        .legend-container { 
+            position: fixed; 
+            right: 20px; 
+            width: 280px; 
+            background: rgba(255,255,255,0.96); 
+            border-radius: 8px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+            max-height: 42px; 
+            overflow: hidden; 
+            z-index: 20; 
+            transition: max-height 0.3s ease; 
+            border: 1px solid #e5e7eb; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .legend-container.expanded { 
+            max-height: 50vh; 
+            z-index: 100; 
+        }
+
+        #legend { top: 20px; }
+        #archetypeLegend { top: 75px; }
+        
+        .legend-header { padding: 12px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; background: #fff; border-bottom: 1px solid #eee; }
+        .legend-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex-grow: 1; }
+        .legend-list li { padding: 8px 12px; border-bottom: 1px solid #f3f4f6; font-size: 13px; cursor: pointer; border-left: 3px solid transparent; }
+        .legend-list li:hover { background-color: #eff6ff; }
+        
+        /* Dragging visuals */
+        .legend-list li.dragging { opacity: 0.5; background: #e5e7eb; }
+
+        /* Description Box */
+        #descPanel { position: fixed; right: 20px; bottom: 80px; width: 280px; background: #fff; padding: 16px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 30; display: none; max-height: 300px; overflow-y: auto; font-size: 14px; line-height: 1.5; border: 1px solid #ddd; }
+        #descPanel strong { display: block; margin-bottom: 6px; color: #1E40AF; font-size: 15px; }
+
+        /* Tooltips */
+        .tooltip { position: absolute; background: rgba(255,255,255,0.98); border: 1px solid #ccc; padding: 10px; border-radius: 6px; font-size: 13px; display: none; z-index: 1000; pointer-events: none; max-width: 250px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); line-height: 1.4; }
+        #canvasTooltip { background: rgba(17, 24, 39, 0.95); color: white; border: none; }
+        #helperTooltip {
+            position: absolute; bottom: 70px; left: 20px;
+            background: rgba(0,0,0,0.6); color: white;
+            padding: 8px 12px; border-radius: 20px;
+            font-size: 12px; pointer-events: none; z-index: 5;
+        }
+
+        /* MODALS */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; }
+        .modal-box { background: white; padding: 25px; border-radius: 8px; width: 600px; max-width: 90%; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .modal-box textarea { width: 100%; height: 250px; padding: 12px; font-family: monospace; border: 1px solid #ccc; border-radius: 4px; background: #f9fafb; }
+        .modal-box button { padding: 12px 18px; background: #2563EB; color: white; border: none; font-weight: bold; cursor: pointer; font-size: 15px; border-radius: 6px; }
+        .modal-box button:hover { background: #1D4ED8; }
+        .modal-box button.secondary { background: #E5E7EB; color: #374151; }
+        .modal-box button.secondary:hover { background: #D1D5DB; }
+        
+        /* Save Modal Specifics */
+        #filenameInput { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; margin: 5px 0 15px 0; box-sizing: border-box;}
+    </style>
+</head>
+<body>
+
+    <div id="cldContainer">
+        <div id="modelTitleDisplay">Aha! Map v1.1</div>
+        <button id="saveButton" class="action-btn">Save Map</button>
+        <button id="loadNewButton" class="action-btn">Load Map Data</button>
+        <button id="saveDataButton" class="action-btn">Save Map Data</button>
+        
+        <div id="helperTooltip">Step 1: Click edge to select (Red)<br>Step 2: Drag mouse to curve</div>
+        <div id="cldNetwork"></div>
+        
+        <div id="legend" class="legend-container">
+            <div class="legend-header" onclick="toggleLegend('legend')">Feedback Loops ▼</div>
+            <ul id="loopList" class="legend-list"></ul>
+        </div>
+        <div id="archetypeLegend" class="legend-container">
+            <div class="legend-header" onclick="toggleLegend('archetypeLegend')">Archetypes ▼</div>
+            <ul id="archetypeList" class="legend-list"></ul>
+        </div>
+        
+        <div id="descPanel"></div>
+        <div id="mainTooltip" class="tooltip"></div>
+        <div id="canvasTooltip" class="tooltip"></div>
+    </div>
+
+    <!-- Input/Load Modal -->
+    <div id="inputModal" class="modal-overlay" style="display: flex;"> <!-- Default to flex so it shows on load if empty -->
+        <div class="modal-box">
+            <h2 style="margin:0; color:#111827;">Load Map Data</h2>
+            <p style="margin:0; color:#6B7280; font-size:14px;">Paste the JSON from Gemini below:</p>
+            <textarea id="jsonInput" placeholder="INJECT_JSON_HERE" spellcheck="false">{
+  "metadata": {
+    "topic": "The Burning House Economy",
+    "narrative_title": "How Australia learned to profit from the fire while forgetting it owned the house"
+  },
+  "nodes": [
+    {
+      "id": "n1",
+      "label": "Fossil Fuel\nExport Revenue",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
+      "x": -300,
+      "y": 0,
+      "description": "The accumulated stock of foreign exchange, fiscal revenue, and corporate profit generated by coal, LNG and iron ore exports. It is the economic foundation that successive governments have treated as structurally non-negotiable. Its very size makes it politically untouchable and institutionally self-reinforcing. [n1]"
+    },
+    {
+      "id": "n2",
+      "label": "Fossil Incumbent\nPolitical Power",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
+      "x": -150,
+      "y": -200,
+      "description": "The accumulated lobbying capacity, campaign donation leverage, revolving-door networks, and media influence that the fossil fuel sector deploys to shape climate and energy policy. This stock grows with revenue and shrinks only under sustained electoral or regulatory pressure. It is the primary transmission mechanism between fossil rent and governance incoherence. [n2]"
+    },
+    {
+      "id": "n3",
+      "label": "Governance\nCoherence",
+      "shape": "ellipse",
+      "color": {
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
+      },
+      "borderWidth": 2.5,
+      "x": 0,
+      "y": -250,
+      "description": "The capacity of Australian federal government to hold a consistent, credible, and durable climate and energy policy position. It collapsed from +3.0 in 2000 to -6.2 in 2018 as the fossil lobby cycled through six prime ministers. Its recovery under Albanese to +1.0 remains fragile and contingent. [n3]"
+    },
+    {
+      "id": "n4",
+      "label": "Climate Policy\nStrength",
+      "shape": "ellipse",
+      "color": {
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
+      },
+      "borderWidth": 1,
+      "x": 150,
+      "y": -150,
+      "description": "The ambition, durability, and enforceability of Australia's legislated emissions reduction commitments. It oscillates violently with electoral cycles rather than tracking scientific necessity or long-term economic logic. Carbon price 2012, repeal 2014, 43 percent target 2022 encodes this oscillation into Archive and Craft. [n4]"
+    },
+    {
+      "id": "n5",
+      "label": "Productive\nTransition Capacity",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
+      "x": 300,
+      "y": 0,
+      "description": "The accumulated investment in renewable energy, green manufacturing, critical minerals processing, and energy transition skills that determines whether Australia can substitute productive export revenue for fossil rent when global demand shifts. It has been chronically underfunded relative to fossil subsidies, leaving Craft KS negative since 2019. [n5]"
+    },
+    {
+      "id": "n6",
+      "label": "Ecological\nGrief Stock",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
+      "x": 100,
+      "y": 200,
+      "description": "The accumulated cultural and psychological burden carried by Australians as fire seasons worsen, reefs bleach, and the bush identity fractures. Lore Stress hit 6.8 in 2019 during the Black Summer fires, its highest reading since the 1930s Depression. This stock is not acknowledged in fiscal policy and has no formal relief mechanism. [n6]"
+    },
+    {
+      "id": "n7",
+      "label": "Global Carbon\nTransition Pressure",
+      "shape": "ellipse",
+      "color": {
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
+      },
+      "borderWidth": 2.5,
+      "x": -400,
+      "y": 150,
+      "description": "The exogenous force of international decarbonisation: EU carbon border adjustment mechanisms, IEA no-new-coal commitments, Asian buyer energy transitions, and geopolitical pressure from Pacific neighbours. It is the external shock that makes the fossil rent trap structurally terminal rather than merely politically inconvenient. [n7]"
+    },
+    {
+      "id": "n8",
+      "label": "Science &amp;\nKnowledge Integrity",
+      "shape": "ellipse",
+      "color": {
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
+      },
+      "borderWidth": 1,
+      "x": 300,
+      "y": -250,
+      "description": "The institutional credibility and operational capacity of Australia's scientific apparatus: CSIRO, BOM, university climate research, and public information systems. Archive Coherence dropped when Abbott cut CSIRO in 2014, recovered partially under Albanese in 2023. When this is high it creates upward pressure on policy ambition; when it is suppressed governance incoherence deepens. [n8]"
+    },
+    {
+      "id": "n9",
+      "label": "Labour Transition\nVulnerability",
+      "shape": "ellipse",
+      "color": {
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
+      },
+      "borderWidth": 1,
+      "x": 150,
+      "y": 300,
+      "description": "The exposure of coal-region workers and fossil-supply-chain labour to stranded asset risk without adequate retraining, income support, or regional reinvestment. Hands KS went from +1.2 during the carbon price era to -3.0 in 2020. The absence of a genuine just-transition fund converts labour anxiety directly into electoral resistance to climate policy. [n9]"
+    },
+    {
+      "id": "n10",
+      "label": "Extreme Weather\nFrequency",
+      "shape": "ellipse",
+      "color": {
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
+      },
+      "borderWidth": 2.5,
+      "x": -100,
+      "y": 350,
+      "description": "The accelerating incidence of heatwaves, megafires, floods, and coral bleaching events driven by global warming in which Australia is a disproportionate victim. It damages physical capital, supply chains, agricultural output, and the cultural identity substrate encoded in Lore. It is both consequence of fossil exports and the feedback that makes their continuation existentially self-defeating. [n10]"
+    },
+    {
+      "id": "n11",
+      "label": "Stranded Asset\nRisk Accumulation",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
+      "x": -300,
+      "y": 300,
+      "description": "The growing stock of fossil fuel infrastructure, coal mines, LNG facilities, and pipeline networks whose economic life is being cut short by the global energy transition faster than they are being written down. As this stock grows it creates political pressure to extend fossil operations to recover sunk costs, deepening the trap even as the exit becomes more urgent. [n11]"
+    },
+    {
+      "id": "n12",
+      "label": "Renewables &amp;\nBattery Investment",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
+      "x": 400,
+      "y": -100,
+      "description": "The accumulated stock of committed capital in utility-scale solar, wind, pumped hydro, and grid-scale battery storage. It has grown rapidly since 2022 under the Capacity Investment Scheme but remains overwhelmingly concentrated in the NEM grid corridor, disconnecting the investment surge from the regional communities that need replacement employment. [n12]"
+    },
+    {
+      "id": "n13",
+      "label": "Regional Mining\nCommunity Viability",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
+      "x": 200,
+      "y": 400,
+      "description": "The accumulated social and economic health of coal-region and resource-region communities: Hunter Valley, Bowen Basin, Latrobe Valley, Pilbara. It is measured in local employment, town population trajectory, school enrolments, and small business survival. Lore Capacity in these communities sits at 4.2-5.2 post-2019 and has not recovered to pre-Abbott levels. It is the human geography of the transition problem. [n13]"
+    },
+    {
+      "id": "n14",
+      "label": "Critical Minerals\nValue-Add Capture",
+      "shape": "ellipse",
+      "color": {
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
+      },
+      "borderWidth": 2.5,
+      "x": 450,
+      "y": 150,
+      "description": "The degree to which Australia processes its lithium, cobalt, nickel, and rare earth endowment domestically rather than shipping raw ore offshore for value-adding by Chinese, Korean, and US battery manufacturers. Currently near zero for most critical minerals despite the world-class resource base. The Archive-Craft gap of plus 3.0 in 2023-2026 encodes this precisely: the knowledge is present, the productive transformation is absent. [n14]"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "n1",
+      "to": "n2",
+      "width": 5,
+      "lag": 2,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Funds lobbying\n+\nLag: Years",
+      "description": "Fossil fuel revenue directly funds political donations, industry associations, and revolving-door employment of former ministers and public servants. The higher the revenue, the larger the lobbying arsenal deployed against carbon pricing and emissions regulation. This edge is the primary transmission belt from economic rent to governance capture. [e1]"
+    },
+    {
+      "id": "e2",
+      "from": "n2",
+      "to": "n3",
+      "width": 6,
+      "lag": 1,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Destabilises\ngovernance\n-\nLag: Months",
+      "description": "Fossil incumbent political power erodes governance coherence by funding internal party warfare, threatening leadership spills, and making climate policy the instrument of factional conflict rather than national strategy. The eleven-year Helm collapse from 2008 to 2018 is the quantitative signature of this edge operating at full force. [e2]"
+    },
+    {
+      "id": "e3",
+      "from": "n3",
+      "to": "n4",
+      "width": 5,
+      "lag": 1,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Enables policy\nambition\n+\nLag: Months",
+      "description": "Governance coherence is the necessary precondition for durable climate policy. Without it, each new administration dismantles the previous one's framework rather than extending it. The carbon price (2012) was enacted during a rare coherence window; its repeal (2014) was the immediate consequence of coherence collapse. [e3]"
+    },
+    {
+      "id": "e4",
+      "from": "n4",
+      "to": "n5",
+      "width": 4,
+      "lag": 4,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Drives transition\ninvestment\n+\nLag: Years",
+      "description": "Strong and durable climate policy creates the investment certainty that mobilises private capital into renewables, battery storage, green hydrogen, and critical minerals processing. Policy oscillation destroys this certainty: the Craft NV flatline after 2007 and its post-2020 decline directly encodes each policy reversal as a disinvestment event. [e4]"
+    },
+    {
+      "id": "e5",
+      "from": "n1",
+      "to": "n11",
+      "width": 4,
+      "lag": 5,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Deepens sunk\ncost exposure\n+\nLag: Years",
+      "description": "High fossil revenue encourages continued capital investment in extraction infrastructure, deepening the stock of assets whose value depends on a future that the energy transition is foreclosing. Each billion dollars of new coal mine capex adds to the stranded asset risk accumulation, tightening the political trap against orderly exit. [e5]"
+    },
+    {
+      "id": "e6",
+      "from": "n11",
+      "to": "n2",
+      "width": 4,
+      "lag": 2,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Intensifies lobby\npressure to extend\n+\nLag: Years",
+      "description": "Stranded asset risk converts fossil owners from rent-seekers into existential fighters. The larger the sunk cost, the more desperate the lobby campaign to extend extraction life, subsidise export infrastructure, and delay transition timelines. This edge converts an economic problem into an escalating political crisis. [e6]"
+    },
+    {
+      "id": "e7",
+      "from": "n7",
+      "to": "n1",
+      "width": 5,
+      "lag": 3,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Erodes demand\nfor exports\n-\nLag: Years",
+      "description": "Global carbon transition pressure reduces long-run demand for Australian thermal coal and progressively reprices LNG as buyer nations decarbonise. The IEA no-new-coal commitment, EU CBAM, and Asian energy transitions are collapsing the revenue outlook on a decade-scale horizon even as current prices remain elevated by conflict premiums. [e7]"
+    },
+    {
+      "id": "e8",
+      "from": "n7",
+      "to": "n5",
+      "width": 3,
+      "lag": 3,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Creates\ntransition\nopportunity\n+\nLag: Years",
+      "description": "Global decarbonisation pressure simultaneously destroys fossil revenue and creates a massive opportunity for Australian critical minerals, green hydrogen, and renewable energy exports. Whether this opportunity is captured depends entirely on whether Productive Transition Capacity is built in time, which requires the Governance Coherence that fossil lobbying suppresses. [e8]"
+    },
+    {
+      "id": "e9",
+      "from": "n10",
+      "to": "n6",
+      "width": 5,
+      "lag": 1,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Deepens\necological grief\n+\nLag: Seasons",
+      "description": "Each Black Summer, each bleaching event, each flooded town deepens the Ecological Grief Stock. Australians have among the highest rates of climate anxiety in the world because the physical damage is visceral and the bush identity is central to national Lore. This edge runs at the speed of weather. [e9]"
+    },
+    {
+      "id": "e10",
+      "from": "n1",
+      "to": "n10",
+      "width": 5,
+      "lag": 20,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Contributes to\nwarming\n+\nLag: Decades",
+      "description": "Australia is the world's largest coal exporter and second-largest LNG exporter. The combustion of its fossil exports contributes materially to global atmospheric CO2 concentrations, which drive the warming that produces the extreme weather that burns Australian communities. The lag is measured in decades, which is exactly why the political system can sustain denial. [e10]"
+    },
+    {
+      "id": "e11",
+      "from": "n6",
+      "to": "n4",
+      "width": 3,
+      "lag": 2,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Drives demand\nfor action\n+\nLag: Elections",
+      "description": "Accumulated ecological grief converts into electoral pressure for stronger climate policy, particularly among younger voters and communities directly affected by fire and flood. This edge powered the teal independents movement in 2022 and the shift in polling that enabled the Albanese 43 percent target. It is the one bottom-up pressure that fossil lobbying cannot fully suppress. [e11]"
+    },
+    {
+      "id": "e12",
+      "from": "n4",
+      "to": "n9",
+      "width": 4,
+      "lag": 2,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Increases transition\npressure on labour\n-\nLag: Years",
+      "description": "Strong climate policy accelerates the closure timeline for coal mines and gas infrastructure, increasing the urgency of worker transition. Without a fully-funded just-transition programme, this becomes a negative edge: policy strength is converted directly into labour anxiety, which fossil lobbyists then harvest as electoral resistance to further action. [e12]"
+    },
+    {
+      "id": "e13",
+      "from": "n9",
+      "to": "n3",
+      "width": 3,
+      "lag": 2,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Electoral backlash\nerodes governance\n-\nLag: Elections",
+      "description": "Labour transition vulnerability generates concentrated electoral opposition in coal-region electorates that has historically been sufficient to destabilise Labor governments and hand the Coalition a veto over climate ambition. This edge is the democratic transmission of economic insecurity into governance collapse, and explains why just-transition investment is the highest leverage point in the system. [e13]"
+    },
+    {
+      "id": "e14",
+      "from": "n8",
+      "to": "n4",
+      "width": 4,
+      "lag": 2,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Evidence base\nfor ambition\n+\nLag: Years",
+      "description": "Strong science and knowledge integrity institutions provide the evidentiary foundation for ambitious, durable climate policy. CSIRO budget cuts in 2014 directly reduced this pressure at the precise moment it was needed most. The Archive recovery post-2023 is one of the more promising signals in the current dataset. [e14]"
+    },
+    {
+      "id": "e15",
+      "from": "n2",
+      "to": "n8",
+      "width": 3,
+      "lag": 2,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Suppresses\nclimate science\n-\nLag: Budgets",
+      "description": "Fossil incumbent political power attacks scientific institutions directly through budget cuts, research funding redirection, and the political delegitimisation of climate expertise in public discourse. The Abbott government's CSIRO cuts and its abolition of the Climate Commission are the cleanest empirical instances of this edge. [e15]"
+    },
+    {
+      "id": "e16",
+      "from": "n4",
+      "to": "n12",
+      "width": 5,
+      "lag": 3,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Policy certainty\ndrives renewable\ncapital\n+\nLag: Years",
+      "description": "Durable climate policy is the necessary precondition for utility-scale renewable and battery investment. The Capacity Investment Scheme (2022) and the 43 percent target produced the fastest renewable investment acceleration in Australian history. Each policy oscillation has historically wiped equivalent investment in the preceding cycle, confirming the direction of causation. [e16]"
+    },
+    {
+      "id": "e17",
+      "from": "n12",
+      "to": "n5",
+      "width": 4,
+      "lag": 4,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Builds transition\nproductive capacity\n+\nLag: Years",
+      "description": "Renewable and battery investment incrementally builds Productive Transition Capacity through construction, operations, supply chain development, and grid engineering skills. The current acceleration is building capacity faster than any previous period, but the Craft KS remaining negative through 2026 signals that value-add capture is still flowing offshore rather than embedding in the domestic economy. [e17]"
+    },
+    {
+      "id": "e18",
+      "from": "n12",
+      "to": "n13",
+      "width": 3,
+      "lag": 3,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Bypasses mining\nregions spatially\n-\nLag: Years",
+      "description": "The current pattern of renewable investment is concentrated in NEM grid corridors and coastal zones, systematically bypassing the inland and northern coal and gas regions whose communities need replacement employment. Large-scale solar and wind projects create construction jobs that are temporary and non-local, without building the permanent economic base that replaces a working coal mine. This spatial mismatch is the central political economy failure of the current transition. [e18]"
+    },
+    {
+      "id": "e19",
+      "from": "n13",
+      "to": "n9",
+      "width": 5,
+      "lag": 1,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Regional decline\namplifies transition\nvulnerability\n+\nLag: Months",
+      "description": "As regional mining community viability deteriorates, labour transition vulnerability intensifies. The two variables are the same phenomenon at different scales: individual worker anxiety and community-level economic fragility are mutually reinforcing, and both feed the Labour Veto Loop that caps climate ambition. You cannot break B4 without addressing n13. [e19]"
+    },
+    {
+      "id": "e20",
+      "from": "n14",
+      "to": "n13",
+      "width": 5,
+      "lag": 5,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Value-add\nprocessing anchors\nregional employment\n+\nLag: Years",
+      "description": "Critical minerals processing and battery manufacturing, if located in or near existing mining regions, can substitute permanent skilled employment for extractive employment while retaining community identity as a resource economy. The Pilbara hydrogen hub, Hunter Valley pumped hydro, and Latrobe Valley battery precinct proposals all attempt this substitution. Whether they succeed depends on sovereign investment decisions not yet made at the required scale. [e20]"
+    },
+    {
+      "id": "e21",
+      "from": "n8",
+      "to": "n14",
+      "width": 4,
+      "lag": 3,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Science base\nenables processing\ntechnology\n+\nLag: Years",
+      "description": "Science and knowledge integrity is the input that converts raw critical mineral endowment into competitive battery and processing technology. The Archive KS recovery to plus 2.2 in 2023 is directly relevant here: CSIRO's battery research, university critical minerals programs, and the National Reconstruction Fund's technology mandate are the domestic knowledge pipeline. The Archive-Craft gap of plus 3.0 signals the pipeline exists but the manufacturing end has not been connected. [e21]"
+    },
+    {
+      "id": "e22",
+      "from": "n14",
+      "to": "n5",
+      "width": 5,
+      "lag": 4,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Value-add\nbuilds productive\ntransition economy\n+\nLag: Years",
+      "description": "Domestic critical minerals processing and battery manufacturing is the highest-value pathway for converting Australia's resource endowment into Productive Transition Capacity. It is what transforms the country from a raw materials exporter in the fossil era into a processed materials and clean energy exporter in the transition era. Without it, the transition reproduces the same enclave-extraction model that characterised the fossil era: high Flow, low Craft, abandoned Hands. [e22]"
+    },
+    {
+      "id": "e23",
+      "from": "n2",
+      "to": "n14",
+      "width": 4,
+      "lag": 2,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Fossil lobby blocks\ncritical minerals\npolicy\n-\nLag: Years",
+      "description": "The fossil incumbent lobby actively resists critical minerals processing and battery manufacturing policy because it competes for the skilled labour, regional political support, and sovereign investment that the fossil sector currently monopolises. The delay on the National Reconstruction Fund, the weakening of critical minerals processing incentives, and the absence of a battery manufacturing mandate all carry the fingerprints of this resistance. [e23]"
+    }
+  ],
+  "loops": [
+    {
+      "id": "R1",
+      "name": "The Fossil Rent Lock",
+      "type": "R",
+      "description": "Fossil revenue funds lobbying power, which destroys governance coherence, which prevents durable climate policy, which starves transition investment, which maintains fossil dependency, which maintains revenue. This is the central reinforcing trap that has held Australian climate governance in oscillation for thirty years. It is not a failure of political will but a structural property of the system. [R1]",
+      "nodeIds": [
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n5"
+      ],
+      "edgeIds": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ]
+    },
+    {
+      "id": "R2",
+      "name": "The Sunk Cost Spiral",
+      "type": "R",
+      "description": "High fossil revenue drives continued infrastructure investment, which deepens stranded asset exposure, which intensifies lobby pressure to extend extraction life, which further erodes governance coherence, which prevents the managed exit that would reduce sunk cost risk. Each iteration tightens the trap. [R2]",
+      "nodeIds": [
+        "n1",
+        "n11",
+        "n2",
+        "n3"
+      ],
+      "edgeIds": [
+        "e5",
+        "e6",
+        "e2",
+        "e1"
+      ]
+    },
+    {
+      "id": "R3",
+      "name": "The Burning House Feedback",
+      "type": "R",
+      "description": "Fossil exports contribute to warming, which increases extreme weather frequency, which deepens ecological grief, which drives demand for stronger climate policy, which briefly strengthens governance, which the fossil lobby immediately counterattacks. The loop amplifies cultural damage faster than political change can respond, because the physical lag of thirty years separates cause from consequence. [R3]",
+      "nodeIds": [
+        "n1",
+        "n10",
+        "n6",
+        "n4",
+        "n3"
+      ],
+      "edgeIds": [
+        "e10",
+        "e9",
+        "e11",
+        "e3"
+      ]
+    },
+    {
+      "id": "B4",
+      "name": "The Labour Veto Loop",
+      "type": "B",
+      "description": "Stronger climate policy increases labour transition vulnerability, which generates electoral backlash, which erodes governance coherence, which weakens climate policy. This balancing loop has historically been powerful enough to cap climate ambition at the level acceptable to coal-region electorates. It is the democratic circuit-breaker that fossil lobbying has learned to weaponise. [B4]",
+      "nodeIds": [
+        "n4",
+        "n9",
+        "n3"
+      ],
+      "edgeIds": [
+        "e12",
+        "e13",
+        "e3"
+      ]
+    },
+    {
+      "id": "B5",
+      "name": "The Science Suppression Loop",
+      "type": "B",
+      "description": "Fossil incumbent power suppresses science and knowledge integrity, which reduces the evidence base for policy ambition, which weakens climate policy, which reduces transition investment, which maintains fossil dependency. This balancing loop operates on budget cycles and works by starving the knowledge system that would otherwise compel action. [B5]",
+      "nodeIds": [
+        "n2",
+        "n8",
+        "n4",
+        "n5"
+      ],
+      "edgeIds": [
+        "e15",
+        "e14",
+        "e4"
+      ]
+    },
+    {
+      "id": "B6",
+      "name": "The Transition Opportunity Gate",
+      "type": "B",
+      "description": "Global carbon transition pressure simultaneously erodes fossil revenue and opens a critical minerals and green energy export opportunity. Whether this balancing loop stabilises or destabilises the system depends on whether Productive Transition Capacity is built before fossil revenue collapses. At present, the fossil lobby is consuming the window in which this substitution was possible. [B6]",
+      "nodeIds": [
+        "n7",
+        "n1",
+        "n5"
+      ],
+      "edgeIds": [
+        "e7",
+        "e8"
+      ]
+    },
+    {
+      "id": "R7",
+      "name": "The Enclave Transition Trap",
+      "type": "R",
+      "description": "Renewable and battery investment flows to grid-corridor projects that bypass mining regions, which leaves regional community viability deteriorating, which amplifies labour transition vulnerability, which feeds the Labour Veto Loop capping climate ambition, which slows the renewable investment that might otherwise be directed to regional value-add. The transition reproduces the spatial injustice of the fossil era unless critical minerals processing deliberately anchors investment in the communities that need it. [R7]",
+      "nodeIds": [
+        "n12",
+        "n13",
+        "n9",
+        "n4"
+      ],
+      "edgeIds": [
+        "e18",
+        "e19",
+        "e13",
+        "e16"
+      ]
+    }
+  ],
+  "archetypes": [
+    {
+      "id": "arch1",
+      "name": "Shifting the Burden",
+      "description": "Australia has consistently chosen the symptomatic fix of fossil export revenue over the fundamental solution of productive transition investment. The current renewables push risks repeating the same structural failure: high-abstraction, low-capacity investment that captures global capital flows without anchoring value-add in regional communities. Critical minerals processing and battery manufacturing are the fundamental solution that Shifting the Burden logic predicts will be perpetually deferred unless sovereign investment mandates break the pattern.",
+      "nodeIds": [
+        "n2",
+        "n1",
+        "n4",
+        "n14",
+        "n3",
+        "n13",
+        "n12",
+        "n5"
+      ],
+      "edgeIds": [
+        "e16",
+        "e18",
+        "e2",
+        "e5",
+        "e1",
+        "e22",
+        "e4",
+        "e3",
+        "e17",
+        "e23",
+        "e6"
+      ]
+    },
+    {
+      "id": "arch2",
+      "name": "Fixes that Fail",
+      "description": "Each attempt to fix Australia's climate governance incoherence through political leadership change (Rudd, Gillard, Turnbull, Albanese) fails because it does not address the underlying fossil incumbent political power that generates the incoherence. The fix works briefly then the system reasserts the status quo, with the additional side effect of deepening public cynicism about governance capacity.",
+      "nodeIds": [
+        "n2",
+        "n3",
+        "n4",
+        "n11"
+      ],
+      "edgeIds": [
+        "e2",
+        "e3",
+        "e6",
+        "e13"
+      ]
+    },
+    {
+      "id": "arch3",
+      "name": "Tragedy of the Commons",
+      "description": "The global atmosphere is the commons. Australia's rational short-term maximisation of fossil export revenue contributes to the atmospheric loading that produces the extreme weather destroying Australian communities, Pacific neighbours, and global stability. Each individual export decision is rational; the aggregate is self-defeating. The commons is consumed faster than governance can respond because the lag between cause and consequence is measured in decades.",
+      "nodeIds": [
+        "n1",
+        "n10",
+        "n6",
+        "n7",
+        "n11"
+      ],
+      "edgeIds": [
+        "e7",
+        "e10",
+        "e9",
+        "e5"
+      ]
+    }
+  ]
+}</textarea>
+            <button onclick="parseAndRun()">VISUALIZE MODEL</button>
+        </div>
+    </div>
+
+    <!-- Save Modal (Shared) -->
+    <div id="saveModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 450px;">
+            <h2 id="saveModalTitle" style="margin:0; color:#111827;">Save Map</h2>
+            <p style="margin:0; color:#6B7280; font-size:14px;">Enter a filename:</p>
+            <input type="text" id="filenameInput" value="model">
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button class="secondary" onclick="document.getElementById('saveModal').style.display='none'">Cancel</button>
+                <button id="confirmSaveBtn">Download</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // GLOBAL STATE
+        let nodes, edges, network;
+        let feedbackLoops = [], systemArchetypes = [], loopLabelPositions = [];
+        let originalNodeStyles = {}, originalEdgeStyles = {};
+        let currentSaveMode = 'html'; // 'html' or 'json'
+        
+        // INTERACTION STATE
+        let draggedLabel = null;
+        let dragOffset = {x:0, y:0};
+        
+        // RECURVE STATE
+        let activeEdgeForRecurve = null;
+        let isRecurvingEdge = false;
+        
+        let lastMouseX = 0, lastMouseY = 0;
+        let draggedItem = null; // For list sorting
+
+        // --- 0. AUTO-LOADER ---
+        window.addEventListener('load', () => {
+             const preloaded = document.getElementById('jsonInput').value;
+             if(preloaded && preloaded.trim().length > 0 && preloaded.trim() !== "undefined") {
+                 parseAndRun();
+             } else {
+                 document.getElementById('inputModal').style.display = 'flex';
+             }
+        });
+
+        // --- HELPER FOR COLOR CONVERSION (from v6.2) ---
+        function colorToRgba(colorInput, alpha) {
+            let r = 128, g = 128, b = 128; // Default to gray if parsing fails
+            alpha = Math.max(0, Math.min(1, alpha));
+
+            if (typeof colorInput === 'string') {
+                const s = colorInput.toLowerCase().trim();
+                if (s.startsWith('#')) {
+                    if (s.length === 4) {
+                        r = parseInt(s[1] + s[1], 16);
+                        g = parseInt(s[2] + s[2], 16);
+                        b = parseInt(s[3] + s[3], 16);
+                    } else if (s.length === 7) {
+                        r = parseInt(s.substring(1, 3), 16);
+                        g = parseInt(s.substring(3, 5), 16);
+                        b = parseInt(s.substring(5, 7), 16);
+                    }
+                } else if (s.startsWith('rgb')) {
+                    const parts = s.match(/[\d.]+/g);
+                    if (parts && parts.length >= 3) {
+                        r = parseInt(parts[0]);
+                        g = parseInt(parts[1]);
+                        b = parseInt(parts[2]);
+                    }
+                }
+            }
+            return `rgba(${r},${g},${b},${alpha})`;
+        }
+
+        // --- 1. DATA PARSING ---
+        function parseAndRun() {
+            const input = document.getElementById('jsonInput').value;
+            if(!input) return alert("Please paste JSON data.");
+
+            try {
+                let clean = input.replace(/```json/gi, '').replace(/```/g, '');
+                const start = clean.indexOf('{');
+                const end = clean.lastIndexOf('}');
+                if (start === -1 || end === -1) throw new Error("No JSON found.");
+                
+                const data = JSON.parse(clean.substring(start, end + 1));
+                
+                document.getElementById('inputModal').style.display = 'none';
+
+                if(data.metadata && data.metadata.topic) {
+                    document.getElementById('modelTitleDisplay').innerText = data.metadata.topic;
+                    document.title = data.metadata.topic;
+                }
+
+                initEngine(data);
+
+            } catch(e) {
+                alert("Error parsing JSON: " + e.message);
+            }
+        }
+
+        document.getElementById('loadNewButton').addEventListener('click', () => {
+             document.getElementById('jsonInput').value = '';
+             document.getElementById('inputModal').style.display = 'flex';
+        });
+
+        // --- SAVE FUNCTIONALITY ---
+        
+        // 1. Save HTML Button
+        document.getElementById('saveButton').addEventListener('click', () => {
+            if (!network || !nodes || !edges) {
+                alert("No model to save. Please load data first.");
+                return;
+            }
+            currentSaveMode = 'html';
+            document.getElementById('saveModalTitle').innerText = "Save Map (HTML)";
+            document.getElementById('filenameInput').value = (document.title || "model");
+            document.getElementById('saveModal').style.display = 'flex';
+            document.getElementById('filenameInput').focus();
+        });
+
+        // 2. Save JSON Button
+        document.getElementById('saveDataButton').addEventListener('click', () => {
+            if (!network || !nodes || !edges) {
+                alert("No model data to save.");
+                return;
+            }
+            currentSaveMode = 'json';
+            document.getElementById('saveModalTitle').innerText = "Save Map Data (JSON)";
+            document.getElementById('filenameInput').value = (document.title || "model");
+            document.getElementById('saveModal').style.display = 'flex';
+            document.getElementById('filenameInput').focus();
+        });
+
+        // 3. Confirm Save Action
+        document.getElementById('confirmSaveBtn').addEventListener('click', () => {
+             try {
+                let filename = document.getElementById('filenameInput').value || "model";
+                
+                // Get Data
+                const currentPositions = network.getPositions();
+                const d = { 
+                    metadata: { topic: document.title },
+                    nodes: nodes.get().map(n => {
+                        const pos = currentPositions[n.id];
+                        return {
+                            ...n,
+                            x: pos ? Math.round(pos.x) : n.x,
+                            y: pos ? Math.round(pos.y) : n.y
+                        };
+                    }),
+                    edges: edges.get().map(e => ({
+                        ...e, 
+                        title: undefined,
+                        smooth: (e.smooth && e.smooth.roundness !== undefined) ? e.smooth : undefined
+                    })),
+                    loops: feedbackLoops,
+                    archetypes: systemArchetypes
+                };
+                const jsonString = JSON.stringify(d, null, 2);
+
+                if (currentSaveMode === 'json') {
+                    // --- SAVE JSON ---
+                    if (!filename.toLowerCase().endsWith('.json')) filename += '.json';
+                    downloadFile(jsonString, filename, 'application/json');
+
+                } else {
+                    // --- SAVE HTML ---
+                    if (!filename.toLowerCase().endsWith('.html')) filename += '.html';
+
+                    const clone = document.documentElement.cloneNode(true);
+                    clone.querySelector('#cldNetwork').innerHTML = ''; 
+                    clone.querySelectorAll('.tooltip').forEach(el => el.style.display = 'none');
+                    clone.querySelectorAll('.legend-container').forEach(el => el.classList.remove('expanded'));
+                    clone.querySelector('#descPanel').style.display = 'none';
+                    clone.querySelector('#inputModal').style.display = 'flex'; 
+                    clone.querySelector('#saveModal').style.display = 'none'; 
+                    clone.querySelector('#jsonInput').textContent = jsonString;
+
+                    const fileContent = "<!DOCTYPE html>\n" + clone.outerHTML;
+                    downloadFile(fileContent, filename, 'text/html');
+                }
+
+                document.getElementById('saveModal').style.display = 'none';
+
+            } catch (err) {
+                alert("Error saving file: " + err.message);
+                console.error(err);
+            }
+        });
+
+        function downloadFile(content, filename, contentType) {
+            const blob = new Blob([content], {type: contentType});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); 
+            a.href = url; 
+            a.download = filename; 
+            a.style.display = 'none';
+            document.body.appendChild(a); 
+            a.click();
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 100);
+        }
+
+        // --- 2. ENGINE INITIALIZATION ---
+        function initEngine(data) {
+            const hasPositions = data.nodes && data.nodes.some(n => n.x !== undefined && n.y !== undefined);
+
+            // MODIFIED: Append [ID] to node labels (without hardcoded 'n')
+            const nodeData = (data.nodes || []).map(n => {
+                let label = n.label || "";
+                const tag = `[${n.id}]`; // Corrected: uses pure ID
+                // Prevent duplicate appending if data is re-loaded
+                if (!label.includes(tag)) {
+                    label = label ? `${label} ${tag}` : tag;
+                }
+                return {
+                    ...n, 
+                    label: label,
+                    x: n.x ? Number(n.x) : undefined, 
+                    y: n.y ? Number(n.y) : undefined
+                };
+            });
+            
+            // MODIFIED: Append [ID] to edge labels (without hardcoded 'e')
+            const edgeData = (data.edges || []).map(e => {
+                let smooth = { enabled: true, type: "cubicBezier", roundness: 0.3 };
+                if (e.smooth && e.smooth.roundness !== undefined) {
+                    smooth = e.smooth; 
+                }
+                
+                let label = e.label || "";
+                const tag = `[${e.id}]`; // Corrected: uses pure ID
+                // Prevent duplicate appending and ensure ID is visible
+                if (!label.includes(tag)) {
+                    label = label ? `${label} ${tag}` : tag;
+                }
+
+                return {...e, label: label, from:String(e.from), to:String(e.to), title:undefined, smooth: smooth};
+            });
+
+            nodes = new vis.DataSet(nodeData);
+            edges = new vis.DataSet(edgeData);
+            
+            feedbackLoops = (data.loops || []).map((l, i) => ({...l, internalId: `loop-${i}`}));
+            systemArchetypes = data.archetypes || [];
+
+            const container = document.getElementById('cldNetwork');
+            const options = {
+                autoResize: true, height: '100%', width: '100%',
+                nodes: { 
+                    shape: 'ellipse', size: 25, 
+                    font: { size: 13, face: 'Inter', color: '#1F2937', multi: 'html' },
+                    widthConstraint: { maximum: 160 }, borderWidth: 2,
+                    color: { background: '#DBEAFE', border: '#3B82F6', highlight: { background: '#BFDBFE', border: '#2563EB' } },
+                    shadow: { enabled: true, size:4, x:2, y:2, color: 'rgba(0,0,0,0.08)'} 
+                },
+                edges: { 
+                    width: 2.5, arrows: { to: { enabled: true, scaleFactor: 0.7 } },
+                    smooth: { enabled: true, type: "cubicBezier", roundness: 0.3 },
+                    font: { align: 'middle', multi: true, face: 'Inter', size: 12, color: '#4B5563', background: 'rgba(255,255,255,0.75)', strokeWidth: 0 },
+                    chosen: {
+                        edge: function(values, id, selected, hovering) {
+                            values.color = '#e11d48'; 
+                            values.width = values.width * 1.5;
+                            values.shadow = { enabled: true, color: 'rgba(225, 29, 72, 0.4)', size: 10 };
+                        }
+                    }
+                },
+                physics: {
+                    enabled: !hasPositions,
+                    stabilization: { enabled: !hasPositions, iterations: 1000, fit: true },
+                    barnesHut: { gravitationalConstant: -2000, centralGravity: 0.3, springLength: 95 }
+                },
+                interaction: { 
+                    hover: true, dragNodes: true, zoomView: true, 
+                    selectConnectedEdges: false 
+                }
+            };
+
+            nodes.forEach(n => originalNodeStyles[n.id] = { color: {...(n.color||options.nodes.color)}, borderWidth: n.borderWidth||2 });
+            edges.forEach(e => originalEdgeStyles[e.id] = { color: {...(e.color||options.edges.color)}, width: e.width||2.5, smooth: e.smooth });
+
+            if(network) network.destroy();
+            network = new vis.Network(container, { nodes, edges }, options);
+            
+            if(!hasPositions) {
+                network.on("stabilizationIterationsDone", () => network.setOptions({ physics: false }));
+            }
+
+            renderLists();
+            setupInteractions();
+            setupListSorting(); 
+        }
+
+        // --- 3. CUSTOM INTERACTION LOGIC ---
+        function setupInteractions() {
+            const canvas = document.querySelector('canvas');
+            const tt = document.getElementById('mainTooltip');
+            const ctt = document.getElementById('canvasTooltip');
+
+            // --- CLICK (SELECTION) ---
+            network.on("click", function(params) {
+                const networkPos = params.pointer.canvas; 
+
+                const hit = loopLabelPositions.find(l => (networkPos.x-l.x)**2 + (networkPos.y-l.y)**2 < l.r**2);
+                if(hit) {
+                    selectLoop(hit.loop);
+                    return; 
+                }
+
+                if (params.nodes.length === 0) { 
+                    if (params.edges.length > 0) { 
+                        const clickedEdgeId = params.edges[0];
+                        activeEdgeForRecurve = (activeEdgeForRecurve === clickedEdgeId) ? null : clickedEdgeId;
+                        if(activeEdgeForRecurve) {
+                            network.selectEdges([activeEdgeForRecurve]);
+                            resetHighlights(false); 
+                        } else {
+                            network.selectEdges([]);
+                        }
+                    } else { 
+                        activeEdgeForRecurve = null;
+                        network.selectEdges([]);
+                        resetHighlights();
+                    }
+                } else {
+                    activeEdgeForRecurve = null;
+                    network.selectEdges([]);
+                }
+            });
+
+            // --- MOUSE DOWN (START DRAG) ---
+            if(canvas) {
+                canvas.addEventListener('mousedown', function(event) {
+                    const rect = canvas.getBoundingClientRect();
+                    const netPos = network.canvas.DOMtoCanvas({x: event.clientX-rect.left, y: event.clientY-rect.top});
+                    
+                    const hit = loopLabelPositions.find(l => (netPos.x-l.x)**2 + (netPos.y-l.y)**2 < l.r**2);
+                    if(hit) {
+                        draggedLabel = hit.loop;
+                        dragOffset = {x: netPos.x - hit.x, y: netPos.y - hit.y};
+                        network.setOptions({interaction:{dragNodes:false, dragView:false}}); 
+                        canvas.style.cursor = 'grabbing';
+                        event.preventDefault();
+                        return;
+                    }
+
+                    if (activeEdgeForRecurve && !isRecurvingEdge) {
+                        isRecurvingEdge = true;
+                        document.addEventListener('mousemove', handleMouseMoveOnDocumentForRecurve);
+                        document.addEventListener('mouseup', handleMouseUpOnDocumentForRecurve, { once: true });
+                        network.setOptions({ interaction: { dragNodes: false, dragView: false } }); 
+                        event.preventDefault();
+                    }
+                });
+
+                canvas.addEventListener('mousemove', (e) => {
+                    lastMouseX = e.clientX;
+                    lastMouseY = e.clientY;
+
+                    if(draggedLabel) {
+                        const rect = canvas.getBoundingClientRect();
+                        const netPos = network.canvas.DOMtoCanvas({x: e.clientX-rect.left, y: e.clientY-rect.top});
+                        draggedLabel.lx = netPos.x - dragOffset.x;
+                        draggedLabel.ly = netPos.y - dragOffset.y;
+                        network.redraw(); 
+                        return;
+                    }
+
+                    const rect = canvas.getBoundingClientRect();
+                    const netPos = network.canvas.DOMtoCanvas({x: e.clientX-rect.left, y: e.clientY-rect.top});
+                    const hit = loopLabelPositions.find(l => (netPos.x-l.x)**2 + (netPos.y-l.y)**2 < l.r**2);
+                    
+                    if(hit) {
+                        canvas.style.cursor = 'pointer';
+                        ctt.innerHTML = `<strong>${hit.loop.name}</strong><p style="margin:5px 0 0">${hit.loop.description}</p>`;
+                        ctt.style.left = (e.clientX+15)+'px'; ctt.style.top = (e.clientY+15)+'px';
+                        ctt.style.display = 'block';
+                    } else {
+                         ctt.style.display = 'none';
+                    }
+                });
+
+                canvas.addEventListener('mouseup', () => {
+                    if(draggedLabel) {
+                        draggedLabel = null;
+                        network.setOptions({interaction:{dragNodes:true, dragView:true}});
+                        canvas.style.cursor = 'default';
+                    }
+                });
+            }
+
+
+            // --- RECURVE HELPERS ---
+            function handleMouseMoveOnDocumentForRecurve(event) {
+                if (!isRecurvingEdge || !activeEdgeForRecurve) return;
+
+                const rect = canvas.getBoundingClientRect();
+                const mousePos = network.canvas.DOMtoCanvas({ x: event.clientX - rect.left, y: event.clientY - rect.top });
+                const edge = edges.get(activeEdgeForRecurve);
+                if (!edge) { handleMouseUpOnDocumentForRecurve(); return; }
+
+                const positions = network.getPositions([edge.from, edge.to]);
+                const fromPos = positions[edge.from];
+                const toPos = positions[edge.to];
+                if (!fromPos || !toPos) { handleMouseUpOnDocumentForRecurve(); return;}
+
+                const midX = (fromPos.x + toPos.x) / 2;
+                const midY = (fromPos.y + toPos.y) / 2;
+                const dxMouse = mousePos.x - midX;
+                const dyMouse = mousePos.y - midY;
+
+                const edgeDx = toPos.x - fromPos.x;
+                const edgeDy = toPos.y - fromPos.y;
+                const edgeLength = Math.sqrt(edgeDx*edgeDx + edgeDy*edgeDy);
+                if (edgeLength < 1) return;
+
+                const orientation = (edgeDx * dyMouse) - (edgeDy * dxMouse);
+                const newCurveType = orientation >= 0 ? 'curvedCCW' : 'curvedCW';
+
+                const distFromMid = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+                const scaleFactor = 0.8; 
+                let newRoundness = Math.max(0.0, Math.min(1.0, (distFromMid / edgeLength) * scaleFactor));
+
+                edges.update({
+                    id: activeEdgeForRecurve,
+                    smooth: { type: newCurveType, roundness: newRoundness, enabled: true }
+                });
+                
+                if(originalEdgeStyles[activeEdgeForRecurve]) {
+                    originalEdgeStyles[activeEdgeForRecurve].smooth = { type: newCurveType, roundness: newRoundness, enabled: true };
+                }
+            }
+
+            function handleMouseUpOnDocumentForRecurve() {
+                if (!isRecurvingEdge) return;
+                isRecurvingEdge = false;
+                document.removeEventListener('mousemove', handleMouseMoveOnDocumentForRecurve);
+                network.setOptions({ interaction: { dragNodes: true, dragView: true } });
+            }
+
+
+            // --- STANDARD VIS.JS EVENTS ---
+            network.on("afterDrawing", (ctx) => {
+                loopLabelPositions = [];
+                ctx.font = "bold 13px Inter"; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                feedbackLoops.forEach(l => {
+                    if(!l.lx) {
+                        const pos = network.getPositions(l.nodeIds);
+                        let x=0,y=0,c=0; for(let k in pos){x+=pos[k].x; y+=pos[k].y; c++;}
+                        if(c){l.lx=x/c; l.ly=y/c;}
+                    }
+                    if(l.lx) {
+                        ctx.fillStyle = l.type==='R' ? 'rgba(190, 24, 93, 0.9)' : 'rgba(30, 64, 175, 0.9)';
+                        ctx.beginPath(); ctx.arc(l.lx, l.ly, 18, 0, 2*Math.PI); ctx.fill();
+                        ctx.strokeStyle = 'white'; ctx.lineWidth = 1; ctx.stroke();
+                        ctx.fillStyle = 'white'; ctx.fillText(l.id, l.lx, l.ly+1);
+                        loopLabelPositions.push({loop: l, x: l.lx, y: l.ly, r: 18});
+                    }
+                });
+            });
+
+            network.on("hoverNode", (p) => {
+                const n = nodes.get(p.node);
+                if(n.description) {
+                    const dom = network.canvas.canvasToDOM(network.getPositions([p.node])[p.node]);
+                    tt.innerHTML = n.description.replace(/\n/g, '<br>');
+                    tt.style.left = (dom.x + 20) + 'px'; tt.style.top = (dom.y + 20) + 'px';
+                    tt.style.display = 'block';
+                }
+            });
+            network.on("blurNode", () => tt.style.display = 'none');
+
+            network.on("hoverEdge", (p) => {
+                const e = edges.get(p.edge);
+                if(e.description) {
+                    tt.innerHTML = e.description.replace(/\n/g, '<br>');
+                    tt.style.left = (lastMouseX + 15) + 'px';
+                    tt.style.top = (lastMouseY + 15) + 'px';
+                    tt.style.display = 'block';
+                }
+            });
+            network.on("blurEdge", () => tt.style.display = 'none');
+        }
+
+        // --- 4. LIST SORTING & RENDERING (UPDATED) ---
+        function setupListSorting() {
+            const list = document.getElementById('loopList');
+            
+            list.addEventListener('dragstart', (e) => {
+                if(e.target.tagName === 'LI') {
+                    draggedItem = e.target;
+                    setTimeout(() => draggedItem.classList.add('dragging'), 0);
+                }
+            });
+
+            list.addEventListener('dragend', () => {
+                if(draggedItem) draggedItem.classList.remove('dragging');
+                draggedItem = null;
+            });
+
+            list.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                const afterElement = getDragAfterElement(list, e.clientY);
+                const current = document.querySelector('.dragging');
+                if (afterElement == null) {
+                    list.appendChild(current);
+                } else {
+                    list.insertBefore(current, afterElement);
+                }
+            });
+
+            list.addEventListener('drop', () => {
+                // REORDER DATA ARRAY
+                const newOrder = [];
+                list.querySelectorAll('li').forEach(li => {
+                    const loop = feedbackLoops.find(l => l.internalId === li.dataset.id);
+                    if(loop) newOrder.push(loop);
+                });
+                feedbackLoops = newOrder;
+                
+                // NO RESEQUENCING - Just redraw to ensure consistency
+                renderLists();
+            });
+        }
+
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('li:not(.dragging)')];
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+
+        function renderLists() {
+            const ll = document.getElementById('loopList'); ll.innerHTML = '';
+            feedbackLoops.forEach(l => {
+                const li = document.createElement('li');
+                li.setAttribute('draggable', true);
+                li.dataset.id = l.internalId;
+
+                const col = l.type==='R'?'#be185d':'#1e40af';
+                let nameDisplay = l.name;
+                
+                if (!nameDisplay.startsWith(l.id)) {
+                    nameDisplay = `<span style="font-weight:bold; color:${col}">${l.id}</span>: ${nameDisplay}`;
+                } else {
+                    nameDisplay = nameDisplay.replace(l.id, `<span style="font-weight:bold; color:${col}">${l.id}</span>`);
+                }
+
+                li.innerHTML = nameDisplay;
+                li.onclick = (e) => { e.stopPropagation(); selectLoop(l); };
+                ll.appendChild(li);
+            });
+            const al = document.getElementById('archetypeList'); al.innerHTML = '';
+            systemArchetypes.forEach(a => {
+                const li = document.createElement('li'); li.textContent = a.name;
+                li.onclick = (e) => { e.stopPropagation(); selectArch(a); };
+                al.appendChild(li);
+            });
+        }
+
+        function selectLoop(l) {
+            highlight(l);
+            const box = document.getElementById('descPanel');
+            box.innerHTML = `<strong>${l.name}</strong>${l.description.replace(/\n/g,'<br>')}`;
+            box.style.display='block';
+            if(!document.getElementById('legend').classList.contains('expanded')) toggleLegend('legend');
+        }
+
+        function selectArch(a) {
+            highlight(a);
+            const box = document.getElementById('descPanel');
+            box.innerHTML = `<strong>${a.name}</strong>${a.description.replace(/\n/g,'<br>')}`;
+            box.style.display='block';
+            if(!document.getElementById('archetypeLegend').classList.contains('expanded')) toggleLegend('archetypeLegend');
+        }
+
+        // --- UPDATED HIGHLIGHT FUNCTION (v6.2 logic) ---
+        function highlight(item) {
+            if (!item || !item.nodeIds || !item.edgeIds) {
+                resetHighlights(true);
+                return;
+            }
+
+            resetHighlights(false); 
+
+            const ns = new Set(item.nodeIds || []), es = new Set(item.edgeIds || []);
+            const nodesToUpdate = [];
+            const edgesToUpdate = [];
+            const highlightColor = '#e11d48'; 
+            const dimOpacity = 0.15;
+
+            // --- Process Nodes ---
+            nodes.forEach(n => {
+                const originalStyle = originalNodeStyles[n.id];
+                if (!originalStyle) return;
+
+                if (ns.has(n.id)) {
+                    nodesToUpdate.push({
+                        id: n.id,
+                        opacity: 1.0,
+                        color: JSON.parse(JSON.stringify(originalStyle.color)),
+                        borderWidth: (originalStyle.borderWidth || 2) * 1.7
+                    });
+                } else {
+                    nodesToUpdate.push({
+                        id: n.id,
+                        opacity: dimOpacity,
+                        color: {
+                            background: colorToRgba(originalStyle.color?.background, dimOpacity * 0.5),
+                            border: colorToRgba(originalStyle.color?.border, dimOpacity),
+                            highlight: { background: colorToRgba(originalStyle.color?.highlight?.background, dimOpacity * 0.5), border: colorToRgba(originalStyle.color?.highlight?.border, dimOpacity) },
+                            hover: { background: colorToRgba(originalStyle.color?.hover?.background, dimOpacity * 0.5), border: colorToRgba(originalStyle.color?.hover?.border, dimOpacity) }
+                        },
+                        borderWidth: (originalStyle.borderWidth || 2),
+                        font: {
+                            color: colorToRgba(nodes.get(n.id).font?.color || '#1F2937', dimOpacity)
+                        }
+                    });
+                }
+            });
+
+            // --- Process Edges ---
+            edges.forEach(e => {
+                const originalStyle = originalEdgeStyles[e.id];
+                if (!originalStyle) return;
+                const defaultWidth = 2.5;
+
+                if (es.has(e.id)) {
+                    edgesToUpdate.push({
+                        id: e.id,
+                        width: (originalStyle.width || defaultWidth) * 1.8,
+                        color: { color: highlightColor, highlight: highlightColor, hover: highlightColor },
+                        font: {
+                            color: '#000000',
+                            background: 'rgba(255, 255, 255, 0.9)'
+                        },
+                        opacity: 1.0,
+                        smooth: JSON.parse(JSON.stringify(originalStyle.smooth || {}))
+                    });
+                } else {
+                    const dimmedColor = colorToRgba(originalStyle.color?.color, dimOpacity * 0.8);
+                    edgesToUpdate.push({
+                        id: e.id,
+                        width: (originalStyle.width || defaultWidth) * 0.8,
+                        color: { color: dimmedColor, highlight: dimmedColor, hover: dimmedColor },
+                        font: {
+                            color: colorToRgba(edges.get(e.id).font?.color || '#4B5563', dimOpacity * 0.5),
+                            background: 'rgba(255, 255, 255, 0.2)'
+                        },
+                        opacity: dimOpacity,
+                        smooth: JSON.parse(JSON.stringify(originalStyle.smooth || {}))
+                    });
+                }
+            });
+
+            nodes.update(nodesToUpdate);
+            edges.update(edgesToUpdate);
+        }
+
+        // --- UPDATED RESET HIGHLIGHTS ---
+        function resetHighlights(fullReset = true) {
+            const nodeUpdates = nodes.get().map(n => {
+                const s = originalNodeStyles[n.id] || { color: '#DBEAFE', borderWidth: 2 };
+                return { 
+                    id: n.id, 
+                    opacity: 1, 
+                    color: s.color, 
+                    borderWidth: s.borderWidth,
+                    font: { color: '#1F2937' } 
+                };
+            });
+            const edgeUpdates = edges.get().map(e => {
+                const s = originalEdgeStyles[e.id] || { color: '#4B5563', width: 2.5 };
+                return { 
+                    id: e.id, 
+                    opacity: 1, 
+                    color: s.color, 
+                    width: s.width,
+                    font: { color: '#4B5563', background: 'rgba(255,255,255,0.75)' } 
+                };
+            });
+
+            nodes.update(nodeUpdates);
+            edges.update(edgeUpdates);
+
+            if(fullReset) {
+                document.getElementById('descPanel').style.display='none';
+                document.querySelectorAll('.legend-container').forEach(l => l.classList.remove('expanded'));
+            }
+        }
+
+        window.toggleLegend = (id) => {
+            const el = document.getElementById(id);
+            const exp = el.classList.contains('expanded');
+            document.querySelectorAll('.legend-container').forEach(l => l.classList.remove('expanded'));
+            document.getElementById('descPanel').style.display = 'none';
+            if(!exp) el.classList.add('expanded');
+        }
+    </script>
+</body>
+</html>

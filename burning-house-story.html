@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Burning House Economy — Australia CAMS Analysis — Neural Nations</title>
+<meta name="description" content="How Australia learned to profit from the fire while forgetting it owned the house. A systemic narrative on Australia's fossil fuel trap, ecological grief, and the enclave transition.">
+<meta name="author" content="Kari McKern">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://neuralnations.org/burning-house-story">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://neuralnations.org/burning-house-story">
+<meta property="og:site_name" content="Neural Nations">
+<meta property="og:title" content="The Burning House Economy — Australia CAMS Analysis">
+<meta property="og:description" content="How Australia learned to profit from the fire while forgetting it owned the house. A systemic narrative • Stratum VII • 2026">
+<meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Burning House Economy">
+<meta name="twitter:description" content="How Australia learned to profit from the fire while forgetting it owned the house.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+  @page { size: A4; margin: 25mm 22mm 25mm 22mm; }
+  html, body { background: #f5f1e4; }
+  body {
+    font-family: "Garamond", "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    font-size: 12.5pt;
+    line-height: 1.65;
+    color: #1f2024;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0;
+    background: #f5f1e4;
+  }
+
+  .story-shell {
+    background: #ffffff;
+    max-width: 720px;
+    margin: 40px auto;
+    padding: 48px 56px 56px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    border-radius: 4px;
+  }
+
+  /* ── Kicker ── */
+  .kicker {
+    font-family: "Inter", sans-serif;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #14b8a6;
+    margin: 0 0 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .kicker::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: #14b8a6;
+  }
+
+  h1 {
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 2.4rem;
+    color: #14213d;
+    text-align: left;
+    margin: 0 0 8px;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+  .subtitle {
+    font-style: italic;
+    color: #6b7280;
+    margin: 0 0 10px;
+    font-size: 1.1rem;
+    line-height: 1.45;
+  }
+  .byline {
+    font-family: "Inter", sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: #9ca3af;
+    text-transform: uppercase;
+    margin: 0 0 36px;
+  }
+  .epigraph {
+    border-left: 3px solid #14b8a6;
+    padding: 8px 18px;
+    margin: 0 0 36px;
+    color: #4b5563;
+    font-style: italic;
+    font-size: 1.05rem;
+    background: #f0fdfa;
+    border-radius: 0 4px 4px 0;
+  }
+  p { margin: 0 0 16px; text-align: justify; hyphens: auto; }
+  p.first::first-line { font-variant: small-caps; letter-spacing: 0.04em; }
+  p.first::first-letter {
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    float: left;
+    font-size: 52pt;
+    line-height: 0.85;
+    margin: 6px 8px 0 0;
+    color: #14213d;
+  }
+  hr.section {
+    border: none;
+    border-top: 1px solid #d4d4d8;
+    margin: 32px auto;
+    width: 60%;
+  }
+  .ornament {
+    text-align: center;
+    color: #14b8a6;
+    font-size: 1.2rem;
+    letter-spacing: 0.4em;
+    margin: 28px 0;
+    opacity: 0.6;
+  }
+
+  /* ── Section headings ── */
+  h2 {
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #14213d;
+    margin: 44px 0 12px;
+    border-bottom: 2px solid #14b8a6;
+    padding-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  h3 {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #14213d;
+    margin: 28px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── Companion map link box ── */
+  .map-link-box {
+    margin: 36px 0;
+    padding: 22px 26px;
+    background: #f0fdfa;
+    border: 1px solid #99f6e4;
+    border-left: 4px solid #14b8a6;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .map-link-box .map-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+  .map-link-box .map-text { flex: 1; }
+  .map-link-box .map-text strong {
+    display: block;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 0.97rem;
+    color: #14213d;
+    margin-bottom: 4px;
+  }
+  .map-link-box .map-text span {
+    font-family: "Inter", sans-serif;
+    font-size: 0.88rem;
+    color: #6b7280;
+  }
+  .map-link-box a {
+    font-family: "Inter", sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #0f766e;
+    text-decoration: none;
+    padding: 8px 16px;
+    background: #ccfbf1;
+    border: 1px solid #99f6e4;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: background 0.15s;
+    flex-shrink: 0;
+  }
+  .map-link-box a:hover { background: #99f6e4; }
+
+  /* ── Reflection section (light background) ── */
+  .reflection-shell {
+    background: #fafaf7;
+    border: 1px solid #e9e5d6;
+    border-radius: 10px;
+    padding: 36px 40px;
+    margin: 44px 0 0;
+  }
+  .reflection-shell h2 {
+    margin-top: 0;
+  }
+  .reflection-shell p { margin: 0 0 14px; }
+  .reflection-shell p:last-child { margin-bottom: 0; }
+
+  /* ── Loop cards ── */
+  .loop-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 16px 0 0;
+  }
+  .loop-card {
+    padding: 14px 18px;
+    border-radius: 8px;
+    border-left: 4px solid #14b8a6;
+    background: #f0fdfa;
+  }
+  .loop-card.balancing {
+    border-left-color: #3b82f6;
+    background: #eff6ff;
+  }
+  .loop-card .loop-label {
+    font-family: "Inter", sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #0f766e;
+    margin: 0 0 6px;
+    display: block;
+  }
+  .loop-card.balancing .loop-label { color: #1d4ed8; }
+  .loop-card p { margin: 0; font-size: 0.95rem; line-height: 1.55; color: #374151; }
+
+  /* ── Addendum section ── */
+  .addendum-shell {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-left: 4px solid #d97706;
+    border-radius: 10px;
+    padding: 32px 40px;
+    margin: 44px 0 0;
+  }
+  .addendum-shell .addendum-kicker {
+    font-family: "Inter", sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #b45309;
+    margin: 0 0 10px;
+    display: block;
+  }
+  .addendum-shell h2 {
+    font-size: 1.05rem;
+    border-bottom-color: #d97706;
+    margin-top: 0;
+  }
+  .addendum-shell p { margin: 0 0 14px; }
+  .addendum-shell p:last-child { margin-bottom: 0; }
+
+  /* ── Nodes list ── */
+  .nodes-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .nodes-list li {
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-family: "Inter", sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #374151;
+  }
+  .nodes-list li strong { color: #1b2a33; font-weight: 600; }
+
+  /* ── Signal box ── */
+  .signal-box {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin: 20px 0;
+  }
+  .signal-box .signal-label {
+    font-family: "Inter", sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #6b7280;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .signal-box .signal-value {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #14213d;
+  }
+  .signal-box .signal-value .positive { color: #0f766e; }
+  .signal-box .signal-value .negative { color: #b91c1c; }
+  .signal-box p {
+    margin: 8px 0 0;
+    font-size: 0.9rem;
+    color: #6b7280;
+    font-family: "Inter", sans-serif;
+  }
+
+  /* ── Leverage bullets ── */
+  .leverage-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .leverage-list li {
+    padding: 12px 16px 12px 14px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-left: 3px solid #14b8a6;
+    border-radius: 6px;
+    font-family: "Inter", sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: #374151;
+  }
+  .leverage-list li strong { color: #14213d; font-weight: 600; }
+
+  /* ── Footer ── */
+  .story-footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid #e5e7eb;
+    font-family: "Inter", sans-serif;
+    font-size: 10px;
+    color: #9ca3af;
+    letter-spacing: 0.05em;
+    text-align: center;
+  }
+  .story-footer a { color: #14b8a6; text-decoration: none; }
+
+  @media (max-width: 720px) {
+    .story-shell { padding: 32px 22px 40px; margin: 0; border-radius: 0; }
+    .map-link-box { flex-direction: column; gap: 12px; }
+    .reflection-shell, .addendum-shell { padding: 24px 22px; }
+  }
+  @media print {
+    body, html { background: #fff; }
+    .story-shell { box-shadow: none; margin: 0; padding: 0; max-width: none; }
+  }
+</style>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-ESZ16XVVNN');
+</script>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle active">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html" class="active">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework &#8599;</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="framework/index.html">Framework &#8599;</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+<div class="story-shell">
+
+    <p class="kicker">Aha! Story &middot; Australia CAMS Analysis &middot; Stratum VII &middot; 2026</p>
+
+    <h1>The Burning House Economy</h1>
+    <p class="subtitle">How Australia learned to profit from the fire while forgetting it owned the house</p>
+    <p class="byline">Kari McKern &middot; Neural Nations &middot; v1.2</p>
+
+    <div class="epigraph">
+        There is a particular kind of person who has watched their house begin to smoulder and, rather than reach for water, has thought about how best to monetise the heat.
+    </div>
+
+    <!-- ── Companion map link ── -->
+    <div class="map-link-box">
+        <div class="map-icon">&#127973;</div>
+        <div class="map-text">
+            <strong>Companion Aha! Map</strong>
+            <span>14 nodes &middot; 23 edges &middot; 7 feedback loops (R1&ndash;R3, B4&ndash;B6, R7) &middot; 3 archetypes &middot; vis-network v1.1</span>
+        </div>
+        <a href="burning-house-map.html">Open Map &rarr;</a>
+    </div>
+
+    <!-- ── THE STORY ── -->
+    <p class="first">Australia has not been that person out of cruelty or stupidity. It has been that person because the architecture of the house made it genuinely difficult to see that the smoke was coming from inside.</p>
+
+    <p>The country sits on the largest proved reserves of thermal coal and the second-largest LNG export capacity on earth. For thirty years, those reserves have generated the revenue that paid for hospitals, universities, the social wage, the comfortable assumption that prosperity was a default condition rather than an achievement requiring maintenance. The money was real. The jobs in the Hunter Valley and the Bowen Basin were real. The royalties that funded Queensland school buildings were real. No one who lived inside that arrangement was wrong to value it.</p>
+
+    <p>What they were not told &mdash; what the system was architecturally designed to prevent them from being told clearly &mdash; was that the same revenue was funding the apparatus that would make it impossible to replace. Every dollar extracted from a coal seam also bought a seat at the table where the next government&rsquo;s climate policy would be negotiated. Every new mine was a new argument for why the transition could be deferred one more electoral cycle. The money was building the cage in which the country would eventually find itself trapped, but it was doing so slowly enough, and with enough genuine benefit distributed along the way, that the trap was indistinguishable from prosperity.</p>
+
+    <div class="ornament">* &nbsp; * &nbsp; *</div>
+
+    <p>The year the carbon price passed, 2012, there was a brief window when the architecture shifted. Governance coherence reached a level not seen since the Howard years. The science institutions were funded, the policy was legislated, the modelling suggested a workable path. It lasted eighteen months. The fossil lobby had always known that durable policy was the one thing that could not be permitted, because durable policy creates investment certainty, and investment certainty builds the transition economy that makes the lobby irrelevant. So it was not the carbon price itself that needed destroying. What needed destroying was the political coalition that had produced it. Leadership destabilisation, media warfare, the careful cultivation of regional labour anxiety &mdash; the tools were not new, but the application was surgical. By July 2014 the tax was gone. By 2018 the Helm stress reading was the worst outside a Depression.</p>
+
+    <p>Meanwhile, out in the margins of this political theatre, something quieter was accumulating. In the Snowy Mountains, the fires were starting a month earlier each decade. On the reef, the bleaching events were no longer anomalies. In the outer suburbs of Sydney and Melbourne, young people were watching the data and making a calculation that their parents had not needed to make: whether the country they would inherit was one worth building a life inside. The grief was not yet political. It was the kind of grief that sits in the body &mdash; the knowledge that something irreplaceable is leaving and that the people with the power to slow it are too invested in its departure to act.</p>
+
+    <p>The summer of 2019 changed the texture of that grief. Eighteen months of fire. Smoke that darkened Sydney at noon. Koalas burning in trees, property after property gone, firefighters working without resources because the men who controlled the fiscal levers had spent a decade insisting that the connection between their product and the weather was speculative. The Lore stress reading that year was the highest in ninety years. Not since the Depression had the cultural substrate of the country registered that level of rupture.</p>
+
+    <div class="ornament">* &nbsp; * &nbsp; *</div>
+
+    <p>What the data encodes, if you know how to read it, is not a story of villains. The fossil lobby did what institutions do: it optimised for its own survival. The coal-region workers voted for the candidates who promised continuity because continuity was what their mortgages required. The politicians triangulated because the electoral map made bold action career-ending. The universities converted international students into revenue because the government had defunded them and told them to find their own way. The landlords used negative gearing because the tax code rewarded them to. Everyone in the system was responding rationally to the incentives the system had built for them. The tragedy is structural, not moral.</p>
+
+    <p>But structural tragedies have structural leverage points, and the data points to three of them with unusual precision. The first is the just-transition programme that has never been seriously funded: the edge from labour transition vulnerability to governance collapse is the single most powerful veto in the system, and it costs a fraction of the fossil subsidies currently transferred every year to break it. The second is science institution integrity: every dollar cut from CSIRO and the Climate Commission was a dollar invested in governance incoherence, because knowledge is what makes coherent policy possible. The third, and least discussed, is the stranded asset cliff. The sunk cost spiral tightens with every new mine approved. The exit from the trap becomes geometrically harder with each iteration. The window for an orderly transition &mdash; one that manages the revenue cliff without a fiscal crisis &mdash; is narrowing, and it narrows at exactly the rate that new fossil capital is committed.</p>
+
+    <p>The global carbon transition is not waiting for Australia to resolve its internal contradictions. The EU&rsquo;s carbon border adjustment is already repricing exports. Asian buyers are already building alternative supply chains. The IEA has already drawn the line: no new coal. The question is not whether the fossil rent era ends. It is whether the country that built so much of its identity and prosperity around that rent will have built something to replace it before the revenue disappears, or whether it will discover the replacement is needed only after the roof has fully caught.</p>
+
+    <div class="ornament">* &nbsp; * &nbsp; *</div>
+
+    <p>There is another story available to Australia, and the data hints at it. The post-2023 Archive recovery is real. The teal independent movement demonstrated that the fossil lobby&rsquo;s grip on suburban electorates was not absolute. The critical minerals endowment &mdash; lithium, cobalt, nickel, rare earths &mdash; is genuinely world-class. The renewable energy resource is among the finest on earth. The country that built the Snowy Scheme and the CSIRO and the NBN (when it chose ambition over caution) knows how to build at scale when the political will is present.</p>
+
+    <p>The Aha! moment, if it comes, will not arrive as a sudden insight. It will arrive as the slow recognition that the house was always more valuable than the revenue it generated from being on fire, and that the people who said so first &mdash; the scientists, the firefighters, the young people in the streets, the Pacific Islanders whose islands are already going under &mdash; were not the enemies of prosperity. They were its last reliable advocates.</p>
+
+    <p>The Critical Move is not a policy. It is a reframing: from managing the decline of fossil revenue to building the conditions under which its replacement is already generating returns before the decline arrives. That means funding the just-transition now, not when the mines close. It means protecting the science institutions with the same ferocity that the lobby protects the export credits. It means treating the stranded asset clock as the emergency it is rather than the political inconvenience it has been managed as for thirty years. And it means telling the story of what the country is building toward, not just defending what it is leaving behind. Stories that run ahead of the data are how systems change. This one is overdue.</p>
+
+    <!-- ── SYSTEMIC REFLECTION ── -->
+    <div class="reflection-shell">
+
+        <h2>Systemic Reflection &amp; Stakeholder Notes</h2>
+
+        <h3>First Principles</h3>
+        <ul class="leverage-list">
+            <li>Rent-seeking systems invest in the political infrastructure that protects the rent before they invest in the productive capacity that could replace it. Australia&rsquo;s fossil sector followed this logic with exceptional discipline.</li>
+            <li>Policy oscillation destroys investment certainty faster than policy weakness does. Eleven years of governance incoherence caused more productive damage than no climate policy at all would have, because it prevented capital from committing to the transition.</li>
+            <li>The lag between carbon emission and physical consequence is thirty years. Democratic systems operate on three-year cycles. This temporal mismatch is the deepest structural cause of climate governance failure everywhere, but Australia&rsquo;s fossil lobby has weaponised it with particular effectiveness.</li>
+            <li>Labour anxiety is the democratic transmission of economic insecurity into political veto. Every just-transition dollar not spent is a fossil lobby donation received.</li>
+        </ul>
+
+        <h3>Core Wisdom &mdash; Systemic Paradoxes</h3>
+        <ul class="leverage-list">
+            <li><strong>The Paradox of Strength:</strong> the more revenue the fossil sector generates, the more politically powerful it becomes, and the harder it is to build the transition economy that would make the revenue unnecessary. The system is strongest at the moment it is most fragile.</li>
+            <li><strong>The Paradox of the Fix:</strong> every political leader who attempted to solve climate governance incoherence by changing the leader failed, because the incoherence was generated by the fossil lobby&rsquo;s structural power, not by the personal limitations of any individual prime minister.</li>
+            <li><strong>The Paradox of Grief:</strong> ecological grief drives demand for action, which briefly strengthens governance, which the fossil lobby immediately counterattacks. The grief accumulates faster than the governance recovers. This is why the generational mood is darkening even as individual policies improve.</li>
+        </ul>
+
+        <h3>Leverage Points</h3>
+        <ul class="leverage-list">
+            <li><strong>Just-Transition Investment (highest leverage):</strong> breaking the Labour Veto Loop (B4) by fully funding worker transition removes the fossil lobby&rsquo;s most effective democratic weapon. Cost: approximately $3 billion. Fossil fuel subsidies currently transferred annually: approximately $11 billion.</li>
+            <li><strong>Science Institution Protection:</strong> restoring and fireproofing CSIRO, BOM, and university climate research against future budget attacks breaks the Science Suppression Loop (B5) and maintains the evidentiary pressure on governance ambition.</li>
+            <li><strong>Stranded Asset Disclosure:</strong> requiring full market disclosure of stranded asset exposure on fossil company balance sheets removes the informational asymmetry that allows the Sunk Cost Spiral (R2) to deepen undetected.</li>
+            <li><strong>Critical Minerals Industrial Policy:</strong> activating the Transition Opportunity Gate (B6) by committing sovereign investment to value-added critical minerals processing converts the global transition from an external threat into an internal growth driver.</li>
+        </ul>
+
+        <h3>Stakeholder Resonances</h3>
+        <p><strong>For the Visionaries</strong> &mdash; the beauty in this system is the Transition Opportunity Gate: the same global force destroying fossil revenue is simultaneously creating a critical minerals and renewable energy export market that Australia is better positioned to serve than almost any other nation. The world needs what is under Australian soil and above it. The question is only whether the political system can redirect attention from what is burning to what is building.</p>
+        <p><strong>For the Pragmatists</strong> &mdash; the just-transition investment calculus is straightforward: three billion dollars eliminates the electoral veto that has cost the country thirty years of transition delay. The fossil subsidy bill is eleven billion a year. The stranded asset exposure on current approved projects exceeds two hundred billion. The cost of inaction is larger than the cost of action by every metric except the three-year electoral cycle.</p>
+
+        <h3>Active Loops</h3>
+        <div class="loop-grid">
+            <div class="loop-card">
+                <span class="loop-label">R1 &mdash; Reinforcing &mdash; The Fossil Rent Lock</span>
+                <p>Fossil revenue funds lobbying power, which destroys governance coherence, which prevents durable climate policy, which starves transition investment, which maintains fossil dependency. The central trap. Thirty years of evidence.</p>
+            </div>
+            <div class="loop-card">
+                <span class="loop-label">R2 &mdash; Reinforcing &mdash; The Sunk Cost Spiral</span>
+                <p>Each new fossil investment deepens stranded asset exposure, which intensifies the lobby campaign to extend extraction life. The spiral tightens with each approval. The exit becomes more costly with each iteration.</p>
+            </div>
+            <div class="loop-card">
+                <span class="loop-label">R3 &mdash; Reinforcing &mdash; The Burning House Feedback</span>
+                <p>Fossil exports warm the atmosphere, which intensifies extreme weather, which deepens ecological grief, which drives brief governance windows, which the lobby immediately closes. The physical damage accumulates faster than the political repair.</p>
+            </div>
+            <div class="loop-card balancing">
+                <span class="loop-label">B4 &mdash; Balancing &mdash; The Labour Veto Loop</span>
+                <p>Climate ambition raises transition vulnerability, which generates electoral backlash, which collapses governance coherence, which reduces ambition. The fossil lobby&rsquo;s most effective democratic weapon. Breakable only by just-transition investment.</p>
+            </div>
+            <div class="loop-card balancing">
+                <span class="loop-label">B5 &mdash; Balancing &mdash; The Science Suppression Loop</span>
+                <p>Fossil incumbent power defunds science, which reduces the evidence base, which weakens policy ambition. Operates on budget cycles. Abbott&rsquo;s CSIRO cuts are the cleanest empirical instance.</p>
+            </div>
+            <div class="loop-card balancing">
+                <span class="loop-label">B6 &mdash; Balancing &mdash; The Transition Opportunity Gate</span>
+                <p>Global decarbonisation destroys fossil demand and simultaneously creates critical minerals and green energy opportunity. Whether this gate opens depends on whether transition capacity is built before fossil revenue collapses. The window is narrowing.</p>
+            </div>
+        </div>
+
+    </div><!-- /reflection-shell -->
+
+    <!-- ── ADDENDUM: ENCLAVE TRANSITION TRAP ── -->
+    <div class="addendum-shell">
+        <span class="addendum-kicker">Addendum</span>
+        <h2>The Enclave Transition Trap</h2>
+
+        <p>There is a second trap hiding inside the first, and it is more subtle because it wears the face of progress. Australia is now building renewable energy faster than at any point in its history. The numbers are genuinely impressive: gigawatts of solar and wind committed, the Capacity Investment Scheme drawing capital at scale, battery storage projects moving from announcement to shovel. The Helm has stabilised. The Archive has recovered. The language of transition is no longer contested at the federal level. And yet the Craft node remains stubbornly negative, and Hands has not followed Archive into recovery. The knowledge is accumulating. The productive transformation is not.</p>
+
+        <p>The reason is spatial. Renewable energy projects are built where the sun and wind are most abundant and where the grid connection is cheapest. That is overwhelmingly the coastal and semi-coastal corridor: the Murray-Darling solar zone, the New England wind corridor, the off-shore Victorian projects. These are not where the people are whose employment the transition needs to replace. The Hunter Valley runs on coal. The Bowen Basin runs on coal. The Latrobe Valley ran on coal until it ran on managed decline. The Pilbara runs on iron ore and gas. These communities are not in the path of the renewable investment surge. They are watching it from a distance, through a media that tells them the future is being built somewhere else, for someone else, by someone with a different kind of skill set than the one they spent decades acquiring.</p>
+
+        <div class="signal-box">
+            <span class="signal-label">Archive&ndash;Craft Gap &mdash; 2023&ndash;2026</span>
+            <div class="signal-value"><span class="positive">Archive KS +2.2</span> &nbsp;/&nbsp; <span class="negative">Craft KS &minus;0.8</span> &nbsp;= gap of <strong>+3.0</strong></div>
+            <p>The widest in the entire 150-year dataset. Australia has more clean energy knowledge than it has ever had and less domestic productive capacity to deploy it than at any point since the Depression. This is not a knowledge problem. It is a sovereign investment problem and an industrial policy problem.</p>
+        </div>
+
+        <p>What the Hunter Valley miner knows, and what the transition plan has not yet found the language to acknowledge, is that his identity is not separable from his work in the way that metropolitan planners assume. It is not that he is resistant to change because he lacks imagination. It is that the change being offered to him is geographically elsewhere, skills-distant, and constructed around a vision of the future in which his town is a sacrifice zone rather than a production site. A solar farm three hundred kilometres away does not replace a coal mine that employed his father and his brother. A call centre retraining programme does not replace the craft knowledge of someone who has spent twenty years operating a longwall mining system. The Lore stress in coal regions is not irrational conservatism. It is a precise reading of a transition plan that has not yet answered the question of where these people fit inside it.</p>
+
+        <p>Australia&rsquo;s critical minerals endowment &mdash; the lithium in Western Australia, the nickel in Queensland, the cobalt in the Northern Territory, the rare earths scattered across the continent &mdash; is the raw material for every battery that will power the post-carbon economy. At present, almost all of it leaves the country as ore or concentrate, to be processed and manufactured into cells by Chinese, Korean, and American companies. The value-add that creates permanent skilled employment, regional economic anchoring, and technological capability is captured elsewhere. Australia is once again digging things up and shipping them out, but this time the things are lithium, cobalt, and nickel rather than coal, and the buyers are battery factories in Jiangsu and South Korea rather than steel mills in Hebei. The enclave model endures. Only the commodity changes.</p>
+
+        <p>The Critical Move here is not complicated to describe, though it is ferociously difficult to execute against the institutional resistance it will face. It is to locate battery manufacturing, critical minerals refining, and green hydrogen production in or adjacent to the communities whose fossil employment is ending. Not because it is the cheapest location &mdash; it is not &mdash; but because the social licence for the transition depends on it, and the social licence for the transition is the precondition for everything else. The Labour Veto Loop does not break through rhetoric about clean jobs. It breaks when the clean jobs are in the same postcode as the coal jobs they are replacing, staffed by the same families, managed by the same unions, and generating the same royalty revenues for the same state governments.</p>
+
+        <p>The window in which that question can still be answered productively is measurable in years, not decades.</p>
+
+    </div><!-- /addendum enclave -->
+
+    <!-- ── ADDENDUM: NEW LOOPS & NODES ── -->
+    <div class="addendum-shell" style="border-left-color:#6366f1;background:#f5f3ff;border-color:#c4b5fd;">
+        <span class="addendum-kicker" style="color:#5b21b6;">Addendum &mdash; New Loops &amp; Nodes</span>
+        <h2 style="border-bottom-color:#6366f1;">New Nodes Added (v1.1)</h2>
+
+        <ul class="nodes-list">
+            <li><strong>n12 &mdash; Renewables &amp; Battery Investment:</strong> The stock of committed capital in solar, wind, pumped hydro, and grid-scale storage. Growing rapidly since 2022 but spatially concentrated away from coal regions.</li>
+            <li><strong>n13 &mdash; Regional Mining Community Viability:</strong> The accumulated social and economic health of Hunter Valley, Bowen Basin, Latrobe Valley, Pilbara. The human geography of the transition problem. Lore Capacity at 4.2&ndash;5.2, not recovered to pre-Abbott levels.</li>
+            <li><strong>n14 &mdash; Critical Minerals Value-Add Capture:</strong> The degree to which lithium, cobalt, nickel, and rare earths are processed domestically. Currently near zero. The Archive-Craft gap of +3.0 in 2023&ndash;2026 encodes this: knowledge present, productive transformation absent.</li>
+        </ul>
+
+        <h3>New Loop</h3>
+        <div class="loop-grid" style="margin-bottom:20px;">
+            <div class="loop-card" style="border-left-color:#6366f1;background:#eef2ff;">
+                <span class="loop-label" style="color:#4338ca;">R7 &mdash; Reinforcing &mdash; The Enclave Transition Trap</span>
+                <p>Renewable investment bypasses mining regions spatially, which deteriorates regional community viability, which amplifies labour transition vulnerability, which feeds the Labour Veto Loop capping climate ambition, which constrains the renewable investment that might otherwise be directed to regional value-add. The transition reproduces the spatial injustice of the fossil era unless critical minerals processing deliberately routes investment into the communities that need it. The break point is n14: value-add capture anchored in transition communities.</p>
+            </div>
+        </div>
+
+        <h3>Updated Leverage Points</h3>
+        <ul class="leverage-list">
+            <li><strong>Critical minerals processing mandate</strong> sited in transition communities: breaks both the Enclave Transition Trap (R7) and the Labour Veto Loop (B4) simultaneously by making the transition economy geographically legible to the people it needs to include.</li>
+            <li><strong>National Reconstruction Fund activation</strong> for battery cell manufacturing: closes the Archive-Craft gap by connecting the knowledge pipeline to domestic production. Without this, Australia will train the engineers who build Chinese battery factories.</li>
+            <li><strong>Regional energy hubs</strong> (Pilbara hydrogen, Hunter pumped hydro, Latrobe battery precinct): anchor the renewable investment surge in the communities whose coal employment is ending, converting temporal job loss into spatial job replacement rather than spatial job abandonment.</li>
+        </ul>
+
+    </div><!-- /addendum new nodes -->
+
+    <div class="story-footer">
+        The Burning House Economy &middot; Aha! Story v1.2 &middot; Australia CAMS Analysis 2026<br>
+        <a href="aha-maps.html">&larr; All Aha! Maps</a> &middot; <a href="burning-house-map.html">Open Interactive Map &rarr;</a>
+    </div>
+
+</div><!-- /story-shell -->
+
+<footer class="footer">
+    <nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a>
+        <a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a>
+        <a href="results.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Results</a>
+    </nav>
+    <p>&copy; 2026 Kari McKern &mdash; Neural Nations CAMS Research. Built as open science &mdash; contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+
+<script src="nav.js"></script>
+</body>
+</html>

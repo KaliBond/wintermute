@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Australia — Detective Panel · The Burning House Economy · Neural Nations</title>
+<meta name="description" content="Poirot, Salander, Marple, and Holmes interrogate the loop structure of the Burning House Economy map. The fossil rent lock, the enclave transition trap, and the Stewards junction.">
+<meta name="author" content="Kari McKern">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://neuralnations.org/burning-house-detective-panel">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://neuralnations.org/burning-house-detective-panel">
+<meta property="og:site_name" content="Neural Nations">
+<meta property="og:title" content="Australia — Detective Panel · The Burning House Economy · Neural Nations">
+<meta property="og:description" content="Poirot, Salander, Marple, and Holmes interrogate the Fossil Rent Lock, the Labour Veto Loop, and the Enclave Transition Trap. Eight revisions. The map survives, in a harder form.">
+<meta property="og:image" content="https://neuralnations.org/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Australia — Detective Panel · Neural Nations">
+<meta name="twitter:description" content="Four detectives stress-test the Burning House Economy map. Does the Fossil Rent Lock thesis survive? Is the Enclave Transition Trap designed or accidental?">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+.story-meta { font-size:0.82em; color:#888; letter-spacing:0.04em; line-height:1.8; }
+.story-divider { text-align:center; color:#DAD2B8; font-size:1.2em; letter-spacing:0.4em; margin:2em 0; }
+
+/* Detective cards */
+.detective-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap:14px;
+    margin:20px 0;
+}
+.detective-card {
+    background:#FBF8EF;
+    border:1px solid #DAD2B8;
+    border-radius:8px;
+    padding:16px 18px;
+}
+.detective-name {
+    font-size:0.95em; font-weight:700; color:#2F6F7D;
+    margin-bottom:4px;
+}
+.detective-role {
+    font-size:0.78em; color:#888; font-style:italic; margin-bottom:8px;
+}
+.detective-specialty {
+    font-size:0.84em; color:#1B2A33; line-height:1.65;
+}
+
+/* Loop section headers */
+.loop-header {
+    display:flex; align-items:flex-start; gap:14px;
+    margin:0 0 16px;
+}
+.loop-badge {
+    flex-shrink:0;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72em; font-weight:700;
+    background:#1B2A33; color:#fff;
+    padding:4px 9px; border-radius:4px;
+    letter-spacing:0.05em; margin-top:3px;
+}
+.loop-badge.r { background:#C84C3E; }
+.loop-badge.b { background:#2F6F7D; }
+.loop-title { font-size:1.05em; font-weight:700; color:#1B2A33; line-height:1.4; }
+.loop-subtitle { font-size:0.82em; color:#888; font-style:italic; margin-top:3px; }
+
+/* Dialogue */
+.dialogue { margin-bottom:0; }
+.dialogue-line {
+    display:flex; gap:10px; align-items:flex-start;
+    margin-bottom:10px; font-size:0.95em; line-height:1.75; color:#1B2A33;
+}
+.speaker {
+    flex-shrink:0; min-width:100px;
+    font-weight:700; color:#2F6F7D;
+    font-size:0.88em; padding-top:1px;
+}
+.speaker.salander { color:#C84C3E; }
+.speaker.marple   { color:#5F7A3A; }
+.speaker.holmes   { color:#6E5DBE; }
+.speech { flex:1; }
+.speech em { font-style:italic; color:#555; }
+.speech strong { color:#1B2A33; }
+
+/* Inline evidence tags */
+.ev {
+    font-family:'JetBrains Mono',monospace; font-size:0.8em;
+    background:rgba(200,76,62,0.08); border:1px solid rgba(200,76,62,0.22);
+    color:#C84C3E; padding:1px 5px; border-radius:2px; white-space:nowrap;
+}
+.node {
+    font-family:'JetBrains Mono',monospace; font-size:0.8em;
+    background:rgba(47,111,125,0.09); border:1px solid rgba(47,111,125,0.28);
+    color:#2F6F7D; padding:1px 5px; border-radius:2px; white-space:nowrap;
+}
+.loop {
+    font-family:'JetBrains Mono',monospace; font-size:0.8em;
+    background:rgba(110,93,190,0.1); border:1px solid rgba(110,93,190,0.28);
+    color:#6E5DBE; padding:1px 5px; border-radius:2px; white-space:nowrap;
+}
+
+/* Revision box */
+.revision-box {
+    background:#F0E9D2;
+    border-left:4px solid #D98B2B;
+    border-radius:0 8px 8px 0;
+    padding:14px 18px;
+    margin-top:18px;
+    font-size:0.88em;
+    line-height:1.7;
+    color:#1B2A33;
+}
+.revision-label {
+    font-size:0.72em; font-weight:700; text-transform:uppercase;
+    letter-spacing:0.1em; color:#D98B2B; margin-bottom:6px;
+}
+
+/* Final revisions list */
+.final-revision {
+    display:flex; gap:14px; align-items:flex-start;
+    margin-bottom:16px;
+}
+.rev-num {
+    flex-shrink:0; width:28px; height:28px;
+    border-radius:50%; background:#D98B2B; color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono',monospace; font-weight:700;
+    font-size:0.82em;
+}
+.rev-body { flex:1; font-size:0.95em; line-height:1.75; color:#1B2A33; }
+.rev-body strong { color:#1B2A33; }
+.rev-loops {
+    display:inline-block; font-size:0.72em; font-family:'JetBrains Mono',monospace;
+    background:#1B2A33; color:#fff; padding:2px 7px; border-radius:3px;
+    margin-left:6px; vertical-align:middle;
+}
+
+.companion-strip { display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+.companion-strip a {
+    display:inline-block; padding:7px 14px; border:1px solid #DAD2B8;
+    border-radius:6px; font-size:0.85em; color:#2F6F7D;
+    text-decoration:none; background:#FBF8EF; font-weight:600;
+}
+.companion-strip a:hover { background:#F0E9D2; }
+
+.verdict-card {
+    background:#1B2A33; color:#F5F1E4;
+    border-radius:8px; padding:22px 26px; margin-top:4px;
+}
+.verdict-card p { font-size:0.97em; line-height:1.8; margin-bottom:1em; }
+.verdict-card p:last-child { margin:0; }
+.verdict-card em { color:#DAD2B8; font-style:italic; }
+.verdict-card strong { color:#fff; }
+</style>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-ESZ16XVVNN');
+</script>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle active">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html" class="active">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework &#8599;</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="framework/index.html">Framework &#8599;</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="aha-maps.html"><strong>Aha! Maps &middot; Bellinger</strong></a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="hero-section">
+        <h1>The Burning House Economy &mdash; Investigation</h1>
+        <p class="hero-subtitle">Detective Panel &mdash; Stress-Test of the Seven Loops</p>
+    </div>
+
+    <div class="card">
+        <p class="story-meta">
+            Australia &middot; 1990&ndash;2026 &middot; CAMS v3.2 &mdash; Ensemble Mean (5-scorer)<br>
+            Companion to <a href="burning-house-story.html" style="color:#2F6F7D;">The Story</a> &middot; <a href="burning-house-map.html" style="color:#2F6F7D;">The Map</a>
+        </p>
+        <p style="font-size:0.97em; line-height:1.8; color:#1B2A33; margin-top:16px;">A panel of four detectives, drawn adversarially, convened to interrogate the loop structure of the Burning House Economy map and its central thesis: that Australia is not failing to transition due to ignorance, but due to a deliberately maintained architecture of political and economic incentives that makes durable climate governance impossible. Their brief: find where the story flatters its subject, where the mechanism is asserted rather than demonstrated, and whether the Enclave Transition Trap is accident or design.</p>
+        <div class="companion-strip" style="margin-top:16px;">
+            <a href="burning-house-map.html">Interactive Map &rarr;</a>
+            <a href="burning-house-story.html">Full Story &rarr;</a>
+            <a href="aha-maps.html#australia">All Australia artefacts &rarr;</a>
+        </div>
+    </div>
+
+    <!-- The Panel -->
+    <div class="card" style="margin-top:18px;">
+        <h2 style="font-size:1.05em; font-weight:700; color:#1B2A33; margin:0 0 18px;">The Panel</h2>
+        <div class="detective-grid">
+            <div class="detective-card">
+                <div class="detective-name">Hercule Poirot</div>
+                <div class="detective-role">Retired &mdash; Sûreté Belge &amp; Scotland Yard</div>
+                <div class="detective-specialty">The fastidious Belgian who organises the little grey cells with care, distrusts coincidence absolutely, and always begins where others end: with the question of who had both motive and the means to arrange the crime to look like something else. <strong>Specialty:</strong> pattern recognition across seemingly unrelated events; the organised conspiracy disguised as systemic failure.</div>
+            </div>
+            <div class="detective-card">
+                <div class="detective-name" style="color:#C84C3E;">Lisbeth Salander</div>
+                <div class="detective-role">Freelance &mdash; Millennium Group</div>
+                <div class="detective-specialty">The hacker who follows the money and the data trails institutions leave when they believe no one is looking. Distrusts the structural explanation until she has verified whose hands are on each lever. <strong>Specialty:</strong> the financial architecture under the policy story; the coalition that persists across apparent changes of government.</div>
+            </div>
+            <div class="detective-card">
+                <div class="detective-name" style="color:#5F7A3A;">Miss Jane Marple</div>
+                <div class="detective-role">Private Citizen &mdash; St Mary Mead</div>
+                <div class="detective-specialty">The elderly spinster who recognises in national policy the same dynamics she observed in village life, and who distrusts grand systemic explanations that lack a human permission-giver. <strong>Specialty:</strong> the universal pattern in the particular; the question of who has not given permission, and why.</div>
+            </div>
+            <div class="detective-card">
+                <div class="detective-name" style="color:#6E5DBE;">Sherlock Holmes</div>
+                <div class="detective-role">Consulting Detective &mdash; 221B Baker Street</div>
+                <div class="detective-specialty">The supreme deducer who works from structural geometry to intent, and who has no patience for coincidence dressed as bad luck. <strong>Specialty:</strong> the mechanical logic that reveals deliberate action; the counterfactual that tests whether an outcome could have been otherwise.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROUND ONE: The Architecture Question -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge r">R1</span>
+            <div>
+                <div class="loop-title">Opening &mdash; The Architecture Question</div>
+                <div class="loop-subtitle">Is the Fossil Rent Lock a structural trap or an organised conspiracy? Round one establishes the frame.</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker">POIROT</span>
+                <span class="speech"><em>(tapping his temple)</em> Mes amis. In thirty years of governance, <em>six</em> prime ministers are removed. Every single removal occurs at the precise moment a durable climate or energy policy begins to take hold. Rudd after Copenhagen. Gillard after the carbon price. Turnbull after the National Energy Guarantee. This is not coincidence. Poirot does not believe in coincidence. The <span class="ev">Helm KS: &minus;6.2 in 2018</span> &mdash; the worst governance coherence reading outside a Depression &mdash; while <span class="ev">Flow KS held at +4.2</span> throughout. Someone is pulling strings. The question I put to the panel: is this <span class="node">Stewards</span> defection, or is it <span class="node">Helm</span> collapse from within?</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker salander">SALANDER</span>
+                <span class="speech">It&rsquo;s both. And you&rsquo;re asking the wrong question. The <span class="ev">Hands-Stewards correlation: +0.80 in 1955, &minus;0.43 today.</span> That&rsquo;s not drift &mdash; that&rsquo;s a deliberate restructuring of who the institutional apparatus serves. Negative gearing. CGT discount. 457 visa expansion. NRAS cancellation. Each one is a policy decision with a clear beneficiary and a clear loser. <span class="node">Stewards</span> didn&rsquo;t <em>fail</em> &mdash; it was <em>repurposed.</em> The fossil lobby didn&rsquo;t capture governance by accident. They had a list. They worked through it. What I want to know is whether anyone has mapped the revolving door between Resources ministers and mining company boards, because I guarantee the <span class="ev">Archive-Craft gap of +3.0</span> closes immediately when you follow that money.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech">This all reminds me of old Colonel Faversham in St Mary Mead, who owned the largest farm in the village. When younger farmers began talking about rotating their crops, he didn&rsquo;t argue against rotation. He simply made himself indispensable to every committee that might approve it. He never said no. He just ensured every meeting ran long and every decision required one more study. The fossil lobby didn&rsquo;t <em>defeat</em> climate policy. They <em>exhausted</em> it. Eleven years of <span class="node">Helm</span> stress is not the result of winning arguments. It is the result of making governance so costly, so unstable, so personally dangerous that the talent willing to attempt it gradually withdrew. Which brings me to what concerns me most: the <span class="ev">Archive-Craft gap</span>. The knowledge is there. The production is absent. When knowledge fails to become action, it is rarely a resource problem. It is almost always a <em>permission</em> problem. Who has not given permission, and why?</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker holmes">HOLMES</span>
+                <span class="speech">The question answers itself once you see what the fossil lobby actually fears. It is not renewable energy. Wind farms do not threaten coal exports. What <em>does</em> threaten the fossil model is domestic value-add manufacturing &mdash; specifically, <span class="node">n14: Critical Minerals Value-Add Capture</span> sited in the same regional communities that currently provide the fossil sector&rsquo;s electoral protection. Consider the geometry. <span class="loop">B4: The Labour Veto Loop</span> works because coal-region workers have no credible alternative employer. The moment a lithium refinery opens in the Bowen Basin, employing the same families at comparable wages, the veto evaporates. The <span class="loop">Enclave Transition Trap R7</span> is not an accident of geography. It is a <em>designed outcome.</em></span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revision identified &mdash; R1 framing</div>
+            The map frames <span class="loop">R1: The Fossil Rent Lock</span> as a structural trap. The panel proposes a stronger claim: the trap is <em>maintained by intent</em>. The distinction matters for leverage-point analysis. A structural trap can be broken by changing incentives. An intentionally maintained trap requires also breaking the coalition maintaining it. The map should acknowledge both the structural and the agentic dimensions of R1, with <span class="node">Fossil Incumbent Political Power (n2)</span> specified as the active maintaining agent, not merely a node in a passive feedback structure.
+        </div>
+    </div>
+
+    <!-- ROUND TWO: The Junction -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge b">B4 + R7</span>
+            <div>
+                <div class="loop-title">Cross-Examination &mdash; The Junction Node</div>
+                <div class="loop-subtitle">Where do the Fossil Rent Lock, the Housing Rentier dynamic, and the Enclave Transition Trap share infrastructure?</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker">POIROT</span>
+                <span class="speech">Bien. So we have consensus on the mechanism: the fossil lobby does not fight the transition &mdash; it <em>routes</em> the transition away from the communities that would make it irreversible. Magnifique. Diabolical, but magnifique. Mademoiselle Salander &mdash; the one coalition you describe: the rentier housing dynamic, the immigration extraction, the fossil incumbency. What is the single node in the CAMS architecture where all three meet?</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker salander">SALANDER</span>
+                <span class="speech"><span class="node">Stewards.</span> Coherence 5.2 to 6.4 across every era from 1996 to 2007. Capacity holding. Stress low. Looks like a healthy institution. But the <span class="ev">Hands-Stewards correlation inverted in that exact window.</span> Stewards isn&rsquo;t failing &mdash; it&rsquo;s <em>functioning perfectly for a different client.</em> The institution built to mediate between capital and labour is now mediating between capital and capital. Housing capital, fossil capital, education-as-revenue capital. They all need the same thing from Stewards: regulatory coherence for themselves, regulatory friction for everyone else. That&rsquo;s your junction, Poirot. <span class="node">Stewards</span> is the node where all three traps share infrastructure.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech">Which means the highest leverage point in the entire system is not a climate policy or a housing policy or an immigration policy. It is the question of <em>whose interests the institutional apparatus is organised to serve.</em> That question has not been asked publicly in Australia in thirty years. Not really asked. The <span class="ev">Lore Capacity sitting at 3.2 in 2014</span> &mdash; its lowest reading since the 1930s Depression &mdash; is what happens when a society loses the cultural vocabulary to ask it. I rather think it needs to be asked now. Before the window Mr Holmes describes closes entirely.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker holmes">HOLMES</span>
+                <span class="speech">It has been asked. By the teal independents in 2022. By every striking waterside worker since Federation. By the Pacific Islander neighbours whose islands are already going under while Australia exports the coal that is sinking them. The asking is not the problem. The problem is that the question dissolves back into noise before an answer can be <em>institutionalised.</em> Not elected. <em>Institutionalised.</em> Those are different things in the system we have just mapped.</span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revision identified &mdash; Stewards node</div>
+            The map does not currently include a Stewards node. The panel identifies this as an omission of first-order importance: without <span class="node">Stewards</span>, the map has no junction at which the fossil trap, the housing rentier dynamic, and the enclave transition trap share a common maintaining mechanism. A future version should add Stewards with an edge from <span class="node">n2: Fossil Incumbent Political Power</span>, encoding the client-substitution that Salander identifies.
+        </div>
+    </div>
+
+    <!-- Loop-by-loop stress test -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge">R2 &amp; R3</span>
+            <div>
+                <div class="loop-title">The Sunk Cost Spiral &amp; The Burning House Feedback</div>
+                <div class="loop-subtitle">Do these loops run independently, or are they coupled through the same lag mechanism?</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker holmes">HOLMES</span>
+                <span class="speech">The two loops are not parallel. They are <em>nested.</em> <span class="loop">R2: The Sunk Cost Spiral</span> operates on political-economy time &mdash; the lag between new mine approval and lobby intensification is years. <span class="loop">R3: The Burning House Feedback</span> operates on physical time &mdash; the lag between carbon emission and extreme weather is decades. The fossil lobby has, with great precision, exploited the difference between these timescales. Democratic systems run on three-year electoral cycles. The physical consequence arrives in thirty years. The lobby&rsquo;s entire strategy is to keep the political salience of the three-year cycle permanently higher than the physical urgency of the thirty-year cycle. <span class="ev">Black Summer 2019-20</span> was the first moment the physical damage broke through into the three-year cycle fast enough to matter electorally. It produced the teal movement. The lobby immediately pivoted to the regional just-transition argument to absorb the shock.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker marple">MARPLE</span>
+                <span class="speech">Which is exactly what Colonel Faversham did when the other farmers finally got a motion to a vote. He didn&rsquo;t fight the vote. He proposed an amendment. The amendment required a working party. The working party required six months. By the time the working party reported, the season had passed and the decision was moot. The lobby&rsquo;s post-2022 &ldquo;yes, but what about the coal workers&rdquo; strategy is the amendment. It is not a sincere concern. It is a procedural absorption of a political threat.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker salander">SALANDER</span>
+                <span class="speech">Right. Which is why the just-transition investment figure matters so much. Three billion to fund the transition. Eleven billion a year in fossil subsidies. If the lobby were genuinely concerned about worker welfare, it would have advocated for the three billion. It never has. The <span class="ev">just-transition funding: effectively zero since 1997</span> despite thirty years of coal-region anxiety is the data point that reveals the concern for workers as instrumental.</span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revision identified &mdash; R2/R3 coupling</div>
+            The map should annotate the temporal coupling between <span class="loop">R2</span> and <span class="loop">R3</span> explicitly: the fossil lobby deliberately maintains the three-year political salience of <span class="loop">R2</span> (sunk costs, jobs, regional economies) at a level that blocks the thirty-year physical urgency of <span class="loop">R3</span> from reaching the governance system. This is not a passive feature of the system but an active lobbying strategy. The edge from <span class="node">n2: Fossil Incumbent Political Power</span> to <span class="node">n3: Governance Coherence</span> should be annotated: <em>mechanism = temporal salience displacement.</em>
+        </div>
+    </div>
+
+    <!-- B5 and B6 -->
+    <div class="card" style="margin-top:18px;">
+        <div class="loop-header">
+            <span class="loop-badge b">B5 + B6</span>
+            <div>
+                <div class="loop-title">Science Suppression &amp; The Transition Opportunity Gate</div>
+                <div class="loop-subtitle">Is the Archive-Craft gap a failure of policy or a feature of it?</div>
+            </div>
+        </div>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <span class="speaker salander">SALANDER</span>
+                <span class="speech">The <span class="ev">Archive-Craft gap: +3.0 in 2023-2026</span> &mdash; the widest in 150 years. This is not a coincidence either. CSIRO produces world-class battery chemistry research. The graduates flow to metropolitan employers or overseas battery manufacturers. The knowledge pipeline exists; the manufacturing end has not been connected. Now look at the National Reconstruction Fund: announced 2022, criteria published with a complexity that systematically advantages metropolitan recipients over regional ones. I can show you the criteria. This is the same pattern as the renewable investment flow: the transition is being built in the postcodes that already have the infrastructure, the connections, and the lobbying capacity to access it. The postcodes that need it most are systematically excluded by the very design of the mechanism.</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker holmes">HOLMES</span>
+                <span class="speech"><span class="loop">B6: The Transition Opportunity Gate</span> is currently framed as balancing: global decarbonisation destroys fossil demand while creating critical minerals opportunity, and whether the gate opens depends on whether transition capacity is built in time. But this framing treats B6 as a neutral mechanism. It is not neutral. The fossil lobby has a strong interest in ensuring that <span class="node">n14: Critical Minerals Value-Add Capture</span> remains near zero, because domestic battery manufacturing in coal regions would break <span class="loop">B4: The Labour Veto Loop</span> permanently. The lobby is not passively failing to open the B6 gate. It is actively working to keep it closed while appearing to support &ldquo;the transition.&rdquo;</span>
+            </div>
+            <div class="dialogue-line">
+                <span class="speaker">POIROT</span>
+                <span class="speech">And so we arrive at the heart of the matter. The map shows seven loops. But the true structure is a single coalition maintaining five of those loops simultaneously while performing support for the remaining two. The performance is the mechanism. This is not incompetence. This is <em>organisation.</em></span>
+            </div>
+        </div>
+        <div class="revision-box">
+            <div class="revision-label">Revision identified &mdash; B6 framing</div>
+            <span class="loop">B6: The Transition Opportunity Gate</span> should be annotated as actively suppressed rather than merely unopened. An edge should run from <span class="node">n2: Fossil Incumbent Political Power</span> to <span class="node">n14: Critical Minerals Value-Add Capture</span> with the label: <em>blocks regional siting mandate</em>. This edge closes the loop between the Fossil Rent Lock and the Enclave Transition Trap, showing they are operated by the same maintaining agent.
+        </div>
+    </div>
+
+    <!-- Final revisions -->
+    <div class="card" style="margin-top:18px;">
+        <h2 style="font-size:1.05em; font-weight:700; color:#1B2A33; margin:0 0 20px;">Panel Revisions &mdash; Eight Enumerated</h2>
+
+        <div class="final-revision">
+            <div class="rev-num">1</div>
+            <div class="rev-body"><strong>R1 intent annotation.</strong> Revise <span class="loop">R1: The Fossil Rent Lock</span> to distinguish structural self-reinforcement from active maintenance by <span class="node">n2: Fossil Incumbent Political Power</span>. The loop is both structural and agentic. <span class="rev-loops">R1 / n2</span></div>
+        </div>
+        <div class="final-revision">
+            <div class="rev-num">2</div>
+            <div class="rev-body"><strong>Add Stewards node.</strong> The map lacks a <span class="node">Stewards</span> node. Without it, the junction at which fossil, housing, and education-revenue capital share maintaining infrastructure is invisible. Add Stewards with a client-substitution edge from n2. <span class="rev-loops">n2 / Stewards</span></div>
+        </div>
+        <div class="final-revision">
+            <div class="rev-num">3</div>
+            <div class="rev-body"><strong>R2/R3 temporal coupling annotation.</strong> The three-year political lag (R2) versus thirty-year physical lag (R3) is not passive. Annotate the edge from n2 to n3 with: <em>mechanism = temporal salience displacement.</em> <span class="rev-loops">R2 / R3 / n2-n3</span></div>
+        </div>
+        <div class="final-revision">
+            <div class="rev-num">4</div>
+            <div class="rev-body"><strong>B6 active suppression edge.</strong> Add edge from <span class="node">n2</span> to <span class="node">n14: Critical Minerals Value-Add Capture</span> labelled <em>blocks regional siting mandate</em>. B6 is not unopened; it is actively kept closed. <span class="rev-loops">B6 / n2-n14</span></div>
+        </div>
+        <div class="final-revision">
+            <div class="rev-num">5</div>
+            <div class="rev-body"><strong>R7 design attribution.</strong> <span class="loop">R7: The Enclave Transition Trap</span> is currently described as a geographic accident. The panel finds it is a designed outcome. The National Reconstruction Fund criteria should be cited as direct evidence. <span class="rev-loops">R7</span></div>
+        </div>
+        <div class="final-revision">
+            <div class="rev-num">6</div>
+            <div class="rev-body"><strong>Just-transition gap as active strategy.</strong> The absence of just-transition funding since 1997 should be framed not as policy neglect but as fossil lobby strategy. Every just-transition dollar not spent is lobby capacity received. The edge from n9 to n3 should be annotated: <em>breakable only by disbursed investment, not announced investment.</em> <span class="rev-loops">B4 / n9-n3</span></div>
+        </div>
+        <div class="final-revision">
+            <div class="rev-num">7</div>
+            <div class="rev-body"><strong>Teal movement as Lore signal.</strong> The post-2022 teal independent movement should be encoded as evidence that <span class="node">n6: Ecological Grief Stock</span> converted into electoral action faster than the lobby could absorb. This is the one loop where the feedback ran at electoral speed rather than decades. <span class="rev-loops">R3 / n6-n4</span></div>
+        </div>
+        <div class="final-revision" style="margin-bottom:0;">
+            <div class="rev-num">8</div>
+            <div class="rev-body"><strong>Stranded asset disclosure as structural intervention.</strong> The map identifies stranded asset disclosure as a leverage point. The panel strengthens this: mandatory balance-sheet disclosure removes the informational asymmetry that allows <span class="loop">R2</span> to deepen undetected. It is not a minor technical reform; it is a structural attack on the sunk-cost spiral. <span class="rev-loops">R2 / n11</span></div>
+        </div>
+    </div>
+
+    <!-- Verdict -->
+    <div class="card" style="margin-top:18px;">
+        <h2 style="font-size:1.05em; font-weight:700; color:#1B2A33; margin:0 0 4px;">Verdict</h2>
+        <div class="verdict-card">
+            <p><strong>Holmes:</strong> The three highest-leverage interventions the data identifies: first, <em>just-transition investment</em> in coal-region communities &mdash; not announced, <em>disbursed;</em> second, <em>critical minerals processing mandates</em> sited regionally, breaking <span style="color:#DAD2B8;font-family:'JetBrains Mono',monospace;font-size:0.85em;">R7</span> at the source; third, <em>Stewards reform</em> &mdash; which means making explicit whose interests the institutional apparatus serves and legislating a different answer. The first two are expensive. The third is merely dangerous.</p>
+            <p><strong>Marple:</strong> The map survives the interrogation, in a harder and less comfortable form. The tragedy is structural. The maintenance is intentional. Both things are true, and the second makes the first much harder to escape.</p>
+            <p><strong>Salander:</strong> I expect the National Reconstruction Fund criteria, when published in full, will tell us which of these the current government has actually understood. The map should reconvene when that document is available.</p>
+            <p><strong>Poirot:</strong> <em>(rising, smoothing his moustaches)</em> The house is burning. The revenues from the fire are real. The architecture that made it impossible to see the smoke was not accidental. And the people who warned earliest &mdash; the scientists, the firefighters, the young people in the streets, the Pacific Islanders whose islands are already going under &mdash; were not the enemies of prosperity. They were its last reliable advocates. The case, I think, is solved. Whether it can be acted upon before the window closes &mdash; that is no longer a detective's question. <em>Bonne chance, mes amis.</em></p>
+        </div>
+    </div>
+
+    <p class="story-meta" style="margin-top:28px; text-align:center;">
+        Burning House Economy &middot; Aha! Mystery Detective Panel v1.0 &middot; Australia CAMS Analysis 2026<br>
+        Eight revisions enumerated. The map survives, in a harder and less flattering form.
+    </p>
+
+</div><!-- /container -->
+
+<footer class="footer">
+    <nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a>
+        <a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a>
+        <a href="aha-maps.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Aha! Maps</a>
+    </nav>
+    <p>&copy; 2026 Kari McKern &mdash; Neural Nations CAMS Research. Built as open science &mdash; contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+
+<script src="nav.js"></script>
+</body>
+</html>
