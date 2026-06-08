@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
+    <title>Crisis in the Middle East: A Quantitative Perspective — Complex Adaptive Humans #15 · Neural Nations</title>
+    <meta name="description" content="Issue #15: The US–Iran confrontation is a systems conflict, not merely a nuclear dispute. CAMS reveals a mode mismatch — Ψ-dominant Iran versus a Φ-overloaded US Helm — and traces the path dependency running from 1953 to the present.">
+    <meta name="keywords" content="CAMS, Neural Nations, Iran, United States, Middle East, nuclear, JCPOA, 1953 coup, Helm node, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/complex-adaptive-humans-15">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/complex-adaptive-humans-15">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="Crisis in the Middle East: A Quantitative Perspective — Complex Adaptive Humans #15 · Neural Nations">
+    <meta property="og:description" content="Issue #15: A structural reading of the US–Iran confrontation. Mode mismatch, path dependency, and the thermodynamic impossibility of deliberative diplomacy from a reactive Helm.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Crisis in the Middle East: A Quantitative Perspective — Complex Adaptive Humans #15">
+    <meta name="twitter:description" content="The US–Iran confrontation as a systems conflict: sovereignty logic versus coercive leverage. CAMS traces how 1953 wired the present, and why pressure strengthens the institutions it aims to weaken.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        { "@type": "WebSite", "name": "Neural Nations", "url": "https://neuralnations.org" },
+        { "@type": "Person", "@id": "https://neuralnations.org/#kari", "name": "Kari McKern", "url": "https://neuralnations.org/cams-project-history" }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    body { background: #F5F1E4; }
+    .article-shell { max-width: 780px; margin: 0 auto; padding: 40px 20px 80px; }
+    .back-link { font-family:'Inter',sans-serif; font-size:.82em; color:rgba(255,255,255,.75); text-decoration:none; display:inline-flex; align-items:center; gap:5px; margin-bottom:28px; transition:color .15s; }
+    .back-link:hover { color:white; }
+    .article-card { background:white; border-radius:8px; padding:64px 72px; box-shadow:0 8px 40px rgba(0,0,0,.18); }
+    .series-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#2F6F7D; margin-bottom:6px; }
+    .issue-meta { font-family:'Inter',sans-serif; font-size:.78em; color:#999; margin-bottom:28px; display:flex; align-items:center; gap:14px; }
+    .issue-badge { background:#F0E9D2; color:#2F6F7D; font-weight:600; padding:3px 10px; border-radius:20px; font-size:.9em; }
+    h1 { font-family:'Cormorant Garamond',serif; font-size:2.6em; font-weight:600; color:#1a1a2e; line-height:1.2; letter-spacing:-.02em; margin:0 0 10px; }
+    .subtitle { font-family:'Cormorant Garamond',serif; font-size:1.15em; font-style:italic; color:#555; margin:0 0 36px; }
+    .rule { border:none; border-top:1px solid #DAD2B8; margin:32px 0; }
+    .body-text { font-family:'Cormorant Garamond',serif; font-size:1.13em; line-height:1.92; color:#2c2c2c; }
+    .body-text p { margin:1.4em 0; }
+    .body-text p:first-of-type::first-letter { font-size:3.2em; font-weight:600; float:left; line-height:.78; margin:0 6px 0 0; color:#2F6F7D; }
+    .body-text blockquote { border-left:3px solid #D98B2B; margin:24px 0; padding:4px 0 4px 20px; color:#555; font-style:italic; }
+    .section-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#999; margin:44px 0 20px; border-top:1px solid #DAD2B8; padding-top:24px; }
+    /* Pull quote */
+    .pull-quote { border-left:4px solid #D98B2B; margin:32px 0; padding:8px 0 8px 24px; }
+    .pull-quote p { font-family:'Cormorant Garamond',serif; font-size:1.28em; font-style:italic; color:#374151; line-height:1.7; margin:0; }
+    /* Stats row */
+    .stat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:20px 0; }
+    .stat-card { background:#F5F1E4; border:1px solid #DAD2B8; border-radius:6px; padding:14px 16px; text-align:center; }
+    .stat-card .stat-val { font-family:'Cormorant Garamond',serif; font-size:1.5em; font-weight:600; color:#1a1a2e; }
+    .stat-card .stat-label { font-family:'Inter',sans-serif; font-size:.72em; color:#888; margin-top:3px; line-height:1.4; }
+    /* Data box */
+    .data-box { background:#F5F1E4; border:1px solid #DAD2B8; border-left:4px solid #2F6F7D; border-radius:6px; padding:16px 20px; margin:20px 0; font-family:'Inter',sans-serif; font-size:.84em; color:#374151; line-height:1.7; }
+    .data-box a { color:#2F6F7D; }
+    /* Contrast grid */
+    .contrast-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:24px 0; }
+    .contrast-card { border-radius:8px; padding:20px; }
+    .contrast-us { background:#f0f6ff; border:1px solid #bfdbfe; border-top:3px solid #1d4ed8; }
+    .contrast-iran { background:#fff5f5; border:1px solid #fecaca; border-top:3px solid #9b1c1c; }
+    .contrast-card .cc-label { font-family:'Inter',sans-serif; font-size:.7em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#888; margin-bottom:10px; }
+    .contrast-card .cc-mode { font-family:'Cormorant Garamond',serif; font-size:1.4em; font-weight:600; color:#1a1a2e; margin-bottom:6px; }
+    .contrast-card .cc-desc { font-family:'Inter',sans-serif; font-size:.82em; color:#555; line-height:1.6; }
+    /* Timeline */
+    .timeline { margin:24px 0; }
+    .tl-item { display:flex; gap:16px; padding:14px 0; border-bottom:1px solid #F0E9D2; }
+    .tl-item:last-child { border-bottom:none; }
+    .tl-year { font-family:'Inter',sans-serif; font-size:.78em; font-weight:700; color:#2F6F7D; flex-shrink:0; width:44px; padding-top:2px; }
+    .tl-body { font-family:'Inter',sans-serif; font-size:.85em; line-height:1.7; color:#374151; }
+    .tl-body strong { color:#1a1a2e; display:block; margin-bottom:2px; }
+    /* Warning box */
+    .warn-box { background:#fff1f2; border:1px solid #fecdd3; border-left:4px solid #9b1c1c; border-radius:6px; padding:16px 20px; margin:20px 0; font-family:'Inter',sans-serif; font-size:.86em; color:#374151; line-height:1.7; }
+    /* Conclusions */
+    .conclusions { background:#1a1a2e; color:white; border-radius:10px; padding:28px 32px; margin:32px 0; }
+    .conclusions h3 { font-family:'Inter',sans-serif; font-size:.78em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#a5f3fc; margin:0 0 16px; }
+    .conclusions ul { font-family:'Inter',sans-serif; font-size:.88em; line-height:1.85; padding-left:20px; color:rgba(255,255,255,.88); margin:0; }
+    .conclusions li { margin:5px 0; }
+    .conclusions .caveat { margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,.12); font-family:'Inter',sans-serif; font-size:.82em; color:rgba(255,255,255,.55); line-height:1.7; }
+    .conclusions .caveat a { color:#a5f3fc; }
+    /* Footer */
+    .article-footer { margin-top:52px; padding-top:28px; border-top:1px solid #DAD2B8; font-family:'Inter',sans-serif; font-size:.82em; color:#888; line-height:1.8; }
+    .article-footer strong { color:#374151; }
+    .li-btn { display:inline-flex; align-items:center; gap:6px; background:#0a66c2; color:white; padding:8px 18px; border-radius:6px; text-decoration:none; font-weight:600; font-size:.9em; margin-top:10px; transition:background .15s; }
+    .li-btn:hover { background:#004182; }
+    .nav-prev-next { display:flex; justify-content:space-between; margin-top:28px; font-family:'Inter',sans-serif; font-size:.82em; }
+    .nav-prev-next a { color:rgba(255,255,255,.75); text-decoration:none; transition:color .15s; }
+    .nav-prev-next a:hover { color:white; }
+    @media(max-width:640px){ .article-card{padding:36px 20px;} h1{font-size:2em;} .stat-grid,.contrast-grid{grid-template-columns:1fr;} }
+    @media print{ body{background:white;} .article-card{box-shadow:none;} }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo"><span class="nav-logo-badge">NN</span><span class="nav-logo-text">Neural Nations</span></a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework ↗</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank"><svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub</a>
+            <a href="newsletter.html" class="nav-btn-newsletter"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span></a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a><a href="model.html">Model</a><a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a><a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a><a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a><a href="framework/index.html">Framework ↗</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+        <hr class="menu-divider">
+        <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+<div class="article-shell">
+    <a class="back-link" href="newsletter.html">← Complex Adaptive Humans</a>
+    <div class="article-card">
+        <div class="series-label">Complex Adaptive Humans &nbsp;&middot;&nbsp; Geopolitical Analysis</div>
+        <div class="issue-meta">
+            <span class="issue-badge">Issue #15</span>
+            <span>February 21, 2026</span>
+        </div>
+        <h1>Crisis in the Middle East: A Quantitative Perspective</h1>
+        <p class="subtitle">Sovereignty logic versus coercive leverage — two states operating under incompatible decision logics</p>
+        <hr class="rule">
+
+        <div class="body-text">
+            <p>The US–Iran confrontation is usually framed as a nuclear dispute. In reality, it is a systems conflict: sovereignty logic versus coercive leverage, shaped by a century of intervention, mistrust, and institutional adaptation.</p>
+
+            <p>The February 2026 talks in Muscat and Geneva may appear routine diplomacy, but structurally they reveal a deeper problem — two states operating under incompatible decision logics in a high-stress international environment.</p>
+
+            <p>The Trump administration is pressing for a deal that would sharply restrict Iran's nuclear programme — ideally ending uranium enrichment — while also addressing ballistic missiles, regional armed groups, and human rights. President Trump has set tight timelines, warning that failure could bring serious military consequences. The United States has expanded its regional military presence as leverage. Senior officials have expressed scepticism, calling the talks "complicated," while Vice President Vance has criticised the absence of Iran's Supreme Leader from direct participation.</p>
+
+            <p>Iranian officials have signalled willingness to compromise on the nuclear file if meaningful sanctions relief is delivered. Tehran insists the talks remain limited to nuclear issues and rejects negotiations over missiles or regional allies, which it defines as non-negotiable elements of national defence.</p>
+        </div>
+
+        <!-- ── Mode mismatch ──────────────────────────── -->
+        <p class="section-label">A Mode Mismatch</p>
+
+        <div class="body-text">
+            <p>Viewed through the CAMS framework — which models societies as self-organising networks balancing deliberative (Ψ-mode) and reactive (Φ-mode) dynamics — the conflict reveals a mode mismatch.</p>
+
+            <p>Iran's willingness to trade enrichment limits for sanctions relief reflects Ψ-dominance: measured, long-horizon signalling rooted in institutional memory and civilisational endurance. US maximalist demands and oscillating rhetoric indicate Φ-overload, where domestic polarisation and strategic overreach suppress deliberative capacity.</p>
+        </div>
+
+        <div class="contrast-grid">
+            <div class="contrast-card contrast-iran">
+                <div class="cc-label">Iran</div>
+                <div class="cc-mode">Ψ-dominant</div>
+                <div class="cc-desc">Long-horizon signalling. Institutional memory. Civilisational endurance. Measured trade-offs within defined red lines.</div>
+            </div>
+            <div class="contrast-card contrast-us">
+                <div class="cc-label">United States</div>
+                <div class="cc-mode">Φ-overloaded</div>
+                <div class="cc-desc">Domestic polarisation suppressing deliberation. Oscillating rhetoric. Strategic overreach. Short-horizon maximalism.</div>
+            </div>
+        </div>
+
+        <div class="body-text">
+            <p>When the mode ratio (R = Φ / Ψ) approaches current thresholds (~5.0), systems become unable to process information deliberatively. Entropy is discharged through kinetic substitutes: military posturing, sanctions escalation, and rhetorical threats.</p>
+
+            <p>The Helm node does not choose reactivity; it is constrained by its coherence–capacity balance.</p>
+        </div>
+
+        <div class="pull-quote">
+            <p>Effective negotiation requires long-horizon planning, internal alignment, and the ability to make commitments that survive domestic noise. Under current conditions, the US Helm appears thermodynamically constrained in performing these functions.</p>
+        </div>
+
+        <!-- ── Phase space chart ──────────────────────────── -->
+        <figure style="margin:28px 0 8px;">
+            <img src="us-iran-attractor-phase.jpg" alt="CAMS attractor phase-space: United States (with dates) and Iran (Markerxixn) — 3D trajectory and density plots" style="width:100%;border-radius:6px;border:1px solid #DAD2B8;">
+            <figcaption style="font-family:'Inter',sans-serif;font-size:.75em;color:#999;margin-top:8px;text-align:center;">Attractor phase-space — Metabolic Load · Mythic Integration · Bond Strength. United States (top) and Iran (Markerxixn, bottom). Iran's trajectory is wider and more dispersed; the US traces a tighter loop that collapses after 2010.</figcaption>
+        </figure>
+
+        <!-- ── Iran path dependencies ──────────────────────────── -->
+        <p class="section-label">Iranian Path Dependencies</p>
+
+        <div class="body-text">
+            <p>Iran's geopolitical posture reflects a long historical pattern: repeated foreign intervention has produced a state structure centred on resistance, sovereignty, and strategic self-reliance.</p>
+
+            <p>From Anglo-Russian interference in the Qajar era to the 1953 coup, the Iran–Iraq War, decades of sanctions, and strikes on nuclear facilities, each episode reinforced a governing lesson: external powers will constrain Iranian autonomy whenever it develops strategic leverage.</p>
+
+            <p>This path dependency has produced a system in which ideological cohesion and security institutions outweigh commercial elites. The clerical establishment and the Revolutionary Guard derive legitimacy from defending sovereignty, while sanctions have weakened independent economic actors who might favour accommodation. External pressure therefore strengthens, rather than weakens, core institutions.</p>
+        </div>
+
+        <div class="pull-quote">
+            <p>CAMS analysis shows that military pressure hardens Iranian resolve because it reinforces the very resistance narrative that underpins regime legitimacy.</p>
+        </div>
+
+        <div class="body-text">
+            <p>Demands for full dismantlement of enrichment are perceived not as safeguards but as permanent subordination. For the United States and Israel, however, Iranian capability threatens regional freedom of action and deterrence balances. The result is structural deadlock: Iran sees scientific autonomy as sovereign necessity; its adversaries see unacceptable risk.</p>
+        </div>
+
+        <!-- ── 1953 ──────────────────────────── -->
+        <p class="section-label">Path Dependency: 1953 and the Making of the Present</p>
+
+        <div class="body-text">
+            <p>From a CAMS perspective, modern Iran is largely a product of external intervention.</p>
+
+            <p>In 1953, Mossadegh's elected government was overthrown with British and American backing after nationalising Iran's oil industry. In the short term, order appeared restored: the Shah was strengthened, Western oil interests protected, and Iran integrated into Cold War security architecture.</p>
+
+            <p>Three long-term consequences followed.</p>
+        </div>
+
+        <div class="timeline">
+            <div class="tl-item">
+                <div class="tl-year">1953</div>
+                <div class="tl-body"><strong>Democratic legitimacy damaged</strong>Mossadegh represented a constitutional nationalist path combining parliamentary rule with independence from foreign control. His removal signalled that electoral mandates would not override strategic interests.</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-year">1953–</div>
+                <div class="tl-body"><strong>Repression replaced pluralism</strong>Political parties, unions, and independent media were constrained or crushed. SAVAK became central to regime stability. Grievances were forced underground; civic institutions hollowed out.</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-year">1953–</div>
+                <div class="tl-body"><strong>Opposition consolidated around religion</strong>By weakening secular and left-leaning forces, the post-1953 order strengthened clerical networks as the primary organised alternative. Mosques and seminaries became hubs of mobilisation.</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-year">1979</div>
+                <div class="tl-body"><strong>The revolution</strong>The Shah presided over a modernising but brittle state: rapid growth, visible inequality, and tight political control. With few lawful outlets for dissent, the crisis of 1978–79 reflected accumulated grievances over sovereignty, legitimacy, and repression. The memory of 1953 became central to the revolutionary narrative.</div>
+            </div>
+        </div>
+
+        <div class="body-text">
+            <p>The 1953 coup did not merely replace one leader with another. It rewired Iran's coordination architecture: concentrating bonds around a narrow property-owning elite, stripping coherence and capacity from all popular and professional nodes, and loading chronic stress onto the proletariat.</p>
+
+            <p>In this sense, 1953 and 1979 are linked by path dependency. The coup narrowed political options, centralised power, and reshaped the opposition. Over time, this configuration produced a revolutionary coalition led by religious authorities rather than secular nationalists. What appeared a tactical success in 1953 contributed, a generation later, to a strategic rupture that still shapes relations between Iran and the West.</p>
+        </div>
+
+        <!-- ── Iran metrics chart ──────────────────────────── -->
+        <figure style="margin:28px 0 8px;">
+            <img src="iran-system-metrics-1945-1985.jpg" alt="Iran CAMS metrics 1945–1985: system metrics, bond strength by node (1949/1953/1979), node value collapse radar, node value heatmap" style="width:100%;border-radius:6px;border:1px solid #DAD2B8;">
+            <figcaption style="font-family:'Inter',sans-serif;font-size:.75em;color:#999;margin-top:8px;text-align:center;">Iran 1945–1985. Top left: system metrics across four decades. Top right: bond strength by node at 1949, 1953, and 1979 — Property Owners spike to 7.7 in 1953. Bottom left: node value collapse radar at three critical junctures. Bottom right: node value heatmap (red = low health, green = high).</figcaption>
+        </figure>
+
+        <div class="data-box">
+            <strong>1953 coordination shock in the data:</strong> Property Owners bond strength spikes to 7.7 — a sharp concentration of institutional power into a narrow elite, immediately visible in the node heatmap as the post-coup years show Proletariat and Trades/Prof. nodes going red while the Executive and Priests maintain green.
+        </div>
+
+        <!-- ── Comparative Helm dynamics ──────────────────────────── -->
+        <p class="section-label">Comparative Helm Dynamics</p>
+
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="stat-val">US Helm</div>
+                <div class="stat-label">High abstraction, declining coherence, elevated stress — decoupled governance and reactive signalling</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val">Iran Helm</div>
+                <div class="stat-label">Tighter abstraction–coherence alignment under chronic pressure — grounded executive resilience</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val">R ≈ 5.0</div>
+                <div class="stat-label">Mode ratio Φ/Ψ — threshold at which deliberative processing gives way to reactive entropy discharge</div>
+            </div>
+        </div>
+
+        <div class="body-text">
+            <p>Under rising stress, systems face a bifurcation: increase internal order and adapt, or fragment into reactive modes. Abstraction without structural integrity accelerates decay; coherent adaptation under pressure can harden resilience.</p>
+
+            <p>From this perspective, modern Iran is not an anomaly but an adaptive response to sustained external constraint.</p>
+        </div>
+
+        <!-- ── Conclusions ──────────────────────────── -->
+        <p class="section-label">Conclusion</p>
+
+        <div class="warn-box">
+            <strong>Reactive equilibrium signature:</strong> Recent interactions show oscillation without convergence — high signalling, low trust, and escalating entropy. This is the thermodynamic signature of a system locked in reactive equilibrium, where each pressure cycle amplifies hysteresis and increases the probability of inadvertent escalation.
+        </div>
+
+        <div class="conclusions">
+            <h3>Structural reading</h3>
+            <ul>
+                <li>The US–Iran confrontation is a systems conflict between incompatible decision logics — Ψ-dominant sovereignty versus Φ-overloaded coercive leverage</li>
+                <li>External pressure on Iran strengthens the very institutions it aims to weaken — the resistance narrative is load-bearing, not incidental</li>
+                <li>The 1953 coup rewired Iran's coordination architecture in ways that produced the 1979 revolution and constrain diplomacy today — path dependency is measurable in the node data</li>
+                <li>The US Helm appears thermodynamically constrained from sustained deliberative engagement — domestic polarisation and strategic overreach suppress the required coherence–capacity alignment</li>
+                <li>Any durable settlement would require credible security guarantees addressing Iran's historical fear of domination — conditions difficult to meet in a high-entropy international environment</li>
+            </ul>
+            <p class="caveat">Further reading: <a href="https://chatgpt.com/share/698a4251-da0c-800c-b780-a22883cc4c23" target="_blank">Blind analysis of two Iranian datasets</a> &nbsp;&middot;&nbsp; <a href="https://www.perplexity.ai/search/with-the-us-helm-apparently-in-b8dxlKOXRo6ucQfzMUQHgg" target="_blank">Thermodynamic Impossibility of Deliberative Diplomacy</a> &nbsp;&middot;&nbsp; <a href="https://www.perplexity.ai/search/analyse-iran-the-eight-nodes-a-FTQhhfRDTqumuiysTdMILg" target="_blank">Iranian dataset analysis</a> &nbsp;&middot;&nbsp; <a href="https://www.perplexity.ai/search/analyse-us-expansion-from-a-sy-5T6wkljqSOOSt5Vgwi3vDg" target="_blank">CAMS analysis 1953–1979</a></p>
+        </div>
+
+        <div class="article-footer">
+            <strong>Complex Adaptive Humans</strong> is the Neural Nations research newsletter by Kari Freyr McKern.<br>
+            Open science &middot; CAMS framework &middot; Sydney, Australia<br><br>
+            <a href="https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/" target="_blank" class="li-btn">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                Subscribe on LinkedIn
+            </a>
+        </div>
+    </div>
+
+    <div class="nav-prev-next">
+        <a href="complex-adaptive-humans-14.html">← #14 Australia by the Numbers</a>
+        <a href="complex-adaptive-humans-16.html">#16 CAMS: An Historical Telescope →</a>
+    </div>
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>

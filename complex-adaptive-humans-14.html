@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
+    <title>Australia by the Numbers: A Multi-Model Diagnostic — Complex Adaptive Humans #14 · Neural Nations</title>
+    <meta name="description" content="Issue #14: DeepSeek, Kimi, and Claude independently diagnose Australia's long-run coordination patterns. Convergent verdict: high symbolic coherence, chronic material stress-routing — and a contemporary drift toward low-grade dysfunction.">
+    <meta name="keywords" content="CAMS, Neural Nations, Australia, blind analysis, DeepSeek, Kimi, Claude, multi-model, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/complex-adaptive-humans-14">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/complex-adaptive-humans-14">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="Australia by the Numbers: A Multi-Model Diagnostic — Complex Adaptive Humans #14 · Neural Nations">
+    <meta property="og:description" content="Issue #14: DeepSeek, Kimi, and Claude read Australia blind. All three converge on the same structural signature: smart but strained — high cognition, chronic material stress.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Australia by the Numbers: A Multi-Model Diagnostic — Complex Adaptive Humans #14">
+    <meta name="twitter:description" content="Three AI platforms read Australia blind. DeepSeek, Kimi, and Claude converge: a brain–body asymmetry, elite-continuity bias, and chronic low-grade dysfunction replacing acute crisis.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        { "@type": "WebSite", "name": "Neural Nations", "url": "https://neuralnations.org" },
+        { "@type": "Person", "@id": "https://neuralnations.org/#kari", "name": "Kari McKern", "url": "https://neuralnations.org/cams-project-history" }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    body { background: #F5F1E4; }
+    .article-shell { max-width: 780px; margin: 0 auto; padding: 40px 20px 80px; }
+    .back-link { font-family:'Inter',sans-serif; font-size:.82em; color:rgba(255,255,255,.75); text-decoration:none; display:inline-flex; align-items:center; gap:5px; margin-bottom:28px; transition:color .15s; }
+    .back-link:hover { color:white; }
+    .article-card { background:white; border-radius:8px; padding:64px 72px; box-shadow:0 8px 40px rgba(0,0,0,.18); }
+    .series-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#2F6F7D; margin-bottom:6px; }
+    .issue-meta { font-family:'Inter',sans-serif; font-size:.78em; color:#999; margin-bottom:28px; display:flex; align-items:center; gap:14px; }
+    .issue-badge { background:#F0E9D2; color:#2F6F7D; font-weight:600; padding:3px 10px; border-radius:20px; font-size:.9em; }
+    h1 { font-family:'Cormorant Garamond',serif; font-size:2.6em; font-weight:600; color:#1a1a2e; line-height:1.2; letter-spacing:-.02em; margin:0 0 10px; }
+    .subtitle { font-family:'Cormorant Garamond',serif; font-size:1.15em; font-style:italic; color:#555; margin:0 0 36px; }
+    .rule { border:none; border-top:1px solid #DAD2B8; margin:32px 0; }
+    .body-text { font-family:'Cormorant Garamond',serif; font-size:1.13em; line-height:1.92; color:#2c2c2c; }
+    .body-text p { margin:1.4em 0; }
+    .body-text p:first-of-type::first-letter { font-size:3.2em; font-weight:600; float:left; line-height:.78; margin:0 6px 0 0; color:#2F6F7D; }
+    .body-text blockquote { border-left:3px solid #D98B2B; margin:24px 0; padding:4px 0 4px 20px; color:#555; font-style:italic; }
+    .section-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#999; margin:44px 0 20px; border-top:1px solid #DAD2B8; padding-top:24px; }
+    /* Stats row */
+    .stat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:20px 0; }
+    .stat-card { background:#F5F1E4; border:1px solid #DAD2B8; border-radius:6px; padding:14px 16px; text-align:center; }
+    .stat-card .stat-val { font-family:'Cormorant Garamond',serif; font-size:1.5em; font-weight:600; color:#1a1a2e; }
+    .stat-card .stat-label { font-family:'Inter',sans-serif; font-size:.72em; color:#888; margin-top:3px; line-height:1.4; }
+    /* Pull quote */
+    .pull-quote { border-left:4px solid #D98B2B; margin:32px 0; padding:8px 0 8px 24px; }
+    .pull-quote p { font-family:'Cormorant Garamond',serif; font-size:1.28em; font-style:italic; color:#374151; line-height:1.7; margin:0; }
+    /* AI blocks */
+    .ai-response { border-radius:10px; padding:24px 28px; margin-bottom:20px; position:relative; }
+    .ai-response::before { content:attr(data-model); position:absolute; top:-1px; left:28px; font-family:'Inter',sans-serif; font-size:.7em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:3px 12px; border-radius:0 0 8px 8px; color:white; }
+    .ai-deepseek { background:#f0f9ff; border:1px solid #bae6fd; }
+    .ai-deepseek::before { background:#0369a1; }
+    .ai-kimi { background:#f0fdf4; border:1px solid #bbf7d0; }
+    .ai-kimi::before { background:#15803d; }
+    .ai-claude { background:#faf7ff; border:1px solid #ddd6fe; }
+    .ai-claude::before { background:#2F6F7D; }
+    .ai-response p { font-family:'Inter',sans-serif; font-size:.86em; line-height:1.78; color:#374151; margin:.85em 0; }
+    .ai-response p:first-of-type { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.08em; color:#1a1a2e; line-height:1.7; }
+    .ai-response p:first-of-type::first-letter { font-size:1em; float:none; }
+    /* Data box */
+    .data-box { background:#F5F1E4; border:1px solid #DAD2B8; border-left:4px solid #2F6F7D; border-radius:6px; padding:16px 20px; margin:20px 0; font-family:'Inter',sans-serif; font-size:.84em; color:#374151; line-height:1.7; }
+    /* Diagnosis row */
+    .diagnosis-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:24px 0; }
+    .diag-card { border-radius:8px; padding:16px; text-align:center; }
+    .diag-deepseek { background:#f0f9ff; border:1px solid #bae6fd; border-top:3px solid #0369a1; }
+    .diag-kimi { background:#f0fdf4; border:1px solid #bbf7d0; border-top:3px solid #15803d; }
+    .diag-claude { background:#faf7ff; border:1px solid #ddd6fe; border-top:3px solid #2F6F7D; }
+    .diag-card .diag-model { font-family:'Inter',sans-serif; font-size:.68em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#888; margin-bottom:8px; }
+    .diag-card .diag-label { font-family:'Cormorant Garamond',serif; font-size:1.05em; font-weight:600; color:#1a1a2e; line-height:1.4; }
+    /* Conclusions */
+    .conclusions { background:#1a1a2e; color:white; border-radius:10px; padding:28px 32px; margin:32px 0; }
+    .conclusions h3 { font-family:'Inter',sans-serif; font-size:.78em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#a5f3fc; margin:0 0 16px; }
+    .conclusions ul { font-family:'Inter',sans-serif; font-size:.88em; line-height:1.85; padding-left:20px; color:rgba(255,255,255,.88); margin:0; }
+    .conclusions li { margin:5px 0; }
+    .conclusions .caveat { margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,.12); font-family:'Inter',sans-serif; font-size:.82em; color:rgba(255,255,255,.55); line-height:1.7; }
+    /* Warning box */
+    .warn-box { background:#fffbeb; border:1px solid #fde68a; border-left:4px solid #D98B2B; border-radius:6px; padding:16px 20px; margin:20px 0; font-family:'Inter',sans-serif; font-size:.86em; color:#374151; line-height:1.7; }
+    /* Footer */
+    .article-footer { margin-top:52px; padding-top:28px; border-top:1px solid #DAD2B8; font-family:'Inter',sans-serif; font-size:.82em; color:#888; line-height:1.8; }
+    .article-footer strong { color:#374151; }
+    .li-btn { display:inline-flex; align-items:center; gap:6px; background:#0a66c2; color:white; padding:8px 18px; border-radius:6px; text-decoration:none; font-weight:600; font-size:.9em; margin-top:10px; transition:background .15s; }
+    .li-btn:hover { background:#004182; }
+    .nav-prev-next { display:flex; justify-content:space-between; margin-top:28px; font-family:'Inter',sans-serif; font-size:.82em; }
+    .nav-prev-next a { color:rgba(255,255,255,.75); text-decoration:none; transition:color .15s; }
+    .nav-prev-next a:hover { color:white; }
+    @media(max-width:640px){ .article-card{padding:36px 20px;} h1{font-size:2em;} .stat-grid,.diagnosis-row{grid-template-columns:1fr;} }
+    @media print{ body{background:white;} .article-card{box-shadow:none;} }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo"><span class="nav-logo-badge">NN</span><span class="nav-logo-text">Neural Nations</span></a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework ↗</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank"><svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub</a>
+            <a href="newsletter.html" class="nav-btn-newsletter"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span></a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a><a href="model.html">Model</a><a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a><a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a><a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a><a href="framework/index.html">Framework ↗</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+        <hr class="menu-divider">
+        <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+<div class="article-shell">
+    <a class="back-link" href="newsletter.html">← Complex Adaptive Humans</a>
+    <div class="article-card">
+        <div class="series-label">Complex Adaptive Humans &nbsp;&middot;&nbsp; Multi-Model Diagnostic</div>
+        <div class="issue-meta">
+            <span class="issue-badge">Issue #14</span>
+            <span>February 6, 2026</span>
+        </div>
+        <h1>Australia by the Numbers: A Multi-Model Diagnostic</h1>
+        <p class="subtitle">Three independent readings of 125 years of national psychology and coordination</p>
+        <hr class="rule">
+
+        <div class="body-text">
+            <p>This comparative blind analysis draws on DeepSeek, Kimi, and Claude to interpret Australia's long-run national psychology and coordination patterns through the lens of complex adaptive systems. Each platform was given the dataset independently, without prior knowledge of the society, and asked to read the structural physics before the name was revealed.</p>
+
+            <p>What emerges is not a political verdict but a structural one: a system with high symbolic coherence and persistent material stress-routing, whose contemporary trajectory has shifted from acute crisis toward chronic, low-grade dysfunction — manageable, but narrowing.</p>
+        </div>
+
+        <div class="diagnosis-row">
+            <div class="diag-card diag-deepseek">
+                <div class="diag-model">DeepSeek</div>
+                <div class="diag-label">Brain–body asymmetry<br><em>smart but strained</em></div>
+            </div>
+            <div class="diag-card diag-kimi">
+                <div class="diag-model">Kimi</div>
+                <div class="diag-label">Elite coherence, material sacrifice<br><em>narcissist with sunstroke</em></div>
+            </div>
+            <div class="diag-card diag-claude">
+                <div class="diag-model">Claude</div>
+                <div class="diag-label">Chronic erosion post-COVID<br><em>capacity without coordination</em></div>
+            </div>
+        </div>
+
+        <figure style="margin:28px 0 8px;">
+            <img src="australia-cams-diagnostic.png" alt="Australia CAMS diagnostic charts — historical trajectory, stress-capacity, coupling strength, node heatmap, Anglo-Saxon comparison" style="width:100%;border-radius:6px;border:1px solid #DAD2B8;">
+            <figcaption style="font-family:'Inter',sans-serif;font-size:.75em;color:#999;margin-top:8px;text-align:center;">Australia 1900–2025 · Historical trajectory · Stress–Capacity anti-correlation · Coupling strength · Node heatmap · Anglo-Saxon comparison</figcaption>
+        </figure>
+
+        <!-- ── DeepSeek ──────────────────────────── -->
+        <p class="section-label">DeepSeek</p>
+
+        <div class="ai-response ai-deepseek" data-model="DeepSeek — Blind Reading">
+            <p>"Elite nodes like Archive and Helm hold enduring self-worth and tight cohesion, while vital bodily nodes such as Hands and Flow cyclically collapse in crises, revealing a structural dissociation between cognition and embodiment. This schism manifests in systemic pathologies: schizoid elitism, traumatic re-enactment, and martial narcissism, wherein labour is perennially undervalued and defence overglorified. The nation compensates through intellectualisation, projection, and sublimation, but healing demands sacred integration of its suffering parts."</p>
+        </div>
+
+        <div class="body-text">
+            <p>Australia's long-run signature in the DeepSeek reading is a persistent brain–body asymmetry: the symbolic layer (Archive, Helm, Lore) carries most of the system's cognitive load and continuity, while the material layer (Hands, Flow — and, in downturns, Craft) behaves like the sacrificial substrate. DeepSeek's lens keeps Archive at the top, with Helm and Lore as the usual co-pilots, and it repeatedly flags Hands and Flow as the first nodes to buckle when stress rises.</p>
+
+            <p>The crisis years don't just lower scores; they reassign pain. WWI-era stress collapses Hands, Flow, and Helm while Shield surges. The Depression hammers Hands, Flow, and Craft. The oil-shock era strains Flow, Hands, and Stewards. 2008–2012 shows renewed strain in the same organs. The through-line is brutal but consistent: when the environment turns hostile, Australia protects the nodes that remember, narrate, and steer — and the nodes that circulate goods and keep people employed pay the bill.</p>
+
+            <p>The most diagnostic moment in DeepSeek's frame is 2020: a country that remains highly coherent in memory and meaning even when circulation and labour seize up. In its own language: <em>smart but strained</em> — not because the system can't think, but because the affect plane becomes uneven and concentrated where daily life happens.</p>
+        </div>
+
+        <div class="pull-quote">
+            <p>DeepSeek's mistake may be to medicalise the finding — its "schizoid elitism/dissociation" language is metaphor, not proof — but its structural inference is sound: stability is purchased by allowing the body to carry the entropy, with the long-term risk that cognition becomes increasingly decoupled from embodiment.</p>
+        </div>
+
+        <!-- ── Kimi ──────────────────────────── -->
+        <p class="section-label">Kimi</p>
+
+        <div class="ai-response ai-kimi" data-model="Kimi — Blind Reading">
+            <p>"MarkerXAXU thinks brilliantly about itself yet suffers from 'cognitive runaway' and 'parliamentary paralysis.' Its soul is described as 'the narcissist with sunstroke — a nation mesmerised by reflection while the continent burns.' In 2020, it became 'a museum of itself — perfect memory, arrested circulation, disabled labour.' The Archive reaches 10/10 coherence while Hands collapses. Its political economy is steered by 'the pastoral unconscious,' where Stewards maintain dominance as affective stabilisers compensating for deindustrialisation. The nation 'metabolises trauma into institutional grandeur,' wearing 'its archives like armour, mistaking memory for vitality.'"</p>
+        </div>
+
+        <div class="body-text">
+            <p>Kimi reads the same topology but turns the gain up: Australia as a system that maintains high symbolic coherence while repeatedly letting its material base be damaged or discarded. Its sharpest calls line up with the scoring's visible discontinuities: a steering collapse signature in 1975 (Helm crisis), wartime mobilisation in the early 1940s (Shield coherence spikes), and a modern pattern where the prestige organs (Archive, Lore, Stewards) remain strong through turbulence while Hands and Flow repeatedly show seizure points.</p>
+
+            <p>Kimi is at its best naming the political economy implied by the topology: a society that can sustain elite coherence and institutional continuity while the everyday organs of work and circulation are the stress sinks. It's an aggressive description of elite stress externalisation — but a recurring pattern in the data.</p>
+
+            <p>Where Kimi overreaches is in crafting a narrative as if uniquely compelled by the numbers. The dataset can support "head–body split," "threat-cohesion bias," and "stress routing into Hands/Flow"; it cannot, by itself, assign motives or pin specific cultural episodes on small year-to-year changes.</p>
+
+            <p>Still, its 2020 reading lands: Australia's signature polycrisis year appears as a system with maximum memory and identity coherence alongside crippled circulation and labour — a year when the nation remained administratively and narratively intact while the material substrate absorbed the shock. Kimi's rhetorical verdicts are harsher than DeepSeek's, but they converge: the risk is not ignorance, it's high cognition with uneven embodiment.</p>
+        </div>
+
+        <!-- ── Claude ──────────────────────────── -->
+        <p class="section-label">Claude</p>
+
+        <div class="ai-response ai-claude" data-model="Claude — Blind Reading">
+            <p>Capacity and Stress are strongly anti-correlated (r ≈ −0.51). Bond strength falls as node-value inequality rises (r ≈ −0.73). Governance is the most sensitive organ: Helm has the highest coherence volatility (σ ≈ 1.96) while Archive is the most stable (σ ≈ 0.70) — a clean "steering is fragile, memory is resilient" signature. The initial blind misidentification (Italy) makes the point: you can get the physics right and still attach the wrong historical costume.</p>
+        </div>
+
+        <div class="body-text">
+            <p>Claude's contribution is that it better quantifies what DeepSeek and Kimi narrate. The "coordination physics" checks out: the anti-correlations are real, the volatility signatures are consistent, and the crisis waypoints align.</p>
+
+            <p>Claude nails the same structural crisis moments: 1918 shows a severe war-stress pattern (Hands stressed, Helm collapsing), 1931 is an extreme depression signature (Hands' node value at zero with Helm coherence collapsed), and 1975 is the peak system-stress year (average stress across nodes reaching 8.25, the maximum in the series).</p>
+
+            <p>Its most useful addition is the contemporary diagnosis: COVID produced an executive hardening — Helm coherence reaching 9 in 2020 — followed by erosion into 2024 (coherence 5, stress 7), while Hands and Flow stress returned after a brief post-COVID lull. Claude frames the present not as an acute constitutional rupture like 1975, but as chronic, low-grade dysfunction: manageable, but the kind that quietly reduces a society's ability to deploy capacity coherently.</p>
+        </div>
+
+        <div class="data-box">
+            <strong>Key metrics (Claude's quantification):</strong><br>
+            Capacity–Stress anti-correlation r ≈ −0.51 &nbsp;&middot;&nbsp;
+            Bond strength vs node-value dispersion r ≈ −0.73 &nbsp;&middot;&nbsp;
+            Helm coherence volatility σ ≈ 1.96 (highest) &nbsp;&middot;&nbsp;
+            Archive coherence volatility σ ≈ 0.70 (lowest) &nbsp;&middot;&nbsp;
+            1975 peak system stress: avg 8.25 across nodes
+        </div>
+
+        <!-- ── Ensemble ──────────────────────────── -->
+        <p class="section-label">Final Opus 4.6 Ensemble Analysis</p>
+
+        <div class="body-text">
+            <p>Australia still operates from a position of relative strength: fiscal buffers, proven resilience, and resource wealth provide a runway for coordination recovery. The system has survived worse. But the gap between capability (8.52) and coordination (2.33) continues widening — and the contemporary drift is away from acute, recoverable crisis toward chronic erosion of the kind that is harder to see and harder to reverse.</p>
+        </div>
+
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="stat-val">8.52</div>
+                <div class="stat-label">Capability — the system can still act</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val">2.33</div>
+                <div class="stat-label">Coordination — bond strength, institutional coupling</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val">+6.19</div>
+                <div class="stat-label">Gap — and widening</div>
+            </div>
+        </div>
+
+        <div class="warn-box">
+            <strong>Shared structural challenges — Australia, USA, UK:</strong><br>
+            Neoliberal erosion of coordination infrastructure &nbsp;&middot;&nbsp;
+            Political polarisation reducing negotiation bandwidth &nbsp;&middot;&nbsp;
+            Housing and wealth concentration increasing Hands/Flow stress &nbsp;&middot;&nbsp;
+            Trade exposure vulnerabilities under supply-chain stress
+        </div>
+
+        <div class="conclusions">
+            <h3>What three models agreed on</h3>
+            <ul>
+                <li>Archive and Helm carry most of the system's continuity — high coherence, low volatility relative to other nodes</li>
+                <li>Hands and Flow are the structural stress sinks — they take the hit in every major crisis, from WWI to COVID</li>
+                <li>2020 is the system's signature year: maximum administrative and symbolic coherence, near-zero material circulation — "a museum of itself"</li>
+                <li>The 1975 constitutional crisis remains the peak system-stress event in 125 years of data (avg stress 8.25)</li>
+                <li>Contemporary trajectory: not acute crisis, but chronic capability–coordination divergence — the harder and quieter kind of decline</li>
+            </ul>
+            <p class="caveat">Blind label: MarkerXAXU. Platforms: DeepSeek, Kimi, Claude (blind); Opus 4.6 ensemble (post-reveal). Australia 1900–2025. Burning House analysis cross-referenced: <a href="burning-house-story.html" style="color:#a5f3fc;">The Burning House Economy</a> &nbsp;&middot;&nbsp; <a href="burning-house-detective-panel.html" style="color:#a5f3fc;">Detective Panel</a></p>
+        </div>
+
+        <div class="article-footer">
+            <strong>Complex Adaptive Humans</strong> is the Neural Nations research newsletter by Kari Freyr McKern.<br>
+            Open science &middot; CAMS framework &middot; Sydney, Australia<br><br>
+            <a href="https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/" target="_blank" class="li-btn">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                Subscribe on LinkedIn
+            </a>
+        </div>
+    </div>
+
+    <div class="nav-prev-next">
+        <a href="complex-adaptive-humans-13.html">← #13 Neutrality, Nordic Systems</a>
+        <a href="complex-adaptive-humans-15.html">#15 Crisis in the Middle East →</a>
+    </div>
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>
