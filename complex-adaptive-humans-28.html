@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
+    <title>First Results from the Epiphenomenon@Trove Study — Complex Adaptive Humans #28 · Neural Nations</title>
+    <meta name="description" content="Issue #28: When does Australia sense enemies? Trove (55M documents, 1900–1955) and Hansard (2006–2025) crossed with CAMS structural scores. Three regimes — Prosperity Ideology, Stress Projection, Event Response. The system gets sick first. It finds the enemy second.">
+    <meta name="keywords" content="CAMS, Neural Nations, Trove, Hansard, Sinophobia, Australia, stress projection, epiphenomenon, Kari McKern, dissipative systems">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/complex-adaptive-humans-28">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/complex-adaptive-humans-28">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="First Results from the Epiphenomenon@Trove Study — Complex Adaptive Humans #28">
+    <meta property="og:description" content="The enemy factory does not require a real enemy. It requires a sick system and an available name. Three distinct regimes of foreign-threat discourse — and a two-year lead on working-class grievance that survived a rigorous statistical test.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="First Results from the Epiphenomenon@Trove Study — Complex Adaptive Humans #28">
+    <meta name="twitter:description" content="When does Australia sense enemies? The system gets sick first. It finds the enemy second. Spearman r = −0.753, p=0.0003 on the Hands/grievance two-year lead.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        { "@type": "WebSite", "name": "Neural Nations", "url": "https://neuralnations.org" },
+        { "@type": "Person", "@id": "https://neuralnations.org/#kari", "name": "Kari McKern", "url": "https://neuralnations.org/cams-project-history" }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    body { background: #F5F1E4; }
+    .article-shell { max-width: 780px; margin: 0 auto; padding: 40px 20px 80px; }
+    .back-link { font-family:'Inter',sans-serif; font-size:.82em; color:rgba(255,255,255,.75); text-decoration:none; display:inline-flex; align-items:center; gap:5px; margin-bottom:28px; transition:color .15s; }
+    .back-link:hover { color:white; }
+    .article-card { background:white; border-radius:8px; padding:64px 72px; box-shadow:0 8px 40px rgba(0,0,0,.18); }
+    .series-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#2F6F7D; margin-bottom:6px; }
+    .issue-meta { font-family:'Inter',sans-serif; font-size:.78em; color:#999; margin-bottom:28px; display:flex; align-items:center; gap:14px; }
+    .issue-badge { background:#F0E9D2; color:#2F6F7D; font-weight:600; padding:3px 10px; border-radius:20px; font-size:.9em; }
+    h1 { font-family:'Cormorant Garamond',serif; font-size:2.6em; font-weight:600; color:#1a1a2e; line-height:1.2; letter-spacing:-.02em; margin:0 0 10px; }
+    .subtitle { font-family:'Cormorant Garamond',serif; font-size:1.15em; font-style:italic; color:#555; margin:0 0 36px; }
+    .rule { border:none; border-top:1px solid #DAD2B8; margin:32px 0; }
+    .body-text { font-family:'Cormorant Garamond',serif; font-size:1.13em; line-height:1.92; color:#2c2c2c; }
+    .body-text p { margin:1.4em 0; }
+    .body-text p:first-of-type::first-letter { font-size:3.2em; font-weight:600; float:left; line-height:.78; margin:0 6px 0 0; color:#2F6F7D; }
+    .section-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#999; margin:44px 0 20px; border-top:1px solid #DAD2B8; padding-top:24px; }
+    /* Data sources */
+    .source-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:20px 0; }
+    .source-card { border-radius:8px; padding:16px 18px; border:1px solid #DAD2B8; }
+    .sc-trove { border-left:4px solid #2F6F7D; background:#f4fbfc; }
+    .sc-hansard { border-left:4px solid #D98B2B; background:#fdf8f0; }
+    .source-card .src-name { font-family:'Inter',sans-serif; font-size:.78em; font-weight:700; color:#1a1a2e; margin-bottom:4px; }
+    .source-card .src-desc { font-family:'Inter',sans-serif; font-size:.78em; color:#374151; line-height:1.65; }
+    /* Regime cards */
+    .regime-block { margin:16px 0; }
+    .regime-card { border-radius:8px; padding:20px 22px; margin:10px 0; border:1px solid #DAD2B8; }
+    .rc-1 { border-left:4px solid #2F6F7D; background:#f4fbfc; }
+    .rc-2 { border-left:4px solid #9b1c1c; background:#fff5f5; }
+    .rc-3 { border-left:4px solid #888; background:#f9f9f9; }
+    .regime-card .reg-name { font-family:'Cormorant Garamond',serif; font-size:1.2em; font-weight:600; font-style:italic; color:#1a1a2e; margin-bottom:6px; }
+    .regime-card .reg-period { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#888; margin-bottom:8px; }
+    .regime-card .reg-desc { font-family:'Cormorant Garamond',serif; font-size:1.05em; color:#374151; line-height:1.75; }
+    /* Key finding box */
+    .key-finding { background:#1a1a2e; border-radius:10px; padding:24px 28px; margin:28px 0; }
+    .key-finding .kf-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#a5f3fc; margin-bottom:10px; }
+    .key-finding .kf-text { font-family:'Cormorant Garamond',serif; font-size:1.2em; font-style:italic; color:rgba(255,255,255,.92); line-height:1.7; margin:0; }
+    /* Stats */
+    .stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:20px 0; }
+    .stat-card { background:#F5F1E4; border:1px solid #DAD2B8; border-radius:6px; padding:14px 16px; text-align:center; }
+    .stat-card .sc-val { font-family:'Cormorant Garamond',serif; font-size:1.6em; font-weight:600; color:#2F6F7D; }
+    .stat-card .sc-label { font-family:'Inter',sans-serif; font-size:.7em; color:#888; margin-top:3px; line-height:1.4; }
+    /* Data images */
+    .data-img { width:100%; border-radius:8px; margin:24px 0; border:1px solid #DAD2B8; }
+    .img-caption { font-family:'Inter',sans-serif; font-size:.76em; color:#888; text-align:center; margin-top:-16px; margin-bottom:24px; line-height:1.5; }
+    /* Pull quote */
+    .pull-quote { border-left:4px solid #D98B2B; margin:32px 0; padding:8px 0 8px 24px; }
+    .pull-quote p { font-family:'Cormorant Garamond',serif; font-size:1.28em; font-style:italic; color:#374151; line-height:1.7; margin:0; }
+    /* Comic caption */
+    .comic-wrap { border:1px solid #DAD2B8; border-radius:8px; overflow:hidden; margin:24px 0; }
+    .comic-wrap img { width:100%; display:block; }
+    .comic-caption { background:#F5F1E4; padding:10px 16px; font-family:'Inter',sans-serif; font-size:.76em; color:#888; line-height:1.6; }
+    /* Hands box */
+    .hands-box { background:#fafaf0; border:1px solid #DAD2B8; border-radius:8px; padding:20px 24px; margin:24px 0; }
+    .hands-box h4 { font-family:'Inter',sans-serif; font-size:.78em; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:#D98B2B; margin:0 0 10px; }
+    .hands-box .hb-body { font-family:'Cormorant Garamond',serif; font-size:1.08em; color:#374151; line-height:1.75; }
+    /* Ext links */
+    .ext-links { display:flex; flex-direction:column; gap:8px; margin:20px 0; }
+    .ext-link { display:flex; align-items:center; gap:10px; background:#F5F1E4; border:1px solid #DAD2B8; border-radius:6px; padding:10px 14px; text-decoration:none; transition:background .15s; }
+    .ext-link:hover { background:#EBE4D2; }
+    .ext-link .el-badge { font-family:'Inter',sans-serif; font-size:.7em; font-weight:700; padding:2px 8px; border-radius:20px; white-space:nowrap; background:#2F6F7D; color:white; }
+    .ext-link .el-text { font-family:'Inter',sans-serif; font-size:.82em; color:#374151; }
+    .ext-link .el-arrow { margin-left:auto; color:#2F6F7D; font-size:.9em; }
+    /* Methodology */
+    .method-note { font-family:'Inter',sans-serif; font-size:.78em; color:#888; line-height:1.75; background:#F5F1E4; border:1px solid #DAD2B8; border-radius:6px; padding:14px 18px; margin-top:24px; }
+    .method-note strong { color:#374151; }
+    /* Conclusions */
+    .conclusions { background:#1a1a2e; color:white; border-radius:10px; padding:28px 32px; margin:32px 0; }
+    .conclusions h3 { font-family:'Inter',sans-serif; font-size:.78em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#a5f3fc; margin:0 0 16px; }
+    .conclusions ul { font-family:'Inter',sans-serif; font-size:.88em; line-height:1.85; padding-left:20px; color:rgba(255,255,255,.88); margin:0; }
+    .conclusions li { margin:5px 0; }
+    /* Footer */
+    .article-footer { margin-top:52px; padding-top:28px; border-top:1px solid #DAD2B8; font-family:'Inter',sans-serif; font-size:.82em; color:#888; line-height:1.8; }
+    .article-footer strong { color:#374151; }
+    .li-btn { display:inline-flex; align-items:center; gap:6px; background:#0a66c2; color:white; padding:8px 18px; border-radius:6px; text-decoration:none; font-weight:600; font-size:.9em; margin-top:10px; transition:background .15s; }
+    .li-btn:hover { background:#004182; }
+    .nav-prev-next { display:flex; justify-content:space-between; margin-top:28px; font-family:'Inter',sans-serif; font-size:.82em; }
+    .nav-prev-next a { color:rgba(255,255,255,.75); text-decoration:none; transition:color .15s; }
+    .nav-prev-next a:hover { color:white; }
+    @media(max-width:640px){ .article-card{padding:36px 20px;} h1{font-size:2em;} .source-grid,.stat-row{grid-template-columns:1fr;} }
+    @media print{ body{background:white;} .article-card{box-shadow:none;} }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo"><span class="nav-logo-badge">NN</span><span class="nav-logo-text">Neural Nations</span></a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework ↗</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank"><svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub</a>
+            <a href="newsletter.html" class="nav-btn-newsletter"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span></a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a><a href="model.html">Model</a><a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a><a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a><a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a><a href="framework/index.html">Framework ↗</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+        <hr class="menu-divider">
+        <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+<div class="article-shell">
+    <a class="back-link" href="newsletter.html">← Complex Adaptive Humans</a>
+    <div class="article-card">
+        <div class="series-label">Complex Adaptive Humans &nbsp;&middot;&nbsp; Epiphenomenon@Trove</div>
+        <div class="issue-meta">
+            <span class="issue-badge">Issue #28</span>
+            <span>May 20, 2026</span>
+        </div>
+        <h1>First Results from the Epiphenomenon@Trove Study</h1>
+        <p class="subtitle">When does Australia sense enemies? 55 million newspaper documents, 20 years of Hansard, and the CAMS structural record — crossed for the first time.</p>
+        <hr class="rule">
+
+        <div class="body-text">
+            <p>I haven't been posting for a few days while I went over the results. Here they are.</p>
+
+            <p>Our baseline is the Australian CAMNATIONS5 ensemble — five independent AI scorers running identical prompts against the same historical evidence, producing institutional health scores for Australia across eight functional nodes from 1875 to 2026. When five independent scorers converge on a result, they are converging on something the historical record was already carrying, waiting to be read. That was what we brought to the Trove and Hansard archives.</p>
+        </div>
+
+        <div class="key-finding">
+            <div class="kf-label">The core question</div>
+            <p class="kf-text">Does foreign-threat discourse track internal structural conditions, or does it track the actual behaviour of foreign states? The answer is the kind that rearranges furniture in your head.</p>
+        </div>
+
+        <!-- ── Data sources ──────────────────────────── -->
+        <p class="section-label">Two Archives, Two Eras</p>
+
+        <div class="source-grid">
+            <div class="source-card sc-trove">
+                <div class="src-name">NLA Trove · Historical arm</div>
+                <div class="src-desc">55 million digitised newspaper documents, 1900–1955. Annual frequencies of China-referential and Russia-referential language, normalised per million words — from Yellow Peril panics through two World Wars to the early Cold War.</div>
+            </div>
+            <div class="source-card sc-hansard">
+                <div class="src-name">Hansard · Contemporary arm</div>
+                <div class="src-desc">Full text of House of Representatives debates, 2006–2025. How Australian parliamentarians are actually talking about China, working-class grievance, housing, wages, and cost of living — year by year.</div>
+            </div>
+        </div>
+
+        <div class="body-text">
+            <p>Both were cross-referenced against the CAMS structural scores for Australia: system coherence, institutional stress, bond strength between nodes, and the praet_gap — the divergence between the Shield node and overall system health. That last metric is the structural signature of a society beginning to militarise its response to internal failure, which is a different problem from external threat and has a different solution.</p>
+        </div>
+
+        <!-- ── Hansard chart ──────────────────────────── -->
+        <img src="hansard-sinophobia-cams-coherence.png" alt="Hansard 2006-2025: Foreign-Threat Discourse vs CAMS Coherence. Sinophobia ppm spikes sharply 2019-2021 (COVID Origins, AUKUS), tracking CAMS coherence decline. Albanese engagement correlates with sinophobia unwinding from 2022." class="data-img">
+        <p class="img-caption">Hansard 2006–2025: Sinophobia discourse (red) and Russophobia (blue) vs CAMS Coherence (purple dashed). Key events annotated: Foreign Interference Legislation, Robin affair, COVID Origins demand, AUKUS, Ukraine, Albanese engagement.</p>
+
+        <!-- ── Three regimes ──────────────────────────── -->
+        <p class="section-label">Three Distinct Regimes</p>
+
+        <div class="body-text">
+            <p>The results revealed three distinct regimes of foreign-threat discourse — not one, which is where most received opinion quietly departs the building.</p>
+        </div>
+
+        <div class="regime-block">
+            <div class="regime-card rc-1">
+                <div class="reg-name">"Prosperity Ideology"</div>
+                <div class="reg-period">Early Federation · Menzies boom years</div>
+                <div class="reg-desc">Threat-coded China discourse rose <em>with</em> system health. The Yellow Peril was not produced by anxiety — it was produced by confidence. White Australia policy was the self-expression of a cohesive, prosperous, outward-facing society asserting its foundational exclusions from a position of strength. Deeply disturbing, structurally coherent, and not the modern pattern at all.</div>
+            </div>
+            <div class="regime-card rc-2">
+                <div class="reg-name">"Stress Projection"</div>
+                <div class="reg-period">2017–2021 · Hansard data</div>
+                <div class="reg-desc">Rising Sinophobia in parliamentary speech is preceded — by one to three years — by deteriorating CAMS metrics: falling system coherence, rising institutional stress, declining bond strength between nodes. The discourse follows the structural deterioration like a shadow following a man who would prefer not to examine it. The system gets sick first. It finds the enemy second.</div>
+            </div>
+            <div class="regime-card rc-3">
+                <div class="reg-name">"Event Response"</div>
+                <div class="reg-period">1948 Cold War crystallisation · 2022 Ukraine shock</div>
+                <div class="reg-desc">Genuine reactions to external events. Real, contemporaneous, and typically fast-decaying — distinguishable from stress projection by their timing and their fade. A third category that prevents the model from reducing everything to projection.</div>
+            </div>
+        </div>
+
+        <div class="pull-quote">
+            <p>The 2017–2021 surge exceeds what the structural baseline alone predicts — something was actively amplifying it. The amplification tracks the political alliance rather than any new Chinese behaviour, and it unwound in the Sinophobia register when the Albanese government changed diplomatic posture from 2022. The domestic grievance signal did not unwind with it, because that signal had its own structural roots — and those roots were real and separate.</p>
+        </div>
+
+        <!-- ── Validation chart ──────────────────────────── -->
+        <img src="australia-trove-validation-report.png" alt="Six-panel CAMS validation report: Australia 2006-2025 Shield, Lore, Flow, Hands node values; China-Threat Discourse Intensity (Hansard ppm); Lag Correlation bar chart; Correlation Table with Spearman r values; China CAMS5 node trajectories 2000-2026." class="data-img">
+        <p class="img-caption">Validation Report: CAMS5 Ensemble vs paper claims. Panel A: Shield, Lore, Flow, Hands node values 2006–2025. Panel B: SHI (Shield − mean(Lore, Flow)). Panel C: China-Threat Discourse Intensity. Panel D: Lag correlation (1–4yr). Panel E: Correlation table. Panel F: China CAMS5 node trajectories 2000–2026.</p>
+
+        <!-- ── Hands register ──────────────────────────── -->
+        <p class="section-label">The Hands Register</p>
+
+        <div class="hands-box">
+            <h4>The finding that surprised me more than the Sinophobia result</h4>
+            <div class="hb-body">The CAMS Hands node tracks labour and workforce health — wages, job security, demographic vitality, the basic material conditions of working life. Cross-referenced against parliamentary grievance discourse on cost of living, housing affordability, and wage stagnation, we found a two-year lead relationship. Hands deteriorate and two years later the grievance language in parliament surges.</div>
+        </div>
+
+        <div class="stat-row">
+            <div class="stat-card">
+                <div class="sc-val">−0.753</div>
+                <div class="sc-label">Spearman r (Hands lead vs parliamentary grievance discourse)</div>
+            </div>
+            <div class="stat-card">
+                <div class="sc-val">p=0.0003</div>
+                <div class="sc-label">Statistical significance — strong enough to be embarrassing to ignore</div>
+            </div>
+            <div class="stat-card">
+                <div class="sc-val">2 years</div>
+                <div class="sc-label">Lead time: Hands deteriorates first, grievance language follows</div>
+            </div>
+        </div>
+
+        <div class="body-text">
+            <p>More striking still: the 2024 cost-of-living crisis, standardised against its own historical baseline, produces grievance discourse exceeding 1931 in proportional terms — +2.54 versus +2.37 standard deviations above baseline. The Hands floor was deeper in the Depression. But Australians today are talking about economic pain more, relative to recent norms, than their grandparents talked about the Depression relative to theirs.</p>
+
+            <p>The good news is that Hands has been recovering — rising from a floor of 3.0 in 2020 to approximately 8.5 in 2025 and 2026, the first time since the late 1940s that it marginally exceeds the Stewards node. On the two-year lead model, grievance discourse should begin easing measurably by 2027 and 2028. The language of struggle tends to peak not at the moment of maximum pain, but during the fight for recovery — when gains are actively contested rather than settled. We may be at or near that peak now.</p>
+        </div>
+
+        <!-- ── Tom Tomorrow ──────────────────────────── -->
+        <p class="section-label">Epiphenomenal Validation</p>
+
+        <div class="comic-wrap">
+            <img src="this-modern-world-tom-tomorrow.png" alt="This Modern World by Tom Tomorrow: satirical comic depicting a late-stress executive regime — Helm fragility, Lore distortion, Shield overreach. Reality no longer corrects power; power attempts to correct reality.">
+            <div class="comic-caption"><em>This Modern World</em> by Tom Tomorrow. A late-stress executive regime: Helm fragility drives Lore distortion, Shield overreach, Archive suppression, and Flow capture. The system is still producing outputs, but its feedback loops are inverted. Reality no longer corrects power; power attempts to correct reality. CAMS names this structure — the comic illustrates it.</div>
+        </div>
+
+        <!-- ── Why it matters ──────────────────────────── -->
+        <p class="section-label">Why This Matters</p>
+
+        <div class="body-text">
+            <p>The Trove and Hansard results do not tell us that China poses no strategic challenges, or that all threat perception is manufactured. What they tell us is that the volume and intensity of enemy discourse has historically been more reliably predicted by internal structural conditions than by the actual behaviour of the named adversary.</p>
+        </div>
+
+        <div class="key-finding">
+            <div class="kf-label">The enemy factory</div>
+            <p class="kf-text">The enemy factory does not require a real enemy. It requires a sick system and an available name. A society that understands this is harder to manipulate. The two problems — genuine external risk and stress projection — are not the same problem and do not have the same solution.</p>
+        </div>
+
+        <!-- ── External links ──────────────────────────── -->
+        <p class="section-label">Presentations &amp; Data</p>
+
+        <div class="ext-links">
+            <a href="anxiety-machine.html" class="ext-link">
+                <span class="el-badge">Presentation</span>
+                <span class="el-text">The Anxiety Machine — neuralnations.org/anxiety-machine</span>
+                <span class="el-arrow">→</span>
+            </a>
+            <a href="epiphenomenon/data.html" class="ext-link">
+                <span class="el-badge">Data</span>
+                <span class="el-text">Full technical report, open datasets &amp; interactive data explorer — neuralnations.org/epiphenomenon/data</span>
+                <span class="el-arrow">→</span>
+            </a>
+        </div>
+
+        <div class="method-note">
+            <strong>Methodology:</strong> Trove: NLA Trove API v3, newspaper category, 1900–1955. Frequencies normalised against baseline word ("the") to produce ppm measures comparable across years. Hansard: XML files from the Open Australia Foundation, House of Representatives debates 2006–2025. CAMS data: CAMNATIONS5 ensemble means 1875–2026, five independent scorers, eight nodes, four metrics. Statistics: Spearman rank correlation, OLS regression, Mann-Whitney U, lag-correlation analysis, z-score normalisation. Results quoted pass p &lt; 0.05 unless noted. Hansard regression (n ≈ 20 years) is noted as suggestive structural evidence. <strong>Conducted:</strong> May 2026, Epiphenomenon@Trove project.
+        </div>
+
+        <div class="conclusions">
+            <h3>What the Trove study found</h3>
+            <ul>
+                <li><strong>Three regimes:</strong> Prosperity Ideology (confidence → threat discourse), Stress Projection (structural deterioration precedes enemy discourse by 1–3 years), Event Response (contemporaneous, fast-decaying)</li>
+                <li><strong>Sinophobia 2017–2021:</strong> exceeds structural baseline — amplified by political alliance coordination, not new Chinese behaviour; unwound with Albanese diplomatic posture change from 2022</li>
+                <li><strong>Hands → grievance two-year lead:</strong> Spearman r = −0.753 (p=0.0003) — strong enough to be embarrassing to ignore</li>
+                <li><strong>2024 cost-of-living crisis:</strong> +2.54σ grievance discourse vs +2.37σ in 1931 Depression — Australians today talk about economic pain proportionally more than their grandparents did</li>
+                <li><strong>Hands recovery 2020→2026:</strong> 3.0 → 8.5 — on the two-year lead model, grievance discourse should ease measurably by 2027–28</li>
+                <li>The data are open. The methodology is documented. Rigorous scepticism is not a challenge to this project. It is the point.</li>
+            </ul>
+        </div>
+
+        <div class="article-footer">
+            <strong>Complex Adaptive Humans</strong> is the Neural Nations research newsletter by Kari Freyr McKern.<br>
+            Open science &middot; CAMS framework &middot; Sydney, Australia<br><br>
+            <a href="https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/" target="_blank" class="li-btn">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                Subscribe on LinkedIn
+            </a>
+        </div>
+    </div>
+
+    <div class="nav-prev-next">
+        <a href="complex-adaptive-humans-25.html">← #25 Reproducibility Across Platforms</a>
+        <span></span>
+    </div>
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>
