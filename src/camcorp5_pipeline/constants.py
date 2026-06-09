@@ -1,0 +1,33 @@
+﻿"""Locked CAMS-CORP v0.2 parameters."""
+
+EDEWS_MU_RAW = 0.0058
+EDEWS_SIGMA_RAW = 0.0945
+
+EDEWS_THRESHOLDS = {
+    "WATCH": 0.062,
+    "WARNING": 0.693,
+    "CRITICAL": 1.122,
+    "EXTREME": 1.303,
+}
+
+MU_P75 = 0.455
+MU_P90 = 0.712
+
+D_HC_P90 = 1.87
+D_HC_P95 = 1.90
+
+ETA_EPSILON = 2.0
+ETA_THRESHOLDS = {
+    "P10": 19.2,
+    "P50": 97.0,
+    "P75": 166.4,
+    "P90": 219.2,
+}
+
+CRISIS_MODERATE = 0.50
+CRISIS_SEVERE = 0.60
+
+CF1_GROWTH_BOUNDARY = 0.3
+CF2_DISCORDANCE_THRESHOLD = 2.0
+
+SLOW_MEMORY_NODES = ["Archive", "Lore", "Stewards"]
