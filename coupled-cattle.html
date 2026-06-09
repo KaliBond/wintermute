@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
+    <title>Coupled Cattle, Tested — Neural Nations</title>
+    <meta name="description" content="A simulation report testing the stampede-as-phase-transition claim: explosive Kuramoto hysteresis and branching-process contagion models. CAMS working note, June 2026.">
+    <meta name="keywords" content="CAMS, Neural Nations, Kuramoto model, phase transition, stampede, branching process, hysteresis, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/coupled-cattle">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/coupled-cattle">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="Coupled Cattle, Tested — Neural Nations">
+    <meta property="og:description" content="A simulation report testing the stampede-as-phase-transition claim: explosive Kuramoto hysteresis and branching-process contagion models. CAMS working note, June 2026.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Coupled Cattle, Tested — Neural Nations">
+    <meta name="twitter:description" content="A simulation report testing the stampede-as-phase-transition claim. CAMS working note, June 2026.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Neural Nations",
+          "url": "https://neuralnations.org",
+          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
+          "author": { "@id": "https://neuralnations.org/#kari" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://neuralnations.org/#kari",
+          "name": "Kari McKern",
+          "url": "https://neuralnations.org/cams-project-history",
+          "jobTitle": "Independent Researcher",
+          "description": "Creator of CAMS — the Complex Adaptive Model of Societies. Researcher, former public servant, IT specialist, Sydney Australia.",
+          "sameAs": [
+            "https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/",
+            "https://github.com/KaliBond"
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+    .report-body {
+        font-size: 1.02em;
+        line-height: 1.82;
+        color: #2c3e50;
+        max-width: 760px;
+    }
+    .report-body p {
+        margin-bottom: 1.35em;
+    }
+    .report-body h2 {
+        font-size: 1.18em;
+        font-weight: 700;
+        color: #1B2A33;
+        margin: 2.2em 0 0.7em;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #DAD2B8;
+    }
+    .report-body h3 {
+        font-size: 1.02em;
+        font-weight: 700;
+        color: #2F6F7D;
+        margin: 1.6em 0 0.5em;
+    }
+    .abstract-box {
+        background: #F0F7F8;
+        border-left: 4px solid #2F6F7D;
+        border-radius: 0 8px 8px 0;
+        padding: 20px 26px;
+        margin-bottom: 2.2em;
+        font-size: 0.97em;
+        line-height: 1.72;
+        color: #2c3e50;
+    }
+    .abstract-box strong {
+        color: #1B2A33;
+    }
+    .finding-box {
+        background: #FBF8EF;
+        border: 1px solid #DAD2B8;
+        border-left: 4px solid #D98B2B;
+        border-radius: 0 8px 8px 0;
+        padding: 16px 22px;
+        margin: 1.8em 0;
+        font-size: 0.96em;
+        line-height: 1.68;
+        color: #2c3e50;
+    }
+    .finding-box .finding-label {
+        font-size: 0.72em;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #D98B2B;
+        margin-bottom: 6px;
+    }
+    .figure-panel {
+        background: #0d0d0d;
+        border-radius: 10px;
+        padding: 10px;
+        margin: 2em 0;
+        text-align: center;
+    }
+    .figure-panel img {
+        max-width: 100%;
+        border-radius: 6px;
+        display: block;
+        margin: 0 auto;
+    }
+    .figure-caption {
+        color: #aaa;
+        font-size: 0.82em;
+        line-height: 1.55;
+        margin-top: 10px;
+        padding: 0 6px 4px;
+        text-align: left;
+    }
+    .figure-caption strong {
+        color: #ddd;
+    }
+    .stat-row {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin: 1.5em 0;
+    }
+    .stat-chip {
+        background: #F5F1E4;
+        border: 1px solid #DAD2B8;
+        border-radius: 8px;
+        padding: 10px 18px;
+        font-size: 0.88em;
+        line-height: 1.4;
+        min-width: 120px;
+    }
+    .stat-chip .val {
+        font-size: 1.4em;
+        font-weight: 700;
+        color: #2F6F7D;
+        display: block;
+    }
+    .stat-chip .lbl {
+        color: #888;
+        font-size: 0.88em;
+    }
+    .files-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 1.4em 0;
+    }
+    .file-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 14px;
+        background: #fff;
+        border: 1px solid #DAD2B8;
+        border-radius: 8px;
+        font-size: 0.87em;
+        color: #2F6F7D;
+        text-decoration: none;
+        transition: border-color 0.18s, box-shadow 0.18s;
+    }
+    .file-link:hover {
+        border-color: #2F6F7D;
+        box-shadow: 0 2px 8px rgba(47,111,125,0.13);
+        color: #1B2A33;
+    }
+    .meta-line {
+        font-size: 0.87em;
+        color: #888;
+        margin-bottom: 1.6em;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+    }
+    .meta-line span {
+        padding: 2px 10px;
+        background: #F5F1E4;
+        border-radius: 20px;
+        border: 1px solid #DAD2B8;
+    }
+    .pull-quote {
+        border-left: 4px solid #2F6F7D;
+        padding: 14px 22px;
+        margin: 1.8em 0;
+        font-size: 1.04em;
+        font-style: italic;
+        color: #34495e;
+        background: #f5f8ff;
+        border-radius: 0 8px 8px 0;
+    }
+    .verdict-box {
+        background: #f0fdf4;
+        border: 1px solid #a7f3d0;
+        border-left: 4px solid #5B7A4F;
+        border-radius: 0 8px 8px 0;
+        padding: 16px 22px;
+        margin: 1.8em 0;
+        font-size: 0.97em;
+        line-height: 1.68;
+    }
+    .verdict-box .verdict-label {
+        font-size: 0.72em;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #5B7A4F;
+        margin-bottom: 6px;
+    }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework ↗</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="framework/index.html">Framework ↗</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+        <hr class="menu-divider">
+        <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="hero-section">
+        <h1>Coupled Cattle, Tested</h1>
+        <p class="hero-subtitle">A simulation report on the stampede-as-phase-transition claim</p>
+    </div>
+
+    <div class="card">
+        <div class="report-body">
+
+            <div class="meta-line">
+                <span>Kari Freyr McKern</span>
+                <span>Neural Nations · CAMS Working Note</span>
+                <span>6 June 2026</span>
+                <span>Open Science</span>
+            </div>
+
+            <div class="abstract-box">
+                <strong>Summary.</strong> This note reports the outcome of a direct computational test of the central claim in the &ldquo;Coupled Cattle&rdquo; paper: that a bovine stampede can be read as a <em>first-order</em> (explosive) synchronisation transition with hysteresis, rather than as the gradual second-order ordering transition that describes ordinary herd cohesion. Two models were implemented from first principles: an explosive Kuramoto model with frequency-correlated coupling, integrated as an SDE with forward and backward parameter sweeps so that hysteresis is a <em>measured output</em> rather than an assumption; and a branching-process contagion model — the honest alternative formalism for a one-shot escape cascade.<br><br>
+                The headline finding is <strong>conditional support with an explicit caveat</strong>. The explosive model produces a genuine hysteresis loop the uniform-coupling control largely lacks, so the first-order reading is mechanistically possible and is not ruled out. But the control&rsquo;s loop area is not zero — it carries a finite-size artefact — which means the raw loop area overstates the effect. The branching model fits the one-shot cascade at least as naturally, reproducing the fat-tailed cascade-size distribution (median&nbsp;2 animals, mean&nbsp;34 near criticality) that matches field intuition. The conclusion for the framework is unchanged in direction but firmer in grounding: the mechanism is possible, the empirical case is still unproven, and the decisive test remains the controlled forward/backward handling-stress experiment specified in the paper&rsquo;s falsification programme.
+            </div>
+
+            <div class="files-row">
+                <a href="dual_model.py" class="file-link" download>
+                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                    dual_model.py
+                </a>
+                <a href="precursor_series.csv" class="file-link" download>
+                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"/></svg>
+                    precursor_series.csv
+                </a>
+                <a href="explosive_kuramoto_hysteresis.png" class="file-link" download>
+                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    Figure 1 (PNG)
+                </a>
+                <a href="branching_contagion.png" class="file-link" download>
+                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    Figure 2 (PNG)
+                </a>
+            </div>
+
+            <!-- ── SECTION 1 ── -->
+            <h2>1. What was being tested, and why</h2>
+
+            <p>The &ldquo;Coupled Cattle&rdquo; paper argues that the CAMS framework &mdash; which scores adaptive collectives on Coherence, Capacity, Stress and Abstraction and maps their configuration onto the synchronisation literature in statistical physics via a criticality bridge &mdash; finds its cleanest animal testbed in the ungulate herd, and its sharpest diagnostic case in the stampede. The paper draws a careful distinction between two kinds of transition. Ordinary herd cohesion, in which synchrony grows continuously as social coupling rises, is well described as a <em>second-order</em> transition of the kind documented for marching locusts and standard self-propelled-particle models. The stampede, by contrast, is proposed as a <em>first-order</em> or explosive transition: the herd sits in a calm attractor, a shock pushes it discontinuously into a flight attractor, and recovery is slow — the behavioural signature of hysteresis.</p>
+
+            <p>That second claim is the one worth attacking, because only it delivers the tipping-point intuition that motivates the framework&rsquo;s predictive ambition. The review exchange sharpened the attack into a precise methodological worry. If we infer the existence of two attractors from the very phenomenology we are trying to explain &mdash; a herd that stays agitated after the stimulus has passed &mdash; we risk circularity, because sustained agitation is equally well explained by a stimulus that has not in fact passed (lingering scent, a handler still present) as by genuine bistability. The only way to break the circle is to manipulate the control parameter in <em>both</em> directions and watch whether the system retraces its path.</p>
+
+            <div class="pull-quote">If the two paths enclose an area, hysteresis is present. If they coincide, the first-order reading is dead.</div>
+
+            <p>A second worry was formal rather than empirical. The Kuramoto model describes phase oscillators, and a grazing animal does not obviously have a phase. A graze-to-flee transition is a one-shot threshold event, better suited to an excitable-medium or branching-process description than to a phase model. This argues for running the stampede claim through two formalisms in parallel &mdash; a synchronisation model and a contagion model &mdash; and asking which fits the cascade more naturally, rather than assuming the synchronisation framing from the outset.</p>
+
+            <!-- ── SECTION 2 ── -->
+            <h2>2. What was built</h2>
+
+            <h3>2.1 Explosive Kuramoto with a hysteresis sweep</h3>
+
+            <p>The first model integrates the Kuramoto equations as a stochastic differential equation using an Euler&ndash;Maruyama scheme with fixed timestep and noise scaled by the square root of the timestep. To give the model the capacity to exhibit a first-order transition &mdash; without which the test would be rigged toward a negative result &mdash; the coupling of each oscillator was made proportional to the magnitude of its natural frequency, the standard construction by which explosive synchronisation arises. A uniform-coupling version was run alongside as a control.</p>
+
+            <p>The control parameter, global coupling, was swept upward (the forward sweep) and then downward (the backward sweep), with the final state at each step carried forward as the initial condition for the next &mdash; an adiabatic sweep, the configuration in which hysteresis, if present, will reveal itself. The enclosed area between the two sweep paths is the quantitative hysteresis measure; a verdict threshold was set in advance so the result could come back negative.</p>
+
+            <h3>2.2 Branching-process contagion</h3>
+
+            <p>The second model treats an escape cascade as a Galton&ndash;Watson branching process: a startled animal recruits a Poisson-distributed number of neighbours, each of whom recruits in turn, with the branching ratio modulated by stress so that low stress is subcritical (cascades die out) and high stress is supercritical (cascades propagate). The cascade was capped at a finite herd size, since a real herd cannot mobilise more animals than it contains &mdash; this finite-population saturation is biologically honest and also prevents the supercritical runs from diverging.</p>
+
+            <h3>2.3 Early-warning precursors</h3>
+
+            <p>On a slow ramp of the branching ratio toward criticality, two standard early-warning indicators were computed: rolling variance and lag-1 autocorrelation. The theory of critical slowing down predicts that both should rise as a system approaches a tipping point &mdash; precisely the signatures the paper&rsquo;s falsification programme proposes to look for in real cattle activity data.</p>
+
+            <!-- ── SECTION 3 ── -->
+            <h2>3. What the simulation showed</h2>
+
+            <h3>3.1 Hysteresis: conditional support, with a control that keeps it honest</h3>
+
+            <div class="figure-panel">
+                <img src="explosive_kuramoto_hysteresis.png" alt="Explosive Kuramoto hysteresis sweep: forward (cyan) and backward (gold) coupling sweeps, explosive vs uniform coupling control">
+                <p class="figure-caption"><strong>Figure 1.</strong> Forward (cyan) and backward (gold) coupling sweeps. <em>Left:</em> explosive coupling (K<sub>i</sub>&nbsp;&prop;&nbsp;|&omega;<sub>i</sub>|) produces a near-vertical jump and a visible enclosed loop (area&nbsp;0.20). <em>Right:</em> the uniform-coupling control rises gradually and the two paths nearly coincide (area&nbsp;0.07). The non-zero control area is a finite-size and finite-relaxation artefact and sets the noise floor against which the explosive loop must be judged.</p>
+            </div>
+
+            <p>The explosive model behaved as the first-order hypothesis predicts. The forward sweep held the order parameter low until the coupling reached roughly 1.5 to 2.0, then jumped almost vertically to a high-synchrony branch; the backward sweep descended through an intermediate value, so the two paths enclosed a clear loop. The uniform-coupling control, by contrast, rose gradually and smoothly, its two sweep paths almost coinciding, exactly as a second-order transition should.</p>
+
+            <div class="stat-row">
+                <div class="stat-chip"><span class="val">0.20</span><span class="lbl">Explosive loop area</span></div>
+                <div class="stat-chip"><span class="val">0.07</span><span class="lbl">Control loop area (artefact)</span></div>
+                <div class="stat-chip"><span class="val">~0.13</span><span class="lbl">Defensible signal (difference)</span></div>
+            </div>
+
+            <div class="finding-box">
+                <div class="finding-label">Key caveat</div>
+                The control&rsquo;s loop area of 0.07 should be zero. It is not, because at modest system size and short relaxation time, the system does not fully equilibrate at each sweep step. Roughly a third of the explosive loop&rsquo;s nominal area is measurement artefact rather than physics. The defensible signal is the <em>difference</em> between explosive and control &mdash; about 0.13 &mdash; together with the shape difference. Reporting the raw 0.20 as &ldquo;hysteresis&rdquo; would have reproduced, inside the simulation, precisely the circularity the review warned against.
+            </div>
+
+            <h3>3.2 Branching cascades: the fat tail that matches the field intuition</h3>
+
+            <div class="figure-panel">
+                <img src="branching_contagion.png" alt="Branching-process escape cascades: size distribution vs stress level, log-log scale">
+                <p class="figure-caption"><strong>Figure 2.</strong> Cascade-size distributions at three stress levels (log&ndash;log scale). As stress raises the branching ratio across the critical value of one, the distribution develops a heavy tail: small cascades remain the norm but herd-spanning events become non-negligible.</p>
+            </div>
+
+            <p>The branching model produced the progression a contagion account predicts. At low stress the branching ratio sat at about 0.74 and cascades died out quickly. As stress rose, the branching ratio crossed one near a stress value of about 0.57, and the cascade-size distribution developed the characteristic heavy tail of a critical branching process.</p>
+
+            <div class="stat-row">
+                <div class="stat-chip"><span class="val">2</span><span class="lbl">Median cascade (near criticality)</span></div>
+                <div class="stat-chip"><span class="val">34</span><span class="lbl">Mean cascade (near criticality)</span></div>
+                <div class="stat-chip"><span class="val">b&nbsp;=&nbsp;1</span><span class="lbl">Critical branching ratio at stress ≈ 0.57</span></div>
+            </div>
+
+            <p>The divergence between median and mean is the statistical fingerprint of criticality, and it captures the stockman&rsquo;s intuition more faithfully than any synchronisation curve &mdash; most disturbances involve a startle and a couple of animals and nothing more, while a rare disturbance of identical initial size takes the entire herd. A synchronisation order parameter, which describes a global average, does not naturally represent this all-or-nothing-by-luck character; a branching process does.</p>
+
+            <h3>3.3 Precursors: variance is the stronger signal</h3>
+
+            <p>On the ramp toward criticality, rolling variance tracked proximity to the tipping point with a correlation of about +0.63, while lag-1 autocorrelation tracked it more weakly, at about +0.34. Both are positive, so both early-warning signatures strengthen as predicted, but the asymmetry is the useful result. Autocorrelation is the noisier indicator and would require longer observation windows to firm up. The practical recommendation: lead with variance-based precursors and treat autocorrelation as confirmatory rather than primary.</p>
+
+            <!-- ── SECTION 4 ── -->
+            <h2>4. What this does and does not license</h2>
+
+            <div class="verdict-box">
+                <div class="verdict-label">Verdict</div>
+                <strong>The careful statement (supported):</strong> a coupled system with frequency-correlated coupling can produce a first-order transition with hysteresis that is qualitatively distinct from the second-order transition of uniform coupling, so the stampede-as-first-order hypothesis is mechanistically coherent and remains a live candidate.<br><br>
+                <strong>The careless statement (not supported):</strong> that stampedes are therefore first-order transitions. The model establishes <em>possibility</em>, not actuality. Only the controlled forward-and-backward handling-stress experiment on real cattle can move the claim from possible to actual.
+            </div>
+
+            <p>Three concrete results carry over into the paper. First, the forward/backward sweep should be named explicitly as the decisive, potentially disconfirming test, with the prior commitment that if no hysteresis is found the first-order Kuramoto reading is dropped for stampedes. Second, the criticality bridge should be partitioned by regime: reserved for genuinely oscillatory phenomena such as circadian and feeding&ndash;rest cycles, and replaced by branching or excitable-medium metrics for one-shot panic propagation. Third, the precursor analysis should foreground variance over autocorrelation and should pre-register the difficulty of detecting either in short, confounded field records.</p>
+
+            <div class="pull-quote">None of this strengthens the cross-scale leap from cattle to human collectives, and it was not intended to. The honest cross-scale statement remains one of mechanism-rhyme rather than dynamics-identity.</div>
+
+            <!-- ── SECTION 5 ── -->
+            <h2>5. Status and reproducibility</h2>
+
+            <p>All results were generated by a single self-contained script run with fixed random seeds. The known limitations are stated rather than hidden: the system size and relaxation time were constrained by a compute budget (source of the non-zero control loop); the branching model uses a global branching ratio rather than a spatially embedded interaction network; and no real cattle data has yet been analysed. The first two are straightforward to relax with more computation; the third is the substance of the empirical programme the paper proposes.</p>
+
+            <div class="files-row" style="margin-top: 1em;">
+                <a href="dual_model.py" class="file-link" download>
+                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    dual_model.py — full reference implementation
+                </a>
+                <a href="precursor_series.csv" class="file-link" download>
+                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    precursor_series.csv — stress ramp data
+                </a>
+            </div>
+
+        </div>
+
+        <div style="margin-top: 36px; padding-top: 20px; border-top: 1px solid #DAD2B8; display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.92em;">
+            <a href="explore.html" style="color: #2F6F7D; text-decoration: none;">&larr; Back to Explore</a>
+            <a href="model.html" style="color: #2F6F7D; text-decoration: none;">CAMS Model</a>
+            <a href="research-diary.html" style="color: #2F6F7D; text-decoration: none;">Research Diary</a>
+        </div>
+    </div>
+</div>
+
+<footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2026 Kari McKern &mdash; Neural Nations CAMS Research. Built as open science &mdash; contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+    </div>
+</footer>
+
+<script>
+const hamburger = document.getElementById('nav-hamburger');
+const mobileMenu = document.getElementById('nav-mobile');
+if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => {
+        mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open');
+    });
+}
+</script>
+</body>
+</html>
