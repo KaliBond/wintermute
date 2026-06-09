@@ -1,0 +1,40 @@
+# DEV Tier Manifest
+
+Files archived here have Stress or Coherence values outside
+the canonical 1–10 range, non-standard node names, or incomplete
+society-year groups.  Not eligible for v2.4 recomputation.
+
+- `Afghanistan_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Merchants / Shopkeepers', 'Priesthood / Knowledge Workers', 'Proletariat', 'Property Owners', 'State Memory', 'Trades / Professions']
+- `Australia_2026_cleaned.csv`: 1 society-years with node count != 8
+- `Australia_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Priests', 'Proletariat', 'Property', 'Shopkeepers/Merchants', 'StateMemory', 'Trades/Professions']
+- `Canada_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Merchants / Shopkeepers', 'Priesthood / Knowledge Workers', 'Proletariat', 'Property', 'StateMemory', 'Trades / Professions']
+- `Denmark_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Priests', 'Proletariat', 'Property', 'Shopkeepers/Merchants', 'StateMemory', 'Trades/Professions']
+- `England_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Merchants / Shopkeepers', 'Priesthood / Knowledge Workers', 'Proletariat', 'Property', 'StateMemory', 'Trades / Professions']
+- `France_1785_1800_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Priests', 'Proletariat', 'Property', 'Shopkeepers/Merchants', 'StateMemory', 'Trades/Professions']
+- `France_Master_3_France_1785_1790_1795_1800_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Priests', 'Proletariat', 'Property', 'Shopkeepers/Merchants', 'StateMemory', 'Trades/Professions']
+- `France_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Priests', 'Proletariat', 'Property', 'Shopkeepers/Merchants', 'StateMemory', 'Trades/Professions']
+- `Germany_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Merchants / Shopkeepers', 'Priesthood / Knowledge Workers', 'Priests', 'Proletariat', 'Property', 'Shopkeepers/Merchants', 'StateMemory', 'Trades / Professions', 'Trades/Professions']
+- `Hong_Kong_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Merchants / Shopkeepers', 'Priesthood / Knowledge Workers', 'Proletariat', 'Property', 'StateMemory', 'Trades / Professions']
+- `Hongkong_Manual_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Merchants / Shopkeepers', 'Priesthood / Knowledge Workers', 'Proletariat', 'Property', 'StateMemory', 'Trades / Professions']
+- `India_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Priests', 'Proletariat', 'Property', 'Shopkeepers/Merchants', 'StateMemory', 'Trades/Professions']
+- `Indonesia_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Merchants / Shopkeepers', 'Priesthood / Knowledge Workers', 'Proletariat', 'Property', 'StateMemory', 'Trades / Professions']
+- `Iran_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Priests', 'Proletariat', 'Property', 'Shopkeepers/Merchants', 'StateMemory', 'Trades/Professions']
+- `Iraq_cleaned.csv`: non-standard nodes: ['3', '4', 'Army', 'Executive', 'Merchants / Shopkeepers', 'Priesthood / Knowledge Workers', 'Proletariat', 'Property', 'StateMemory', 'Trades / ', 'Trades / Professions', 'Trades Professions', 'TradesProfessions']
+- `Israel_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Merchants / Shopkeepers', 'Priesthood / Knowledge Workers', 'Proletariat', 'Property', 'StateMemory', 'Trades / Professions']
+- `Italy19002025_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Merchants / Shopkeepers', 'Priesthood / Knowledge Workers', 'Proletariat', 'Property', 'StateMemory', 'Trades / Professions']
+- `Italy_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Merchants / Shopkeepers', 'Priesthood / Knowledge Workers', 'Proletariat', 'Property', 'StateMemory', 'Trades / Professions']
+- `Japan_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Merchants / Shopkeepers', 'Priesthood / Knowledge Workers', 'Proletariat', 'Property', 'StateMemory', 'Trades / Professions']
+- `Lebanon_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Merchants / Shopkeepers', 'Priesthood / Knowledge Workers', 'Proletariat', 'Property', 'StateMemory', 'Trades / Professions']
+- `Netherlands_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Priests', 'Proletariat', 'Property', 'Shopkeepers/Merchants', 'StateMemory', 'Trades/Professions']
+- `New_Rome_Ad_5Y_Rome_0_Bce_5Ad_10Ad_15Ad_20_Ad_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Priests', 'Proletariat', 'Property', 'Shopkeepers/Merchants', 'StateMemory', 'Trades/Professions']
+- `Pakistan_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Merchants / Shopkeepers', 'Priesthood / Knowledge Workers', 'Proletariat', 'Property', 'StateMemory', 'Trades / Professions']
+- `Russia_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Merchants / Shopkeepers', 'Priesthood / Knowledge Workers', 'Proletariat', 'Property', 'StateMemory', 'Trades / Professions']
+- `Saudi_Arabia_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Priests', 'Proletariat', 'Property', 'Shopkeepers/Merchants', 'StateMemory', 'Trades/Professions']
+- `Singapore_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Priests', 'Proletariat', 'Property', 'Shopkeepers/Merchants', 'StateMemory', 'Trades/Professions']
+- `Syria_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Merchants / Shopkeepers', 'Priesthood / Knowledge Workers', 'Proletariat', 'Property', 'StateMemory', 'Trades / Professions']
+- `Thailand_1850_2025_Thailand_1850_2025_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Merchants / Shopkeepers', 'Priesthood / Knowledge Workers', 'Proletariat', 'Property', 'StateMemory', 'Trades / Professions']
+- `USA_HighRes_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Priests', 'Proletariat', 'Property', 'Shopkeepers', 'Shopkeepers/Merchants', 'StateMemory', 'Trades/Prof.', 'Trades/Professions']
+- `USA_Master_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Priests', 'Proletariat', 'Property', 'Shopkeepers', 'Shopkeepers/Merchants', 'StateMemory', 'Trades/Prof.', 'Trades/Professions']
+- `USA_Reconstructed_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Priests', 'Proletariat', 'Property', 'Shopkeepers', 'Shopkeepers/Merchants', 'StateMemory', 'Trades/Prof.', 'Trades/Professions']
+- `USA_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Priests', 'Proletariat', 'Property', 'Shopkeepers', 'Shopkeepers/Merchants', 'StateMemory', 'Trades/Prof.', 'Trades/Professions']
+- `Usa_Maximum_1790-2025_Us_High_Res_2025_(1)_cleaned.csv`: non-standard nodes: ['Army', 'Executive', 'Priests', 'Proletariat', 'Property', 'Shopkeepers', 'Shopkeepers/Merchants', 'StateMemory', 'Trades/Prof.', 'Trades/Professions']
