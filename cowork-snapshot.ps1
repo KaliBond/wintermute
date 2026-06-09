@@ -1,4 +1,4 @@
-# Usage: .\cowork-snapshot.ps1 [message]
+# Usage: powershell -ExecutionPolicy Bypass -File cowork-snapshot.ps1 [message]
 # Commits all current changes with a timestamped label for easy rollback.
 
 param([string]$message = "")
