@@ -4,12 +4,12 @@
 param([string]$message = "")
 
 $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm"
-$label = if ($message) { "$message — $timestamp" } else { "Cowork snapshot — $timestamp" }
+$label = if ($message) { "$message - $timestamp" } else { "Cowork snapshot - $timestamp" }
 
 git -C $PSScriptRoot add -A
 $staged = git -C $PSScriptRoot diff --cached --name-only
 if (-not $staged) {
-    Write-Host "Nothing to commit — working tree clean."
+    Write-Host "Nothing to commit - working tree clean."
     exit 0
 }
 
