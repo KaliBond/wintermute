@@ -1,5 +1,21 @@
 # CAMS v2.3 Derivatives Recalculation Plan
 
+## Before starting (run in PowerShell from wintermute/)
+
+```powershell
+cd C:\Users\julie\wintermute
+.\cowork-snapshot.ps1 "pre-recalc"
+```
+
+After completing the steps below:
+
+```powershell
+.\cowork-snapshot.ps1 "post-recalc-v2.3"
+```
+
+You can also run `.\cowork-snapshot.ps1 "checkpoint-label"` between steps.
+To roll back: `git log --oneline` → `git reset --hard <hash>`
+
 ## Data Tiers
 
 ### CANONICAL
@@ -8,9 +24,13 @@ Identified by `_ENS_` in filename. These are the authoritative datasets.
 Node Value and Bond Strength are recalculated from their C/K/S/A means.
 
 Companion ENV files (inter-scorer variance: SD_Coherence, SD_Capacity, etc.)
-are **not** recalculated — they are copied as-is. Note: ENV files in
-`cleaned_datasets/` were badly ingested (wrong headers, empty values);
-source them from `cam5/` originals instead.
+are **not** recalculated — they are copied as-is. SD values may be null
+where scorer variance was not recorded; that is valid.
+
+Note: ENV files in `cleaned_datasets/` were ingested with incorrect column
+headers (Coherence/Capacity/... instead of SD_Coherence/SD_Capacity/...).
+The row structure (Society, Year, Node) is correct. Source real ENV files
+from `cam5/` originals which have the correct SD column names.
 
 ### USP — Useful Single Passes
 Single-pass datasets with valid 1–10 scores on all four dimensions and
@@ -24,13 +44,18 @@ understanding early methodology.
 
 ---
 
-## Formulas (cams_framework_v2_3.py — do not deviate)
+## Formulas (cams_framework_v2_4.py — JUNO canonical, do not deviate)
 
 ```
-Node Value:    V_i = C + K + (A / 2) - S
-Bond Strength: Bij = sqrt(max(Vi + 8, 0) * max(Vj + 8, 0)) / 32
-Per-node BS  = mean(Bij) across all 7 pairwise bonds in the society-year
+Node Value:    V_i = C + K - S + 0.5*A
+Coupling:      q_i = (0.6*C + 0.4*A) / 10
+Bond Strength: B_ij = sqrt(q_i * q_j) * 2^(-(S_i+S_j)/10)  ∈ [0,1]
+Per-node BS  = mean(B_ij) across all 7 pairwise bonds in the society-year
 ```
+
+v2.3 formula (`sqrt(max(V+8,0)*max(V+8,0))/32`) is retired — it is not a
+scalar rescaling of v2.4 (node ordering bends; Spearman 0.982, not 1.0).
+Do not run a v2.3 pass first.
 
 ---
 
@@ -95,7 +120,9 @@ for csv_path in sorted(INPUT_DIR.glob("*.csv")):
         continue
 
     # --- Detect ENV files (SD/variance companions) ---
-    # Badly ingested in cleaned_datasets — skip here, handle in Step 3
+    # ENV files in cleaned_datasets have incorrect column headers
+    # (C/K/S/A instead of SD_C/SD_K/...). Skip here; handle in Step 3.
+    # Null SD values within ENV files are valid.
     if "_ENV_" in csv_path.name or csv_path.name.endswith("_ENV_cleaned.csv"):
         results["env_skip"].append(csv_path.name)
         continue
@@ -199,10 +226,10 @@ print(f"\nManifest written to {manifest_path}")
 
 ```bash
 # Recalculate CANONICAL derivatives
-python cams_framework_v2_3.py data/v2.3_input/canonical/ data/v2.3/canonical/
+python cams_framework_v2_4.py data/v2.3_input/canonical/ data/v2.3/canonical/
 
 # Recalculate USP derivatives
-python cams_framework_v2_3.py data/v2.3_input/usp/ data/v2.3/usp/
+python cams_framework_v2_4.py data/v2.3_input/usp/ data/v2.3/usp/
 ```
 
 ---
@@ -301,7 +328,8 @@ Formulas: V = C + K + A/2 - S
 
 ## Notes for Claude Code
 
-- **Do not modify `cams_framework_v2_3.py`** — it is the canonical formula source.
+- **Use `cams_framework_v2_4.py`** — canonical formula source for all new work.
+- **`cams_framework_v2_3.py` is frozen** — reproducibility artefact only, DO NOT import for new work.
 - Staging dirs (`data/v2.3_input/`) are temporary; delete after commit.
 - ENV files contain inter-scorer variance (SD columns), not raw scores.
   They are companions to ENS files and bypass the recalc pipeline.

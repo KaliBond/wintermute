@@ -2,6 +2,12 @@
 cams_framework_v2_3.py
 CAMS v2.3 canonical computation pipeline.
 
+SUPERSEDED by cams_framework_v2_4.py (CAMS-CAN v1.0-Final, 7 Jun 2026).
+DO NOT import this module for new work or batch recomputation.
+This file is frozen as a reproducibility artefact: results published under
+v2.3 can be reproduced exactly by importing from this module.
+See formulation-decisions log: JUNO_FORMALISM.TXT + FORMULATION_KIMI.TXT.
+
 All Node Value and Bond Strength figures in data/v2.3/ are derived
 from raw scores (Coherence, Capacity, Stress, Abstraction) using the
 functions in this file. No hand-crafted or externally scored BS values
