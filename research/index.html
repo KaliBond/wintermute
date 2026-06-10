@@ -1,12 +1,146 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-AU">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=/research-diary">
-  <link rel="canonical" href="https://neuralnations.org/research-diary">
-  <title>Research Diary — Neural Nations</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research — Neural Nations Project</title>
+<meta name="description" content="Working papers, data tools, and empirical analyses from the Neural Nations Project (CAMS framework).">
+<link rel="canonical" href="https://neuralnations.org/research/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ea; --paper:#fbf9f3; --ink:#1f1d18; --ink-soft:#4a463d;
+  --rule:#cfc8b6; --rule-soft:#e3ddc9; --accent:#8b1e1e; --gold:#c8961a;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",sans-serif;
+     font-size:14px;line-height:1.6;padding:0 0 80px;}
+.site-nav{
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:0.15em;
+  text-transform:uppercase;background:#1f1d18;color:#9a9485;
+  padding:8px 24px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid #3a3628;
+}
+.site-nav a{color:#c8961a;text-decoration:none;}
+.site-nav a:hover{text-decoration:underline;}
+.container{max-width:860px;margin:0 auto;padding:48px 24px 0;}
+h1{font-family:"Newsreader",serif;font-size:32px;font-weight:500;
+   line-height:1.1;margin-bottom:6px;}
+.tagline{font-style:italic;color:var(--ink-soft);font-family:"Newsreader",serif;
+         font-size:15px;margin-bottom:36px;}
+.section-label{font-family:"IBM Plex Mono",monospace;font-size:10px;
+  text-transform:uppercase;letter-spacing:0.15em;color:var(--ink-soft);
+  border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:18px;
+  margin-top:40px;}
+.paper-card{
+  background:var(--paper);border:1px solid var(--rule);
+  padding:20px 22px;margin-bottom:14px;
+  transition:border-color .15s;
+}
+.paper-card:hover{border-color:#a09070;}
+.paper-card a{text-decoration:none;color:inherit;}
+.paper-card .ptitle{
+  font-family:"Newsreader",serif;font-size:18px;font-weight:500;
+  color:var(--ink);margin-bottom:6px;line-height:1.3;
+}
+.paper-card .ptitle a{color:var(--accent);}
+.paper-card .ptitle a:hover{text-decoration:underline;}
+.paper-card .pmeta{
+  font-family:"IBM Plex Mono",monospace;font-size:10px;
+  color:var(--ink-soft);letter-spacing:0.05em;margin-bottom:8px;
+}
+.paper-card .pabstract{font-size:13px;color:var(--ink-soft);line-height:1.55;}
+.badge{
+  display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:9px;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:2px 7px;border:1px solid;border-radius:2px;
+  margin-right:6px;vertical-align:middle;
+}
+.badge-new{color:#3d6648;border-color:#3d6648;background:#eaf1ec;}
+.badge-preprint{color:#2c5470;border-color:#2c5470;background:#e6eff6;}
+.badge-tool{color:#7a4a10;border-color:#a87320;background:#f6efdf;}
+footer{margin-top:60px;padding:18px 24px;border-top:1px solid var(--rule);
+  font-size:11px;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;
+  max-width:860px;margin-left:auto;margin-right:auto;}
+</style>
 </head>
 <body>
-  <p>Redirecting to <a href="/research-diary">Research Diary</a>…</p>
+<nav class="site-nav">
+  <span><a href="https://neuralnations.org">Neural Nations Project</a></span>
+  <span>Research</span>
+</nav>
+<div class="container">
+  <h1>Research</h1>
+  <p class="tagline">Working papers, data tools, and empirical analyses from the Neural Nations Project.</p>
+
+  <div class="section-label">Papers &amp; Preprints — 2026</div>
+
+  <div class="paper-card">
+    <div class="pmeta">
+      <span class="badge badge-new">New</span>
+      <span class="badge badge-preprint">Preprint</span>
+      McKern, K.F. &nbsp;·&nbsp; 10 June 2026 &nbsp;·&nbsp;
+      Target: <em>Cliodynamics</em>
+    </div>
+    <div class="ptitle">
+      <a href="cams-validation-2026.html">
+        Graph-Theoretic Diagnosis of Societal Collapse: Empirical Validation of the CAMS Framework Across 18 Societies (10–2026 CE)
+      </a>
+    </div>
+    <p class="pabstract">
+      PCA across 7,880 node-year observations establishes that four CAMS diagnostic metrics compress to one dominant empirical dimension (PC1 = 72.7% variance, range 47–89%). Node-pair coupling varies 0.41–0.91 across 18 societies, predicting structural resilience vs. cascade failure. Crisis fingerprint matching against 17 historical precedents finds current Western democracies (USA ρ = 0.97; Germany ρ = 0.99; UK ρ = 1.00) in stress states comparable to historical severe crises, with 5–12 year recovery timelines indicated. Twelve falsifiable predictions registered for prospective validation 2026–2028.
+    </p>
+  </div>
+
+  <div class="section-label">Interactive Tools</div>
+
+  <div class="paper-card">
+    <div class="pmeta">
+      <span class="badge badge-tool">Tool</span>
+      Neural Nations Project &nbsp;·&nbsp; 2025–2026
+    </div>
+    <div class="ptitle">
+      <a href="/telescope.html">CAMS Historical Telescope</a>
+    </div>
+    <p class="pabstract">
+      Interactive visualisation of CAMS node values, Bond Strength, and crisis signatures across 9 societies from 10 CE to 2026. Drag the timeline, select societies, inspect year-by-year dossiers.
+    </p>
+  </div>
+
+  <div class="paper-card">
+    <div class="pmeta">
+      <span class="badge badge-tool">Tool</span>
+      Neural Nations Project &nbsp;·&nbsp; 2026
+    </div>
+    <div class="ptitle">
+      <a href="/cams_western_diagnostic.html">Western State Diagnostic — CAMS v3.2-R</a>
+    </div>
+    <p class="pabstract">
+      Cross-society diagnostic dashboard for Western and comparator states. Node Value, Bond Strength, and institutional pathway classification for USA, UK, Germany, France, Australia, Canada, and non-Western comparators.
+    </p>
+  </div>
+
+  <div class="section-label">Data</div>
+
+  <div class="paper-card">
+    <div class="pmeta">
+      <span class="badge badge-preprint">Public</span>
+      GitHub: KaliBond/wintermute
+    </div>
+    <div class="ptitle">
+      <a href="https://github.com/KaliBond/wintermute" target="_blank" rel="noopener">
+        CAMS Canonical Dataset Corpus
+      </a>
+    </div>
+    <p class="pabstract">
+      18 canonical CAMS datasets (7,880 node-year observations). Includes ensemble-mean CSVs, inter-scorer variance envelopes, and PCA/coupling results from the June 2026 full-corpus validation. All files public; methodology documented in CAMS-CAN-MASTER-REFERENCE.md.
+    </p>
+  </div>
+</div>
+<footer>
+  Neural Nations Project · neuralnations.org · GitHub: KaliBond/wintermute ·
+  Kari Freyr McKern · Sydney, Australia
+</footer>
 </body>
 </html>
