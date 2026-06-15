@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
+    <title>The Single Axis of History — Complex Adaptive Humans #32 · Neural Nations</title>
+    <meta name="description" content="Issue #32: A principal component analysis of 19,008 CAMS data rows across 28 civilisations reveals a single dominant axis — 77.5% of all variance — running from organised structural health to dissipative collapse. The mathematical stress test that proved the framework is measuring one unified reality.">
+    <meta name="keywords" content="CAMS, PCA, principal component analysis, civilisational health, societal collapse, systemic health, Neural Nations, Kari McKern, multi-method validation, AI rater, common method variance">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/complex-adaptive-humans-32">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/complex-adaptive-humans-32">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="The Single Axis of History: Why the CAMS Framework Measures a Unified Reality">
+    <meta property="og:description" content="19,008 data rows. 28 civilisations. One dominant axis: 77.5% of all variance. A relentless mathematical stress test of the CAMS framework — and what it proves about the nature of societal health.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Single Axis of History — Complex Adaptive Humans #32">
+    <meta name="twitter:description" content="Are CAMS's four dimensions arbitrary dials, or windows onto a single underlying reality? PCA across 28 civilisations gives an unambiguous answer: 77.5% of all variance loads on one axis.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        { "@type": "WebSite", "name": "Neural Nations", "url": "https://neuralnations.org" },
+        { "@type": "Person", "@id": "https://neuralnations.org/#kari", "name": "Kari McKern", "url": "https://neuralnations.org/cams-project-history" }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    body { background: #F5F1E4; }
+    .article-shell { max-width: 780px; margin: 0 auto; padding: 40px 20px 80px; }
+    .back-link { font-family:'Inter',sans-serif; font-size:.82em; color:rgba(255,255,255,.75); text-decoration:none; display:inline-flex; align-items:center; gap:5px; margin-bottom:28px; transition:color .15s; }
+    .back-link:hover { color:white; }
+    .article-card { background:white; border-radius:8px; padding:64px 72px; box-shadow:0 8px 40px rgba(0,0,0,.18); }
+    .series-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#2F6F7D; margin-bottom:6px; }
+    .issue-meta { font-family:'Inter',sans-serif; font-size:.78em; color:#999; margin-bottom:28px; display:flex; align-items:center; gap:14px; }
+    .issue-badge { background:#F0E9D2; color:#2F6F7D; font-weight:600; padding:3px 10px; border-radius:20px; font-size:.9em; }
+    h1 { font-family:'Cormorant Garamond',serif; font-size:2.4em; font-weight:600; color:#1a1a2e; line-height:1.2; letter-spacing:-.02em; margin:0 0 10px; }
+    .subtitle { font-family:'Cormorant Garamond',serif; font-size:1.15em; font-style:italic; color:#555; margin:0 0 36px; }
+    .rule { border:none; border-top:1px solid #DAD2B8; margin:32px 0; }
+    .body-text { font-family:'Cormorant Garamond',serif; font-size:1.13em; line-height:1.92; color:#2c2c2c; }
+    .body-text p { margin:1.4em 0; }
+    .body-text p:first-of-type::first-letter { font-size:3.2em; font-weight:600; float:left; line-height:.78; margin:0 6px 0 0; color:#2F6F7D; }
+    .section-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#999; margin:44px 0 20px; border-top:1px solid #DAD2B8; padding-top:24px; }
+    /* Key result box */
+    .keystone-box { background:#1a1a2e; border-radius:10px; padding:28px 32px; margin:24px 0; }
+    .keystone-box .kb-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#a5f3fc; margin-bottom:12px; }
+    .keystone-box .kb-body { font-family:'Cormorant Garamond',serif; font-size:1.12em; color:rgba(255,255,255,.92); line-height:1.85; }
+    .keystone-box .kb-body p { margin:.8em 0; }
+    /* Stat numbers */
+    .stat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:20px 0; }
+    .stat-grid-2 { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin:20px 0; }
+    .stat-grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:20px 0; }
+    .stat-cell { background:#F5F1E4; border:1px solid #DAD2B8; border-radius:8px; padding:14px 12px; text-align:center; }
+    .stat-cell.danger { background:#fff4f2; border-color:#f8c0b8; }
+    .stat-cell .sc-val { font-family:'Cormorant Garamond',serif; font-size:1.7em; font-weight:600; color:#2F6F7D; line-height:1; }
+    .stat-cell.danger .sc-val { color:#C84C3E; }
+    .stat-cell .sc-lbl { font-family:'Inter',sans-serif; font-size:.69em; color:#888; margin-top:4px; line-height:1.4; }
+    /* Loading bar */
+    .loading-bar { margin:6px 0; }
+    .loading-bar .lb-label { font-family:'Inter',sans-serif; font-size:.78em; color:#555; display:flex; justify-content:space-between; margin-bottom:3px; }
+    .loading-bar .lb-track { background:#F0E9D2; border-radius:4px; height:10px; overflow:hidden; }
+    .loading-bar .lb-fill { height:100%; border-radius:4px; }
+    .lb-fill.pos { background:#2F6F7D; }
+    .lb-fill.neg { background:#C84C3E; }
+    /* Images */
+    .data-img { width:100%; border-radius:8px; margin:24px 0; border:1px solid #DAD2B8; }
+    .img-caption { font-family:'Inter',sans-serif; font-size:.76em; color:#888; text-align:center; margin-top:-16px; margin-bottom:24px; line-height:1.5; }
+    /* Aside / callout */
+    .aside-box { background:#fdf8f0; border:1px solid #DAD2B8; border-left:4px solid #D98B2B; border-radius:6px; padding:16px 20px; margin:16px 0; font-family:'Cormorant Garamond',serif; font-size:1.06em; color:#374151; line-height:1.8; }
+    /* Bullet test blocks */
+    .test-block { background:#F5F1E4; border:1px solid #DAD2B8; border-radius:8px; padding:20px 24px; margin:20px 0; }
+    .test-block .tb-title { font-family:'Inter',sans-serif; font-size:.76em; font-weight:700; color:#2F6F7D; text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px; }
+    .test-block .tb-body { font-family:'Cormorant Garamond',serif; font-size:1.08em; color:#374151; line-height:1.82; }
+    /* Warning/truth box */
+    .hard-truth { background:#fff8f0; border:1px solid #f59e0b; border-left:4px solid #f59e0b; border-radius:6px; padding:16px 20px; margin:20px 0; font-family:'Cormorant Garamond',serif; font-size:1.06em; color:#374151; line-height:1.8; }
+    /* Pull quote */
+    .pull-quote { border-left:4px solid #D98B2B; margin:32px 0; padding:8px 0 8px 24px; }
+    .pull-quote p { font-family:'Cormorant Garamond',serif; font-size:1.28em; font-style:italic; color:#374151; line-height:1.7; margin:0; }
+    /* CAMS framing box */
+    .cams-frame { background:#1a2e1a; border:1px solid #15803d; border-radius:10px; padding:26px 30px; margin:28px 0; }
+    .cams-frame .cf-label { font-family:'Inter',sans-serif; font-size:.72em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#86efac; margin-bottom:12px; }
+    .cams-frame .cf-body { font-family:'Cormorant Garamond',serif; font-size:1.1em; color:rgba(255,255,255,.9); line-height:1.85; }
+    .cams-frame .cf-body p { margin:.8em 0; }
+    /* Conclusions */
+    .conclusions { background:#1a1a2e; color:white; border-radius:10px; padding:28px 32px; margin:32px 0; }
+    .conclusions h3 { font-family:'Inter',sans-serif; font-size:.78em; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#a5f3fc; margin:0 0 16px; }
+    .conclusions ul { font-family:'Inter',sans-serif; font-size:.88em; line-height:1.85; padding-left:20px; color:rgba(255,255,255,.88); margin:0; }
+    .conclusions li { margin:5px 0; }
+    /* Footer */
+    .article-footer { margin-top:52px; padding-top:28px; border-top:1px solid #DAD2B8; font-family:'Inter',sans-serif; font-size:.82em; color:#888; line-height:1.8; }
+    .article-footer strong { color:#374151; }
+    .li-btn { display:inline-flex; align-items:center; gap:6px; background:#0a66c2; color:white; padding:8px 18px; border-radius:6px; text-decoration:none; font-weight:600; font-size:.9em; margin-top:10px; transition:background .15s; }
+    .li-btn:hover { background:#004182; }
+    .nav-prev-next { display:flex; justify-content:space-between; margin-top:28px; font-family:'Inter',sans-serif; font-size:.82em; }
+    .nav-prev-next a { color:rgba(255,255,255,.75); text-decoration:none; transition:color .15s; }
+    .nav-prev-next a:hover { color:white; }
+    @media(max-width:640px){ .article-card{padding:36px 20px;} h1{font-size:1.9em;} .stat-grid,.stat-grid-4,.stat-grid-2{grid-template-columns:1fr 1fr;} }
+    @media print{ body{background:white;} .article-card{box-shadow:none;} }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo"><span class="nav-logo-badge">NN</span><span class="nav-logo-text">Neural Nations</span></a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link" style="color:#2F6F7D;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:4px 10px;">Framework ↗</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank"><svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub</a>
+            <a href="newsletter.html" class="nav-btn-newsletter"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span></a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a><a href="model.html">Model</a><a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a><a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a><a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a><a href="framework/index.html">Framework ↗</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+        <hr class="menu-divider">
+        <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+<div class="article-shell">
+    <a class="back-link" href="newsletter.html">← Complex Adaptive Humans</a>
+    <div class="article-card">
+        <div class="series-label">Complex Adaptive Humans &nbsp;&middot;&nbsp; Validation &amp; Methods</div>
+        <div class="issue-meta">
+            <span class="issue-badge">Issue #32</span>
+            <span>June 15, 2026</span>
+        </div>
+        <h1>The Single Axis of History</h1>
+        <p class="subtitle">Why the CAMS framework measures a unified reality.</p>
+        <hr class="rule">
+
+        <!-- ── Opening ─────────────────────────────────────── -->
+        <div class="body-text">
+            <p>There is a recurring nightmare that haunts anyone trying to turn historical analysis into a quantitative science: the illusion of the arbitrary dial.</p>
+            <p>When we rate a society across history on four raw dimensions — Coherence, Capacity, Abstraction, and Stress — the cynical observer might naturally ask: aren't these just four arbitrary dials? Are we measuring a loose collection of independent, subjective opinions that happen to be housed in the same spreadsheet?</p>
+        </div>
+
+        <div class="aside-box">
+            If the dials wander independently, the framework is noise. If they move together in a rigid, predictable dance across countries and civilisations, we are no longer looking at four separate metrics — we are looking at four windows opening onto a single, underlying structural reality.
+        </div>
+
+        <div class="body-text">
+            <p>To find out which world we live in, we subjected the entire CAMS-CAN global corpus to a relentless mathematical stress test. The results are in — and the foundational structural math of the framework has held up with astonishing clarity.</p>
+        </div>
+
+        <!-- ── Keystone Result ───────────────────────────────── -->
+        <p class="section-label">The Keystone Result: One Universal Axis</p>
+
+        <div class="body-text">
+            <p>We began by feeding 19,008 individual data rows — spanning 28 distinct civilisations, corporations, and states over thousands of cumulative years — into a standard statistical engine called Principal Component Analysis (PCA). PCA asks a simple question: when these four numbers move around, do they wander aimlessly, or do they align along a hidden, primary highway?</p>
+            <p>The answer was emphatic.</p>
+        </div>
+
+        <div class="keystone-box">
+            <div class="kb-label">The Keystone Result</div>
+            <div class="kb-body">
+                <p>A single, dominant axis accounts for <strong>77.5%</strong> of all variance across the entire global dataset. When this primary axis moves, the dimensions lock arms with mathematical precision: Coherence (+0.96), Capacity (+0.95), and Abstraction (+0.78) all rise in unison, while Stress (−0.82) violently plunges in the opposite direction.</p>
+                <p>The framework is not measuring four separate things. It is measuring one single, unified phenomenon: a society's exact position on a spectrum running from organised structural health at one end to highly activated, dissipative collapse at the other.</p>
+            </div>
+        </div>
+
+        <div class="stat-grid-4">
+            <div class="stat-cell"><div class="sc-val">77.5%</div><div class="sc-lbl">Variance explained by PC1 — the dominant axis</div></div>
+            <div class="stat-cell"><div class="sc-val">+0.96</div><div class="sc-lbl">Coherence loading on PC1</div></div>
+            <div class="stat-cell"><div class="sc-val">+0.95</div><div class="sc-lbl">Capacity loading on PC1</div></div>
+            <div class="stat-cell danger"><div class="sc-val">−0.82</div><div class="sc-lbl">Stress loading on PC1 (inverted)</div></div>
+        </div>
+
+        <div style="margin:28px 0 8px;">
+            <div class="loading-bar">
+                <div class="lb-label"><span>Coherence</span><span>+0.96</span></div>
+                <div class="lb-track"><div class="lb-fill pos" style="width:96%"></div></div>
+            </div>
+            <div class="loading-bar">
+                <div class="lb-label"><span>Capacity</span><span>+0.95</span></div>
+                <div class="lb-track"><div class="lb-fill pos" style="width:95%"></div></div>
+            </div>
+            <div class="loading-bar">
+                <div class="lb-label"><span>Abstraction</span><span>+0.78</span></div>
+                <div class="lb-track"><div class="lb-fill pos" style="width:78%"></div></div>
+            </div>
+            <div class="loading-bar">
+                <div class="lb-label"><span>Stress</span><span>−0.82</span></div>
+                <div class="lb-track"><div class="lb-fill neg" style="width:82%"></div></div>
+            </div>
+        </div>
+        <p style="font-family:'Inter',sans-serif;font-size:.73em;color:#aaa;text-align:center;margin-top:6px;">PC1 dimension loadings across the global CAMS-CAN corpus (N = 19,008)</p>
+
+        <img src="fig1_scree.png" alt="Scree plot: PC1 variance explained vs. permutation noise nulls. PC1 at 77.5% vastly exceeds the null ceiling." class="data-img">
+        <p class="img-caption">Fig. 1 — Scree plot vs. noise nulls. PC1 at 77.5% towers over the permutation null ceiling, confirming the axis is genuine structural signal.</p>
+
+        <img src="fig3_corr.png" alt="Raw-dimension correlation matrix for CAMS four dimensions: Coherence, Capacity, Abstraction, Stress." class="data-img">
+        <p class="img-caption">Fig. 3 — Raw-dimension correlation matrix. Strong positive correlations among Coherence, Capacity, and Abstraction; strong negative correlations with Stress.</p>
+
+        <img src="fig2_loadings.png" alt="PC1 loading plot labelled: Systemic Health vs Dissipative Collapse. Coherence, Capacity, and Abstraction load positively; Stress loads negatively." class="data-img">
+        <p class="img-caption">Fig. 2 — PC1 loading plot. The axis runs from systemic health (high Coherence, Capacity, Abstraction) to dissipative collapse (high Stress). This is the single axis of historical organisation.</p>
+
+        <!-- ── Trying to Break It ───────────────────────────── -->
+        <p class="section-label">Trying to Break the Signal</p>
+
+        <div class="body-text">
+            <p>Because a statistical result this clean naturally invites suspicion, we spent the remainder of the investigation trying to aggressively break it. We threw a battery of noise tests, permutations, and structural cuts at the matrix to see if the 77.5% headline was an artifact of how the data was pooled.</p>
+        </div>
+
+        <div class="test-block">
+            <div class="tb-title">The Scramble Test</div>
+            <div class="tb-body">We ran a permutation null test, completely scrambling the data to destroy any genuine relationships between the dimensions. Under these conditions, the axis collapsed down to a baseline of <strong>25.4%</strong>. The massive gap between 25.4% and 77.5% is pure, undeniable structural signal.</div>
+        </div>
+
+        <div class="test-block">
+            <div class="tb-title">The "Rich vs. Poor" Control</div>
+            <div class="tb-body">You might argue the axis just separates structurally wealthy eras from poor ones. To test this, we mathematically subtracted the average baseline of each society, leaving only its internal trajectory through time. Even when tracking a single society's isolated historical ups and downs, the axis still explained a massive <strong>76.2%</strong> of the movement.</div>
+        </div>
+
+        <div class="test-block">
+            <div class="tb-title">The Institutional Check</div>
+            <div class="tb-body">We isolated all 18 functional node-types independently. The axis successfully reproduced inside every single one of them, explaining between <strong>64%</strong> (in the abstract "Lore" node) and <strong>84%</strong> (in the tangible "Army" node) of the variance.</div>
+        </div>
+
+        <div class="stat-grid">
+            <div class="stat-cell"><div class="sc-val">77.5%</div><div class="sc-lbl">Full corpus — PC1 variance</div></div>
+            <div class="stat-cell danger"><div class="sc-val">25.4%</div><div class="sc-lbl">Scramble null — permuted baseline</div></div>
+            <div class="stat-cell"><div class="sc-val">76.2%</div><div class="sc-lbl">Within-society only (baseline subtracted)</div></div>
+        </div>
+
+        <img src="fig4_robustness.png" alt="Bar chart: PC1 dominance is stable across every analytic cut — full corpus, within-society, and all 18 node types." class="data-img">
+        <p class="img-caption">Fig. 4 — PC1 dominance across every analytic cut. The axis holds from 64% (Lore) to 84% (Army), remaining far above the 25.4% noise floor in every sub-analysis.</p>
+
+        <!-- ── AI Halo Effect ───────────────────────────────── -->
+        <p class="section-label">Defeating the "AI Halo Effect"</p>
+
+        <div class="body-text">
+            <p>The most sophisticated objection left on the table was the problem of Common-Method Variance (CMV). Because the raw historical scores were generated by a single AI rater, perhaps this beautiful 77.5% axis was just a psychological artifact — a "halo effect" where the AI simply assumed that a stressed society must also be an incapable one.</p>
+            <p>To crush this objection, we constructed a formal cross-validation test using overlapping historical timelines scored independently by completely distinct AI architectures (Gemini and Grok), alongside rigorous human-scored reference benchmarks for Australia.</p>
+            <p>We isolated 3,543 aligned node-year cells pooled across four highly diverse societies (Germany, the USA, Egypt, and Finland) and played a deliberate trick on the math: we built a cross-method matrix sourcing Coherence and Abstraction from Gemini, but Capacity and Stress from Grok. Because no single model produced both sides of the equation, it was physically impossible for a single "mind" to manufacture the link.</p>
+        </div>
+
+        <img src="fig5_crossmethod.png" alt="Cross-method PCA: the Health-Collapse axis survives when Coherence/Abstraction come from Gemini and Capacity/Stress come from Grok." class="data-img">
+        <p class="img-caption">Fig. 5 — The Health–Collapse axis survives cross-method construction. Coherence and Abstraction from Gemini; Capacity and Stress from Grok. No single model could have manufactured this correlation.</p>
+
+        <div class="keystone-box">
+            <div class="kb-label">Cross-Method Core Result</div>
+            <div class="kb-body">
+                <p>Even when drawing dimensions from independent observers who never compared notes, the method-independent core of the systemic axis explained <strong>65.6%</strong> of the variance, with robust cross-method loadings of +0.86 for Coherence, +0.87 for Capacity, and −0.78 for Stress.</p>
+                <p>When we pushed the framework even harder — running a strict three-source test in Australia that pitted Gemini and Grok directly against human reference scoring — the cross-method core remained locked at a clear <strong>58%</strong>. Across our entire multi-method battery, the true independent signal consistently lives in a powerful <strong>58% to 66% range</strong>, far above any noise ceiling.</p>
+            </div>
+        </div>
+
+        <div class="stat-grid">
+            <div class="stat-cell"><div class="sc-val">65.6%</div><div class="sc-lbl">Cross-method core (Germany, USA, Egypt, Finland)</div></div>
+            <div class="stat-cell"><div class="sc-val">58%</div><div class="sc-lbl">Three-source test floor (Gemini + Grok + human — Australia)</div></div>
+            <div class="stat-cell"><div class="sc-val">58–66%</div><div class="sc-lbl">True independent signal range across full battery</div></div>
+        </div>
+
+        <img src="fig8_mtmm_australia.png" alt="Three-way MTMM matrix: Australia. Gemini, Grok, and human reference scoring converge on the same structural axis." class="data-img">
+        <p class="img-caption">Fig. 8 — Three-way MTMM matrix: Australia. Gemini, Grok, and human reference scoring each arrive at the same Health–Collapse axis independently, with a cross-method core locked at 58%.</p>
+
+        <!-- ── The Value of Divergence ──────────────────────── -->
+        <p class="section-label">The Value of Divergence</p>
+
+        <div class="body-text">
+            <p>True science requires printing the hard truths, not just the easy wins. When we ran a hyper-localised three-way test on Egypt (collating Gemini, Grok, and OpenAI's GPT), the axis collapsed to a noisy <strong>35–46%</strong>. Why? Because GPT scored Egypt's internal Coherence and Capacity divergently from the other two models, exposing a high degree of data interpolation in that specific sub-file.</p>
+        </div>
+
+        <img src="fig6_mtmm_egypt.png" alt="Three-way MTMM matrix: Egypt. Axis collapses to 35-46% variance explained due to GPT diverging from Gemini and Grok on Coherence and Capacity." class="data-img">
+        <p class="img-caption">Fig. 6 — Three-way MTMM matrix: Egypt. The axis collapses to 35–46% when GPT is added as a third rater — flagging thin historical data and model interpolation in this sub-file.</p>
+
+        <img src="fig7_convergent_by_trait.png" alt="Cross-model agreement by trait for Egypt: Coherence and Capacity show high inter-model divergence compared to Stress." class="data-img">
+        <p class="img-caption">Fig. 7 — Cross-model agreement by trait: Egypt. Coherence and Capacity show the highest inter-model divergence, pinpointing exactly where the scoring uncertainty is concentrated.</p>
+
+        <div class="hard-truth">
+            Far from a failure, this divergence proves the integrity of the test: it tells us exactly where the historical scoring boundaries are tight, and exactly where thin data causes models to hallucinate. A test that cannot fail is not a test.
+        </div>
+
+        <img src="fig9_australia_vs_egypt.png" alt="Strict cross-method test: Australia vs Egypt. Australia holds above 58%; Egypt drops to 35-46%. The contrast reveals data density as a driver of axis stability." class="data-img">
+        <p class="img-caption">Fig. 9 — Strict cross-method test: Australia vs. Egypt. The contrast is diagnostic — data density and source quality, not the framework itself, drive axis stability.</p>
+
+        <!-- ── The Residual ─────────────────────────────────── -->
+        <p class="section-label">The Residual: Noise vs. Systemic Bias</p>
+
+        <div class="body-text">
+            <p>If the method-independent axis captures up to two-thirds of the signal, what is happening in the remaining third?</p>
+            <p>The answer came from our tracking files for China. By comparing the exact same model run on the same data across different dates, we isolated the model's test-retest reliability. The same model run twice agreed with itself at a massive <strong>0.86 correlation</strong>.</p>
+        </div>
+
+        <img src="fig10_china_reliability_ladder.png" alt="China reliability ladder: same-model test-retest correlation of 0.86, confirming residual variance is systematic bias rather than random noise." class="data-img">
+        <p class="img-caption">Fig. 10 — China reliability ladder. Same model, same data, different run dates: r = 0.86 test-retest correlation. The residual is systematic bias, not random noise.</p>
+
+        <div class="aside-box">
+            This is incredibly good news for the future of the project. Because the residual is <strong>systematic</strong> rather than random, it means we can systematically reduce it. We can narrow that variance gap by hardening our prompting protocols, standardising scoring scripts, and relying on multi-model ensembles rather than single runs.
+        </div>
+
+        <!-- ── Road Ahead ───────────────────────────────────── -->
+        <p class="section-label">What It Means for the Road Ahead</p>
+
+        <div class="pull-quote">
+            <p>The CAMS framework is successfully tracking a real, objective, scale-invariant axis of human organisation that persists across centuries, institutions, and independent observers.</p>
+        </div>
+
+        <div class="cams-frame">
+            <div class="cf-label">What PCA Has and Has Not Proved</div>
+            <div class="cf-body">
+                <p>PCA cannot prove the thermodynamic interpretation of this axis — the underlying physical mechanism remains an open, brilliant question for the next phase of research. But what PCA has proved beyond doubt is the <em>existence</em> of the axis itself.</p>
+                <p>We now know exactly where we stand. A unified, cross-method foundation of societal health and decay is real, it is measurable, and we have the receipts to prove it. Now, it is time to refine the tools and map the trajectory.</p>
+            </div>
+        </div>
+
+        <div class="conclusions">
+            <h3>The structural math — what the stress tests found</h3>
+            <ul>
+                <li>19,008 data rows, 28 civilisations: a single dominant axis explains 77.5% of all CAMS variance</li>
+                <li>Dimension loadings lock arms: Coherence +0.96, Capacity +0.95, Abstraction +0.78, Stress −0.82</li>
+                <li>Scramble test: permuted null collapses to 25.4% — the gap of 52 percentage points is pure structural signal</li>
+                <li>Within-society control (baseline subtracted): axis still explains 76.2% — not a "rich vs. poor" artifact</li>
+                <li>Institutional check: axis reproduces in all 18 node-types, from 64% (Lore) to 84% (Army)</li>
+                <li>Cross-method test (Gemini + Grok, 3,543 cells): method-independent core at 65.6% — no single AI halo possible</li>
+                <li>Three-source test with human benchmarks (Australia): cross-method floor holds at 58%</li>
+                <li>Egypt divergence (35–46%): not a failure — it precisely locates where thin historical data causes model interpolation</li>
+                <li>China reliability ladder: same-model test-retest r = 0.86; the residual third is systematic bias, not random noise — and therefore reducible</li>
+                <li>The axis is real. Its thermodynamic interpretation remains an open question. The measurement instrument is no longer in doubt.</li>
+            </ul>
+        </div>
+
+        <div class="article-footer">
+            <strong>Complex Adaptive Humans</strong> is the Neural Nations research newsletter by Kari Freyr McKern.<br>
+            Open science &middot; CAMS framework &middot; Sydney, Australia<br><br>
+            <a href="https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/" target="_blank" class="li-btn">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                Subscribe on LinkedIn
+            </a>
+        </div>
+    </div>
+
+    <div class="nav-prev-next">
+        <a href="complex-adaptive-humans-31.html">← #31 Exporting Entropy</a>
+        <span></span>
+    </div>
+</div>
+
+<script src="nav.js"></script>
+
+<footer class="footer">
+    <nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a>
+        <a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a>
+        <a href="results.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Results</a>
+    </nav>
+    <p>&copy; 2026 Kari McKern &mdash; Neural Nations CAMS Research. Built as open science &mdash; contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+</body>
+</html>
