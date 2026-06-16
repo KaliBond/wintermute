@@ -19,9 +19,8 @@ body {
     position: sticky;
     top: 0;
     z-index: 1000;
-    /* CAMS paper-1 over paper-0 with hairline ink edge */
-    background: #ECE6D2;
-    border-bottom: 1px solid #DAD2B8;
+    background: #D0C4A8;
+    border-bottom: 1px solid #B8AC98;
     box-shadow: 0 1px 0 rgba(27,42,51,0.04);
 }
 
@@ -181,8 +180,8 @@ body {
 /* Mobile drawer */
 .nav-mobile {
     display: none;
-    background: #ECE6D2;
-    border-top: 1px solid #DAD2B8;
+    background: #D0C4A8;
+    border-top: 1px solid #B8AC98;
     padding: 10px 16px 18px;
 }
 .nav-mobile.open { display: block; }
