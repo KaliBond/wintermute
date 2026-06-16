@@ -72,7 +72,7 @@ body {
 }
 
 .nav-link {
-    color: #4A5560;
+    color: #5A6E78;
     text-decoration: none;
     padding: 6px 12px;
     border-radius: 10px;
@@ -81,8 +81,8 @@ body {
     transition: color 0.15s, background 0.15s;
     white-space: nowrap;
 }
-.nav-link:hover  { color: #1B2A33; background: rgba(27,42,51,0.06); }
-.nav-link.active { color: #1B2A33; background: rgba(27,42,51,0.08); font-weight: 600; }
+.nav-link:hover  { color: #1B2A33; background: #EDE7D4; }
+.nav-link.active { color: #2F6F7D; background: #EDE7D4; font-weight: 600; }
 
 /* Dropdown */
 .nav-dropdown { position: relative; display: flex; align-items: center; }
