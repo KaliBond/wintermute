@@ -83,17 +83,6 @@
     background:linear-gradient(to right,#2d3748 0%,#2d3748 var(--pct,100%),#e2e8f0 var(--pct,100%),#e2e8f0 100%); outline:none; cursor:pointer; }
     input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px;
     border-radius:50%; background:#2d3748; border:3px solid #fff; box-shadow:0 0 0 2px #2d3748; cursor:pointer; }
-    #formalism-toggle {
-        display:inline-flex; align-items:center; gap:0.35rem;
-        font-size:0.68rem; font-family:ui-monospace,'JetBrains Mono',monospace;
-        background:#f7f7f5; border:1px solid #e2e8f0; border-radius:6px;
-        padding:0.25rem 0.6rem; user-select:none;
-    }
-    #formalism-toggle .ftog-label { color:#9ca3af; font-size:0.62rem; text-transform:uppercase; letter-spacing:0.05em; margin-right:0.1rem; }
-    .ftog-btn { padding:0.18rem 0.55rem; border:1px solid #e2e8f0; border-radius:4px; background:#fff; color:#4a5568; cursor:pointer; font-family:inherit; font-size:inherit; transition:background 0.15s,color 0.15s; }
-    .ftog-btn.active { background:#2d3748; color:#fff; border-color:#2d3748; }
-    .ftog-btn.juno-badge { border-color:#2E7D52; }
-    .ftog-btn.juno-badge.active { background:#2E7D52; color:#fff; border-color:#2E7D52; }
     </style>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
@@ -198,16 +187,6 @@
                         class="w-full bg-white border border-gray-300 rounded-xl px-4 py-2.5 text-sm text-[#2d3748] font-medium focus:ring-2 focus:ring-[#2d3748] focus:border-transparent">
                         <option value="">Loading…</option>
                     </select>
-                </div>
-
-                <!-- Formalism toggle -->
-                <div class="flex-shrink-0 self-end pb-1">
-                    <div id="formalism-toggle" title="Switch bond-strength formalism">
-                        <span class="ftog-label">Formalism</span>
-                        <button id="btn-cams" class="ftog-btn active" onclick="setFormalism('CAMS')">CAMS v3.2</button>
-                        <button id="btn-juno" class="ftog-btn juno-badge" onclick="setFormalism('JUNO')">JUNO 1.0</button>
-                        <span id="formalism-loading" style="display:none;font-size:0.65rem;color:#9ca3af">loading…</span>
-                    </div>
                 </div>
 
                 <!-- Year slider + play -->
@@ -380,7 +359,6 @@ let networkInit = false;
 async function loadData() {
     const r = await fetch('cleaned_datasets/cams_index.json');
     DB = await r.json();
-    if (window._junoCaptureCams) window._junoCaptureCams();
 
     // Inject main template
     const tpl = document.getElementById('mainTemplate');
@@ -704,68 +682,6 @@ function stopPlay() {
     playTimer = null;
     setPlaying(false);
 }
-
-// ── JUNO 1.0 formalism toggle ─────────────────────────────────────────────
-(function () {
-    let _camsData   = null;
-    let _junoData   = null;
-    let _junoLoading = false;
-
-    window._junoCaptureCams = function () { _camsData = DB; };
-
-    function loadJuno(cb) {
-        if (_junoData) { cb(_junoData); return; }
-        if (_junoLoading) return;
-        _junoLoading = true;
-        document.getElementById('formalism-loading').style.display = 'inline';
-        fetch('data/juno_full.json')
-            .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
-            .then(d => {
-                _junoData = d.societies || d;
-                document.getElementById('formalism-loading').style.display = 'none';
-                cb(_junoData);
-            })
-            .catch(err => {
-                document.getElementById('formalism-loading').style.display = 'none';
-                console.warn('[JUNO toggle] load failed:', err.message);
-                const btn = document.getElementById('btn-juno');
-                btn.disabled = true;
-                btn.title = 'JUNO data not available';
-                document.getElementById('btn-cams').classList.add('active');
-                btn.classList.remove('active');
-            });
-    }
-
-    function switchTo(newDB, soc) {
-        DB = newDB;
-        if (!DB[currentSociety]) {
-            currentSociety = soc || Object.keys(DB).sort()[0];
-            document.getElementById('societySelect').value = currentSociety;
-        }
-        const years = sortedYears(currentSociety);
-        currentYear = years[years.length - 1];
-        resetSlider(years);
-        ['trend', 'bond'].forEach(k => { if (charts[k]) { charts[k].destroy(); delete charts[k]; } });
-        updateUI();
-    }
-
-    window.setFormalism = function (which) {
-        if (!_camsData) return;
-        document.getElementById('btn-cams').classList.toggle('active', which === 'CAMS');
-        document.getElementById('btn-juno').classList.toggle('active', which === 'JUNO');
-        if (which === 'CAMS') {
-            switchTo(_camsData);
-        } else {
-            loadJuno(function (junoSocs) {
-                switchTo(Object.assign({}, _camsData, junoSocs), Object.keys(junoSocs)[0]);
-            });
-        }
-    };
-
-    window.addEventListener('load', function () {
-        setTimeout(function () { if (_camsData) loadJuno(function () {}); }, 2000);
-    });
-})();
 
 // ── BOOT ──────────────────────────────────────────────────────────────────
 loadData().catch(err => {
