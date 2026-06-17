@@ -1,27 +1,27 @@
 JUNO-1.0 vs CAMS-v3.2 Concordance Report
 ==================================================
-Societies  : ['Argentina', 'Australia', 'Canada', 'Chile', 'China', 'Colombia', 'France', 'Germany', 'India', 'Iran', 'Japan', 'Norway', 'Poland', 'Russia', 'Sweden', 'Thailand', 'Turkey', 'UK', 'USA']
-Years      : 1800–2026
-Obs (node) : 15,848
+Societies  : ['Argentina', 'Australia', 'Canada', 'Chile', 'China', 'Colombia', 'Denmark', 'France', 'Germany', 'Hong Kong', 'India', 'Indonesia', 'Iran', 'Iraq', 'Italy', 'Japan', 'Lebanon', 'Netherlands', 'Norway', 'Pakistan', 'Poland', 'Russia', 'Saudi Arabia', 'Singapore', 'South Africa', 'Sweden', 'Syria', 'Thailand', 'Turkey', 'UAE', 'UK', 'USA', 'Ukraine']
+Years      : 20–2026
+Obs (node) : 30,008
 
 Bond Strength (per-node):
-  Overall  Spearman ρ = 0.9772  MAE = 18.0650
+  Overall  Spearman ρ = 0.9580  MAE = 21.5050
   Note: MAE is cross-scale (JUNO ∈[0,1], CAMS-v3.2 ~[0.7,64]); Spearman is scale-invariant.
 
 Per-node Spearman ρ:
-  Helm       ρ = 0.9736  MAE = 18.7633
-  Shield     ρ = 0.9733  MAE = 17.8328
-  Lore       ρ = 0.9692  MAE = 19.9073
-  Stewards   ρ = 0.9817  MAE = 17.7475
-  Craft      ρ = 0.9759  MAE = 17.8480
-  Hands      ρ = 0.9795  MAE = 14.5824
-  Archive    ρ = 0.9790  MAE = 19.6928
-  Flow       ρ = 0.9818  MAE = 18.1457
+  Helm       ρ = 0.9599  MAE = 22.1069
+  Shield     ρ = 0.9569  MAE = 21.0419
+  Lore       ρ = 0.9407  MAE = 22.8189
+  Stewards   ρ = 0.9624  MAE = 21.3679
+  Craft      ρ = 0.9584  MAE = 21.6168
+  Hands      ρ = 0.9629  MAE = 17.9017
+  Archive    ρ = 0.9559  MAE = 23.2408
+  Flow       ρ = 0.9590  MAE = 21.9453
 
 System-level metrics (Spearman ρ, scale-invariant):
-  System Bond Density  : 0.9780
-  Decay Index          : 0.9766
-  λ₂ Connectivity      : 0.9766
+  System Bond Density  : 0.9585
+  Decay Index          : 0.9743
+  λ₂ Connectivity      : 0.9553
 
 Interpretation:
   ρ > 0.95 → formalisms agree on rank ordering (same crises, same hierarchy).
@@ -36,16 +36,30 @@ Per-society SBD concordance:
   Chile                ρ = 0.9707  n=152
   China                ρ = 0.9868  n=226
   Colombia             ρ = 0.9154  n=152
-  France               ρ = 0.9960  n=31
+  Denmark              ρ = 0.9962  n=114
+  France               ρ = 0.9549  n=177
   Germany              ρ = 0.9552  n=147
+  Hong Kong            ρ = 0.9285  n=116
   India                ρ = 0.9729  n=31
+  Indonesia            ρ = 1.0000  n=85
   Iran                 ρ = 0.9855  n=152
-  Japan                ρ = 0.9758  n=31
+  Iraq                 ρ = 0.8775  n=118
+  Italy                ρ = 0.9120  n=124
+  Japan                ρ = 0.9819  n=152
+  Lebanon              ρ = 0.9957  n=83
+  Netherlands          ρ = 0.9825  n=54
   Norway               ρ = 0.9658  n=147
+  Pakistan             ρ = 0.9778  n=78
   Poland               ρ = 0.9726  n=152
   Russia               ρ = 0.8460  n=227
-  Sweden               ρ = 0.9594  n=31
+  Saudi Arabia         ρ = 0.8809  n=126
+  Singapore            ρ = 0.9785  n=96
+  South Africa         ρ = 0.9884  n=145
+  Sweden               ρ = 0.9413  n=145
+  Syria                ρ = 0.9823  n=115
   Thailand             ρ = 0.9418  n=36
   Turkey               ρ = 0.9895  n=31
+  UAE                  ρ = 0.9464  n=51
   UK                   ρ = 0.9761  n=147
   USA                  ρ = 0.9829  n=26
+  Ukraine              ρ = 0.9770  n=84
