@@ -6,7 +6,7 @@
 
     <!-- Primary SEO -->
     <title>Open Datasets — Neural Nations</title>
-    <meta name="description" content="41,519 CAMS records across 43 societies and 50 historical series. Freely downloadable. Scored by GPT + Grok + Gemini ensemble. Scoring methodology, validation reports, and GitHub repository.">
+    <meta name="description" content="41,519 CAMS records across 43 societies and 50 historical series. JUNO-1.0 bond formalism covering 36 societies. Freely downloadable. Scored by GPT + Grok + Gemini ensemble. Scoring methodology, validation reports, and GitHub repository.">
     <meta name="keywords" content="CAMS, Neural Nations, civilisational complexity, institutional analysis, Kari McKern">
     <meta name="author" content="Kari McKern">
     <meta name="robots" content="index, follow">
@@ -18,13 +18,13 @@
     <meta property="og:site_name" content="Neural Nations">
     <meta property="og:locale" content="en_AU">
     <meta property="og:title" content="Open Datasets — Neural Nations">
-    <meta property="og:description" content="44,215 CAMS records across 40 societies and 49 historical series. Freely downloadable. Scoring methodology, validation reports, and GitHub repository.">
+    <meta property="og:description" content="41,519 CAMS records across 43 societies and 50 historical series. JUNO-1.0 bond formalism covering 36 societies. Freely downloadable. Scoring methodology, validation reports, and GitHub repository.">
     <meta property="og:image" content="https://neuralnations.org/og-image.png">
 
     <!-- Twitter / X Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Open Datasets — Neural Nations">
-    <meta name="twitter:description" content="44,215 CAMS records across 40 societies and 49 historical series. Freely downloadable. Scoring methodology, validation reports, and GitHub repository.">
+    <meta name="twitter:description" content="41,519 CAMS records across 43 societies and 50 historical series. JUNO-1.0 bond formalism covering 36 societies. Freely downloadable. Scoring methodology, validation reports, and GitHub repository.">
     <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
 
     <script type="application/ld+json">
@@ -930,6 +930,79 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- JUNO-1.0 FORMALISM -->
+    <div class="card">
+        <p class="section-label" style="color:#2E7D52;">JUNO 1.0 &mdash; Bond Strength Formalism</p>
+
+        <div class="method-box" style="border-color:#2E7D52;background:#f0faf4;">
+            <strong>What JUNO-1.0 is:</strong> A scale-invariant bond formalism that replaces the legacy CAMS v3.2 bond formula
+            with a normalised alternative. Where CAMS v3.2 bonds can range up to ~64, JUNO-1.0 bonds are constrained to [0, 1],
+            making cross-society and cross-era comparisons directly meaningful.<br><br>
+            <strong>Formula:</strong> B<sub>ij</sub> = &radic;(q<sub>i</sub> &middot; q<sub>j</sub>) &middot; 2<sup>&minus;(S<sub>i</sub>+S<sub>j</sub>)/10</sup>
+            &nbsp;&nbsp;where&nbsp;&nbsp; q<sub>i</sub> = (0.6&middot;C + 0.4&middot;A) / 10<br><br>
+            <strong>&Lambda; (coordination index):</strong> B&#772;(t) / B&#772;<sub>0</sub> &mdash; the system bond density at year <em>t</em> divided by the
+            society&rsquo;s 90th-percentile historical SBD. Scale-invariant; comparable across all 36 societies.<br><br>
+            <strong>Concordance with CAMS v3.2:</strong> Spearman &rho; = 0.95 (SBD) and &rho; = 0.95 (per-bond) across all 36 societies &mdash;
+            the two formalisms agree on structural ordering while JUNO-1.0 provides a bounded, interpretable scale.
+        </div>
+
+        <div class="validation-strip" style="margin-top:16px;">
+            <div class="vstat">
+                <div class="vsv" style="color:#2E7D52;">36</div>
+                <div class="vsl">Societies covered<br>by JUNO-1.0</div>
+            </div>
+            <div class="vstat">
+                <div class="vsv" style="color:#2E7D52;">[0, 1]</div>
+                <div class="vsl">Bond strength range<br>(normalised)</div>
+            </div>
+            <div class="vstat">
+                <div class="vsv" style="color:#2E7D52;">&rho; = 0.95</div>
+                <div class="vsl">Concordance with<br>CAMS v3.2</div>
+            </div>
+            <div class="vstat">
+                <div class="vsv" style="color:#2E7D52;">301 KB</div>
+                <div class="vsl">Pre-computed site JSON<br>(all 36 societies)</div>
+            </div>
+        </div>
+
+        <p class="region-heading" style="margin-top:20px;">Pre-computed outputs</p>
+        <div class="dataset-grid">
+            <div class="dataset-card" style="border-color:#a8d5bc;">
+                <span class="society" style="color:#1a3d2b;">juno_full.json &mdash; All 36 societies</span>
+                <span class="meta">JUNO-1.0 &middot; Node Value, Bond Strength, B&#8320;, &Lambda; trends &middot; Ready for site toggle &middot; 301 KB</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/data/juno_full.json" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/data/juno_full.json" target="_blank" class="dl" style="color:#2E7D52;border-color:#a8d5bc;">Download JSON</a>
+                </div>
+            </div>
+            <div class="dataset-card" style="border-color:#a8d5bc;">
+                <span class="society" style="color:#1a3d2b;">JUNO_all_countries.csv &mdash; Raw scores</span>
+                <span class="meta">36 societies &middot; 32,361 rows &middot; 20 CE&ndash;2026 &middot; C, K, S, A per node per year &middot; JUNO input format</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/data/juno/JUNO_all_countries.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/data/juno/JUNO_all_countries.csv" target="_blank" class="dl" style="color:#2E7D52;border-color:#a8d5bc;">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card" style="border-color:#a8d5bc;">
+                <span class="society" style="color:#1a3d2b;">juno_backcalc.py &mdash; Pipeline script</span>
+                <span class="meta">Computes JUNO-1.0 + CAMS-v3.2 node metrics, bond matrix, concordance &middot; CLI tool &middot; Python 3.10+</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno_backcalc.py" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno_backcalc.py" target="_blank" class="dl" style="color:#2E7D52;border-color:#a8d5bc;">Download .py</a>
+                </div>
+            </div>
+        </div>
+
+        <p style="margin-top:16px;font-size:0.88em;color:#555;">
+            The JUNO formalism toggle is live in
+            <a href="test.html" style="color:#2E7D52;font-weight:600;">CAMS Historical Telescope</a>.
+            GitHub Action <code>update_juno_data.yml</code> auto-regenerates <code>juno_full.json</code>
+            whenever ENS source files or pipeline scripts change.
+            See <a href="https://github.com/KaliBond/wintermute/blob/main/generate_site_json.py" target="_blank" style="color:#2E7D52;">generate_site_json.py</a>
+            for the full schema specification.
+        </p>
     </div>
 
     <!-- DATASETS — dynamic from datasets.json -->
