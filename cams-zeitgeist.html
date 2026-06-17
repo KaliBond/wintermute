@@ -133,6 +133,18 @@
     flex-shrink: 0;
     }
     .play-btn:hover, .play-btn.playing { background: #2F6F7D; color: white; }
+    /* ── JUNO formalism toggle ─────────────────────────────────── */
+    #formalism-toggle {
+        display:inline-flex; align-items:center; gap:0.35rem;
+        font-size:0.68rem; font-family:ui-monospace,'JetBrains Mono',monospace;
+        background:#fff; border:1px solid #d0c0e8; border-radius:6px;
+        padding:0.25rem 0.6rem; user-select:none; align-self:flex-end; margin-bottom:3px;
+    }
+    #formalism-toggle .ftog-label { color:#aaa; font-size:0.62rem; text-transform:uppercase; letter-spacing:0.05em; margin-right:0.1rem; }
+    .ftog-btn { padding:0.18rem 0.55rem; border:1px solid #d0c0e8; border-radius:4px; background:#f8f5ff; color:#5a3580; cursor:pointer; font-family:inherit; font-size:inherit; transition:background 0.15s,color 0.15s; }
+    .ftog-btn.active { background:#2F6F7D; color:#fff; border-color:#2F6F7D; }
+    .ftog-btn.juno-badge { border-color:#2E7D52; }
+    .ftog-btn.juno-badge.active { background:#2E7D52; color:#fff; border-color:#2E7D52; }
     /* ── Metric gauges ─────────────────────────────────────────── */
     .gauge-grid {
     display: grid;
@@ -354,6 +366,12 @@
             </div>
         </div>
         <div id="loadStatus" style="font-size:0.78rem; color:#aaa; align-self:flex-end; padding-bottom:3px;"></div>
+        <div id="formalism-toggle" title="Switch bond-strength formalism">
+            <span class="ftog-label">Formalism</span>
+            <button id="btn-cams" class="ftog-btn active" onclick="setFormalism('CAMS')">CAMS v3.2</button>
+            <button id="btn-juno" class="ftog-btn juno-badge" onclick="setFormalism('JUNO')">JUNO 1.0</button>
+            <span id="formalism-loading" style="display:none;font-size:0.65rem;color:#aaa">loading…</span>
+        </div>
         <div style="align-self:flex-end; padding-bottom:3px; text-align:right;">
             <div style="font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:#888; margin-bottom:2px;">Z Rank</div>
             <div style="font-size:1rem; font-weight:700; color:#2F6F7D;">
@@ -974,6 +992,7 @@ function renderCogSig(yearData) {
 // ── Init ──────────────────────────────────────────────────────────────────────
 async function init() {
     database = await loadData();
+    if (window._junoCaptureCams) window._junoCaptureCams();
     const societies = Object.keys(database).sort();
     setStatus(societies.length + ' societies loaded.');
 
@@ -993,6 +1012,7 @@ async function init() {
         }
         slider.value = state.year;
     }
+    window._setSociety = setSociety;
 
     const def = societies.includes('Australia') ? 'Australia' : societies[0];
     sel.value = def;
@@ -1006,6 +1026,78 @@ sel.addEventListener('change', e => { setSociety(e.target.value); updateDashboar
         updateDashboard();
     });
 }
+
+// ── JUNO 1.0 formalism toggle ─────────────────────────────────────────────
+(function () {
+    let _camsDb  = null;
+    let _junoDb  = null;
+    let _loading = false;
+
+    window._junoCaptureCams = function () { _camsDb = database; };
+
+    function transformRaw(raw) {
+        const db = {};
+        for (const [soc, years] of Object.entries(raw)) {
+            db[soc] = [];
+            for (const [yr, nodes] of Object.entries(years)) {
+                const year = parseInt(yr);
+                for (const [node, m] of Object.entries(nodes)) {
+                    const [c,k,s,a] = m;
+                    db[soc].push({ year, node, c, k, s, a,
+                        val:  parseFloat((1.5*c + k - 1.5*s + 0.5*a).toFixed(2)),
+                        bond: parseFloat(((c+k)/Math.max(s,0.1)*0.5).toFixed(3)) });
+                }
+            }
+            db[soc].sort((a,b) => a.year - b.year);
+        }
+        return db;
+    }
+
+    function loadJuno(cb) {
+        if (_junoDb) { cb(_junoDb); return; }
+        if (_loading) return;
+        _loading = true;
+        document.getElementById('formalism-loading').style.display = 'inline';
+        fetch('data/juno_full.json')
+            .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+            .then(d => {
+                _junoDb = transformRaw(d.societies || d);
+                document.getElementById('formalism-loading').style.display = 'none';
+                cb(_junoDb);
+            })
+            .catch(err => {
+                document.getElementById('formalism-loading').style.display = 'none';
+                console.warn('[JUNO toggle] load failed:', err.message);
+                const btn = document.getElementById('btn-juno');
+                btn.disabled = true;
+                btn.title = 'JUNO data not available';
+                document.getElementById('btn-cams').classList.add('active');
+                btn.classList.remove('active');
+            });
+    }
+
+    window.setFormalism = function (which) {
+        if (!_camsDb) return;
+        document.getElementById('btn-cams').classList.toggle('active', which === 'CAMS');
+        document.getElementById('btn-juno').classList.toggle('active', which === 'JUNO');
+        if (which === 'CAMS') {
+            database = _camsDb;
+            window._setSociety(state.society);
+            updateDashboard();
+        } else {
+            loadJuno(function (junoDb) {
+                database = Object.assign({}, _camsDb, junoDb);
+                if (!database[state.society]) state.society = Object.keys(database).sort()[0];
+                window._setSociety(state.society);
+                updateDashboard();
+            });
+        }
+    };
+
+    window.addEventListener('load', function () {
+        setTimeout(function () { if (_camsDb) loadJuno(function () {}); }, 2000);
+    });
+})();
 
 init();
 </script>
