@@ -1,0 +1,82 @@
+# .github/workflows/update_juno_data.yml
+#
+# Runs whenever JUNO data CSVs are pushed to the repo.
+# Produces data/juno_full.json and commits it back.
+#
+# Place this file at:  .github/workflows/update_juno_data.yml
+# in the wintermute repo.
+#
+# Trigger paths — edit to match where you keep your JUNO CSVs:
+#   data/juno/JUNO_all_countries.csv
+#   data/juno/JUNO_*.csv
+#
+# Required repo files (copy from the juno-implementation folder):
+#   juno_backcalc.py
+#   generate_site_json.py
+#
+# No secrets needed — reads and writes only to the same repo.
+
+name: Update JUNO site data
+
+on:
+  push:
+    paths:
+      # Re-run whenever JUNO source data or the scripts change
+      - 'data/juno/**.csv'
+      - 'data/nations/**_ENS.csv'   # ensemble scores feed the JUNO pipeline
+      - 'juno_backcalc.py'
+      - 'generate_site_json.py'
+  workflow_dispatch:    # allow manual trigger from Actions tab
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # needed for the commit-back step
+
+    steps:
+
+      # 1. Check out the full repo (with history for trend calculations)
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 2. Set up Python
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: pip install numpy pandas scipy
+
+      # 4. Run juno_backcalc.py to (re-)derive node/system metrics
+      #    from the raw JUNO scores. Output goes to data/juno/derived/
+      - name: Run juno_backcalc
+        run: |
+          python juno_backcalc.py \
+            --raw  data/juno/JUNO_all_countries.csv \
+            --out  data/juno/derived/
+
+      # 5. Generate the site JSON from the derived outputs
+      - name: Generate juno_full.json
+        run: |
+          python generate_site_json.py \
+            --input data/juno/JUNO_all_countries.csv \
+            --nm    data/juno/derived/node_metrics_juno.csv \
+            --sm    data/juno/derived/system_metrics_juno.csv \
+            --out   data/juno_full.json
+
+      # 6. Commit the updated JSON back to the repo
+      #    (only commits if juno_full.json actually changed)
+      - name: Commit updated data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/juno_full.json data/juno/derived/
+          git diff --cached --quiet || git commit \
+            -m "chore: update JUNO site data [skip ci]" \
+            -m "Triggered by: ${{ github.event_name }} on ${{ github.sha }}"
+          git push
