@@ -304,75 +304,6 @@ footer a{ color:var(--accent-teal); text-decoration:none; }
 <script src="compare-app.js"></script>
 <script src="compare-render.js"></script>
 <script>
-  // ── JUNO 1.0 formalism toggle ───────────────────────────────────────────
-  (function () {
-    var _camsData = null, _junoData = null, _loading = false;
-
-    window._junoCaptureCams = function () { _camsData = DATA; };
-
-    function rebuildSelects(socs) {
-      ['sel-a','sel-b'].forEach(function (id) {
-        var sel = document.getElementById(id);
-        var cur = sel.value;
-        sel.innerHTML = '';
-        socs.forEach(function (s) {
-          sel.insertAdjacentHTML('beforeend', '<option value="' + s + '">' + s + '</option>');
-        });
-        sel.value = (DATA[cur] ? cur : socs[0]);
-      });
-      SOC_A = document.getElementById('sel-a').value;
-      SOC_B = document.getElementById('sel-b').value;
-      setNames();
-    }
-
-    function loadJuno(cb) {
-      if (_junoData) { cb(_junoData); return; }
-      if (_loading) return;
-      _loading = true;
-      document.getElementById('formalism-loading').style.display = 'inline';
-      fetch('../data/juno_full.json')
-        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-        .then(function (d) {
-          _junoData = d.societies || d;
-          document.getElementById('formalism-loading').style.display = 'none';
-          cb(_junoData);
-        })
-        .catch(function (err) {
-          document.getElementById('formalism-loading').style.display = 'none';
-          console.warn('[JUNO toggle] load failed:', err.message);
-          var btn = document.getElementById('btn-juno');
-          btn.disabled = true; btn.title = 'JUNO data not available';
-          document.getElementById('btn-cams').classList.add('active');
-          btn.classList.remove('active');
-        });
-    }
-
-    window.setFormalism = function (which) {
-      if (!_camsData) return;
-      document.getElementById('btn-cams').classList.toggle('active', which === 'CAMS');
-      document.getElementById('btn-juno').classList.toggle('active', which === 'JUNO');
-      var newData = which === 'CAMS' ? _camsData : null;
-      function apply(d) {
-        window.DATA = d;
-        Object.keys(seriesCache).forEach(function (k) { delete seriesCache[k]; });
-        rebuildSelects(Object.keys(d).sort());
-        resyncRange();
-        renderActive();
-      }
-      if (which === 'CAMS') {
-        apply(_camsData);
-      } else {
-        loadJuno(function (junoSocs) {
-          apply(Object.assign({}, _camsData, junoSocs));
-        });
-      }
-    };
-
-    window.addEventListener('load', function () {
-      setTimeout(function () { if (_camsData) loadJuno(function () {}); }, 2000);
-    });
-  })();
-
   function showErr(msg) {
     document.getElementById('loading').style.display = 'none';
     document.getElementById('app').style.display = 'block';
@@ -411,6 +342,74 @@ footer a{ color:var(--accent-teal); text-decoration:none; }
     document.getElementById('loading').textContent = 'Data load error: ' + err.message;
     console.error('[compare] loadAllENS failed:', err);
   });
+</script>
+<script>
+(function () {
+    var _camsData = null, _junoData = null, _loading = false;
+
+    window._junoCaptureCams = function () { _camsData = DATA; };
+
+    function rebuildSelects(socs) {
+        ['sel-a', 'sel-b'].forEach(function (id) {
+            var sel = document.getElementById(id);
+            var cur = sel.value;
+            sel.innerHTML = '';
+            socs.forEach(function (s) {
+                sel.insertAdjacentHTML('beforeend', '<option value="' + s + '">' + s + '</option>');
+            });
+            sel.value = (DATA[cur] ? cur : socs[0]);
+        });
+        SOC_A = document.getElementById('sel-a').value;
+        SOC_B = document.getElementById('sel-b').value;
+        setNames();
+    }
+
+    function loadJuno(cb) {
+        if (_junoData) { cb(_junoData); return; }
+        if (_loading) return;
+        _loading = true;
+        document.getElementById('formalism-loading').style.display = 'inline';
+        fetch('../cleaned_datasets/juno_cams_index.json')
+            .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+            .then(function (d) {
+                _junoData = d;
+                document.getElementById('formalism-loading').style.display = 'none';
+                cb(_junoData);
+            })
+            .catch(function (err) {
+                document.getElementById('formalism-loading').style.display = 'none';
+                console.warn('[JUNO toggle] load failed:', err.message);
+                var btn = document.getElementById('btn-juno');
+                btn.disabled = true; btn.title = 'JUNO data not available';
+                document.getElementById('btn-cams').classList.add('active');
+                btn.classList.remove('active');
+            });
+    }
+
+    window.setFormalism = function (which) {
+        if (!_camsData) return;
+        document.getElementById('btn-cams').classList.toggle('active', which === 'CAMS');
+        document.getElementById('btn-juno').classList.toggle('active', which === 'JUNO');
+        function apply(d) {
+            window.DATA = d;
+            Object.keys(seriesCache).forEach(function (k) { delete seriesCache[k]; });
+            rebuildSelects(Object.keys(d).sort());
+            resyncRange();
+            renderActive();
+        }
+        if (which === 'CAMS') {
+            apply(_camsData);
+        } else {
+            loadJuno(function (junoSocs) {
+                apply(Object.assign({}, _camsData, junoSocs));
+            });
+        }
+    };
+
+    window.addEventListener('load', function () {
+        setTimeout(function () { if (_camsData) loadJuno(function () {}); }, 2000);
+    });
+})();
 </script>
 </body>
 </html>

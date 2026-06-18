@@ -699,7 +699,13 @@ function stopPlay() {
     setPlaying(false);
 }
 
-// ── JUNO 1.0 formalism toggle ─────────────────────────────────────────────
+// ── BOOT ──────────────────────────────────────────────────────────────────
+loadData().catch(err => {
+    document.getElementById('mainContent').innerHTML =
+        `<div class="p-10 text-red-600 text-sm">Failed to load dataset: ${err.message}</div>`;
+});
+</script>
+<script>
 (function () {
     let _camsData = null;
     let _junoData = null;
@@ -711,10 +717,9 @@ function stopPlay() {
         const sel = document.getElementById('societySelect');
         const cur = sel.value;
         sel.innerHTML = '';
-        Object.keys(data).sort().forEach(name => {
+        Object.keys(data).sort().forEach(function (name) {
             const opt = document.createElement('option');
-            opt.value = name;
-            opt.textContent = name;
+            opt.value = name; opt.textContent = name;
             sel.appendChild(opt);
         });
         currentSociety = data[cur] ? cur : Object.keys(data).sort()[0];
@@ -722,7 +727,7 @@ function stopPlay() {
         const years = sortedYears(currentSociety);
         currentYear = years[years.length - 1];
         resetSlider(years);
-        ['trend', 'bond'].forEach(k => { if (charts[k]) { charts[k].destroy(); delete charts[k]; } });
+        ['trend', 'bond'].forEach(function (k) { if (charts[k]) { charts[k].destroy(); delete charts[k]; } });
     }
 
     function loadJuno(cb) {
@@ -731,18 +736,17 @@ function stopPlay() {
         _loading = true;
         document.getElementById('formalism-loading').style.display = 'inline';
         fetch('cleaned_datasets/juno_cams_index.json')
-            .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
-            .then(d => {
+            .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+            .then(function (d) {
                 _junoData = d;
                 document.getElementById('formalism-loading').style.display = 'none';
                 cb(_junoData);
             })
-            .catch(err => {
+            .catch(function (err) {
                 document.getElementById('formalism-loading').style.display = 'none';
                 console.warn('[JUNO toggle] load failed:', err.message);
-                const btn = document.getElementById('btn-juno');
-                btn.disabled = true;
-                btn.title = 'JUNO data not available';
+                var btn = document.getElementById('btn-juno');
+                btn.disabled = true; btn.title = 'JUNO data not available';
                 document.getElementById('btn-cams').classList.add('active');
                 btn.classList.remove('active');
             });
@@ -769,12 +773,6 @@ function stopPlay() {
         setTimeout(function () { if (_camsData) loadJuno(function () {}); }, 2000);
     });
 })();
-
-// ── BOOT ──────────────────────────────────────────────────────────────────
-loadData().catch(err => {
-    document.getElementById('mainContent').innerHTML =
-        `<div class="p-10 text-red-600 text-sm">Failed to load dataset: ${err.message}</div>`;
-});
 </script>
 <script src="nav.js"></script>
 </body>

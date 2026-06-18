@@ -1027,7 +1027,9 @@ sel.addEventListener('change', e => { setSociety(e.target.value); updateDashboar
     });
 }
 
-// ── JUNO 1.0 formalism toggle ─────────────────────────────────────────────
+init();
+</script>
+<script>
 (function () {
     let _camsDb  = null;
     let _junoDb  = null;
@@ -1036,20 +1038,23 @@ sel.addEventListener('change', e => { setSociety(e.target.value); updateDashboar
     window._junoCaptureCams = function () { _camsDb = database; };
 
     function transformRaw(raw) {
-        const db = {};
-        for (const [soc, years] of Object.entries(raw)) {
+        var db = {};
+        Object.entries(raw).forEach(function (entry) {
+            var soc = entry[0], years = entry[1];
             db[soc] = [];
-            for (const [yr, nodes] of Object.entries(years)) {
-                const year = parseInt(yr);
-                for (const [node, m] of Object.entries(nodes)) {
-                    const [c,k,s,a] = m;
-                    db[soc].push({ year, node, c, k, s, a,
+            Object.entries(years).forEach(function (ye) {
+                var yr = ye[0], nodes = ye[1];
+                var year = parseInt(yr);
+                Object.entries(nodes).forEach(function (ne) {
+                    var node = ne[0], m = ne[1];
+                    var c = m[0], k = m[1], s = m[2], a = m[3];
+                    db[soc].push({ year: year, node: node, c: c, k: k, s: s, a: a,
                         val:  parseFloat((1.5*c + k - 1.5*s + 0.5*a).toFixed(2)),
                         bond: parseFloat(((c+k)/Math.max(s,0.1)*0.5).toFixed(3)) });
-                }
-            }
-            db[soc].sort((a,b) => a.year - b.year);
-        }
+                });
+            });
+            db[soc].sort(function (a, b) { return a.year - b.year; });
+        });
         return db;
     }
 
@@ -1058,19 +1063,18 @@ sel.addEventListener('change', e => { setSociety(e.target.value); updateDashboar
         if (_loading) return;
         _loading = true;
         document.getElementById('formalism-loading').style.display = 'inline';
-        fetch('data/juno_full.json')
-            .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
-            .then(d => {
-                _junoDb = transformRaw(d.societies || d);
+        fetch('cleaned_datasets/juno_cams_index.json')
+            .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+            .then(function (d) {
+                _junoDb = transformRaw(d);
                 document.getElementById('formalism-loading').style.display = 'none';
                 cb(_junoDb);
             })
-            .catch(err => {
+            .catch(function (err) {
                 document.getElementById('formalism-loading').style.display = 'none';
                 console.warn('[JUNO toggle] load failed:', err.message);
-                const btn = document.getElementById('btn-juno');
-                btn.disabled = true;
-                btn.title = 'JUNO data not available';
+                var btn = document.getElementById('btn-juno');
+                btn.disabled = true; btn.title = 'JUNO data not available';
                 document.getElementById('btn-cams').classList.add('active');
                 btn.classList.remove('active');
             });
@@ -1098,8 +1102,6 @@ sel.addEventListener('change', e => { setSociety(e.target.value); updateDashboar
         setTimeout(function () { if (_camsDb) loadJuno(function () {}); }, 2000);
     });
 })();
-
-init();
 </script>
 <script src="nav.js"></script>
 </body>
