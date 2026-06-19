@@ -1,27 +1,27 @@
 JUNO-1.0 vs CAMS-v3.2 Concordance Report
 ==================================================
-Societies  : ['Argentina', 'Australia', 'Canada', 'Chile', 'China', 'Colombia', 'Denmark', 'France', 'Germany', 'Hong Kong', 'India', 'Indonesia', 'Iran', 'Iraq', 'Italy', 'Japan', 'Lebanon', 'Netherlands', 'Norway', 'Pakistan', 'Poland', 'Russia', 'Saudi Arabia', 'Singapore', 'South Africa', 'Sweden', 'Syria', 'Thailand', 'Turkey', 'UAE', 'UK', 'USA', 'Ukraine']
+Societies  : ['Argentina', 'Australia', 'Brazil', 'Canada', 'Chile', 'China', 'Colombia', 'Denmark', 'France', 'Germany', 'Hong Kong', 'India', 'Indonesia', 'Iran', 'Iraq', 'Israel', 'Italy', 'Japan', 'Lebanon', 'Netherlands', 'Norway', 'Pakistan', 'Poland', 'Russia', 'Saudi Arabia', 'Singapore', 'South Africa', 'Sweden', 'Syria', 'Thailand', 'Turkey', 'UAE', 'UK', 'USA', 'Ukraine', 'Venezuela']
 Years      : 20–2026
-Obs (node) : 30,008
+Obs (node) : 32,264
 
 Bond Strength (per-node):
-  Overall  Spearman ρ = 0.9580  MAE = 21.5050
+  Overall  Spearman ρ = 0.9496  MAE = 21.7019
   Note: MAE is cross-scale (JUNO ∈[0,1], CAMS-v3.2 ~[0.7,64]); Spearman is scale-invariant.
 
 Per-node Spearman ρ:
-  Helm       ρ = 0.9599  MAE = 22.1069
-  Shield     ρ = 0.9569  MAE = 21.0419
-  Lore       ρ = 0.9407  MAE = 22.8189
-  Stewards   ρ = 0.9624  MAE = 21.3679
-  Craft      ρ = 0.9584  MAE = 21.6168
-  Hands      ρ = 0.9629  MAE = 17.9017
-  Archive    ρ = 0.9559  MAE = 23.2408
-  Flow       ρ = 0.9590  MAE = 21.9453
+  Helm       ρ = 0.9523  MAE = 22.3245
+  Shield     ρ = 0.9482  MAE = 21.2471
+  Lore       ρ = 0.9316  MAE = 22.9651
+  Stewards   ρ = 0.9538  MAE = 21.6049
+  Craft      ρ = 0.9490  MAE = 21.8376
+  Hands      ρ = 0.9541  MAE = 18.1532
+  Archive    ρ = 0.9471  MAE = 23.3167
+  Flow       ρ = 0.9513  MAE = 22.1661
 
 System-level metrics (Spearman ρ, scale-invariant):
-  System Bond Density  : 0.9585
-  Decay Index          : 0.9743
-  λ₂ Connectivity      : 0.9553
+  System Bond Density  : 0.9491
+  Decay Index          : 0.9746
+  λ₂ Connectivity      : 0.9467
 
 Interpretation:
   ρ > 0.95 → formalisms agree on rank ordering (same crises, same hierarchy).
@@ -32,6 +32,7 @@ Interpretation:
 Per-society SBD concordance:
   Argentina            ρ = 0.9957  n=77
   Australia            ρ = 0.9671  n=152
+  Brazil               ρ = 0.9762  n=146
   Canada               ρ = 0.9617  n=33
   Chile                ρ = 0.9707  n=152
   China                ρ = 0.9868  n=226
@@ -44,6 +45,7 @@ Per-society SBD concordance:
   Indonesia            ρ = 1.0000  n=85
   Iran                 ρ = 0.9855  n=152
   Iraq                 ρ = 0.8775  n=118
+  Israel               ρ = 0.9990  n=80
   Italy                ρ = 0.9120  n=124
   Japan                ρ = 0.9819  n=152
   Lebanon              ρ = 0.9957  n=83
@@ -63,3 +65,4 @@ Per-society SBD concordance:
   UK                   ρ = 0.9761  n=147
   USA                  ρ = 0.9829  n=26
   Ukraine              ρ = 0.9770  n=84
+  Venezuela            ρ = 0.9927  n=56
