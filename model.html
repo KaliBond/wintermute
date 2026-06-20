@@ -211,111 +211,92 @@
         <p class="hero-subtitle">Complex Adaptive Model of Societies — v1.0-Final · locked 7 June 2026</p>
     </div>
 
-    <!-- ── v1.0-Final: What CAMS is ─────────────────────────────────────── -->
+    <!-- ── v1.0-Final ───────────────────────────────────────────────────── -->
     <div class="card">
-        <p class="section-label" style="margin-top:0;">What CAMS is</p>
+        <p class="section-label" style="margin-top:0;">CAMS v1.0-Final — The Locked Model</p>
         <p style="font-size:1.05em; line-height:1.75;">
-            CAMS (<strong>Complex Adaptive Model State</strong>) is a graph-theoretic diagnostic framework for tracking the internal coordination health of societies as complex adaptive systems. It is a <strong>diagnostic instrument, not a predictive oracle</strong>: the common-mode signal detects that a system is under stress; the residual (node-level) layer identifies which function is failing.
+            CAMS (<strong>Complex Adaptive Model State</strong>) is a graph-theoretic diagnostic framework for tracking the internal coordination health of societies as complex adaptive systems. It is a <strong>diagnostic instrument, not a predictive oracle</strong>: common-mode signal detects that a system is under stress; the residual (node-level) layer identifies which function is failing.
         </p>
-        <div style="background:rgba(47,111,125,0.06); border-left:3px solid #2F6F7D; border-radius:0 8px 8px 0; padding:14px 18px; margin-top:20px;">
-            The <strong>v1.0-Final formulation</strong> (locked 7 June 2026) resolved three architecture decisions open since the April 2026 release candidate: node architecture, the structural adjacency prior, and the canonical edge-weight equation. All cross-society comparison must use values recomputed under this formulation from raw scores — pre-existing Node Value or Bond Strength columns in older datasets are not compliant with v1.0-Final and should not be used directly.
+        <div style="background:rgba(47,111,125,0.06); border-left:3px solid #2F6F7D; border-radius:0 8px 8px 0; padding:14px 18px; margin-top:18px; font-size:0.93em; line-height:1.7; color:#444;">
+            The <strong>v1.0-Final formulation</strong> (locked 7 June 2026) resolved the three architecture decisions that had been open since the April 2026 release candidate: node architecture, the structural adjacency prior, and the canonical edge-weight equation. All cross-society comparison must use values recomputed under this formulation from raw scores — pre-existing Node Value or Bond Strength columns in older datasets should never be treated as already compliant.
         </div>
     </div>
 
-    <!-- ── v1.0-Final: Eight Nodes ──────────────────────────────────────── -->
+    <!-- ── Eight nodes ───────────────────────────────────────────────────── -->
     <div class="card">
         <p class="section-label">The eight nodes</p>
-        <p style="color:#555; margin-bottom:16px;">Eight invariant functional nodes — every persistent organised collective must meet each of these coordination requirements in some form.</p>
-        <div class="node-grid">
-            <div class="node-card node-helm">
-                <strong>Helm</strong>
-                <span>Executive / strategic leadership — head of state, cabinet, ruling party, legitimation.</span>
-            </div>
-            <div class="node-card node-shield">
-                <strong>Shield</strong>
-                <span>Defence / coercion monopoly — military, police, territorial security.</span>
-            </div>
-            <div class="node-card node-lore">
-                <strong>Lore</strong>
-                <span>Cultural narrative — religion, ideology, media, education.</span>
-            </div>
-            <div class="node-card node-stewards">
-                <strong>Stewards</strong>
-                <span>Bureaucratic administration — civil service, regulators, fiscal apparatus.</span>
-            </div>
-            <div class="node-card node-archive">
-                <strong>Archive</strong>
-                <span>Knowledge &amp; institutional memory — libraries, universities, records, legal codes.</span>
-            </div>
-            <div class="node-card node-craft">
-                <strong>Craft</strong>
-                <span>Production &amp; manufacturing — industry, artisanal economy, resource extraction.</span>
-            </div>
-            <div class="node-card node-hands">
-                <strong>Hands</strong>
-                <span>Labour &amp; collective action — workforce organisation, labour markets, guilds.</span>
-            </div>
-            <div class="node-card node-flow">
-                <strong>Flow</strong>
-                <span>Distribution &amp; markets — trade networks, transport, currency, supply chains.</span>
-            </div>
-        </div>
-        <p style="font-size:0.88em; color:#666; margin-top:12px; line-height:1.6;">
-            <strong>Architecture note (locked):</strong> The eight-node partition is retained. A proposed Lore–Archive merger was formally rejected — the pair shows the strongest residual co-movement in the corpus (mean r = 0.643 after removing common-mode), but this reflects shared exposure to slow-loop stressors, not functional identity. Archive is institutional memory; Lore is the normative/cultural layer. A separately mooted Craft–Flow merger was withdrawn.
+        <p style="color:#555; margin-bottom:16px; line-height:1.65;">CAMS models any persistent organised collective through eight invariant functional nodes, each corresponding to a coordination requirement every society must meet in some form.</p>
+        <table class="regime-table">
+            <thead>
+                <tr><th>Node</th><th>Functional role</th><th>Typical institutional referents</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong style="color:#e74c3c;">Helm</strong></td><td>Executive / strategic leadership</td><td>Head of state, cabinet, ruling party, legitimation</td></tr>
+                <tr><td><strong style="color:#c0392b;">Shield</strong></td><td>Defence / coercion monopoly</td><td>Military, police, territorial security</td></tr>
+                <tr><td><strong style="color:#9b59b6;">Lore</strong></td><td>Cultural narrative</td><td>Religion, ideology, media, education</td></tr>
+                <tr><td><strong style="color:#e67e22;">Stewards</strong></td><td>Bureaucratic administration</td><td>Civil service, regulators, fiscal apparatus</td></tr>
+                <tr><td><strong style="color:#3498db;">Archive</strong></td><td>Knowledge &amp; institutional memory</td><td>Libraries, universities, records, legal codes</td></tr>
+                <tr><td><strong style="color:#1abc9c;">Craft</strong></td><td>Production &amp; manufacturing</td><td>Industry, artisanal economy, resource extraction</td></tr>
+                <tr><td><strong style="color:#7f8c8d;">Hands</strong></td><td>Labour &amp; collective action</td><td>Workforce organisation, labour markets, guilds</td></tr>
+                <tr><td><strong style="color:#f1c40f;">Flow</strong></td><td>Distribution &amp; markets</td><td>Trade networks, transport, currency, supply chains</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:0.87em; color:#666; margin-top:14px; line-height:1.65;">
+            <strong>Architecture decision (locked):</strong> The eight-node partition is retained. A proposed Lore–Archive merger was formally rejected — the pair shows the strongest residual co-movement in the corpus (mean r = 0.643 after removing common-mode), but this reflects shared exposure to slow-loop stressors, not functional identity. Archive is institutional memory; Lore is the normative/cultural layer. A separately mooted Craft–Flow merger has been withdrawn outright.
         </p>
-        <p style="font-size:0.88em; color:#555; margin-top:12px; line-height:1.6;">
+        <p style="font-size:0.87em; color:#555; margin-top:10px; line-height:1.65;">
             Each node is scored on four dimensions, integer 1–10: <strong>Coherence (C)</strong> — internal consistency; <strong>Capacity (K)</strong> — institutional depth and output; <strong>Stress (S)</strong> — external pressure and adaptive demand; <strong>Abstraction (A)</strong> — institutional sophistication and symbolic reach.
         </p>
     </div>
 
-    <!-- ── v1.0-Final: Locked core operators ────────────────────────────── -->
+    <!-- ── Locked core operators ─────────────────────────────────────────── -->
     <div class="card">
         <p class="section-label">Locked core operators</p>
 
-        <p style="color:#555; margin-bottom:6px; font-weight:600;">Node Viability</p>
+        <p style="color:#555; margin-bottom:5px; font-weight:600;">Node Viability</p>
         <div class="formula-block">V_i = C_i + K_i − S_i + 0.5·A_i</div>
 
-        <p style="color:#555; margin:14px 0 6px; font-weight:600;">Cognitive Activation <span style="font-weight:400; font-size:0.88em;">(singularity-only floor)</span></p>
+        <p style="color:#555; margin:16px 0 5px; font-weight:600;">Cognitive Activation <span style="font-weight:400; font-size:0.88em;">(singularity-only floor)</span></p>
         <div class="formula-block">σ_i = (A_i · C_i / 100) · (K_i − S_i)</div>
-        <p style="font-size:0.85em; color:#666; margin-top:6px; line-height:1.6;">
-            The K<sub>i</sub> = S<sub>i</sub> singularity is the only point where a floor substitution (0.1) is applied — not a blanket clip across all values. An earlier draft that floor-clipped every node made σ<sub>min</sub> structurally non-negative and silently disabled the Local Node Failure trigger; that form is retired.
+        <p style="font-size:0.87em; color:#666; margin-top:8px; line-height:1.65;">
+            The K<sub>i</sub> = S<sub>i</sub> singularity is the only point where a floor substitution (0.1) is applied — not as a blanket clip across all values. An earlier draft that floor-clipped every node made σ<sub>min</sub> structurally non-negative and silently disabled the Local Node Failure trigger; that form is retired.
         </p>
 
-        <p style="color:#555; margin:14px 0 6px; font-weight:600;">Coupling Quality</p>
+        <p style="color:#555; margin:16px 0 5px; font-weight:600;">Coupling Quality</p>
         <div class="formula-block">q_i = (0.6·C_i + 0.4·A_i) / 10</div>
 
-        <p style="color:#555; margin:14px 0 6px; font-weight:600;">Bounded Edge Weight</p>
+        <p style="color:#555; margin:16px 0 5px; font-weight:600;">Bounded Edge Weight</p>
         <div class="formula-block">B_ij = T_ij · √(q_i · q_j) · 2^(−(S_i + S_j)/10)</div>
-        <p style="font-size:0.85em; color:#666; margin-top:6px; line-height:1.6;">
-            <strong>Structural adjacency prior (locked):</strong> T<sub>ij</sub> = 1 for all node pairs — a fully connected graph. A theoretically motivated sparse prior was tested; it shifts magnitudes but not diagnostic rank ordering at current scoring granularity. A data-driven T<sub>ij</sub> is deferred to v1.1, once the corpus is large enough to estimate pairwise bond trajectories empirically.
+        <p style="font-size:0.87em; color:#666; margin-top:8px; line-height:1.65;">
+            <strong>Structural adjacency prior (locked):</strong> T<sub>ij</sub> = 1 for all node pairs — a fully connected graph. A theoretically motivated sparse prior was tested and shifts magnitudes but not diagnostic rank ordering at current scoring granularity; a data-driven T<sub>ij</sub> is deferred to v1.1, once the corpus is large enough to estimate pairwise bond trajectories empirically.
         </p>
 
-        <p style="color:#555; margin:14px 0 6px; font-weight:600;">Connectivity</p>
+        <p style="color:#555; margin:16px 0 5px; font-weight:600;">Connectivity</p>
         <div class="formula-block">λ₂  — second eigenvalue of the raw, unnormalised Laplacian   (observed range ≈ 0.3–3.4)</div>
-        <p style="font-size:0.85em; color:#666; margin-top:6px; line-height:1.6;">
-            The <em>normalised</em> Laplacian collapses to a degenerate [1.07–1.14] range across societies and must not be used for cross-society comparison.
+        <p style="font-size:0.87em; color:#666; margin-top:8px; line-height:1.65;">
+            The normalised Laplacian collapses to a degenerate [1.07–1.14] range across societies and must not be used for cross-society comparison.
         </p>
     </div>
 
-    <!-- ── v1.0-Final: Phase classifier ─────────────────────────────────── -->
+    <!-- ── Phase classifier ──────────────────────────────────────────────── -->
     <div class="card">
         <p class="section-label">The six-dimensional phase classifier</p>
         <div class="formula-block">Φ_G(t) = (V̄,  σ_V,  V_min,  B̄,  λ₂,  σ_min)</div>
-        <p style="font-size:0.88em; color:#555; margin-top:10px; line-height:1.7;">
-            This replaces an earlier two-dimensional classifier built on (V̄, σ_V) alone. The two added terms — V<sub>min</sub> and σ<sub>min</sub> — exist specifically to catch single-node failures that the two-dimensional version missed (Germany 2024 Helm collapse, USA 2020), where the system mean looked unremarkable while one node had already failed.
+        <p style="font-size:0.93em; color:#555; margin-top:12px; line-height:1.75;">
+            This replaces an earlier two-dimensional classifier built on (V̄, σ_V) alone. The two added terms — V<sub>min</sub> and σ<sub>min</sub> — exist specifically to catch single-node failures that the two-dimensional version missed (Germany 2024's Helm collapse, USA 2020), where the system mean looked unremarkable while one node had already failed.
         </p>
 
-        <p style="color:#555; margin-top:18px; margin-bottom:6px; font-weight:600;">Local Node Failure trigger</p>
+        <p style="color:#555; margin-top:20px; margin-bottom:5px; font-weight:600;">Local Node Failure trigger</p>
         <div class="formula-block">V_min &lt; 4.0  OR  σ_min ≤ −0.85   — independent of V̄</div>
-        <p style="font-size:0.88em; color:#555; margin-top:8px; line-height:1.7;">
-            This is the single most consequential threshold in the classifier, because it is the only one that does not require the whole system to be visibly in trouble before flagging a failing part.
+        <p style="font-size:0.93em; color:#555; margin-top:10px; line-height:1.75;">
+            This is the single most consequential threshold in the classifier, because it is the only one that doesn't require the whole system to be visibly in trouble before flagging a failing part.
         </p>
-        <p style="font-size:0.85em; color:#888; margin-top:10px; line-height:1.6;">
-            Regime thresholds beyond this trigger are provisional and corpus-calibrated on a small sample (8 societies); recalibration across the full ~50-series corpus is an open item and is not part of the v1.0-Final lock.
+        <p style="font-size:0.87em; color:#888; margin-top:10px; line-height:1.65;">
+            Regime thresholds beyond this trigger are provisional and corpus-calibrated on a small sample (8 societies); recalibration across the full ~50-series corpus is an open item, not yet part of the lock.
         </p>
     </div>
 
-    <!-- ── v1.0-Final: What this is and isn't ───────────────────────────── -->
+    <!-- ── What this is and isn't ────────────────────────────────────────── -->
     <div class="card">
         <p class="section-label">What this is and isn't</p>
         <p style="line-height:1.75;">
@@ -325,19 +306,19 @@
             Where V̄ is very low (≲ 2), the whole-system common-mode signal dominates and residual node attribution becomes unreliable — this caveat applies wherever a crisis is attributed to a specific node.
         </p>
         <p style="line-height:1.75; margin-top:14px;">
-            All societies in the corpus — Western and non-Western, ancient and modern, democratic and authoritarian — are scored by the same operators without geopolitical privilege. Where the model's output touches on threat discourse (e.g. external-state framing), the structural metrics, not an essentialised account of the external actor, are what is being reported.
+            All societies in the corpus — Western and non-Western, ancient and modern, democratic and authoritarian — are scored by the same operators without geopolitical privilege. Where the model's output touches on threat discourse (e.g. external-state framing), the structural metrics, not an essentialised account of the external actor, are what's being reported.
         </p>
     </div>
 
-    <!-- ── v1.0-Final: Status ────────────────────────────────────────────── -->
+    <!-- ── Status ────────────────────────────────────────────────────────── -->
     <div class="card" style="border-left:4px solid #2F6F7D;">
         <p class="section-label" style="margin-top:0;">Status</p>
         <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
             <span style="display:inline-flex; align-items:center; gap:6px; padding:5px 14px; background:#e8f4f8; border:1px solid #b3d9e8; border-radius:20px; font-size:0.88em; font-weight:600; color:#2F6F7D;">v1.0-Final — operators locked 7 June 2026</span>
             <span style="display:inline-flex; align-items:center; gap:6px; padding:5px 14px; background:#fff8e8; border:1px solid #f5d98b; border-radius:20px; font-size:0.88em; font-weight:600; color:#b07d10;">Not yet validated out-of-sample</span>
         </div>
-        <p style="font-size:0.88em; color:#555; line-height:1.75; margin:0;">
-            v1.0-Final is closed-form and locked for the operators above. The primary pathway toward a stronger framework rating is the <strong>2026–2028 prospective prediction set</strong>, pre-registered with explicit falsification criteria. Until those predictions resolve, claims should be framed as "strongly supports" rather than "demonstrates."
+        <p style="font-size:0.9em; color:#555; line-height:1.75; margin:0;">
+            v1.0-Final is closed-form and locked for the operators above. It is not yet validated out-of-sample: that is the job of the 2026–2028 prospective prediction set, pre-registered with explicit falsification criteria, which is the primary pathway toward a stronger framework rating. Until those predictions resolve, claims should be framed as "strongly supports" rather than "demonstrates."
         </p>
     </div>
 
