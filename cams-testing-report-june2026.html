@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CAMS v1.0.1 — Instrument Test Battery · June 2026 — Neural Nations</title>
+    <meta name="description" content="Full test battery for the CAMS v1.0.1 instrument: corpus verification across 2,532 society-years, JUNO formalism audit, blind scoring control, and pre-registered prospective predictions for 2027–2028.">
+    <meta name="keywords" content="CAMS, Neural Nations, validation, JUNO, v1.0.1, bond strength, vantage-point bias, prospective predictions, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/cams-testing-report-june2026">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/cams-testing-report-june2026">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="CAMS v1.0.1 — Instrument Test Battery · June 2026">
+    <meta property="og:description" content="Six-part test battery: corpus audit, cross-run reliability, formalism verification, classifier repair, vantage-point bias control, and pre-registered 2027–2028 predictions.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CAMS v1.0.1 — Instrument Test Battery · June 2026">
+    <meta name="twitter:description" content="Six-part test battery for CAMS: corpus audit, formalism repair, blind scoring control, and pre-registered prospective predictions.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+    .report-wrap {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 40px 24px 96px;
+    }
+    .report-eyebrow {
+        font-size: 0.72em;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: #2F6F7D;
+        margin-bottom: 12px;
+    }
+    .report-wrap h1 {
+        font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+        font-weight: 800;
+        color: #1a0a2e;
+        line-height: 1.15;
+        margin: 0 0 10px;
+    }
+    .report-meta {
+        font-size: 0.88em;
+        color: #6b7280;
+        margin: 0 0 32px;
+        line-height: 1.6;
+    }
+    .report-meta strong { color: #374151; }
+    .report-lede {
+        font-size: 1.08em;
+        line-height: 1.78;
+        color: #374151;
+        border-left: 4px solid #2F6F7D;
+        padding: 16px 20px;
+        background: rgba(47,111,125,0.04);
+        border-radius: 0 8px 8px 0;
+        margin-bottom: 40px;
+    }
+    .report-body {
+        font-size: 1.01em;
+        line-height: 1.82;
+        color: #2c3e50;
+    }
+    .report-body p { margin-bottom: 1.3em; }
+    .report-body h2 {
+        font-size: 1.18em;
+        font-weight: 700;
+        color: #1B2A33;
+        margin: 2.4em 0 0.7em;
+        padding-bottom: 7px;
+        border-bottom: 1px solid #DAD2B8;
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+    }
+    .report-body h2 .step {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.7em;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        color: #9ca3af;
+    }
+    .report-body h3 {
+        font-size: 1.01em;
+        font-weight: 700;
+        color: #2F6F7D;
+        margin: 1.6em 0 0.4em;
+    }
+    .finding-box {
+        background: #f8f9fa;
+        border: 1px solid #e5e7eb;
+        border-left: 4px solid #2F6F7D;
+        border-radius: 0 8px 8px 0;
+        padding: 16px 20px;
+        margin: 20px 0;
+        font-size: 0.95em;
+        line-height: 1.7;
+    }
+    .finding-box.warn {
+        border-left-color: #D98B2B;
+        background: #fffbf0;
+    }
+    .finding-box.ok {
+        border-left-color: #2ca02c;
+        background: #f0fdf4;
+    }
+    .finding-box.crit {
+        border-left-color: #C84C3E;
+        background: #fdf5f4;
+    }
+    .finding-label {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.7em;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+    }
+    .finding-box.warn .finding-label { color: #D98B2B; }
+    .finding-box.ok .finding-label { color: #2ca02c; }
+    .finding-box.crit .finding-label { color: #C84C3E; }
+    .finding-box .finding-label { color: #2F6F7D; }
+
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9em;
+        margin: 20px 0;
+    }
+    .data-table th {
+        text-align: left;
+        font-size: 0.78em;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #6b7280;
+        padding: 8px 10px;
+        border-bottom: 2px solid #DAD2B8;
+        white-space: nowrap;
+    }
+    .data-table td {
+        padding: 8px 10px;
+        border-bottom: 1px solid #f0ece0;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.88em;
+        vertical-align: top;
+    }
+    .data-table td.label {
+        font-family: inherit;
+        font-weight: 500;
+        color: #1a1a1a;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr.hit td { background: #f0fdf4; }
+    .data-table tr.miss td { background: #fdf5f4; }
+    .data-table tr.warn td { background: #fffbf0; }
+
+    .fig-block {
+        margin: 28px 0;
+        text-align: center;
+    }
+    .fig-block img {
+        max-width: 100%;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+    }
+    .fig-caption {
+        font-size: 0.84em;
+        color: #6b7280;
+        margin-top: 8px;
+        font-style: italic;
+        line-height: 1.5;
+    }
+
+    .status-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px;
+        margin: 24px 0;
+    }
+    .status-tile {
+        padding: 16px 18px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        background: #fff;
+    }
+    .status-tile .st-label {
+        font-size: 0.72em;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #9ca3af;
+        margin-bottom: 6px;
+    }
+    .status-tile .st-val {
+        font-size: 1.5em;
+        font-weight: 800;
+        line-height: 1;
+        color: #1a0a2e;
+        margin-bottom: 4px;
+    }
+    .status-tile .st-note {
+        font-size: 0.82em;
+        color: #6b7280;
+        line-height: 1.4;
+    }
+    .status-tile.ok { border-left: 3px solid #2ca02c; }
+    .status-tile.warn { border-left: 3px solid #D98B2B; }
+    .status-tile.crit { border-left: 3px solid #C84C3E; }
+    .status-tile.teal { border-left: 3px solid #2F6F7D; }
+
+    .predict-table { font-size: 0.88em; }
+    .predict-table td.regime { font-weight: 600; }
+    .predict-table td.pending { color: #9ca3af; font-style: italic; }
+
+    .section-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px; height: 24px;
+        border-radius: 50%;
+        background: #2F6F7D;
+        color: #fff;
+        font-size: 0.72em;
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-right: 2px;
+    }
+
+    @media (max-width: 640px) {
+        .report-wrap { padding: 28px 16px 60px; }
+        .status-grid { grid-template-columns: 1fr 1fr; }
+    }
+    </style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link active">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+    </div>
+</nav>
+
+<main class="report-wrap">
+
+    <p class="report-eyebrow">CAMS v1.0.1 · Instrument Test Battery · 12 June 2026</p>
+    <h1>Testing the Instrument:<br>Six-Part Battery for CAMS v1.0.1</h1>
+    <div class="report-meta">
+        <strong>Kari Freyr McKern</strong> &middot; 12 June 2026 &middot; Corpus: 2,532 society-years · 25 entities · 41 BS-verified CSVs<br>
+        Instrument version: <strong>v1.0.1</strong> (recalibrated from v1.0-Final following formalism audit)
+    </div>
+
+    <div class="report-lede">
+        CAMS is a framework for measuring institutional health. Over the week of 9–12 June 2026 the whole instrument was put through a structured test battery: data integrity, cross-run reliability, mathematical formalism, classifier repair, vantage-point bias, and prospective prediction. This report records what was tested, what failed, what was repaired, and what the instrument now honestly claims.
+    </div>
+
+    <div class="status-grid">
+        <div class="status-tile ok">
+            <div class="st-label">Corpus verified</div>
+            <div class="st-val">47/49</div>
+            <div class="st-note">Files pass exact formula check. 2 corrected (Poland, Latium).</div>
+        </div>
+        <div class="status-tile ok">
+            <div class="st-label">Bond strength</div>
+            <div class="st-val">max |Δ| = 0</div>
+            <div class="st-note">Pre-computed vs recomputed B<sub>ij</sub>: exact match across full corpus.</div>
+        </div>
+        <div class="status-tile ok">
+            <div class="st-label">Classifier anchors</div>
+            <div class="st-val">12/12</div>
+            <div class="st-note">Historical anchor cases pass after formalism repair.</div>
+        </div>
+        <div class="status-tile warn">
+            <div class="st-label">Cross-run reliability</div>
+            <div class="st-val">±1.9 V̄</div>
+            <div class="st-note">Year-level drift between independent five-scorer runs. Published bands updated.</div>
+        </div>
+        <div class="status-tile warn">
+            <div class="st-label">Vantage-point bias</div>
+            <div class="st-val">~0.5–2 V̄</div>
+            <div class="st-note">Proximal end of each series scores harshly; quantified and disclosed.</div>
+        </div>
+        <div class="status-tile teal">
+            <div class="st-label">Predictions frozen</div>
+            <div class="st-val">6</div>
+            <div class="st-note">USA, Germany, China · 2027–2028 · explicit falsification criteria.</div>
+        </div>
+    </div>
+
+    <div class="report-body">
+
+        <h2><span class="step">Step 1</span> Is the data sound?</h2>
+        <p>The project's full archive — 49 datasets covering 25 entities across up to two centuries — was checked file by file. Every number was recomputed from scratch against the canonical v1.0-Final formulas. Forty-seven of forty-nine files passed perfectly.</p>
+        <div class="finding-box warn">
+            <div class="finding-label">Two corrections required</div>
+            <strong>Poland</strong> and <strong>Latium Vetus</strong> contained derived Bond Strength figures that no version of the official formula could reproduce — evidently written without running the calculation. Raw scores were intact; the faulty columns were recomputed and replaced. Four societies scored at five-year intervals were removed so the archive speaks one consistent temporal language. All downstream work uses the corrected files.
+        </div>
+        <p>Separately, four countries scored at five-year intervals rather than yearly were removed from the comparative corpus so that all cross-society analysis rests on consistent annual data.</p>
+
+        <h2><span class="step">Step 2</span> If we measure twice, do we get the same answer?</h2>
+        <p>A fresh, independent five-scorer run of Australia 2020–2026 was compared against the existing series. The two runs broadly agreed on direction but disagreed on magnitude by about twice the published error bars implied.</p>
+        <div class="finding-box warn">
+            <div class="finding-label">Reliability finding</div>
+            Published uncertainty estimates measured agreement <em>within</em> one scoring exercise, not the larger drift <em>between</em> independent exercises. The true inter-run spread at year level reaches ±1.9 V̄; at node level, ±4.9 NV. All later work uses the larger, honest figure. Prediction bands are set at ±2.0 V̄ accordingly.
+        </div>
+
+        <h2><span class="step">Step 3</span> Does the mathematics actually work? — The JUNO formalism audit</h2>
+        <p>The v1.0-Final formalism was tested against all 2,532 society-years. The graph-theoretic core survived. The classifier layer did not.</p>
+
+        <h3>Error 1 — Fatal: the σ<sub>i</sub> floor clip kills three regime triggers</h3>
+        <p>The published formula uses <code>σ<sub>i</sub> = (A·C/100) · max(K−S, 0.1)</code>. Because max(K−S, 0.1) is always positive, σ<sub>i</sub> is also always positive — making negative σ<sub>i</sub> thresholds unreachable:</p>
+        <div class="finding-box crit">
+            <div class="finding-label">Dead code</div>
+            <ul style="margin:0; padding-left:20px;">
+                <li><strong>Phantom Type II can never fire</strong> (requires σ<sub>min</sub> &lt; −0.7). Observed firings across 2,532 society-years: zero.</li>
+                <li>The σ<sub>min</sub> ≤ −0.85 arm of Local Node Failure is dead code.</li>
+                <li>The σ<sub>min</sub> &gt; −0.3 condition in Stable Adaptive is vacuous.</li>
+            </ul>
+            <br>The thresholds were calibrated on the <em>unclipped</em> form (A·C/100)·(K−S); the singularity floor was added afterward without re-deriving them.
+        </div>
+
+        <h3>Error 2 — Germany 2024 claim fails on the verified corpus</h3>
+        <p>v1.0-Final claimed "Germany 2024 now correctly classifies as Local Node Failure." Observed in the verified germany_cams5 series: V̄ = 7.2, V<sub>min</sub> = 4.4, B̄ = 0.221, unclipped σ<sub>min</sub> = −0.77 → <strong>Strained</strong>, not LNF. V<sub>min</sub> misses the 4.0 trigger by 0.4; σ<sub>min</sub> misses −0.85 by 0.08. The claim rested on a series that is not in the corpus.</p>
+
+        <h3>Error 3 — USA figures unverifiable: USA not in the corpus at the time</h3>
+        <p>v1.0-Final's "USA 2026: V̄ = 3.5, V<sub>min</sub> = −0.1, B̄ = 0.131 — Confirmed" could not be verified; no USA file existed in the corpus at the time of the claim. The USA five-scorer ensemble has since been migrated (see Step 6 below). The observed figures differ materially from the claimed ones: V̄ = 1.17, V<sub>min</sub> = −0.70, B̄ = 0.120.</p>
+
+        <h3>Claimed bounds: mostly hold</h3>
+        <table class="data-table">
+            <thead>
+                <tr><th>Claim</th><th>Observed (full corpus)</th><th>Verdict</th></tr>
+            </thead>
+            <tbody>
+                <tr class="hit"><td class="label">B<sub>ij</sub> ∈ [0, 1]</td><td>max 0.657</td><td>✓ Holds</td></tr>
+                <tr class="warn"><td class="label">λ₂<sub>raw</sub> ∈ [0.27, 3.42]</td><td>0.379 – 3.668</td><td>Top exceeded — 8-society calibration artifact; full corpus widens range</td></tr>
+                <tr class="hit"><td class="label">λ₂ discriminates regimes</td><td>Stable μ=2.60 · Strained μ=1.79 · LNF μ=1.09 — monotone</td><td>✓ Holds on full corpus</td></tr>
+            </tbody>
+        </table>
+
+        <h2><span class="step">Step 4</span> Repair and recalibrate — CAMS v1.0.1</h2>
+        <p>All three errors are attributable to a single root cause: thresholds calibrated on the unclipped σ<sub>i</sub>, then a floor was added without re-deriving them. The repair is minimal and preserves the original intent.</p>
+        <div class="finding-box ok">
+            <div class="finding-label">Fix applied in v1.0.1</div>
+            <strong>Sign-preserving clip:</strong> σ<sub>i</sub> = (A·C/100) · sign(K−S) · max(|K−S|, 0.1)<br><br>
+            This preserves negative σ<sub>i</sub> where K &lt; S (the diagnostically meaningful cases) while avoiding the zero singularity. Corpus σ<sub>min</sub> now spans −2.76 to +1.68, and all three previously dead triggers fire at sensible rates: 38.2% (σ &lt; −0.3), 13.7% (σ &lt; −0.7), 8.0% (σ &lt; −0.85).
+        </div>
+
+        <p>The formerly impossible Phantom Type II category came alive: <strong>41 historical cases</strong>, all historically exact — Weimar Germany 1931, late Qing dynasty, partition-era Poland, post-Soviet Ukraine. The category was never wrong; it was unreachable.</p>
+
+        <p>Classifier precedence was specified explicitly: Freeze → Systemic Crisis → Phantom Type II → Local Node Failure → Stable Adaptive → Strained. The repaired classifier was validated against twelve historical anchor cases — all twelve passed.</p>
+
+        <div class="fig-block">
+            <img src="fig1_node_value_verification.png" alt="Node Value verification: computed vs pre-computed across full corpus" loading="lazy">
+            <p class="fig-caption">Fig 1. Node Value verification — computed V<sub>i</sub> vs pre-computed values across the full 2,532 society-year corpus. Points lie on the 1:1 line; max |Δ| = 0.00.</p>
+        </div>
+
+        <div class="fig-block">
+            <img src="juno_verify_bond_strength.png" alt="JUNO Bond Strength verification: max |Δ| = 0.00e+00" loading="lazy">
+            <p class="fig-caption">Fig 2. JUNO Bond Strength verification — pre-computed vs recomputed B<sub>ij</sub>. Max absolute deviation = 0.00e+00: the canonical bond-strength formula is verified exact across the full corpus.</p>
+        </div>
+
+        <div class="fig-block">
+            <img src="fig2_phase_space_trajectories.png" alt="Phase space trajectories under v1.0.1 classifier" loading="lazy">
+            <p class="fig-caption">Fig 3. Phase-space trajectories (V̄, B̄, λ₂) under the v1.0.1 classifier. Stable Adaptive societies cluster top-right; Systemic Crisis cases cluster bottom-left. Strained societies form a diffuse mid-band.</p>
+        </div>
+
+        <div class="fig-block">
+            <img src="fig3_regime_timeline.png" alt="Regime timeline across the corpus 1800–2026" loading="lazy">
+            <p class="fig-caption">Fig 4. Regime timeline, selected societies 1800–2026, under the repaired v1.0.1 classifier. Phantom Type II cases (hollow institutions) appear throughout the historical record once the dead code is removed.</p>
+        </div>
+
+        <h3>Spot checks</h3>
+        <table class="data-table">
+            <thead>
+                <tr><th>Case</th><th>V̄</th><th>V<sub>min</sub></th><th>B̄</th><th>Regime</th><th>Sensible?</th></tr>
+            </thead>
+            <tbody>
+                <tr><td class="label">Hong Kong 1943</td><td>−3.7</td><td>—</td><td>0.060</td><td>LNF + Systemic Crisis + Freeze</td><td>✓ Occupation collapse</td></tr>
+                <tr><td class="label">Ukraine 2022</td><td>5.8</td><td>0.6</td><td>0.180</td><td>Local Node Failure</td><td>✓</td></tr>
+                <tr><td class="label">China 2025</td><td>13.5</td><td>10.4</td><td>0.372</td><td>Stable Adaptive</td><td>Per corpus</td></tr>
+                <tr><td class="label">Russia 2026</td><td>8.8</td><td>7.1</td><td>0.250</td><td>Strained</td><td>Per corpus</td></tr>
+                <tr><td class="label">Australia 2026</td><td>8.9</td><td>6.9</td><td>0.276</td><td>Strained</td><td>✓</td></tr>
+                <tr class="miss"><td class="label">Germany 2024</td><td>7.2</td><td>4.4</td><td>0.221</td><td>Strained</td><td>Contradicts v1.0-Final claim</td></tr>
+            </tbody>
+        </table>
+
+        <div class="fig-block">
+            <img src="fig4_ukraine_detail.png" alt="Ukraine 2014–2026 detail: node trajectories and regime transitions" loading="lazy">
+            <p class="fig-caption">Fig 5. Ukraine 2014–2026 detail. Local Node Failure in 2022 is driven by V<sub>min</sub> = 0.6 (Shield absorbing full wartime stress while other nodes degrade). The trajectory is coherent with the corpus anchor cases.</p>
+        </div>
+
+        <h2><span class="step">Step 5</span> Testing the measurer, not just the measured — vantage-point bias control</h2>
+        <p>The deepest worry with historical scoring is hindsight. Do recent years look worse simply because their troubles are vivid, while older crises have been smoothed by time? To test this, the years 2000–2010 in America were scored twice: once from today's vantage (a 2026-scorer) and once as if by an analyst working in early 2012.</p>
+
+        <div class="finding-box warn">
+            <div class="finding-label">Vantage-point bias: confirmed, directional, quantified</div>
+            Each vantage scores <em>its own recent past most harshly</em> by ~0.5–2.0 V̄ points. The ΔV̄ gradient across the 2000–2010 window is −0.18/yr (r = −0.83, p = 0.002). The same decade's decline looks 60% steeper viewed from 2012 than from 2026.
+        </div>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Year</th><th>V̄ (2012 vantage)</th><th>V̄ (2026 vantage)</th><th>ΔV̄</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>2000</td><td>12.28</td><td>10.29</td><td>+1.99</td></tr>
+                <tr><td>2001</td><td>8.39</td><td>7.34</td><td>+1.05</td></tr>
+                <tr><td>2004</td><td>8.65</td><td>7.91</td><td>+0.74</td></tr>
+                <tr><td>2008</td><td>2.42</td><td>2.68</td><td>−0.25</td></tr>
+                <tr><td>2010</td><td>5.20</td><td>5.78</td><td>−0.58</td></tr>
+            </tbody>
+        </table>
+
+        <p>The sign pattern matches the pre-stated hypothesis exactly: each vantage scores its own recent past more harshly and the distant past more benignly. The blinding was simulated (the scorer knew post-2012 history), which means the measured divergence is a <em>lower bound</em> on the true vantage effect.</p>
+
+        <div class="finding-box">
+            <div class="finding-label">Practical implications</div>
+            <ul style="margin:0; padding-left:20px; line-height:1.8;">
+                <li>Long-run trajectories can be trusted in shape.</li>
+                <li>The final 3–5 years of any series carry vantage-proximal stress inflation of ~0.5–1.5 V̄.</li>
+                <li>Cross-society comparisons of current state are safer than within-series recent trends (shared bias partially cancels).</li>
+                <li>Regime assignments within ±2 V̄ of a threshold in the most recent years should not be cited without this caveat.</li>
+                <li>The ±2.0 V̄ prediction bands are vindicated: vantage tilt at the proximal end sits inside the pre-registered band.</li>
+            </ul>
+        </div>
+
+        <h2><span class="step">Step 6</span> Predictions on the record — pre-registered 2027–2028</h2>
+        <p>A diagnostic tool earns trust by predicting, not just explaining. Six predictions for 2027 and 2028 were frozen on 12 June 2026, with explicit falsification criteria. No post-hoc adjustment is permitted.</p>
+
+        <p>Method: per-node, per-dimension OLS trend over the last five scored years, clamped to [0,10]; F<sub>G</sub> and regime computed by v1.0.1. Bands set at ±2.0 V̄ to reflect honest inter-run reliability.</p>
+
+        <table class="data-table predict-table">
+            <thead>
+                <tr><th>Society</th><th>Year</th><th>V̄</th><th>V<sub>min</sub></th><th>B̄</th><th>λ₂</th><th>σ<sub>min</sub></th><th>Predicted regime</th><th>Result</th></tr>
+            </thead>
+            <tbody>
+                <tr class="crit"><td class="label">USA</td><td>2027</td><td>0.52</td><td>−1.77</td><td>0.111</td><td>0.78</td><td>−0.79</td><td class="regime">Systemic Crisis</td><td class="pending">—</td></tr>
+                <tr class="crit"><td class="label">USA</td><td>2028</td><td>−0.40</td><td>−2.54</td><td>0.099</td><td>0.70</td><td>−0.77</td><td class="regime">Systemic Crisis</td><td class="pending">—</td></tr>
+                <tr class="warn"><td class="label">Germany</td><td>2027</td><td>8.55</td><td>5.86</td><td>0.257</td><td>1.75</td><td>−0.41</td><td class="regime">Strained</td><td class="pending">—</td></tr>
+                <tr class="warn"><td class="label">Germany</td><td>2028</td><td>8.70</td><td>5.62</td><td>0.262</td><td>1.75</td><td>−0.42</td><td class="regime">Strained</td><td class="pending">—</td></tr>
+                <tr class="hit"><td class="label">China</td><td>2027</td><td>13.78</td><td>10.10</td><td>0.380</td><td>2.65</td><td>+0.31</td><td class="regime">Stable Adaptive</td><td class="pending">—</td></tr>
+                <tr class="hit"><td class="label">China</td><td>2028</td><td>13.88</td><td>10.03</td><td>0.383</td><td>2.65</td><td>+0.24</td><td class="regime">Stable Adaptive</td><td class="pending">—</td></tr>
+            </tbody>
+        </table>
+
+        <div class="finding-box">
+            <div class="finding-label">Falsification criteria (frozen)</div>
+            A prediction <strong>hits</strong> if: (1) the v1.0.1 regime matches, AND (2) observed V̄ falls within ±2.0 of predicted V̄.<br><br>
+            A prediction <strong>fails informatively</strong> if regime misses in the direction of improvement for USA or deterioration for China — the outcomes recency-salience bias predicts.<br><br>
+            <strong>Instrument falsified</strong> (not just missed forecast): if two or more of the six predictions miss regime by two or more cascade levels, the classifier thresholds do not generalise prospectively and v1.0.1 must be withdrawn rather than patched.
+        </div>
+
+        <h2>What it all adds up to</h2>
+        <p>The archive is now verified end to end. The mathematics genuinely works under v1.0.1. The diagnostic categories have earned their places against real history. But the week's most important product is <em>humility made precise</em>.</p>
+        <p>The instrument measures two things at once: the state of a society, and the standpoint of whoever is doing the measuring. That second component is real, runs in a consistent direction, and is now quantified — roughly 0.5–2.0 V̄ of exaggeration in the most recent few years of any series.</p>
+        <p>Long-run trajectories can be trusted in shape. Dramatic claims about the most recent three years of any country deserve a discount that is now known rather than guessed. The framework no longer merely asserts that it is honest about uncertainty. It has receipts.</p>
+
+        <div class="finding-box ok">
+            <div class="finding-label">Current instrument status</div>
+            <strong>CAMS v1.0.1</strong> · Graph-theoretic core verified on 2,532 society-years · Classifier repaired and validated against 12 historical anchors · Cross-run reliability quantified (±1.9 V̄) · Vantage-point bias quantified (~0.5–2.0 V̄ proximal) · Six prospective predictions frozen for 2027–2028 · Thresholds recalibrated on full corpus (not original 8-society set)
+        </div>
+
+        <p style="margin-top:40px; padding-top:18px; border-top:1px solid #DAD2B8; font-size:0.88em; color:#9ca3af; line-height:1.7;">
+            Source files: <code>CAMS_Validation_Report.md</code> · <code>JUNO_Formalism_Test_Report_2026-06-12.md</code> · <code>Blind_Scoring_Control_Report_2026-06-12.md</code> · <code>JUNO_Prospective_Predictions_2027_2028.md</code> · <code>CAMS_Testing_Summary_Plain_Language.md</code> · <code>JUNO_v1.0.1_Recalibration_Patch.md</code> — all in HariSeldon/cam5 working directory. Datasets: <code>JUNO_FG_corpus_v101.csv</code> · <code>JUNO_predictions_2027_2028.csv</code> · <code>USA_blind2012_vs_2026_comparison.csv</code>.
+        </p>
+
+    </div>
+
+</main>
+
+<footer class="footer">
+    <nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a>
+        <a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a>
+        <a href="validation.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Validation &amp; Limits</a>
+    </nav>
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+
+<script src="nav.js"></script>
+</body>
+</html>
