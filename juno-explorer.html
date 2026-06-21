@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JUNO Dataset Explorer — Neural Nations</title>
+  <meta name="description" content="Interactive explorer for the JUNO Unified Dataset: 36 societies, 8 nodes, 32,361 scored node-years. Trajectory charts, thermodynamic phase portraits, and per-node health diagnostics.">
+  <meta property="og:title" content="JUNO Dataset Explorer — Neural Nations">
+  <meta property="og:description" content="36 societies · 8 nodes · 32,361 scored node-years · CAMS-CAN bond-strength formalism">
+  <meta property="og:image" content="https://neuralnations.org/og-image.png">
+  <link rel="canonical" href="https://neuralnations.org/juno-explorer">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ESZ16XVVNN');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Source+Serif+4:wght@400;600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    #juno-app {
+      min-height: calc(100vh - 60px);
+      background: #F5F1E4;
+      background-image: radial-gradient(rgba(170,140,80,.045) 1px,transparent 1px),
+                        radial-gradient(rgba(100,80,50,.035) 1px,transparent 1px);
+      background-size: 3px 3px, 7px 7px;
+      background-position: 0 0, 1px 2px;
+      font-family: 'Inter', sans-serif;
+      color: #1B2A33;
+    }
+    #juno-app * { box-sizing: border-box; }
+    #juno-header {
+      border-bottom: 1px solid #C9BE9E;
+      background: #FBF7EC;
+      position: sticky;
+      top: 60px;
+      z-index: 90;
+    }
+    #juno-header-inner {
+      max-width: 1340px;
+      margin: 0 auto;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .juno-glyph {
+      width: 34px; height: 34px; border-radius: 999px; flex-shrink: 0;
+      background: radial-gradient(circle at 50% 50%, #D98B2B 0 6px, transparent 7px),
+                  conic-gradient(from 0deg,#C84C3E 0 12.5%,#2E8B6B 0 25%,#B0392E 0 37.5%,#2F7A5C 0 50%,#D98B2B 0 62.5%,#6A8FB8 0 75%,#4B7CAE 0 87.5%,#3A6FA8 0 100%);
+      box-shadow: inset 0 0 0 2px #FBF7EC;
+    }
+    .juno-wordmark { font-family:'Fraunces',serif; font-weight:600; font-size:21px; line-height:1; letter-spacing:-0.01em; color:#1B2A33; }
+    .juno-wordmark span { color:#2F6F7D; }
+    .juno-subline { font-family:'JetBrains Mono',monospace; font-weight:500; font-size:9.5px; letter-spacing:.18em; text-transform:uppercase; color:#5A6E78; margin-top:5px; }
+    .juno-stat-strip { margin-left:auto; display:flex; border-top:1px solid #1B2A33; border-bottom:1px solid #1B2A33; }
+    .juno-stat-cell { padding:8px 18px 9px; border-right:1px solid #E2DAC3; }
+    .juno-stat-cell:last-child { border-right:0; }
+    .juno-stat-label { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:#5A6E78; }
+    .juno-stat-val { font-family:'JetBrains Mono',monospace; font-size:20px; margin-top:5px; line-height:1; font-variant-numeric:tabular-nums; }
+    #juno-body {
+      max-width: 1340px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: grid;
+      grid-template-columns: 248px 1fr;
+      gap: 0;
+      align-items: start;
+    }
+    #juno-sidebar {
+      border-right: 1px solid #E2DAC3;
+      padding: 20px 18px 40px 0;
+      position: sticky;
+      top: 113px;
+      align-self: start;
+      max-height: calc(100vh - 113px);
+      overflow: auto;
+    }
+    #juno-sidebar::-webkit-scrollbar { width:9px; }
+    #juno-sidebar::-webkit-scrollbar-thumb { background:#E2DAC3; border-radius:99px; }
+    #juno-sidebar::-webkit-scrollbar-track { background:transparent; }
+    .juno-sidebar-label { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:#5A6E78; padding:0 4px 10px; }
+    .soc-btn {
+      display:flex; align-items:center; gap:9px; padding:7px 10px;
+      border:0; border-left:2px solid transparent;
+      background:transparent; cursor:pointer; width:100%;
+      font-family:'Inter',sans-serif;
+    }
+    .soc-btn:hover { background:#EDE7D4; }
+    .soc-btn.active { background:#EDE7D4; }
+    .soc-btn-dot { width:9px; height:9px; border-radius:999px; flex-shrink:0; }
+    .soc-btn-name { flex:1; text-align:left; font-family:'Inter',sans-serif; font-size:13px; color:#1B2A33; }
+    .soc-btn-vmean { font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#5A6E78; font-variant-numeric:tabular-nums; }
+    #juno-detail { padding:26px 0 56px 28px; min-width:0; }
+    .juno-title-block { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap; border-bottom:1px solid #C9BE9E; padding-bottom:18px; }
+    .juno-eyebrow { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#2F6F7D; }
+    .juno-h1 { font-family:'Fraunces',serif; font-weight:600; font-size:46px; line-height:1.02; letter-spacing:-0.02em; color:#1B2A33; margin:8px 0 0; }
+    .regime-pill { display:inline-flex; align-items:center; gap:8px; padding:6px 14px; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:500; letter-spacing:.04em; }
+    .regime-pill-dot { width:8px; height:8px; border-radius:999px; }
+    .juno-latest-label { font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#5A6E78; }
+    .metric-tiles { display:grid; grid-template-columns:repeat(4,1fr); border-bottom:1px solid #E2DAC3; margin-top:2px; }
+    .metric-tile { padding:16px 18px 18px; border-right:1px solid #E2DAC3; }
+    .metric-tile:last-child { border-right:0; }
+    .metric-tile-label { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:#5A6E78; }
+    .metric-tile-val { font-family:'JetBrains Mono',monospace; font-size:34px; line-height:1; margin-top:10px; font-variant-numeric:tabular-nums; letter-spacing:-0.01em; }
+    .metric-tile-sub { font-family:'Source Serif 4',serif; font-size:12px; color:#5A6E78; margin-top:7px; line-height:1.3; }
+    .traj-header { display:flex; align-items:center; gap:14px; margin-top:24px; flex-wrap:wrap; }
+    .traj-label { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#5A6E78; }
+    .metric-toggle { display:flex; border:1px solid #1B2A33; }
+    .mbtn { padding:7px 13px; border:0; border-right:1px solid #1B2A33; background:transparent; color:#2F4652; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.04em; cursor:pointer; }
+    .mbtn:last-child { border-right:0; }
+    .mbtn:hover { background:#EDE7D4; }
+    .mbtn.active { background:#1B2A33; color:#FBF7EC; }
+    .chart-box { margin-top:14px; border:1px solid #E2DAC3; border-top:1.5px solid #1B2A33; background:#FBF7EC; padding:16px 16px 10px; }
+    .regime-legend { display:flex; gap:18px; flex-wrap:wrap; margin-top:6px; padding-top:10px; border-top:1px solid #E2DAC3; }
+    .regime-legend-item { display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#2F4652; }
+    .regime-legend-swatch { width:10px; height:10px; border-radius:2px; }
+    .section-head { display:flex; align-items:baseline; gap:14px; margin:38px 0 12px; flex-wrap:wrap; border-top:1px solid #C9BE9E; padding-top:26px; }
+    .section-head h3 { font-family:'Inter',sans-serif; font-weight:600; font-size:18px; color:#1B2A33; margin:0; }
+    .section-head-sub { font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#5A6E78; }
+    .slope-caption { font-family:'Source Serif 4',serif; font-size:13px; line-height:1.5; color:#5A6E78; margin:8px 4px 4px; max-width:74ch; }
+    .node-section-head { display:flex; align-items:baseline; gap:16px; margin:34px 0 14px; flex-wrap:wrap; }
+    .node-section-head h3 { font-family:'Inter',sans-serif; font-weight:600; font-size:18px; color:#1B2A33; margin:0; }
+    .node-summary { margin-left:auto; display:flex; gap:14px; }
+    .node-summary-item { display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#2F4652; }
+    .node-summary-dot { width:9px; height:9px; border-radius:999px; }
+    .node-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+    .node-card { border:1px solid #E2DAC3; background:#FBF7EC; padding:13px 14px 15px; }
+    .node-card-header { display:flex; align-items:baseline; justify-content:space-between; gap:10px; }
+    .node-card-name { font-family:'Inter',sans-serif; font-weight:600; font-size:14px; color:#1B2A33; }
+    .node-card-status { display:flex; align-items:center; gap:5px; margin-top:3px; }
+    .node-status-dot { width:7px; height:7px; border-radius:999px; }
+    .node-status-label { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.08em; text-transform:uppercase; font-weight:600; }
+    .node-layer-label { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.08em; text-transform:uppercase; color:#8C9AA1; }
+    .node-v-val { font-family:'JetBrains Mono',monospace; font-size:20px; line-height:1; color:#1B2A33; font-variant-numeric:tabular-nums; }
+    .node-v-label { font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:.1em; text-transform:uppercase; color:#5A6E78; margin-top:2px; }
+    .node-dims { margin-top:12px; display:flex; flex-direction:column; gap:7px; }
+    .node-dim-row { display:flex; align-items:center; gap:8px; }
+    .node-dim-key { width:12px; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; }
+    .node-dim-track { flex:1; height:6px; background:#EDE7D4; border-radius:99px; overflow:hidden; }
+    .node-dim-fill { height:100%; border-radius:99px; }
+    .node-dim-val { width:26px; text-align:right; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#2F4652; font-variant-numeric:tabular-nums; }
+    .manifold-section { margin-top:40px; border-top:1px solid #C9BE9E; padding-top:26px; display:grid; grid-template-columns:1.15fr 1fr; gap:40px; }
+    .manifold-eyebrow { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#2F6F7D; }
+    .manifold-h2 { font-family:'Fraunces',serif; font-weight:600; font-size:26px; line-height:1.15; letter-spacing:-0.01em; color:#1B2A33; margin:10px 0 14px; }
+    .manifold-p { font-family:'Source Serif 4',serif; font-size:15.5px; line-height:1.62; color:#2F4652; margin:0 0 14px; max-width:56ch; }
+    .manifold-mono-chip { font-family:'JetBrains Mono',monospace; font-size:.92em; background:#EDE7D4; padding:1px 5px; border-radius:2px; }
+    .regime-dist-card { border:1px solid #E2DAC3; border-top:1.5px solid #1B2A33; border-bottom:1.5px solid #1B2A33; background:#FBF7EC; padding:18px 20px; }
+    .regime-dist-label { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#5A6E78; margin-bottom:6px; }
+    .regime-dist-row { padding:9px 0; border-bottom:1px dashed #E2DAC3; }
+    .regime-dist-row:last-child { border-bottom:0; }
+    .regime-dist-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+    .regime-dist-name { display:inline-flex; align-items:center; gap:7px; font-family:'Source Serif 4',serif; font-size:13.5px; color:#1B2A33; }
+    .regime-dist-pct { font-family:'JetBrains Mono',monospace; font-size:12px; color:#2F4652; font-variant-numeric:tabular-nums; }
+    .regime-dist-track { display:block; height:5px; background:#EDE7D4; border-radius:99px; overflow:hidden; }
+    .regime-dist-fill { display:block; height:100%; border-radius:99px; }
+    #juno-footer { border-top:1px solid #E2DAC3; background:#FBF7EC; padding:22px 32px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:11px; color:#5A6E78; letter-spacing:.04em; }
+
+    @media (max-width: 1024px) {
+      #juno-body { grid-template-columns: 200px 1fr; padding: 0 16px; }
+      .juno-h1 { font-size: 34px; }
+      .metric-tiles { grid-template-columns: repeat(2,1fr); }
+      .metric-tile:nth-child(2) { border-right:0; }
+      .metric-tile:nth-child(3) { border-top:1px solid #E2DAC3; }
+      .manifold-section { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      #juno-body { grid-template-columns: 1fr; padding: 0 12px; }
+      #juno-sidebar { position:static; max-height:none; border-right:0; border-bottom:1px solid #E2DAC3; padding:12px 0 16px; }
+      #juno-detail { padding:20px 0 40px; }
+      .juno-h1 { font-size:28px; }
+      .node-grid { grid-template-columns: repeat(2,1fr); }
+      .juno-stat-strip { display:none; }
+      .metric-tile-val { font-size:26px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-badge">NN</span>
+      <span class="nav-logo-text">Neural Nations</span>
+    </a>
+    <div class="nav-menu">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="start-here.html" class="nav-link">Start Here</a>
+      <a href="model.html" class="nav-link">Model</a>
+      <a href="datasets.html" class="nav-link">Datasets</a>
+      <a href="explore.html" class="nav-link active">Explore</a>
+      <div class="nav-dropdown">
+        <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+        <div class="nav-dropdown-menu">
+          <a href="results.html">Results at a Glance</a>
+          <a href="validation.html">Validation &amp; Limits</a>
+          <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+          <a href="escalation-archetypes.html">Escalation Archetypes</a>
+          <a href="cams-failure-modes.html">Failure Modes Map</a>
+          <a href="failure-modes-story.html">Failure Modes Story</a>
+          <a href="attractors.html">Attractors</a>
+          <hr class="menu-divider">
+          <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+        </div>
+      </div>
+      <a href="research-diary.html" class="nav-link">Research Diary</a>
+      <a href="faq.html" class="nav-link">FAQ</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+        <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+      </a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="index.html">Home</a>
+    <a href="start-here.html">Start Here</a>
+    <a href="model.html">Model</a>
+    <a href="datasets.html">Datasets</a>
+    <a href="explore.html">Explore</a>
+    <a href="research-diary.html">Research Diary</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<div id="juno-app">
+
+  <header id="juno-header">
+    <div id="juno-header-inner">
+      <div class="juno-glyph"></div>
+      <div>
+        <div class="juno-wordmark">JUNO <span>Dataset Explorer</span></div>
+        <div class="juno-subline">CAMS-CAN &middot; Complex Adaptive Model State &middot; Bond-Strength formalism</div>
+      </div>
+      <div class="juno-stat-strip">
+        <div class="juno-stat-cell">
+          <div class="juno-stat-label">Societies</div>
+          <div class="juno-stat-val" style="color:#2F6F7D;">36</div>
+        </div>
+        <div class="juno-stat-cell">
+          <div class="juno-stat-label">Node-years</div>
+          <div class="juno-stat-val" style="color:#1B2A33;">32,361</div>
+        </div>
+        <div class="juno-stat-cell">
+          <div class="juno-stat-label">Nodes</div>
+          <div class="juno-stat-val" style="color:#8A5BB8;">8</div>
+        </div>
+        <div class="juno-stat-cell">
+          <div class="juno-stat-label">Span</div>
+          <div class="juno-stat-val" style="color:#4F8F6B;">1750&ndash;2026</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="juno-body">
+    <aside id="juno-sidebar">
+      <div class="juno-sidebar-label">Corpus &middot; 36 societies</div>
+      <div id="soc-list" style="display:flex;flex-direction:column;gap:1px;"></div>
+    </aside>
+    <section id="juno-detail"></section>
+  </div>
+
+  <footer id="juno-footer">
+    JUNO Unified Dataset &middot; 36 societies &middot; 32,361 scored node-years &middot; CAMS-CAN bond-strength formalism &middot; Kari McKern
+  </footer>
+
+</div>
+
+<script src="nav.js"></script>
+<script src="juno_data.js"></script>
+<script>
+(function(){
+  const REGIME_COLOR = {
+    'High Coherence':'#4F8F6B',
+    'Stable Integration':'#7BAE96',
+    'Moderate Stress':'#C9A227',
+    'Fragmentation':'#C05A4A',
+    'Acute Crisis':'#B0392E',
+    'Systemic Collapse':'#8B2E22'
+  };
+  const REGIME_ORDER = ['High Coherence','Stable Integration','Moderate Stress','Fragmentation','Acute Crisis','Systemic Collapse'];
+  const NODE_META = {
+    Helm:     {c:'#C84C3E', layer:'Interface'},
+    Shield:   {c:'#B0392E', layer:'Interface'},
+    Stewards: {c:'#D98B2B', layer:'Interface'},
+    Lore:     {c:'#2E8B6B', layer:'Mythic'},
+    Archive:  {c:'#2F7A5C', layer:'Mythic'},
+    Craft:    {c:'#3A6FA8', layer:'Material'},
+    Hands:    {c:'#4B7CAE', layer:'Material'},
+    Flow:     {c:'#6A8FB8', layer:'Material'}
+  };
+  const NODE_ORDER = ['Helm','Shield','Stewards','Lore','Archive','Craft','Hands','Flow'];
+  const METRIC_META = {
+    V:   {label:'Health V̄',    color:'#2F6F7D', dom:null,    fmt:v=>v.toFixed(1)},
+    SBD: {label:'Bond ρ',       color:'#D98B2B', dom:[0,0.5], fmt:v=>v.toFixed(3)},
+    S:   {label:'Stress S̄',    color:'#C84C3E', dom:[0,10],  fmt:v=>v.toFixed(1)},
+    C:   {label:'Coherence C̄', color:'#2F7ECC', dom:[0,10],  fmt:v=>v.toFixed(1)}
+  };
+  const DIM_COLORS = {C:'#2F7ECC', K:'#2E8B6B', S:'#C84C3E', A:'#8A5BB8'};
+
+  function rc(r){ return REGIME_COLOR[r] || '#B8B09A'; }
+
+  function nodeStatus(n){
+    const m = (n.C + n.K)/2 - n.S;
+    if(m >= 1.2) return {label:'Healthy',  color:'#3E8E5E'};
+    if(m >= 0)   return {label:'Strained', color:'#C28A1E'};
+    return           {label:'Failing',  color:'#C0392B'};
+  }
+
+  let _vmax = null;
+  function globalVMax(data){
+    if(_vmax) return _vmax;
+    let m = 10;
+    data.societies.forEach(s=>{
+      m = Math.max(m, s.latest.vmean);
+      s.series.forEach(d=>{ m = Math.max(m, d.V); });
+    });
+    _vmax = Math.ceil(m + 1);
+    return _vmax;
+  }
+
+  function buildChart(soc, metric){
+    const W=1000, H=300, pl=46, pr=14, pt=16, pb=30;
+    const iw=W-pl-pr, ih=H-pt-pb;
+    const ser = soc.series;
+    const mm = METRIC_META[metric];
+    const y0=ser[0].y, y1=ser[ser.length-1].y;
+    const xspan = Math.max(1, y1-y0);
+    const px = yr => pl + (yr-y0)/xspan*iw;
+    let lo, hi;
+    if(mm.dom){ [lo,hi] = mm.dom; }
+    else {
+      const vals = ser.map(d=>d[metric]);
+      lo = Math.min(...vals); hi = Math.max(...vals);
+      const pad = (hi-lo)*0.12 || 1;
+      lo = Math.max(0, lo-pad); hi = hi+pad;
+    }
+    const py = v => pt + ih - (v-lo)/Math.max(1e-6,(hi-lo))*ih;
+    const step = iw / Math.max(1, ser.length-1);
+
+    let bands = ser.map(d=>{
+      const x = Math.max(pl, px(d.y)-step/2);
+      return `<rect x="${x.toFixed(1)}" y="${pt}" width="${(step+0.6).toFixed(1)}" height="${ih}" fill="${rc(d.R)}" opacity="0.22"/>`;
+    }).join('');
+
+    let grid = '';
+    for(let t=0; t<=4; t++){
+      const v = lo+(hi-lo)*t/4, yy = py(v);
+      grid += `<line x1="${pl}" x2="${W-pr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="#E2DAC3" stroke-width="1"/>`;
+      grid += `<text x="${pl-8}" y="${(yy+3.5).toFixed(1)}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="11" fill="#8C9AA1">${mm.fmt(v)}</text>`;
+    }
+
+    let xlabs = '';
+    for(let t=0; t<=6; t++){
+      const yr = Math.round(y0+(y1-y0)*t/6);
+      xlabs += `<text x="${px(yr).toFixed(1)}" y="${H-9}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#8C9AA1">${yr}</text>`;
+    }
+
+    const linePts = ser.map(d=>`${px(d.y).toFixed(1)},${py(d[metric]).toFixed(1)}`).join(' ');
+    const areaD = `M ${px(ser[0].y).toFixed(1)},${pt+ih} L `+
+      ser.map(d=>`${px(d.y).toFixed(1)},${py(d[metric]).toFixed(1)}`).join(' L ')+
+      ` L ${px(y1).toFixed(1)},${pt+ih} Z`;
+
+    let overlay = '';
+    if(metric !== 'S'){
+      const sp = ser.map(d=>{
+        const sv = Math.max(0,Math.min(10,d.S));
+        return `${px(d.y).toFixed(1)},${(pt+ih-(sv/10)*ih).toFixed(1)}`;
+      }).join(' ');
+      overlay = `<polyline points="${sp}" fill="none" stroke="#C84C3E" stroke-width="1.3" stroke-dasharray="4 4" opacity="0.55"/>`;
+    }
+
+    return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block;">
+      ${bands}${grid}
+      <path d="${areaD}" fill="${mm.color}" opacity="0.10"/>
+      ${overlay}
+      <polyline points="${linePts}" fill="none" stroke="${mm.color}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+      <line x1="${pl}" x2="${pl}" y1="${pt}" y2="${pt+ih}" stroke="#1B2A33" stroke-width="1"/>
+      <line x1="${pl}" x2="${W-pr}" y1="${pt+ih}" y2="${pt+ih}" stroke="#1B2A33" stroke-width="1"/>
+      ${xlabs}
+    </svg>`;
+  }
+
+  function buildSlope(cur, data){
+    const W=1000, H=440, pl=54, pr=150, pt=22, pb=42;
+    const iw=W-pl-pr, ih=H-pt-pb;
+    const vMax = globalVMax(data);
+    const sx = s => pl + Math.max(0,Math.min(10,s))/10*iw;
+    const vy = v => pt + ih - Math.max(0,Math.min(vMax,v))/vMax*ih;
+
+    const defs = `<defs>
+      <linearGradient id="thermoSlope" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#3E8E5E" stop-opacity="0.20"/>
+        <stop offset="45%" stop-color="#D7C26B" stop-opacity="0.14"/>
+        <stop offset="72%" stop-color="#C05A4A" stop-opacity="0.16"/>
+        <stop offset="100%" stop-color="#8B2E22" stop-opacity="0.26"/>
+      </linearGradient>
+    </defs>`;
+
+    let grid = `<rect x="${pl}" y="${pt}" width="${iw}" height="${ih}" fill="url(#thermoSlope)"/>`;
+    for(let t=0; t<=5; t++){
+      const xx = sx(t*2);
+      grid += `<line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${pt}" y2="${pt+ih}" stroke="#E2DAC3" stroke-width="1"/>`;
+      grid += `<text x="${xx.toFixed(1)}" y="${pt+ih+18}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#8C9AA1">${t*2}</text>`;
+    }
+    for(let t=0; t<=4; t++){
+      const v=vMax*t/4, yy=vy(v);
+      grid += `<line x1="${pl}" x2="${pl+iw}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="#E2DAC3" stroke-width="1"/>`;
+      grid += `<text x="${pl-8}" y="${(yy+3.5).toFixed(1)}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="11" fill="#8C9AA1">${v.toFixed(0)}</text>`;
+    }
+
+    const slope = `<line x1="${sx(1.6).toFixed(1)}" y1="${vy(vMax*0.96).toFixed(1)}" x2="${sx(8.8).toFixed(1)}" y2="${vy(vMax*0.16).toFixed(1)}" stroke="#1B2A33" stroke-width="1.4" stroke-dasharray="2 5" opacity="0.55"/>`;
+    const corners = `
+      <text x="${pl+6}" y="${pt+16}" font-family="JetBrains Mono,monospace" font-size="10.5" letter-spacing="0.12em" fill="#3E8E5E">ORDER · LOW ENTROPY</text>
+      <text x="${pl+iw-6}" y="${pt+ih-10}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="10.5" letter-spacing="0.12em" fill="#8B2E22">DISSIPATIVE COLLAPSE</text>
+      <text x="${(pl+iw/2).toFixed(1)}" y="${H-6}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="0.1em" fill="#5A6E78">STRESS  S̄  →  (dissipation)</text>
+      <text x="16" y="${(pt+ih/2).toFixed(1)}" text-anchor="middle" transform="rotate(-90 16 ${(pt+ih/2).toFixed(1)})" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="0.1em" fill="#5A6E78">SYSTEM HEALTH  V̄  ↑</text>`;
+
+    const others = data.societies.filter(s=>s.name!==cur.name).map(s=>{
+      const last = s.series[s.series.length-1];
+      return `<circle cx="${sx(last.S).toFixed(1)}" cy="${vy(last.V).toFixed(1)}" r="3.2" fill="${rc(s.latest.regime)}" opacity="0.32"/>`;
+    }).join('');
+
+    const trail = cur.series.map(d=>`${sx(d.S).toFixed(1)},${vy(d.V).toFixed(1)}`).join(' ');
+    const s0 = cur.series[0];
+    const trailSvg = `<polyline points="${trail}" fill="none" stroke="#2F6F7D" stroke-width="1.6" opacity="0.45" stroke-linejoin="round"/>
+      <circle cx="${sx(s0.S).toFixed(1)}" cy="${vy(s0.V).toFixed(1)}" r="3.5" fill="none" stroke="#2F6F7D" stroke-width="1.4" opacity="0.6"/>`;
+
+    // high/low year labels
+    const cyr = cur.latest.year;
+    const cand = cur.series.filter(d=>d.y!==cyr);
+    function pick(dir, N, gap){
+      const sorted = [...cand].sort((a,b)=> dir==='hi' ? b.V-a.V : a.V-b.V);
+      const out = [];
+      for(const d of sorted){
+        if(out.length>=N) break;
+        if(out.some(o=>Math.abs(o.y-d.y)<gap)) continue;
+        out.push(d);
+      }
+      return out;
+    }
+    const highs = pick('hi',3,16).map((d,i)=>({d,c:'#2E8B6B',above:true,rank:i}));
+    const lows  = pick('lo',3,16).map((d,i)=>({d,c:'#C0392B',above:false,rank:i}));
+    let extra = '';
+    [...highs,...lows].forEach(p=>{
+      const x=sx(p.d.S), y=vy(p.d.V);
+      const ty = p.above ? y-16-p.rank*19 : y+26+p.rank*19;
+      const anchor = x>pl+iw-50 ? 'end' : (x<pl+54 ? 'start' : 'middle');
+      extra += `<line x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${x.toFixed(1)}" y2="${(p.above?ty+5:ty-13).toFixed(1)}" stroke="${p.c}" stroke-width="1" opacity="0.45"/>`;
+      extra += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.5" fill="${p.c}" stroke="#FBF7EC" stroke-width="1.8"/>`;
+      extra += `<text x="${x.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="${anchor}" font-family="JetBrains Mono,monospace" font-size="18" font-weight="700" fill="#1B2A33" stroke="#FBF7EC" stroke-width="3.4" paint-order="stroke">${p.d.y}</text>`;
+    });
+
+    // current marker
+    const last = cur.series[cur.series.length-1];
+    const cxv=sx(last.S), cyv=vy(last.V);
+    const rco = rc(cur.latest.regime);
+    const cross = `<g opacity="0.5">
+      <line x1="${pl}" x2="${cxv.toFixed(1)}" y1="${cyv.toFixed(1)}" y2="${cyv.toFixed(1)}" stroke="${rco}" stroke-width="1" stroke-dasharray="3 3"/>
+      <line x1="${cxv.toFixed(1)}" x2="${cxv.toFixed(1)}" y1="${(pt+ih).toFixed(1)}" y2="${cyv.toFixed(1)}" stroke="${rco}" stroke-width="1" stroke-dasharray="3 3"/>
+    </g>`;
+    const marker = `
+      <circle cx="${cxv.toFixed(1)}" cy="${cyv.toFixed(1)}" r="9" fill="${rco}" opacity="0.18"/>
+      <circle cx="${cxv.toFixed(1)}" cy="${cyv.toFixed(1)}" r="5.5" fill="${rco}" stroke="#FBF7EC" stroke-width="1.6"/>`;
+
+    const lx = cxv > pl+iw-160 ? cxv-12 : cxv+14;
+    const lAnchor = cxv > pl+iw-160 ? 'end' : 'start';
+    const ly = cyv < pt+56 ? cyv+24 : cyv-30;
+    const label = `
+      <text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${lAnchor}" font-family="Fraunces,serif" font-weight="700" font-size="24" fill="#1B2A33" stroke="#FBF7EC" stroke-width="3.6" paint-order="stroke">${cyr}</text>
+      <text x="${lx.toFixed(1)}" y="${(ly+18).toFixed(1)}" text-anchor="${lAnchor}" font-family="JetBrains Mono,monospace" font-size="13" font-weight="500" fill="#2F4652" stroke="#FBF7EC" stroke-width="3" paint-order="stroke">S̄ ${last.S.toFixed(1)} · V̄ ${last.V.toFixed(1)}</text>`;
+
+    const frame = `<rect x="${pl}" y="${pt}" width="${iw}" height="${ih}" fill="none" stroke="#1B2A33" stroke-width="1"/>`;
+
+    return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block;">
+      ${defs}${grid}${slope}${corners}${others}${trailSvg}${cross}${extra}${marker}${frame}${label}
+    </svg>`;
+  }
+
+  // ── State ──
+  let selected = 'Australia';
+  let metric   = 'V';
+  let data     = null;
+  let byName   = {};
+
+  // ── Sidebar ──
+  function renderSidebar(){
+    const list = document.getElementById('soc-list');
+    list.innerHTML = data.societies.map(s=>{
+      const on = s.name===selected;
+      const color = rc(s.latest.regime);
+      const ring = on ? color+'33' : '#FBF7EC';
+      return `<button class="soc-btn${on?' active':''}" data-name="${s.name}"
+        style="border-left-color:${on?color:'transparent'};">
+        <span class="soc-btn-dot" style="background:${color};box-shadow:0 0 0 2px ${ring};"></span>
+        <span class="soc-btn-name" style="font-weight:${on?700:500};">${s.name}</span>
+        <span class="soc-btn-vmean">${s.latest.vmean.toFixed(1)}</span>
+      </button>`;
+    }).join('');
+
+    list.querySelectorAll('.soc-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        selected = btn.dataset.name;
+        renderSidebar();
+        renderDetail();
+      });
+    });
+  }
+
+  // ── Detail panel ──
+  function renderDetail(){
+    const cur = byName[selected] || data.societies[0];
+    const lat  = cur.latest;
+    const rco  = rc(lat.regime);
+    const rBg  = rco + '14';
+
+    // metric tiles
+    const tiles = [
+      {label:'System Health V̄', color:'#2F6F7D', value:lat.vmean.toFixed(1), sub:'mean node value, latest year'},
+      {label:'Bond Density ρ',   color:'#D98B2B', value:lat.sbd.toFixed(3),   sub:'system bond density (SBD)'},
+      {label:'Algebraic λ₂',color:'#8A5BB8', value:lat.l2.toFixed(2),    sub:'Fiedler connectivity'},
+      {label:'Regime',                color:rco,        value:cur.years,             sub:'years in record'}
+    ].map((t,i)=>`<div class="metric-tile" style="${i===3?'border-right:0;':''}">
+      <div class="metric-tile-label">${t.label}</div>
+      <div class="metric-tile-val" style="color:${t.color};">${t.value}</div>
+      <div class="metric-tile-sub">${t.sub}</div>
+    </div>`).join('');
+
+    // metric toggle
+    const toggle = ['V','SBD','S','C'].map((k,i)=>`<button class="mbtn${metric===k?' active':''}" data-metric="${k}" style="${i<3?'border-right:1px solid #1B2A33;':''}">${METRIC_META[k].label}</button>`).join('');
+
+    // charts
+    const chart = buildChart(cur, metric);
+    const slope = buildSlope(cur, data);
+
+    // regime legend
+    const legend = REGIME_ORDER.map(r=>`<span class="regime-legend-item"><span class="regime-legend-swatch" style="background:${rc(r)};"></span>${r}</span>`).join('');
+
+    // node cards
+    const nodeCards = NODE_ORDER.filter(nm=>lat.nodes[nm]).map(nm=>{
+      const n = lat.nodes[nm];
+      const meta = NODE_META[nm] || {c:'#5A6E78', layer:''};
+      const st = nodeStatus(n);
+      const dims = ['C','K','S','A'].map(k=>`<div class="node-dim-row">
+        <span class="node-dim-key" style="color:${DIM_COLORS[k]};">${k}</span>
+        <span class="node-dim-track"><span class="node-dim-fill" style="width:${(n[k]*10).toFixed(0)}%;background:${DIM_COLORS[k]};"></span></span>
+        <span class="node-dim-val">${n[k].toFixed(1)}</span>
+      </div>`).join('');
+      return `<div class="node-card" style="border-top:3px solid ${st.color};">
+        <div class="node-card-header">
+          <div>
+            <div class="node-card-name">${nm}</div>
+            <div class="node-card-status">
+              <span class="node-status-dot" style="background:${st.color};"></span>
+              <span class="node-status-label" style="color:${st.color};">${st.label}</span>
+              <span class="node-layer-label">&nbsp;&middot; ${meta.layer}</span>
+            </div>
+          </div>
+          <div style="text-align:right;flex-shrink:0;">
+            <div class="node-v-val">${n.V.toFixed(1)}</div>
+            <div class="node-v-label">value</div>
+          </div>
+        </div>
+        <div class="node-dims">${dims}</div>
+      </div>`;
+    }).join('');
+
+    // node tally
+    const nFail = NODE_ORDER.filter(nm=>lat.nodes[nm]&&nodeStatus(lat.nodes[nm]).label==='Failing').length;
+    const nWarn = NODE_ORDER.filter(nm=>lat.nodes[nm]&&nodeStatus(lat.nodes[nm]).label==='Strained').length;
+    const nOk   = NODE_ORDER.filter(nm=>lat.nodes[nm]&&nodeStatus(lat.nodes[nm]).label==='Healthy').length;
+    const tally = [
+      {label:'Healthy', n:nOk,   color:'#3E8E5E'},
+      {label:'Strained',n:nWarn, color:'#C28A1E'},
+      {label:'Failing', n:nFail, color:'#C0392B'}
+    ].map(g=>`<span class="node-summary-item"><span class="node-summary-dot" style="background:${g.color};"></span>${g.n} ${g.label}</span>`).join('');
+
+    // regime distribution
+    const counts={};
+    cur.series.forEach(d=>{ counts[d.R]=(counts[d.R]||0)+1; });
+    const tot = cur.series.length;
+    const regimeDist = REGIME_ORDER.filter(r=>counts[r]).map(r=>`<div class="regime-dist-row">
+      <div class="regime-dist-header">
+        <span class="regime-dist-name"><span style="width:9px;height:9px;border-radius:2px;background:${rc(r)};display:inline-block;"></span>${r}</span>
+        <span class="regime-dist-pct">${((counts[r]/tot)*100).toFixed(0)}%</span>
+      </div>
+      <span class="regime-dist-track"><span class="regime-dist-fill" style="width:${((counts[r]/tot)*100).toFixed(1)}%;background:${rc(r)};"></span></span>
+    </div>`).join('');
+
+    document.getElementById('juno-detail').innerHTML = `
+      <div class="juno-title-block">
+        <div>
+          <div class="juno-eyebrow">${cur.minYear}&ndash;${cur.maxYear} &middot; ${cur.years} years scored</div>
+          <h1 class="juno-h1">${cur.name}</h1>
+        </div>
+        <div style="display:inline-flex;flex-direction:column;align-items:flex-end;gap:6px;">
+          <span class="regime-pill" style="border:1px solid ${rco};background:${rBg};color:${rco};">
+            <span class="regime-pill-dot" style="background:${rco};"></span>${lat.regime}
+          </span>
+          <span class="juno-latest-label">latest state &middot; ${lat.year}</span>
+        </div>
+      </div>
+
+      <div class="metric-tiles">${tiles}</div>
+
+      <div class="traj-header">
+        <span class="traj-label">Trajectory</span>
+        <div class="metric-toggle" id="metric-toggle">${toggle}</div>
+      </div>
+
+      <div class="chart-box">
+        ${chart}
+        <div class="regime-legend">${legend}</div>
+      </div>
+
+      <div class="section-head">
+        <h3>Thermodynamic position</h3>
+        <span class="section-head-sub">order (health) vs. dissipation (stress) &middot; trail = ${cur.minYear}&ndash;${cur.maxYear} &middot; marker = ${lat.year}</span>
+      </div>
+      <div class="chart-box">
+        ${slope}
+        <p class="slope-caption">Every society slides along one diagonal — high coherence and capacity at low entropy (upper-left) down toward high-stress dissipative collapse (lower-right). The teal trail is <strong style="color:#2F4652;">${cur.name}</strong>&rsquo;s path through phase space; faint dots are the latest state of the other 35 societies.</p>
+      </div>
+
+      <div class="node-section-head">
+        <h3>Eight-node state</h3>
+        <span class="section-head-sub">${lat.year} &middot; failing = stress exceeds coherence + capacity</span>
+        <div class="node-summary">${tally}</div>
+      </div>
+      <div class="node-grid">${nodeCards}</div>
+
+      <div class="manifold-section">
+        <div>
+          <div class="manifold-eyebrow">The measured manifold</div>
+          <h2 class="manifold-h2">Four dimensions, one latent axis of systemic health.</h2>
+          <p class="manifold-p">Each of the eight nodes carries a four-dimensional state vector — <span style="color:#2F7ECC;font-weight:600;">Coherence</span>, <span style="color:#2E8B6B;font-weight:600;">Capacity</span>, <span style="color:#C84C3E;font-weight:600;">Stress</span>, <span style="color:#8A5BB8;font-weight:600;">Abstraction</span>. Bond Strength <span class="manifold-mono-chip">B&#7522;&#7523; = &radic;(q&#7522;q&#7523;)&middot;2<sup>&minus;(S&#7522;+S&#7523;)/10</sup></span> couples them into a single network whose density tracks systemic health.</p>
+          <p class="manifold-p">Principal-component analysis across 19,008 node-years shows one component carrying <strong style="color:#1B2A33;">77.5%</strong> of all variance — the Health &harr; Dissipative-Collapse axis, stable across every society and reproducible inside every node.</p>
+        </div>
+        <div class="regime-dist-card">
+          <div class="regime-dist-label">Regime occupancy &middot; this society</div>
+          ${regimeDist}
+        </div>
+      </div>`;
+
+    // wire metric toggle
+    document.getElementById('metric-toggle').querySelectorAll('.mbtn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        metric = btn.dataset.metric;
+        renderDetail();
+      });
+    });
+  }
+
+  // ── Boot ──
+  function init(){
+    if(!window.JUNO_DATA){ setTimeout(init, 60); return; }
+    data = window.JUNO_DATA;
+    data.societies.forEach(s=>{ byName[s.name]=s; });
+    renderSidebar();
+    renderDetail();
+  }
+  init();
+})();
+</script>
+</body>
+</html>
