@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aha! Map v1.1</title>
+    <!-- SWAPPED CDN TO JSDELIVR FOR BETTER RELIABILITY -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network/standalone/umd/vis-network.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style type="text/css">
+        /* --- CORE STYLES --- */
+        body, html { font-family: 'Inter', sans-serif; margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #f0f2f5; }
+        #cldContainer { position: relative; width: 100%; height: 100vh; display: flex; flex-direction: column; }
+        #cldNetwork { flex-grow: 1; border: 1px solid #d1d5db; background-color: #ffffff; width: 100%; height: 100%; }
+
+        /* UI Elements */
+        #modelTitleDisplay { position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold; color: #1F2937; background-color: rgba(255, 255, 255, 0.9); padding: 10px 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); z-index: 10; pointer-events: none; }
+        
+        .action-btn { position: absolute; bottom: 20px; z-index: 25; padding: 10px 18px; font-size: 14px; font-weight: 500; border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        
+        /* Button Positioning */
+        #saveButton { left: 20px; background-color: #2563EB; color: white; }
+        #saveButton:hover { background-color: #1D4ED8; }
+        
+        #loadNewButton { left: 140px; background-color: #fff; color: #374151; }
+        #loadNewButton:hover { background-color: #f9fafb; }
+
+        /* New Button: Save Map Data (JSON) */
+        #saveDataButton { left: 285px; background-color: #10B981; color: white; }
+        #saveDataButton:hover { background-color: #059669; }
+
+        /* Legends */
+        .legend-container { 
+            position: fixed; 
+            right: 20px; 
+            width: 280px; 
+            background: rgba(255,255,255,0.96); 
+            border-radius: 8px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+            max-height: 42px; 
+            overflow: hidden; 
+            z-index: 20; 
+            transition: max-height 0.3s ease; 
+            border: 1px solid #e5e7eb; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .legend-container.expanded { 
+            max-height: 50vh; 
+            z-index: 100; 
+        }
+
+        #legend { top: 20px; }
+        #archetypeLegend { top: 75px; }
+        
+        .legend-header { padding: 12px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; background: #fff; border-bottom: 1px solid #eee; }
+        .legend-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex-grow: 1; }
+        .legend-list li { padding: 8px 12px; border-bottom: 1px solid #f3f4f6; font-size: 13px; cursor: pointer; border-left: 3px solid transparent; }
+        .legend-list li:hover { background-color: #eff6ff; }
+        
+        /* Dragging visuals */
+        .legend-list li.dragging { opacity: 0.5; background: #e5e7eb; }
+
+        /* Description Box */
+        #descPanel { position: fixed; right: 20px; bottom: 80px; width: 280px; background: #fff; padding: 16px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 30; display: none; max-height: 300px; overflow-y: auto; font-size: 14px; line-height: 1.5; border: 1px solid #ddd; }
+        #descPanel strong { display: block; margin-bottom: 6px; color: #1E40AF; font-size: 15px; }
+
+        /* Tooltips */
+        .tooltip { position: absolute; background: rgba(255,255,255,0.98); border: 1px solid #ccc; padding: 10px; border-radius: 6px; font-size: 13px; display: none; z-index: 1000; pointer-events: none; max-width: 250px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); line-height: 1.4; }
+        #canvasTooltip { background: rgba(17, 24, 39, 0.95); color: white; border: none; }
+        #helperTooltip {
+            position: absolute; bottom: 70px; left: 20px;
+            background: rgba(0,0,0,0.6); color: white;
+            padding: 8px 12px; border-radius: 20px;
+            font-size: 12px; pointer-events: none; z-index: 5;
+        }
+
+        /* MODALS */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; }
+        .modal-box { background: white; padding: 25px; border-radius: 8px; width: 600px; max-width: 90%; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .modal-box textarea { width: 100%; height: 250px; padding: 12px; font-family: monospace; border: 1px solid #ccc; border-radius: 4px; background: #f9fafb; }
+        .modal-box button { padding: 12px 18px; background: #2563EB; color: white; border: none; font-weight: bold; cursor: pointer; font-size: 15px; border-radius: 6px; }
+        .modal-box button:hover { background: #1D4ED8; }
+        .modal-box button.secondary { background: #E5E7EB; color: #374151; }
+        .modal-box button.secondary:hover { background: #D1D5DB; }
+        
+        /* Save Modal Specifics */
+        #filenameInput { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; margin: 5px 0 15px 0; box-sizing: border-box;}
+    </style>
+</head>
+<body>
+
+    <div id="cldContainer">
+        <div id="modelTitleDisplay">Aha! Map v1.1</div>
+        <button id="saveButton" class="action-btn">Save Map</button>
+        <button id="loadNewButton" class="action-btn">Load Map Data</button>
+        <button id="saveDataButton" class="action-btn">Save Map Data</button>
+        
+        <div id="helperTooltip">Step 1: Click edge to select (Red)<br>Step 2: Drag mouse to curve</div>
+        <div id="cldNetwork"></div>
+        
+        <div id="legend" class="legend-container">
+            <div class="legend-header" onclick="toggleLegend('legend')">Feedback Loops ▼</div>
+            <ul id="loopList" class="legend-list"></ul>
+        </div>
+        <div id="archetypeLegend" class="legend-container">
+            <div class="legend-header" onclick="toggleLegend('archetypeLegend')">Archetypes ▼</div>
+            <ul id="archetypeList" class="legend-list"></ul>
+        </div>
+        
+        <div id="descPanel"></div>
+        <div id="mainTooltip" class="tooltip"></div>
+        <div id="canvasTooltip" class="tooltip"></div>
+    </div>
+
+    <!-- Input/Load Modal -->
+    <div id="inputModal" class="modal-overlay" style="display: none;"> <!-- Auto-loaded from embedded JSON -->
+        <div class="modal-box">
+            <h2 style="margin:0; color:#111827;">Load Map Data</h2>
+            <p style="margin:0; color:#6B7280; font-size:14px;">Paste the JSON from Gemini below:</p>
+            <textarea id="jsonInput" placeholder="INJECT_JSON_HERE" spellcheck="false">{
+  "metadata": {
+    "topic": "The Estate That Wouldn't Wake Up",
+    "narrative_title": "How the US Network Broke Three Times and Called It Three Different Things"
+  },
+  "nodes": [
+    {
+      "id": "n1",
+      "label": "Archive (Inherited Warning)",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 2.5,
+      "x": -400,
+      "y": -50,
+      "description": "Archive is the system's stock of institutional memory, expertise, and verified record: pandemic playbooks, prior intelligence assessments, scientific consensus, audit trails. In 2020 it held an NSC pandemic playbook and decades of epidemiological capacity. It is exogenous to any single crisis because it accumulates across administrations, yet whether it gets opened is a live choice. [n1]"
+    },
+    {
+      "id": "n2",
+      "label": "Helm (Executive Command)",
+      "shape": "ellipse",
+      "color": {
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
+      },
+      "borderWidth": 1,
+      "x": -150,
+      "y": -150,
+      "description": "Helm is the strategic and executive centre that converts warning into coordinated national action. Its job is to read Archive and Craft, then mobilise Hands and Flow before stress compounds. Across 2001, 2007, and 2020 it is the node that repeatedly receives signal early and acts late. [n2]"
+    },
+    {
+      "id": "n3",
+      "label": "Lore (Public Narrative)",
+      "shape": "ellipse",
+      "color": {
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
+      },
+      "borderWidth": 1,
+      "x": -150,
+      "y": 50,
+      "description": "Lore is the mythic and narrative layer: the stories that stabilise or destabilise public meaning, including media framing, political messaging, and after-the-fact origin stories. Lore can either transmit Archive faithfully or substitute reassurance and blame for it. In this system it does the latter at every major rupture. [n3]"
+    },
+    {
+      "id": "n4",
+      "label": "Stewards (Asset &amp; Estate Owners)",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 2.5,
+      "x": -400,
+      "y": 150,
+      "description": "Stewards are the Estate: asset managers, landowners, capital guardians, and hierarchy managers, not civil servants. They do not administer the crisis directly, but their interest in protecting asset values, market confidence, and existing order sets the incentive field that narrows what Helm is willing to recognise and what Lore is willing to say. [n4]"
+    },
+    {
+      "id": "n5",
+      "label": "Craft (Specialist Capacity)",
+      "shape": "ellipse",
+      "color": {
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
+      },
+      "borderWidth": 1,
+      "x": 100,
+      "y": -250,
+      "description": "Craft is the technical and professional class: epidemiologists, virologists, security analysts, logisticians. The US holds deep Craft capacity in every one of the three episodes, but Craft is repeatedly filtered through political acceptability rather than mobilised as a governing centre, so its expertise becomes available without becoming determinative. [n5]"
+    },
+    {
+      "id": "n6",
+      "label": "Shield (Security Frame)",
+      "shape": "ellipse",
+      "color": {
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
+      },
+      "borderWidth": 1,
+      "x": 100,
+      "y": -50,
+      "description": "Shield is the coercive and security boundary of the system: intelligence agencies, retaliation against dissenters, and the apparatus that decides which threats count as existential. Shield's drift across this story is from external threat detection toward internal narrative enforcement, including whistleblower marginalisation. [n6]"
+    },
+    {
+      "id": "n7",
+      "label": "Hands (Workforce &amp; Households)",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
+      "x": 400,
+      "y": 250,
+      "description": "Hands is the labour base and mass execution layer: workers, carers, service staff, ordinary households. Hands accumulates the entropy released by every upstream delay, absorbing the cost of late testing, fragmented messaging, and uneven mitigation without having had a vote in any of the decisions that produced those conditions. [n7]"
+    },
+    {
+      "id": "n8",
+      "label": "Flow (Markets, Trade, Supply)",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
+      "x": 400,
+      "y": -50,
+      "description": "Flow is circulation: markets, trade, transport, supply chains, vaccine distribution. Flow is simultaneously the thing Stewards most want protected and the channel through which disruption propagates outward, carrying PPE shortages, market shocks, and geopolitical vaccine competition across borders. [n8]"
+    },
+    {
+      "id": "n9",
+      "label": "Geopolitical Rival Framing",
+      "shape": "ellipse",
+      "color": {
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
+      },
+      "borderWidth": 2.5,
+      "x": 100,
+      "y": 150,
+      "description": "This is the exogenous pressure to recast a domestic failure as an externally caused one, most visible in the China-origin framing of 2020 and the parallel anti-Sinovac influence operation. It enters the system from outside any single node and is picked up selectively by Lore and Shield whenever internal accountability becomes too costly to sustain. [n9]"
+    },
+    {
+      "id": "n10",
+      "label": "Institutional Trust (System Bond Strength)",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 2.5,
+      "x": 0,
+      "y": 350,
+      "description": "Institutional Trust is the central reservoir of the whole system: the accumulated public confidence that Helm, Lore, Archive, and Shield are acting in good faith and in coordination. It depletes every time a rupture is metabolised through blame rather than repair, and it is the resource that 2001, 2007, and 2020 each drew down without replenishing. [n10]"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "n1",
+      "to": "n2",
+      "width": 6,
+      "lag": 2,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Warning ignored
+-
+Lag: Months",
+      "description": "Archive holds the pandemic playbook and prior warnings, but Helm fails to translate that inherited memory into timely coordinated action. This is the first rupture in each episode: the system had what it needed and did not use it in time. [e1]"
+    },
+    {
+      "id": "e2",
+      "from": "n2",
+      "to": "n3",
+      "width": 5,
+      "lag": 1,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Executive sets the story
++
+Lag: Weeks",
+      "description": "Helm shapes what Lore is permitted to say, rewarding optimistic and politically convenient messaging over situational accuracy. The administrative apparatus becomes an instrument of executive signalling rather than a neutral transmitter of Archive's contents. [e2]"
+    },
+    {
+      "id": "e3",
+      "from": "n4",
+      "to": "n2",
+      "width": 6,
+      "lag": 1,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Asset protection narrows options
+-
+Lag: Weeks",
+      "description": "Stewards do not run the crisis response, but pressure to preserve market confidence, asset values, and reopening momentum narrows the field of choices Helm considers politically survivable, biasing action toward reassurance over containment. [e3]"
+    },
+    {
+      "id": "e4",
+      "from": "n4",
+      "to": "n3",
+      "width": 4,
+      "lag": 1,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Order-preservation bias
+-
+Lag: Weeks",
+      "description": "The same Steward incentive field biases Lore toward reassurance and, later, toward blame-shifting rather than honest reckoning, because a story that preserves the existing hierarchy is structurally cheaper than one that indicts it. [e4]"
+    },
+    {
+      "id": "e5",
+      "from": "n5",
+      "to": "n2",
+      "width": 4,
+      "lag": 2,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Expertise available, filtered
++
+Lag: Months",
+      "description": "Craft supplies real technical capacity to Helm, but that capacity is incompletely integrated into executive decisions and is frequently screened for political acceptability before it reaches the point of action. [e5]"
+    },
+    {
+      "id": "e6",
+      "from": "n6",
+      "to": "n5",
+      "width": 5,
+      "lag": 1,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Hand-picked clique forms
+-
+Lag: Weeks",
+      "description": "Shield's leadership forms a hostile sub-clique with selected Craft scientists, artificially restricting connectivity to dissenting experts and converting a circular reporting loop into the system's de facto consensus. [e6]"
+    },
+    {
+      "id": "e7",
+      "from": "n6",
+      "to": "n3",
+      "width": 5,
+      "lag": 1,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Security frame supplies narrative
++
+Lag: Weeks",
+      "description": "Shield increasingly feeds Lore a retaliation-and-concealment narrative, marginalising whistleblowers and reframing scientific disagreement as a question of loyalty rather than evidence. [e7]"
+    },
+    {
+      "id": "e8",
+      "from": "n9",
+      "to": "n3",
+      "width": 6,
+      "lag": 2,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Externalised blame story
++
+Lag: Months",
+      "description": "Geopolitical rival framing is metabolised by Lore as an explanatory shortcut: relocating responsibility for institutional failure onto a foreign origin story is easier to sustain than acknowledging the internal Helm-Archive rupture. [e8]"
+    },
+    {
+      "id": "e9",
+      "from": "n9",
+      "to": "n8",
+      "width": 4,
+      "lag": 1,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Rival vaccine discredited
++
+Lag: Weeks",
+      "description": "The same geopolitical framing extends into Flow through an influence operation discrediting a rival's vaccine in third countries, prioritising strategic positioning over the documented real-world effectiveness of that vaccine. [e9]"
+    },
+    {
+      "id": "e10",
+      "from": "n3",
+      "to": "n7",
+      "width": 5,
+      "lag": 3,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Minimisation reaches the public
+-
+Lag: Months",
+      "description": "Once Lore settles on minimisation or blame, that story reaches Hands directly, shaping whether households take precautions seriously and whether they trust subsequent official guidance at all. [e10]"
+    },
+    {
+      "id": "e11",
+      "from": "n2",
+      "to": "n7",
+      "width": 6,
+      "lag": 3,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Delay becomes lived cost
+-
+Lag: Months",
+      "description": "Every month Helm delays coordinated action becomes testing shortages, fragmented mitigation, and uneven protection that Hands absorbs directly, with no mechanism to pass the cost back upstream. [e11]"
+    },
+    {
+      "id": "e12",
+      "from": "n2",
+      "to": "n8",
+      "width": 5,
+      "lag": 2,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Delay disrupts supply
+-
+Lag: Months",
+      "description": "Helm's delay in mobilising federal coordination becomes PPE and testing-supply shortages and broader economic dislocation as Flow both protects and transmits the crisis. [e12]"
+    },
+    {
+      "id": "e13",
+      "from": "n7",
+      "to": "n10",
+      "width": 6,
+      "lag": 4,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Lived cost erodes trust
+-
+Lag: Years",
+      "description": "As Hands bears the visible cost of upstream failure without upstream accountability, the reservoir of Institutional Trust depletes; people remember who paid and who didn't. [e13]"
+    },
+    {
+      "id": "e14",
+      "from": "n3",
+      "to": "n10",
+      "width": 6,
+      "lag": 4,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Story substitutes for repair
+-
+Lag: Years",
+      "description": "Each time Lore resolves a rupture through blame or externalisation rather than honest repair, Institutional Trust is depleted rather than restored, because the underlying Helm-Archive fracture is never actually closed. [e14]"
+    },
+    {
+      "id": "e15",
+      "from": "n10",
+      "to": "n1",
+      "width": 4,
+      "lag": 5,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Low trust starves memory
+-
+Lag: Years",
+      "description": "Depleted Institutional Trust makes it politically costly for any future Helm to openly consult Archive, since doing so risks admitting the prior failure, which closes the loop: low trust now produces under-used memory next time. [e15]"
+    },
+    {
+      "id": "e16",
+      "from": "n10",
+      "to": "n6",
+      "width": 4,
+      "lag": 3,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Eroded trust invites security framing
++
+Lag: Years",
+      "description": "As general trust falls, ambiguous failures are increasingly recast as security and loyalty problems rather than administrative ones, because a security frame offers Shield and Helm a faster story than a forensic one. [e16]"
+    },
+    {
+      "id": "e17",
+      "from": "n4",
+      "to": "n8",
+      "width": 4,
+      "lag": 1,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Reopening pressure protects flow",
+      "description": "Stewards push to keep markets, trade, and reopening moving even while containment is incomplete, treating Flow as the asset to be defended first and the epidemic as a secondary constraint to be managed around it. [e17]"
+    }
+  ],
+  "loops": [
+    {
+      "id": "R1",
+      "name": "The Delay-Blame Spiral",
+      "type": "R",
+      "description": "Helm delays converting Archive's warning into action [e1], which forces Hands and Flow to absorb the cost [e11, e12], which Lore then explains through externalised blame [e8] rather than honest repair, which erodes Institutional Trust [e14], which makes the next Helm even less willing to open Archive [e15]. The spiral repeats with a different proper noun each time: 2001, 2007, 2020. [R1]",
+      "nodeIds": [
+        "n1",
+        "n2",
+        "n3",
+        "n7",
+        "n8",
+        "n9",
+        "n10"
+      ],
+      "edgeIds": [
+        "e1",
+        "e8",
+        "e11",
+        "e12",
+        "e14",
+        "e15"
+      ]
+    },
+    {
+      "id": "R2",
+      "name": "The Steward Capture Loop",
+      "type": "R",
+      "description": "Stewards narrow Helm's admissible choices toward asset protection [e3] and bias Lore toward reassurance [e4], which in turn keeps Flow moving on Steward terms [e17], reinforcing exactly the incentive structure that produced the narrow choice set in the first place. This loop never resolves the crisis, it just protects the order around it. [R2]",
+      "nodeIds": [
+        "n4",
+        "n2",
+        "n3",
+        "n8"
+      ],
+      "edgeIds": [
+        "e3",
+        "e4",
+        "e17"
+      ]
+    },
+    {
+      "id": "R3",
+      "name": "The Hand-Picked Consensus Trap",
+      "type": "R",
+      "description": "Shield forms a hostile clique with selected Craft voices [e6], restricting which expertise reaches Helm [e5] and supplying Lore with a retaliation-and-concealment story instead of a forensic one [e7]. The narrower the clique, the more confident the consensus sounds, and the more confident it sounds, the harder it becomes for outside Craft to be heard. [R3]",
+      "nodeIds": [
+        "n6",
+        "n5",
+        "n2",
+        "n3"
+      ],
+      "edgeIds": [
+        "e5",
+        "e6",
+        "e7"
+      ]
+    },
+    {
+      "id": "B1",
+      "name": "The Trust-Security Substitution",
+      "type": "B",
+      "description": "When Institutional Trust falls, the system reaches for Shield's security frame as a faster, simpler story than the slow forensic work of repairing Helm-Archive coordination [e16]. This looks like stabilisation in the short run, because a named culprit feels resolved, but it balances the symptom rather than the underlying decoupling, so the next shock starts from a lower trust baseline. [B1]",
+      "nodeIds": [
+        "n10",
+        "n6"
+      ],
+      "edgeIds": [
+        "e16"
+      ]
+    },
+    {
+      "id": "R4",
+      "name": "The Externalised Origin Engine",
+      "type": "R",
+      "description": "Geopolitical rival framing feeds Lore an origin story that relocates blame abroad [e8] and simultaneously discredits a rival's competing vaccine in Flow [e9], doing double duty: explaining the failure and weakening a competitor's standing in the same narrative move. The 2026 ODNI release and the 2020-21 Philippines anti-Sinovac operation are two faces of this same loop, six years apart. [R4]",
+      "nodeIds": [
+        "n9",
+        "n3",
+        "n8"
+      ],
+      "edgeIds": [
+        "e8",
+        "e9"
+      ]
+    },
+    {
+      "id": "B2",
+      "name": "Hands as the Shock Absorber",
+      "type": "B",
+      "description": "Hands silently stabilises the rest of the system by absorbing the entropy that Helm, Stewards, and Lore decline to absorb themselves [e10, e11]. This looks like resilience from above, since the system as a whole keeps functioning, but it is resilience purchased by transferring stress downward onto the node with the least power to refuse it. [B2]",
+      "nodeIds": [
+        "n3",
+        "n2",
+        "n7"
+      ],
+      "edgeIds": [
+        "e10",
+        "e11"
+      ]
+    }
+  ],
+  "archetypes": [
+    {
+      "id": "arch1",
+      "name": "Shifting the Burden",
+      "description": "Each time the system faces a Helm-Archive rupture, it has two available fixes: the fundamental fix (open Archive honestly, accept Helm accountability, repair Lore's relationship to fact) and the symptomatic fix (externalise blame, invoke Shield's security frame, protect Steward asset positions). The symptomatic fix is faster and less politically costly, so the system reaches for it every time, which is why 2001, 2007, and 2020 rhyme rather than differ. The fundamental fix atrophies from disuse while the symptomatic fix gets more reflexive and more convincing with each repetition. [arch1]",
+      "nodeIds": [
+        "n1",
+        "n2",
+        "n3",
+        "n6",
+        "n9",
+        "n10"
+      ],
+      "edgeIds": [
+        "e1",
+        "e8",
+        "e14",
+        "e15",
+        "e16"
+      ]
+    },
+    {
+      "id": "arch2",
+      "name": "Tragedy of the Commons",
+      "description": "Institutional Trust is the shared resource that every node draws on but no single node is responsible for replenishing. Stewards, Helm, and Lore each extract short-term benefit from the trust reservoir, whether through asset protection, political survival, or narrative convenience, while Hands bears the depletion without having drawn from it. Like any commons, it can absorb individual extraction for a while, but the cumulative draw from 2001 through 2020 leaves a thinner reservoir for whatever comes next. [arch2]",
+      "nodeIds": [
+        "n4",
+        "n2",
+        "n3",
+        "n7",
+        "n10"
+      ],
+      "edgeIds": [
+        "e3",
+        "e4",
+        "e10",
+        "e11",
+        "e13",
+        "e14"
+      ]
+    }
+  ]
+}</textarea>
+            <button onclick="parseAndRun()">VISUALIZE MODEL</button>
+        </div>
+    </div>
+
+    <!-- Save Modal (Shared) -->
+    <div id="saveModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 450px;">
+            <h2 id="saveModalTitle" style="margin:0; color:#111827;">Save Map</h2>
+            <p style="margin:0; color:#6B7280; font-size:14px;">Enter a filename:</p>
+            <input type="text" id="filenameInput" value="model">
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button class="secondary" onclick="document.getElementById('saveModal').style.display='none'">Cancel</button>
+                <button id="confirmSaveBtn">Download</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // GLOBAL STATE
+        let nodes, edges, network;
+        let feedbackLoops = [], systemArchetypes = [], loopLabelPositions = [];
+        let originalNodeStyles = {}, originalEdgeStyles = {};
+        let currentSaveMode = 'html'; // 'html' or 'json'
+
+        // --- 0. AUTO-LOADER ---
+        window.addEventListener('load', () => {
+            const preloaded = document.getElementById('jsonInput').value;
+            if (preloaded && preloaded.trim().length > 0 && preloaded.trim() !== "undefined") {
+                parseAndRun();
+            } else {
+                document.getElementById('inputModal').style.display = 'flex';
+            }
+        });
+        
+        // INTERACTION STATE
+        let draggedLabel = null;
+        let dragOffset = {x:0, y:0};
+        
+        // RECURVE STATE
+        let activeEdgeForRecurve = null;
+        let isRecurvingEdge = false;
+        
+        let lastMouseX = 0, lastMouseY = 0;
+        let draggedItem = null; // For list sorting
+
+        // --- 0. AUTO-LOADER ---
+        window.addEventListener('load', () => {
+             const preloaded = document.getElementById('jsonInput').value;
+             if(preloaded && preloaded.trim().length > 0 && preloaded.trim() !== "undefined") {
+                 parseAndRun();
+             } else {
+                 document.getElementById('inputModal').style.display = 'flex';
+             }
+        });
+
+        // --- HELPER FOR COLOR CONVERSION (from v6.2) ---
+        function colorToRgba(colorInput, alpha) {
+            let r = 128, g = 128, b = 128; // Default to gray if parsing fails
+            alpha = Math.max(0, Math.min(1, alpha));
+
+            if (typeof colorInput === 'string') {
+                const s = colorInput.toLowerCase().trim();
+                if (s.startsWith('#')) {
+                    if (s.length === 4) {
+                        r = parseInt(s[1] + s[1], 16);
+                        g = parseInt(s[2] + s[2], 16);
+                        b = parseInt(s[3] + s[3], 16);
+                    } else if (s.length === 7) {
+                        r = parseInt(s.substring(1, 3), 16);
+                        g = parseInt(s.substring(3, 5), 16);
+                        b = parseInt(s.substring(5, 7), 16);
+                    }
+                } else if (s.startsWith('rgb')) {
+                    const parts = s.match(/[\d.]+/g);
+                    if (parts && parts.length >= 3) {
+                        r = parseInt(parts[0]);
+                        g = parseInt(parts[1]);
+                        b = parseInt(parts[2]);
+                    }
+                }
+            }
+            return `rgba(${r},${g},${b},${alpha})`;
+        }
+
+        // --- 1. DATA PARSING ---
+        function parseAndRun() {
+            const input = document.getElementById('jsonInput').value;
+            if(!input) return alert("Please paste JSON data.");
+
+            try {
+                let clean = input.replace(/```json/gi, '').replace(/```/g, '');
+                const start = clean.indexOf('{');
+                const end = clean.lastIndexOf('}');
+                if (start === -1 || end === -1) throw new Error("No JSON found.");
+                
+                const data = JSON.parse(clean.substring(start, end + 1));
+                
+                document.getElementById('inputModal').style.display = 'none';
+
+                if(data.metadata && data.metadata.topic) {
+                    document.getElementById('modelTitleDisplay').innerText = data.metadata.topic;
+                    document.title = data.metadata.topic;
+                }
+
+                initEngine(data);
+
+            } catch(e) {
+                alert("Error parsing JSON: " + e.message);
+            }
+        }
+
+        document.getElementById('loadNewButton').addEventListener('click', () => {
+             document.getElementById('jsonInput').value = '';
+             document.getElementById('inputModal').style.display = 'flex';
+        });
+
+        // --- SAVE FUNCTIONALITY ---
+        
+        // 1. Save HTML Button
+        document.getElementById('saveButton').addEventListener('click', () => {
+            if (!network || !nodes || !edges) {
+                alert("No model to save. Please load data first.");
+                return;
+            }
+            currentSaveMode = 'html';
+            document.getElementById('saveModalTitle').innerText = "Save Map (HTML)";
+            document.getElementById('filenameInput').value = (document.title || "model");
+            document.getElementById('saveModal').style.display = 'flex';
+            document.getElementById('filenameInput').focus();
+        });
+
+        // 2. Save JSON Button
+        document.getElementById('saveDataButton').addEventListener('click', () => {
+            if (!network || !nodes || !edges) {
+                alert("No model data to save.");
+                return;
+            }
+            currentSaveMode = 'json';
+            document.getElementById('saveModalTitle').innerText = "Save Map Data (JSON)";
+            document.getElementById('filenameInput').value = (document.title || "model");
+            document.getElementById('saveModal').style.display = 'flex';
+            document.getElementById('filenameInput').focus();
+        });
+
+        // 3. Confirm Save Action
+        document.getElementById('confirmSaveBtn').addEventListener('click', () => {
+             try {
+                let filename = document.getElementById('filenameInput').value || "model";
+                
+                // Get Data
+                const currentPositions = network.getPositions();
+                const d = { 
+                    metadata: { topic: document.title },
+                    nodes: nodes.get().map(n => {
+                        const pos = currentPositions[n.id];
+                        return {
+                            ...n,
+                            x: pos ? Math.round(pos.x) : n.x,
+                            y: pos ? Math.round(pos.y) : n.y
+                        };
+                    }),
+                    edges: edges.get().map(e => ({
+                        ...e, 
+                        title: undefined,
+                        smooth: (e.smooth && e.smooth.roundness !== undefined) ? e.smooth : undefined
+                    })),
+                    loops: feedbackLoops,
+                    archetypes: systemArchetypes
+                };
+                const jsonString = JSON.stringify(d, null, 2);
+
+                if (currentSaveMode === 'json') {
+                    // --- SAVE JSON ---
+                    if (!filename.toLowerCase().endsWith('.json')) filename += '.json';
+                    downloadFile(jsonString, filename, 'application/json');
+
+                } else {
+                    // --- SAVE HTML ---
+                    if (!filename.toLowerCase().endsWith('.html')) filename += '.html';
+
+                    const clone = document.documentElement.cloneNode(true);
+                    clone.querySelector('#cldNetwork').innerHTML = ''; 
+                    clone.querySelectorAll('.tooltip').forEach(el => el.style.display = 'none');
+                    clone.querySelectorAll('.legend-container').forEach(el => el.classList.remove('expanded'));
+                    clone.querySelector('#descPanel').style.display = 'none';
+                    clone.querySelector('#inputModal').style.display = 'flex'; 
+                    clone.querySelector('#saveModal').style.display = 'none'; 
+                    clone.querySelector('#jsonInput').textContent = jsonString;
+
+                    const fileContent = "<!DOCTYPE html>\n" + clone.outerHTML;
+                    downloadFile(fileContent, filename, 'text/html');
+                }
+
+                document.getElementById('saveModal').style.display = 'none';
+
+            } catch (err) {
+                alert("Error saving file: " + err.message);
+                console.error(err);
+            }
+        });
+
+        function downloadFile(content, filename, contentType) {
+            const blob = new Blob([content], {type: contentType});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); 
+            a.href = url; 
+            a.download = filename; 
+            a.style.display = 'none';
+            document.body.appendChild(a); 
+            a.click();
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 100);
+        }
+
+        // --- 2. ENGINE INITIALIZATION ---
+        function initEngine(data) {
+            const hasPositions = data.nodes && data.nodes.some(n => n.x !== undefined && n.y !== undefined);
+
+            // MODIFIED: Append [ID] to node labels (without hardcoded 'n')
+            const nodeData = (data.nodes || []).map(n => {
+                let label = n.label || "";
+                const tag = `[${n.id}]`; // Corrected: uses pure ID
+                // Prevent duplicate appending if data is re-loaded
+                if (!label.includes(tag)) {
+                    label = label ? `${label} ${tag}` : tag;
+                }
+                return {
+                    ...n, 
+                    label: label,
+                    x: n.x ? Number(n.x) : undefined, 
+                    y: n.y ? Number(n.y) : undefined
+                };
+            });
+            
+            // MODIFIED: Append [ID] to edge labels (without hardcoded 'e')
+            const edgeData = (data.edges || []).map(e => {
+                let smooth = { enabled: true, type: "cubicBezier", roundness: 0.3 };
+                if (e.smooth && e.smooth.roundness !== undefined) {
+                    smooth = e.smooth; 
+                }
+                
+                let label = e.label || "";
+                const tag = `[${e.id}]`; // Corrected: uses pure ID
+                // Prevent duplicate appending and ensure ID is visible
+                if (!label.includes(tag)) {
+                    label = label ? `${label} ${tag}` : tag;
+                }
+
+                return {...e, label: label, from:String(e.from), to:String(e.to), title:undefined, smooth: smooth};
+            });
+
+            nodes = new vis.DataSet(nodeData);
+            edges = new vis.DataSet(edgeData);
+            
+            feedbackLoops = (data.loops || []).map((l, i) => ({...l, internalId: `loop-${i}`}));
+            systemArchetypes = data.archetypes || [];
+
+            const container = document.getElementById('cldNetwork');
+            const options = {
+                autoResize: true, height: '100%', width: '100%',
+                nodes: { 
+                    shape: 'ellipse', size: 25, 
+                    font: { size: 13, face: 'Inter', color: '#1F2937', multi: 'html' },
+                    widthConstraint: { maximum: 160 }, borderWidth: 2,
+                    color: { background: '#DBEAFE', border: '#3B82F6', highlight: { background: '#BFDBFE', border: '#2563EB' } },
+                    shadow: { enabled: true, size:4, x:2, y:2, color: 'rgba(0,0,0,0.08)'} 
+                },
+                edges: { 
+                    width: 2.5, arrows: { to: { enabled: true, scaleFactor: 0.7 } },
+                    smooth: { enabled: true, type: "cubicBezier", roundness: 0.3 },
+                    font: { align: 'middle', multi: true, face: 'Inter', size: 12, color: '#4B5563', background: 'rgba(255,255,255,0.75)', strokeWidth: 0 },
+                    chosen: {
+                        edge: function(values, id, selected, hovering) {
+                            values.color = '#e11d48'; 
+                            values.width = values.width * 1.5;
+                            values.shadow = { enabled: true, color: 'rgba(225, 29, 72, 0.4)', size: 10 };
+                        }
+                    }
+                },
+                physics: {
+                    enabled: !hasPositions,
+                    stabilization: { enabled: !hasPositions, iterations: 1000, fit: true },
+                    barnesHut: { gravitationalConstant: -2000, centralGravity: 0.3, springLength: 95 }
+                },
+                interaction: { 
+                    hover: true, dragNodes: true, zoomView: true, 
+                    selectConnectedEdges: false 
+                }
+            };
+
+            nodes.forEach(n => originalNodeStyles[n.id] = { color: {...(n.color||options.nodes.color)}, borderWidth: n.borderWidth||2 });
+            edges.forEach(e => originalEdgeStyles[e.id] = { color: {...(e.color||options.edges.color)}, width: e.width||2.5, smooth: e.smooth });
+
+            if(network) network.destroy();
+            network = new vis.Network(container, { nodes, edges }, options);
+            
+            if(!hasPositions) {
+                network.on("stabilizationIterationsDone", () => network.setOptions({ physics: false }));
+            }
+
+            renderLists();
+            setupInteractions();
+            setupListSorting(); 
+        }
+
+        // --- 3. CUSTOM INTERACTION LOGIC ---
+        function setupInteractions() {
+            const canvas = document.querySelector('canvas');
+            const tt = document.getElementById('mainTooltip');
+            const ctt = document.getElementById('canvasTooltip');
+
+            // --- CLICK (SELECTION) ---
+            network.on("click", function(params) {
+                const networkPos = params.pointer.canvas; 
+
+                const hit = loopLabelPositions.find(l => (networkPos.x-l.x)**2 + (networkPos.y-l.y)**2 < l.r**2);
+                if(hit) {
+                    selectLoop(hit.loop);
+                    return; 
+                }
+
+                if (params.nodes.length === 0) { 
+                    if (params.edges.length > 0) { 
+                        const clickedEdgeId = params.edges[0];
+                        activeEdgeForRecurve = (activeEdgeForRecurve === clickedEdgeId) ? null : clickedEdgeId;
+                        if(activeEdgeForRecurve) {
+                            network.selectEdges([activeEdgeForRecurve]);
+                            resetHighlights(false); 
+                        } else {
+                            network.selectEdges([]);
+                        }
+                    } else { 
+                        activeEdgeForRecurve = null;
+                        network.selectEdges([]);
+                        resetHighlights();
+                    }
+                } else {
+                    activeEdgeForRecurve = null;
+                    network.selectEdges([]);
+                }
+            });
+
+            // --- MOUSE DOWN (START DRAG) ---
+            if(canvas) {
+                canvas.addEventListener('mousedown', function(event) {
+                    const rect = canvas.getBoundingClientRect();
+                    const netPos = network.canvas.DOMtoCanvas({x: event.clientX-rect.left, y: event.clientY-rect.top});
+                    
+                    const hit = loopLabelPositions.find(l => (netPos.x-l.x)**2 + (netPos.y-l.y)**2 < l.r**2);
+                    if(hit) {
+                        draggedLabel = hit.loop;
+                        dragOffset = {x: netPos.x - hit.x, y: netPos.y - hit.y};
+                        network.setOptions({interaction:{dragNodes:false, dragView:false}}); 
+                        canvas.style.cursor = 'grabbing';
+                        event.preventDefault();
+                        return;
+                    }
+
+                    if (activeEdgeForRecurve && !isRecurvingEdge) {
+                        isRecurvingEdge = true;
+                        document.addEventListener('mousemove', handleMouseMoveOnDocumentForRecurve);
+                        document.addEventListener('mouseup', handleMouseUpOnDocumentForRecurve, { once: true });
+                        network.setOptions({ interaction: { dragNodes: false, dragView: false } }); 
+                        event.preventDefault();
+                    }
+                });
+
+                canvas.addEventListener('mousemove', (e) => {
+                    lastMouseX = e.clientX;
+                    lastMouseY = e.clientY;
+
+                    if(draggedLabel) {
+                        const rect = canvas.getBoundingClientRect();
+                        const netPos = network.canvas.DOMtoCanvas({x: e.clientX-rect.left, y: e.clientY-rect.top});
+                        draggedLabel.lx = netPos.x - dragOffset.x;
+                        draggedLabel.ly = netPos.y - dragOffset.y;
+                        network.redraw(); 
+                        return;
+                    }
+
+                    const rect = canvas.getBoundingClientRect();
+                    const netPos = network.canvas.DOMtoCanvas({x: e.clientX-rect.left, y: e.clientY-rect.top});
+                    const hit = loopLabelPositions.find(l => (netPos.x-l.x)**2 + (netPos.y-l.y)**2 < l.r**2);
+                    
+                    if(hit) {
+                        canvas.style.cursor = 'pointer';
+                        ctt.innerHTML = `<strong>${hit.loop.name}</strong><p style="margin:5px 0 0">${hit.loop.description}</p>`;
+                        ctt.style.left = (e.clientX+15)+'px'; ctt.style.top = (e.clientY+15)+'px';
+                        ctt.style.display = 'block';
+                    } else {
+                         ctt.style.display = 'none';
+                    }
+                });
+
+                canvas.addEventListener('mouseup', () => {
+                    if(draggedLabel) {
+                        draggedLabel = null;
+                        network.setOptions({interaction:{dragNodes:true, dragView:true}});
+                        canvas.style.cursor = 'default';
+                    }
+                });
+            }
+
+
+            // --- RECURVE HELPERS ---
+            function handleMouseMoveOnDocumentForRecurve(event) {
+                if (!isRecurvingEdge || !activeEdgeForRecurve) return;
+
+                const rect = canvas.getBoundingClientRect();
+                const mousePos = network.canvas.DOMtoCanvas({ x: event.clientX - rect.left, y: event.clientY - rect.top });
+                const edge = edges.get(activeEdgeForRecurve);
+                if (!edge) { handleMouseUpOnDocumentForRecurve(); return; }
+
+                const positions = network.getPositions([edge.from, edge.to]);
+                const fromPos = positions[edge.from];
+                const toPos = positions[edge.to];
+                if (!fromPos || !toPos) { handleMouseUpOnDocumentForRecurve(); return;}
+
+                const midX = (fromPos.x + toPos.x) / 2;
+                const midY = (fromPos.y + toPos.y) / 2;
+                const dxMouse = mousePos.x - midX;
+                const dyMouse = mousePos.y - midY;
+
+                const edgeDx = toPos.x - fromPos.x;
+                const edgeDy = toPos.y - fromPos.y;
+                const edgeLength = Math.sqrt(edgeDx*edgeDx + edgeDy*edgeDy);
+                if (edgeLength < 1) return;
+
+                const orientation = (edgeDx * dyMouse) - (edgeDy * dxMouse);
+                const newCurveType = orientation >= 0 ? 'curvedCCW' : 'curvedCW';
+
+                const distFromMid = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+                const scaleFactor = 0.8; 
+                let newRoundness = Math.max(0.0, Math.min(1.0, (distFromMid / edgeLength) * scaleFactor));
+
+                edges.update({
+                    id: activeEdgeForRecurve,
+                    smooth: { type: newCurveType, roundness: newRoundness, enabled: true }
+                });
+                
+                if(originalEdgeStyles[activeEdgeForRecurve]) {
+                    originalEdgeStyles[activeEdgeForRecurve].smooth = { type: newCurveType, roundness: newRoundness, enabled: true };
+                }
+            }
+
+            function handleMouseUpOnDocumentForRecurve() {
+                if (!isRecurvingEdge) return;
+                isRecurvingEdge = false;
+                document.removeEventListener('mousemove', handleMouseMoveOnDocumentForRecurve);
+                network.setOptions({ interaction: { dragNodes: true, dragView: true } });
+            }
+
+
+            // --- STANDARD VIS.JS EVENTS ---
+            network.on("afterDrawing", (ctx) => {
+                loopLabelPositions = [];
+                ctx.font = "bold 13px Inter"; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                feedbackLoops.forEach(l => {
+                    if(!l.lx) {
+                        const pos = network.getPositions(l.nodeIds);
+                        let x=0,y=0,c=0; for(let k in pos){x+=pos[k].x; y+=pos[k].y; c++;}
+                        if(c){l.lx=x/c; l.ly=y/c;}
+                    }
+                    if(l.lx) {
+                        ctx.fillStyle = l.type==='R' ? 'rgba(190, 24, 93, 0.9)' : 'rgba(30, 64, 175, 0.9)';
+                        ctx.beginPath(); ctx.arc(l.lx, l.ly, 18, 0, 2*Math.PI); ctx.fill();
+                        ctx.strokeStyle = 'white'; ctx.lineWidth = 1; ctx.stroke();
+                        ctx.fillStyle = 'white'; ctx.fillText(l.id, l.lx, l.ly+1);
+                        loopLabelPositions.push({loop: l, x: l.lx, y: l.ly, r: 18});
+                    }
+                });
+            });
+
+            network.on("hoverNode", (p) => {
+                const n = nodes.get(p.node);
+                if(n.description) {
+                    const dom = network.canvas.canvasToDOM(network.getPositions([p.node])[p.node]);
+                    tt.innerHTML = n.description.replace(/\n/g, '<br>');
+                    tt.style.left = (dom.x + 20) + 'px'; tt.style.top = (dom.y + 20) + 'px';
+                    tt.style.display = 'block';
+                }
+            });
+            network.on("blurNode", () => tt.style.display = 'none');
+
+            network.on("hoverEdge", (p) => {
+                const e = edges.get(p.edge);
+                if(e.description) {
+                    tt.innerHTML = e.description.replace(/\n/g, '<br>');
+                    tt.style.left = (lastMouseX + 15) + 'px';
+                    tt.style.top = (lastMouseY + 15) + 'px';
+                    tt.style.display = 'block';
+                }
+            });
+            network.on("blurEdge", () => tt.style.display = 'none');
+        }
+
+        // --- 4. LIST SORTING & RENDERING (UPDATED) ---
+        function setupListSorting() {
+            const list = document.getElementById('loopList');
+            
+            list.addEventListener('dragstart', (e) => {
+                if(e.target.tagName === 'LI') {
+                    draggedItem = e.target;
+                    setTimeout(() => draggedItem.classList.add('dragging'), 0);
+                }
+            });
+
+            list.addEventListener('dragend', () => {
+                if(draggedItem) draggedItem.classList.remove('dragging');
+                draggedItem = null;
+            });
+
+            list.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                const afterElement = getDragAfterElement(list, e.clientY);
+                const current = document.querySelector('.dragging');
+                if (afterElement == null) {
+                    list.appendChild(current);
+                } else {
+                    list.insertBefore(current, afterElement);
+                }
+            });
+
+            list.addEventListener('drop', () => {
+                // REORDER DATA ARRAY
+                const newOrder = [];
+                list.querySelectorAll('li').forEach(li => {
+                    const loop = feedbackLoops.find(l => l.internalId === li.dataset.id);
+                    if(loop) newOrder.push(loop);
+                });
+                feedbackLoops = newOrder;
+                
+                // NO RESEQUENCING - Just redraw to ensure consistency
+                renderLists();
+            });
+        }
+
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('li:not(.dragging)')];
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+
+        function renderLists() {
+            const ll = document.getElementById('loopList'); ll.innerHTML = '';
+            feedbackLoops.forEach(l => {
+                const li = document.createElement('li');
+                li.setAttribute('draggable', true);
+                li.dataset.id = l.internalId;
+
+                const col = l.type==='R'?'#be185d':'#1e40af';
+                let nameDisplay = l.name;
+                
+                if (!nameDisplay.startsWith(l.id)) {
+                    nameDisplay = `<span style="font-weight:bold; color:${col}">${l.id}</span>: ${nameDisplay}`;
+                } else {
+                    nameDisplay = nameDisplay.replace(l.id, `<span style="font-weight:bold; color:${col}">${l.id}</span>`);
+                }
+
+                li.innerHTML = nameDisplay;
+                li.onclick = (e) => { e.stopPropagation(); selectLoop(l); };
+                ll.appendChild(li);
+            });
+            const al = document.getElementById('archetypeList'); al.innerHTML = '';
+            systemArchetypes.forEach(a => {
+                const li = document.createElement('li'); li.textContent = a.name;
+                li.onclick = (e) => { e.stopPropagation(); selectArch(a); };
+                al.appendChild(li);
+            });
+        }
+
+        function selectLoop(l) {
+            highlight(l);
+            const box = document.getElementById('descPanel');
+            box.innerHTML = `<strong>${l.name}</strong>${l.description.replace(/\n/g,'<br>')}`;
+            box.style.display='block';
+            if(!document.getElementById('legend').classList.contains('expanded')) toggleLegend('legend');
+        }
+
+        function selectArch(a) {
+            highlight(a);
+            const box = document.getElementById('descPanel');
+            box.innerHTML = `<strong>${a.name}</strong>${a.description.replace(/\n/g,'<br>')}`;
+            box.style.display='block';
+            if(!document.getElementById('archetypeLegend').classList.contains('expanded')) toggleLegend('archetypeLegend');
+        }
+
+        // --- UPDATED HIGHLIGHT FUNCTION (v6.2 logic) ---
+        function highlight(item) {
+            if (!item || !item.nodeIds || !item.edgeIds) {
+                resetHighlights(true);
+                return;
+            }
+
+            resetHighlights(false); 
+
+            const ns = new Set(item.nodeIds || []), es = new Set(item.edgeIds || []);
+            const nodesToUpdate = [];
+            const edgesToUpdate = [];
+            const highlightColor = '#e11d48'; 
+            const dimOpacity = 0.15;
+
+            // --- Process Nodes ---
+            nodes.forEach(n => {
+                const originalStyle = originalNodeStyles[n.id];
+                if (!originalStyle) return;
+
+                if (ns.has(n.id)) {
+                    nodesToUpdate.push({
+                        id: n.id,
+                        opacity: 1.0,
+                        color: JSON.parse(JSON.stringify(originalStyle.color)),
+                        borderWidth: (originalStyle.borderWidth || 2) * 1.7
+                    });
+                } else {
+                    nodesToUpdate.push({
+                        id: n.id,
+                        opacity: dimOpacity,
+                        color: {
+                            background: colorToRgba(originalStyle.color?.background, dimOpacity * 0.5),
+                            border: colorToRgba(originalStyle.color?.border, dimOpacity),
+                            highlight: { background: colorToRgba(originalStyle.color?.highlight?.background, dimOpacity * 0.5), border: colorToRgba(originalStyle.color?.highlight?.border, dimOpacity) },
+                            hover: { background: colorToRgba(originalStyle.color?.hover?.background, dimOpacity * 0.5), border: colorToRgba(originalStyle.color?.hover?.border, dimOpacity) }
+                        },
+                        borderWidth: (originalStyle.borderWidth || 2),
+                        font: {
+                            color: colorToRgba(nodes.get(n.id).font?.color || '#1F2937', dimOpacity)
+                        }
+                    });
+                }
+            });
+
+            // --- Process Edges ---
+            edges.forEach(e => {
+                const originalStyle = originalEdgeStyles[e.id];
+                if (!originalStyle) return;
+                const defaultWidth = 2.5;
+
+                if (es.has(e.id)) {
+                    edgesToUpdate.push({
+                        id: e.id,
+                        width: (originalStyle.width || defaultWidth) * 1.8,
+                        color: { color: highlightColor, highlight: highlightColor, hover: highlightColor },
+                        font: {
+                            color: '#000000',
+                            background: 'rgba(255, 255, 255, 0.9)'
+                        },
+                        opacity: 1.0,
+                        smooth: JSON.parse(JSON.stringify(originalStyle.smooth || {}))
+                    });
+                } else {
+                    const dimmedColor = colorToRgba(originalStyle.color?.color, dimOpacity * 0.8);
+                    edgesToUpdate.push({
+                        id: e.id,
+                        width: (originalStyle.width || defaultWidth) * 0.8,
+                        color: { color: dimmedColor, highlight: dimmedColor, hover: dimmedColor },
+                        font: {
+                            color: colorToRgba(edges.get(e.id).font?.color || '#4B5563', dimOpacity * 0.5),
+                            background: 'rgba(255, 255, 255, 0.2)'
+                        },
+                        opacity: dimOpacity,
+                        smooth: JSON.parse(JSON.stringify(originalStyle.smooth || {}))
+                    });
+                }
+            });
+
+            nodes.update(nodesToUpdate);
+            edges.update(edgesToUpdate);
+        }
+
+        // --- UPDATED RESET HIGHLIGHTS ---
+        function resetHighlights(fullReset = true) {
+            const nodeUpdates = nodes.get().map(n => {
+                const s = originalNodeStyles[n.id] || { color: '#DBEAFE', borderWidth: 2 };
+                return { 
+                    id: n.id, 
+                    opacity: 1, 
+                    color: s.color, 
+                    borderWidth: s.borderWidth,
+                    font: { color: '#1F2937' } 
+                };
+            });
+            const edgeUpdates = edges.get().map(e => {
+                const s = originalEdgeStyles[e.id] || { color: '#4B5563', width: 2.5 };
+                return { 
+                    id: e.id, 
+                    opacity: 1, 
+                    color: s.color, 
+                    width: s.width,
+                    font: { color: '#4B5563', background: 'rgba(255,255,255,0.75)' } 
+                };
+            });
+
+            nodes.update(nodeUpdates);
+            edges.update(edgeUpdates);
+
+            if(fullReset) {
+                document.getElementById('descPanel').style.display='none';
+                document.querySelectorAll('.legend-container').forEach(l => l.classList.remove('expanded'));
+            }
+        }
+
+        window.toggleLegend = (id) => {
+            const el = document.getElementById(id);
+            const exp = el.classList.contains('expanded');
+            document.querySelectorAll('.legend-container').forEach(l => l.classList.remove('expanded'));
+            document.getElementById('descPanel').style.display = 'none';
+            if(!exp) el.classList.add('expanded');
+        }
+    </script>
+</body>
+</html>

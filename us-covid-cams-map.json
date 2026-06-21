@@ -1,0 +1,346 @@
+{
+  "metadata": {
+    "topic": "The Estate That Wouldn't Wake Up",
+    "narrative_title": "How the US Network Broke Three Times and Called It Three Different Things"
+  },
+  "nodes": [
+    {
+      "id": "n1",
+      "label": "Archive (Inherited Warning)",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 2.5,
+      "x": -400,
+      "y": -50,
+      "description": "Archive is the system's stock of institutional memory, expertise, and verified record: pandemic playbooks, prior intelligence assessments, scientific consensus, audit trails. In 2020 it held an NSC pandemic playbook and decades of epidemiological capacity. It is exogenous to any single crisis because it accumulates across administrations, yet whether it gets opened is a live choice. [n1]"
+    },
+    {
+      "id": "n2",
+      "label": "Helm (Executive Command)",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": -150,
+      "y": -150,
+      "description": "Helm is the strategic and executive centre that converts warning into coordinated national action. Its job is to read Archive and Craft, then mobilise Hands and Flow before stress compounds. Across 2001, 2007, and 2020 it is the node that repeatedly receives signal early and acts late. [n2]"
+    },
+    {
+      "id": "n3",
+      "label": "Lore (Public Narrative)",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": -150,
+      "y": 50,
+      "description": "Lore is the mythic and narrative layer: the stories that stabilise or destabilise public meaning, including media framing, political messaging, and after-the-fact origin stories. Lore can either transmit Archive faithfully or substitute reassurance and blame for it. In this system it does the latter at every major rupture. [n3]"
+    },
+    {
+      "id": "n4",
+      "label": "Stewards (Asset & Estate Owners)",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 2.5,
+      "x": -400,
+      "y": 150,
+      "description": "Stewards are the Estate: asset managers, landowners, capital guardians, and hierarchy managers, not civil servants. They do not administer the crisis directly, but their interest in protecting asset values, market confidence, and existing order sets the incentive field that narrows what Helm is willing to recognise and what Lore is willing to say. [n4]"
+    },
+    {
+      "id": "n5",
+      "label": "Craft (Specialist Capacity)",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": 100,
+      "y": -250,
+      "description": "Craft is the technical and professional class: epidemiologists, virologists, security analysts, logisticians. The US holds deep Craft capacity in every one of the three episodes, but Craft is repeatedly filtered through political acceptability rather than mobilised as a governing centre, so its expertise becomes available without becoming determinative. [n5]"
+    },
+    {
+      "id": "n6",
+      "label": "Shield (Security Frame)",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 1,
+      "x": 100,
+      "y": -50,
+      "description": "Shield is the coercive and security boundary of the system: intelligence agencies, retaliation against dissenters, and the apparatus that decides which threats count as existential. Shield's drift across this story is from external threat detection toward internal narrative enforcement, including whistleblower marginalisation. [n6]"
+    },
+    {
+      "id": "n7",
+      "label": "Hands (Workforce & Households)",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": 400,
+      "y": 250,
+      "description": "Hands is the labour base and mass execution layer: workers, carers, service staff, ordinary households. Hands accumulates the entropy released by every upstream delay, absorbing the cost of late testing, fragmented messaging, and uneven mitigation without having had a vote in any of the decisions that produced those conditions. [n7]"
+    },
+    {
+      "id": "n8",
+      "label": "Flow (Markets, Trade, Supply)",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 1,
+      "x": 400,
+      "y": -50,
+      "description": "Flow is circulation: markets, trade, transport, supply chains, vaccine distribution. Flow is simultaneously the thing Stewards most want protected and the channel through which disruption propagates outward, carrying PPE shortages, market shocks, and geopolitical vaccine competition across borders. [n8]"
+    },
+    {
+      "id": "n9",
+      "label": "Geopolitical Rival Framing",
+      "shape": "ellipse",
+      "color": { "background": "#DBEAFE", "border": "#3B82F6" },
+      "borderWidth": 2.5,
+      "x": 100,
+      "y": 150,
+      "description": "This is the exogenous pressure to recast a domestic failure as an externally caused one, most visible in the China-origin framing of 2020 and the parallel anti-Sinovac influence operation. It enters the system from outside any single node and is picked up selectively by Lore and Shield whenever internal accountability becomes too costly to sustain. [n9]"
+    },
+    {
+      "id": "n10",
+      "label": "Institutional Trust (System Bond Strength)",
+      "shape": "box",
+      "color": { "background": "#CCFBF1", "border": "#14B8A6" },
+      "borderWidth": 2.5,
+      "x": 0,
+      "y": 350,
+      "description": "Institutional Trust is the central reservoir of the whole system: the accumulated public confidence that Helm, Lore, Archive, and Shield are acting in good faith and in coordination. It depletes every time a rupture is metabolised through blame rather than repair, and it is the resource that 2001, 2007, and 2020 each drew down without replenishing. [n10]"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "n1",
+      "to": "n2",
+      "width": 6,
+      "lag": 2,
+      "color": { "color": "#991B1B" },
+      "label": "Warning ignored\n-\nLag: Months",
+      "description": "Archive holds the pandemic playbook and prior warnings, but Helm fails to translate that inherited memory into timely coordinated action. This is the first rupture in each episode: the system had what it needed and did not use it in time. [e1]"
+    },
+    {
+      "id": "e2",
+      "from": "n2",
+      "to": "n3",
+      "width": 5,
+      "lag": 1,
+      "color": { "color": "#1E40AF" },
+      "label": "Executive sets the story\n+\nLag: Weeks",
+      "description": "Helm shapes what Lore is permitted to say, rewarding optimistic and politically convenient messaging over situational accuracy. The administrative apparatus becomes an instrument of executive signalling rather than a neutral transmitter of Archive's contents. [e2]"
+    },
+    {
+      "id": "e3",
+      "from": "n4",
+      "to": "n2",
+      "width": 6,
+      "lag": 1,
+      "color": { "color": "#991B1B" },
+      "label": "Asset protection narrows options\n-\nLag: Weeks",
+      "description": "Stewards do not run the crisis response, but pressure to preserve market confidence, asset values, and reopening momentum narrows the field of choices Helm considers politically survivable, biasing action toward reassurance over containment. [e3]"
+    },
+    {
+      "id": "e4",
+      "from": "n4",
+      "to": "n3",
+      "width": 4,
+      "lag": 1,
+      "color": { "color": "#991B1B" },
+      "label": "Order-preservation bias\n-\nLag: Weeks",
+      "description": "The same Steward incentive field biases Lore toward reassurance and, later, toward blame-shifting rather than honest reckoning, because a story that preserves the existing hierarchy is structurally cheaper than one that indicts it. [e4]"
+    },
+    {
+      "id": "e5",
+      "from": "n5",
+      "to": "n2",
+      "width": 4,
+      "lag": 2,
+      "color": { "color": "#1E40AF" },
+      "label": "Expertise available, filtered\n+\nLag: Months",
+      "description": "Craft supplies real technical capacity to Helm, but that capacity is incompletely integrated into executive decisions and is frequently screened for political acceptability before it reaches the point of action. [e5]"
+    },
+    {
+      "id": "e6",
+      "from": "n6",
+      "to": "n5",
+      "width": 5,
+      "lag": 1,
+      "color": { "color": "#991B1B" },
+      "label": "Hand-picked clique forms\n-\nLag: Weeks",
+      "description": "Shield's leadership forms a hostile sub-clique with selected Craft scientists, artificially restricting connectivity to dissenting experts and converting a circular reporting loop into the system's de facto consensus. [e6]"
+    },
+    {
+      "id": "e7",
+      "from": "n6",
+      "to": "n3",
+      "width": 5,
+      "lag": 1,
+      "color": { "color": "#1E40AF" },
+      "label": "Security frame supplies narrative\n+\nLag: Weeks",
+      "description": "Shield increasingly feeds Lore a retaliation-and-concealment narrative, marginalising whistleblowers and reframing scientific disagreement as a question of loyalty rather than evidence. [e7]"
+    },
+    {
+      "id": "e8",
+      "from": "n9",
+      "to": "n3",
+      "width": 6,
+      "lag": 2,
+      "color": { "color": "#1E40AF" },
+      "label": "Externalised blame story\n+\nLag: Months",
+      "description": "Geopolitical rival framing is metabolised by Lore as an explanatory shortcut: relocating responsibility for institutional failure onto a foreign origin story is easier to sustain than acknowledging the internal Helm-Archive rupture. [e8]"
+    },
+    {
+      "id": "e9",
+      "from": "n9",
+      "to": "n8",
+      "width": 4,
+      "lag": 1,
+      "color": { "color": "#1E40AF" },
+      "label": "Rival vaccine discredited\n+\nLag: Weeks",
+      "description": "The same geopolitical framing extends into Flow through an influence operation discrediting a rival's vaccine in third countries, prioritising strategic positioning over the documented real-world effectiveness of that vaccine. [e9]"
+    },
+    {
+      "id": "e10",
+      "from": "n3",
+      "to": "n7",
+      "width": 5,
+      "lag": 3,
+      "color": { "color": "#991B1B" },
+      "label": "Minimisation reaches the public\n-\nLag: Months",
+      "description": "Once Lore settles on minimisation or blame, that story reaches Hands directly, shaping whether households take precautions seriously and whether they trust subsequent official guidance at all. [e10]"
+    },
+    {
+      "id": "e11",
+      "from": "n2",
+      "to": "n7",
+      "width": 6,
+      "lag": 3,
+      "color": { "color": "#991B1B" },
+      "label": "Delay becomes lived cost\n-\nLag: Months",
+      "description": "Every month Helm delays coordinated action becomes testing shortages, fragmented mitigation, and uneven protection that Hands absorbs directly, with no mechanism to pass the cost back upstream. [e11]"
+    },
+    {
+      "id": "e12",
+      "from": "n2",
+      "to": "n8",
+      "width": 5,
+      "lag": 2,
+      "color": { "color": "#991B1B" },
+      "label": "Delay disrupts supply\n-\nLag: Months",
+      "description": "Helm's delay in mobilising federal coordination becomes PPE and testing-supply shortages and broader economic dislocation as Flow both protects and transmits the crisis. [e12]"
+    },
+    {
+      "id": "e13",
+      "from": "n7",
+      "to": "n10",
+      "width": 6,
+      "lag": 4,
+      "color": { "color": "#991B1B" },
+      "label": "Lived cost erodes trust\n-\nLag: Years",
+      "description": "As Hands bears the visible cost of upstream failure without upstream accountability, the reservoir of Institutional Trust depletes; people remember who paid and who didn't. [e13]"
+    },
+    {
+      "id": "e14",
+      "from": "n3",
+      "to": "n10",
+      "width": 6,
+      "lag": 4,
+      "color": { "color": "#991B1B" },
+      "label": "Story substitutes for repair\n-\nLag: Years",
+      "description": "Each time Lore resolves a rupture through blame or externalisation rather than honest repair, Institutional Trust is depleted rather than restored, because the underlying Helm-Archive fracture is never actually closed. [e14]"
+    },
+    {
+      "id": "e15",
+      "from": "n10",
+      "to": "n1",
+      "width": 4,
+      "lag": 5,
+      "color": { "color": "#991B1B" },
+      "label": "Low trust starves memory\n-\nLag: Years",
+      "description": "Depleted Institutional Trust makes it politically costly for any future Helm to openly consult Archive, since doing so risks admitting the prior failure, which closes the loop: low trust now produces under-used memory next time. [e15]"
+    },
+    {
+      "id": "e16",
+      "from": "n10",
+      "to": "n6",
+      "width": 4,
+      "lag": 3,
+      "color": { "color": "#1E40AF" },
+      "label": "Eroded trust invites security framing\n+\nLag: Years",
+      "description": "As general trust falls, ambiguous failures are increasingly recast as security and loyalty problems rather than administrative ones, because a security frame offers Shield and Helm a faster story than a forensic one. [e16]"
+    },
+    {
+      "id": "e17",
+      "from": "n4",
+      "to": "n8",
+      "width": 4,
+      "lag": 1,
+      "color": { "color": "#1E40AF" },
+      "label": "Reopening pressure protects flow",
+      "description": "Stewards push to keep markets, trade, and reopening moving even while containment is incomplete, treating Flow as the asset to be defended first and the epidemic as a secondary constraint to be managed around it. [e17]"
+    }
+  ],
+  "loops": [
+    {
+      "id": "R1",
+      "name": "The Delay-Blame Spiral",
+      "type": "R",
+      "description": "Helm delays converting Archive's warning into action [e1], which forces Hands and Flow to absorb the cost [e11, e12], which Lore then explains through externalised blame [e8] rather than honest repair, which erodes Institutional Trust [e14], which makes the next Helm even less willing to open Archive [e15]. The spiral repeats with a different proper noun each time: 2001, 2007, 2020. [R1]",
+      "nodeIds": ["n1", "n2", "n3", "n7", "n8", "n9", "n10"],
+      "edgeIds": ["e1", "e8", "e11", "e12", "e14", "e15"]
+    },
+    {
+      "id": "R2",
+      "name": "The Steward Capture Loop",
+      "type": "R",
+      "description": "Stewards narrow Helm's admissible choices toward asset protection [e3] and bias Lore toward reassurance [e4], which in turn keeps Flow moving on Steward terms [e17], reinforcing exactly the incentive structure that produced the narrow choice set in the first place. This loop never resolves the crisis, it just protects the order around it. [R2]",
+      "nodeIds": ["n4", "n2", "n3", "n8"],
+      "edgeIds": ["e3", "e4", "e17"]
+    },
+    {
+      "id": "R3",
+      "name": "The Hand-Picked Consensus Trap",
+      "type": "R",
+      "description": "Shield forms a hostile clique with selected Craft voices [e6], restricting which expertise reaches Helm [e5] and supplying Lore with a retaliation-and-concealment story instead of a forensic one [e7]. The narrower the clique, the more confident the consensus sounds, and the more confident it sounds, the harder it becomes for outside Craft to be heard. [R3]",
+      "nodeIds": ["n6", "n5", "n2", "n3"],
+      "edgeIds": ["e5", "e6", "e7"]
+    },
+    {
+      "id": "B1",
+      "name": "The Trust-Security Substitution",
+      "type": "B",
+      "description": "When Institutional Trust falls, the system reaches for Shield's security frame as a faster, simpler story than the slow forensic work of repairing Helm-Archive coordination [e16]. This looks like stabilisation in the short run, because a named culprit feels resolved, but it balances the symptom rather than the underlying decoupling, so the next shock starts from a lower trust baseline. [B1]",
+      "nodeIds": ["n10", "n6"],
+      "edgeIds": ["e16"]
+    },
+    {
+      "id": "R4",
+      "name": "The Externalised Origin Engine",
+      "type": "R",
+      "description": "Geopolitical rival framing feeds Lore an origin story that relocates blame abroad [e8] and simultaneously discredits a rival's competing vaccine in Flow [e9], doing double duty: explaining the failure and weakening a competitor's standing in the same narrative move. The 2026 ODNI release and the 2020-21 Philippines anti-Sinovac operation are two faces of this same loop, six years apart. [R4]",
+      "nodeIds": ["n9", "n3", "n8"],
+      "edgeIds": ["e8", "e9"]
+    },
+    {
+      "id": "B2",
+      "name": "Hands as the Shock Absorber",
+      "type": "B",
+      "description": "Hands silently stabilises the rest of the system by absorbing the entropy that Helm, Stewards, and Lore decline to absorb themselves [e10, e11]. This looks like resilience from above, since the system as a whole keeps functioning, but it is resilience purchased by transferring stress downward onto the node with the least power to refuse it. [B2]",
+      "nodeIds": ["n3", "n2", "n7"],
+      "edgeIds": ["e10", "e11"]
+    }
+  ],
+  "archetypes": [
+    {
+      "id": "arch1",
+      "name": "Shifting the Burden",
+      "description": "Each time the system faces a Helm-Archive rupture, it has two available fixes: the fundamental fix (open Archive honestly, accept Helm accountability, repair Lore's relationship to fact) and the symptomatic fix (externalise blame, invoke Shield's security frame, protect Steward asset positions). The symptomatic fix is faster and less politically costly, so the system reaches for it every time, which is why 2001, 2007, and 2020 rhyme rather than differ. The fundamental fix atrophies from disuse while the symptomatic fix gets more reflexive and more convincing with each repetition. [arch1]",
+      "nodeIds": ["n1", "n2", "n3", "n6", "n9", "n10"],
+      "edgeIds": ["e1", "e8", "e14", "e15", "e16"]
+    },
+    {
+      "id": "arch2",
+      "name": "Tragedy of the Commons",
+      "description": "Institutional Trust is the shared resource that every node draws on but no single node is responsible for replenishing. Stewards, Helm, and Lore each extract short-term benefit from the trust reservoir, whether through asset protection, political survival, or narrative convenience, while Hands bears the depletion without having drawn from it. Like any commons, it can absorb individual extraction for a while, but the cumulative draw from 2001 through 2020 leaves a thinner reservoir for whatever comes next. [arch2]",
+      "nodeIds": ["n4", "n2", "n3", "n7", "n10"],
+      "edgeIds": ["e3", "e4", "e10", "e11", "e13", "e14"]
+    }
+  ]
+}
