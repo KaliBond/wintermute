@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Three Great-Power Trajectories Against Their Own Historical Attractors — Neural Nations</title>
+    <meta name="description" content="A JUNO/CAMS results note on bloc-coordination structure and the isolation of the United States trajectory. China, Russia, and the USA measured against their own twentieth-century attractor bands. All three in distinct positions in 2026; only one has left its historical basin.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/great-power-attractors">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/great-power-attractors">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:title" content="Three Great-Power Trajectories Against Their Own Historical Attractors">
+    <meta property="og:description" content="China (z = +1.37), Russia (z = +0.28), USA (z = −2.73). Only one system has left its twentieth-century basin — in both viability and coupling, led from the legitimacy node.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ESZ16XVVNN');</script>
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+    .report-wrap {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 40px 24px 96px;
+    }
+    .report-eyebrow {
+        font-size: 0.72em;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: #2F6F7D;
+        margin-bottom: 12px;
+    }
+    .report-wrap h1 {
+        font-size: clamp(1.55rem, 3.4vw, 2.2rem);
+        font-weight: 800;
+        color: #1a0a2e;
+        line-height: 1.15;
+        margin: 0 0 10px;
+    }
+    .report-subtitle {
+        font-size: 1.06em;
+        color: #374151;
+        margin: 0 0 10px;
+        line-height: 1.5;
+        font-style: italic;
+    }
+    .report-meta {
+        font-size: 0.88em;
+        color: #6b7280;
+        margin: 0 0 32px;
+        line-height: 1.6;
+    }
+    .report-meta strong { color: #374151; }
+    .report-abstract {
+        font-size: 1.01em;
+        line-height: 1.78;
+        color: #374151;
+        border-left: 4px solid #2F6F7D;
+        padding: 16px 20px;
+        background: rgba(47,111,125,0.04);
+        border-radius: 0 8px 8px 0;
+        margin-bottom: 40px;
+    }
+    .report-body {
+        font-size: 1.01em;
+        line-height: 1.82;
+        color: #2c3e50;
+    }
+    .report-body p { margin-bottom: 1.3em; }
+    .report-body h2 {
+        font-size: 1.14em;
+        font-weight: 700;
+        color: #1B2A33;
+        margin: 2.6em 0 0.7em;
+        padding-bottom: 7px;
+        border-bottom: 1px solid #DAD2B8;
+    }
+    .report-body h3 {
+        font-size: 1.01em;
+        font-weight: 700;
+        color: #2F6F7D;
+        margin: 1.8em 0 0.4em;
+    }
+    .finding-box {
+        background: #f8f9fa;
+        border: 1px solid #e5e7eb;
+        border-left: 4px solid #2F6F7D;
+        border-radius: 0 8px 8px 0;
+        padding: 16px 20px;
+        margin: 20px 0;
+        font-size: 0.95em;
+        line-height: 1.72;
+    }
+    .finding-box.warn { border-left-color: #D98B2B; background: #fffbf0; }
+    .finding-box.crit { border-left-color: #C84C3E; background: #fdf5f4; }
+    .finding-box.ok   { border-left-color: #2ca02c; background: #f0fdf4; }
+    .finding-label {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.7em;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+        color: #2F6F7D;
+    }
+    .finding-box.warn .finding-label { color: #D98B2B; }
+    .finding-box.crit .finding-label { color: #C84C3E; }
+    .finding-box.ok   .finding-label { color: #2ca02c; }
+
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9em;
+        margin: 20px 0;
+    }
+    .data-table th {
+        text-align: left;
+        font-size: 0.78em;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #6b7280;
+        padding: 8px 12px;
+        border-bottom: 2px solid #DAD2B8;
+        white-space: nowrap;
+    }
+    .data-table td {
+        padding: 8px 12px;
+        border-bottom: 1px solid #f0ece0;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.88em;
+        vertical-align: top;
+    }
+    .data-table td.label {
+        font-family: inherit;
+        font-weight: 500;
+        color: #1a1a1a;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr.no-sig td { color: #6b7280; }
+
+    .z-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin: 24px 0;
+    }
+    .z-tile {
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 16px 18px;
+        background: #fff;
+        text-align: center;
+    }
+    .z-tile .z-country {
+        font-size: 0.72em;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 8px;
+    }
+    .z-tile .z-score {
+        font-size: 2em;
+        font-weight: 800;
+        line-height: 1;
+        margin-bottom: 6px;
+        font-family: 'JetBrains Mono', monospace;
+    }
+    .z-tile .z-status {
+        font-size: 0.78em;
+        line-height: 1.4;
+        color: #6b7280;
+    }
+    .z-tile.china  { border-left: 4px solid #4F8F6B; }
+    .z-tile.russia { border-left: 4px solid #C9A227; }
+    .z-tile.usa    { border-left: 4px solid #C84C3E; }
+
+    .fig-block { margin: 28px 0; text-align: center; }
+    .fig-block img { max-width: 100%; border: 1px solid #e5e7eb; border-radius: 8px; }
+    .fig-caption { font-size: 0.84em; color: #6b7280; margin-top: 10px; font-style: italic; line-height: 1.5; text-align: left; }
+
+    .data-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 20px 0;
+    }
+    .data-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 14px;
+        border: 1px solid #DAD2B8;
+        border-radius: 6px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.82em;
+        color: #2F6F7D;
+        text-decoration: none;
+        background: #fff;
+    }
+    .data-link:hover { background: #f0f7f7; border-color: #2F6F7D; }
+
+    @media (max-width: 640px) {
+        .report-wrap { padding: 28px 16px 60px; }
+        .z-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link active">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+    </div>
+</nav>
+
+<main class="report-wrap">
+
+    <p class="report-eyebrow">Results Note &middot; JUNO/CAMS v1.0-Final &middot; June 2026</p>
+    <h1>Three Great-Power Trajectories Against Their Own Historical Attractors</h1>
+    <p class="report-subtitle">Bloc-coordination structure and the isolation of the United States trajectory in the contemporary great-power set</p>
+    <div class="report-meta">
+        <strong>Kari Freyr McKern</strong> &middot; JUNO/CAMS v1.0-Final &middot; Five-scorer ensemble corpus<br>
+        Data: USA 1900–2026 &middot; Russia 1800–2026 &middot; China 1875–2026 &middot; 5-year resolution (USA), annual (Russia, China)
+    </div>
+
+    <div class="report-abstract">
+        We test whether China, Russia, and the United States move as a coordinated system, and locate each polity's present institutional state relative to its own twentieth-century baseline. Using five-scorer ensemble Node-Value series on the canonical eight-node framework, each polity's 1900–1999 system-mean viability defines an attractor band (±2σ). Three findings follow. First, the bloc-coordination hypothesis is not supported on any timescale: no pairwise correlation attains significance, and the one elevated value — post-2000 China–Russia, r = 0.80 — rests on six observations and fails its significance test (p = 0.06). Second, the three polities occupy qualitatively distinct positions in 2026: China sits above its band centre (z = +1.37), Russia rests inside its band (z = +0.28), and the United States lies below its band floor (z = −2.73), the only system of the three outside its own historical envelope. Third, the United States anomaly is two-dimensional: both node viability (z = −2.73) and inter-node coupling (z = −2.48) have left the twentieth-century band, a configuration not shared by either of the other systems. The departure is led by the Lore (legitimacy) node under no external forcing, the framework signature of an endogenous legitimacy crisis. All headline results survive inter-scorer envelope testing.
+    </div>
+
+    <div class="report-body">
+
+        <h2>1. Methods</h2>
+
+        <h3>1.1 Data</h3>
+        <p>Three longitudinal series were analysed, each an ensemble mean over five independent scoring passes under an identical protocol on the canonical eight institutional nodes (Helm, Shield, Lore, Stewards, Craft, Hands, Archive, Flow): the United States (1900–2026, 5-year resolution), Russia (1800–2026, annual; 1900–2026 used here), and China (1875–2026, annual; 1900–2026 used here). Each series is accompanied by an envelope file recording inter-scorer dispersion (per-node V-range, V-min, V-max) for robustness testing.</p>
+
+        <h3>1.2 Node viability and the attractor band</h3>
+        <p>Node viability follows the canonical definition <strong>V = C + K − S + 0.5A</strong>, computed per node-year, with system viability taken as the mean across the eight nodes. For each polity the <em>historical attractor</em> is the mean (μ) and standard deviation (σ) of system viability over 1900–1999. The interval μ ± 2σ is the attractor band: the region the system occupied across the full twentieth century, including its depressions, wars, and regime changes. A 2026 value outside this band indicates departure from the basin the system historically returned to. Position is reported as a z-score: z = (V₂₀₂₆ − μ) / σ.</p>
+
+        <h3>1.3 Inter-node coupling</h3>
+        <p>Edge weights follow the canonical bounded form <strong>B<sub>ij</sub> = √(q<sub>i</sub>·q<sub>j</sub>) · 2<sup>−(S<sub>i</sub>+S<sub>j</sub>)/10</sup></strong>, with coupling quality q<sub>i</sub> = (0.6C<sub>i</sub> + 0.4A<sub>i</sub>)/10, yielding B ∈ [0, 1]. The uploaded series carried legacy-scaled Bond-Strength values (range ≈ 2.7–38.7); these were recomputed under the canonical formula prior to analysis (recomputed range [0.07, 0.49]). Canonical-recomputed files are released with this note. System coupling is the mean edge weight per year; its attractor band is defined as for viability.</p>
+
+        <h3>1.4 Correlation and robustness</h3>
+        <p>Pairwise Pearson correlations between system-viability trajectories were computed on common years (1900–2026, n = 26) and on the post-2000 window (n = 6), with two-tailed p-values. Robustness was assessed by re-evaluating each 2026 position at the harsh and generous edges of the inter-scorer envelope; a result is considered robust when its qualitative classification (inside vs. outside band) holds across the full envelope.</p>
+
+        <h2>2. Results</h2>
+
+        <h3>2.1 Position against the historical attractor</h3>
+
+        <div class="z-grid">
+            <div class="z-tile china">
+                <div class="z-country" style="color:#4F8F6B;">China</div>
+                <div class="z-score" style="color:#4F8F6B;">+1.37</div>
+                <div class="z-status">Above band centre<br>μ = 5.25 (low baseline, chronic pre-reform crisis)</div>
+            </div>
+            <div class="z-tile russia">
+                <div class="z-country" style="color:#C9A227;">Russia</div>
+                <div class="z-score" style="color:#C9A227;">+0.28</div>
+                <div class="z-status">Inside band<br>Recovered from two prior basin exits (1917, 1991)</div>
+            </div>
+            <div class="z-tile usa">
+                <div class="z-country" style="color:#C84C3E;">USA</div>
+                <div class="z-score" style="color:#C84C3E;">−2.73</div>
+                <div class="z-status">Below band floor<br>Lowest value in 126-year record. Only system outside its own envelope.</div>
+            </div>
+        </div>
+
+        <p>The three positions in 2026 are qualitatively distinct. The United States, having held a comparatively narrow band throughout the twentieth century (μ = 10.78, σ = 2.64) and recovered from every prior trough, descends monotonically after 2000 and crosses below its 2σ floor by 2020, reaching the lowest value in its 126-year record by 2026 (z = −2.73). Russia, the most volatile of the three, suffered two genuine basin exits — the 1917 revolutionary collapse (z = −2.92, negative viability) and the 1991 Soviet dissolution (z = −1.70) — yet recovered to within its band after each and sits inside it in 2026 (z = +0.28). China rises from the lowest twentieth-century baseline of the three (μ = 5.25), reflecting chronic pre-reform crisis, to above its band centre by the 2000s, holding there through 2026 (z = +1.37).</p>
+
+        <div class="fig-block">
+            <img src="fig_three_panel.png" alt="Three-panel figure: system viability for China, Russia, and USA 1900–2026 against each polity's own 1900–1999 attractor band" loading="lazy">
+            <p class="fig-caption"><strong>Figure 1.</strong> System viability (mean Node Value) for each polity, 1900–2026, against its own 1900–1999 attractor band (±2σ, shaded; mean dotted). Five-scorer ensemble means under JUNO/CAMS v1.0-Final. The US trajectory departs its band floor by 2020 and reaches its own 126-year minimum in 2026. Russia and China both remain within or above their own historical envelopes.</p>
+        </div>
+
+        <h3>2.2 The bloc-coordination test</h3>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Pair</th>
+                    <th>Full century r (p)</th>
+                    <th>Post-2000 r (p)</th>
+                    <th>Significant?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="no-sig">
+                    <td class="label">China – Russia</td>
+                    <td>+0.13 (0.53)</td>
+                    <td>+0.80 (0.06)</td>
+                    <td>No</td>
+                </tr>
+                <tr class="no-sig">
+                    <td class="label">China – USA</td>
+                    <td>−0.35 (0.08)</td>
+                    <td>+0.71 (0.11)</td>
+                    <td>No</td>
+                </tr>
+                <tr class="no-sig">
+                    <td class="label">Russia – USA</td>
+                    <td>+0.03 (0.87)</td>
+                    <td>+0.23 (0.67)</td>
+                    <td>No</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="font-size:0.85em;color:#6b7280;margin-top:-8px;">Two-tailed p in parentheses. Full century n = 26; post-2000 n = 6. No coefficient attains significance at α = 0.05.</p>
+
+        <div class="finding-box">
+            <div class="finding-label">Bloc-coordination hypothesis: not supported</div>
+            Over the full century, no pairing is statistically significant. The single elevated value is post-2000 China–Russia (r = 0.80), the figure most readily cited in support of bloc coordination. On six observations it carries p = 0.06 and cannot be distinguished from two independently high, gently declining trajectories at similar altitude — the more so because China–USA over the same window is comparably high (r = 0.71) while moving in the <em>opposite</em> direction of institutional health. Post-2000 co-movement is consistent with shared exposure to common exogenous shocks (2008, COVID-19) rather than coordinated dynamics.
+        </div>
+
+        <h3>2.3 The United States anomaly is two-dimensional</h3>
+
+        <p>The US departure is not confined to viability. Mean inter-node coupling, recomputed on the canonical scale, falls from a twentieth-century baseline of 0.307 to 0.131 in 2026 (z = −2.48), closely mirroring the viability departure (z = −2.73). Russia (coupling z = −0.06) and China (z = +0.89) both retain their historical coupling.</p>
+
+        <div class="finding-box crit">
+            <div class="finding-label">Two-dimensional departure — USA only</div>
+            A system can shed viability while preserving its connective structure — the more recoverable case — or lose both. Only the United States exhibits the latter: viability z = −2.73, coupling z = −2.48. Russia and China each retain their historical coupling.<br><br>
+            Node-level decomposition identifies the driver. From 2000 to 2026 the US <strong>Lore (legitimacy)</strong> node falls from 11.3 to 0.5, a near-total evacuation, while the <strong>Shield (security)</strong> node remains the most intact institution in the system (7.5). A configuration in which the coercive node outlasts the legitimating node, under no external forcing within the window, is the framework signature of an <em>endogenous legitimacy crisis</em> rather than an externally imposed capacity shock.
+        </div>
+
+        <p>The contrast with Russia and China is direct: over the same window the Russian Archive and Lore nodes strengthened (+3.1, +1.6), and the Chinese Archive node strengthened (+0.6) — i.e. the legitimacy and memory nodes <em>consolidated</em> in both of the systems most often grouped against the United States.</p>
+
+        <h3>2.4 Robustness</h3>
+
+        <p>All headline classifications survive inter-scorer envelope testing.</p>
+
+        <div class="finding-box ok">
+            <div class="finding-label">Robustness summary</div>
+            <strong>USA:</strong> Inter-scorer dispersion tight (mean V-range 0.75, near series median). At the most generous envelope edge the system sits at z = −2.56, still below its floor. No scorer places it inside the band.<br><br>
+            <strong>China:</strong> Harshest envelope edge gives z = +1.11, still above band centre.<br><br>
+            <strong>Russia:</strong> Noisiest to score (2026 V-range 3.94, above its median). Envelope straddles band centre (harsh z = −0.34, generous z = +0.85). Classification: band-stable in direction — nowhere near a floor breach — but precise placement is scorer-sensitive. Reported as band-stable with wide uncertainty rather than pinned to a point estimate.
+        </div>
+
+        <h2>3. Discussion</h2>
+
+        <p>The data support neither of the two narratives most often applied to this triad. They do not support a coordinated China–Russia bloc: across any window longer than the shared-shock period the trajectories are dynamically independent, and the one supportive correlation fails its significance test. Equally, they do not support a uniform great-power decline: of the three systems, two are at or above their own twentieth-century baselines and only one has left its historical envelope.</p>
+
+        <p>What the analysis isolates is a single anomaly. The system most often cast as the stable anchor of the international order is the one that has departed its basin of attraction — in both viability and coupling, led from the legitimacy node, under endogenous rather than external forcing — while the two systems most often cast as a threatening axis are independently holding above and within their own century-long bands.</p>
+
+        <div class="finding-box warn">
+            <div class="finding-label">Interpretive note</div>
+            This inverts the directional assumption embedded in much contemporary framing. It is offered as an evidence-led structural reading, not a forecast: Russia's own record demonstrates that apparent stability can precede sharp collapse (1914→1917), so no trajectory's future is fixed by its past, and the US position likewise admits return — the framework states departure from a historical basin, not irreversibility.
+        </div>
+
+        <h2>4. Limitations</h2>
+
+        <p>The post-2000 window is short by construction (n = 6); all post-2000-only statistics are reported with that limit explicit. The great-power comparison rests on a 26-point century series, which is adequate for the correlation and attractor tests reported but does not support finer temporal claims. All series are five-scorer ensemble means; the Russia 2026 placement carries materially wider inter-scorer uncertainty than the other two and is reported accordingly. Attractor bands are calibrated on 1900–1999 and are conditioned on each polity's particular twentieth-century history; bands are not interchangeable across polities and z-scores are within-system, not cross-system, measures. Finally, "departure from the attractor" is a statement about a system's own historical envelope, not a prediction of trajectory.</p>
+
+        <h2>5. Data and reproducibility</h2>
+
+        <p>Canonical-recomputed Node-Value and Bond-Strength series for all three polities are released with this note. Bond-Strength values in these files are computed under the canonical bounded edge weight and supersede the legacy-scaled values in the source uploads.</p>
+
+        <div class="data-links">
+            <a href="USA_canonical_BS.csv" class="data-link" download>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                USA_canonical_BS.csv
+            </a>
+            <a href="Russia_canonical_BS.csv" class="data-link" download>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Russia_canonical_BS.csv
+            </a>
+            <a href="China_canonical_BS.csv" class="data-link" download>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                China_canonical_BS.csv
+            </a>
+        </div>
+
+        <p style="margin-top:40px; padding-top:18px; border-top:1px solid #DAD2B8; font-size:0.88em; color:#9ca3af; line-height:1.7;">
+            Instrument: JUNO/CAMS v1.0-Final · Five-scorer ensemble · Canonical Bond-Strength formula B<sub>ij</sub> = √(q<sub>i</sub>q<sub>j</sub>)·2<sup>−(S<sub>i</sub>+S<sub>j</sub>)/10</sup> · Attractor bands calibrated 1900–1999 · z-scores within-system only
+        </p>
+    </div>
+
+</main>
+
+<footer class="footer">
+    <nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a>
+        <a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a>
+        <a href="juno-explorer.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">JUNO Explorer</a>
+        <a href="validation.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Validation &amp; Limits</a>
+    </nav>
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+
+<script src="nav.js"></script>
+</body>
+</html>
