@@ -135,8 +135,8 @@
     .node-dims { margin-top:12px; display:flex; flex-direction:column; gap:7px; }
     .node-dim-row { display:flex; align-items:center; gap:8px; }
     .node-dim-key { width:12px; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; }
-    .node-dim-track { flex:1; height:6px; background:#EDE7D4; border-radius:99px; overflow:hidden; }
-    .node-dim-fill { height:100%; border-radius:99px; }
+    .node-dim-track { flex:1; height:6px; background:#EDE7D4; border-radius:99px; overflow:hidden; display:block; }
+    .node-dim-fill { display:block; height:100%; border-radius:99px; }
     .node-dim-val { width:26px; text-align:right; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#2F4652; font-variant-numeric:tabular-nums; }
     .manifold-section { margin-top:40px; border-top:1px solid #C9BE9E; padding-top:26px; display:grid; grid-template-columns:1.15fr 1fr; gap:40px; }
     .manifold-eyebrow { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#2F6F7D; }
@@ -553,7 +553,7 @@
       return `<div class="node-card" style="border-top:3px solid ${st.color};">
         <div class="node-card-header">
           <div>
-            <div class="node-card-name">${nm}</div>
+            <div class="node-card-name" style="color:${meta.c};">${nm}</div>
             <div class="node-card-status">
               <span class="node-status-dot" style="background:${st.color};"></span>
               <span class="node-status-label" style="color:${st.color};">${st.label}</span>
