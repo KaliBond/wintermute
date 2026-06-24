@@ -1,0 +1,263 @@
+/* ───────────────────────────────────────────────────────────────
+   Explain Simply — "What is this? Explain in plain English"
+   A tasteful on-brand trigger button + modal for Neural Nations.
+   Palette: ink #1B2A33 · teal #2F6F7D · cream #F5F1E4 / #FBF8EF / #F0E9D2
+   ─────────────────────────────────────────────────────────────── */
+
+/* ── Trigger button ─────────────────────────────────────────── */
+.es-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin: 22px auto 0;
+    padding: 11px 20px 11px 16px;
+    font: inherit;
+    font-size: 0.92em;
+    font-weight: 600;
+    color: #2F6F7D;
+    background: #FBF8EF;
+    border: 1px solid #2F6F7D;
+    border-radius: 999px;
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 1;
+    transition: background .15s, color .15s, box-shadow .15s, transform .12s;
+    position: relative;
+    z-index: 1;
+}
+.es-trigger:hover {
+    background: #2F6F7D;
+    color: #FBF8EF;
+    box-shadow: 0 2px 14px rgba(47,111,125,.22);
+}
+.es-trigger:active { transform: translateY(1px); }
+.es-trigger:focus-visible {
+    outline: 2px solid #2F6F7D;
+    outline-offset: 2px;
+}
+.es-trigger .es-spark {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+}
+
+/* ── Overlay ────────────────────────────────────────────────── */
+.es-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 4000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(27,42,51,0.42);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .26s cubic-bezier(.2,.7,.2,1);
+}
+.es-overlay.es-open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ── Dialog ─────────────────────────────────────────────────── */
+.es-dialog {
+    width: 100%;
+    max-width: 560px;
+    max-height: calc(100vh - 48px);
+    display: flex;
+    flex-direction: column;
+    background: #F5F1E4;
+    border: 1px solid #DAD2B8;
+    border-radius: 14px;
+    box-shadow: 0 18px 50px rgba(27,42,51,0.28), 0 2px 0 rgba(27,42,51,0.06);
+    overflow: hidden;
+    transform: translateY(12px) scale(.985);
+    transition: transform .26s cubic-bezier(.2,.7,.2,1);
+}
+.es-overlay.es-open .es-dialog {
+    transform: translateY(0) scale(1);
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+.es-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 24px 24px 16px;
+    border-bottom: 1px solid #DAD2B8;
+}
+.es-eyebrow {
+    font-size: 0.68em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #2F6F7D;
+    margin: 0 0 6px;
+}
+.es-title {
+    font-size: 1.32em;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #1B2A33;
+    margin: 0;
+    line-height: 1.2;
+}
+.es-close {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    color: #5A6E78;
+    cursor: pointer;
+    transition: background .15s, color .15s, border-color .15s;
+    margin: -4px -4px 0 0;
+}
+.es-close:hover { background: #EDE7D4; color: #1B2A33; border-color: #DAD2B8; }
+.es-close:focus-visible { outline: 2px solid #2F6F7D; outline-offset: 2px; }
+.es-close svg { width: 18px; height: 18px; }
+
+/* ── Body ───────────────────────────────────────────────────── */
+.es-body {
+    padding: 22px 24px 8px;
+    overflow-y: auto;
+}
+.es-prose {
+    transition: opacity .2s ease;
+}
+.es-prose p {
+    font-family: Georgia, 'Source Serif 4', 'Times New Roman', serif;
+    font-size: 1.04em;
+    line-height: 1.74;
+    color: #2A3B45;
+    margin: 0 0 16px;
+}
+.es-prose p:last-child { margin-bottom: 0; }
+.es-prose.es-loading { opacity: 0.32; }
+
+/* Skeleton shimmer while generating */
+.es-skeleton {
+    display: none;
+    padding: 4px 0 8px;
+}
+.es-body.es-busy .es-prose { display: none; }
+.es-body.es-busy .es-skeleton { display: block; }
+.es-skeleton-line {
+    height: 13px;
+    border-radius: 4px;
+    margin-bottom: 13px;
+    background: linear-gradient(90deg, #E7E0CC 0%, #F0EAD9 50%, #E7E0CC 100%);
+    background-size: 200% 100%;
+    animation: es-shimmer 1.25s ease-in-out infinite;
+}
+.es-skeleton-line:nth-child(4n) { width: 72%; margin-bottom: 22px; }
+@keyframes es-shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+.es-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    padding: 16px 24px 22px;
+    border-top: 1px solid #DAD2B8;
+    margin-top: 18px;
+}
+.es-note {
+    font-size: 0.78em;
+    color: #7A8890;
+    line-height: 1.5;
+    flex: 1;
+    min-width: 160px;
+}
+.es-regen {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    font: inherit;
+    font-size: 0.86em;
+    font-weight: 600;
+    color: #FBF8EF;
+    background: #2F6F7D;
+    border: 1px solid #2F6F7D;
+    border-radius: 999px;
+    cursor: pointer;
+    line-height: 1;
+    white-space: nowrap;
+    transition: filter .15s, transform .12s;
+}
+.es-regen:hover { filter: brightness(0.92); }
+.es-regen:active { transform: translateY(1px); }
+.es-regen:focus-visible { outline: 2px solid #1B2A33; outline-offset: 2px; }
+.es-regen:disabled { opacity: 0.55; cursor: progress; }
+.es-regen .es-spin {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+.es-regen.es-working .es-spin { animation: es-rotate .8s linear infinite; }
+.es-regen .es-regen-label::after { content: 'Regenerate with AI'; }
+.es-regen.es-working .es-regen-label::after { content: 'Generating…'; }
+@keyframes es-rotate { to { transform: rotate(360deg); } }
+
+@media (max-width: 600px) {
+    .es-dialog { max-width: 100%; }
+    .es-title { font-size: 1.18em; }
+    .es-foot { flex-direction: column-reverse; align-items: stretch; }
+    .es-regen { justify-content: center; }
+}
+
+/* ── Per-item card trigger (Explore catalogue) ──────────────── */
+.es-card {
+    position: relative;
+    display: flex;
+}
+.es-card > .artifact-link {
+    flex: 1 1 auto;
+    width: 100%;
+}
+.es-card-btn {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px 4px 7px;
+    font: inherit;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #2F6F7D;
+    background: #FBF8EF;
+    border: 1px solid #2F6F7D;
+    border-radius: 999px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(-2px);
+    box-shadow: 0 1px 4px rgba(27,42,51,.12);
+    transition: opacity .15s, transform .15s, background .15s, color .15s;
+}
+.es-card:hover .es-card-btn,
+.es-card:focus-within .es-card-btn { opacity: 1; transform: none; }
+.es-card-btn:hover { background: #2F6F7D; color: #FBF8EF; }
+.es-card-btn:active { transform: translateY(1px); }
+.es-card-btn:focus-visible { opacity: 1; transform: none; outline: 2px solid #2F6F7D; outline-offset: 2px; }
+.es-card-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+/* Touch devices have no hover — keep the trigger discoverable. */
+@media (hover: none) {
+    .es-card-btn { opacity: 0.92; transform: none; }
+}
+

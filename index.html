@@ -55,6 +55,7 @@
     </script>
 
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="explain-simply.css">
     <style>
         /* ── Home-page-specific styles ──────────────────────────── */
 
@@ -336,6 +337,10 @@
         <div class="home-hero">
             <h1>Neural Nations</h1>
             <p class="pull-quote">The foundational insight is that human societies are Complex Adaptive Systems and their CAS dynamics can be recovered from history in human archives. CAMS makes those recovered dynamics measurable through eight institutional nodes.</p>
+            <button type="button" class="es-trigger" data-explain-simply>
+                <svg class="es-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.7 4.9L18.5 9.5l-4.8 1.6L12 16l-1.7-4.9L5.5 9.5l4.8-1.6z"/></svg>
+                What is this? Explain in plain English
+            </button>
         </div>
 
         <div class="home-lede" style="margin-top:4px;">
@@ -469,5 +474,13 @@
 </footer>
 
 <script src="nav.js"></script>
+<script>
+window.EXPLAIN_SIMPLY_CONFIG = {
+  endpoint: 'https://api.moonshot.ai/v1/chat/completions',
+  model: 'kimi-k2-0905-preview',
+  apiKey: 'sk-G6B3zXe3sVqpWVmoqY796HGeFFeZfMxxCDXI4KxKgGXQI6tP'
+};
+</script>
+<script src="explain-simply.js"></script>
 </body>
 </html>
