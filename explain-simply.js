@@ -200,15 +200,20 @@
   // Per-item: explain one specific tool or paper from the Explore page.
   function buildItemPrompt(item) {
     var label = item.kind ? (item.kind.toLowerCase()) : 'item';
+    var body = item.body ? item.body.slice(0, 5000) : '';
     return "Context — " + CAMS_PRIMER + "\n\n" +
       "On the site's Explore page there is a " + label + " titled:\n" +
       "\u201c" + item.name + "\u201d\n" +
       (item.desc ? ("Its catalogue blurb reads: \u201c" + item.desc + "\u201d\n") : "") +
-      "\nWrite a warm, plain-English explanation of what THIS specific " + label + " is and why someone might open it. Audience: a curious non-expert. Rules:\n" +
-      "- 90 to 140 words, 2 short paragraphs.\n" +
-      "- No jargon, no equations, no Greek letters, no buzzwords. Decode any technical terms from the blurb into everyday language.\n" +
-      "- Be concrete about what the reader will see, learn, or be able to do.\n" +
-      "- Warm and clear, not promotional. Do not oversell.\n" +
+      (body ? ("\nHere is text taken directly from the " + label + " itself (may be truncated):\n\"\"\"\n" + body + "\n\"\"\"\n") : "") +
+      "\nWrite a warm, plain-English explanation of what THIS specific " + label + " is about and why someone might open it. " +
+      (body
+        ? "Base it on the actual text above — summarise its real argument, findings, or what the tool actually does. Be specific to this " + label + ", not generic about CAMS."
+        : "Base it on the title and blurb; decode any technical terms into everyday language.") + "\nRules:\n" +
+      "- 110 to 170 words, 2 short paragraphs.\n" +
+      "- No jargon, no equations, no Greek letters, no buzzwords. Translate technical terms into everyday language.\n" +
+      "- Be concrete about what the reader will actually find, learn, or be able to do.\n" +
+      "- Warm and clear, not promotional. Do not oversell or invent findings not present in the text.\n" +
       "- No greeting, no title, no markdown, no bullet points. Plain prose only.\n\n" +
       "Return only the explanation text.";
   }
@@ -263,10 +268,121 @@
     });
   }
 
+  // ── Read the linked item's real content ──────────────────────
+  // Same-origin HTML pages can be fetched and summarised. PDFs and
+  // external links (Gemini, Amazon, claude.ai artifacts) can't be read
+  // cross-origin, so those fall back to the catalogue blurb.
+  function isInternalHtml(href) {
+    if (!href) return false;
+    if (/^https?:\/\//i.test(href)) return false;      // external/absolute
+    if (/^(mailto:|tel:|#|javascript:)/i.test(href)) return false;
+    if (/\.pdf($|[?#])/i.test(href)) return false;      // PDF — can't parse here
+    if (/\.html?($|[?#])/i.test(href)) return true;
+    if (/\/$/.test(href)) return true;                  // directory → index.html
+    return !/\.[a-z0-9]+($|[?#])/i.test(href);          // extensionless route
+  }
+
+  function extractReadable(htmlString) {
+    var doc = new DOMParser().parseFromString(htmlString, 'text/html');
+    doc.querySelectorAll('script,style,noscript,svg,nav,footer,.navbar,.nav-mobile,header.sh-hero ~ *').forEach(function (n) { n.remove(); });
+    var metaEl = doc.querySelector('meta[name="description"]');
+    var meta = metaEl ? (metaEl.getAttribute('content') || '') : '';
+    var root = doc.querySelector('main, article, .container, .card, body') || doc.body;
+    var text = (root ? root.textContent : '').replace(/\s+/g, ' ').trim();
+    return (meta ? meta + '\n\n' : '') + text;
+  }
+
+  function loadItemBody(item) {
+    if (!item || item._loaded) return Promise.resolve();
+    if (isInternalHtml(item.href)) {
+      return fetch(item.href, { credentials: 'same-origin' })
+        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+        .then(function (html) { item.body = extractReadable(html); item._loaded = true; })
+        .catch(function () { item._loaded = true; }); // silent — blurb fallback
+    }
+    if (isInternalPdf(item.href)) {
+      return loadPdfBody(item);
+    }
+    item._loaded = true;
+    return Promise.resolve();
+  }
+
+  // ── PDF reading (lazy pdf.js) ───────────────────────────────
+  var PDFJS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+  var PDFJS_WORKER = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  var pdfjsPromise = null;
+
+  function isInternalPdf(href) {
+    if (!href) return false;
+    if (/^https?:\/\//i.test(href)) return false;       // external — CORS-blocked
+    if (/^(mailto:|tel:|#|javascript:)/i.test(href)) return false;
+    return /\.pdf($|[?#])/i.test(href);
+  }
+
+  // Load pdf.js once, on first PDF request.
+  function ensurePdfJs() {
+    if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+    if (pdfjsPromise) return pdfjsPromise;
+    pdfjsPromise = new Promise(function (resolve, reject) {
+      var s = document.createElement('script');
+      s.src = PDFJS_URL;
+      s.onload = function () {
+        if (window.pdfjsLib) {
+          try { window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER; } catch (e) {}
+          resolve(window.pdfjsLib);
+        } else { reject(new Error('pdfjsLib missing')); }
+      };
+      s.onerror = function () { reject(new Error('pdf.js failed to load')); };
+      document.head.appendChild(s);
+    });
+    return pdfjsPromise;
+  }
+
+  // Read up to `maxPages` pages of text, sequentially (ES5-safe).
+  function readPdfPages(pdf, maxPages) {
+    var out = [];
+    var chain = Promise.resolve();
+    var total = Math.min(pdf.numPages || 0, maxPages);
+    var _loop = function (i) {
+      chain = chain.then(function () {
+        if (out.join(' ').length > 6000) return;        // enough context
+        return pdf.getPage(i)
+          .then(function (pg) { return pg.getTextContent(); })
+          .then(function (tc) {
+            out.push(tc.items.map(function (it) { return it.str; }).join(' '));
+          });
+      });
+    };
+    for (var i = 1; i <= total; i++) _loop(i);
+    return chain.then(function () { return out.join('\n'); });
+  }
+
+  function loadPdfBody(item) {
+    return ensurePdfJs()
+      .then(function (pdfjsLib) {
+        return fetch(item.href, { credentials: 'same-origin' })
+          .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); })
+          .then(function (buf) { return pdfjsLib.getDocument({ data: buf }).promise; })
+          .then(function (pdf) { return readPdfPages(pdf, 8); });
+      })
+      .then(function (text) {
+        item.body = String(text || '').replace(/\s+/g, ' ').trim();
+        item._loaded = true;
+      })
+      .catch(function () { item._loaded = true; }); // silent — blurb fallback
+  }
+
   // Returns a Promise<string[]> of paragraphs.
   // Provider order: configured endpoint (Kimi/Grok/GPT) → window.claude
   // (prototype only) → hand-written fallbacks.
   function generate() {
+    // For items, first try to load the real page content so the AI can
+    // explain THIS paper/tool specifically (not just from the blurb).
+    var pre = currentItem ? loadItemBody(currentItem) : Promise.resolve();
+    return pre.then(runProviders);
+  }
+
+  function runProviders() {
     var prompt = buildPrompt();
 
     if (CONFIG && CONFIG.endpoint) {
@@ -338,7 +454,7 @@
       a.parentNode.insertBefore(wrap, a);
       wrap.appendChild(a);
 
-      var item = { name: cardName(a), kind: badgeKind(a), desc: cardDesc(a) };
+      var item = { name: cardName(a), kind: badgeKind(a), desc: cardDesc(a), href: a.getAttribute('href') };
 
       var btn = document.createElement('button');
       btn.type = 'button';
