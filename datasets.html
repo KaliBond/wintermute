@@ -1005,6 +1005,74 @@
         </p>
     </div>
 
+    <!-- JUNO BLIND TEST -->
+    <div class="card" style="border-left: 4px solid #2E7D52;">
+        <p class="section-label" style="color:#2E7D52;">JUNO Blind Test Dataset &mdash; June 2026</p>
+        <p style="font-size:0.92em;color:#555;margin-bottom:16px;line-height:1.7;">
+            A held-out inference challenge built on the full JUNO-1.0 corpus. Society identities are replaced with anonymous labels
+            (Society_A &ndash; Society_H); time is expressed as an offset (T+0 &ndash; T+226) relative to each society&rsquo;s
+            internal baseline. All four CAMS primary metrics (C, K, S, A) are present alongside the pre-computed JUNO-1.0 derived
+            quantities &mdash; so the dataset can be used either as a scoring target or as a diagnostic benchmark without re-running
+            the pipeline. Researchers can attempt to identify the societies from structural signatures alone before consulting the
+            answer key (to be published separately).
+        </p>
+
+        <div class="validation-strip" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));margin-bottom:20px;">
+            <div class="vstat">
+                <div class="vsv">8</div>
+                <div class="vsl">Anonymised societies (A&ndash;H)</div>
+            </div>
+            <div class="vstat">
+                <div class="vsv">227</div>
+                <div class="vsl">Time steps per society (T+0 &ndash; T+226)</div>
+            </div>
+            <div class="vstat">
+                <div class="vsv">9,608</div>
+                <div class="vsl">Node-step rows</div>
+            </div>
+            <div class="vstat">
+                <div class="vsv">8</div>
+                <div class="vsl">CAMS nodes per step</div>
+            </div>
+            <div class="vstat">
+                <div class="vsv">JUNO 1.0</div>
+                <div class="vsl">Bond formalism · pre-computed</div>
+            </div>
+        </div>
+
+        <p class="region-heading" style="margin-top:0;">Schema</p>
+        <table class="schema-table" style="margin-bottom:20px;">
+            <thead>
+                <tr><th>Column</th><th>Type</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><code>Society_ID</code></td><td>string</td><td>Anonymised label — Society_A through Society_H</td></tr>
+                <tr><td><code>T_Offset</code></td><td>string</td><td>Time step relative to internal baseline (T+0, T+1, &hellip;, T+226)</td></tr>
+                <tr><td><code>Node</code></td><td>string</td><td>One of the 8 CAMS nodes (Archive, Craft, Flow, Hands, Helm, Lore, Shield, Stewards)</td></tr>
+                <tr><td><code>Coherence</code></td><td>float 1&ndash;10</td><td>Internal node alignment</td></tr>
+                <tr><td><code>Capacity</code></td><td>float 1&ndash;10</td><td>Resources and effectiveness</td></tr>
+                <tr><td><code>Stress</code></td><td>float 1&ndash;10</td><td>Accumulated pressure and dysfunction</td></tr>
+                <tr><td><code>Abstraction</code></td><td>float 1&ndash;10</td><td>Symbolic and conceptual reach</td></tr>
+                <tr><td><code>Node_Value_Calc</code></td><td>float</td><td>JUNO-1.0 node value &sigma; = A&middot;C&middot;(K&minus;S)</td></tr>
+                <tr><td><code>Bond_Strength_Calc</code></td><td>float [0,1]</td><td>JUNO-1.0 normalised bond strength B<sub>ij</sub></td></tr>
+                <tr><td><code>Lambda2_Calc</code></td><td>float</td><td>&Lambda; coordination index &mdash; SBD / SBD<sub>90th</sub></td></tr>
+                <tr><td><code>V_Mean_Calc</code></td><td>float</td><td>Mean node value across all nodes at this time step</td></tr>
+                <tr><td><code>V_Min_Calc</code></td><td>float</td><td>Minimum node value at this time step</td></tr>
+            </tbody>
+        </table>
+
+        <div class="dataset-grid">
+            <div class="dataset-card" style="border-color:#a8d5bc;">
+                <span class="society" style="color:#1a3d2b;">JUNO_Blind_Test.csv</span>
+                <span class="meta">8 anonymised societies &middot; T+0&ndash;T+226 &middot; 9,608 rows &middot; JUNO-1.0 derived metrics included &middot; 621 KB &middot; June 2026</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/JUNO_Blind_Test.csv" target="_blank">View on GitHub</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/JUNO_Blind_Test.csv" target="_blank" class="dl" style="color:#2E7D52;border-color:#a8d5bc;">Download CSV</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- DATASETS — dynamic from datasets.json -->
     <div class="card">
         <p class="section-label">All Datasets — <span id="ds-count">76</span> files · <span id="ds-records">62,871</span> records</p>
