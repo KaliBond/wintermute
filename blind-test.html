@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JUNO/CAMS Blind Test — Neural Nations</title>
+    <meta name="description" content="Open blind-analysis challenge for the JUNO/CAMS framework. Load an anonymised dataset and the protocol prompt into any capable LLM and run the five-stage analysis before the unblinding key is revealed.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/blind-test">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/blind-test">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:title" content="JUNO/CAMS Blind Test — Neural Nations">
+    <meta property="og:description" content="Open blind-analysis challenge for the JUNO/CAMS framework. Can an LLM identify anonymised societies from their coordination physics alone?">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <link rel="stylesheet" href="style.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+        <hr class="menu-divider">
+        <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <!-- HEADER CARD -->
+    <div class="card" style="border-left: 4px solid #D98B2B;">
+        <h1 style="font-size: 1.35em; margin-bottom: 6px;">JUNO/CAMS Blind-Analysis Challenge</h1>
+        <p style="color: #888; font-size: 0.88em; margin-bottom: 20px;">Open validation experiment &nbsp;&middot;&nbsp; v1.0 &nbsp;&middot;&nbsp; neuralnations.org/blind-test</p>
+
+        <p style="font-size: 0.95em; line-height: 1.8; color: #444;">
+            Each blind dataset contains <strong>8 anonymised societies</strong> scored across up to 125 time steps on the CAMS eight-node framework (Helm, Shield, Lore, Stewards, Craft, Hands, Archive, Flow &times; four metrics: Coherence, Capacity, Stress, Abstraction). Nations, years, and all identifying information have been stripped. Society labels are <code>Society_A</code> through <code>Society_H</code>; time is expressed as <code>T+0, T+1, &hellip; T+N</code> offsets only.
+        </p>
+        <p style="font-size: 0.95em; line-height: 1.8; color: #444; margin-top: 10px;">
+            The challenge: <strong>can an LLM read a society&rsquo;s coordination physics and correctly identify who it is — before the key is revealed?</strong> Guesses must precede the unblinding key to be falsifiable. That ordering is the whole point.
+        </p>
+    </div>
+
+    <!-- HOW TO RUN -->
+    <div class="card" style="margin-top: 20px;">
+        <h2 style="font-size: 1.05em; font-weight: 700; color: #1f77b4; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 16px;">How to Run the Test</h2>
+
+        <ol style="margin: 0 0 0 20px; line-height: 2.0; color: #444; font-size: 0.93em;">
+            <li>Download the <strong>Protocol Prompt PDF</strong> below.</li>
+            <li>Download one of the three <strong>Blind Dataset CSVs</strong> (pick any — or run all three).</li>
+            <li>Open a <strong>fresh LLM session</strong> (Claude, Grok, Gemini, GPT-4o, or any capable model). Fresh means no prior CAMS context loaded.</li>
+            <li>Paste the full text of the protocol prompt into the session, then attach or paste the CSV data alongside it.</li>
+            <li>Let the model run <strong>Stages 1&ndash;4</strong> in order &mdash; canonical metrics, cognitive signature, epiphenomena, identification guesses. The model must output <em>&ldquo;Guesses locked. Please provide the key.&rdquo;</em> before you supply the answer.</li>
+            <li>Once Stage 4 guesses are locked, <strong>contact Kari</strong> (see below) or wait for the unblinding key to be published here to score the run.</li>
+            <li>With the key in hand, the model proceeds to <strong>Stage 5 &mdash; CAS analysis</strong>.</li>
+        </ol>
+
+        <div style="margin-top: 20px; padding: 14px 18px; background: #fdf9f0; border: 1px solid #e5d9c0; border-radius: 6px; font-size: 0.88em; color: #7a6030; line-height: 1.7;">
+            <strong>Protocol note:</strong> The analysis order is binding &mdash; metrics &rarr; signature &rarr; epiphenomena &rarr; identity guesses &rarr; request key &rarr; CAS analysis. Do not reveal or request the key before Stage 4 output is complete. Guesses are only falsifiable if they precede the key.
+        </div>
+    </div>
+
+    <!-- DOWNLOADS -->
+    <div class="card" style="margin-top: 20px;">
+        <h2 style="font-size: 1.05em; font-weight: 700; color: #1f77b4; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 20px;">Downloads</h2>
+
+        <!-- Protocol PDF -->
+        <div style="display: flex; align-items: center; gap: 16px; padding: 16px; background: #f5f3ee; border-radius: 8px; margin-bottom: 14px; border: 1px solid #ddd;">
+            <div style="flex-shrink:0; width:40px; height:40px; background:#D98B2B; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                <svg fill="white" viewBox="0 0 24 24" style="width:20px;height:20px;"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+            </div>
+            <div style="flex:1;">
+                <div style="font-weight:700; font-size:0.95em; color:#1a1a2e;">JUNO/CAMS Blind-Analysis Protocol Prompt v1.0</div>
+                <div style="font-size:0.83em; color:#888; margin-top:2px;">PDF &nbsp;&middot;&nbsp; 43 KB &nbsp;&middot;&nbsp; Full five-stage analysis protocol — paste into LLM alongside dataset</div>
+            </div>
+            <a href="blind-test/CAMS_Blind_Analysis_Protocol_v1.0.pdf" download style="flex-shrink:0; padding:8px 16px; background:#D98B2B; color:white; border-radius:6px; text-decoration:none; font-size:0.85em; font-weight:600;">Download PDF</a>
+        </div>
+
+        <!-- Set 1 -->
+        <div style="display: flex; align-items: center; gap: 16px; padding: 16px; background: #f5f3ee; border-radius: 8px; margin-bottom: 14px; border: 1px solid #ddd;">
+            <div style="flex-shrink:0; width:40px; height:40px; background:#2F6F7D; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                <svg fill="white" viewBox="0 0 24 24" style="width:20px;height:20px;"><path d="M3 3h18v2H3V3zm0 4h18v2H3V7zm0 4h12v2H3v-2zm0 4h12v2H3v-2zm0 4h18v2H3v-2z"/></svg>
+            </div>
+            <div style="flex:1;">
+                <div style="font-weight:700; font-size:0.95em; color:#1a1a2e;">Blind Dataset &mdash; Set 1</div>
+                <div style="font-size:0.83em; color:#888; margin-top:2px;">CSV &nbsp;&middot;&nbsp; ~304 KB &nbsp;&middot;&nbsp; 8 societies (A&ndash;H) &nbsp;&middot;&nbsp; ~8,064 rows &nbsp;&middot;&nbsp; Schema: Society_ID, T_Offset, Node, C, K, S, A</div>
+            </div>
+            <a href="blind-test/JUNO_Blind_Set_1.csv" download style="flex-shrink:0; padding:8px 16px; background:#2F6F7D; color:white; border-radius:6px; text-decoration:none; font-size:0.85em; font-weight:600;">Download CSV</a>
+        </div>
+
+        <!-- Set 2 -->
+        <div style="display: flex; align-items: center; gap: 16px; padding: 16px; background: #f5f3ee; border-radius: 8px; margin-bottom: 14px; border: 1px solid #ddd;">
+            <div style="flex-shrink:0; width:40px; height:40px; background:#2F6F7D; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                <svg fill="white" viewBox="0 0 24 24" style="width:20px;height:20px;"><path d="M3 3h18v2H3V3zm0 4h18v2H3V7zm0 4h12v2H3v-2zm0 4h12v2H3v-2zm0 4h18v2H3v-2z"/></svg>
+            </div>
+            <div style="flex:1;">
+                <div style="font-weight:700; font-size:0.95em; color:#1a1a2e;">Blind Dataset &mdash; Set 2</div>
+                <div style="font-size:0.83em; color:#888; margin-top:2px;">CSV &nbsp;&middot;&nbsp; ~304 KB &nbsp;&middot;&nbsp; 8 societies (A&ndash;H) &nbsp;&middot;&nbsp; ~8,040 rows &nbsp;&middot;&nbsp; Schema: Society_ID, T_Offset, Node, C, K, S, A</div>
+            </div>
+            <a href="blind-test/JUNO_Blind_Set_2.csv" download style="flex-shrink:0; padding:8px 16px; background:#2F6F7D; color:white; border-radius:6px; text-decoration:none; font-size:0.85em; font-weight:600;">Download CSV</a>
+        </div>
+
+        <!-- Set 3 -->
+        <div style="display: flex; align-items: center; gap: 16px; padding: 16px; background: #f5f3ee; border-radius: 8px; border: 1px solid #ddd;">
+            <div style="flex-shrink:0; width:40px; height:40px; background:#2F6F7D; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                <svg fill="white" viewBox="0 0 24 24" style="width:20px;height:20px;"><path d="M3 3h18v2H3V3zm0 4h18v2H3V7zm0 4h12v2H3v-2zm0 4h12v2H3v-2zm0 4h18v2H3v-2z"/></svg>
+            </div>
+            <div style="flex:1;">
+                <div style="font-weight:700; font-size:0.95em; color:#1a1a2e;">Blind Dataset &mdash; Set 3</div>
+                <div style="font-size:0.83em; color:#888; margin-top:2px;">CSV &nbsp;&middot;&nbsp; ~299 KB &nbsp;&middot;&nbsp; 8 societies (A&ndash;H) &nbsp;&middot;&nbsp; ~7,912 rows &nbsp;&middot;&nbsp; Schema: Society_ID, T_Offset, Node, C, K, S, A</div>
+            </div>
+            <a href="blind-test/JUNO_Blind_Set_3.csv" download style="flex-shrink:0; padding:8px 16px; background:#2F6F7D; color:white; border-radius:6px; text-decoration:none; font-size:0.85em; font-weight:600;">Download CSV</a>
+        </div>
+    </div>
+
+    <!-- PROTOCOL OVERVIEW -->
+    <div class="card" style="margin-top: 20px;">
+        <h2 style="font-size: 1.05em; font-weight: 700; color: #1f77b4; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 16px;">Protocol Overview (5 Stages)</h2>
+
+        <div style="border-left: 3px solid #D98B2B; padding-left: 16px; margin-bottom: 18px;">
+            <div style="font-weight: 700; font-size: 0.93em; color: #1a1a2e; margin-bottom: 4px;">Stage 1 &mdash; Canonical Metrics</div>
+            <p style="font-size: 0.88em; line-height: 1.75; color: #555; margin: 0;">Compute node viability (V<sub>i</sub>), cognitive activation (s<sub>i</sub>), coupling quality (q<sub>i</sub>), and bond strength (B<sub>ij</sub>) from raw scores using locked operators &mdash; no substitutions. Derive per-society-year V&#772;, V_min, B&#772;, &lambda;<sub>2</sub>, s_min, S&#772;. Classify each year into one of six regimes: Stable Adaptive, Strained, Local Node Failure, Phantom Type II, Systemic Crisis, Freeze/Collapse.</p>
+        </div>
+
+        <div style="border-left: 3px solid #2F6F7D; padding-left: 16px; margin-bottom: 18px;">
+            <div style="font-weight: 700; font-size: 0.93em; color: #1a1a2e; margin-bottom: 4px;">Stage 2 &mdash; Cognitive Signature</div>
+            <p style="font-size: 0.88em; line-height: 1.75; color: #555; margin: 0;">Map where the society <em>thinks</em>: distribution of s<sub>i</sub> across nodes, dominant and dormant channels, signature drift over time, mean Abstraction trend. Produce a one-line taxonomic label grounded in the numbers.</p>
+        </div>
+
+        <div style="border-left: 3px solid #5a3580; padding-left: 16px; margin-bottom: 18px;">
+            <div style="font-weight: 700; font-size: 0.93em; color: #1a1a2e; margin-bottom: 4px;">Stage 3 &mdash; Epiphenomena</div>
+            <p style="font-size: 0.88em; line-height: 1.75; color: #555; margin: 0;">Detect system-level patterns: synchrony structure (permutation null &ge;1000 shuffles), compensation dynamics, coupling&ndash;viability divergence, failure morphology, and carried-forward row audit. Nulls reported with equal prominence as positives.</p>
+        </div>
+
+        <div style="border-left: 3px solid #C84C3E; padding-left: 16px; margin-bottom: 18px;">
+            <div style="font-weight: 700; font-size: 0.93em; color: #1a1a2e; margin-bottom: 4px;">Stage 4 &mdash; Identification Guesses, then Request Key</div>
+            <p style="font-size: 0.88em; line-height: 1.75; color: #555; margin: 0;">For each society: ranked identity candidates, inferred T+0 anchor year, event-fingerprints, confidence grade. Then the model outputs <strong>&ldquo;Guesses locked. Please provide the key.&rdquo;</strong> and waits. On receipt of key: score hits, misses, near-misses honestly.</p>
+        </div>
+
+        <div style="border-left: 3px solid #2ca02c; padding-left: 16px;">
+            <div style="font-weight: 700; font-size: 0.93em; color: #1a1a2e; margin-bottom: 4px;">Stage 5 &mdash; CAS Analysis (post-key)</div>
+            <p style="font-size: 0.88em; line-height: 1.75; color: #555; margin: 0;">With identities confirmed: phase transitions and early-warning signatures (critical slowing down), feedback loop candidates from lagged cross-node correlations, emergence analysis (attractors, hysteresis, basin structure), and a common-systems reading of what the ensemble shares across otherwise unlike societies.</p>
+        </div>
+    </div>
+
+    <!-- UNBLINDING STATUS -->
+    <div class="card" style="margin-top: 20px; border-left: 4px solid #888;">
+        <h2 style="font-size: 1.05em; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px;">Unblinding Keys &mdash; Status</h2>
+
+        <table style="width:100%; border-collapse:collapse; font-size:0.90em; color:#444;">
+            <thead>
+                <tr style="border-bottom: 2px solid #ddd; text-align:left;">
+                    <th style="padding:8px 12px; font-weight:700;">Dataset</th>
+                    <th style="padding:8px 12px; font-weight:700;">Societies</th>
+                    <th style="padding:8px 12px; font-weight:700;">Key Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom:1px solid #eee;">
+                    <td style="padding:10px 12px;"><strong>Set 1</strong></td>
+                    <td style="padding:10px 12px; color:#888;">Society_A &ndash; H (8 nations)</td>
+                    <td style="padding:10px 12px;"><span style="background:#fff3cd; color:#856404; padding:3px 10px; border-radius:4px; font-size:0.82em; font-weight:600;">SEALED &mdash; pending Stage 4 completion</span></td>
+                </tr>
+                <tr style="border-bottom:1px solid #eee;">
+                    <td style="padding:10px 12px;"><strong>Set 2</strong></td>
+                    <td style="padding:10px 12px; color:#888;">Society_A &ndash; H (8 nations)</td>
+                    <td style="padding:10px 12px;"><span style="background:#fff3cd; color:#856404; padding:3px 10px; border-radius:4px; font-size:0.82em; font-weight:600;">SEALED &mdash; pending Stage 4 completion</span></td>
+                </tr>
+                <tr>
+                    <td style="padding:10px 12px;"><strong>Set 3</strong></td>
+                    <td style="padding:10px 12px; color:#888;">Society_A &ndash; H (8 nations)</td>
+                    <td style="padding:10px 12px;"><span style="background:#fff3cd; color:#856404; padding:3px 10px; border-radius:4px; font-size:0.82em; font-weight:600;">SEALED &mdash; pending Stage 4 completion</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="font-size: 0.85em; color: #888; margin-top: 16px; line-height: 1.7;">Keys will be published here once Stage 4 guesses have been locked and submitted. To submit a completed Stage 4, <a href="contact.html" style="color:#1f77b4;">contact Kari</a> or open an issue on <a href="https://github.com/KaliBond/wintermute" target="_blank" style="color:#1f77b4;">GitHub</a>.</p>
+    </div>
+
+    <!-- DISCIPLINE CLAUSES -->
+    <div class="card" style="margin-top: 20px; background: #f9f7f2;">
+        <h2 style="font-size: 1.0em; font-weight: 700; color: #1a1a2e; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px;">Discipline Clauses (apply throughout)</h2>
+        <ul style="margin: 0 0 0 20px; line-height: 1.95; color: #555; font-size: 0.88em;">
+            <li>Nulls are reported with the same prominence as positives.</li>
+            <li>No conclusion may be drafted before its supporting computation has run (scoring-first, narrative never).</li>
+            <li>Cross-scorer or cross-vintage data validates morphology, never magnitudes; do not pool Node Values across scorers.</li>
+            <li>Own-history attractor bands only; no cross-polity league tables.</li>
+            <li>If a test cannot be run cleanly (resolution, n, carry-forward), state it is out of scope rather than running it degraded.</li>
+        </ul>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="card" style="margin-top: 20px;">
+        <h2 style="font-size: 1.0em; font-weight: 700; color: #1a1a2e; margin-bottom: 10px;">What this tests</h2>
+        <p style="font-size: 0.90em; line-height: 1.8; color: #444;">CAMS claims that structural coordination physics &mdash; the shape of node coupling, the trajectory of stress and capacity, the signature of cognitive activation &mdash; is sufficient to fingerprint a society across history. If that claim is true, a blind-running LLM should be able to identify real nations from their CAMS scores alone, without any external geopolitical priming. The three datasets here are the test bed. The protocol enforces guesses-before-key ordering so results are genuinely falsifiable, not retrodicted.</p>
+        <p style="font-size: 0.90em; line-height: 1.8; color: #444; margin-top: 10px;">The experiment is open. Anyone with access to a capable LLM can run it. Results, including misses, are encouraged to be submitted &mdash; failed identifications are as informative as correct ones about where the instrument&rsquo;s signal is strong or weak.</p>
+        <p style="margin-top: 20px; font-size: 0.88em; color: #888;">&mdash; <strong>Kari McKern</strong>, Neural Nations &nbsp;&middot;&nbsp; <a href="datasets.html" style="color:#1f77b4;">Datasets</a> &nbsp;&middot;&nbsp; <a href="model.html" style="color:#1f77b4;">Model</a> &nbsp;&middot;&nbsp; <a href="validation.html" style="color:#1f77b4;">Validation</a></p>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a>
+        <a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a>
+        <a href="datasets.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Datasets</a>
+    </nav>
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+<script src="nav.js"></script>
+</body>
+</html>
