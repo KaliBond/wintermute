@@ -1,0 +1,414 @@
+/* ============================================================
+   CAMS Design System — colors_and_type.css
+   Complex Adaptive Model State / CAMS-CAN Framework
+   ------------------------------------------------------------
+   Two moods coexist in the brand:
+   (1) PAPER   — cream academic plot surface (primary)
+   (2) TABLET  — brushed-stone engraved aphorisms (mythopoetic)
+   Plus (3) TELEMETRY — a darker "mission control" variant for
+   live dashboards that was proposed in CAMS DS v1.0 Lattice &
+   Pulse and is kept as an opt-in mode.
+   ============================================================ */
+
+/* ---------- Webfonts (Google Fonts substitutes) ------------- */
+/* Fraunces  → mythopoetic serif display & tablet caps          */
+/* Source Serif 4 → body serif for primer / report copy         */
+/* Inter     → UI, plot-legend, metric numerals                 */
+/* JetBrains Mono → equations, code, numerals in dashboards     */
+/* Fraunces  → display serif (light 200 for Telescope titles, 500–900 for tablets)
+   Special Elite → typewriter narrative (Telescope dossier body text)
+   Source Serif 4 → book-paper primer copy
+   Inter     → UI chrome, plot labels, metric headers
+   JetBrains Mono → equations, code, numerals */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300&family=Special+Elite&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  /* ============================================================
+     1. PAPER SURFACE (primary background family)
+     The cream shown across every matplotlib figure and the
+     CAMS Primer pages. Warm, slightly yellowed, not white.
+     ============================================================ */
+  --paper-0:       #FBF7EC;   /* brightest paper — cards on paper */
+  --paper-1:       #F5F1E4;   /* canonical plot cream (default bg)*/
+  --paper-2:       #EDE7D4;   /* soft separator / muted block     */
+  --paper-3:       #E2DAC3;   /* rule lines, inset borders        */
+  --paper-edge:    #C9BE9E;   /* tablet/page edge shadow tone     */
+
+  /* ============================================================
+     2. INK (foreground text family)
+     Dark teal-navy, not pure black. Matches plot titles + body.
+     ============================================================ */
+  --ink-900:       #1B2A33;   /* default body ink                 */
+  --ink-700:       #2F4652;   /* secondary text                   */
+  --ink-500:       #5A6E78;   /* tertiary / captions              */
+  --ink-300:       #8C9AA1;   /* disabled / axis label grey       */
+  --ink-100:       #C4CCD0;   /* hairline / placeholder           */
+
+  /* ============================================================
+     3. NODE SEMANTICS (the eight CAMS nodes)
+     These are the colors the live matplotlib notebooks use.
+     Treat them as a *domain palette*, not decoration.
+     ============================================================ */
+  /* Canonical names (per neuralnations.org v2.3). Each node belongs
+     to one of three layers — Mythic / Interface / Material. */
+  --node-lore:        #2E8B6B;   /* Mythic    · meaning, doctrine     */
+  --node-archive:     #2F7A5C;   /* Mythic    · record, memory        */
+  --node-helm:        #C84C3E;   /* Interface · governance, decision  */
+  --node-stewards:    #D98B2B;   /* Interface · resource control      */
+  --node-shield:      #B0392E;   /* Interface · defence, force        */
+  --node-craft:       #3A6FA8;   /* Material  · skilled production    */
+  --node-hands:       #4B7CAE;   /* Material  · labour                */
+  --node-flow:        #6A8FB8;   /* Material  · trade, distribution   */
+  /* Legacy aliases — keep one cycle so existing files don't break. */
+  --node-priests:     var(--node-lore);
+  --node-executive:   var(--node-helm);
+  --node-owners:      var(--node-stewards);
+  --node-army:        var(--node-shield);
+  --node-trades:      var(--node-craft);
+  --node-proletariat: var(--node-hands);
+  --node-merchants:   var(--node-flow);
+
+  /* ============================================================
+     4. MODE SEMANTICS (the four measured dimensions)
+     Coherence / Capacity / Stress / Abstraction map to distinct
+     hues across every plot and the metric cards.
+     ============================================================ */
+  --mode-coherence:   #2F7ECC;   /* blue    C(t)                     */
+  --mode-capacity:    #2E8B6B;   /* green   K(t)                     */
+  --mode-stress:      #C84C3E;   /* red     S(t)                     */
+  --mode-abstraction: #8A5BB8;   /* purple  A(t)                     */
+
+  /* ============================================================
+     4b. LAYER PALETTE (v2.3 — Mythic / Interface / Material)
+     The three coupled layers of any CAMS-CAN society. Cross-layer
+     coupling Λ(t) is the load-bearing systemic metric.
+     ============================================================ */
+  --layer-mythic:     #C76EFF;   /* purple  · Lore, Archive          */
+  --layer-interface:  #00D4FF;   /* cyan    · Helm, Stewards, Shield */
+  --layer-material:   #00E5A3;   /* green   · Craft, Hands, Flow     */
+  --gradient-mythic-interface:    linear-gradient(145deg,#C76EFF,#00D4FF);  /* @kind color */
+  --gradient-interface-material:  linear-gradient(145deg,#00D4FF,#00E5A3);  /* @kind color */
+
+  /* ============================================================
+     5. STATE / TYPOLOGY (civilisational health classes)
+     From System-Health telemetry panels: green = resilient,
+     amber = transitional, red = collapse risk.
+     ============================================================ */
+  --state-adaptive:   #4F8F6B;   /* Type I  — Adaptive / Expansive   */
+  --state-stable:     #7BAE96;   /* Type II — Stable Core            */
+  --state-resilient:  #D7C26B;   /* Type III — Resilient Frontier    */
+  --state-fragile:    #C05A4A;   /* Type IV — Fragile / High-Stress  */
+  --state-collapse:   #8B2E22;   /* Λ(t) < 0.45 — coordination fail  */
+
+  /* band fills for telemetry plots (translucent) */
+  --band-resilient:   rgba(123, 174, 150, 0.22);
+  --band-transitional:rgba(215, 194, 107, 0.22);
+  --band-collapse:    rgba(192, 90, 74, 0.20);
+
+  /* ============================================================
+     6. TABLET SURFACE
+     The engraved-titanium aphorism plates used for CAMS
+     "tablets" — didactic, solemn, inscriptional.
+     ============================================================ */
+  --tablet-bg:        #3B3D3E;   /* charcoal backing                 */
+  --tablet-metal:     #8E8F8B;   /* brushed titanium surface         */
+  --tablet-metal-hi:  #BCBDB8;   /* highlight stroke                 */
+  --tablet-metal-lo:  #5A5C5A;   /* engraved shadow                  */
+  --tablet-ink:       #1F1F1F;   /* engraved glyph fill              */
+
+  /* ============================================================
+     7. DARK / "LATTICE & PULSE" — PRODUCT SURFACE (default for web)
+     Used by neuralnations.org. Paper is the secondary surface,
+     reserved for printed/research outputs.
+     ============================================================ */
+  --dark-bg:          #0A0E10;
+  --dark-surface:     #121719;
+  --dark-grid:        #1E2428;
+  --dark-text:        #E8EDEE;
+  --dark-text-mute:   #96A2A8;
+  --pulse-cyan:       #3DD0E5;   /* coherence signal on dark         */
+  --pulse-red:        #E56F6F;   /* stress signal on dark            */
+  --pulse-green:      #6AD7A8;   /* capacity signal on dark          */
+  --pulse-violet:     #B78BE8;   /* abstraction signal on dark       */
+
+  /* ============================================================
+     7b. TELESCOPE SURFACE (cool-white analytical instrument)
+     The "Historical Telescope" explorer on neuralnations.org.
+     Light, clinical, institutional — not cream, not dark.
+     ============================================================ */
+  --scope-bg:         #ffffff;
+  --scope-bg2:        #f7f8fc;
+  --scope-bg3:        #f0f2f7;
+  --scope-bg4:        #e8ebf2;
+  --scope-border:     #d8dce6;
+  --scope-border2:    #c5cad8;
+  --scope-text:       #1a2533;
+  --scope-text2:      #4a5a70;
+  --scope-text3:      #6b7a90;
+  --scope-teal:       #00b89e;
+  --scope-teal2:      #008f7a;
+  --scope-teal-dim:   #b8e8e0;
+  --scope-amber:      #d98c00;
+  --scope-amber2:     #b36f00;
+  --scope-amber-dim:  #f5d9a8;
+  --scope-red:        #c53030;
+  --scope-blue:       #2b6cb0;
+  --scope-purple:     #6b46c1;
+  --scope-gold:       #c8961a;
+
+  /* ============================================================
+     7c. ATTRACTOR BASINS (the seven regimes)
+     Each society at any year-slice occupies one basin.
+     Colors from the live Telescope codebase.
+     ============================================================ */
+  --basin-peak:       #f0a020;   /* Peak Expansion — imperial apex    */
+  --basin-nav:        #40b0e0;   /* Navigational — reconstruction     */
+  --basin-strain:     #d09020;   /* Early Strain — tipping            */
+  --basin-praetorian: #d04030;   /* Praetorian — military-exec crisis */
+  --basin-archipelago:#7070a0;   /* Archipelago — post-coherence frag */
+  --basin-mass:       #900020;   /* Mass Formation — totalist         */
+  --basin-phantom:    #8050b0;   /* Phantom — cultural persistence    */
+
+  /* ============================================================
+     7d. SOCIETY COLORS (per-dataset identity)
+     Used to distinguish societies in comparative plots.
+     ============================================================ */
+  --soc-rome:         #c87820;
+  --soc-usa:          #4090d0;
+  --soc-germany:      #90b030;
+  --soc-china:        #d04040;
+  --soc-uk:           #6070c0;
+  --soc-spain:        #c0602a;
+  --soc-italy:        #30a870;
+  --soc-australia:    #20a0b0;
+  --soc-south-africa: #a06030;
+
+  /* ============================================================
+     8. ACCENT (used sparingly — diagram highlights, callouts)
+     ============================================================ */
+  --accent-ochre:     #D98B2B;   /* the "CAMS" yellow from the logo */
+  --accent-ochre-hi:  #EFA94A;
+  --accent-teal:      #2F6F7D;   /* plot-title teal                  */
+
+  /* ============================================================
+     9. TYPOGRAPHY FAMILIES
+     ============================================================ */
+  --font-display:  'Fraunces', 'Playfair Display', Georgia, serif;
+  --font-serif:    'Source Serif 4', 'Source Serif Pro', Georgia, 'Times New Roman', serif;
+  --font-sans:     'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono:     'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  /* For engraved tablet caps, Fraunces at heavy weight + wide tracking
+     stands in for the hand-cut Trajan capitals in the source images. */
+  --font-tablet:   'Fraunces', 'Trajan Pro', 'Cinzel', Georgia, serif;
+  /* Special Elite — typewriter narrative for Telescope dossier body */
+  --font-typewriter: 'Special Elite', 'Courier New', cursive;
+
+  /* ============================================================
+     10. TYPE SCALE
+     Modest, paper-appropriate. Titles breathe.
+     ============================================================ */
+  --fs-display:   64px;
+  --lh-display:   1.02;   /* @kind font */
+  --fs-h1:        44px;
+  --lh-h1:        1.10;   /* @kind font */
+  --fs-h2:        30px;
+  --lh-h2:        1.18;   /* @kind font */
+  --fs-h3:        22px;
+  --lh-h3:        1.28;   /* @kind font */
+  --fs-h4:        17px;
+  --lh-h4:        1.35;   /* @kind font */
+  --fs-body:      16px;
+  --lh-body:      1.55;   /* @kind font */
+  --fs-small:     14px;
+  --lh-small:     1.45;   /* @kind font */
+  --fs-caption:   12px;
+  --lh-caption:   1.35;   /* @kind font */
+  --fs-tablet:    36px;
+  --lh-tablet:    1.25;   /* @kind font */  /* caps on plates   */
+  --fs-metric:    56px;
+  --lh-metric:    1.00;   /* @kind font */  /* dashboard number */
+
+  /* Letter-spacing tokens */
+  --ls-tight:     -0.02em;   /* @kind font */  /* display */
+  --ls-snug:      -0.01em;   /* @kind font */  /* h1 / h2 */
+  --ls-normal:     0;        /* @kind font */
+  --ls-wide:       0.04em;   /* @kind font */  /* small caps labels */
+  --ls-tablet:     0.10em;   /* @kind font */  /* engraved caps */
+
+  /* ============================================================
+     11. SPACING (4px base, tighter at small end)
+     ============================================================ */
+  --sp-0:   0;   /* @kind spacing */
+  --sp-1:   4px;
+  --sp-2:   8px;
+  --sp-3:   12px;
+  --sp-4:   16px;
+  --sp-5:   24px;
+  --sp-6:   32px;
+  --sp-7:   48px;
+  --sp-8:   64px;
+  --sp-9:   96px;
+
+  /* ============================================================
+     12. RADII  (paper has almost no rounding; telemetry has some)
+     ============================================================ */
+  --r-0:    0;   /* @kind radius */
+  --r-1:    2px;   /* hairline rounded: plot cards                 */
+  --r-2:    4px;   /* inputs, chips                                */
+  --r-3:    8px;   /* panels                                       */
+  --r-4:    14px;  /* hero cards, tablet plates                    */
+  --r-pill: 999px;
+
+  /* ============================================================
+     13. BORDERS & SHADOWS
+     Paper uses hairline ink borders instead of soft shadows.
+     ============================================================ */
+  --border-hair:    1px solid var(--paper-3);
+  --border-ink:     1px solid var(--ink-900);
+  --border-ink-2:   2px solid var(--ink-900);
+  --border-dashed:  1px dashed var(--ink-300);
+
+  --shadow-plate:   0 2px 0 var(--paper-edge),
+                    0 18px 40px -20px rgba(27, 42, 51, 0.28);
+  --shadow-tablet:  inset 0 1px 0 rgba(255,255,255,0.12),
+                    inset 0 -2px 0 rgba(0,0,0,0.25),
+                    0 20px 40px -18px rgba(0,0,0,0.55);
+  --shadow-pulse:   0 0 14px rgba(61, 208, 229, 0.55); /* dark mode  */
+}
+
+/* ============================================================
+   14. SEMANTIC ELEMENT DEFAULTS
+   Apply on body (or a wrapper) to get paper-mode baselines.
+   ============================================================ */
+/* Default body is dark (product surface). Add class .cams-paper-page
+   on <body> or a wrapper to switch to the cream research surface. */
+html, body {
+  background: var(--dark-bg);
+  color: var(--dark-text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-feature-settings: "ss01", "ss02", "kern";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Display — mythopoetic section titles */
+.cams-display,
+h1.cams-display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-tight);
+  color: var(--ink-900);
+  font-variation-settings: "SOFT" 50, "WONK" 0;
+}
+
+/* Plot / page title — teal-ink sans */
+h1, .cams-h1 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-h1);
+  letter-spacing: var(--ls-snug);
+  color: var(--accent-teal);
+}
+h2, .cams-h2 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-snug);
+  color: var(--ink-900);
+}
+h3, .cams-h3 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  color: var(--ink-900);
+}
+h4, .cams-h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: var(--fs-h4);
+  line-height: var(--lh-h4);
+  color: var(--ink-900);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+}
+
+/* Primer body — Source Serif, book-paper feel */
+.cams-prose,
+.cams-prose p {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--ink-900);
+  text-wrap: pretty;
+}
+.cams-prose em { font-style: italic; }
+
+/* Tablet caps — engraved plates */
+.cams-tablet-caps {
+  font-family: var(--font-tablet);
+  font-weight: 700;
+  font-size: var(--fs-tablet);
+  line-height: var(--lh-tablet);
+  letter-spacing: var(--ls-tablet);
+  text-transform: uppercase;
+  color: var(--tablet-ink);
+}
+
+/* Label / small-caps metric header */
+.cams-label {
+  font-family: var(--font-sans);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  color: var(--ink-500);
+}
+
+/* Metric numeral — dashboard readouts */
+.cams-metric {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: var(--fs-metric);
+  line-height: var(--lh-metric);
+  letter-spacing: -0.02em;
+  color: var(--ink-900);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Equation — inline math */
+code, .cams-eq {
+  font-family: var(--font-mono);
+  font-size: 0.95em;
+  color: var(--ink-900);
+  background: var(--paper-2);
+  padding: 1px 5px;
+  border-radius: var(--r-1);
+}
+
+/* ============================================================
+   15. PAPER TEXTURE HELPER
+   A subtle noise/fiber overlay that mimics the look of the
+   real plot PNGs. Apply as ::before on a surface.
+   ============================================================ */
+.cams-paper-page {
+  background: var(--paper-1);
+  color: var(--ink-900);
+}
+.cams-paper-page h1, .cams-paper-page .cams-h1 { color: var(--accent-teal); }
+.cams-paper-page h2, .cams-paper-page h3, .cams-paper-page h4 { color: var(--ink-900); }
+
+.cams-paper {
+  background-color: var(--paper-1);
+  background-image:
+    radial-gradient(rgba(170, 140, 80, 0.05) 1px, transparent 1px),
+    radial-gradient(rgba(100, 80, 50, 0.04) 1px, transparent 1px);
+  background-size: 3px 3px, 7px 7px;
+  background-position: 0 0, 1px 2px;
+}

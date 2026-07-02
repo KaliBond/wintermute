@@ -1,0 +1,10 @@
+/* ============================================================
+   CAMS Design System — canonical entrypoint
+   ------------------------------------------------------------
+   Link THIS one file from a consuming project to pull in the
+   full design system: all colour / spacing / radius / shadow /
+   type tokens, the webfont imports, and the semantic element
+   defaults. Everything else (page shells, per-section copies)
+   builds on top of these tokens.
+   ============================================================ */
+@import url('colors_and_type.css');
