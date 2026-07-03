@@ -1,0 +1,177 @@
+============================================================
+CAMS PIPELINE SUMMARY REPORT
+============================================================
+
+## ARCHETYPE CLASSIFICATION
+
+       Society archetype   mean_AC   mean_KS  delta_loop_mean
+United Kingdom       HCS 41.099150  2.749660        67.997528
+        Canada     HCS-T 32.438030  0.956061       -13.976430
+        France     HCS-T 36.567910  1.353814       -19.640860
+       Germany     HCS-T 36.694898  2.239456        -0.634140
+        Norway     HCS-T 33.498707  1.878571        -8.385818
+        Sweden     HCS-T 36.141842  1.365789       -12.958289
+           USA     HCS-T 35.037992  2.229724        -4.140283
+     Argentina     LCS-T 19.791364 -1.122078        -0.468609
+     Australia     LCS-T 28.106776  0.900000        -8.527964
+         China     LCS-T 28.916939 -0.685918         2.697668
+          Iran     LCS-T 20.957237 -1.013651         5.304911
+  Latium Vetus     LCS-T 26.345696 -1.281962        10.988919
+        Poland     LCS-T 26.308224 -1.051480        -7.889699
+        Russia     LCS-T 28.084317  0.370595        45.293610
+         Chile       MIX 30.948026  1.619079        12.901189
+      Thailand       MIX 32.790000  0.578472         4.414667
+
+============================================================
+
+## LOOP DECOUPLING (mean delta_loop per society)
+
+       Society  delta_loop_mean  delta_loop_std  delta_loop_max
+United Kingdom        67.997528       28.383135        127.0533
+        Russia        45.293610       41.574333        177.1760
+         Chile        12.901189       22.131024         56.7413
+  Latium Vetus        10.988919       30.062268         98.7632
+          Iran         5.304911       26.720888         93.9163
+      Thailand         4.414667       31.785205         45.5120
+         China         2.697668       34.053649        126.9067
+     Argentina        -0.468609       11.332319         33.1600
+       Germany        -0.634140       45.764310        185.6992
+           USA        -4.140283       36.856006         60.2533
+        Poland        -7.889699       17.054174         22.6000
+        Norway        -8.385818       37.141272        100.5600
+     Australia        -8.527964       26.361024         50.1520
+        Sweden       -12.958289       23.606160         40.4667
+        Canada       -13.976430       24.530514         31.2667
+        France       -19.640860       43.882400         90.6693
+
+============================================================
+
+## ISLANDS OF RIGIDITY (bridge edges with recovery < 50%)
+
+       Society  node_i   node_j  shock_year  pre_W  trough_W  recovery_W  recovery_pct
+     Argentina  Shield     Lore        2008 0.0000    0.0000      0.0000  0.000000e+00
+     Argentina  Shield Stewards        2008 0.0000    0.0000      0.0000  0.000000e+00
+     Argentina  Shield    Craft        2008 0.0000    0.0000      0.0000  0.000000e+00
+     Argentina  Shield    Craft        2020 0.8660    0.9737      1.0000 -2.440000e+01
+     Argentina  Shield    Hands        2008 0.0000    0.0000      0.0000  0.000000e+00
+     Argentina  Shield    Hands        2020 0.9799    1.0000      1.0000 -0.000000e+00
+     Argentina  Shield     Flow        2008 0.0000    0.0000      0.0000  0.000000e+00
+     Argentina Archive Stewards        2020 0.8660    0.6231      0.0000 -2.565000e+02
+     Argentina Archive     Flow        2020 0.8660    0.0000      0.0000  0.000000e+00
+     Australia    Helm    Craft        2008 0.0000    0.0000      0.0000  0.000000e+00
+     Australia  Shield     Lore        2008 0.0000    0.0000      0.0000  0.000000e+00
+     Australia  Shield     Lore        2020 1.0000    0.0000      0.0000  0.000000e+00
+     Australia  Shield Stewards        2008 0.0000    0.0000      0.0000  0.000000e+00
+     Australia  Shield Stewards        2020 0.0000    0.0000      0.0000  0.000000e+00
+     Australia  Shield    Craft        2008 0.0000    0.0000      0.0000  0.000000e+00
+     Australia  Shield    Craft        2020 1.0000    0.0000      0.0000  0.000000e+00
+     Australia  Shield    Hands        2008 0.0000    0.0000      0.0000  0.000000e+00
+     Australia  Shield    Hands        2020 1.0000    0.0000      0.0000  0.000000e+00
+     Australia  Shield     Flow        2008 0.0000    0.0000      0.0000  0.000000e+00
+     Australia  Shield     Flow        2020 1.0000    0.0000      0.0000  0.000000e+00
+     Australia Archive Stewards        2008 0.0000    0.0000      0.0000  0.000000e+00
+     Australia Archive Stewards        2020 0.0000    0.0000      0.0000  0.000000e+00
+     Australia Archive     Flow        2008 0.0000    0.0000      0.0000  0.000000e+00
+         Chile    Helm     Lore        2008 0.5607    0.7697      0.9733 -9.750000e+01
+         Chile    Helm     Lore        2020 0.9530    0.6168      0.3019 -9.370000e+01
+         Chile  Shield     Lore        2008 0.0000    0.4857      0.6655 -3.700000e+01
+         Chile  Shield     Lore        2020 0.9936    0.7635      0.1470 -2.679000e+02
+         Chile  Shield     Flow        2008 0.9347    0.9059      0.0000 -3.140100e+03
+         Chile  Shield     Flow        2020 0.9955    0.2665      0.2096 -7.800000e+00
+         Chile Archive     Flow        2008 0.0000    0.9717      0.7668  2.110000e+01
+         Chile Archive     Flow        2020 0.9401    0.7663      0.0000 -4.409000e+02
+        France    Helm    Craft        2008 0.0000    0.0000      0.0000  0.000000e+00
+        France    Helm    Craft        2020 0.9955    0.9270      0.0000 -1.352300e+03
+        France    Helm    Hands        2008 0.0000    0.0000      0.0000  0.000000e+00
+        France    Helm     Flow        2020 0.9900    0.8876      0.0000 -8.667000e+02
+        France  Shield Stewards        2008 0.0000    0.0000      0.0000  0.000000e+00
+        France  Shield Stewards        2020 1.0000    0.8928      0.0000 -8.332000e+02
+        France  Shield    Craft        2008 0.0000    0.0000      0.0000  0.000000e+00
+        France  Shield    Hands        2008 0.0000    0.0000      0.0000  0.000000e+00
+        France  Shield     Flow        2008 0.0000    0.0000      0.0000  0.000000e+00
+        France  Shield     Flow        2020 0.9865    0.8478      0.0000 -6.113000e+02
+        France Archive Stewards        2008 0.0000    0.0000      0.0000  0.000000e+00
+        France Archive    Hands        2008 0.0000    0.0000      0.0000  0.000000e+00
+       Germany    Helm     Lore        2020 0.8672    0.7570      0.5340 -2.024000e+02
+       Germany    Helm    Craft        2008 0.7332    0.0000      0.0000  0.000000e+00
+       Germany    Helm    Craft        2020 0.0000    0.8546      0.5082  4.050000e+01
+       Germany  Shield    Hands        2020 0.8676    0.8701      0.9971 -5.084300e+03
+       Germany  Shield     Flow        2008 1.0000    0.5845      0.0000 -1.407000e+02
+       Germany Archive    Hands        2008 0.0568    0.2515      0.5272 -1.416000e+02
+       Germany Archive    Hands        2020 0.8749    0.4695      0.0000 -1.158000e+02
+          Iran    Helm     Lore        2008 0.4897    0.0000      0.0000  0.000000e+00
+          Iran  Shield     Lore        2008 0.9979    0.9543      0.8226 -3.020000e+02
+          Iran  Shield     Lore        2020 0.9414    0.6669      0.2273 -1.602000e+02
+          Iran Archive     Lore        2020 0.9900    0.9890      0.0000 -9.992510e+04
+        Norway    Helm     Lore        2020 0.0000    0.0000      0.0000  0.000000e+00
+        Norway  Shield     Lore        2020 0.0000    0.0000      0.0000  0.000000e+00
+        Norway  Shield Stewards        2008 0.0000    0.0000      0.0000  0.000000e+00
+        Norway  Shield Stewards        2020 0.0000    0.0000      0.0000  0.000000e+00
+        Norway  Shield    Craft        2008 0.0000    0.0000      0.0000  0.000000e+00
+        Norway  Shield    Craft        2020 0.0000    0.0000      0.0000  0.000000e+00
+        Norway  Shield    Hands        2008 0.0000    0.0000      0.0000  0.000000e+00
+        Norway  Shield    Hands        2020 0.0000    0.0000      0.0000  0.000000e+00
+        Norway  Shield     Flow        2008 0.0000    0.0000      0.0000  0.000000e+00
+        Norway  Shield     Flow        2020 0.0000    0.0000      0.0000  0.000000e+00
+        Norway Archive     Lore        2008 0.0000    0.0000      0.0000  0.000000e+00
+        Norway Archive     Lore        2020 0.0000    0.0000      0.0000  0.000000e+00
+        Poland  Shield Stewards        2008 0.0000    0.0000      0.0000  0.000000e+00
+        Poland  Shield    Craft        2008 0.0000    0.0000      0.0000  0.000000e+00
+        Poland  Shield    Hands        2008 0.0000    0.0000      0.0000  0.000000e+00
+        Poland  Shield     Flow        2008 0.0000    0.0000      0.0000  0.000000e+00
+        Poland Archive Stewards        2008 0.0000    0.0000      0.0000  0.000000e+00
+        Poland Archive    Hands        2008 0.0000    0.0000      0.0000  0.000000e+00
+        Poland Archive     Flow        2008 0.0000    0.0000      0.0000  0.000000e+00
+        Russia    Helm     Lore        2020 0.9948    0.9639      0.6119 -1.137100e+03
+        Russia    Helm    Craft        2008 0.3753    0.8055      0.7114  2.190000e+01
+        Russia    Helm    Craft        2020 0.0000    0.9728      0.9936 -2.100000e+00
+        Russia    Helm    Hands        2008 0.9911    0.6143      0.0000 -1.630000e+02
+        Russia    Helm    Hands        2020 0.7515    0.9577      0.9923 -1.680000e+01
+        Russia  Shield     Lore        2020 0.0000    0.6753      0.8968 -3.280000e+01
+        Russia  Shield Stewards        2008 0.5874    0.0000      0.0000  0.000000e+00
+        Russia  Shield Stewards        2020 0.0000    0.9965      0.9223  7.400000e+00
+        Russia  Shield    Hands        2020 0.0000    0.8912      0.9461 -6.200000e+00
+        Russia  Shield     Flow        2008 0.0000    0.0000      0.0000  0.000000e+00
+        Russia  Shield     Flow        2020 0.5750    0.9331      0.7637  4.730000e+01
+           USA    Helm    Hands        2020 0.0000    1.0000      0.9951  5.000000e-01
+           USA  Shield     Lore        2008 1.0000    0.0000      0.0000  0.000000e+00
+           USA  Shield Stewards        2008 1.0000    0.9503      0.0000 -1.912300e+03
+           USA  Shield    Hands        2008 1.0000    1.0000      0.0000 -1.000000e+11
+           USA  Shield     Flow        2008 1.0000    0.9936      0.0000 -1.549680e+04
+           USA  Shield     Flow        2020 0.0000    0.0000      0.0000  0.000000e+00
+           USA Archive     Lore        2008 0.0000    0.0000      0.0000  0.000000e+00
+United Kingdom    Helm    Hands        2008 0.0000    0.0000      0.0000  0.000000e+00
+United Kingdom    Helm    Hands        2020 0.0000    0.0000      0.0000  0.000000e+00
+United Kingdom  Shield    Hands        2008 0.0000    0.0000      0.0000  0.000000e+00
+United Kingdom  Shield    Hands        2020 0.0000    0.6364      1.0000 -5.710000e+01
+
+============================================================
+
+## CRISIS DEFORMATION (COLLAPSE_CONTRACTION events)
+
+  Total COLLAPSE_CONTRACTION events: 110
+       Society  shock_year  count
+     Argentina        2008      4
+     Argentina        2020      1
+     Australia        2008      5
+        Canada        2008      7
+        Canada        2020      6
+         Chile        2008      6
+         Chile        2020      3
+         China        2008      2
+         China        2020      8
+        France        2008      5
+        France        2020      5
+       Germany        2008      4
+       Germany        2020      6
+          Iran        2008      7
+          Iran        2020      4
+        Poland        2020      2
+        Russia        2008      5
+        Russia        2020      5
+           USA        2008      8
+           USA        2020      7
+United Kingdom        2008      7
+United Kingdom        2020      3
+
+============================================================
