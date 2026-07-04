@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./cams-instrument-support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="cams-instrument-ds/colors_and_type.css">
+<link rel="stylesheet" href="cams-instrument-ds/styles.css">
+<script src="cams-instrument-data-global.js"></script>
+</helmet>
+<template id="__bundler_thumbnail"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#F5F1E4"/><g transform="translate(50 50)"><circle cx="0" cy="-22" r="6" fill="#3A6FA8"/><circle cx="15.6" cy="-15.6" r="6" fill="#B88A1E"/><circle cx="22" cy="0" r="6" fill="#8B2E22"/><circle cx="15.6" cy="15.6" r="6" fill="#4F8F6B"/><circle cx="0" cy="22" r="6" fill="#2F6F7D"/><circle cx="-15.6" cy="15.6" r="6" fill="#2E8B6B"/><circle cx="-22" cy="0" r="6" fill="#8050B0"/><circle cx="-15.6" cy="-15.6" r="6" fill="#C05A4A"/><circle cx="0" cy="0" r="9" fill="none" stroke="#1B2A33" stroke-width="1.5"></circle></g></svg></template>
+
+<div data-screen-label="CAMS Morphospace Atlas" class="cams-paper" style="width:1480px;margin:0 auto;color:#1B2A33;font-family:var(--font-sans);min-height:1200px;padding-bottom:60px;">
+
+  <!-- HEADER -->
+  <header style="display:flex;align-items:flex-end;justify-content:space-between;padding:26px 32px 18px;border-bottom:1px solid #E2DAC3;">
+    <div style="display:flex;align-items:baseline;gap:18px;">
+      <div style="font-family:var(--font-display);font-weight:600;font-size:32px;letter-spacing:.03em;color:#1B2A33;line-height:1;">Morphospace<span style="color:#2F6F7D;"> Atlas</span></div>
+      <div>
+        <div style="font-size:12px;color:#5A6E78;letter-spacing:.02em;">A formal typology of civilisational cognitive&#8211;affective forms &#8212; CAMS v3.2&#8209;R</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:flex-end;gap:26px;">
+      <div style="font-family:var(--font-mono);font-size:10px;color:#8C9AA1;text-align:right;text-transform:uppercase;letter-spacing:.08em;">Version 1.0 &#183; JUNO Series<br>Issued July 2026</div>
+      <a href="cams-instrument.html" style="display:inline-flex;align-items:center;gap:7px;text-decoration:none;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#2F4652;border:1px solid #C9BE9E;border-radius:7px;padding:8px 12px;background:#FBF7EC;">&#8592; Instrument</a>
+    </div>
+  </header>
+
+  <div style="padding:26px 32px 0;max-width:1000px;">
+    <div style="font-size:10.5px;font-weight:600;letter-spacing:.14em;color:#2F6F7D;text-transform:uppercase;margin-bottom:8px;">Purpose</div>
+    <p style="font-family:var(--font-serif);font-size:14.5px;line-height:1.65;color:#2F4652;margin:0;">This atlas formalises the morphospace of civilisational types detectable by CAMS. It gives threshold rules, node&#8209;activation profiles, coupling signatures and decision logic so that a blinded case &#8212; an organisation, city, region, sector, historical polity or contemporary society &#8212; can be submitted, scored and classified without reference to its name. It does not claim these eight types are exhaustive: they are the minimum set of meaningfully distinct attractor regions recovered so far. New evidence may warrant subdivision, merger, or the addition of new types.</p>
+  </div>
+
+  <!-- EPIPHENOMENON VS CLASSIFIER CALLOUT -->
+  <div style="margin:22px 32px 0;padding:16px 20px;background:#FBF7EC;border:1px solid #E2DAC3;border-left:3px solid #2F6F7D;border-radius:6px;max-width:1000px;">
+    <div style="font-size:10.5px;font-weight:600;letter-spacing:.14em;color:#2F6F7D;text-transform:uppercase;margin-bottom:7px;">Two different readings, not competing ones</div>
+    <p style="font-family:var(--font-serif);font-size:13px;line-height:1.6;color:#2F4652;margin:0;">The Instrument's <strong style="font-weight:600;">epiphenomenon</strong> reading is local and instantaneous &#8212; what one node (Shield, Lore, Flow&#8230;) leaks into the culture at one point in time (Doctrine vs Siege Mind vs Stand&#8209;down). This atlas is the complementary <strong style="font-weight:600;">system&#8209;level classifier</strong>: which stable configuration of all eight nodes &#8212; which activation profile, coupling motif and floor/ceiling &#8212; a whole trajectory belongs to. Epiphenomena are the weather; morphospace type is the climate.</p>
+  </div>
+
+  <!-- FORMAL FOUNDATIONS -->
+  <div style="padding:28px 32px 0;">
+    <div style="font-size:10.5px;font-weight:600;letter-spacing:.14em;color:#2F6F7D;text-transform:uppercase;margin-bottom:14px;">Formal foundations</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+
+      <!-- primary metrics table -->
+      <div style="background:#FBF7EC;border:1px solid #E2DAC3;border-radius:8px;padding:15px 18px 16px;box-shadow:0 1px 0 #E2DAC3;">
+        <div style="font-size:11px;font-weight:600;color:#1B2A33;margin-bottom:10px;">The four primary metrics <span style="color:#8C9AA1;font-weight:400;">&#183; per node, per time step</span></div>
+        <sc-for list="{{ metricRows }}" as="r" hint-placeholder-count="4">
+          <div style="display:grid;grid-template-columns:26px 90px 60px 1fr;gap:10px;align-items:baseline;padding:6px 0;border-top:1px solid #E2DAC3;">
+            <div style="font-family:var(--font-serif);font-style:italic;font-size:15px;font-weight:600;color:{{ r.color }};">{{ r.symbol }}</div>
+            <div style="font-size:12px;font-weight:600;color:#1B2A33;">{{ r.name }}</div>
+            <div style="font-family:var(--font-mono);font-size:10px;color:#8C9AA1;">{{ r.range }}</div>
+            <div style="font-size:11.5px;color:#5A6E78;line-height:1.4;">{{ r.meaning }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- quadrants table -->
+      <div style="background:#FBF7EC;border:1px solid #E2DAC3;border-radius:8px;padding:15px 18px 16px;box-shadow:0 1px 0 #E2DAC3;">
+        <div style="font-size:11px;font-weight:600;color:#1B2A33;margin-bottom:10px;">The four cognitive quadrants <span style="color:#8C9AA1;font-weight:400;">&#183; per node, per time step</span></div>
+        <sc-for list="{{ quadrants }}" as="q" hint-placeholder-count="4">
+          <div style="display:grid;grid-template-columns:30px 128px 1fr;gap:10px;align-items:start;padding:7px 0;border-top:1px solid #E2DAC3;">
+            <span style="width:9px;height:9px;border-radius:9px;background:{{ q.color }};margin-top:4px;"></span>
+            <div>
+              <div style="font-size:12px;font-weight:600;color:{{ q.color }};">{{ q.name }}</div>
+              <div style="font-family:var(--font-mono);font-size:9.5px;color:#8C9AA1;">{{ q.condition }}</div>
+            </div>
+            <div style="font-size:11.5px;color:#5A6E78;line-height:1.4;">{{ q.meaning }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;">
+      <!-- derived quantities -->
+      <div style="background:#FBF7EC;border:1px solid #E2DAC3;border-radius:8px;padding:15px 18px 16px;box-shadow:0 1px 0 #E2DAC3;">
+        <div style="font-size:11px;font-weight:600;color:#1B2A33;margin-bottom:10px;">Derived quantities</div>
+        <sc-for list="{{ formulas }}" as="f" hint-placeholder-count="7">
+          <div style="padding:8px 0;border-top:1px solid #E2DAC3;">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;">
+              <span style="font-size:11.5px;font-weight:600;color:#1B2A33;">{{ f.name }}</span>
+              <span style="font-family:var(--font-mono);font-size:12px;color:#2F6F7D;">{{ f.expr }}</span>
+            </div>
+            <div style="font-size:11px;color:#5A6E78;line-height:1.4;margin-top:2px;">{{ f.note }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- system thresholds -->
+      <div style="background:#FBF7EC;border:1px solid #E2DAC3;border-radius:8px;padding:15px 18px 16px;box-shadow:0 1px 0 #E2DAC3;">
+        <div style="font-size:11px;font-weight:600;color:#1B2A33;margin-bottom:10px;">System&#8209;level critical thresholds</div>
+        <sc-for list="{{ thresholds }}" as="t" hint-placeholder-count="8">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6.5px 0;border-top:1px solid #E2DAC3;">
+            <span style="font-size:11.5px;color:#1B2A33;">{{ t.metric }}</span>
+            <span style="font-family:var(--font-mono);font-size:11px;color:#C05A4A;">{{ t.rule }}</span>
+            <span style="font-size:11px;color:#8C9AA1;flex:none;width:190px;text-align:right;">{{ t.meaning }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- EIGHT ARCHETYPES -->
+  <div style="padding:32px 32px 0;">
+    <div style="font-size:10.5px;font-weight:600;letter-spacing:.14em;color:#2F6F7D;text-transform:uppercase;margin-bottom:6px;">The eight morphospace archetypes</div>
+    <div style="font-size:11px;color:#8C9AA1;margin-bottom:14px;max-width:1000px;">Each card's radar is the archetype's z-scored &#963; activation profile relative to the full dataset &#8212; axes clockwise from top: Lore (Lo), Archive (Ar), Helm (He), Stewards (St), Shield (Sh), Craft (Cr), Hands (Ha), Flow (Fl).</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+      <sc-for list="{{ archetypes }}" as="a" hint-placeholder-count="8">
+        <div style="background:#FBF7EC;border:1px solid #E2DAC3;border-top:3px solid {{ a.color }};border-radius:8px;padding:17px 20px 18px;box-shadow:0 1px 0 #E2DAC3;">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:9px;">
+            <div style="font-family:var(--font-display);font-size:18px;font-weight:600;color:#1B2A33;line-height:1.2;flex:1;min-width:0;">{{ a.name }}</div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;flex:none;">
+              <svg viewBox="0 0 160 160" width="90" height="90" style="flex:none;">
+                <circle cx="80" cy="80" r="30" fill="none" stroke="#E2DAC3" stroke-width="0.6" stroke-dasharray="3,3"></circle>
+                <sc-for list="{{ radarAxisPts }}" as="ax" hint-placeholder-count="8">
+                  <line x1="80" y1="80" x2="{{ ax.x }}" y2="{{ ax.y }}" stroke="#E2DAC3" stroke-width="0.8"></line>
+                </sc-for>
+                <polygon points="{{ a.sigPoly }}" fill="{{ a.color }}" fill-opacity="0.22" stroke="{{ a.color }}" stroke-width="1.4"></polygon>
+                <sc-for list="{{ radarLabelPts }}" as="rl" hint-placeholder-count="8">
+                  <text x="{{ rl.x }}" y="{{ rl.y }}" dy="{{ rl.dy }}" font-size="9" fill="#5A6E78" text-anchor="{{ rl.anchor }}" font-family="var(--font-mono)">{{ rl.label }}</text>
+                </sc-for>
+              </svg>
+              <div style="font-family:var(--font-mono);font-size:9.5px;color:#8C9AA1;white-space:nowrap;">Type {{ a.num }}</div>
+            </div>
+          </div>
+          <p style="font-family:var(--font-serif);font-size:12.5px;line-height:1.55;color:#2F4652;margin:0 0 12px;">{{ a.logic }}</p>
+          <div style="border:1px solid #E2DAC3;border-radius:6px;overflow:hidden;margin-bottom:10px;">
+            <sc-for list="{{ a.rows }}" as="row" hint-placeholder-count="8">
+              <div style="display:grid;grid-template-columns:150px 1fr;gap:10px;padding:6.5px 11px;background:{{ row.bg }};border-bottom:1px solid #E2DAC3;">
+                <span style="font-size:10px;letter-spacing:.03em;color:#8C9AA1;text-transform:uppercase;">{{ row.label }}</span>
+                <span style="font-size:11.5px;color:#1B2A33;line-height:1.4;">{{ row.value }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="font-family:var(--font-mono);font-size:10px;color:#8C9AA1;line-height:1.5;margin-bottom:8px;">decision rule<br><span style="color:#5A6E78;">{{ a.decisionRule }}</span></div>
+          <div style="font-size:11px;color:#5A6E78;"><span style="color:#8C9AA1;">analogues &#183;</span> {{ a.analogues }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- GROUNDED CLASSIFICATION -->
+  <div style="padding:34px 32px 0;">
+    <div style="font-size:10.5px;font-weight:600;letter-spacing:.14em;color:#2F6F7D;text-transform:uppercase;margin-bottom:6px;">Grounded classification</div>
+    <p style="font-family:var(--font-serif);font-size:13px;line-height:1.6;color:#2F4652;margin:0 0 16px;max-width:1000px;">Running the classifier over the full 1750&#8211;2026 span of all 36 societies in the instrument &#8212; ranking each by mean node activation &#963;&#8305; over its whole recorded history and scoring the result against each archetype's dominant/secondary node set. This is a first pass on full-span means; a windowed, trajectory-aware version (needed properly for Post-Catastrophe Workshop, which is defined by slope as much as level) is the natural next iteration.</p>
+    <sc-if value="{{ groundReady }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:18px;align-items:start;">
+
+        <!-- morphospace scatter + trajectories -->
+        <div style="background:#FBF7EC;border:1px solid #E2DAC3;border-radius:8px;padding:15px 18px 14px;position:sticky;top:16px;">
+          <div style="font-size:12.5px;font-weight:600;color:#1B2A33;margin-bottom:2px;">Morphospace scatter</div>
+          <div style="font-size:10.5px;color:#8C9AA1;margin-bottom:10px;">&#923;&#8322; coupling (x) vs dominant-node &#963; activation (y) &#8212; 36 societies, full-span means</div>
+          <svg viewBox="0 0 560 380" style="width:100%;height:auto;display:block;">
+            <!-- subtle grid lines -->
+            <sc-for list="{{ xTicks }}" as="xt" hint-placeholder-count="5">
+              <line x1="{{ xt.x }}" y1="16" x2="{{ xt.x }}" y2="340" stroke="#EDE8D8" stroke-width="0.5"></line>
+            </sc-for>
+            <sc-for list="{{ yTicks }}" as="yt" hint-placeholder-count="5">
+              <line x1="46" y1="{{ yt.y }}" x2="544" y2="{{ yt.y }}" stroke="#EDE8D8" stroke-width="0.5"></line>
+            </sc-for>
+            <!-- axes -->
+            <line x1="46" y1="340" x2="544" y2="340" stroke="#C9BE9E" stroke-width="1"></line>
+            <line x1="46" y1="16" x2="46" y2="340" stroke="#C9BE9E" stroke-width="1"></line>
+            <sc-for list="{{ xTicks }}" as="xt" hint-placeholder-count="5">
+              <g>
+                <line x1="{{ xt.x }}" y1="340" x2="{{ xt.x }}" y2="344" stroke="#C9BE9E" stroke-width="1"></line>
+                <text x="{{ xt.x }}" y="356" font-size="9" fill="#8C9AA1" text-anchor="middle" font-family="var(--font-mono)">{{ xt.label }}</text>
+              </g>
+            </sc-for>
+            <sc-for list="{{ yTicks }}" as="yt" hint-placeholder-count="5">
+              <g>
+                <line x1="42" y1="{{ yt.y }}" x2="46" y2="{{ yt.y }}" stroke="#C9BE9E" stroke-width="1"></line>
+                <text x="38" y="{{ yt.y }}" font-size="9" fill="#8C9AA1" text-anchor="end" dominant-baseline="middle" font-family="var(--font-mono)">{{ yt.label }}</text>
+              </g>
+            </sc-for>
+            <text x="295" y="374" font-size="9.5" fill="#5A6E78" text-anchor="middle" font-family="var(--font-mono)">&#923;&#8322; (algebraic connectivity)</text>
+            <text x="14" y="178" font-size="9.5" fill="#5A6E78" text-anchor="middle" font-family="var(--font-mono)" transform="rotate(-90 14 178)">dominant-node &#963; (activation)</text>
+
+            <sc-for list="{{ trajectories }}" as="tr" hint-placeholder-count="3">
+              <g>
+                <path d="{{ tr.pathD }}" fill="none" stroke="{{ tr.color }}" stroke-width="1.4" stroke-dasharray="3,2" opacity="0.85"></path>
+                <circle cx="{{ tr.start.x }}" cy="{{ tr.start.y }}" r="3" fill="#FBF7EC" stroke="{{ tr.color }}" stroke-width="1.4"></circle>
+                <circle cx="{{ tr.end.x }}" cy="{{ tr.end.y }}" r="4" fill="{{ tr.color }}"></circle>
+                <text x="{{ tr.end.x }}" dx="7" y="{{ tr.end.y }}" dy="3" font-size="9" fill="{{ tr.color }}" font-family="var(--font-mono)">{{ tr.name }}</text>
+              </g>
+            </sc-for>
+
+            <sc-for list="{{ scatterPoints }}" as="p" hint-placeholder-count="36">
+              <circle cx="{{ p.cx }}" cy="{{ p.cy }}" r="3.6" fill="{{ p.fill }}" opacity="0.85" stroke="#FBF7EC" stroke-width="0.6"></circle>
+            </sc-for>
+
+            <!-- archetype centroid annotations -->
+            <sc-for list="{{ archCentroids }}" as="ac" hint-placeholder-count="8">
+              <text x="{{ ac.cx }}" y="{{ ac.cy }}" font-size="7.5" fill="{{ ac.color }}" text-anchor="middle" font-family="var(--font-mono)" font-weight="600" opacity="0.8">{{ ac.name }}</text>
+            </sc-for>
+          </svg>
+          <div style="display:flex;flex-wrap:wrap;gap:5px 12px;margin-top:10px;">
+            <sc-for list="{{ legendArch }}" as="la" hint-placeholder-count="8">
+              <div style="display:flex;align-items:center;gap:5px;">
+                <span style="width:7px;height:7px;border-radius:7px;background:{{ la.color }};display:inline-block;"></span>
+                <span style="font-size:9.5px;color:#5A6E78;">{{ la.name }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="font-size:9.5px;color:#8C9AA1;margin-top:8px;line-height:1.4;">Dashed lines trace the three societies with the largest morphospace displacement across their recorded span (open circle = early quintile mean, filled = late). Archetype labels mark cluster centroids.</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <sc-for list="{{ groups }}" as="g" hint-placeholder-count="8">
+            <div style="background:#FBF7EC;border:1px solid #E2DAC3;border-radius:8px;padding:13px 16px 14px;">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:9px;">
+                <div style="display:flex;align-items:baseline;gap:8px;">
+                  <span style="width:8px;height:8px;border-radius:9px;background:{{ g.color }};display:inline-block;"></span>
+                  <span style="font-size:12.5px;font-weight:600;color:#1B2A33;">{{ g.name }}</span>
+                </div>
+                <span style="font-family:var(--font-mono);font-size:10.5px;color:#8C9AA1;">{{ g.count }} societies</span>
+              </div>
+              <sc-if value="{{ g.hasMembers }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;flex-direction:column;gap:5px;">
+                  <sc-for list="{{ g.societies }}" as="s" hint-placeholder-count="3">
+                    <div style="display:flex;align-items:baseline;gap:8px;padding:5px 8px;border-radius:5px;background:#F5F1E4;">
+                      <span style="font-size:11.5px;font-weight:600;color:#1B2A33;width:110px;flex:none;">{{ s.name }}</span>
+                      <span style="font-family:var(--font-mono);font-size:9.5px;color:#5A6E78;flex:1;">{{ s.top3Txt }}</span>
+                      <span style="font-family:var(--font-mono);font-size:9.5px;color:#8C9AA1;">&#923;&#8322; {{ s.lambdaTxt }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ g.empty }}" hint-placeholder-val="{{ false }}">
+                <div style="font-size:11px;color:#8C9AA1;font-style:italic;">no clean match in this dataset</div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+
+  <div style="padding:28px 32px 40px;max-width:1000px;">
+    <div style="font-size:10px;color:#8C9AA1;line-height:1.55;border-top:1px solid #E2DAC3;padding-top:14px;">Method note: node activation &#963;&#8305; is averaged across each society's full recorded span, then nodes are ranked and matched against each archetype's dominant/secondary/lagging node set with rank&#8209;weighted scoring. &#923;&#8322; is the full&#8209;span mean algebraic connectivity. This is a heuristic first pass, not the JUNO blind&#8209;test protocol described in the source draft &#8212; treat placements as illustrative, not certified.</div>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { groundReady: false, groups: null };
+
+  componentDidMount() {
+    this._tryCompute();
+  }
+
+  _tryCompute() {
+    if (window.CAMS_DATA) { this._compute(); }
+    else { setTimeout(() => this._tryCompute(), 60); }
+  }
+
+  _compute() {
+    const DATA = window.CAMS_DATA;
+    const nodeOrder = DATA.nodeOrder; // Lore, Archive, Helm, Stewards, Shield, Craft, Hands, Flow
+    const AB = { Lore:'Lo', Archive:'Ar', Helm:'He', Stewards:'St', Shield:'Sh', Craft:'Cr', Hands:'Ha', Flow:'Fl' };
+    const nNodes = 8;
+
+    const ARCH = [
+      { id:'port', num:1, name:'Port Organism', color:'#3A6FA8', dominant:['Flow','Archive','Stewards'], secondary:['Craft','Helm'], lagging:['Hands','Shield'] },
+      { id:'archive-crown', num:2, name:'Archive-Crown', color:'#B88A1E', dominant:['Archive','Lore','Craft'], secondary:['Stewards','Helm'], lagging:['Shield'] },
+      { id:'survival-shrine', num:3, name:'Survival Shrine', color:'#8B2E22', dominant:['Lore','Archive','Shield'], secondary:[], lagging:['Flow','Hands'] },
+      { id:'frontier-engine', num:4, name:'Frontier Engine', color:'#4F8F6B', dominant:['Flow','Craft','Hands','Helm'], secondary:[], lagging:['Lore','Archive'] },
+      { id:'rentier-flow', num:5, name:'Rentier-Flow State', color:'#2F6F7D', dominant:['Flow','Stewards'], secondary:['Archive','Craft'], lagging:['Hands'] },
+      { id:'welfare-machine', num:6, name:'Welfare-Machine', color:'#2E8B6B', dominant:['Stewards','Craft','Hands'], secondary:['Shield'], lagging:[] },
+      { id:'post-catastrophe', num:7, name:'Post-Catastrophe Workshop', color:'#8050B0', dominant:['Craft','Archive','Helm'], secondary:['Lore'], lagging:['Flow','Hands'] },
+      { id:'siege-forge', num:8, name:'Siege-Forge', color:'#C05A4A', dominant:['Shield','Lore'], secondary:['Archive'], lagging:['Flow','Hands','Craft'] },
+    ];
+
+    const nQ = 5;
+    const results = [];
+    for (const [name, s] of Object.entries(DATA.societies)) {
+      const nYears = s.nodes.length;
+      const sigmaSum = new Array(8).fill(0);
+      let lambdaSum = 0;
+      const third = Math.max(1, Math.floor(nYears / 3));
+      let lamEarly = 0, lamLate = 0;
+      const qSize = Math.max(1, Math.floor(nYears / nQ));
+      const qSigmaSum = Array.from({ length: nQ }, () => new Array(8).fill(0));
+      const qLambdaSum = new Array(nQ).fill(0);
+      const qCount = new Array(nQ).fill(0);
+
+      for (let y = 0; y < nYears; y++) {
+        const yr = s.nodes[y];
+        const qi = Math.min(nQ - 1, Math.floor(y / qSize));
+        for (let i = 0; i < 8; i++) {
+          const C = yr[i][0], K = yr[i][1], S = yr[i][2], A = yr[i][3];
+          const sig = A * C * (K - S);
+          sigmaSum[i] += sig;
+          qSigmaSum[qi][i] += sig;
+        }
+        lambdaSum += s.lambda2[y];
+        qLambdaSum[qi] += s.lambda2[y];
+        qCount[qi] += 1;
+        if (y < third) lamEarly += s.lambda2[y];
+        if (y >= nYears - third) lamLate += s.lambda2[y];
+      }
+      const sigmaMean = sigmaSum.map(v => v / nYears);
+      const lambdaMean = lambdaSum / nYears;
+      const lamEarlyMean = lamEarly / third, lamLateMean = lamLate / third;
+      const risingCoupling = (lamLateMean - lamEarlyMean) > 0.3;
+
+      const ranked = nodeOrder.map((nm, i) => ({ name: nm, sigma: sigmaMean[i] })).sort((a, b) => b.sigma - a.sigma);
+      const top3 = ranked.slice(0, 3).map(r => r.name);
+      const top3Idx = top3.map(nm => nodeOrder.indexOf(nm));
+      const topSigmaAvg = top3Idx.reduce((acc, i) => acc + sigmaMean[i], 0) / 3;
+
+      let best = null, bestScore = -Infinity;
+      for (const arch of ARCH) {
+        let score = 0;
+        top3.forEach((nm, rank) => {
+          const w = rank === 0 ? 3 : rank === 1 ? 2 : 1;
+          if (arch.dominant.includes(nm)) score += w;
+          else if (arch.secondary.includes(nm)) score += w * 0.4;
+        });
+        arch.lagging.forEach(nm => { if (top3.includes(nm)) score -= 1.5; });
+        if (arch.id === 'post-catastrophe' && risingCoupling) score += 1.5;
+        if (score > bestScore) { bestScore = score; best = arch; }
+      }
+
+      const quintiles = [];
+      for (let qi = 0; qi < nQ; qi++) {
+        if (qCount[qi] === 0) continue;
+        const qm = qSigmaSum[qi].map(v => v / qCount[qi]);
+        const qx = qLambdaSum[qi] / qCount[qi];
+        const qy = top3Idx.reduce((acc, i) => acc + qm[i], 0) / 3;
+        quintiles.push({ x: qx, y: qy });
+      }
+
+      results.push({
+        name, top3, top3Txt: top3.map(n => AB[n]).join(' · '),
+        sigmaMean, lambdaMean, topSigmaAvg,
+        archetype: best, score: bestScore, quintiles,
+      });
+    }
+
+    const groups = ARCH.map(a => {
+      const members = results.filter(r => r.archetype.id === a.id).sort((x, y) => y.score - x.score);
+      return {
+        id: a.id, name: a.name, color: a.color, count: members.length,
+        hasMembers: members.length > 0, empty: members.length === 0,
+        societies: members.map(m => ({ name: m.name, top3Txt: m.top3Txt, lambdaTxt: m.lambdaMean.toFixed(2) })),
+      };
+    });
+
+    // ---- Morphospace scatter geometry ----
+    const W = 560, H = 380, ML = 46, MR = 16, MT = 16, MB = 40;
+    const xs = results.map(r => r.lambdaMean), ys = results.map(r => r.topSigmaAvg);
+    const xMin = Math.min(...xs), xMax = Math.max(...xs);
+    const yMin = Math.min(...ys), yMax = Math.max(...ys);
+    const xPad = (xMax - xMin) * 0.1 || 0.2, yPad = (yMax - yMin) * 0.1 || 1;
+    const xDom = [xMin - xPad, xMax + xPad], yDom = [yMin - yPad, yMax + yPad];
+    const sx = x => ML + (x - xDom[0]) / (xDom[1] - xDom[0]) * (W - ML - MR);
+    const sy = y => H - MB - (y - yDom[0]) / (yDom[1] - yDom[0]) * (H - MT - MB);
+
+    const scatterPoints = results.map(r => ({
+      cx: sx(r.lambdaMean).toFixed(1), cy: sy(r.topSigmaAvg).toFixed(1),
+      fill: r.archetype.color, name: r.name, archName: r.archetype.name,
+    }));
+
+    const xTickVals = [0.5, 1, 1.5, 2, 2.5].filter(t => t >= xDom[0] && t <= xDom[1]);
+    const xTicks = xTickVals.map(t => ({ x: sx(t).toFixed(1), label: t.toString() }));
+    const yTickCount = 4;
+    const yTicks = Array.from({ length: yTickCount + 1 }, (_, i) => yDom[0] + i * (yDom[1] - yDom[0]) / yTickCount)
+      .map(t => ({ y: sy(t).toFixed(1), label: t.toFixed(0) }));
+
+    // ---- Trajectories: largest morphospace displacement, early -> late quintile ----
+    const withDisp = results.filter(r => r.quintiles.length >= 2).map(r => {
+      const p0 = r.quintiles[0], p1 = r.quintiles[r.quintiles.length - 1];
+      const dx = sx(p1.x) - sx(p0.x), dy = sy(p1.y) - sy(p0.y);
+      return Object.assign({}, r, { disp: Math.hypot(dx, dy) });
+    }).sort((a, b) => b.disp - a.disp);
+    const chosen = withDisp.slice(0, 3);
+    const trajectories = chosen.map(r => {
+      const pts = r.quintiles.map(p => ({ x: sx(p.x).toFixed(1), y: sy(p.y).toFixed(1) }));
+      const pathD = pts.map((p, i) => (i === 0 ? 'M' : 'L') + p.x + ',' + p.y).join(' ');
+      return { name: r.name, color: r.archetype.color, pathD, start: pts[0], end: pts[pts.length - 1] };
+    });
+
+    // ---- Per-archetype signature radars (z-scored sigma profile) ----
+    const popMean = new Array(nNodes).fill(0), popStd = new Array(nNodes).fill(0);
+    for (let i = 0; i < nNodes; i++) {
+      const vals = results.map(r => r.sigmaMean[i]);
+      const m = vals.reduce((a, b) => a + b, 0) / vals.length;
+      const v = vals.reduce((a, b) => a + (b - m) * (b - m), 0) / vals.length;
+      popMean[i] = m; popStd[i] = Math.sqrt(v) || 1;
+    }
+    const RC = 80, RR = 52;
+    const angle = i => -Math.PI / 2 + i * (2 * Math.PI / nNodes);
+    const radarAxisPts = nodeOrder.map((nm, i) => {
+      const a = angle(i);
+      return { x: (RC + Math.cos(a) * RR).toFixed(1), y: (RC + Math.sin(a) * RR).toFixed(1) };
+    });
+    const nodeAbbr = { Lore:'Lo', Archive:'Ar', Helm:'He', Stewards:'St', Shield:'Sh', Craft:'Cr', Hands:'Ha', Flow:'Fl' };
+    const radarLabelPts = nodeOrder.map((nm, i) => {
+      const a = angle(i);
+      const lr = RR + 14;
+      const ca = Math.cos(a), sa = Math.sin(a);
+      return {
+        x: (RC + ca * lr).toFixed(1), y: (RC + sa * lr).toFixed(1),
+        label: nodeAbbr[nm],
+        anchor: ca > 0.3 ? 'start' : ca < -0.3 ? 'end' : 'middle',
+        dy: sa > 0.3 ? '0.8em' : sa < -0.3 ? '-0.1em' : '0.35em',
+      };
+    });
+    const archSignatures = ARCH.map(a => {
+      const members = results.filter(r => r.archetype.id === a.id);
+      let z;
+      if (members.length === 0) { z = new Array(nNodes).fill(0); }
+      else {
+        z = nodeOrder.map((nm, i) => {
+          const m = members.reduce((acc, r) => acc + r.sigmaMean[i], 0) / members.length;
+          return (m - popMean[i]) / popStd[i];
+        });
+      }
+      const zc = z.map(v => Math.max(-2, Math.min(2, v)));
+      const poly = zc.map((v, i) => {
+        const a2 = angle(i);
+        const r = RR * 0.15 + ((v + 2) / 4) * RR * 0.85;
+        return (RC + Math.cos(a2) * r).toFixed(1) + ',' + (RC + Math.sin(a2) * r).toFixed(1);
+      }).join(' ');
+      return { id: a.id, poly };
+    });
+
+    // ---- Archetype centroids for scatter annotations ----
+    const archCentroids = ARCH.map(a => {
+      const members = results.filter(r => r.archetype.id === a.id);
+      if (members.length === 0) return null;
+      const avgX = members.reduce((acc, r) => acc + sx(r.lambdaMean), 0) / members.length;
+      const avgY = members.reduce((acc, r) => acc + sy(r.topSigmaAvg), 0) / members.length;
+      return { name: a.name, color: a.color, cx: avgX.toFixed(1), cy: (avgY - 12).toFixed(1) };
+    }).filter(Boolean);
+
+    this.setState({
+      groundReady: true, groups, scatterPoints, xTicks, yTicks, trajectories,
+      archSignatures, radarAxisPts, radarLabelPts, archCentroids,
+    });
+  }
+
+  renderVals() {
+    const metricRows = [
+      { symbol:'C', color:'#2F7ECC', name:'Coherence', range:'0–10', meaning:'Internal consistency of a node’s function' },
+      { symbol:'K', color:'#2E8B6B', name:'Capacity', range:'0–10', meaning:'Energy, resources and operative power available' },
+      { symbol:'S', color:'#C84C3E', name:'Stress', range:'0.5–10', meaning:'Load, threat and pressure on the node' },
+      { symbol:'A', color:'#8A5BB8', name:'Abstraction', range:'0–10', meaning:'Symbolic, explanatory and ideational sophistication' },
+    ];
+
+    const quadrants = [
+      { name:'Q1 · Vital Thought', color:'#4F8F6B', condition:'A·C high, (K−S) > 0', meaning:'Coherent ideas backed by free energy — expansive, integrated, working.' },
+      { name:'Q2 · Brilliant but Fragile', color:'#B88A1E', condition:'A·C high, (K−S) < 0', meaning:'Peak abstraction over eroding substrate — ideas present, headroom absent.' },
+      { name:'Q3 · Decoupled & Anxious', color:'#C05A4A', condition:'A·C low, (K−S) < 0', meaning:'Stress exceeds capacity, σ < 0 — the node works against itself.' },
+      { name:'Q4 · Nascent / Dim', color:'#8C9AA1', condition:'A·C low, (K−S) ≥ 0', meaning:'Capacity present, coherence thin — alive but not yet firing.' },
+    ];
+
+    const formulas = [
+      { name:'Node Value', expr:'NVᵢ = Cᵢ+Kᵢ−Sᵢ+0.5Aᵢ', note:'Baseline viability of one node at one time step.' },
+      { name:'Bond Strength', expr:'BSᵢ ≈ 0.95×NVᵢ', note:'Approximate single-node contribution to network coupling.' },
+      { name:'Node Fitness', expr:'fᵢ = Cᵢ+Kᵢ+Aᵢ−|Sᵢ|', note:'Composite fitness, stress taken as an absolute cost.' },
+      { name:'Activation Index', expr:'σᵢ = Aᵢ·Cᵢ·(Kᵢ−Sᵢ)', note:'The key morphospace quantity — where a society is actively thinking, not just storing.' },
+      { name:'Zeitgeist Index', expr:'Z(t) = Ā·C̄·(K̄−S̄)', note:'σ taken at system level across node means.' },
+      { name:'System Health', expr:'H(t) = Σ(EROIᵢKᵢ)/Σ|Sᵢ| · e⁻ᴬ⁄ᵀ', note:'Net productive capacity per unit stress, discounted by abstraction load.' },
+      { name:'Phase Transition Risk', expr:'β = σₛₜᵣₑₛₛ/μₕₑₐₗₜₕ × cf', note:'Instability pressure relative to system health.' },
+      { name:'Algebraic Connectivity', expr:'Λ₂ = λ₂(L)', note:'Second eigenvalue of the graph Laplacian over Bond_Strength — how well the eight sub-brains coordinate.' },
+    ];
+
+    const thresholds = [
+      { metric:'System Health H', rule:'H < 2.5', meaning:'High collapse risk' },
+      { metric:'Phase Transition Risk β', rule:'β > 0.5', meaning:'Critical instability' },
+      { metric:'Elite Adaptation A_elite', rule:'A < 0', meaning:'Leadership failure' },
+      { metric:'Resilience R = K̄/S̄', rule:'R < 1.5', meaning:'System vulnerability' },
+      { metric:'Λ₂', rule:'< 0.5', meaning:'Fragmented, near-decoupled' },
+      { metric:'Λ₂', rule:'0.5–1.2', meaning:'Low-Moderate coupling' },
+      { metric:'Λ₂', rule:'1.2–1.8', meaning:'Moderate-High coupling' },
+      { metric:'Λ₂', rule:'> 1.8', meaning:'High coupling / surge-capable' },
+    ];
+
+    const mkRows = (pairs) => pairs.map((p, i) => ({ label: p[0], value: p[1], bg: i % 2 === 0 ? '#FBF7EC' : '#F5F1E4' }));
+
+    const archetypes = [
+      { id:'port', num:1, name:'Port Organism', color:'#3A6FA8',
+        logic:'The society’s cognitive-affective life is organised around circulation and memory — it thinks through the flow of goods, people and information, plus the archive that accumulates from it.',
+        rows: mkRows([
+          ['Dominant nodes (σ)', 'Flow, Archive, Stewards (any order, top three)'],
+          ['Secondary nodes', 'Craft, Helm — moderate, supportive'],
+          ['Lagging nodes', 'Hands, Shield — often Nascent/Dim'],
+          ['Q1 Vital Thought', 'Flow, Archive — sustained'],
+          ['Λ₂ band', '1.2–2.0 (Moderate-High to High)'],
+          ['Bond cluster', 'Flow↔Archive↔Stewards tight; outward links to Craft'],
+          ['Floor / ceiling', 'Λ₂ rarely below 0.8; high ceiling — Flow surge drives system-wide coherence spikes'],
+          ['Signature wound', 'Disruption of external circulation rapidly degrades the whole; Hands and Craft recover slowly'],
+        ]),
+        decisionRule: 'Flow + Archive in σ top-3 with Q1 status, coupling led by the Flow↔Archive↔Stewards triangle. If Stewards outranks Craft and Hands is dim, lean Rentier-Flow (5) instead.',
+        analogues: 'port-city states, entrepôt economies, maritime trading republics',
+      },
+      { id:'archive-crown', num:2, name:'Archive-Crown', color:'#B88A1E',
+        logic:'The centre of gravity sits in symbolic production, memory and transmission. Trust is high because institutional memory is deep and accessible.',
+        rows: mkRows([
+          ['Dominant nodes (σ)', 'Archive, Lore, Craft (any order, top three)'],
+          ['Secondary nodes', 'Stewards, Helm — moderate'],
+          ['Lagging nodes', 'Shield — low but stable'],
+          ['Q1 Vital Thought', 'Archive, Lore sustained; Craft occasionally Q1'],
+          ['Λ₂ band', '1.3–1.9 (stable Moderate-High)'],
+          ['Bond cluster', 'Archive↔Lore↔Craft triangle; Helm integrating, not dominant'],
+          ['Floor / ceiling', 'NV_min positive across the symbolic crown; moderate ceiling, does not surge'],
+          ['Signature wound', 'Lore erosion or Archive fragmentation leaves the crown intact in form but empty in function (Q2→Q3)'],
+        ]),
+        decisionRule: 'Archive + Lore + Craft in σ top-3, predominantly Q1, Shield quiet. If Lore is degraded despite Archive holding, consider Survival Shrine (3).',
+        analogues: 'Song dynasty administrative-scholarly state, pre-collapse Venetian republic, Nordic knowledge-welfare hybrids',
+      },
+      { id:'survival-shrine', num:3, name:'Survival Shrine', color:'#8B2E22',
+        logic:'The symbolic crown and security apparatus survive a period of operational collapse. The society thinks through its deepest identity and defence while production and circulation stay structurally damaged.',
+        rows: mkRows([
+          ['Dominant nodes (σ)', 'Lore, Archive, Shield'],
+          ['Critical condition', 'Flow, Hands and/or Craft in Q3 or Q4'],
+          ['Quadrant profile', 'Lore/Archive often Q2 (Brilliant but Fragile); Shield Q1 or Q2'],
+          ['Λ₂ band', '0.5–1.2 (Low-Moderate) — degraded, not collapsed'],
+          ['Bond cluster', 'Lore↔Archive strong; Shield partly integrated; operational nodes weak'],
+          ['Floor / ceiling', 'Λ₂ can reach 0.3–0.5 acutely; low surge capacity'],
+          ['Signature wound', 'Long-pressure wound — circulation and production stay damaged even after symbolic recovery'],
+        ]),
+        decisionRule: 'Lore + Archive + Shield dominate σ AND Flow/Hands show negative or near-zero NV. If Shield is also degraded and symbolic nodes alone remain, see Siege-Forge (8).',
+        analogues: 'siege economies, occupied polities retaining cultural institutions, post-defeat societies keeping their religious-scholarly apparatus',
+      },
+      { id:'frontier-engine', num:4, name:'Frontier Engine', color:'#4F8F6B',
+        logic:'Cognitive-affective energy concentrates in operational nodes. Symbolic and memory nodes lag. High activation, low explanatory depth — expansion and production are the dominant thought.',
+        rows: mkRows([
+          ['Dominant nodes (σ)', 'Flow, Craft, Hands, Helm (three-plus of the four)'],
+          ['Lagging nodes', 'Lore (Q4), Archive (Q4 or Nascent)'],
+          ['Quadrant profile', 'Operational cluster Q1; symbolic crown Nascent/Dim'],
+          ['Λ₂ band', '1.0–1.8; strong within the operational cluster, weak into symbolic nodes'],
+          ['Bond cluster', 'Flow↔Craft↔Hands↔Helm tight; Archive/Lore loosely bonded'],
+          ['Floor / ceiling', 'Moderate resilience; high ceiling — can surge in resource-rich expansion phases'],
+          ['Signature wound', 'Meaning-deficit — high output, low symbolic coherence; collapses fast when the frontier closes'],
+        ]),
+        decisionRule: 'Three or more of Flow/Craft/Hands/Helm dominate σ, symbolic crown Nascent/Dim, coupling concentrated operationally.',
+        analogues: 'colonial extraction economies, early industrialising states, resource-boom societies, settler frontiers',
+      },
+      { id:'rentier-flow', num:5, name:'Rentier-Flow State', color:'#2F6F7D',
+        logic:'Circulation stays active but its surplus is captured and administered rather than reinvested — Stewards holds elevated coherence and free energy while extracting rent from Flow’s circulation.',
+        rows: mkRows([
+          ['Dominant nodes (σ)', 'Flow, Stewards (third seat variable — Archive or Craft)'],
+          ['Secondary nodes', 'Shield — moderate'],
+          ['Lagging nodes', 'Archive/Lore erode in coherence; Hands can be strained'],
+          ['Q1 Vital Thought', 'Flow, Stewards'],
+          ['Λ₂ band', '1.0–1.7 (Moderate) — administrative-logistical, not knowledge-coupled'],
+          ['Bond cluster', 'Flow↔Stewards tight; weak into Archive/Lore'],
+          ['Floor / ceiling', 'NV_min can go negative for Hands under extraction pressure; ceiling capped by rentier concentration'],
+          ['Signature wound', 'Extraction without reinvestment — Hands and Craft erode even while Flow/Stewards look healthy'],
+        ]),
+        decisionRule: 'Flow + Stewards dominate with positive (K−S), Archive/Lore coherence eroding, coupling concentrated in circulation–stewardship rather than the symbolic crown.',
+        analogues: 'resource-rent economies, tribute systems, financial-rentier hubs',
+      },
+      { id:'welfare-machine', num:6, name:'Welfare-Machine', color:'#2E8B6B',
+        logic:'Redistribution and care, not circulation or symbolism, are the dominant activation. Stewards, Craft and Hands cooperate to sustain broad Node Value; Shield present but not hypertrophic.',
+        rows: mkRows([
+          ['Dominant nodes (σ)', 'Stewards, Craft, Hands'],
+          ['Secondary nodes', 'Shield — moderate'],
+          ['Lagging nodes', 'none severe — Archive/Lore steady but not dominant'],
+          ['Q1 Vital Thought', 'Stewards, Craft, Hands sustained together — a rare three-way cluster'],
+          ['Λ₂ band', '1.3–1.9 (stable, broad-based)'],
+          ['Bond cluster', 'Stewards↔Craft↔Hands triangle — redistribution/care motif'],
+          ['Floor / ceiling', 'High floor by design; moderate ceiling — built for durability, not surge'],
+          ['Signature wound', 'Fiscal/administrative overreach can flatten Craft or Hands into Q4 rather than Q3'],
+        ]),
+        decisionRule: 'Stewards + Craft + Hands dominate σ together, robust mutual coupling, supportive (not hypertrophic) Shield.',
+        analogues: 'Nordic welfare states, mutual-aid/guild economies, redistribution-heavy administrative states',
+      },
+      { id:'post-catastrophe', num:7, name:'Post-Catastrophe Workshop', color:'#8050B0',
+        logic:'A society rebuilding after operational collapse. Craft, Archive and Helm carry most activation as reconstruction proceeds; Flow and Hands are recovering but still carry the wound.',
+        rows: mkRows([
+          ['Dominant nodes (σ)', 'Craft, Archive, Helm'],
+          ['Secondary nodes', 'Lore — patchy, present but uneven'],
+          ['Lagging nodes', 'Flow, Hands — recovering, still below Q1'],
+          ['Quadrant profile', 'Craft, Helm Q1; Archive often Q2 early, moving toward Q1'],
+          ['Λ₂ band', 'rising from a low base (0.4–0.6 early) toward 1.0–1.5'],
+          ['Bond cluster', 'reconstruction chains — Craft↔Helm↔Archive strengthening over time'],
+          ['Floor / ceiling', 'Λ₂ can start near 0.3–0.5; ceiling bounded until Flow/Hands re-enter Q1'],
+          ['Signature wound', 'Path-dependent — the trajectory, not the snapshot, is diagnostic'],
+        ]),
+        decisionRule: 'Craft + Archive + Helm dominate σ, Λ₂ trending upward from a low base, Flow/Hands recovering but still low. Confirm with trajectory, not one year.',
+        analogues: 'post-war reconstruction states, post-disaster recovery economies, societies rebuilding after institutional collapse',
+      },
+      { id:'siege-forge', num:8, name:'Siege-Forge', color:'#C05A4A',
+        logic:'Shield turns hypertrophic under acute existential pressure, joined by Lore in symbolic intensity, while Archive holds sturdy and operational nodes are depleted. A close relative of Survival Shrine, with defence rather than memory in front.',
+        rows: mkRows([
+          ['Dominant nodes (σ)', 'Shield, Lore (Archive sturdy but not always top-3)'],
+          ['Secondary nodes', 'Archive'],
+          ['Lagging nodes', 'Flow, Hands, often Craft — Decoupled & Anxious'],
+          ['Quadrant profile', 'Shield frequently Q1/Q2 (hypertrophic); Lore Q2 tipping toward Q3'],
+          ['Λ₂ band', '0.3–1.0 (low) — crown cluster tight, coupling degraded elsewhere'],
+          ['Bond cluster', 'Shield↔Lore strong; Archive partly integrated; operational nodes weak'],
+          ['Floor / ceiling', 'NV_min deeply negative operationally; Λ₂ can approach fragmentation (<0.5); low ceiling'],
+          ['Signature wound', 'Weaponised identity — meaning-making fuses with defence; recovery needs Shield to stand down first'],
+        ]),
+        decisionRule: 'Shield + Lore dominate σ (Shield outranking Lore) AND operational nodes show negative NV. If Lore/Archive dominate instead and Shield is only moderate, classify Survival Shrine (3).',
+        analogues: 'societies under prolonged siege or occupation, garrison states, populations organised around an existential threat narrative',
+      },
+    ];
+
+    const sigById = {};
+    (this.state.archSignatures || []).forEach(s => { sigById[s.id] = s.poly; });
+    archetypes.forEach(a => { a.sigPoly = sigById[a.id] || ''; });
+
+    const legendArch = archetypes.map(a => ({ name: a.name, color: a.color }));
+
+    return {
+      metricRows, quadrants, formulas, thresholds, archetypes, legendArch,
+      groundReady: this.state.groundReady,
+      groups: this.state.groups || [],
+      scatterPoints: this.state.scatterPoints || [],
+      xTicks: this.state.xTicks || [],
+      yTicks: this.state.yTicks || [],
+      trajectories: this.state.trajectories || [],
+      radarAxisPts: this.state.radarAxisPts || [],
+      radarLabelPts: this.state.radarLabelPts || [],
+      archCentroids: this.state.archCentroids || [],
+    };
+  }
+}
+
+</script>
+</body>
+</html>
