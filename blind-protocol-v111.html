@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JUNO/CAMS Blind-Analysis Protocol v1.1.1 — Neural Nations</title>
+    <meta name="description" content="Results of the JUNO/CAMS Blind-Analysis Protocol v1.1.1 cognitive-affective extension experiment. 24 societies across 3 blind sets. MRR improved 0.667 → 0.833; calibration gate failed on conflict states.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/blind-protocol-v111">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/blind-protocol-v111">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="JUNO/CAMS Blind-Analysis Protocol v1.1.1 — Neural Nations">
+    <meta property="og:description" content="Results of the JUNO/CAMS Blind-Analysis Protocol v1.1.1 cognitive-affective extension experiment across 24 blind societies.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+    .proto-hero {
+        background: linear-gradient(135deg, #1B2A33 0%, #2C3E2F 60%, #4a7c59 100%);
+        color: #F5F1E4;
+        padding: 52px 32px 44px;
+        text-align: center;
+    }
+    .proto-hero h1 { font-size: 2.3em; font-weight: 700; margin: 0 0 10px; line-height: 1.2; }
+    .proto-hero .subtitle { font-size: 1em; color: #A8C5B0; margin: 0 0 16px; font-style: italic; }
+    .status-badge {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: rgba(74,124,89,0.35); border: 1px solid rgba(168,197,176,0.4);
+        border-radius: 999px; padding: 6px 18px;
+        font-size: 0.8em; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #C8E4CC;
+    }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #D98B2B; }
+
+    .page-body { max-width: 840px; margin: 0 auto; padding: 36px 24px 80px; }
+
+    .card {
+        background: #FBF8EF; border: 1px solid #DAD2B8; border-radius: 8px;
+        padding: 22px 28px; margin-bottom: 20px;
+        box-shadow: 0 1px 0 rgba(27,42,51,0.04);
+    }
+    .card h2 { font-size: 1.12em; color: #1B2A33; margin: 0 0 14px; padding-bottom: 10px; border-bottom: 1px solid #DAD2B8; }
+    .card p { color: #2F4651; line-height: 1.7; margin: 0 0 10px; font-size: 0.94em; }
+    .card p:last-child { margin-bottom: 0; }
+
+    .callout {
+        background: #F0F7F9; border-left: 3px solid #2F6F7D; border-radius: 0 6px 6px 0;
+        padding: 12px 16px; margin: 12px 0; font-size: 0.9em; color: #2F4651; line-height: 1.65;
+    }
+    .callout strong { color: #1B2A33; }
+    .callout.amber { background: #FDF6E8; border-left-color: #D98B2B; }
+    .callout.red   { background: #FDF0EE; border-left-color: #C84C3E; }
+    .callout.jade  { background: #F0F7F2; border-left-color: #4a7c59; }
+
+    /* metric grid */
+    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 16px 0; }
+    .metric-box { background: #F5F1E4; border: 1px solid #DAD2B8; border-radius: 6px; padding: 14px 16px; text-align: center; }
+    .metric-value { font-size: 2em; font-weight: 700; color: #2F6F7D; font-family: ui-monospace,'JetBrains Mono',monospace; line-height: 1.1; }
+    .metric-value.amber { color: #D98B2B; }
+    .metric-value.jade  { color: #4a7c59; }
+    .metric-value.red   { color: #C84C3E; }
+    .metric-label { font-size: 0.78em; color: #6B7480; margin-top: 4px; font-weight: 500; }
+    .metric-delta { font-size: 0.82em; font-weight: 700; color: #4a7c59; }
+
+    /* results table */
+    .results-table { width: 100%; border-collapse: collapse; font-size: 0.86em; margin: 12px 0; }
+    .results-table th { background: #2F4651; color: #F5F1E4; padding: 7px 12px; text-align: left; font-size: 0.85em; }
+    .results-table td { padding: 7px 12px; border-bottom: 1px solid #DAD2B8; color: #2F4651; }
+    .results-table tr:nth-child(even) td { background: #F5F1E4; }
+    .results-table tr:last-child td { border-bottom: none; }
+    .pass { color: #4a7c59; font-weight: 700; }
+    .fail { color: #C84C3E; font-weight: 700; }
+
+    /* document links */
+    .doc-grid { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+    .doc-link {
+        display: flex; align-items: flex-start; gap: 12px;
+        background: #F5F1E4; border: 1px solid #DAD2B8; border-radius: 6px;
+        padding: 11px 14px; text-decoration: none; color: #2F4651;
+        transition: border-color 0.15s, background 0.15s;
+    }
+    .doc-link:hover { border-color: #4a7c59; background: #F0F7F2; }
+    .doc-badge {
+        flex-shrink: 0; font-size: 0.7em; font-weight: 700; letter-spacing: .08em;
+        text-transform: uppercase; background: #4a7c59; color: #fff;
+        padding: 2px 8px; border-radius: 3px; margin-top: 2px;
+    }
+    .doc-badge.teal { background: #2F6F7D; }
+    .doc-badge.amber { background: #D98B2B; }
+    .doc-badge.slate { background: #2F4651; }
+    .doc-meta { flex: 1; }
+    .doc-name { font-weight: 600; color: #1B2A33; font-size: 0.92em; }
+    .doc-desc { font-size: 0.82em; color: #6B7480; margin-top: 2px; }
+
+    .attribution { margin-top: 28px; padding-top: 16px; border-top: 1px solid #DAD2B8; font-size: 0.88em; color: #6B7480; }
+    .attribution strong { color: #1B2A33; font-weight: 600; }
+    code { font-family: ui-monospace,'JetBrains Mono',SFMono-Regular,monospace; font-size: 0.88em; background: #EDE8D8; padding: 1px 5px; border-radius: 3px; color: #1B2A33; }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<div class="proto-hero">
+    <h1>JUNO/CAMS Blind-Analysis Protocol v1.1.1</h1>
+    <p class="subtitle">Cognitive-affective extension &mdash; 3 blind sets &middot; 24 societies &middot; 3,000+ society-years</p>
+    <div class="status-badge">
+        <span class="status-dot"></span>
+        Stage 6 complete &nbsp;&middot;&nbsp; July 2026 &nbsp;&middot;&nbsp; Calibration gate failed
+    </div>
+</div>
+
+<div class="page-body">
+
+    <!-- OVERVIEW -->
+    <div class="card">
+        <p>This page presents results of the JUNO/CAMS Blind-Analysis Protocol v1.1.1, which tested whether decomposing the legacy activation term into distinct <strong>cognitive</strong> (<code>gᵢ</code>) and <strong>affective/energy</strong> (<code>eᵢ</code>) components improves morphological classification and identity disambiguation. Three unlabelled blind sets of 8 societies each were analysed using a strict falsification-first two-track design: canonical operators locked first, then cognitive-affective operators computed, keys revealed only at Stage 6.</p>
+        <div class="callout jade">
+            <strong>Relation to JUNO v1.2.</strong> This experiment used the v1.1.1 protocol — a cognitive-affective extension that decomposes the activation term, distinct from the v1.2-Final numerical-policy and dead-code fixes. The v1.1.1 operators are not incorporated into the production JUNO v1.2 classifier; this experiment informs future protocol iterations.
+        </div>
+    </div>
+
+    <!-- KEY RESULTS -->
+    <div class="card">
+        <h2>Key Results — Pooled (24 Societies)</h2>
+        <div class="metric-grid">
+            <div class="metric-box">
+                <div class="metric-value">66.7<span style="font-size:0.55em">%</span></div>
+                <div class="metric-label">Track 1 Rank-1 Accuracy<br>(canonical)</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-value jade">83.3<span style="font-size:0.55em">%</span></div>
+                <div class="metric-label">Track 2 Rank-1 Accuracy<br>(augmented) <span class="metric-delta">+16.6%</span></div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-value">0.667</div>
+                <div class="metric-label">MRR — Track 1 (canonical)</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-value jade">0.833</div>
+                <div class="metric-label">MRR — Track 2 (augmented) <span class="metric-delta">+0.167</span></div>
+            </div>
+        </div>
+
+        <div class="callout red" style="margin-top:14px;">
+            <strong>Formal result: FAILED.</strong> Despite the MRR improvement, the amended Stage 2B criterion (A4) requires non-degradation of confidence calibration. Track 2 increased confidence on false positives for Afghanistan and Iraq (both true family: <code>conflict-state</code>), which were incorrectly relabeled to <code>cognitive-affective split</code> with high confidence. This triggered the calibration degradation penalty.
+        </div>
+    </div>
+
+    <!-- SET BREAKDOWN -->
+    <div class="card">
+        <h2>Set-by-Set Breakdown</h2>
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>Set</th>
+                    <th>Track 1 MRR</th>
+                    <th>Track 2 MRR</th>
+                    <th>Delta</th>
+                    <th>Finding</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Set 1</strong></td>
+                    <td>0.750</td>
+                    <td>0.750</td>
+                    <td>0</td>
+                    <td>Honest null — signed operators confirmed canonical; Hands Drag detected in 6/8 societies</td>
+                </tr>
+                <tr>
+                    <td><strong>Set 2</strong></td>
+                    <td>0.500</td>
+                    <td><span class="pass">1.000</span></td>
+                    <td>+0.500</td>
+                    <td>High disambiguation value — 4 misclassifications corrected (China, Russia, Poland, Iran → cognitive-affective split)</td>
+                </tr>
+                <tr>
+                    <td><strong>Set 3</strong></td>
+                    <td>0.750</td>
+                    <td>0.750</td>
+                    <td>0 (net)</td>
+                    <td>Calibration failure on Afghanistan and Iraq; 2 correct relabelings offset by 2 false-positive upgrades</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 style="margin-top:18px;">Error Migration Audit</h2>
+        <div class="metric-grid" style="grid-template-columns:1fr 1fr;">
+            <div class="metric-box">
+                <div class="metric-value jade">4</div>
+                <div class="metric-label">Misses fixed by Track 2<br>(China, Russia, Poland, Iran)</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-value">0</div>
+                <div class="metric-label">New misses created by Track 2<br>(no canonical correct overturned)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DISCUSSION -->
+    <div class="card">
+        <h2>Interpretation</h2>
+        <p>The calibration gate failure reveals a specific limit of the v1.1.1 signed operators: while they correctly decode masked internal stress in authoritarian and transitional states — where high cognitive elaboration coexists with negative affective valence — they misinterpret structural collapse in active conflict states. In Afghanistan and Iraq, extreme viability failure (<code>Vᵢ &lt; 0</code>) combined with negative affective valence was misclassified as a cognitive-affective inversion rather than a Freeze/Collapse event.</p>
+        <div class="callout amber">
+            <strong>Fix identified.</strong> The precedence order in the regime classifier must be refined so that extreme negative viability (Rule 1: Freeze/Collapse) strictly overrides any cognitive-affective inversion signals. This would prevent high-confidence <code>cognitive-affective split</code> labels being assigned to societies undergoing fundamental systemic collapse. Implementation is planned for a future protocol iteration.
+        </div>
+        <p>The sign test (one-sided binomial, H₀: no improvement) returned p = 0.0625 on 4 positive deltas, 0 negative deltas, and 20 tied societies — below the α = 0.05 threshold, primarily because only 4 of 24 classifications changed rank. The improvement is real but not yet statistically significant at the required confidence level given the current sample size.</p>
+    </div>
+
+    <!-- PLOTS -->
+    <div class="card">
+        <h2>Figures</h2>
+
+        <p style="font-size:0.88em;color:#5A6E78;margin-bottom:16px;">All figures generated programmatically from the scored corpus. Click any image to open full-size.</p>
+
+        <div style="margin-bottom:22px;">
+            <a href="blind-test/fig11_rank1_accuracy.png" target="_blank">
+                <img src="blind-test/fig11_rank1_accuracy.png" alt="Figure 11: Rank-1 Accuracy comparison Track 1 vs Track 2" style="width:100%;border-radius:6px;border:1px solid #DAD2B8;">
+            </a>
+            <p style="font-size:0.82em;color:#6B7480;margin-top:6px;text-align:center;"><strong>Fig 11</strong> — Rank-1 accuracy: canonical (Track 1) 66.7% vs augmented (Track 2) 83.3%</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;">
+            <div>
+                <a href="blind-test/fig10_mrr_comparison.png" target="_blank">
+                    <img src="blind-test/fig10_mrr_comparison.png" alt="Figure 10: MRR per society" style="width:100%;border-radius:6px;border:1px solid #DAD2B8;">
+                </a>
+                <p style="font-size:0.82em;color:#6B7480;margin-top:6px;text-align:center;"><strong>Fig 10</strong> — MRR per society; note Set 2 improvements</p>
+            </div>
+            <div>
+                <a href="blind-test/fig13_mrr_delta.png" target="_blank">
+                    <img src="blind-test/fig13_mrr_delta.png" alt="Figure 13: MRR delta per society" style="width:100%;border-radius:6px;border:1px solid #DAD2B8;">
+                </a>
+                <p style="font-size:0.82em;color:#6B7480;margin-top:6px;text-align:center;"><strong>Fig 13</strong> — MRR delta; positive = Track 2 improvement</p>
+            </div>
+        </div>
+
+        <div style="margin-bottom:22px;">
+            <a href="blind-test/fig8_disambiguation.png" target="_blank">
+                <img src="blind-test/fig8_disambiguation.png" alt="Figure 8: Rank-1 disambiguation summary" style="width:100%;border-radius:6px;border:1px solid #DAD2B8;">
+            </a>
+            <p style="font-size:0.82em;color:#6B7480;margin-top:6px;text-align:center;"><strong>Fig 8</strong> — Disambiguation summary; red bars = Track 2 forced primary family relabeling</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;">
+            <div>
+                <a href="blind-test/fig12_scoring_matrix.png" target="_blank">
+                    <img src="blind-test/fig12_scoring_matrix.png" alt="Figure 12: Scoring matrix" style="width:100%;border-radius:6px;border:1px solid #DAD2B8;">
+                </a>
+                <p style="font-size:0.82em;color:#6B7480;margin-top:6px;text-align:center;"><strong>Fig 12</strong> — Full classification scoring matrix</p>
+            </div>
+            <div>
+                <a href="blind-test/fig3_regime_timeline.png" target="_blank">
+                    <img src="blind-test/fig3_regime_timeline.png" alt="Figure 3: Regime timeline" style="width:100%;border-radius:6px;border:1px solid #DAD2B8;">
+                </a>
+                <p style="font-size:0.82em;color:#6B7480;margin-top:6px;text-align:center;"><strong>Fig 3</strong> — Regime classification timeline (v1.1.1)</p>
+            </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div>
+                <a href="blind-test/fig1_viability_trajectories.png" target="_blank">
+                    <img src="blind-test/fig1_viability_trajectories.png" alt="Figure 1: Viability trajectories" style="width:100%;border-radius:6px;border:1px solid #DAD2B8;">
+                </a>
+                <p style="font-size:0.82em;color:#6B7480;margin-top:6px;text-align:center;"><strong>Fig 1</strong> — Mean Vᵢ trajectories by set</p>
+            </div>
+            <div>
+                <a href="blind-test/fig5_signed_heatmap.png" target="_blank">
+                    <img src="blind-test/fig5_signed_heatmap.png" alt="Figure 5: Signed activation heatmap" style="width:100%;border-radius:6px;border:1px solid #DAD2B8;">
+                </a>
+                <p style="font-size:0.82em;color:#6B7480;margin-top:6px;text-align:center;"><strong>Fig 5</strong> — Signed activation heatmap sᵢ_signed by node</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- DOCUMENTS -->
+    <div class="card">
+        <h2>Documents &amp; Data</h2>
+        <div class="doc-grid">
+            <a href="blind-test/JUNO_CAMS_Blind_Protocol_v1_1_1.pdf" target="_blank" class="doc-link">
+                <span class="doc-badge">Report</span>
+                <div class="doc-meta">
+                    <div class="doc-name">JUNO/CAMS Blind-Analysis Protocol v1.1.1 — Full Report</div>
+                    <div class="doc-desc">Protocol specification, methodology, all set analyses, Stage 6 scoring · PDF</div>
+                </div>
+            </a>
+            <a href="blind-test/stage6_scoring_results.csv" download class="doc-link">
+                <span class="doc-badge teal">CSV</span>
+                <div class="doc-meta">
+                    <div class="doc-name">Stage 6 Scoring Results</div>
+                    <div class="doc-desc">Post-key scoring table: regime, family, MRR, Track 1 vs Track 2 · CSV</div>
+                </div>
+            </a>
+            <a href="blind-test/canonical_society_year_metrics.csv" download class="doc-link">
+                <span class="doc-badge teal">CSV</span>
+                <div class="doc-meta">
+                    <div class="doc-name">Canonical Society-Year Metrics</div>
+                    <div class="doc-desc">Track 1 — V̄, B̄, s_min, λ₂ for all 24 societies across 3,000+ society-years · CSV (448 KB)</div>
+                </div>
+            </a>
+            <a href="blind-test/signed_society_year_metrics.csv" download class="doc-link">
+                <span class="doc-badge teal">CSV</span>
+                <div class="doc-meta">
+                    <div class="doc-name">Signed Society-Year Metrics</div>
+                    <div class="doc-desc">Track 2 — cognitive (gᵢ) and affective (eᵢ) decomposition; signed activation sᵢ_signed · CSV (637 KB)</div>
+                </div>
+            </a>
+            <a href="blind-test/fig8_disambiguation.png" target="_blank" class="doc-link">
+                <span class="doc-badge slate">Figure</span>
+                <div class="doc-meta">
+                    <div class="doc-name">Figure 8 — Disambiguation Summary</div>
+                    <div class="doc-desc">Rank-1 identity disambiguation: canonical vs augmented per society · PNG</div>
+                </div>
+            </a>
+            <a href="blind-test/fig10_mrr_comparison.png" target="_blank" class="doc-link">
+                <span class="doc-badge slate">Figure</span>
+                <div class="doc-meta">
+                    <div class="doc-name">Figure 10 — MRR Comparison</div>
+                    <div class="doc-desc">MRR per society across both tracks, showing Set 2 improvements · PNG</div>
+                </div>
+            </a>
+            <a href="blind-test/fig11_rank1_accuracy.png" target="_blank" class="doc-link">
+                <span class="doc-badge slate">Figure</span>
+                <div class="doc-meta">
+                    <div class="doc-name">Figure 11 — Rank-1 Accuracy</div>
+                    <div class="doc-desc">Pooled Track 1 vs Track 2 rank-1 accuracy · PNG</div>
+                </div>
+            </a>
+            <a href="blind-test/fig12_scoring_matrix.png" target="_blank" class="doc-link">
+                <span class="doc-badge slate">Figure</span>
+                <div class="doc-meta">
+                    <div class="doc-name">Figure 12 — Scoring Matrix</div>
+                    <div class="doc-desc">Full classification scoring matrix · PNG</div>
+                </div>
+            </a>
+            <a href="blind-test/fig1_viability_trajectories.png" target="_blank" class="doc-link">
+                <span class="doc-badge slate">Figure</span>
+                <div class="doc-meta">
+                    <div class="doc-name">Figure 1 — Viability Trajectories</div>
+                    <div class="doc-desc">Mean Vᵢ trajectories across all sets · PNG</div>
+                </div>
+            </a>
+            <a href="blind-test/fig3_regime_timeline.png" target="_blank" class="doc-link">
+                <span class="doc-badge slate">Figure</span>
+                <div class="doc-meta">
+                    <div class="doc-name">Figure 3 — Regime Timeline</div>
+                    <div class="doc-desc">v1.1.1 regime classification timeline across society-years · PNG</div>
+                </div>
+            </a>
+            <a href="blind-test/fig5_signed_heatmap.png" target="_blank" class="doc-link">
+                <span class="doc-badge slate">Figure</span>
+                <div class="doc-meta">
+                    <div class="doc-name">Figure 5 — Signed Activation Heatmap</div>
+                    <div class="doc-desc">Mean sᵢ_signed — cognitive/affective alignment and inversion by node · PNG</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="attribution">
+        <strong>Kari McKern</strong> &nbsp;&middot;&nbsp; co-developed with GPT authors (OpenAI) &nbsp;&middot;&nbsp; July 2026 &nbsp;&middot;&nbsp;
+        <a href="juno-v1-2.html" style="color:#4a7c59;">JUNO v1.2-Final</a> &nbsp;&middot;&nbsp;
+        <a href="explore.html" style="color:#4a7c59;">Explore</a>
+    </div>
+
+</div>
+
+<script src="mobile-nav.js"></script>
+</body>
+</html>
