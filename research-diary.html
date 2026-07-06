@@ -308,6 +308,20 @@
     <!-- Research Diary Entries -->
     <div id="diary-entries">
 
+        <div class="diary-entry methodology">
+            <div class="entry-header">
+                <h3>JUNO v1.2-Final — Production Specification Adopted</h3>
+                <div>
+                    <span class="entry-type">Methodology</span>
+                    <span class="entry-date">2026-07-06</span>
+                </div>
+            </div>
+            <div class="entry-content">
+                <p>Following the 3,002 society-year blind-corpus test of v1.1 (24 model-scored societies, 24,016 node-years), JUNO v1.2-Final has been adopted as the production specification for the CAMS regime classifier. Two substantive changes were made. First, a mandatory numerical rounding policy — aggregates (V̄, V_min, s_min, B̄) must be rounded to 6 decimal places before every threshold comparison — resolves a floating-point reproducibility defect observed on three society-years where IEEE-754 arithmetic caused the same data to yield different regime labels depending on whether values had passed through a file round-trip. Second, the Local Node Failure s-arm (<code>s_min ≤ −0.80</code>) was deleted as confirmed unreachable dead code: every case that satisfied it was captured by Phantom Type II or a higher-precedence regime. Zero firings were observed across the entire blind corpus. The Strained floor was correspondingly lowered from V̄ ≥ 6 to V̄ ≥ 4, making classifier coverage provably complete for well-formed data — 100% coverage verified (v1.1: 99.8%). λ₂ has been reclassified as a derived diagnostic only; its r = 0.972 correlation with B̄ is documented as a circularity arising from the graph Laplacian structure. All gains from the v1.1 sign-preserving sᵢ correction are preserved.</p>
+                <p style="margin-top:12px;"><a href="juno-v1-2.html" style="color:#2F6F7D;font-weight:600;">→ JUNO v1.2-Final specification</a> &nbsp;&middot;&nbsp; <a href="juno/JUNO_v1.2-Final_Formalism.md" download style="color:#2F6F7D;">Formalism .md</a> &nbsp;&middot;&nbsp; <a href="juno/CAMS_Audit_Addendum_v1.1_to_v1.2.pdf" target="_blank" style="color:#2F6F7D;">Audit Addendum PDF</a> &nbsp;&middot;&nbsp; <a href="juno/juno_v12_final_panel.csv" download style="color:#2F6F7D;">Panel CSV (268 KB)</a></p>
+            </div>
+        </div>
+
         <div class="diary-entry research-milestone">
             <div class="entry-header">
                 <h3>Nation Database Expansion — Five New Societies, Tool Integration, and Site Updates</h3>

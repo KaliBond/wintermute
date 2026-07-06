@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JUNO v1.2-Final — Neural Nations</title>
+    <meta name="description" content="Production specification for JUNO v1.2-Final. Regime classifier, numerical policy, and reference ranges following the 3,002 society-year blind-corpus test of v1.1.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/juno-v1-2">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/juno-v1-2">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="JUNO v1.2-Final — Neural Nations">
+    <meta property="og:description" content="Production specification for JUNO v1.2-Final. Regime classifier, numerical policy, and reference ranges following the 3,002 society-year blind-corpus test.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+    .juno-hero {
+        background: linear-gradient(135deg, #1B2A33 0%, #2F4651 60%, #2F6F7D 100%);
+        color: #F5F1E4;
+        padding: 56px 32px 48px;
+        text-align: center;
+    }
+    .juno-hero h1 {
+        font-size: 2.6em;
+        font-weight: 700;
+        margin: 0 0 10px;
+        letter-spacing: .02em;
+        line-height: 1.15;
+    }
+    .juno-hero .subtitle {
+        font-size: 1.05em;
+        color: #A8C5CC;
+        margin: 0 0 18px;
+        font-style: italic;
+    }
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(47,111,125,0.35);
+        border: 1px solid rgba(168,197,204,0.4);
+        border-radius: 999px;
+        padding: 6px 18px;
+        font-size: 0.8em;
+        font-weight: 600;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        color: #C8E0E4;
+    }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #4CAF7A; }
+
+    .page-body { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    .section-label {
+        font-size: 0.72em;
+        font-weight: 700;
+        letter-spacing: .15em;
+        text-transform: uppercase;
+        color: #2F6F7D;
+        margin-bottom: 10px;
+    }
+
+    .card {
+        background: #FBF8EF;
+        border: 1px solid #DAD2B8;
+        border-radius: 8px;
+        padding: 24px 28px;
+        margin-bottom: 20px;
+        box-shadow: 0 1px 0 rgba(27,42,51,0.04);
+    }
+    .card h2 {
+        font-size: 1.15em;
+        color: #1B2A33;
+        margin: 0 0 14px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #DAD2B8;
+    }
+    .card h3 {
+        font-size: 0.97em;
+        color: #2F6F7D;
+        margin: 18px 0 8px;
+        font-weight: 600;
+    }
+    .card p { color: #2F4651; line-height: 1.7; margin: 0 0 10px; font-size: 0.95em; }
+    .card p:last-child { margin-bottom: 0; }
+
+    .callout {
+        background: #F0F7F9;
+        border-left: 3px solid #2F6F7D;
+        border-radius: 0 6px 6px 0;
+        padding: 14px 18px;
+        margin: 14px 0;
+        font-size: 0.9em;
+        color: #2F4651;
+        line-height: 1.65;
+    }
+    .callout strong { color: #1B2A33; }
+    .callout.amber { background: #FDF6E8; border-left-color: #D98B2B; }
+    .callout.red   { background: #FDF0EE; border-left-color: #C84C3E; }
+
+    /* formula block */
+    .formula-block {
+        background: #F5F1E4;
+        border: 1px solid #DAD2B8;
+        border-radius: 6px;
+        padding: 16px 20px;
+        margin: 12px 0;
+        font-family: ui-monospace, 'JetBrains Mono', SFMono-Regular, monospace;
+        font-size: 0.9em;
+        line-height: 1.9;
+        color: #1B2A33;
+    }
+    .formula-block .formula-name {
+        font-family: inherit;
+        font-weight: 700;
+        color: #2F6F7D;
+    }
+
+    /* regime table */
+    .regime-table { width: 100%; border-collapse: collapse; font-size: 0.88em; margin: 14px 0; }
+    .regime-table th {
+        background: #2F4651;
+        color: #F5F1E4;
+        padding: 8px 12px;
+        text-align: left;
+        font-weight: 600;
+        letter-spacing: .04em;
+        font-size: 0.85em;
+    }
+    .regime-table td { padding: 8px 12px; border-bottom: 1px solid #DAD2B8; vertical-align: top; line-height: 1.5; }
+    .regime-table tr:nth-child(even) td { background: #F5F1E4; }
+    .regime-table tr:last-child td { border-bottom: none; }
+    .regime-name { font-weight: 700; color: #1B2A33; }
+    .regime-new { font-size: 0.75em; font-weight: 700; color: #2F6F7D; text-transform: uppercase; letter-spacing: .08em; margin-left: 6px; vertical-align: middle; }
+    .regime-deleted { font-size: 0.75em; font-weight: 700; color: #C84C3E; text-transform: uppercase; letter-spacing: .08em; margin-left: 6px; vertical-align: middle; }
+
+    /* data range table */
+    .range-table { width: 100%; border-collapse: collapse; font-size: 0.88em; margin: 12px 0; }
+    .range-table th { background: #2F4651; color: #F5F1E4; padding: 7px 12px; text-align: left; font-size: 0.85em; }
+    .range-table td { padding: 7px 12px; border-bottom: 1px solid #DAD2B8; font-family: ui-monospace, 'JetBrains Mono', SFMono-Regular, monospace; color: #1B2A33; }
+    .range-table tr:nth-child(even) td { background: #F5F1E4; }
+    .range-table tr:last-child td { border-bottom: none; }
+
+    /* change log table */
+    .changelog-table { width: 100%; border-collapse: collapse; font-size: 0.86em; margin: 12px 0; }
+    .changelog-table th { background: #2F4651; color: #F5F1E4; padding: 7px 12px; text-align: left; font-size: 0.85em; }
+    .changelog-table td { padding: 8px 12px; border-bottom: 1px solid #DAD2B8; vertical-align: top; line-height: 1.55; color: #2F4651; }
+    .changelog-table tr:nth-child(even) td { background: #F5F1E4; }
+    .changelog-table tr:last-child td { border-bottom: none; }
+    .changelog-table td:first-child { font-weight: 600; color: #1B2A33; white-space: nowrap; }
+    .del { color: #C84C3E; font-size: 0.82em; }
+    .new { color: #2F6F7D; font-size: 0.82em; }
+
+    /* precedence chain */
+    .precedence {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: center;
+        margin: 12px 0;
+        font-size: 0.85em;
+    }
+    .prec-item {
+        background: #2F4651;
+        color: #F5F1E4;
+        padding: 4px 12px;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 0.9em;
+    }
+    .prec-arrow { color: #8A9AA5; font-size: 1.1em; }
+
+    /* downloads */
+    .download-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 14px;
+    }
+    .download-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        border-radius: 6px;
+        font-size: 0.87em;
+        font-weight: 600;
+        text-decoration: none;
+        transition: opacity 0.15s;
+    }
+    .download-btn:hover { opacity: 0.82; }
+    .download-btn.primary { background: #2F6F7D; color: #F5F1E4; }
+    .download-btn.secondary { background: #F5F1E4; color: #2F4651; border: 1px solid #C9BE9E; }
+
+    .attribution {
+        margin-top: 28px;
+        padding-top: 16px;
+        border-top: 1px solid #DAD2B8;
+        font-size: 0.88em;
+        color: #6B7480;
+    }
+    .attribution strong { color: #1B2A33; font-weight: 600; }
+
+    code {
+        font-family: ui-monospace, 'JetBrains Mono', SFMono-Regular, monospace;
+        font-size: 0.88em;
+        background: #EDE8D8;
+        padding: 1px 5px;
+        border-radius: 3px;
+        color: #1B2A33;
+    }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<div class="juno-hero">
+    <h1>JUNO v1.2-Final</h1>
+    <p class="subtitle">Production specification &mdash; CAMS regime classifier</p>
+    <div class="status-badge">
+        <span class="status-dot"></span>
+        Production &nbsp;&middot;&nbsp; July 2026 &nbsp;&middot;&nbsp; Prospective validation open
+    </div>
+</div>
+
+<div class="page-body">
+
+    <!-- INTRO -->
+    <div class="card">
+        <p>JUNO v1.2-Final is the production specification for the CAMS regime classifier, adopted following the <strong>3,002 society-year blind-corpus test of v1.1</strong> (24 model-scored societies, 24,016 node-years). It is backwards-compatible with all JUNO v1.1 data; no re-scoring of prior panels is required. Two substantive changes were made: a mandatory numerical rounding policy resolving a floating-point reproducibility defect, and a classifier simplification removing a dead-code arm confirmed unreachable on the full blind corpus.</p>
+        <div class="callout">
+            <strong>Validation scope.</strong> The blind-corpus test demonstrates operator coherence and classifier coverage on model-generated panels — compression consistency, not external validity. Genuine validation of v1.2 requires fresh holdout data, aligned with the prospective 2026&ndash;2028 monitoring programme.
+        </div>
+        <div class="download-row">
+            <a href="juno/JUNO_v1.2-Final_Formalism.md" download class="download-btn primary">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                Formalism .md
+            </a>
+            <a href="juno/CAMS_Audit_Addendum_v1.1_to_v1.2.pdf" target="_blank" class="download-btn primary">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                Audit Addendum PDF
+            </a>
+            <a href="juno/juno_v12_final_panel.csv" download class="download-btn secondary">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                Panel CSV (268 KB)
+            </a>
+        </div>
+    </div>
+
+    <!-- §1 CORE OPERATORS -->
+    <div class="card">
+        <h2>§1 &nbsp; Core Mathematical Operators <span style="font-size:0.72em;font-weight:400;color:#6B7480;">&mdash; unchanged from v1.1</span></h2>
+        <div class="formula-block">
+<span class="formula-name">Node Viability (Vᵢ)</span>
+    Vᵢ = C + K − S + 0.5·A
+
+<span class="formula-name">Cognitive Activation (sᵢ) &mdash; sign-preserving clip</span>
+    sᵢ = (A·C / 100) · sign(K − S) · max(|K − S|, 0.1)
+
+<span class="formula-name">Coupling Quality (qᵢ)</span>
+    qᵢ = (0.6C + 0.4A) / 10
+
+<span class="formula-name">Bond Strength (Bᵢⱼ)</span>
+    Bᵢⱼ = √(qᵢ·qⱼ) · 2^(−(Sᵢ+Sⱼ)/10),  bounded [0, 1]
+
+<span class="formula-name">Algebraic Connectivity (λ₂)</span>
+    Second-smallest eigenvalue of the graph Laplacian of W, where Wᵢⱼ = Bᵢⱼ (i ≠ j)</div>
+    </div>
+
+    <!-- §2 NUMERICAL POLICY -->
+    <div class="card">
+        <h2>§2 &nbsp; Numerical Policy <span style="font-size:0.72em;font-weight:600;color:#2F6F7D;">NEW IN v1.2 &mdash; MANDATORY</span></h2>
+        <div class="callout amber">
+            All aggregate metrics (<strong>V̄, V_min, s_min, B̄</strong>) must be <strong>rounded to 6 decimal places before every threshold comparison</strong> in the regime classifier.
+        </div>
+        <p>Input scores carry one decimal place, so aggregate values land exactly on classifier thresholds routinely (e.g. <code>V_min = 4.0</code>). IEEE-754 arithmetic can represent such values as <code>3.9999999999999996</code>, making strict-inequality comparisons path-dependent: the same data yields different regime labels depending on whether values pass through a file round-trip. This was observed on three society-years in the blind corpus. Without a declared rounding policy, regime labels are not reproducible across implementations.</p>
+    </div>
+
+    <!-- §3 REGIME CLASSIFIER -->
+    <div class="card">
+        <h2>§3 &nbsp; Regime Classifier (v1.2-Final)</h2>
+        <p style="font-size:0.9em;color:#5A6E78;margin-bottom:14px;"><strong>Precedence order</strong> (highest → lowest; evaluation order, not severity ranking):</p>
+        <div class="precedence">
+            <span class="prec-item">Freeze / Collapse</span>
+            <span class="prec-arrow">→</span>
+            <span class="prec-item">Systemic Crisis</span>
+            <span class="prec-arrow">→</span>
+            <span class="prec-item">Phantom Type II</span>
+            <span class="prec-arrow">→</span>
+            <span class="prec-item">Local Node Failure</span>
+            <span class="prec-arrow">→</span>
+            <span class="prec-item">Stable Adaptive</span>
+            <span class="prec-arrow">→</span>
+            <span class="prec-item">Strained</span>
+            <span class="prec-arrow">→</span>
+            <span class="prec-item">Unclassified</span>
+        </div>
+        <p style="font-size:0.85em;color:#6B7480;margin-bottom:16px;">Stable Adaptive is tested before Strained because Strained is the residual band — with the V̄ ≥ 4 floor it spans everything from mild strain to near-Stable profiles that narrowly miss a Stable sub-condition, so it must be evaluated last.</p>
+        <table class="regime-table">
+            <thead>
+                <tr>
+                    <th style="width:20%">Regime</th>
+                    <th style="width:42%">Conditions (v1.2)</th>
+                    <th>Change from v1.1</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="regime-name">Freeze / Collapse</span></td>
+                    <td>V̄ &lt; 0 AND V_min &lt; −3 AND B̄ &lt; 0.15</td>
+                    <td style="color:#6B7480;">None</td>
+                </tr>
+                <tr>
+                    <td><span class="regime-name">Systemic Crisis</span></td>
+                    <td>V̄ &lt; 6 AND V_min &lt; 0 AND B̄ &lt; 0.20</td>
+                    <td style="color:#6B7480;">None</td>
+                </tr>
+                <tr>
+                    <td><span class="regime-name">Phantom Type II</span></td>
+                    <td>s_min &lt; −0.65</td>
+                    <td style="color:#6B7480;">None</td>
+                </tr>
+                <tr>
+                    <td><span class="regime-name">Local Node Failure</span></td>
+                    <td><strong>V_min &lt; 4.0 only</strong></td>
+                    <td>s-arm (<code>s_min ≤ −0.80</code>) <span class="regime-deleted">deleted</span> — unreachable under precedence: every case satisfying it is captured by Phantom Type II or higher. Zero firings on 3,002 blind society-years.</td>
+                </tr>
+                <tr>
+                    <td><span class="regime-name">Stable Adaptive</span></td>
+                    <td>V̄ &gt; 10 AND V_min &gt; 5.0 AND B̄ &gt; 0.28 AND s_min &gt; −0.25</td>
+                    <td style="color:#6B7480;">None</td>
+                </tr>
+                <tr>
+                    <td><span class="regime-name">Strained</span></td>
+                    <td><strong>4 ≤ V̄ ≤ 10</strong>, OR V̄ &gt; 10 failing any Stable sub-condition</td>
+                    <td>Floor lowered from V̄ ≥ 6 to <strong>V̄ ≥ 4</strong> <span class="regime-new">updated</span> — coverage now provably complete for well-formed data</td>
+                </tr>
+                <tr>
+                    <td><span class="regime-name">Unclassified</span></td>
+                    <td>Anything remaining</td>
+                    <td>Preserved as data-quality tripwire. Fires only on data-integrity failures or future operator changes. v1.1: 0.2% residual; v1.2: 0% on blind corpus.</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="callout" style="margin-top:14px;">
+            <strong>Coverage proof.</strong> The V̄ ≥ 4 floor makes coverage provably complete for well-formed data: any case reaching the Strained rule has survived Local Node Failure, hence V_min ≥ 4, and since V̄ ≥ V_min always, V̄ ≥ 4 is guaranteed. 100% coverage on the blind corpus (v1.1: 99.8%; six gap cases with V̄ ∈ [5.35, 5.65] are now Strained; no other reclassifications).
+        </div>
+    </div>
+
+    <!-- §4 REFERENCE RANGES -->
+    <div class="card">
+        <h2>§4 &nbsp; Reference Ranges from Audited Panels</h2>
+        <div class="callout amber" style="margin-bottom:14px;">
+            These are <strong>descriptive statistics of specific scored corpora, not instrument bounds</strong>. The only intrinsic bounds are mathematical: Bᵢⱼ ∈ [0, 1]; λ₂ ≥ 0. New panels may legitimately exceed any figure below.
+        </div>
+        <p style="font-size:0.88em;color:#5A6E78;margin-bottom:10px;">Blind corpus: 24 model-scored societies · 3,002 society-years · 24,016 node-years</p>
+        <table class="range-table">
+            <thead>
+                <tr>
+                    <th>Quantity</th>
+                    <th>Observed range</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Vᵢ (node-level)</td><td>[−7.50, 23.00]</td></tr>
+                <tr><td>sᵢ (node-level)</td><td>[−2.50, +8.00]</td></tr>
+                <tr><td>s_min (year-level)</td><td>[−2.50, +5.40]</td></tr>
+                <tr><td>Bᵢⱼ</td><td>[0.025, 0.758]</td></tr>
+                <tr><td>B̄ (year-level)</td><td>[0.045, 0.722]</td></tr>
+                <tr><td>λ₂</td><td>[0.268, 5.354]</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:0.85em;color:#6B7480;margin-top:8px;">The v1.1 §4 figures (Bᵢⱼ max 0.657; λ₂ ∈ [0.379, 3.668]; sᵢ max +1.68) described the original calibration corpus only and are superseded as validation criteria.</p>
+    </div>
+
+    <!-- §5 LAMBDA STATUS -->
+    <div class="card">
+        <h2>§5 &nbsp; Status of λ₂</h2>
+        <p>λ₂ is a <strong>derived diagnostic, not an independent validator and not a classifier input</strong>.</p>
+        <p>On the blind corpus λ₂ orders all six regimes monotonically by severity:</p>
+        <div class="formula-block" style="font-size:0.85em;">
+Medians — Stable 2.68 &gt; Strained 1.95 &gt; Phantom II 1.52 &gt; LNF 1.38 &gt; Systemic Crisis 0.83 &gt; Freeze/Collapse 0.51
+Kruskal-Wallis H ≈ 2529</div>
+        <p>However, λ₂ correlates with B̄ at <em>r</em> = 0.972 — near-mechanically, since for a dense 8-node graph λ₂ tracks n·(mean edge weight): λ₂/(8·B̄) = 0.83 ± 0.10. B̄ is itself a classifier input, so the ordering substantially restates the classifier's own thresholds. After regressing out B̄, residual ordering collapses for several contrasts; per-case separability is strong for Stable vs Strained (AUC 0.95) but weak for Phantom II vs LNF (AUC 0.63).</p>
+        <h3>Legitimate uses of λ₂</h3>
+        <ul style="color:#2F4651;font-size:0.93em;line-height:1.8;padding-left:1.4em;">
+            <li>Internal-consistency check of the operator algebra</li>
+            <li>The ~17% deviation of λ₂ from the pure-B̄ prediction, which carries network-topology information not captured by mean bond strength</li>
+        </ul>
+    </div>
+
+    <!-- §6 VALIDATION -->
+    <div class="card">
+        <h2>§6 &nbsp; Validation Status</h2>
+        <div class="callout red">
+            The blind-corpus test demonstrates <strong>operator coherence and classifier coverage on model-generated panels</strong> — compression consistency, not external validity. Ensemble tightness certifies precision, not ground truth; shared model bias remains an unquantified confound.
+        </div>
+        <p>Because the v1.2 threshold adjustments were chosen by inspection of the 3,002-year blind corpus, re-running that corpus is a consistency check only. Genuine validation of v1.2 requires fresh holdout data, aligned with the prospective 2026&ndash;2028 monitoring programme.</p>
+        <p>Between-run reliability margins (±1 NV at year level, wider at node level) continue to apply to prospective work. Corpus sizes cited in this document are limited to directly auditable figures.</p>
+    </div>
+
+    <!-- §7 CHANGELOG -->
+    <div class="card">
+        <h2>§7 &nbsp; Change Log: v1.1 → v1.2</h2>
+        <table class="changelog-table">
+            <thead>
+                <tr><th>Component</th><th>v1.1</th><th>v1.2-Final</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>LNF s-arm</td>
+                    <td>s_min ≤ −0.80</td>
+                    <td><span class="del">Deleted</span> — unreachable dead code</td>
+                </tr>
+                <tr>
+                    <td>Local Node Failure</td>
+                    <td>V_min &lt; 4.0 OR s_min ≤ −0.80</td>
+                    <td>V_min &lt; 4.0 only</td>
+                </tr>
+                <tr>
+                    <td>Strained floor</td>
+                    <td>V̄ ≥ 6</td>
+                    <td><span class="new">V̄ ≥ 4</span> — provably complete</td>
+                </tr>
+                <tr>
+                    <td>Unclassified</td>
+                    <td>0.2% residual on blind corpus</td>
+                    <td>Preserved as tripwire; fires only on data-integrity failure</td>
+                </tr>
+                <tr>
+                    <td>Numerical policy</td>
+                    <td>Unspecified</td>
+                    <td><span class="new">Round aggregates to 6 dp before threshold comparison (mandatory)</span></td>
+                </tr>
+                <tr>
+                    <td>§4 bounds</td>
+                    <td>"Validated instrument bounds"</td>
+                    <td>"Reference ranges from audited panels"; removed from validation criteria</td>
+                </tr>
+                <tr>
+                    <td>λ₂ role</td>
+                    <td>Supporting indicator; candidate core discriminator</td>
+                    <td>Derived diagnostic only; circularity with B̄ documented</td>
+                </tr>
+                <tr>
+                    <td>Validation framing</td>
+                    <td>External-validation language</td>
+                    <td>Operator coherence on model-generated panels; prospective validation open</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="font-size:0.88em;color:#5A6E78;margin-top:10px;">All gains from the v1.1 sign-preserving sᵢ correction are preserved: 31.8% of node-years carry negative activation, Phantom Type II fires (250 society-years under v1.2), and the June 2026 dead-code diagnosis remains resolved.</p>
+    </div>
+
+    <div class="attribution">
+        <strong>Kari McKern</strong> &nbsp;&middot;&nbsp; co-developed with Fable 5 (Anthropic) &nbsp;&middot;&nbsp; July 2026 &nbsp;&middot;&nbsp;
+        <a href="research-diary.html" style="color:#2F6F7D;">Research Diary</a> &nbsp;&middot;&nbsp;
+        <a href="explore.html" style="color:#2F6F7D;">Explore</a>
+    </div>
+
+</div>
+
+<script src="mobile-nav.js"></script>
+</body>
+</html>
