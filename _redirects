@@ -6,8 +6,8 @@
 # www → apex redirect (requires www added as custom domain in Pages dashboard)
 https://www.neuralnations.org/* https://neuralnations.org/:splat 301
 
-# /research and /research/ → canonical /research-diary
-/research/              /research-diary         301
+# /research/ → papers hub (research/index.html), served directly, no redirect
+# /research → canonical /research-diary (keeps legacy research.html v2.3 spec page out of the way)
 /research               /research-diary         301
 
 # /test → canonical /status_report (test.html is now legacy)
