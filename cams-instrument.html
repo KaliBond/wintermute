@@ -708,5 +708,14 @@ class Component extends DCLogic {
   }
 }
 </script>
+<script>
+(function(){
+  var a = document.createElement('a');
+  a.href = 'index.html';
+  a.textContent = '← Neural Nations';
+  a.style.cssText = 'position:fixed;top:8px;left:8px;z-index:99999;background:#1B2A33;color:#fff;font-family:sans-serif;font-size:11px;font-weight:600;padding:4px 10px;border-radius:5px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,0.3);line-height:1.6;';
+  document.body.appendChild(a);
+})();
+</script>
 </body>
 </html>
