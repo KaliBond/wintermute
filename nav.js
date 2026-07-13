@@ -1,5 +1,5 @@
 // Neural Nations — nav interactions
-(function () {
+function initNav() {
 
     // ── Dropdown: click-toggle (works on touch + desktop) ────────
     document.querySelectorAll('.nav-dropdown').forEach(function (dd) {
@@ -51,4 +51,8 @@
         });
     }
 
-})();
+}
+
+// Boot: render chrome first (if present), then bind behaviour.
+if (typeof renderChrome === 'function') renderChrome();
+initNav();
