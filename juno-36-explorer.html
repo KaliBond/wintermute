@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JUNO Dataset Explorer — Neural Nations</title>
+  <title>JUNO_36 Dataset Explorer — Neural Nations</title>
   <meta name="description" content="Interactive explorer for the JUNO Unified Dataset: 36 societies, 8 nodes, 32,361 scored node-years. Trajectory charts, thermodynamic phase portraits, and per-node health diagnostics.">
-  <meta property="og:title" content="JUNO Dataset Explorer — Neural Nations">
+  <meta property="og:title" content="JUNO_36 Dataset Explorer — Neural Nations">
   <meta property="og:description" content="36 societies · 8 nodes · 32,361 scored node-years · CAMS-CAN bond-strength formalism">
   <meta property="og:image" content="https://neuralnations.org/og-image.png">
-  <link rel="canonical" href="https://neuralnations.org/juno-explorer">
+  <link rel="canonical" href="https://neuralnations.org/juno-36-explorer">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ESZ16XVVNN');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -197,6 +197,7 @@
           <a href="cams-failure-modes.html">Failure Modes Map</a>
           <a href="failure-modes-story.html">Failure Modes Story</a>
           <a href="attractors.html">Attractors</a>
+          <a href="predictions.html">Predictions 2027&ndash;2028</a>
           <hr class="menu-divider">
           <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
         </div>
@@ -275,14 +276,15 @@
 <script>
 (function(){
   const REGIME_COLOR = {
-    'High Coherence':'#4F8F6B',
-    'Stable Integration':'#7BAE96',
-    'Moderate Stress':'#C9A227',
-    'Fragmentation':'#C05A4A',
-    'Acute Crisis':'#B0392E',
-    'Systemic Collapse':'#8B2E22'
+    'Stable Adaptive':        '#4F8F6B',
+    'Strained':               '#C9A227',
+    'Intermediate/Uncertain': '#B8B09A',
+    'Local Node Failure':     '#C05A4A',
+    'Phantom Type II':        '#B0392E',
+    'Systemic Crisis':        '#8B2E22',
+    'Freeze/Collapse':        '#7B1E1E'
   };
-  const REGIME_ORDER = ['High Coherence','Stable Integration','Moderate Stress','Fragmentation','Acute Crisis','Systemic Collapse'];
+  const REGIME_ORDER = ['Stable Adaptive','Strained','Intermediate/Uncertain','Local Node Failure','Phantom Type II','Systemic Crisis','Freeze/Collapse'];
   const NODE_META = {
     Helm:     {c:'#C84C3E', layer:'Interface'},
     Shield:   {c:'#B0392E', layer:'Interface'},
