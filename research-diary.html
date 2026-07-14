@@ -308,6 +308,21 @@
     <!-- Research Diary Entries -->
     <div id="diary-entries">
 
+        <div class="diary-entry validation">
+            <div class="entry-header">
+                <h3>JUNO/CAMS Blind-Analysis Challenge — Open to the Public</h3>
+                <div>
+                    <span class="entry-type">Validation</span>
+                    <span class="entry-date">2026-07-14</span>
+                </div>
+            </div>
+            <div class="entry-content">
+                <p>The blind-analysis protocol used for the named scientific assessment (8 societies, 1,201 society-years, 232 inflection points — see the <a href="cams-blind-test-assessment.html" style="color:#2F6F7D;font-weight:600;">Blind Test Assessment</a> writeup) is now open for anyone to run themselves at <a href="blind-test.html" style="color:#2F6F7D;font-weight:600;">neuralnations.org/blind-test</a>. Each blind dataset strips all identifying information — nations become <code>Society_A</code> through <code>Society_H</code>, years become <code>T+0 … T+N</code> offsets — leaving only the eight-node CAMS scores (Helm, Shield, Lore, Stewards, Craft, Hands, Archive, Flow × Coherence, Capacity, Stress, Abstraction).</p>
+                <p style="margin-top:12px;">The test is deliberately falsifiable: a fresh LLM session (no prior CAMS context) runs the four-stage protocol — canonical metrics, cognitive signature, epiphenomena, identity guesses — and must lock its guesses <em>before</em> the unblinding key is revealed. Only then does it proceed to Stage 5 CAS analysis. Anyone can download the protocol prompt and dataset CSVs and run the challenge against Claude, Grok, Gemini, GPT-4o, or any other capable model.</p>
+                <p style="margin-top:12px;"><a href="blind-test.html" style="color:#2F6F7D;font-weight:600;">→ Run the Blind-Analysis Challenge</a></p>
+            </div>
+        </div>
+
         <div class="diary-entry methodology">
             <div class="entry-header">
                 <h3>JUNO v1.2-Final — Production Specification Adopted</h3>
