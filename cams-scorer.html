@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CAMS Scorer — Score Any Country, Company, or City — Neural Nations</title>
+    <meta name="description" content="Run a live CAMS raw scoring pass on any country, company, or city. Five isolated GPT passes, ensembled into node-level Coherence, Capacity, Stress, and Abstraction with an uncertainty envelope.">
+    <meta name="keywords" content="CAMS scorer, CAMS raw scoring, Neural Nations, Kari McKern, ensemble scoring, node scoring">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/cams-scorer">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/cams-scorer">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="CAMS Scorer — Score Any Country, Company, or City">
+    <meta property="og:description" content="Run a live CAMS raw scoring pass — five isolated GPT passes ensembled into node-level scores with an uncertainty envelope.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CAMS Scorer">
+    <meta name="twitter:description" content="Score any country, company, or city live using the CAMS raw scoring ensemble.">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+    .cs-hero { max-width: 760px; margin: 0 auto 4px; }
+    .cs-eyebrow { font: 700 0.72rem ui-monospace, monospace; letter-spacing: 0.16em; text-transform: uppercase; color: #2F6F7D; margin-bottom: 14px; }
+    .cs-hero h1 { text-align: left; font-size: 2.3rem; line-height: 1.1; letter-spacing: -0.025em; color: #1B2A33; margin: 0 0 16px; }
+    .cs-hero .cs-sub { font-size: 1.08rem; line-height: 1.7; color: #3a4750; max-width: 64ch; margin: 0; }
+
+    .cs-form { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 26px 0 6px; }
+    @media (max-width: 720px) { .cs-form { grid-template-columns: 1fr 1fr; } }
+    .cs-field { display: flex; flex-direction: column; gap: 6px; }
+    .cs-field.cs-span2 { grid-column: span 2; }
+    @media (max-width: 720px) { .cs-field.cs-span2 { grid-column: span 2; } }
+    .cs-field label { font: 700 0.68rem ui-monospace, monospace; letter-spacing: 0.06em; text-transform: uppercase; color: #55606a; }
+    .cs-field select, .cs-field input { font: 600 0.92rem -apple-system, sans-serif; padding: 9px 11px; border: 1px solid #D8CFB0; border-radius: 8px; background: #FBF8EF; color: #1B2A33; }
+    .cs-field select:focus, .cs-field input:focus { outline: 2px solid #6FB3C0; outline-offset: 1px; }
+
+    .cs-actions { display: flex; align-items: center; gap: 14px; margin-top: 18px; flex-wrap: wrap; }
+    .cs-run { font: 700 0.92rem -apple-system, sans-serif; padding: 11px 22px; border-radius: 10px; border: none; background: #2F6F7D; color: #F5F1E4; cursor: pointer; transition: .14s; }
+    .cs-run:hover:not(:disabled) { background: #387f8e; }
+    .cs-run:disabled { opacity: 0.55; cursor: not-allowed; }
+    .cs-status { font-size: 0.86rem; color: #55606a; }
+    .cs-status.cs-err { color: #b3392e; font-weight: 600; }
+
+    .cs-note { background: #F4EEDD; border: 1px solid #E3DAC0; border-left: 3px solid #2F6F7D; border-radius: 0 10px 10px 0; padding: 14px 18px; margin: 22px 0; font-size: 0.9rem; color: #55606a; line-height: 1.6; }
+
+    .cs-results { margin-top: 28px; }
+    .cs-results-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+    .cs-results-head h2 { font-size: 1.15rem; margin: 0; color: #1B2A33; }
+    .cs-dl { font: 600 0.8rem -apple-system, sans-serif; color: #2F6F7D; text-decoration: none; border: 1px solid #B9D2D6; border-radius: 7px; padding: 6px 12px; background: #F0E9D2; }
+    .cs-dl:hover { background: #e6dcbc; }
+    .cs-table-wrap { overflow-x: auto; border: 1px solid #E3DAC0; border-radius: 10px; }
+    table.cs-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+    table.cs-table th, table.cs-table td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #EDE6CE; white-space: nowrap; }
+    table.cs-table th { background: #F4EEDD; font: 700 0.68rem ui-monospace, monospace; letter-spacing: 0.04em; text-transform: uppercase; color: #55606a; }
+    table.cs-table tr:last-child td { border-bottom: none; }
+    table.cs-table td.cs-num { font-family: ui-monospace, monospace; }
+
+    .cs-skel { display: none; }
+    .cs-skel.on { display: block; }
+    .cs-skel-line { height: 14px; background: linear-gradient(90deg, #EDE6CE 25%, #F4EEDD 50%, #EDE6CE 75%); background-size: 200% 100%; animation: cs-shimmer 1.3s infinite; border-radius: 5px; margin-bottom: 8px; }
+    @keyframes cs-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    @media (max-width: 600px) { .cs-hero h1 { font-size: 1.7rem; } }
+    </style>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date()); gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="mathematical-backbone.html">Mathematical Backbone</a>
+                    <a href="social-cognition.html">Social Cognition · Real Time</a>
+                    <a href="cams-scorer.html">CAMS Scorer</a>
+                    <a href="argentina-puzzle.html">The Puzzle of Argentina</a>
+                    <hr class="menu-divider">
+                    <a href="cams-zeitgeist.html">Zeitgeist Detector</a>
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="attractors.html">Attractors</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link">Framework ↗</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="framework/index.html">Framework ↗</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="mathematical-backbone.html">Mathematical Backbone</a>
+        <a href="social-cognition.html">Social Cognition · Real Time</a>
+        <a href="cams-scorer.html">CAMS Scorer</a>
+        <a href="argentina-puzzle.html">The Puzzle of Argentina</a>
+        <hr class="menu-divider">
+        <a href="cams-zeitgeist.html">Zeitgeist Detector</a>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="attractors.html">Attractors</a>
+    </div>
+</nav>
+
+<div class="container" style="max-width:1040px;">
+
+    <div class="card" style="padding:34px 32px 30px;">
+        <div class="cs-hero">
+            <div class="cs-eyebrow">Neural Nations · CAMS Raw Scorer · Live</div>
+            <h1>CAMS Scorer</h1>
+            <p class="cs-sub">Score any country, company, or city on the eight CAMS nodes, on demand. Five isolated GPT passes read the historical record, score Coherence, Capacity, Stress, and Abstraction independently, and are combined into an ensemble mean with an uncertainty envelope — the same raw-scoring doctrine behind every dataset published on this site.</p>
+        </div>
+
+        <form id="cs-form" autocomplete="off">
+            <div class="cs-form">
+                <div class="cs-field">
+                    <label for="cs-variant">Variant</label>
+                    <select id="cs-variant">
+                        <option value="country" selected>Country</option>
+                        <option value="company">Company</option>
+                        <option value="city">City</option>
+                    </select>
+                </div>
+                <div class="cs-field cs-span2">
+                    <label for="cs-entity">Entity</label>
+                    <input type="text" id="cs-entity" placeholder="e.g. USA, Tesla, Detroit" maxlength="120" required>
+                </div>
+                <div class="cs-field">
+                    <label for="cs-passes">Passes</label>
+                    <select id="cs-passes">
+                        <option value="5" selected>5</option>
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+                <div class="cs-field">
+                    <label for="cs-start">Start year</label>
+                    <input type="number" id="cs-start" value="2020" required>
+                </div>
+                <div class="cs-field">
+                    <label for="cs-end">End year (optional)</label>
+                    <input type="number" id="cs-end" placeholder="same as start">
+                </div>
+            </div>
+
+            <div class="cs-actions">
+                <button type="submit" class="cs-run" id="cs-run">Run scoring pass</button>
+                <span class="cs-status" id="cs-status"></span>
+            </div>
+        </form>
+
+        <div class="cs-note">Runs are capped server-side at 5 years and 5 passes per request, and rate-limited per visitor, to keep this a fair, shared instrument. Passes run one at a time — a 3-pass run typically takes 2–4 minutes, longer for more passes or years. Leave the tab open until it finishes.</div>
+    </div>
+
+    <div class="card cs-results" id="cs-results" style="display:none;">
+        <div class="cs-results-head">
+            <h2 id="cs-results-title">Results</h2>
+            <a href="#" class="cs-dl" id="cs-dl-mean" download="cams-scores.csv">Download CSV</a>
+        </div>
+        <div class="cs-skel" id="cs-skel">
+            <div class="cs-skel-line" style="width:100%"></div>
+            <div class="cs-skel-line" style="width:92%"></div>
+            <div class="cs-skel-line" style="width:96%"></div>
+            <div class="cs-skel-line" style="width:88%"></div>
+        </div>
+        <div class="cs-table-wrap"><table class="cs-table" id="cs-table"></table></div>
+    </div>
+
+    <div class="card" style="background:#1B2A33;border-color:#1B2A33;margin-top:30px;">
+        <p class="section-label" style="color:#6FB3C0;">How this differs from the published datasets</p>
+        <p class="lede" style="color:#C9D4D8;max-width:74ch;">This is the same raw-scoring rubric used to build every ensemble dataset on Neural Nations, run live instead of offline. It captures raw node measurements only — no Node Value, Bond Strength, or diagnosis — leaving all downstream calculation to the published CAMS pipeline. Treat a single on-demand run as indicative, not canonical: the published datasets use larger, cross-checked ensembles.</p>
+    </div>
+</div>
+
+<footer class="footer">
+    <nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html" style="color:#2F6F7D;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a>
+        <a href="explore.html" style="color:#2F6F7D;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a>
+        <a href="social-cognition.html" style="color:#2F6F7D;text-decoration:none;font-size:0.9em;font-weight:600;">Social Cognition</a>
+        <a href="cams-zeitgeist.html" style="color:#2F6F7D;text-decoration:none;font-size:0.9em;font-weight:600;">Zeitgeist</a>
+    </nav>
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Raw scoring ensemble, computed live on request. Open science — <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+
+<script src="nav.js"></script>
+<script src="cams-scorer.js"></script>
+</body>
+</html>
