@@ -27,6 +27,26 @@
     Russia:    { csv: "data/nations/Russia_ENS.csv" },
     Sweden:    { csv: "data/nations/Sweden_ENS.csv" },
     USA:       { csv: "data/nations/USA_ENS.csv" },
+    Brazil:       { csv: "data/nations/Brazil_ENS.csv" },
+    Denmark:      { csv: "data/nations/Denmark_ENS.csv" },
+    "Hong Kong":  { csv: "data/nations/Hong_Kong_ENS.csv" },
+    Indonesia:    { csv: "data/nations/Indonesia_ENS.csv" },
+    Iraq:         { csv: "data/nations/Iraq_ENS.csv" },
+    Israel:       { csv: "data/nations/Israel_ENS.csv" },
+    Italy:        { csv: "data/nations/Italy_ENS.csv" },
+    Lebanon:      { csv: "data/nations/Lebanon_ENS.csv" },
+    Netherlands:  { csv: "data/nations/Netherlands_ENS.csv" },
+    Pakistan:     { csv: "data/nations/Pakistan_ENS.csv" },
+    "Saudi Arabia": { csv: "data/nations/Saudi_Arabia_ENS.csv" },
+    Singapore:    { csv: "data/nations/Singapore_ENS.csv" },
+    "South Africa": { csv: "data/nations/South_Africa_ENS.csv" },
+    Syria:        { csv: "data/nations/Syria_ENS.csv" },
+    Thailand:     { csv: "data/nations/Thailand_ENS.csv" },
+    Turkiye:      { csv: "data/nations/Turkiye_ENS.csv" },
+    UAE:          { csv: "data/nations/UAE_ENS.csv" },
+    UK:           { csv: "data/nations/UK_ENS.csv" },
+    Ukraine:      { csv: "data/nations/Ukraine_ENS.csv" },
+    Venezuela:    { csv: "data/nations/Venezuela_ENS.csv" },
   };
   const ORDER = ["Helm", "Shield", "Flow", "Hands", "Craft", "Stewards", "Lore", "Archive"];
   const IDENT = {
@@ -192,9 +212,11 @@
     const sbar = mean(ORDER.map((n) => sig[n])), tb = sbar / maxAbs;
     const cpulse = 0.85 + 0.15 * Math.sin(now / 500);
     g.fillStyle = sigColor(tb, 0.10); g.beginPath(); g.arc(cx, cy, (24 + Math.abs(tb) * 20) * cpulse, 0, 7); g.fill();
-    g.fillStyle = "#EDE7D4"; g.font = "700 13px ui-monospace, monospace"; g.textAlign = "center"; g.textBaseline = "middle";
-    g.fillText(Math.round(dispYear), cx, cy - 6);
-    g.fillStyle = "#6FB3C0"; g.font = "600 9px ui-monospace, monospace"; g.fillText("σ̄ " + sbar.toFixed(0), cx, cy + 9);
+    g.fillStyle = "#EDE7D4"; g.font = "700 11px -apple-system, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle";
+    g.fillText(society, cx, cy - 16);
+    g.font = "700 13px ui-monospace, monospace";
+    g.fillText(Math.round(dispYear), cx, cy - 2);
+    g.fillStyle = "#6FB3C0"; g.font = "600 9px ui-monospace, monospace"; g.fillText("σ̄ " + sbar.toFixed(0), cx, cy + 13);
   }
 
   function renderReadout() {
