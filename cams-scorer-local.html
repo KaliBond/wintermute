@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>CAMS Scorer — Local Edition — Neural Nations</title>
-    <meta name="description" content="Download the standalone CAMS Scorer for Windows. Score any country, company, or city on your own machine, using your own OpenAI account.">
+    <meta name="description" content="Download the standalone CAMS Scorer for Windows or Linux. Score any country, company, or city on your own machine, using your own OpenAI account.">
     <meta name="robots" content="noindex, nofollow">
     <link rel="canonical" href="https://neuralnations.org/cams-scorer-local">
 
@@ -83,7 +83,7 @@
         <div class="ls-hero">
             <div class="ls-eyebrow">Neural Nations · CAMS Raw Scorer · Local Edition</div>
             <h1>CAMS Scorer — Local Edition</h1>
-            <p>A standalone Windows tool that runs the same CAMS raw-scoring ensemble as the <a href="cams-scorer.html">online CAMS Scorer</a>, entirely on your own machine, using your own OpenAI account. Nothing is sent to Neural Nations — the tool talks directly to OpenAI with your key, and you're billed directly by OpenAI at your account's own rates.</p>
+            <p>A standalone tool that runs the same CAMS raw-scoring ensemble as the <a href="cams-scorer.html">online CAMS Scorer</a>, entirely on your own machine, using your own OpenAI account. Nothing is sent to Neural Nations — the tool talks directly to OpenAI with your key, and you're billed directly by OpenAI at your account's own rates.</p>
         </div>
 
         <div class="ls-dl-card">
@@ -94,21 +94,25 @@
             <a href="local-scorer/cams-scorer.exe" class="ls-dl-btn" download>Download</a>
         </div>
 
-        <div class="ls-warn">Windows SmartScreen will likely flag this on first run, since it's a new, unsigned executable from an independent publisher. Click <strong>"More info" → "Run anyway"</strong> if you trust the source. You can also read the <a href="local-scorer/README.txt">plain-text README</a> or inspect the <a href="https://github.com/KaliBond/wintermute" target="_blank">source repo</a> first.</div>
+        <div class="ls-dl-card">
+            <div class="ls-dl-meta">
+                <div class="name">cams-scorer-linux</div>
+                <div class="sub">Linux / WSL (x86-64) · ~16 MB · no install, no Python required</div>
+            </div>
+            <a href="local-scorer/cams-scorer-linux" class="ls-dl-btn" download>Download</a>
+        </div>
+
+        <div class="ls-warn">Windows SmartScreen will likely flag the .exe on first run, since it's a new, unsigned executable from an independent publisher. Click <strong>"More info" → "Run anyway"</strong> if you trust the source. You can also read the <a href="local-scorer/README.txt">plain-text README</a> or inspect the <a href="https://github.com/KaliBond/wintermute" target="_blank">source repo</a> first.</div>
     </div>
 
     <div class="card">
-        <p class="section-label">Setup</p>
+        <p class="section-label">Setup — Windows</p>
         <ol class="ls-steps">
             <li>Get an OpenAI API key at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a>.</li>
             <li>Open a terminal (PowerShell) in the folder where you saved <code>cams-scorer.exe</code>.</li>
             <li>Set your key for the session: <code>$env:OPENAI_API_KEY = "sk-..."</code></li>
             <li>Run a scoring pass — see examples below.</li>
         </ol>
-    </div>
-
-    <div class="card">
-        <p class="section-label">Usage</p>
         <pre class="ls-code"><span class="c"># country, single year, default 5 passes</span>
 .\cams-scorer.exe country USA 2020 2024
 
@@ -117,6 +121,24 @@
 
 <span class="c"># city, fewer passes, faster</span>
 .\cams-scorer.exe city Detroit 2019 2023 --passes 3</pre>
+    </div>
+
+    <div class="card">
+        <p class="section-label">Setup — Linux / WSL</p>
+        <ol class="ls-steps">
+            <li>Get an OpenAI API key at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a>.</li>
+            <li>Open a terminal in the folder where you saved <code>cams-scorer-linux</code>, then mark it executable: <code>chmod +x cams-scorer-linux</code></li>
+            <li>Set your key for the session: <code>export OPENAI_API_KEY="sk-..."</code></li>
+            <li>Run a scoring pass — see examples below.</li>
+        </ol>
+        <pre class="ls-code"><span class="c"># country, single year, default 5 passes</span>
+./cams-scorer-linux country USA 2020 2024
+
+<span class="c"># company</span>
+./cams-scorer-linux company Tesla 2023
+
+<span class="c"># city, fewer passes, faster</span>
+./cams-scorer-linux city Detroit 2019 2023 --passes 3</pre>
         <p style="font-size:0.9rem;color:#55606a;line-height:1.6;margin-top:14px;">Each pass is a separate live model call — a 5-pass run typically takes several minutes. Two CSVs are written to the current folder: <code>&lt;entity&gt;_cams_scores.csv</code> (ensemble mean per node) and <code>&lt;entity&gt;_cams_envelope.csv</code> (uncertainty — standard deviation and valid-pass count per cell). This is raw scoring only — no Node Value, Bond Strength, or diagnosis. See <a href="model.html">the model page</a> for the full CAMS calculation pipeline.</p>
     </div>
 
