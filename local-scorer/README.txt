@@ -5,8 +5,26 @@ Score any country, company, or city on the eight CAMS nodes, using
 your own OpenAI account. Nothing is sent to Neural Nations — this
 runs entirely on your machine and talks directly to OpenAI.
 
-SETUP (one-time)
------------------
+Three versions are provided:
+   cams-scorer-gui.exe   Windows app, double-click to open, no command line
+   cams-scorer.exe       Windows command-line version
+   cams-scorer-linux     Linux / WSL command-line version
+
+GUI VERSION (cams-scorer-gui.exe) — easiest
+--------------------------------------------
+1. Double-click cams-scorer-gui.exe to open it.
+2. On first launch it asks for your OpenAI API key
+   (get one at https://platform.openai.com/api-keys). It's saved
+   locally in %APPDATA%\CAMSScorer\config.json (plain text) so you
+   won't be asked again.
+3. Fill in the form (what to score, name, years, number of passes)
+   and click "Run scoring pass".
+4. Results appear in the table and are saved as CSV files in
+   Documents\CAMS Scorer Output — click "Open output folder" to find
+   them.
+
+COMMAND-LINE VERSIONS — setup (one-time)
+------------------------------------------
 1. Get an OpenAI API key: https://platform.openai.com/api-keys
 2. Set it as an environment variable before running:
 
@@ -16,9 +34,14 @@ SETUP (one-time)
    Windows (cmd.exe):
        set OPENAI_API_KEY=sk-...
 
-USAGE
------
-   cams-scorer.exe <country|company|city> <entity> <start_year> [end_year] [options]
+   Linux / WSL:
+       export OPENAI_API_KEY="sk-..."
+       chmod +x cams-scorer-linux   (first time only)
+
+USAGE (command-line versions)
+------------------------------
+   cams-scorer.exe <country|company|city> <entity> <start_year> [end_year] [options]     (Windows)
+   ./cams-scorer-linux <country|company|city> <entity> <start_year> [end_year] [options]  (Linux/WSL)
 
 Examples:
    cams-scorer.exe country USA 2020 2024
