@@ -1,10 +1,12 @@
 /* ──────────────────────────────────────────────────────────────────────────
    CAMS Scorer — live raw scoring against the Neural Nations CAMS API.
    The API key never reaches this page: the Fly.io backend (cams-raw-scorer)
-   holds OPENAI_API_KEY server-side and does the OpenAI calls itself. This
-   page only sends the site token (below), which is a soft gate, not a
+   holds KIMI_API_KEY server-side and does the Kimi (Moonshot) calls itself.
+   This page only sends the site token (below), which is a soft gate, not a
    secret — it ships in public source, so the backend also rate-limits by
-   IP. See CAMS_RAW_SCORER_SUITE/NEURALNATIONS_API.md for the full contract.
+   IP. Only the "country" variant is served live; company/city are gated to
+   a sales inquiry. See CAMS_RAW_SCORER_SUITE/NEURALNATIONS_API.md for the
+   full contract.
    ────────────────────────────────────────────────────────────────────────── */
 (function () {
   "use strict";
@@ -62,9 +64,10 @@
     var endRaw = document.getElementById("cs-end").value.trim();
     var endYear = endRaw ? +endRaw : startYear;
 
+    if (variant !== "country") { setStatus("Company and city scoring are by inquiry — email sales@neuralnations.org.", true); return; }
     if (!entity) { setStatus("Enter an entity to score.", true); return; }
     if (!startYear) { setStatus("Enter a start year.", true); return; }
-    if (endYear - startYear + 1 > 5) { setStatus("Runs are capped at 5 years — narrow the range.", true); return; }
+    if (endYear - startYear + 1 > 10) { setStatus("Runs are capped at 10 years — narrow the range.", true); return; }
 
     runBtn.disabled = true;
     setStatus("Running " + passes + " isolated passes, one at a time — this can take a few minutes…");

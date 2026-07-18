@@ -160,8 +160,8 @@
                     <label for="cs-variant">Variant</label>
                     <select id="cs-variant">
                         <option value="country" selected>Country</option>
-                        <option value="company">Company</option>
-                        <option value="city">City</option>
+                        <option value="company" disabled>Company — by inquiry</option>
+                        <option value="city" disabled>City — by inquiry</option>
                     </select>
                 </div>
                 <div class="cs-field cs-span2">
@@ -171,9 +171,7 @@
                 <div class="cs-field">
                     <label for="cs-passes">Passes</label>
                     <select id="cs-passes">
-                        <option value="5" selected>5</option>
-                        <option value="4">4</option>
-                        <option value="3">3</option>
+                        <option value="3" selected>3</option>
                     </select>
                 </div>
                 <div class="cs-field">
@@ -192,7 +190,8 @@
             </div>
         </form>
 
-        <div class="cs-note">Runs are capped server-side at 5 years and 5 passes per request, and rate-limited per visitor, to keep this a fair, shared instrument. Passes run one at a time — a 3-pass run typically takes 2–4 minutes, longer for more passes or years. Leave the tab open until it finishes.</div>
+        <div class="cs-note">Runs are capped server-side at 10 years and 3 passes per request, and rate-limited per visitor, to keep this a fair, shared instrument. Passes run one at a time — a 3-pass run typically takes 2–4 minutes, longer for more years. Leave the tab open until it finishes.</div>
+        <div class="cs-note">Company and city scoring are available by inquiry — email <a href="mailto:sales@neuralnations.org" style="color:#2F6F7D;">sales@neuralnations.org</a>.</div>
     </div>
 
     <div class="card cs-results" id="cs-results" style="display:none;">
