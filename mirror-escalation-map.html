@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aha! Map v1.1</title>
+    <!-- SWAPPED CDN TO JSDELIVR FOR BETTER RELIABILITY -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network/standalone/umd/vis-network.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style type="text/css">
+        /* --- CORE STYLES --- */
+        body, html { font-family: 'Inter', sans-serif; margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #f0f2f5; }
+        #cldContainer { position: relative; width: 100%; height: 100vh; display: flex; flex-direction: column; }
+        #cldNetwork { flex-grow: 1; border: 1px solid #d1d5db; background-color: #ffffff; width: 100%; height: 100%; }
+
+        /* UI Elements */
+        #modelTitleDisplay { position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold; color: #1F2937; background-color: rgba(255, 255, 255, 0.9); padding: 10px 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); z-index: 10; pointer-events: none; }
+        
+        .action-btn { position: absolute; bottom: 20px; z-index: 25; padding: 10px 18px; font-size: 14px; font-weight: 500; border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        
+        /* Button Positioning */
+        #saveButton { left: 20px; background-color: #2563EB; color: white; }
+        #saveButton:hover { background-color: #1D4ED8; }
+        
+        #loadNewButton { left: 140px; background-color: #fff; color: #374151; }
+        #loadNewButton:hover { background-color: #f9fafb; }
+
+        /* New Button: Save Map Data (JSON) */
+        #saveDataButton { left: 285px; background-color: #10B981; color: white; }
+        #saveDataButton:hover { background-color: #059669; }
+
+        /* Legends */
+        .legend-container { 
+            position: fixed; 
+            right: 20px; 
+            width: 280px; 
+            background: rgba(255,255,255,0.96); 
+            border-radius: 8px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+            max-height: 42px; 
+            overflow: hidden; 
+            z-index: 20; 
+            transition: max-height 0.3s ease; 
+            border: 1px solid #e5e7eb; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .legend-container.expanded { 
+            max-height: 50vh; 
+            z-index: 100; 
+        }
+
+        #legend { top: 20px; }
+        #archetypeLegend { top: 75px; }
+        
+        .legend-header { padding: 12px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; background: #fff; border-bottom: 1px solid #eee; }
+        .legend-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex-grow: 1; }
+        .legend-list li { padding: 8px 12px; border-bottom: 1px solid #f3f4f6; font-size: 13px; cursor: pointer; border-left: 3px solid transparent; }
+        .legend-list li:hover { background-color: #eff6ff; }
+        
+        /* Dragging visuals */
+        .legend-list li.dragging { opacity: 0.5; background: #e5e7eb; }
+
+        /* Description Box */
+        #descPanel { position: fixed; right: 20px; bottom: 80px; width: 280px; background: #fff; padding: 16px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 30; display: none; max-height: 300px; overflow-y: auto; font-size: 14px; line-height: 1.5; border: 1px solid #ddd; }
+        #descPanel strong { display: block; margin-bottom: 6px; color: #1E40AF; font-size: 15px; }
+
+        /* Tooltips */
+        .tooltip { position: absolute; background: rgba(255,255,255,0.98); border: 1px solid #ccc; padding: 10px; border-radius: 6px; font-size: 13px; display: none; z-index: 1000; pointer-events: none; max-width: 250px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); line-height: 1.4; }
+        #canvasTooltip { background: rgba(17, 24, 39, 0.95); color: white; border: none; }
+        #helperTooltip {
+            position: absolute; bottom: 70px; left: 20px;
+            background: rgba(0,0,0,0.6); color: white;
+            padding: 8px 12px; border-radius: 20px;
+            font-size: 12px; pointer-events: none; z-index: 5;
+        }
+
+        /* MODALS */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; }
+        .modal-box { background: white; padding: 25px; border-radius: 8px; width: 600px; max-width: 90%; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .modal-box textarea { width: 100%; height: 250px; padding: 12px; font-family: monospace; border: 1px solid #ccc; border-radius: 4px; background: #f9fafb; }
+        .modal-box button { padding: 12px 18px; background: #2563EB; color: white; border: none; font-weight: bold; cursor: pointer; font-size: 15px; border-radius: 6px; }
+        .modal-box button:hover { background: #1D4ED8; }
+        .modal-box button.secondary { background: #E5E7EB; color: #374151; }
+        .modal-box button.secondary:hover { background: #D1D5DB; }
+        
+        /* Save Modal Specifics */
+        #filenameInput { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; margin: 5px 0 15px 0; box-sizing: border-box;}
+    </style>
+</head>
+<body>
+
+    <div id="cldContainer">
+        <div id="modelTitleDisplay">Aha! Map v1.1</div>
+        <button id="saveButton" class="action-btn">Save Map</button>
+        <button id="loadNewButton" class="action-btn">Load Map Data</button>
+        <button id="saveDataButton" class="action-btn">Save Map Data</button>
+        
+        <div id="helperTooltip">Step 1: Click edge to select (Red)<br>Step 2: Drag mouse to curve</div>
+        <div id="cldNetwork"></div>
+        
+        <div id="legend" class="legend-container">
+            <div class="legend-header" onclick="toggleLegend('legend')">Feedback Loops ▼</div>
+            <ul id="loopList" class="legend-list"></ul>
+        </div>
+        <div id="archetypeLegend" class="legend-container">
+            <div class="legend-header" onclick="toggleLegend('archetypeLegend')">Archetypes ▼</div>
+            <ul id="archetypeList" class="legend-list"></ul>
+        </div>
+        
+        <div id="descPanel"></div>
+        <div id="mainTooltip" class="tooltip"></div>
+        <div id="canvasTooltip" class="tooltip"></div>
+    </div>
+
+    <!-- Input/Load Modal -->
+    <div id="inputModal" class="modal-overlay" style="display: flex;"> <!-- Default to flex so it shows on load if empty -->
+        <div class="modal-box">
+            <h2 style="margin:0; color:#111827;">Load Map Data</h2>
+            <p style="margin:0; color:#6B7280; font-size:14px;">Paste the JSON from Gemini below:</p>
+            <textarea id="jsonInput" placeholder="INJECT_JSON_HERE" spellcheck="false">{
+  "metadata": {
+    "topic": "The Mirror in Singapore: The Escalation Engine Between Two Hegemons"
+  },
+  "nodes": [
+    {
+      "id": "n1",
+      "label": "US Perceived Threat from China",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
+      "x": -400,
+      "y": -260,
+      "description": "The accumulated stock of American conviction that China is a rising hegemon: fleet forecasts, 2027 invasion deadlines, cyber intrusions, grey-zone maritime pressure. It is a forecast, not a ledger, so it is fed by inference about intent as much as by events. [n1]"
+    },
+    {
+      "id": "n2",
+      "label": "China Perceived Threat from US",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
+      "x": 400,
+      "y": -260,
+      "description": "The accumulated stock of Chinese conviction that the US is the actual hegemon: 800 bases, encircling alliances, offensive weaponry in the South China Sea, a documented ledger of interventions. Symmetric in structure to n1 but sourced from record rather than forecast. [n2]"
+    },
+    {
+      "id": "n3",
+      "label": "US Coalition &amp; Force Posture",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
+      "x": -160,
+      "y": -60,
+      "description": "The accumulated American answer to threat: forward-postured missiles on the island chains, AUKUS, the Quad, allied industrial bases, more than a trillion dollars of spending. Framed by its builder as deterrence; read from the other chair as encirclement. [n3]"
+    },
+    {
+      "id": "n4",
+      "label": "China Military Build-up &amp; Hardening",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
+      "x": 160,
+      "y": -60,
+      "description": "The accumulated Chinese answer: nuclear expansion, hypersonics, amphibious capability, maritime assertiveness. Framed by its builder as legitimate self-strengthening; read from the other chair as confirmation of hegemonic intent. [n4]"
+    },
+    {
+      "id": "n5",
+      "label": "Mutual Deterrence Signalling",
+      "shape": "ellipse",
+      "color": {
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
+      },
+      "borderWidth": 1,
+      "x": 0,
+      "y": 120,
+      "description": "The rate at which each side manufactures dilemmas for the other: speeches, exercises, protests, 'more complications, more reasons to say it is not worth it.' Each act is experienced by its author as response and by its target as initiation. [n5]"
+    },
+    {
+      "id": "n6",
+      "label": "Interpretive Asymmetry (Response vs Intent)",
+      "shape": "ellipse",
+      "color": {
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
+      },
+      "borderWidth": 1,
+      "x": 0,
+      "y": -140,
+      "description": "The engine's core auxiliary: each actor reads its own move as defensive response and the other's identical move as offensive intent. This attribution gap is what converts symmetric behaviour into an escalation spiral rather than a stalemate. [n6]"
+    },
+    {
+      "id": "n7",
+      "label": "Economic Interdependence",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
+      "x": -520,
+      "y": 200,
+      "description": "The accumulated web of trade, supply chains and shared straits binding the region's smaller nations to both giants. A genuine balancing force, yet each giant reframes the other's ties as leverage to be broken rather than a peace to be kept. [n7]"
+    },
+    {
+      "id": "n8",
+      "label": "Coalition Coercion Pressure on Third Parties",
+      "shape": "ellipse",
+      "color": {
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
+      },
+      "borderWidth": 1,
+      "x": -520,
+      "y": 0,
+      "description": "The rate at which each power pressures smaller states to take sides, and reframes their prosperity-through-trade as a leak in the alliance. The 'beware entanglement' logic that treats a partner's economy as a constraint on one's own freedom of action. [n8]"
+    },
+    {
+      "id": "n9",
+      "label": "Moral Framing / Principle Rhetoric",
+      "shape": "ellipse",
+      "color": {
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
+      },
+      "borderWidth": 1,
+      "x": 520,
+      "y": 0,
+      "description": "The universal language each side speaks: peace, sovereignty, stability, the rules-based order, 'we never coerce.' It legitimises each build-up domestically and delegitimises the other's, hardening both threat stocks. [n9]"
+    },
+    {
+      "id": "n10",
+      "label": "Unnamed National Interest (oil, straits, chips, decision-space)",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
+      "x": 520,
+      "y": 200,
+      "description": "The private ledger beneath the public principle: a third of China's oil through Hormuz, American freedom of action, the semiconductor chokepoint. The Iran episode exposes this stock the moment behaviour and rhetoric diverge. [n10]"
+    },
+    {
+      "id": "n11",
+      "label": "Risk of Catastrophic Conflict",
+      "shape": "box",
+      "color": {
+        "background": "#CCFBF1",
+        "border": "#14B8A6"
+      },
+      "borderWidth": 1,
+      "x": 0,
+      "y": 320,
+      "description": "The terminal accumulation: the probability of the war both sides swear they are only preparing to prevent. Rises with every turn of the mutual spiral and every disabled balancing loop. [n11]"
+    },
+    {
+      "id": "n12",
+      "label": "Common Interest Recognition Capacity",
+      "shape": "ellipse",
+      "color": {
+        "background": "#DBEAFE",
+        "border": "#3B82F6"
+      },
+      "borderWidth": 2.5,
+      "x": -200,
+      "y": 400,
+      "description": "The genuinely untested exogenous capacity to name aloud the open strait, the working supply chain, the shared planet — and to lower a weapon first. The machine punishes whoever lowers first, so this capacity is structurally starved. [n12]"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "n1",
+      "to": "n3",
+      "width": 6,
+      "lag": 1,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Threat drives posture\n+\nLag: Months",
+      "description": "American perceived threat funds the coalition and force posture. The stronger the forecast of Chinese hegemony, the larger the deterrent answer. [e1]"
+    },
+    {
+      "id": "e2",
+      "from": "n3",
+      "to": "n2",
+      "width": 6,
+      "lag": 1,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Posture read as encirclement\n+\nLag: Months",
+      "description": "The US posture, filtered through China's interpretive lens, raises China's perceived threat. Deterrence and encirclement are the same object seen from two chairs. [e2]"
+    },
+    {
+      "id": "e3",
+      "from": "n2",
+      "to": "n4",
+      "width": 6,
+      "lag": 1,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Threat drives hardening\n+\nLag: Months",
+      "description": "Chinese perceived threat funds the military build-up and maritime hardening. The stronger the conviction of American encirclement, the larger the self-strengthening answer. [e3]"
+    },
+    {
+      "id": "e4",
+      "from": "n4",
+      "to": "n1",
+      "width": 6,
+      "lag": 1,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Hardening confirms forecast\n+\nLag: Months",
+      "description": "China's build-up, filtered through America's interpretive lens, confirms the original forecast and raises US perceived threat. The prophecy validates itself. [e4]"
+    },
+    {
+      "id": "e5",
+      "from": "n6",
+      "to": "n2",
+      "width": 5,
+      "lag": 0,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Attribution gap amplifies\n+\nLag: Immediate",
+      "description": "Interpretive asymmetry multiplies the threat China reads into American posture, because the US move is scored as intent rather than response. [e5]"
+    },
+    {
+      "id": "e6",
+      "from": "n6",
+      "to": "n1",
+      "width": 5,
+      "lag": 0,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Attribution gap amplifies\n+\nLag: Immediate",
+      "description": "The same asymmetry multiplies the threat the US reads into Chinese hardening. The gap is symmetric; it feeds both threat stocks equally. [e6]"
+    },
+    {
+      "id": "e7",
+      "from": "n3",
+      "to": "n5",
+      "width": 4,
+      "lag": 0,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Posture generates signalling\n+\nLag: Immediate",
+      "description": "Force posture is expressed through exercises, deployments and speeches — the signalling rate. [e7]"
+    },
+    {
+      "id": "e8",
+      "from": "n4",
+      "to": "n5",
+      "width": 4,
+      "lag": 0,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Hardening generates signalling\n+\nLag: Immediate",
+      "description": "Chinese hardening is expressed through drills, protests and assertive manoeuvres — feeding the same signalling rate. [e8]"
+    },
+    {
+      "id": "e9",
+      "from": "n5",
+      "to": "n6",
+      "width": 4,
+      "lag": 1,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Signalling widens the gap\n+\nLag: Weeks",
+      "description": "Every round of mutual signalling deepens the interpretive asymmetry: each side accumulates more evidence of the other's 'aggression' and none of its own. [e9]"
+    },
+    {
+      "id": "e10",
+      "from": "n9",
+      "to": "n1",
+      "width": 3,
+      "lag": 1,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Principle legitimises threat\n+\nLag: Months",
+      "description": "Moral framing hardens the US threat stock by casting China's build-up as a violation of order rather than a response. [e10]"
+    },
+    {
+      "id": "e11",
+      "from": "n9",
+      "to": "n2",
+      "width": 3,
+      "lag": 1,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Principle legitimises threat\n+\nLag: Months",
+      "description": "The mirror-image rhetoric ('no country is a hegemon but the US') hardens China's threat stock the same way. Both sides moralise; both are fuelled by it. [e11]"
+    },
+    {
+      "id": "e12",
+      "from": "n10",
+      "to": "n9",
+      "width": 3,
+      "lag": 2,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Interest quietly contradicts principle\n−\nLag: Variable",
+      "description": "The private interest ledger erodes the credibility of the moral framing: when oil is at stake (Hormuz), the anti-hegemon behaves hegemonically and the principle is exposed as selective. [e12]"
+    },
+    {
+      "id": "e13",
+      "from": "n5",
+      "to": "n8",
+      "width": 3,
+      "lag": 1,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Rivalry pressures third parties\n+\nLag: Months",
+      "description": "As signalling rises, both giants intensify pressure on smaller states to take sides, treating their trade ties as leaks to be closed. [e13]"
+    },
+    {
+      "id": "e14",
+      "from": "n8",
+      "to": "n7",
+      "width": 4,
+      "lag": 2,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Coercion erodes interdependence\n−\nLag: Years",
+      "description": "Coalition coercion severs the very trade web that could restrain the giants — dismantling the balancing loop in the name of winning it. [e14]"
+    },
+    {
+      "id": "e15",
+      "from": "n7",
+      "to": "n11",
+      "width": 5,
+      "lag": 2,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Interdependence restrains war\n−\nLag: Years",
+      "description": "Genuine economic interdependence lowers conflict risk — the region's real stabiliser. Weakening it (via e14) removes a brake the system cannot easily rebuild. [e15]"
+    },
+    {
+      "id": "e16",
+      "from": "n5",
+      "to": "n11",
+      "width": 5,
+      "lag": 1,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Signalling raises war risk\n+\nLag: Months",
+      "description": "Each turn of mutual deterrence signalling raises the ambient probability of miscalculation and accidental war. [e16]"
+    },
+    {
+      "id": "e17",
+      "from": "n1",
+      "to": "n9",
+      "width": 3,
+      "lag": 1,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Threat demands justification\n+\nLag: Months",
+      "description": "A rising threat stock demands moral justification for the posture it funds, so each side generates more principle rhetoric — a self-reinforcing legitimation loop. [e17]"
+    },
+    {
+      "id": "e18",
+      "from": "n2",
+      "to": "n9",
+      "width": 3,
+      "lag": 1,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Threat demands justification\n+\nLag: Months",
+      "description": "Symmetrically, China's rising threat stock generates its own principle rhetoric to justify hardening. The moral register is shared machinery. [e18]"
+    },
+    {
+      "id": "e19",
+      "from": "n11",
+      "to": "n12",
+      "width": 4,
+      "lag": 3,
+      "color": {
+        "color": "#1E40AF"
+      },
+      "label": "Danger could awaken recognition\n+\nLag: Uncertain",
+      "description": "Rising catastrophic risk is the one force that could, in principle, awaken common-interest recognition — the near-miss that makes both sides look in the mirror. Historically weak and delayed. [e19]"
+    },
+    {
+      "id": "e20",
+      "from": "n12",
+      "to": "n5",
+      "width": 5,
+      "lag": 1,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Recognition dampens signalling\n−\nLag: Months",
+      "description": "If exercised, common-interest recognition would slow the signalling rate and let one side lower a weapon first. This is the system's dormant balancing loop — starved because the machine punishes whoever lowers first. [e20]"
+    },
+    {
+      "id": "e21",
+      "from": "n7",
+      "to": "n8",
+      "width": 3,
+      "lag": 2,
+      "color": {
+        "color": "#991B1B"
+      },
+      "label": "Interdependence resists coercion\n−\nLag: Years",
+      "description": "Where trade ties are deep, third parties resist side-taking pressure — a small balancing check on coalition coercion, though usually overwhelmed by the giants' leverage. [e21]"
+    }
+  ],
+  "loops": [
+    {
+      "id": "R1",
+      "name": "The Mirror Spiral",
+      "type": "R",
+      "description": "The master reinforcing loop. US threat funds posture, China reads it as encirclement, China hardens, the US reads that as confirmation, and round it goes. No villain is required — each turn is a sincere response to the last. This is the engine that manufactures the enemy it claims to observe. [R1]",
+      "nodeIds": [
+        "n1",
+        "n3",
+        "n2",
+        "n4"
+      ],
+      "edgeIds": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ]
+    },
+    {
+      "id": "R2",
+      "name": "The Attribution Amplifier",
+      "type": "R",
+      "description": "Interpretive asymmetry feeds on the signalling that force posture and hardening produce, and pumps that widened gap back into both threat stocks. It is why symmetric behaviour spirals instead of settling: each side keeps a ledger of the other's sins and none of its own. [R2]",
+      "nodeIds": [
+        "n3",
+        "n4",
+        "n5",
+        "n6",
+        "n1",
+        "n2"
+      ],
+      "edgeIds": [
+        "e7",
+        "e8",
+        "e9",
+        "e5",
+        "e6",
+        "e1",
+        "e3"
+      ]
+    },
+    {
+      "id": "R3",
+      "name": "The Legitimation Engine",
+      "type": "R",
+      "description": "Each rising threat stock demands moral justification, which generates principle rhetoric, which hardens the threat stock further. Peace-and-sovereignty language becomes fuel for the very rivalry it claims to transcend — on both sides identically. [R3]",
+      "nodeIds": [
+        "n1",
+        "n2",
+        "n9"
+      ],
+      "edgeIds": [
+        "e17",
+        "e18",
+        "e10",
+        "e11"
+      ]
+    },
+    {
+      "id": "B4",
+      "name": "The Severed Brake (Interdependence)",
+      "type": "B",
+      "description": "Economic interdependence should restrain war — and it tries to, resisting coercion where trade runs deep. But the rivalry drives coalition coercion that erodes interdependence faster than it can restrain. A balancing loop the system is actively dismantling in order to win. [B4]",
+      "nodeIds": [
+        "n5",
+        "n8",
+        "n7",
+        "n11"
+      ],
+      "edgeIds": [
+        "e13",
+        "e14",
+        "e15",
+        "e21"
+      ]
+    },
+    {
+      "id": "B5",
+      "name": "The Dormant Awakening",
+      "type": "B",
+      "description": "Rising catastrophic risk could awaken common-interest recognition, which would dampen signalling and cool the whole engine. This is the intended safety loop — but it is long-lagged, uncertain, and structurally starved because whoever lowers first is punished. It almost never fires in time. [B5]",
+      "nodeIds": [
+        "n11",
+        "n12",
+        "n5"
+      ],
+      "edgeIds": [
+        "e19",
+        "e20",
+        "e16"
+      ]
+    },
+    {
+      "id": "R6",
+      "name": "The Exposed Ledger",
+      "type": "R",
+      "description": "The private interest stock (oil, straits, chips) quietly contradicts the moral framing, discrediting principle rhetoric. The Iran strike is the falsification test: it catches the self-declared anti-hegemon behaving hegemonically the moment its oil is threatened, showing the moral register is shared cover for interest on both sides. [R6]",
+      "nodeIds": [
+        "n10",
+        "n9",
+        "n1",
+        "n2"
+      ],
+      "edgeIds": [
+        "e12",
+        "e10",
+        "e11"
+      ]
+    }
+  ],
+  "archetypes": [
+    {
+      "id": "arch1",
+      "name": "Escalation",
+      "description": "The classic mutual-threat archetype: two actors each treat their own build-up as defensive and the other's as offensive, so each response becomes the next provocation. Here it is doubled by interpretive asymmetry, which guarantees that symmetric moves are read asymmetrically and the spiral never self-corrects. [arch1]",
+      "nodeIds": [
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n5",
+        "n6"
+      ],
+      "edgeIds": [
+        "e1",
+        "e2",
+        "e3",
+        "e4",
+        "e5",
+        "e6",
+        "e7",
+        "e8",
+        "e9"
+      ]
+    },
+    {
+      "id": "arch2",
+      "name": "Fixes that Fail",
+      "description": "The 'fix' — building coalitions and pressuring third parties to take sides — solves the immediate deterrence problem but erodes the economic interdependence that was the region's deepest restraint on war. The short-term fix undermines the long-term brake. [arch2]",
+      "nodeIds": [
+        "n5",
+        "n8",
+        "n7",
+        "n11"
+      ],
+      "edgeIds": [
+        "e13",
+        "e14",
+        "e15",
+        "e21",
+        "e16"
+      ]
+    },
+    {
+      "id": "arch3",
+      "name": "Shifting the Burden (to Principle)",
+      "description": "Rather than address the underlying interest conflict directly, both sides shift the burden onto moral rhetoric — peace, sovereignty, order — which relieves domestic pressure while leaving the real interest ledger untouched and the addiction to escalation intact. The Exposed Ledger loop is what eventually reveals the symptomatic fix. [arch3]",
+      "nodeIds": [
+        "n1",
+        "n2",
+        "n9",
+        "n10"
+      ],
+      "edgeIds": [
+        "e17",
+        "e18",
+        "e10",
+        "e11",
+        "e12"
+      ]
+    }
+  ]
+}</textarea>
+            <button onclick="parseAndRun()">VISUALIZE MODEL</button>
+        </div>
+    </div>
+
+    <!-- Save Modal (Shared) -->
+    <div id="saveModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 450px;">
+            <h2 id="saveModalTitle" style="margin:0; color:#111827;">Save Map</h2>
+            <p style="margin:0; color:#6B7280; font-size:14px;">Enter a filename:</p>
+            <input type="text" id="filenameInput" value="model">
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button class="secondary" onclick="document.getElementById('saveModal').style.display='none'">Cancel</button>
+                <button id="confirmSaveBtn">Download</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // GLOBAL STATE
+        let nodes, edges, network;
+        let feedbackLoops = [], systemArchetypes = [], loopLabelPositions = [];
+        let originalNodeStyles = {}, originalEdgeStyles = {};
+        let currentSaveMode = 'html'; // 'html' or 'json'
+        
+        // INTERACTION STATE
+        let draggedLabel = null;
+        let dragOffset = {x:0, y:0};
+        
+        // RECURVE STATE
+        let activeEdgeForRecurve = null;
+        let isRecurvingEdge = false;
+        
+        let lastMouseX = 0, lastMouseY = 0;
+        let draggedItem = null; // For list sorting
+
+        // --- 0. AUTO-LOADER ---
+        window.addEventListener('load', () => {
+             const preloaded = document.getElementById('jsonInput').value;
+             if(preloaded && preloaded.trim().length > 0 && preloaded.trim() !== "undefined") {
+                 parseAndRun();
+             } else {
+                 document.getElementById('inputModal').style.display = 'flex';
+             }
+        });
+
+        // --- HELPER FOR COLOR CONVERSION (from v6.2) ---
+        function colorToRgba(colorInput, alpha) {
+            let r = 128, g = 128, b = 128; // Default to gray if parsing fails
+            alpha = Math.max(0, Math.min(1, alpha));
+
+            if (typeof colorInput === 'string') {
+                const s = colorInput.toLowerCase().trim();
+                if (s.startsWith('#')) {
+                    if (s.length === 4) {
+                        r = parseInt(s[1] + s[1], 16);
+                        g = parseInt(s[2] + s[2], 16);
+                        b = parseInt(s[3] + s[3], 16);
+                    } else if (s.length === 7) {
+                        r = parseInt(s.substring(1, 3), 16);
+                        g = parseInt(s.substring(3, 5), 16);
+                        b = parseInt(s.substring(5, 7), 16);
+                    }
+                } else if (s.startsWith('rgb')) {
+                    const parts = s.match(/[\d.]+/g);
+                    if (parts && parts.length >= 3) {
+                        r = parseInt(parts[0]);
+                        g = parseInt(parts[1]);
+                        b = parseInt(parts[2]);
+                    }
+                }
+            }
+            return `rgba(${r},${g},${b},${alpha})`;
+        }
+
+        // --- 1. DATA PARSING ---
+        function parseAndRun() {
+            const input = document.getElementById('jsonInput').value;
+            if(!input) return alert("Please paste JSON data.");
+
+            try {
+                let clean = input.replace(/```json/gi, '').replace(/```/g, '');
+                const start = clean.indexOf('{');
+                const end = clean.lastIndexOf('}');
+                if (start === -1 || end === -1) throw new Error("No JSON found.");
+                
+                const data = JSON.parse(clean.substring(start, end + 1));
+                
+                document.getElementById('inputModal').style.display = 'none';
+
+                if(data.metadata && data.metadata.topic) {
+                    document.getElementById('modelTitleDisplay').innerText = data.metadata.topic;
+                    document.title = data.metadata.topic;
+                }
+
+                initEngine(data);
+
+            } catch(e) {
+                alert("Error parsing JSON: " + e.message);
+            }
+        }
+
+        document.getElementById('loadNewButton').addEventListener('click', () => {
+             document.getElementById('jsonInput').value = '';
+             document.getElementById('inputModal').style.display = 'flex';
+        });
+
+        // --- SAVE FUNCTIONALITY ---
+        
+        // 1. Save HTML Button
+        document.getElementById('saveButton').addEventListener('click', () => {
+            if (!network || !nodes || !edges) {
+                alert("No model to save. Please load data first.");
+                return;
+            }
+            currentSaveMode = 'html';
+            document.getElementById('saveModalTitle').innerText = "Save Map (HTML)";
+            document.getElementById('filenameInput').value = (document.title || "model");
+            document.getElementById('saveModal').style.display = 'flex';
+            document.getElementById('filenameInput').focus();
+        });
+
+        // 2. Save JSON Button
+        document.getElementById('saveDataButton').addEventListener('click', () => {
+            if (!network || !nodes || !edges) {
+                alert("No model data to save.");
+                return;
+            }
+            currentSaveMode = 'json';
+            document.getElementById('saveModalTitle').innerText = "Save Map Data (JSON)";
+            document.getElementById('filenameInput').value = (document.title || "model");
+            document.getElementById('saveModal').style.display = 'flex';
+            document.getElementById('filenameInput').focus();
+        });
+
+        // 3. Confirm Save Action
+        document.getElementById('confirmSaveBtn').addEventListener('click', () => {
+             try {
+                let filename = document.getElementById('filenameInput').value || "model";
+                
+                // Get Data
+                const currentPositions = network.getPositions();
+                const d = { 
+                    metadata: { topic: document.title },
+                    nodes: nodes.get().map(n => {
+                        const pos = currentPositions[n.id];
+                        return {
+                            ...n,
+                            x: pos ? Math.round(pos.x) : n.x,
+                            y: pos ? Math.round(pos.y) : n.y
+                        };
+                    }),
+                    edges: edges.get().map(e => ({
+                        ...e, 
+                        title: undefined,
+                        smooth: (e.smooth && e.smooth.roundness !== undefined) ? e.smooth : undefined
+                    })),
+                    loops: feedbackLoops,
+                    archetypes: systemArchetypes
+                };
+                const jsonString = JSON.stringify(d, null, 2);
+
+                if (currentSaveMode === 'json') {
+                    // --- SAVE JSON ---
+                    if (!filename.toLowerCase().endsWith('.json')) filename += '.json';
+                    downloadFile(jsonString, filename, 'application/json');
+
+                } else {
+                    // --- SAVE HTML ---
+                    if (!filename.toLowerCase().endsWith('.html')) filename += '.html';
+
+                    const clone = document.documentElement.cloneNode(true);
+                    clone.querySelector('#cldNetwork').innerHTML = ''; 
+                    clone.querySelectorAll('.tooltip').forEach(el => el.style.display = 'none');
+                    clone.querySelectorAll('.legend-container').forEach(el => el.classList.remove('expanded'));
+                    clone.querySelector('#descPanel').style.display = 'none';
+                    clone.querySelector('#inputModal').style.display = 'flex'; 
+                    clone.querySelector('#saveModal').style.display = 'none'; 
+                    clone.querySelector('#jsonInput').textContent = jsonString;
+
+                    const fileContent = "<!DOCTYPE html>\n" + clone.outerHTML;
+                    downloadFile(fileContent, filename, 'text/html');
+                }
+
+                document.getElementById('saveModal').style.display = 'none';
+
+            } catch (err) {
+                alert("Error saving file: " + err.message);
+                console.error(err);
+            }
+        });
+
+        function downloadFile(content, filename, contentType) {
+            const blob = new Blob([content], {type: contentType});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); 
+            a.href = url; 
+            a.download = filename; 
+            a.style.display = 'none';
+            document.body.appendChild(a); 
+            a.click();
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 100);
+        }
+
+        // --- 2. ENGINE INITIALIZATION ---
+        function initEngine(data) {
+            const hasPositions = data.nodes && data.nodes.some(n => n.x !== undefined && n.y !== undefined);
+
+            // MODIFIED: Append [ID] to node labels (without hardcoded 'n')
+            const nodeData = (data.nodes || []).map(n => {
+                let label = n.label || "";
+                const tag = `[${n.id}]`; // Corrected: uses pure ID
+                // Prevent duplicate appending if data is re-loaded
+                if (!label.includes(tag)) {
+                    label = label ? `${label} ${tag}` : tag;
+                }
+                return {
+                    ...n, 
+                    label: label,
+                    x: n.x ? Number(n.x) : undefined, 
+                    y: n.y ? Number(n.y) : undefined
+                };
+            });
+            
+            // MODIFIED: Append [ID] to edge labels (without hardcoded 'e')
+            const edgeData = (data.edges || []).map(e => {
+                let smooth = { enabled: true, type: "cubicBezier", roundness: 0.3 };
+                if (e.smooth && e.smooth.roundness !== undefined) {
+                    smooth = e.smooth; 
+                }
+                
+                let label = e.label || "";
+                const tag = `[${e.id}]`; // Corrected: uses pure ID
+                // Prevent duplicate appending and ensure ID is visible
+                if (!label.includes(tag)) {
+                    label = label ? `${label} ${tag}` : tag;
+                }
+
+                return {...e, label: label, from:String(e.from), to:String(e.to), title:undefined, smooth: smooth};
+            });
+
+            nodes = new vis.DataSet(nodeData);
+            edges = new vis.DataSet(edgeData);
+            
+            feedbackLoops = (data.loops || []).map((l, i) => ({...l, internalId: `loop-${i}`}));
+            systemArchetypes = data.archetypes || [];
+
+            const container = document.getElementById('cldNetwork');
+            const options = {
+                autoResize: true, height: '100%', width: '100%',
+                nodes: { 
+                    shape: 'ellipse', size: 25, 
+                    font: { size: 13, face: 'Inter', color: '#1F2937', multi: 'html' },
+                    widthConstraint: { maximum: 160 }, borderWidth: 2,
+                    color: { background: '#DBEAFE', border: '#3B82F6', highlight: { background: '#BFDBFE', border: '#2563EB' } },
+                    shadow: { enabled: true, size:4, x:2, y:2, color: 'rgba(0,0,0,0.08)'} 
+                },
+                edges: { 
+                    width: 2.5, arrows: { to: { enabled: true, scaleFactor: 0.7 } },
+                    smooth: { enabled: true, type: "cubicBezier", roundness: 0.3 },
+                    font: { align: 'middle', multi: true, face: 'Inter', size: 12, color: '#4B5563', background: 'rgba(255,255,255,0.75)', strokeWidth: 0 },
+                    chosen: {
+                        edge: function(values, id, selected, hovering) {
+                            values.color = '#e11d48'; 
+                            values.width = values.width * 1.5;
+                            values.shadow = { enabled: true, color: 'rgba(225, 29, 72, 0.4)', size: 10 };
+                        }
+                    }
+                },
+                physics: {
+                    enabled: !hasPositions,
+                    stabilization: { enabled: !hasPositions, iterations: 1000, fit: true },
+                    barnesHut: { gravitationalConstant: -2000, centralGravity: 0.3, springLength: 95 }
+                },
+                interaction: { 
+                    hover: true, dragNodes: true, zoomView: true, 
+                    selectConnectedEdges: false 
+                }
+            };
+
+            nodes.forEach(n => originalNodeStyles[n.id] = { color: {...(n.color||options.nodes.color)}, borderWidth: n.borderWidth||2 });
+            edges.forEach(e => originalEdgeStyles[e.id] = { color: {...(e.color||options.edges.color)}, width: e.width||2.5, smooth: e.smooth });
+
+            if(network) network.destroy();
+            network = new vis.Network(container, { nodes, edges }, options);
+            
+            if(!hasPositions) {
+                network.on("stabilizationIterationsDone", () => network.setOptions({ physics: false }));
+            }
+
+            renderLists();
+            setupInteractions();
+            setupListSorting(); 
+        }
+
+        // --- 3. CUSTOM INTERACTION LOGIC ---
+        function setupInteractions() {
+            const canvas = document.querySelector('canvas');
+            const tt = document.getElementById('mainTooltip');
+            const ctt = document.getElementById('canvasTooltip');
+
+            // --- CLICK (SELECTION) ---
+            network.on("click", function(params) {
+                const networkPos = params.pointer.canvas; 
+
+                const hit = loopLabelPositions.find(l => (networkPos.x-l.x)**2 + (networkPos.y-l.y)**2 < l.r**2);
+                if(hit) {
+                    selectLoop(hit.loop);
+                    return; 
+                }
+
+                if (params.nodes.length === 0) { 
+                    if (params.edges.length > 0) { 
+                        const clickedEdgeId = params.edges[0];
+                        activeEdgeForRecurve = (activeEdgeForRecurve === clickedEdgeId) ? null : clickedEdgeId;
+                        if(activeEdgeForRecurve) {
+                            network.selectEdges([activeEdgeForRecurve]);
+                            resetHighlights(false); 
+                        } else {
+                            network.selectEdges([]);
+                        }
+                    } else { 
+                        activeEdgeForRecurve = null;
+                        network.selectEdges([]);
+                        resetHighlights();
+                    }
+                } else {
+                    activeEdgeForRecurve = null;
+                    network.selectEdges([]);
+                }
+            });
+
+            // --- MOUSE DOWN (START DRAG) ---
+            if(canvas) {
+                canvas.addEventListener('mousedown', function(event) {
+                    const rect = canvas.getBoundingClientRect();
+                    const netPos = network.canvas.DOMtoCanvas({x: event.clientX-rect.left, y: event.clientY-rect.top});
+                    
+                    const hit = loopLabelPositions.find(l => (netPos.x-l.x)**2 + (netPos.y-l.y)**2 < l.r**2);
+                    if(hit) {
+                        draggedLabel = hit.loop;
+                        dragOffset = {x: netPos.x - hit.x, y: netPos.y - hit.y};
+                        network.setOptions({interaction:{dragNodes:false, dragView:false}}); 
+                        canvas.style.cursor = 'grabbing';
+                        event.preventDefault();
+                        return;
+                    }
+
+                    if (activeEdgeForRecurve && !isRecurvingEdge) {
+                        isRecurvingEdge = true;
+                        document.addEventListener('mousemove', handleMouseMoveOnDocumentForRecurve);
+                        document.addEventListener('mouseup', handleMouseUpOnDocumentForRecurve, { once: true });
+                        network.setOptions({ interaction: { dragNodes: false, dragView: false } }); 
+                        event.preventDefault();
+                    }
+                });
+
+                canvas.addEventListener('mousemove', (e) => {
+                    lastMouseX = e.clientX;
+                    lastMouseY = e.clientY;
+
+                    if(draggedLabel) {
+                        const rect = canvas.getBoundingClientRect();
+                        const netPos = network.canvas.DOMtoCanvas({x: e.clientX-rect.left, y: e.clientY-rect.top});
+                        draggedLabel.lx = netPos.x - dragOffset.x;
+                        draggedLabel.ly = netPos.y - dragOffset.y;
+                        network.redraw(); 
+                        return;
+                    }
+
+                    const rect = canvas.getBoundingClientRect();
+                    const netPos = network.canvas.DOMtoCanvas({x: e.clientX-rect.left, y: e.clientY-rect.top});
+                    const hit = loopLabelPositions.find(l => (netPos.x-l.x)**2 + (netPos.y-l.y)**2 < l.r**2);
+                    
+                    if(hit) {
+                        canvas.style.cursor = 'pointer';
+                        ctt.innerHTML = `<strong>${hit.loop.name}</strong><p style="margin:5px 0 0">${hit.loop.description}</p>`;
+                        ctt.style.left = (e.clientX+15)+'px'; ctt.style.top = (e.clientY+15)+'px';
+                        ctt.style.display = 'block';
+                    } else {
+                         ctt.style.display = 'none';
+                    }
+                });
+
+                canvas.addEventListener('mouseup', () => {
+                    if(draggedLabel) {
+                        draggedLabel = null;
+                        network.setOptions({interaction:{dragNodes:true, dragView:true}});
+                        canvas.style.cursor = 'default';
+                    }
+                });
+            }
+
+
+            // --- RECURVE HELPERS ---
+            function handleMouseMoveOnDocumentForRecurve(event) {
+                if (!isRecurvingEdge || !activeEdgeForRecurve) return;
+
+                const rect = canvas.getBoundingClientRect();
+                const mousePos = network.canvas.DOMtoCanvas({ x: event.clientX - rect.left, y: event.clientY - rect.top });
+                const edge = edges.get(activeEdgeForRecurve);
+                if (!edge) { handleMouseUpOnDocumentForRecurve(); return; }
+
+                const positions = network.getPositions([edge.from, edge.to]);
+                const fromPos = positions[edge.from];
+                const toPos = positions[edge.to];
+                if (!fromPos || !toPos) { handleMouseUpOnDocumentForRecurve(); return;}
+
+                const midX = (fromPos.x + toPos.x) / 2;
+                const midY = (fromPos.y + toPos.y) / 2;
+                const dxMouse = mousePos.x - midX;
+                const dyMouse = mousePos.y - midY;
+
+                const edgeDx = toPos.x - fromPos.x;
+                const edgeDy = toPos.y - fromPos.y;
+                const edgeLength = Math.sqrt(edgeDx*edgeDx + edgeDy*edgeDy);
+                if (edgeLength < 1) return;
+
+                const orientation = (edgeDx * dyMouse) - (edgeDy * dxMouse);
+                const newCurveType = orientation >= 0 ? 'curvedCCW' : 'curvedCW';
+
+                const distFromMid = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+                const scaleFactor = 0.8; 
+                let newRoundness = Math.max(0.0, Math.min(1.0, (distFromMid / edgeLength) * scaleFactor));
+
+                edges.update({
+                    id: activeEdgeForRecurve,
+                    smooth: { type: newCurveType, roundness: newRoundness, enabled: true }
+                });
+                
+                if(originalEdgeStyles[activeEdgeForRecurve]) {
+                    originalEdgeStyles[activeEdgeForRecurve].smooth = { type: newCurveType, roundness: newRoundness, enabled: true };
+                }
+            }
+
+            function handleMouseUpOnDocumentForRecurve() {
+                if (!isRecurvingEdge) return;
+                isRecurvingEdge = false;
+                document.removeEventListener('mousemove', handleMouseMoveOnDocumentForRecurve);
+                network.setOptions({ interaction: { dragNodes: true, dragView: true } });
+            }
+
+
+            // --- STANDARD VIS.JS EVENTS ---
+            network.on("afterDrawing", (ctx) => {
+                loopLabelPositions = [];
+                ctx.font = "bold 13px Inter"; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                feedbackLoops.forEach(l => {
+                    if(!l.lx) {
+                        const pos = network.getPositions(l.nodeIds);
+                        let x=0,y=0,c=0; for(let k in pos){x+=pos[k].x; y+=pos[k].y; c++;}
+                        if(c){l.lx=x/c; l.ly=y/c;}
+                    }
+                    if(l.lx) {
+                        ctx.fillStyle = l.type==='R' ? 'rgba(190, 24, 93, 0.9)' : 'rgba(30, 64, 175, 0.9)';
+                        ctx.beginPath(); ctx.arc(l.lx, l.ly, 18, 0, 2*Math.PI); ctx.fill();
+                        ctx.strokeStyle = 'white'; ctx.lineWidth = 1; ctx.stroke();
+                        ctx.fillStyle = 'white'; ctx.fillText(l.id, l.lx, l.ly+1);
+                        loopLabelPositions.push({loop: l, x: l.lx, y: l.ly, r: 18});
+                    }
+                });
+            });
+
+            network.on("hoverNode", (p) => {
+                const n = nodes.get(p.node);
+                if(n.description) {
+                    const dom = network.canvas.canvasToDOM(network.getPositions([p.node])[p.node]);
+                    tt.innerHTML = n.description.replace(/\n/g, '<br>');
+                    tt.style.left = (dom.x + 20) + 'px'; tt.style.top = (dom.y + 20) + 'px';
+                    tt.style.display = 'block';
+                }
+            });
+            network.on("blurNode", () => tt.style.display = 'none');
+
+            network.on("hoverEdge", (p) => {
+                const e = edges.get(p.edge);
+                if(e.description) {
+                    tt.innerHTML = e.description.replace(/\n/g, '<br>');
+                    tt.style.left = (lastMouseX + 15) + 'px';
+                    tt.style.top = (lastMouseY + 15) + 'px';
+                    tt.style.display = 'block';
+                }
+            });
+            network.on("blurEdge", () => tt.style.display = 'none');
+        }
+
+        // --- 4. LIST SORTING & RENDERING (UPDATED) ---
+        function setupListSorting() {
+            const list = document.getElementById('loopList');
+            
+            list.addEventListener('dragstart', (e) => {
+                if(e.target.tagName === 'LI') {
+                    draggedItem = e.target;
+                    setTimeout(() => draggedItem.classList.add('dragging'), 0);
+                }
+            });
+
+            list.addEventListener('dragend', () => {
+                if(draggedItem) draggedItem.classList.remove('dragging');
+                draggedItem = null;
+            });
+
+            list.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                const afterElement = getDragAfterElement(list, e.clientY);
+                const current = document.querySelector('.dragging');
+                if (afterElement == null) {
+                    list.appendChild(current);
+                } else {
+                    list.insertBefore(current, afterElement);
+                }
+            });
+
+            list.addEventListener('drop', () => {
+                // REORDER DATA ARRAY
+                const newOrder = [];
+                list.querySelectorAll('li').forEach(li => {
+                    const loop = feedbackLoops.find(l => l.internalId === li.dataset.id);
+                    if(loop) newOrder.push(loop);
+                });
+                feedbackLoops = newOrder;
+                
+                // NO RESEQUENCING - Just redraw to ensure consistency
+                renderLists();
+            });
+        }
+
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('li:not(.dragging)')];
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+
+        function renderLists() {
+            const ll = document.getElementById('loopList'); ll.innerHTML = '';
+            feedbackLoops.forEach(l => {
+                const li = document.createElement('li');
+                li.setAttribute('draggable', true);
+                li.dataset.id = l.internalId;
+
+                const col = l.type==='R'?'#be185d':'#1e40af';
+                let nameDisplay = l.name;
+                
+                if (!nameDisplay.startsWith(l.id)) {
+                    nameDisplay = `<span style="font-weight:bold; color:${col}">${l.id}</span>: ${nameDisplay}`;
+                } else {
+                    nameDisplay = nameDisplay.replace(l.id, `<span style="font-weight:bold; color:${col}">${l.id}</span>`);
+                }
+
+                li.innerHTML = nameDisplay;
+                li.onclick = (e) => { e.stopPropagation(); selectLoop(l); };
+                ll.appendChild(li);
+            });
+            const al = document.getElementById('archetypeList'); al.innerHTML = '';
+            systemArchetypes.forEach(a => {
+                const li = document.createElement('li'); li.textContent = a.name;
+                li.onclick = (e) => { e.stopPropagation(); selectArch(a); };
+                al.appendChild(li);
+            });
+        }
+
+        function selectLoop(l) {
+            highlight(l);
+            const box = document.getElementById('descPanel');
+            box.innerHTML = `<strong>${l.name}</strong>${l.description.replace(/\n/g,'<br>')}`;
+            box.style.display='block';
+            if(!document.getElementById('legend').classList.contains('expanded')) toggleLegend('legend');
+        }
+
+        function selectArch(a) {
+            highlight(a);
+            const box = document.getElementById('descPanel');
+            box.innerHTML = `<strong>${a.name}</strong>${a.description.replace(/\n/g,'<br>')}`;
+            box.style.display='block';
+            if(!document.getElementById('archetypeLegend').classList.contains('expanded')) toggleLegend('archetypeLegend');
+        }
+
+        // --- UPDATED HIGHLIGHT FUNCTION (v6.2 logic) ---
+        function highlight(item) {
+            if (!item || !item.nodeIds || !item.edgeIds) {
+                resetHighlights(true);
+                return;
+            }
+
+            resetHighlights(false); 
+
+            const ns = new Set(item.nodeIds || []), es = new Set(item.edgeIds || []);
+            const nodesToUpdate = [];
+            const edgesToUpdate = [];
+            const highlightColor = '#e11d48'; 
+            const dimOpacity = 0.15;
+
+            // --- Process Nodes ---
+            nodes.forEach(n => {
+                const originalStyle = originalNodeStyles[n.id];
+                if (!originalStyle) return;
+
+                if (ns.has(n.id)) {
+                    nodesToUpdate.push({
+                        id: n.id,
+                        opacity: 1.0,
+                        color: JSON.parse(JSON.stringify(originalStyle.color)),
+                        borderWidth: (originalStyle.borderWidth || 2) * 1.7
+                    });
+                } else {
+                    nodesToUpdate.push({
+                        id: n.id,
+                        opacity: dimOpacity,
+                        color: {
+                            background: colorToRgba(originalStyle.color?.background, dimOpacity * 0.5),
+                            border: colorToRgba(originalStyle.color?.border, dimOpacity),
+                            highlight: { background: colorToRgba(originalStyle.color?.highlight?.background, dimOpacity * 0.5), border: colorToRgba(originalStyle.color?.highlight?.border, dimOpacity) },
+                            hover: { background: colorToRgba(originalStyle.color?.hover?.background, dimOpacity * 0.5), border: colorToRgba(originalStyle.color?.hover?.border, dimOpacity) }
+                        },
+                        borderWidth: (originalStyle.borderWidth || 2),
+                        font: {
+                            color: colorToRgba(nodes.get(n.id).font?.color || '#1F2937', dimOpacity)
+                        }
+                    });
+                }
+            });
+
+            // --- Process Edges ---
+            edges.forEach(e => {
+                const originalStyle = originalEdgeStyles[e.id];
+                if (!originalStyle) return;
+                const defaultWidth = 2.5;
+
+                if (es.has(e.id)) {
+                    edgesToUpdate.push({
+                        id: e.id,
+                        width: (originalStyle.width || defaultWidth) * 1.8,
+                        color: { color: highlightColor, highlight: highlightColor, hover: highlightColor },
+                        font: {
+                            color: '#000000',
+                            background: 'rgba(255, 255, 255, 0.9)'
+                        },
+                        opacity: 1.0,
+                        smooth: JSON.parse(JSON.stringify(originalStyle.smooth || {}))
+                    });
+                } else {
+                    const dimmedColor = colorToRgba(originalStyle.color?.color, dimOpacity * 0.8);
+                    edgesToUpdate.push({
+                        id: e.id,
+                        width: (originalStyle.width || defaultWidth) * 0.8,
+                        color: { color: dimmedColor, highlight: dimmedColor, hover: dimmedColor },
+                        font: {
+                            color: colorToRgba(edges.get(e.id).font?.color || '#4B5563', dimOpacity * 0.5),
+                            background: 'rgba(255, 255, 255, 0.2)'
+                        },
+                        opacity: dimOpacity,
+                        smooth: JSON.parse(JSON.stringify(originalStyle.smooth || {}))
+                    });
+                }
+            });
+
+            nodes.update(nodesToUpdate);
+            edges.update(edgesToUpdate);
+        }
+
+        // --- UPDATED RESET HIGHLIGHTS ---
+        function resetHighlights(fullReset = true) {
+            const nodeUpdates = nodes.get().map(n => {
+                const s = originalNodeStyles[n.id] || { color: '#DBEAFE', borderWidth: 2 };
+                return { 
+                    id: n.id, 
+                    opacity: 1, 
+                    color: s.color, 
+                    borderWidth: s.borderWidth,
+                    font: { color: '#1F2937' } 
+                };
+            });
+            const edgeUpdates = edges.get().map(e => {
+                const s = originalEdgeStyles[e.id] || { color: '#4B5563', width: 2.5 };
+                return { 
+                    id: e.id, 
+                    opacity: 1, 
+                    color: s.color, 
+                    width: s.width,
+                    font: { color: '#4B5563', background: 'rgba(255,255,255,0.75)' } 
+                };
+            });
+
+            nodes.update(nodeUpdates);
+            edges.update(edgeUpdates);
+
+            if(fullReset) {
+                document.getElementById('descPanel').style.display='none';
+                document.querySelectorAll('.legend-container').forEach(l => l.classList.remove('expanded'));
+            }
+        }
+
+        window.toggleLegend = (id) => {
+            const el = document.getElementById(id);
+            const exp = el.classList.contains('expanded');
+            document.querySelectorAll('.legend-container').forEach(l => l.classList.remove('expanded'));
+            document.getElementById('descPanel').style.display = 'none';
+            if(!exp) el.classList.add('expanded');
+        }
+    </script>
+</body>
+</html>
