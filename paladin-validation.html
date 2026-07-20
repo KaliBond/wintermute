@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>When a Metaphor Earns Its Keep — Adversarial Validation of the Paladin Rendering Layer over JUNO</title>
+<meta name="description" content="Adversarial audit and controlled rendering protocol for the Paladin interpretive layer over the JUNO eight-node CAMS field: which claims survive as measurement, which survive only as metaphor, and the discipline that keeps the difference visible.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://neuralnations.org/paladin-validation">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,700;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --paper:#f7f5f0; --card:#ffffff; --ink:#1c2333; --muted:#5d6577;
+  --accent:#b4562f; --accent-soft:#f3e3da;
+  --green:#2e7d52; --green-soft:#e2f0e8;
+  --amber:#b07d1e; --amber-soft:#f6ecd4;
+  --red:#b3392e; --red-soft:#f7e5e2;
+  --gray:#6b7280; --gray-soft:#ececef;
+  --line:#e3e0d8;
+}
+.pv-wrap{max-width:940px;margin:0 auto;padding:0 24px 90px;font-family:Georgia,'Times New Roman',serif;color:var(--ink);line-height:1.68;font-size:17px;background:var(--paper);}
+.pv-masthead{border-bottom:3px double var(--line);padding:40px 0 26px;margin-bottom:30px;}
+.pv-brand{font-family:'IBM Plex Sans',-apple-system,sans-serif;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700;}
+.pv-brand span{color:var(--muted);}
+.pv-masthead h1{font-family:'Newsreader',Georgia,serif;font-size:38px;line-height:1.14;margin:14px 0 8px;font-weight:700;letter-spacing:-0.01em;}
+.pv-subtitle{font-size:18px;color:var(--muted);font-style:italic;margin:0 0 18px;}
+.pv-meta{font-family:'IBM Plex Sans',-apple-system,sans-serif;font-size:13px;color:var(--muted);line-height:1.7;}
+.pv-meta b{color:var(--ink);}
+.pv-wrap h2{font-family:'Newsreader',Georgia,serif;font-size:25px;margin:50px 0 16px;padding-top:20px;border-top:1px solid var(--line);}
+.pv-wrap h3{font-family:'Newsreader',Georgia,serif;font-size:19px;margin:28px 0 10px;}
+.pv-wrap p{margin:0 0 16px;}
+.pv-lede{font-size:20px;line-height:1.6;}
+.pv-summary{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:6px;padding:26px 30px;margin:28px 0;box-shadow:0 1px 4px rgba(28,35,51,.06);}
+.pv-summary h2{border:none;margin:0 0 12px;padding:0;font-size:21px;color:var(--accent);}
+.pv-summary p{font-size:16.5px;}
+.pv-eq{font-family:'IBM Plex Mono',Consolas,monospace;background:#efede6;border-radius:5px;padding:12px 16px;margin:14px 0;font-size:15px;color:#2c3340;overflow-x:auto;}
+.pv-verdict-grid{display:grid;grid-template-columns:1fr;gap:14px;margin:22px 0;}
+.pv-verdict{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px 20px;display:flex;gap:16px;align-items:flex-start;}
+.pv-badge{flex:0 0 auto;font-family:'IBM Plex Sans',-apple-system,sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:4px;padding:4px 10px;margin-top:3px;}
+.b-green{background:var(--green-soft);color:var(--green);}
+.b-amber{background:var(--amber-soft);color:var(--amber);}
+.b-red{background:var(--red-soft);color:var(--red);}
+.b-gray{background:var(--gray-soft);color:var(--gray);}
+.pv-vbody .claim{font-weight:700;margin-bottom:3px;}
+.pv-vbody .ev{font-size:15px;color:var(--muted);}
+.pv-wrap table{width:100%;border-collapse:collapse;margin:16px 0 26px;font-size:14.5px;font-family:'IBM Plex Sans',-apple-system,sans-serif;}
+.pv-wrap th{background:#efede6;text-align:left;padding:9px 12px;border-bottom:2px solid var(--line);font-size:12px;letter-spacing:.03em;text-transform:uppercase;color:var(--muted);}
+.pv-wrap td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.pv-wrap tr:nth-child(even) td{background:#fbfaf7;}
+.pv-pass{color:var(--green);font-weight:700;}
+.pv-fail{color:var(--accent);font-weight:700;}
+.pv-callout{background:var(--accent-soft);border-radius:6px;padding:18px 22px;margin:24px 0;font-size:16px;}
+.pv-callout b{color:var(--accent);}
+.pv-stage{background:#eef2f6;border-radius:6px;padding:16px 20px;margin:18px 0;font-family:'IBM Plex Sans',-apple-system,sans-serif;font-size:14.5px;}
+.pv-stage b{color:#1a3a5c;}
+ol.pv-list{padding-left:22px;}
+ol.pv-list li{margin-bottom:10px;}
+.pv-dl-row{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px;}
+.pv-dl{font-family:'IBM Plex Sans',-apple-system,sans-serif;font-weight:600;font-size:13.5px;padding:10px 18px;border-radius:8px;text-decoration:none;background:#2F6F7D;color:#F5F1E4;}
+.pv-dl.secondary{background:#e3ddc9;color:#2c3340;}
+.pv-footer{border-top:3px double var(--line);margin-top:60px;padding-top:24px;font-family:'IBM Plex Sans',-apple-system,sans-serif;font-size:13px;color:var(--muted);}
+code{font-family:'IBM Plex Mono',Consolas,monospace;font-size:.9em;background:#efede6;padding:1px 5px;border-radius:3px;}
+@media(max-width:640px){.pv-masthead h1{font-size:28px;}.pv-wrap{padding:0 16px 60px;}}
+</style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="mathematical-backbone.html">Mathematical Backbone</a>
+                    <a href="social-cognition.html">Social Cognition · Real Time</a>
+                    <a href="cams-scorer.html">CAMS Scorer</a>
+                    <a href="argentina-puzzle.html">The Puzzle of Argentina</a>
+                    <hr class="menu-divider">
+                    <a href="cams-zeitgeist.html">Zeitgeist Detector</a>
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="attractors.html">Attractors</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link">Framework ↗</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="framework/index.html">Framework ↗</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="mathematical-backbone.html">Mathematical Backbone</a>
+        <a href="social-cognition.html">Social Cognition · Real Time</a>
+        <a href="cams-scorer.html">CAMS Scorer</a>
+        <a href="argentina-puzzle.html">The Puzzle of Argentina</a>
+        <hr class="menu-divider">
+        <a href="cams-zeitgeist.html">Zeitgeist Detector</a>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="attractors.html">Attractors</a>
+    </div>
+</nav>
+
+<div class="pv-wrap">
+
+<header class="pv-masthead">
+  <div class="pv-brand">neural<span>nations</span> · CAMS / JUNO companion validation</div>
+  <h1>When a Metaphor Earns Its Keep</h1>
+  <p class="pv-subtitle">Adversarial validation of the Paladin rendering layer over the JUNO eight-node field</p>
+  <div class="pv-meta">
+    <b>Validation report</b> · 20 July 2026 ·
+    Kari McKern, Neural Nations Project / CAMS Framework Initiative, Sydney, Australia ·
+    Adversarial audit by Anthropic Claude and OpenAI GPT models ·
+    Data: <a href="juno/JUNO_Unified_Dataset.csv" download style="color:#2F6F7D;">JUNO Unified Dataset</a> (32,361 node-years, 36 societies) and an earlier spent blind corpus (3,002 society-years, 24 society-runs)
+  </div>
+</header>
+
+<p class="pv-lede">JUNO scores a society across eight institutional nodes — Helm, Shield, Lore, Stewards, Craft, Hands, Archive and Flow — each on Coherence, Capacity, Stress and Abstraction. Atop that measurement sits a proposed "Paladin" layer that renders the node field as character: which node <em>dreams</em>, which <em>can act</em>, where the <em>burden falls</em>, and whether dream and energy are <em>aligned</em>. This report is the record of an adversarial audit built to answer one question: is that vocabulary a discovery, or a description wearing a discovery's clothes?</p>
+
+<div class="pv-summary">
+  <h2>In plain language</h2>
+  <p>Can a JUNO-scored society be said to "dream," to "act," to carry a "burden"? The Paladin layer names four things about a society's eight institutional nodes: which one shows the most organised imagination (its <em>dream</em>), which one has the most spare capacity to act (its <em>energy</em>), which one is running the deepest deficit (its <em>burden</em>), and whether the imaginative nodes and the well-resourced nodes tend to be the same nodes (their <em>alignment</em>).</p>
+  <p>We put an AI model up against the claim, specifically instructed to try to break it. Three of the four turned out to be exactly what a skeptic would suspect: relabelled maxima and minima with no information in them beyond "this column happened to be highest." That's not fraud — a label can be useful without being a discovery — but it means those three phrases must never be cited as evidence of anything.</p>
+  <p>The fourth, alignment, survived the attack. It isn't reducible to the simple summary numbers a skeptic would check first, and it's stable from one year to the next — properties pure noise doesn't have. But it does not predict what happens next: societies with strongly aligned dream and energy are no more or less likely to decline or hit crisis than societies that aren't. It describes a persistent trait, not a warning light.</p>
+  <p>Along the way, the audit caught and fixed its own mistake — an early pass wrongly concluded alignment was noise, because of a data-keying error that spliced unrelated society-years together. That correction is reported here rather than quietly absorbed, because an audit that hides its own errors cannot be trusted to have found anyone else's.</p>
+</div>
+
+<h2>1. What this is, and what it is not</h2>
+<p>The JUNO operators — node viability, signed activation, pairwise bond strength, the graph Laplacian's algebraic connectivity — are the measurement engine. They do the measuring. The Paladin layer does not measure anything; it <em>renders</em>: it translates a multidimensional institutional state into language a person can hold in mind. The governing principle is one line:</p>
+<div class="pv-eq">The operators measure; the metaphor renders.</div>
+<p>A rendering is not a weaker measurement — it is a different kind of object, judged by different tests. A weather map is not a lesser barometer; it is the thing that lets a person see the pressure field. The Paladin layer is legitimate exactly as far as it stays faithful to, and traceable back to, the numbers beneath it.</p>
+
+<h2>2. The rendering layer, formally</h2>
+<p>For society <em>x</em>, node <em>i</em> and year <em>t</em>, the measured state is x<sub>i,t</sub> = (C<sub>i,t</sub>, K<sub>i,t</sub>, S<sub>i,t</sub>, A<sub>i,t</sub>) — coherence, capacity, stress and abstraction. These feed the canonical JUNO operators (node viability, coupling quality, pairwise bond weight, graph connectivity; see the <a href="juno-v1-2.html" style="color:#2F6F7D;">JUNO v1.2-Final specification</a>), which the Paladin layer sits above and cannot alter.</p>
+<p>Two derived node quantities are defined:</p>
+<div class="pv-eq">dream &nbsp;d<sub>i</sub> = A<sub>i</sub>·C<sub>i</sub> / 100 &nbsp;&nbsp;&nbsp;(coherent imaginative reach)<br>available energy &nbsp;e<sub>i</sub> = K<sub>i</sub> − S<sub>i</sub> &nbsp;&nbsp;&nbsp;(usable capacity after current stress)</div>
+<p>Dream does not mean an intention, policy programme or wish — it is a rendering of coherent abstraction. Energy is a precondition for action, not observed action: a node may hold surplus and remain idle, constrained or excluded. From these, three extrema and one relation are named:</p>
+<table>
+<tr><th>Rendered phrase</th><th>Declared operator</th><th>Reports</th><th>Does not report</th></tr>
+<tr><td><b>dreams through</b></td><td>argmax<sub>i</sub>(d<sub>i</sub>)</td><td>node of strongest coherent abstraction</td><td>a decision, intention or plan</td></tr>
+<tr><td><b>can act through</b></td><td>argmax<sub>i</sub>(e<sub>i</sub>)</td><td>node with the largest usable energy surplus</td><td>observed action or realised power</td></tr>
+<tr><td><b>the burden falls upon</b></td><td>argmin<sub>i</sub>(e<sub>i</sub>)</td><td>node in the deepest energy deficit</td><td>proof that a cost was deliberately transferred</td></tr>
+<tr><td><b>is aligned / misaligned</b></td><td>corr<sub>i</sub>(d<sub>i</sub>, e<sub>i</sub>)</td><td>covariance of dream and energy across all eight nodes</td><td>an early-warning or crisis forecast</td></tr>
+</table>
+<p>The first three name extrema and carry no information beyond the ranking that produced them — "hypertensive" carries no information beyond the blood-pressure reading either, and remains a useful word. Alignment is different in kind: a covariance over the whole eight-node configuration, not a relabelled column.</p>
+
+<table>
+<tr><th>Paladin</th><th>Institutional function</th></tr>
+<tr><td>Helm</td><td>Executive direction, strategic integration, collective choice</td></tr>
+<tr><td>Shield</td><td>Defence, threat perception, coercive capacity, sovereignty</td></tr>
+<tr><td>Lore</td><td>Meaning, identity, legitimacy, narrative imagination</td></tr>
+<tr><td>Stewards</td><td>Stored wealth, land, assets, capital allocation</td></tr>
+<tr><td>Craft</td><td>Technical competence, skilled production, practical innovation</td></tr>
+<tr><td>Hands</td><td>Everyday labour, social reproduction, lived participation</td></tr>
+<tr><td>Archive</td><td>Memory, law, evidence, continuity, institutional learning</td></tr>
+<tr><td>Flow</td><td>Trade, logistics, finance, exchange, circulation</td></tr>
+</table>
+
+<h2>3. Methods — two audit stages</h2>
+<p>The audit was run in two stages on two different corpora, and the report keeps their numbers separate rather than pooling them.</p>
+<div class="pv-stage"><b>Stage 1 — original blind-corpus audit.</b> 3,002 society-years across 24 society-runs drawn from three blind experimental sets, previously spent for identification purposes (and so unusable for confirmatory testing, but appropriate for diagnostic falsification). Four analyses: structural verification of operator invariants; redundancy of each construct against cheap marginal covariates; non-redundancy confirmation via residual autocorrelation; and incremental prediction of forward viability change and regime transition.</div>
+<div class="pv-stage"><b>Stage 2 — full-corpus verification.</b> A post-thread integrity check on the supplied <a href="juno/JUNO_Unified_Dataset.csv" download style="color:#1a3a5c;">JUNO Unified Dataset</a> (32,361 node-year observations, 36 societies, 4,050 society-year groups), of which 4,033 society-years contained all eight canonical nodes. This stage recomputed dream, energy, extrema and alignment across the full complete-case panel, with explicit tie retention and a zero-variance guard.</div>
+<p>Both stages implemented the operators independently over their respective corpora, with extrema evaluated under tie retention rather than first-match selection, and alignment computed as a Pearson correlation across the eight paired node values per society-year.</p>
+
+<h3>3.1 The keying error, and its correction</h3>
+<p>During Stage 1, an initial analysis concluded that alignment was statistical noise. That conclusion was false. The three blind sets reuse society labels across distinct panels; pooling by label alone spliced unrelated series together, destroying the within-society-year node relation and the autocorrelation that would otherwise be visible. Re-keying explicitly by (set, society) — and, in Stage 2, by (society, year, node) — reversed the result. The error and its correction are retained in this record because the correction materially changed the epistemic status of alignment, and because an audit that conceals its own corrected errors cannot credibly certify anyone else's claims.</p>
+
+<h2>4. Results</h2>
+
+<h3>4.1 Structural verification — pass</h3>
+<p>All operators computed consistently across both corpora. In Stage 1, the Laplacian null eigenvalue was zero to machine precision, the edge-sum and node-average definitions of system bond density agreed to machine precision, and all normalised quantities stayed within bounds. The one implementation hazard identified in both stages: alignment is undefined when dream or energy has zero cross-node variance in a society-year — 134 of 3,002 Stage-1 panels, 137 of 4,033 Stage-2 panels (3.4%; 11 uniform-dream, 131 uniform-energy, 5 uniform on both). Such cases must return <code>NA</code>, never zero — zero would falsely assert measured non-alignment where the truth is "no variation to measure."</p>
+
+<h3>4.2 The three headline roles are renderings, not discoveries</h3>
+<p>The central critical result was accepted in both stages. "Dreams through," "can act through" and "the burden falls upon" are deterministic relabellings of argmax(d), argmax(e) and argmin(e) — they match their marginal-ranking counterparts at rate exactly 1.000, because dream and energy are themselves monotone functions of the underlying score columns. In Stage 1, related composite constructs collapsed further still: a dream-embodiment construct was 95.9% explained by mean energy alone, and dream-concentration was 70.6% a function of dream dispersion. None of the three roles carries incremental empirical content beyond the ranking that generates it.</p>
+<p>Extremum ties were also common, not rare — a finding with direct protocol consequences. In Stage 2's full corpus: co-leading dream nodes in 1,280 of 4,033 complete society-years (31.7%), co-leading energy nodes in 1,393 (34.5%), co-burden nodes in 974 (24.2%). A single unqualified "winner" is often an artefact of software ordering rather than a decisive structural fact; any usable rendering must report ties and margins, not silently pick a first match.</p>
+
+<h3>4.3 Alignment — non-redundant and stable, but not predictive</h3>
+<div class="pv-verdict-grid">
+  <div class="pv-verdict"><span class="pv-badge b-green">Non-redundant</span><div class="pv-vbody"><div class="claim">Not reducible to cheap marginal summaries.</div><div class="ev">Stage 1: only 13.2% of alignment's variance explained by mean dream and mean energy. Stage 2 (full corpus): only 1.9% explained by the same marginals.</div></div></div>
+  <div class="pv-verdict"><span class="pv-badge b-green">Temporally stable</span><div class="pv-vbody"><div class="claim">Persists year to year — a structural disposition, not noise.</div><div class="ev">Stage 1: residual lag-1 autocorrelation ≈ 0.66 in every society-run. Stage 2: lag-1 correlation r = 0.747 across 3,541 consecutive-year pairs with defined values.</div></div></div>
+  <div class="pv-verdict"><span class="pv-badge b-red">Non-predictive</span><div class="pv-vbody"><div class="claim">Does not forecast subsequent decline or crisis.</div><div class="ev">Stage 1: incremental association with forward viability change near zero at all tested horizons (Spearman ≈ +0.01 to +0.03); regime-transition discrimination at AUC 0.47–0.49 — chance level — unchanged after removing cheap baselines. Stage 2 confirms the same null under the audit's tested lagged specifications.</div></div></div>
+</div>
+<p>The retained claim is therefore precise and bounded:</p>
+<div class="pv-callout"><b>Locked claim.</b> Dream–energy alignment measures the degree to which a society directs its usable institutional energy toward the nodes sustaining its most coherent abstractions. In the tested corpora it behaves as a persistent structural characteristic; it does not independently forecast subsequent decline or crisis.</div>
+<p>Being non-predictive is not being inert. A trait can characterise a system strongly while forecasting nothing about it — federal structure and legal continuity do the same (Meehl, 1954). Whether alignment governs <em>how</em> a society adapts rather than <em>whether</em> it declines, and whether a single aggregate correlation over-compresses morphologically distinct configurations (Shield-centred versus Archive-centred alignment, say), are open questions — admissible only as pre-specified tests on fresh data, never as post-hoc rescues of a null on the corpus that produced it.</p>
+
+<h2>5. The locked Paladin protocol</h2>
+<p>The results motivate a discipline, not a deletion. The metaphor is validated only as a compound object — strip any one component and the guarantee voids:</p>
+<div class="pv-eq">Paladin rendering &nbsp;+&nbsp; operator declaration &nbsp;+&nbsp; numerical leash &nbsp;+&nbsp; interpretation firewall</div>
+
+<h3>5.1 Traceable, not reversible</h3>
+<p>From "Archive dreams; Shield can act; the burden falls upon Hands" one recovers the winning node in each ranking — but not the scores, margins, ties or the distribution across the other five nodes. The map is many-to-one. Full information is recovered only when a rendering carries its <b>numerical leash</b>: the winning value and its margin over the runner-up.</p>
+<div class="pv-eq">Archive dreams most strongly (d = 0.72; margin to Lore = 0.04). Shield holds the largest energy surplus (e = +3.1; margin = 0.6). The burden falls upon Hands (e = −2.4; margin below Flow = 0.5).</div>
+<p>Any near-tie threshold must be declared before analysis and tied to scoring reliability — never chosen after seeing the case.</p>
+
+<h3>5.2 The interpretation firewall</h3>
+<p>Every report separates three levels and forbids a lower level from borrowing the authority of a higher one.</p>
+<table>
+<tr><th>Level</th><th>Example</th><th>Epistemic status</th></tr>
+<tr><td>1 — Computed result</td><td>"Archive has the highest dream score. Shield has the highest energy surplus. Hands has the lowest energy balance."</td><td>Directly calculated from declared operators.</td></tr>
+<tr><td>2 — Interpretive rendering</td><td>"The society dreams through memory, can act most readily through security, and its heaviest burden falls upon ordinary labour."</td><td>A faithful, human-readable rendering.</td></tr>
+<tr><td>3 — Historical hypothesis</td><td>"Institutional continuity may remain culturally authoritative while initiative has migrated towards defensive structures."</td><td>A conjecture requiring independent historical evidence.</td></tr>
+</table>
+<p>A succession event — the leading dream moving from Lore to Shield, say — is legitimate Level-2 morphology, historically intelligible and worth investigating. It is not, on its own, evidence of a crisis, a causal transfer or a discovered mechanism.</p>
+
+<h3>5.3 Claim discipline</h3>
+<table>
+<tr><th>Status</th><th>Example</th></tr>
+<tr><td class="pv-pass">Permitted</td><td>"Archive has the highest dream score." / "The society dreams through memory." / "Dream and energy are negatively aligned in this year."</td></tr>
+<tr><td>Conditional</td><td>"The cost was shifted onto Hands" — only with independent evidence of transfer.</td></tr>
+<tr><td class="pv-fail">Prohibited</td><td>"Shield caused the crisis because it became the leading dreamer." / "Alignment predicts decline." / "The Paladin succession validates the historical interpretation."</td></tr>
+</table>
+
+<h3>5.4 Reporting template</h3>
+<div class="pv-eq">At year t, [Paladin] has the strongest dream score (d = …; margin = …). [Paladin] holds the largest available-energy surplus (e = …; margin = …), while the deepest deficit lies in [Paladin] (e = …; margin = …). In Paladin language, the society dreams through […], can act most readily through […], and its heaviest burden falls upon […]. Dream and energy are [aligned / weakly aligned / misaligned], with r<sub>DE</sub> = ….<br>This is a structural rendering; any historical explanation is tested separately against the record.</div>
+
+<h2>6. Evaluation of the metaphor itself</h2>
+<table>
+<tr><th>Criterion</th><th>Outcome</th><th>Reason</th></tr>
+<tr><td>Faithfulness</td><td class="pv-pass">Pass, with wording controls</td><td>"Dreams through" matches coherent abstraction; "can act" and "burden falls" avoid claims of realised action or transfer.</td></tr>
+<tr><td>Cognitive usefulness</td><td class="pv-pass">Pass, interpretive axis</td><td>Compresses an eight-node field into a pattern trackable through time; claims no new empirical information.</td></tr>
+<tr><td>Discrimination</td><td class="pv-pass">Pass</td><td>Different nodes lead in different societies and periods; succession is not universal.</td></tr>
+<tr><td>Traceability</td><td class="pv-pass">Pass, with the numerical leash</td><td>Operator, value, tie status and margin must remain visible on every headline claim.</td></tr>
+<tr><td>Non-seduction</td><td>Conditional</td><td>The metaphor cannot prevent over-reading on its own — the interpretation firewall must do it.</td></tr>
+</table>
+
+<h2>7. Discussion</h2>
+<p>A measurement is validated by accuracy; a rendering is validated by faithfulness, traceability, discrimination and restraint. Judged as a measurement, the Paladin layer largely fails — three of four constructs are relabelled marginals. Judged as a rendering, it passes, under the same standard by which "state capacity" or "economic health" are legitimate: not because they add information, but because the path back to observables stays visible.</p>
+<p>The alignment result is the instructive one. That a construct can be genuinely non-redundant yet predictively inert echoes the clinical–statistical prediction literature (Meehl, 1954): structural reality and forecasting power are distinct properties. Whether alignment governs the manner of adaptation rather than its probability, and whether it over-aggregates morphologically distinct configurations, remain open — but only as pre-specified tests on fresh data.</p>
+<p>The episode also has a methodological moral for AI-assisted research: one model generated an elegant formulation; another stripped away the claims that did not survive scrutiny; the critic then corrected its own erroneous analysis and helped formalise the surviving metaphor. This is a productive adversarial pattern, but not a substitute for independent data or human accountability. A model's confident error should not be silently replaced by its corrected answer — recording the failure reveals which analytical operations are fragile and strengthens reproducibility.</p>
+
+<h2>8. Limitations</h2>
+<ol class="pv-list">
+<li>Node scores are model-derived historical assessments; internal precision and coherence do not establish external ground truth.</li>
+<li>The adversarial audit was cross-model rather than institutionally independent; shared training assumptions may remain between the generating and critiquing models.</li>
+<li>The predictive null is specification-bound — it establishes no incremental forecasting value under the tested models, outcomes and horizons, not a universal impossibility result.</li>
+<li>Redundancy was assessed against a specific marginal-covariate set; non-redundancy is established relative to what was tested, not proven irreducible against all encodings.</li>
+<li>Stage 2's unified corpus contains irregular temporal spans and incomplete society-years; complete-case analysis may not represent missing periods.</li>
+<li>Argmax/argmin renderings are sensitive to discrete scores and ties — a margin and tie policy is mandatory, not optional.</li>
+<li>Dream, energy and burden remain metaphors. Even faithful metaphors can acquire unintended connotations across cultural or disciplinary settings.</li>
+</ol>
+
+<h2>9. Conclusion</h2>
+<p>The eight Paladins are not a second instrument hidden inside JUNO. They are the human-readable face of the one instrument. A face is validated by whether it faithfully shows what lies behind it, not by whether it can see the future. The metaphor earns its place because every claim it makes can be traced to a declared relation among the scores. It fails only in the way all vivid metaphors fail: it invites over-reading unless its numerical leash stays visible.</p>
+<p><b>Faithfulness and traceability belong to the metaphor; restraint belongs to the protocol.</b></p>
+
+<h2>10. Materials and reproducibility</h2>
+<p>This report consolidates the Paladin Character Protocol (final locked specification), the Paladin Rendering Scientific Paper, and the companion Validation Paper into a single account. It sits atop the canonical JUNO structural formalism and the following underlying materials:</p>
+<div class="pv-dl-row">
+  <a href="juno-v1-2.html" class="pv-dl">JUNO v1.2-Final specification</a>
+  <a href="juno/JUNO_v1.2_Scientific_Paper.pdf" target="_blank" class="pv-dl secondary">JUNO v1.2 Scientific Paper (PDF)</a>
+  <a href="juno/JUNO_Unified_Dataset.csv" download class="pv-dl secondary">JUNO Unified Dataset (CSV, 32,361 node-years)</a>
+</div>
+
+<h2>References</h2>
+<p style="font-size:15px;color:var(--muted);">
+Black, M. (1962). <em>Models and Metaphors: Studies in Language and Philosophy.</em> Cornell University Press.<br>
+Box, G. E. P. (1976). Science and statistics. <em>Journal of the American Statistical Association</em>, 71(356), 791–799.<br>
+Card, S. K., Mackinlay, J. D., &amp; Shneiderman, B. (Eds.). (1999). <em>Readings in Information Visualization.</em> Morgan Kaufmann.<br>
+Fiedler, M. (1973). Algebraic connectivity of graphs. <em>Czechoslovak Mathematical Journal</em>, 23(2), 298–305.<br>
+Gentner, D. (1983). Structure-mapping: A theoretical framework for analogy. <em>Cognitive Science</em>, 7(2), 155–170.<br>
+Hesse, M. B. (1966). <em>Models and Analogies in Science.</em> University of Notre Dame Press.<br>
+Lakoff, G., &amp; Johnson, M. (1980). <em>Metaphors We Live By.</em> University of Chicago Press.<br>
+Meehl, P. E. (1954). <em>Clinical versus Statistical Prediction.</em> University of Minnesota Press.<br>
+McKern, K. (2026a). JUNO v1.2-Final Formalism and JUNO Unified Dataset. Neural Nations Project.<br>
+McKern, K. (2026b). The Paladin Character Protocol. Neural Nations Project, version 1.0.<br>
+Nosek, B. A., Ebersole, C. R., DeHaven, A. C., &amp; Mellor, D. T. (2018). The preregistration revolution. <em>PNAS</em>, 115(11), 2600–2606.<br>
+Simmons, J. P., Nelson, L. D., &amp; Simonsohn, U. (2011). False-positive psychology. <em>Psychological Science</em>, 22(11), 1359–1366.
+</p>
+
+<div class="pv-footer">
+  <p><b>AI assistance statement.</b> The Paladin formulation and its adversarial audit were developed through human-supervised dialogue involving OpenAI GPT and Anthropic Claude models. The models contributed formulation, criticism, code-oriented checks and editorial revision; they are not authors and bear no responsibility for the claims retained. Kari McKern designed the framework, conducted the audit and is responsible for all claims in this report.</p>
+  <p style="margin-top:10px;"><b>Status.</b> This is a methodological record and protocol paper. It has not undergone external peer review. "Validated" refers only to the stated criteria for controlled rendering, not to external validation of JUNO's historical scores or forecasting performance.</p>
+  <p style="margin-top:16px;">© 2026 Kari McKern — Neural Nations CAMS Research. Open science — <a href="https://github.com/KaliBond/wintermute" target="_blank" style="color:#2F6F7D;">KaliBond/wintermute</a>.</p>
+</div>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>
