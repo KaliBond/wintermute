@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAMS / JUNO Multiplex Network</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://neuralnations.org/cams-network">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<style>
+  :root { --gov: #3d6fb4; --prod: #e08a2b; --bg: #faf8f3; --ink: #2a2a2a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--ink); }
+  #wrap { display: flex; flex-wrap: wrap; gap: 16px; padding: 16px; }
+  #panel { flex: 0 0 270px; background: white; border: 1px solid #e2ddd0; border-radius: 10px; padding: 14px 16px; }
+  #stage { flex: 1 1 640px; background: white; border: 1px solid #e2ddd0; border-radius: 10px; min-width: 480px; }
+  h1 { font-size: 16px; margin: 0 0 4px; }
+  h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: #777; margin: 18px 0 8px; }
+  .layer-btn { display: block; width: 100%; text-align: left; padding: 7px 10px; margin-bottom: 6px; border-radius: 7px; border: 1px solid #ddd6c4; background: #fff; cursor: pointer; font-size: 13px; transition: background .15s, color .15s, border-color .15s; }
+  .layer-btn:hover { background: #f2efe6; }
+  .layer-btn.active { color: white; border-color: transparent; }
+  .rate-note, .pivot-note { font-size: 11.5px; color: #666; margin: 2px 0 10px; line-height: 1.4; }
+  .pivot-note { background: #fbf1e0; border: 1px solid #eadfc4; border-radius: 7px; padding: 8px 9px; }
+  .legend-row { display: flex; align-items: center; gap: 8px; font-size: 13px; margin-bottom: 6px; }
+  .swatch { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+  #threshold-row { margin-top: 4px; }
+  #threshold { width: 100%; }
+  #threshold-val { font-size: 12px; color: #666; }
+  .toggle-row { display: flex; align-items: center; gap: 8px; font-size: 13px; margin: 6px 0; }
+  #tooltip { position: absolute; pointer-events: none; background: rgba(30,30,30,.92); color: white; padding: 6px 9px; border-radius: 6px; font-size: 12px; line-height: 1.4; max-width: 220px; opacity: 0; transition: opacity .1s; z-index: 10; }
+  .node-label { font-size: 12px; font-weight: 600; fill: #222; paint-order: stroke; stroke: #faf8f3; stroke-width: 4px; stroke-linejoin: round; pointer-events: none; text-anchor: middle; }
+  .node circle { stroke: #222; stroke-width: 1.6px; cursor: pointer; }
+  .pivot-ring { fill: none; stroke: #b3453a; stroke-width: 1.6px; stroke-dasharray: 4 3; }
+  .edge { fill: none; }
+  .info-text { font-size: 12.5px; color: #555; line-height: 1.5; }
+  #stage-inner { position: relative; }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="panel">
+    <h1>CAMS / JUNO Multiplex Network</h1>
+    <p class="info-text">8 institutional nodes, 4 metric layers. Bond springs are stiffened or loosened by each node's net K&minus;S (Capacity &minus; Stress); the whole configuration slowly rotates around the most-activated (highest-stress) node.</p>
+
+    <h2>Layer</h2>
+    <div id="layer-buttons"></div>
+    <div class="rate-note" id="rate-note"></div>
+
+    <h2>Pivot</h2>
+    <div class="pivot-note" id="pivot-note"></div>
+
+    <h2>Institutional category</h2>
+    <div class="legend-row"><span class="swatch" style="background:var(--gov)"></span>Governance (Helm, Shield, Archive, Lore)</div>
+    <div class="legend-row"><span class="swatch" style="background:var(--prod)"></span>Production / Society (Stewards, Craft, Hands, Flow)</div>
+    <p class="info-text">Node size &prop; structural weight <em>w</em>. Node ring thickness &prop; |K&minus;S| (magnitude of net health/stress).</p>
+
+    <h2>Controls</h2>
+    <div class="toggle-row"><input type="checkbox" id="rotate-toggle" checked><label for="rotate-toggle">Rotate around pivot node</label></div>
+    <div id="threshold-row">
+      <input type="range" id="threshold" min="0" max="0.4" step="0.01" value="0.1">
+      <div id="threshold-val">showing edges &ge; 0.10</div>
+    </div>
+    <p class="info-text">Springs: bond weight sets base tension; K&minus;S of the two endpoints tightens (healthy) or loosens (stressed) it further. Drag any node to feel the springs.</p>
+  </div>
+  <div id="stage">
+    <div id="stage-inner"></div>
+  </div>
+</div>
+<div id="tooltip"></div>
+
+<script>
+const DATA = {"nodes": [{"id": "Helm", "category": "Governance", "w": 0.08, "C": 5.2, "K": 6.1, "S": 4.8, "A": 5.5, "ks": 1.3}, {"id": "Shield", "category": "Governance", "w": 0.1, "C": 6.0, "K": 5.8, "S": 5.5, "A": 4.9, "ks": 0.3}, {"id": "Archive", "category": "Governance", "w": 0.09, "C": 5.8, "K": 5.5, "S": 4.2, "A": 6.2, "ks": 1.3}, {"id": "Lore", "category": "Governance", "w": 0.09, "C": 4.9, "K": 5.0, "S": 5.8, "A": 5.7, "ks": -0.8}, {"id": "Stewards", "category": "Production/Society", "w": 0.12, "C": 5.5, "K": 6.4, "S": 4.0, "A": 5.1, "ks": 2.4}, {"id": "Craft", "category": "Production/Society", "w": 0.14, "C": 6.2, "K": 7.0, "S": 3.8, "A": 5.4, "ks": 3.2}, {"id": "Hands", "category": "Production/Society", "w": 0.2, "C": 5.0, "K": 6.8, "S": 5.2, "A": 4.3, "ks": 1.6}, {"id": "Flow", "category": "Production/Society", "w": 0.18, "C": 5.7, "K": 6.5, "S": 4.5, "A": 4.8, "ks": 2.0}], "layers": {"backbone": [{"source": "Helm", "target": "Helm", "weight": 0.4}, {"source": "Shield", "target": "Helm", "weight": 0.6}, {"source": "Archive", "target": "Helm", "weight": 0.3}, {"source": "Lore", "target": "Helm", "weight": 0.5}, {"source": "Stewards", "target": "Helm", "weight": 0.2}, {"source": "Craft", "target": "Helm", "weight": 0.1}, {"source": "Hands", "target": "Helm", "weight": 0.1}, {"source": "Flow", "target": "Helm", "weight": 0.2}, {"source": "Helm", "target": "Shield", "weight": 0.5}, {"source": "Shield", "target": "Shield", "weight": 0.3}, {"source": "Archive", "target": "Shield", "weight": 0.2}, {"source": "Lore", "target": "Shield", "weight": 0.4}, {"source": "Stewards", "target": "Shield", "weight": 0.1}, {"source": "Craft", "target": "Shield", "weight": 0.1}, {"source": "Hands", "target": "Shield", "weight": 0.2}, {"source": "Flow", "target": "Shield", "weight": 0.1}, {"source": "Helm", "target": "Archive", "weight": 0.2}, {"source": "Shield", "target": "Archive", "weight": 0.1}, {"source": "Archive", "target": "Archive", "weight": 0.5}, {"source": "Lore", "target": "Archive", "weight": 0.6}, {"source": "Stewards", "target": "Archive", "weight": 0.3}, {"source": "Craft", "target": "Archive", "weight": 0.2}, {"source": "Hands", "target": "Archive", "weight": 0.1}, {"source": "Flow", "target": "Archive", "weight": 0.1}, {"source": "Helm", "target": "Lore", "weight": 0.4}, {"source": "Shield", "target": "Lore", "weight": 0.3}, {"source": "Archive", "target": "Lore", "weight": 0.5}, {"source": "Lore", "target": "Lore", "weight": 0.4}, {"source": "Stewards", "target": "Lore", "weight": 0.2}, {"source": "Craft", "target": "Lore", "weight": 0.1}, {"source": "Hands", "target": "Lore", "weight": 0.1}, {"source": "Flow", "target": "Lore", "weight": 0.2}, {"source": "Helm", "target": "Stewards", "weight": 0.2}, {"source": "Shield", "target": "Stewards", "weight": 0.1}, {"source": "Archive", "target": "Stewards", "weight": 0.3}, {"source": "Lore", "target": "Stewards", "weight": 0.2}, {"source": "Stewards", "target": "Stewards", "weight": 0.4}, {"source": "Craft", "target": "Stewards", "weight": 0.3}, {"source": "Hands", "target": "Stewards", "weight": 0.4}, {"source": "Flow", "target": "Stewards", "weight": 0.3}, {"source": "Helm", "target": "Craft", "weight": 0.1}, {"source": "Shield", "target": "Craft", "weight": 0.1}, {"source": "Archive", "target": "Craft", "weight": 0.2}, {"source": "Lore", "target": "Craft", "weight": 0.1}, {"source": "Stewards", "target": "Craft", "weight": 0.3}, {"source": "Craft", "target": "Craft", "weight": 0.5}, {"source": "Hands", "target": "Craft", "weight": 0.4}, {"source": "Flow", "target": "Craft", "weight": 0.3}, {"source": "Helm", "target": "Hands", "weight": 0.1}, {"source": "Shield", "target": "Hands", "weight": 0.2}, {"source": "Archive", "target": "Hands", "weight": 0.1}, {"source": "Lore", "target": "Hands", "weight": 0.1}, {"source": "Stewards", "target": "Hands", "weight": 0.4}, {"source": "Craft", "target": "Hands", "weight": 0.3}, {"source": "Hands", "target": "Hands", "weight": 0.4}, {"source": "Flow", "target": "Hands", "weight": 0.5}, {"source": "Helm", "target": "Flow", "weight": 0.2}, {"source": "Shield", "target": "Flow", "weight": 0.1}, {"source": "Archive", "target": "Flow", "weight": 0.1}, {"source": "Lore", "target": "Flow", "weight": 0.2}, {"source": "Stewards", "target": "Flow", "weight": 0.3}, {"source": "Craft", "target": "Flow", "weight": 0.4}, {"source": "Hands", "target": "Flow", "weight": 0.5}, {"source": "Flow", "target": "Flow", "weight": 0.3}], "stress": [{"source": "Helm", "target": "Helm", "weight": 0.16666666666666666}, {"source": "Shield", "target": "Helm", "weight": 0.24999999999999994}, {"source": "Archive", "target": "Helm", "weight": 0.12499999999999997}, {"source": "Lore", "target": "Helm", "weight": 0.20833333333333331}, {"source": "Stewards", "target": "Helm", "weight": 0.08333333333333333}, {"source": "Craft", "target": "Helm", "weight": 0.041666666666666664}, {"source": "Hands", "target": "Helm", "weight": 0.041666666666666664}, {"source": "Flow", "target": "Helm", "weight": 0.08333333333333333}, {"source": "Helm", "target": "Shield", "weight": 0.2631578947368421}, {"source": "Shield", "target": "Shield", "weight": 0.15789473684210525}, {"source": "Archive", "target": "Shield", "weight": 0.10526315789473684}, {"source": "Lore", "target": "Shield", "weight": 0.21052631578947367}, {"source": "Stewards", "target": "Shield", "weight": 0.05263157894736842}, {"source": "Craft", "target": "Shield", "weight": 0.05263157894736842}, {"source": "Hands", "target": "Shield", "weight": 0.10526315789473684}, {"source": "Flow", "target": "Shield", "weight": 0.05263157894736842}, {"source": "Helm", "target": "Archive", "weight": 0.09523809523809523}, {"source": "Shield", "target": "Archive", "weight": 0.047619047619047616}, {"source": "Archive", "target": "Archive", "weight": 0.23809523809523808}, {"source": "Lore", "target": "Archive", "weight": 0.2857142857142857}, {"source": "Stewards", "target": "Archive", "weight": 0.14285714285714285}, {"source": "Craft", "target": "Archive", "weight": 0.09523809523809523}, {"source": "Hands", "target": "Archive", "weight": 0.047619047619047616}, {"source": "Flow", "target": "Archive", "weight": 0.047619047619047616}, {"source": "Helm", "target": "Lore", "weight": 0.18181818181818182}, {"source": "Shield", "target": "Lore", "weight": 0.13636363636363635}, {"source": "Archive", "target": "Lore", "weight": 0.22727272727272727}, {"source": "Lore", "target": "Lore", "weight": 0.18181818181818182}, {"source": "Stewards", "target": "Lore", "weight": 0.09090909090909091}, {"source": "Craft", "target": "Lore", "weight": 0.045454545454545456}, {"source": "Hands", "target": "Lore", "weight": 0.045454545454545456}, {"source": "Flow", "target": "Lore", "weight": 0.09090909090909091}, {"source": "Helm", "target": "Stewards", "weight": 0.09090909090909091}, {"source": "Shield", "target": "Stewards", "weight": 0.045454545454545456}, {"source": "Archive", "target": "Stewards", "weight": 0.13636363636363635}, {"source": "Lore", "target": "Stewards", "weight": 0.09090909090909091}, {"source": "Stewards", "target": "Stewards", "weight": 0.18181818181818182}, {"source": "Craft", "target": "Stewards", "weight": 0.13636363636363635}, {"source": "Hands", "target": "Stewards", "weight": 0.18181818181818182}, {"source": "Flow", "target": "Stewards", "weight": 0.13636363636363635}, {"source": "Helm", "target": "Craft", "weight": 0.05}, {"source": "Shield", "target": "Craft", "weight": 0.05}, {"source": "Archive", "target": "Craft", "weight": 0.1}, {"source": "Lore", "target": "Craft", "weight": 0.05}, {"source": "Stewards", "target": "Craft", "weight": 0.15}, {"source": "Craft", "target": "Craft", "weight": 0.25}, {"source": "Hands", "target": "Craft", "weight": 0.2}, {"source": "Flow", "target": "Craft", "weight": 0.15}, {"source": "Helm", "target": "Hands", "weight": 0.047619047619047616}, {"source": "Shield", "target": "Hands", "weight": 0.09523809523809523}, {"source": "Archive", "target": "Hands", "weight": 0.047619047619047616}, {"source": "Lore", "target": "Hands", "weight": 0.047619047619047616}, {"source": "Stewards", "target": "Hands", "weight": 0.19047619047619047}, {"source": "Craft", "target": "Hands", "weight": 0.14285714285714285}, {"source": "Hands", "target": "Hands", "weight": 0.19047619047619047}, {"source": "Flow", "target": "Hands", "weight": 0.23809523809523808}, {"source": "Helm", "target": "Flow", "weight": 0.09523809523809523}, {"source": "Shield", "target": "Flow", "weight": 0.047619047619047616}, {"source": "Archive", "target": "Flow", "weight": 0.047619047619047616}, {"source": "Lore", "target": "Flow", "weight": 0.09523809523809523}, {"source": "Stewards", "target": "Flow", "weight": 0.14285714285714285}, {"source": "Craft", "target": "Flow", "weight": 0.19047619047619047}, {"source": "Hands", "target": "Flow", "weight": 0.23809523809523808}, {"source": "Flow", "target": "Flow", "weight": 0.14285714285714285}], "capacity": [{"source": "Helm", "target": "Helm", "weight": 0.16243654822335027}, {"source": "Shield", "target": "Helm", "weight": 0.24365482233502533}, {"source": "Archive", "target": "Helm", "weight": 0.0913705583756345}, {"source": "Lore", "target": "Helm", "weight": 0.15228426395939085}, {"source": "Stewards", "target": "Helm", "weight": 0.09137055837563451}, {"source": "Craft", "target": "Helm", "weight": 0.06598984771573603}, {"source": "Hands", "target": "Helm", "weight": 0.07106598984771573}, {"source": "Flow", "target": "Helm", "weight": 0.12182741116751267}, {"source": "Helm", "target": "Shield", "weight": 0.27607361963190186}, {"source": "Shield", "target": "Shield", "weight": 0.147239263803681}, {"source": "Archive", "target": "Shield", "weight": 0.0736196319018405}, {"source": "Lore", "target": "Shield", "weight": 0.147239263803681}, {"source": "Stewards", "target": "Shield", "weight": 0.055214723926380375}, {"source": "Craft", "target": "Shield", "weight": 0.0736196319018405}, {"source": "Hands", "target": "Shield", "weight": 0.15950920245398775}, {"source": "Flow", "target": "Shield", "weight": 0.06748466257668713}, {"source": "Helm", "target": "Archive", "weight": 0.05714285714285715}, {"source": "Shield", "target": "Archive", "weight": 0.028571428571428574}, {"source": "Archive", "target": "Archive", "weight": 0.2285714285714286}, {"source": "Lore", "target": "Archive", "weight": 0.34285714285714286}, {"source": "Stewards", "target": "Archive", "weight": 0.13714285714285715}, {"source": "Craft", "target": "Archive", "weight": 0.1142857142857143}, {"source": "Hands", "target": "Archive", "weight": 0.04571428571428572}, {"source": "Flow", "target": "Archive", "weight": 0.04571428571428572}, {"source": "Helm", "target": "Lore", "weight": 0.1333333333333333}, {"source": "Shield", "target": "Lore", "weight": 0.09999999999999998}, {"source": "Archive", "target": "Lore", "weight": 0.27777777777777773}, {"source": "Lore", "target": "Lore", "weight": 0.2222222222222222}, {"source": "Stewards", "target": "Lore", "weight": 0.08888888888888889}, {"source": "Craft", "target": "Lore", "weight": 0.044444444444444446}, {"source": "Hands", "target": "Lore", "weight": 0.044444444444444446}, {"source": "Flow", "target": "Lore", "weight": 0.08888888888888889}, {"source": "Helm", "target": "Stewards", "weight": 0.06278026905829596}, {"source": "Shield", "target": "Stewards", "weight": 0.026905829596412554}, {"source": "Archive", "target": "Stewards", "weight": 0.09417040358744394}, {"source": "Lore", "target": "Stewards", "weight": 0.06278026905829596}, {"source": "Stewards", "target": "Stewards", "weight": 0.17937219730941706}, {"source": "Craft", "target": "Stewards", "weight": 0.16143497757847533}, {"source": "Hands", "target": "Stewards", "weight": 0.25112107623318386}, {"source": "Flow", "target": "Stewards", "weight": 0.16143497757847533}, {"source": "Helm", "target": "Craft", "weight": 0.022421524663677132}, {"source": "Shield", "target": "Craft", "weight": 0.022421524663677132}, {"source": "Archive", "target": "Craft", "weight": 0.05381165919282511}, {"source": "Lore", "target": "Craft", "weight": 0.026905829596412554}, {"source": "Stewards", "target": "Craft", "weight": 0.14798206278026907}, {"source": "Craft", "target": "Craft", "weight": 0.3139013452914798}, {"source": "Hands", "target": "Craft", "weight": 0.25112107623318386}, {"source": "Flow", "target": "Craft", "weight": 0.16143497757847533}, {"source": "Helm", "target": "Hands", "weight": 0.020833333333333336}, {"source": "Shield", "target": "Hands", "weight": 0.05}, {"source": "Archive", "target": "Hands", "weight": 0.020833333333333336}, {"source": "Lore", "target": "Hands", "weight": 0.020833333333333336}, {"source": "Stewards", "target": "Hands", "weight": 0.2}, {"source": "Craft", "target": "Hands", "weight": 0.1625}, {"source": "Hands", "target": "Hands", "weight": 0.2333333333333333}, {"source": "Flow", "target": "Hands", "weight": 0.2916666666666667}, {"source": "Helm", "target": "Flow", "weight": 0.05405405405405405}, {"source": "Shield", "target": "Flow", "weight": 0.02252252252252252}, {"source": "Archive", "target": "Flow", "weight": 0.02252252252252252}, {"source": "Lore", "target": "Flow", "weight": 0.05405405405405405}, {"source": "Stewards", "target": "Flow", "weight": 0.13513513513513511}, {"source": "Craft", "target": "Flow", "weight": 0.23423423423423423}, {"source": "Hands", "target": "Flow", "weight": 0.31531531531531526}, {"source": "Flow", "target": "Flow", "weight": 0.16216216216216214}], "coherence": [{"source": "Helm", "target": "Helm", "weight": 0.21374045801526714}, {"source": "Shield", "target": "Helm", "weight": 0.29770992366412213}, {"source": "Archive", "target": "Helm", "weight": 0.10305343511450382}, {"source": "Lore", "target": "Helm", "weight": 0.19083969465648853}, {"source": "Stewards", "target": "Helm", "weight": 0.09160305343511449}, {"source": "Craft", "target": "Helm", "weight": 0.022900763358778622}, {"source": "Hands", "target": "Helm", "weight": 0.019083969465648856}, {"source": "Flow", "target": "Helm", "weight": 0.06106870229007635}, {"source": "Helm", "target": "Shield", "weight": 0.3266331658291457}, {"source": "Shield", "target": "Shield", "weight": 0.21105527638190952}, {"source": "Archive", "target": "Shield", "weight": 0.08040201005025126}, {"source": "Lore", "target": "Shield", "weight": 0.20100502512562812}, {"source": "Stewards", "target": "Shield", "weight": 0.05527638190954774}, {"source": "Craft", "target": "Shield", "weight": 0.030150753768844216}, {"source": "Hands", "target": "Shield", "weight": 0.06030150753768843}, {"source": "Flow", "target": "Shield", "weight": 0.03517587939698492}, {"source": "Helm", "target": "Archive", "weight": 0.081447963800905}, {"source": "Shield", "target": "Archive", "weight": 0.036199095022624445}, {"source": "Archive", "target": "Archive", "weight": 0.27149321266968324}, {"source": "Lore", "target": "Archive", "weight": 0.35294117647058826}, {"source": "Stewards", "target": "Archive", "weight": 0.13574660633484162}, {"source": "Craft", "target": "Archive", "weight": 0.06334841628959276}, {"source": "Hands", "target": "Archive", "weight": 0.027149321266968326}, {"source": "Flow", "target": "Archive", "weight": 0.03167420814479638}, {"source": "Helm", "target": "Lore", "weight": 0.17167381974248927}, {"source": "Shield", "target": "Lore", "weight": 0.11587982832618027}, {"source": "Archive", "target": "Lore", "weight": 0.27896995708154504}, {"source": "Lore", "target": "Lore", "weight": 0.22317596566523606}, {"source": "Stewards", "target": "Lore", "weight": 0.08583690987124463}, {"source": "Craft", "target": "Lore", "weight": 0.03004291845493562}, {"source": "Hands", "target": "Lore", "weight": 0.02575107296137339}, {"source": "Flow", "target": "Lore", "weight": 0.06866952789699572}, {"source": "Helm", "target": "Stewards", "weight": 0.09734513274336283}, {"source": "Shield", "target": "Stewards", "weight": 0.04424778761061947}, {"source": "Archive", "target": "Stewards", "weight": 0.11946902654867256}, {"source": "Lore", "target": "Stewards", "weight": 0.07964601769911504}, {"source": "Stewards", "target": "Stewards", "weight": 0.23008849557522124}, {"source": "Craft", "target": "Stewards", "weight": 0.11946902654867256}, {"source": "Hands", "target": "Stewards", "weight": 0.17699115044247787}, {"source": "Flow", "target": "Stewards", "weight": 0.1327433628318584}, {"source": "Helm", "target": "Craft", "weight": 0.039800995024875635}, {"source": "Shield", "target": "Craft", "weight": 0.039800995024875635}, {"source": "Archive", "target": "Craft", "weight": 0.06965174129353234}, {"source": "Lore", "target": "Craft", "weight": 0.03482587064676617}, {"source": "Stewards", "target": "Craft", "weight": 0.1492537313432836}, {"source": "Craft", "target": "Craft", "weight": 0.2985074626865672}, {"source": "Hands", "target": "Craft", "weight": 0.21890547263681598}, {"source": "Flow", "target": "Craft", "weight": 0.1492537313432836}, {"source": "Helm", "target": "Hands", "weight": 0.03225806451612903}, {"source": "Shield", "target": "Hands", "weight": 0.07373271889400923}, {"source": "Archive", "target": "Hands", "weight": 0.027649769585253454}, {"source": "Lore", "target": "Hands", "weight": 0.027649769585253454}, {"source": "Stewards", "target": "Hands", "weight": 0.20276497695852538}, {"source": "Craft", "target": "Hands", "weight": 0.1382488479262673}, {"source": "Hands", "target": "Hands", "weight": 0.22119815668202764}, {"source": "Flow", "target": "Hands", "weight": 0.2764976958525346}, {"source": "Helm", "target": "Flow", "weight": 0.08108108108108109}, {"source": "Shield", "target": "Flow", "weight": 0.03603603603603604}, {"source": "Archive", "target": "Flow", "weight": 0.03153153153153153}, {"source": "Lore", "target": "Flow", "weight": 0.07207207207207209}, {"source": "Stewards", "target": "Flow", "weight": 0.14864864864864863}, {"source": "Craft", "target": "Flow", "weight": 0.1981981981981982}, {"source": "Hands", "target": "Flow", "weight": 0.27027027027027023}, {"source": "Flow", "target": "Flow", "weight": 0.16216216216216214}], "abstraction": [{"source": "Helm", "target": "Helm", "weight": 0.194331983805668}, {"source": "Shield", "target": "Helm", "weight": 0.21862348178137653}, {"source": "Archive", "target": "Helm", "weight": 0.15789473684210525}, {"source": "Lore", "target": "Helm", "weight": 0.2631578947368421}, {"source": "Stewards", "target": "Helm", "weight": 0.07287449392712551}, {"source": "Craft", "target": "Helm", "weight": 0.020242914979757085}, {"source": "Hands", "target": "Helm", "weight": 0.016194331983805668}, {"source": "Flow", "target": "Helm", "weight": 0.056680161943319825}, {"source": "Helm", "target": "Shield", "weight": 0.28846153846153844}, {"source": "Shield", "target": "Shield", "weight": 0.15384615384615383}, {"source": "Archive", "target": "Shield", "weight": 0.12820512820512822}, {"source": "Lore", "target": "Shield", "weight": 0.25641025641025644}, {"source": "Stewards", "target": "Shield", "weight": 0.05128205128205129}, {"source": "Craft", "target": "Shield", "weight": 0.032051282051282055}, {"source": "Hands", "target": "Shield", "weight": 0.05128205128205129}, {"source": "Flow", "target": "Shield", "weight": 0.03846153846153846}, {"source": "Helm", "target": "Archive", "weight": 0.07758620689655174}, {"source": "Shield", "target": "Archive", "weight": 0.02586206896551724}, {"source": "Archive", "target": "Archive", "weight": 0.3232758620689655}, {"source": "Lore", "target": "Archive", "weight": 0.3879310344827586}, {"source": "Stewards", "target": "Archive", "weight": 0.10344827586206896}, {"source": "Craft", "target": "Archive", "weight": 0.04310344827586207}, {"source": "Hands", "target": "Archive", "weight": 0.01724137931034483}, {"source": "Flow", "target": "Archive", "weight": 0.021551724137931036}, {"source": "Helm", "target": "Lore", "weight": 0.17167381974248927}, {"source": "Shield", "target": "Lore", "weight": 0.09012875536480686}, {"source": "Archive", "target": "Lore", "weight": 0.3218884120171674}, {"source": "Lore", "target": "Lore", "weight": 0.25751072961373395}, {"source": "Stewards", "target": "Lore", "weight": 0.06866952789699572}, {"source": "Craft", "target": "Lore", "weight": 0.02145922746781116}, {"source": "Hands", "target": "Lore", "weight": 0.01716738197424893}, {"source": "Flow", "target": "Lore", "weight": 0.05150214592274678}, {"source": "Helm", "target": "Stewards", "weight": 0.08938547486033521}, {"source": "Shield", "target": "Stewards", "weight": 0.03910614525139664}, {"source": "Archive", "target": "Stewards", "weight": 0.16759776536312848}, {"source": "Lore", "target": "Stewards", "weight": 0.111731843575419}, {"source": "Stewards", "target": "Stewards", "weight": 0.2011173184357542}, {"source": "Craft", "target": "Stewards", "weight": 0.11731843575418993}, {"source": "Hands", "target": "Stewards", "weight": 0.15642458100558657}, {"source": "Flow", "target": "Stewards", "weight": 0.11731843575418993}, {"source": "Helm", "target": "Craft", "weight": 0.04026845637583892}, {"source": "Shield", "target": "Craft", "weight": 0.03355704697986577}, {"source": "Archive", "target": "Craft", "weight": 0.10738255033557048}, {"source": "Lore", "target": "Craft", "weight": 0.05369127516778524}, {"source": "Stewards", "target": "Craft", "weight": 0.1409395973154362}, {"source": "Craft", "target": "Craft", "weight": 0.2684563758389262}, {"source": "Hands", "target": "Craft", "weight": 0.21476510067114096}, {"source": "Flow", "target": "Craft", "weight": 0.1409395973154362}, {"source": "Helm", "target": "Hands", "weight": 0.0326797385620915}, {"source": "Shield", "target": "Hands", "weight": 0.065359477124183}, {"source": "Archive", "target": "Hands", "weight": 0.045751633986928095}, {"source": "Lore", "target": "Hands", "weight": 0.045751633986928095}, {"source": "Stewards", "target": "Hands", "weight": 0.18300653594771238}, {"source": "Craft", "target": "Hands", "weight": 0.15686274509803919}, {"source": "Hands", "target": "Hands", "weight": 0.20915032679738563}, {"source": "Flow", "target": "Hands", "weight": 0.261437908496732}, {"source": "Helm", "target": "Flow", "weight": 0.08433734939759034}, {"source": "Shield", "target": "Flow", "weight": 0.03614457831325301}, {"source": "Archive", "target": "Flow", "weight": 0.04819277108433735}, {"source": "Lore", "target": "Flow", "weight": 0.10843373493975904}, {"source": "Stewards", "target": "Flow", "weight": 0.14457831325301204}, {"source": "Craft", "target": "Flow", "weight": 0.1927710843373494}, {"source": "Hands", "target": "Flow", "weight": 0.24096385542168675}, {"source": "Flow", "target": "Flow", "weight": 0.14457831325301204}]}};
+
+const CATEGORY_COLOR = { "Governance": "#3d6fb4", "Production/Society": "#e08a2b" };
+const LAYER_COLOR = { backbone: "#555555", stress: "#c0392b", capacity: "#1f8a70", coherence: "#2c5f9e", abstraction: "#8e44ad" };
+const LAYER_LABEL = { backbone: "Backbone (base bonds)", stress: "Stress", capacity: "Capacity", coherence: "Coherence", abstraction: "Abstraction" };
+const RATE_NOTE = {
+  backbone: "Static structure &mdash; the shared skeleton the four metrics move across.",
+  stress: "Medium decay (&gamma;=0.15) but flips into runaway amplification (+0.3&times; excess) once S&gt;6 &mdash; a fast-onset instability layer.",
+  capacity: "Fastest / most nonlinear: coupled gain, drag and logistic-damping terms (0.2&ndash;0.4, &delta;=0.08) &mdash; capacity can swing quickly.",
+  coherence: "Fast relaxation toward neighbourhood average (&alpha;=0.25), continuously dragged down by stress (&beta;=0.12).",
+  abstraction: "Slowest: diffusion rate only 0.05 &mdash; high inertia, interpretive layer changes gradually.",
+};
+
+let currentLayer = "backbone";
+let threshold = 0.10;
+let rotating = true;
+
+const W = 680, H = 640, cx = W/2, cy = H/2;
+const svg = d3.select("#stage-inner").append("svg")
+  .attr("viewBox", "0 0 " + W + " " + H).attr("width", "100%").attr("height", H);
+
+const defs = svg.append("defs");
+Object.entries(LAYER_COLOR).forEach(([layer, color]) => {
+  defs.append("marker").attr("id", "arrow-" + layer)
+    .attr("viewBox", "0 -5 10 10").attr("refX", 10).attr("refY", 0)
+    .attr("markerWidth", 7).attr("markerHeight", 7).attr("orient", "auto")
+    .append("path").attr("d", "M0,-5L10,0L0,5").attr("fill", color);
+});
+
+// rotating wrapper: everything visual lives inside this <g>
+const rotG = svg.append("g").attr("id", "rot-g");
+const edgeLayer = rotG.append("g");
+const nodeLayer = rotG.append("g");
+const labelLayer = rotG.append("g");
+
+const nodes = DATA.nodes.map(n => ({ ...n }));
+const nodeById = Object.fromEntries(nodes.map(n => [n.id, n]));
+
+// Pivot = most "activated" node = highest raw Stress in the snapshot.
+const pivot = nodes.reduce((a, b) => (b.S > a.S ? b : a));
+pivot.fx = cx; pivot.fy = cy;
+d3.select("#pivot-note").html(
+  `<b>${pivot.id}</b> &mdash; highest Stress in the initial snapshot (S=${pivot.S}). ` +
+  `Pinned at the centre; the rest of the network orbits it.`
+);
+
+const wMax = d3.max(nodes, d => d.w);
+const rScale = d3.scaleSqrt().domain([0, wMax]).range([16, 34]);
+const ksExtent = d3.extent(nodes, d => d.ks);
+const healthScale = d3.scaleLinear().domain(ksExtent).range([0.35, 1.75]).clamp(true);
+const ksAbsMax = d3.max(nodes, d => Math.abs(d.ks));
+const ringScale = d3.scaleLinear().domain([0, ksAbsMax]).range([1, 5]);
+
+// initial placement: small jittered circle so the simulation has somewhere to start from
+nodes.forEach((n, i) => {
+  if (n.fx == null) {
+    const a = (Math.PI * 2 * i) / nodes.length;
+    n.x = cx + 140 * Math.cos(a);
+    n.y = cy + 140 * Math.sin(a);
+  } else { n.x = n.fx; n.y = n.fy; }
+});
+
+let link = [];
+const simulation = d3.forceSimulation(nodes)
+  .force("charge", d3.forceManyBody().strength(-260))
+  .force("collide", d3.forceCollide().radius(d => rScale(d.w) + 6))
+  .force("x", d3.forceX(cx).strength(0.025))
+  .force("y", d3.forceY(cy).strength(0.025))
+  .force("link", d3.forceLink([]).id(d => d.id))
+  .on("tick", ticked);
+
+function linkDistance(d) {
+  const wNorm = d.weight / maxWForLayer;
+  const health = (healthScale(nodeById[d.source.id || d.source].ks) + healthScale(nodeById[d.target.id || d.target].ks)) / 2;
+  const base = 46 + 170 * (1 - wNorm);
+  return base / health;
+}
+function linkStrength(d) {
+  const wNorm = d.weight / maxWForLayer;
+  const health = (healthScale(nodeById[d.source.id || d.source].ks) + healthScale(nodeById[d.target.id || d.target].ks)) / 2;
+  return Math.max(0.02, Math.min(1, 0.05 + 0.9 * wNorm * health));
+}
+
+let maxWForLayer = 1;
+
+function selfLoopPath(n) {
+  let dx = n.x - cx, dy = n.y - cy;
+  const mag = Math.hypot(dx, dy) || 1;
+  dx /= mag; dy /= mag;
+  const r = rScale(n.w), bulge = 24;
+  const x0 = n.x + dx * r * 0.6 - dy * r * 0.5, y0 = n.y + dy * r * 0.6 + dx * r * 0.5;
+  const x1 = n.x + dx * r * 0.6 + dy * r * 0.5, y1 = n.y + dy * r * 0.6 - dx * r * 0.5;
+  const xc = n.x + dx * (r + bulge), yc = n.y + dy * (r + bulge);
+  return `M${x0},${y0} Q${xc},${yc} ${x1},${y1}`;
+}
+function edgePath(d) {
+  const dx = d.target.x - d.source.x, dy = d.target.y - d.source.y;
+  const dr = Math.hypot(dx, dy) * 1.5;
+  return `M${d.source.x},${d.source.y} A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
+}
+
+const tooltip = d3.select("#tooltip");
+function showTip(html, event) {
+  const r = document.getElementById("stage").getBoundingClientRect();
+  tooltip.style("opacity", 1).html(html)
+    .style("left", (event.clientX - r.left + 16) + "px")
+    .style("top", (event.clientY - r.top + 8) + "px");
+}
+function hideTip() { tooltip.style("opacity", 0); }
+
+const drag = d3.drag()
+  .on("start", (event, d) => { if (!event.active) simulation.alphaTarget(0.3).restart(); if (d !== pivot) { d.fx = d.x; d.fy = d.y; } })
+  .on("drag", (event, d) => { if (d !== pivot) { d.fx = event.x; d.fy = event.y; } })
+  .on("end", (event, d) => { if (!event.active) simulation.alphaTarget(0); if (d !== pivot) { d.fx = null; d.fy = null; } });
+
+function setLayer(layerName) {
+  currentLayer = layerName;
+  const raw = DATA.layers[layerName];
+  maxWForLayer = d3.max(raw, d => d.weight) || 1;
+  link = raw.filter(e => e.weight >= threshold).map(e => ({ ...e }));
+  simulation.force("link", d3.forceLink(link).id(d => d.id)
+    .distance(linkDistance).strength(linkStrength));
+  simulation.alpha(0.9).restart();
+  draw();
+}
+
+function draw() {
+  const color = LAYER_COLOR[currentLayer];
+  const self = link.filter(d => (d.source.id || d.source) === (d.target.id || d.target));
+  const trueCross = link.filter(d => (d.source.id || d.source) !== (d.target.id || d.target));
+  const widthScale = d3.scaleLinear().domain([0, maxWForLayer]).range([0.6, 6]);
+
+  const crossSel = edgeLayer.selectAll("path.cross").data(trueCross, d => d.source.id + "->" + d.target.id);
+  crossSel.exit().remove();
+  const crossEnter = crossSel.enter().append("path").attr("class", "edge cross");
+  crossEnter.merge(crossSel)
+    .attr("stroke", color).attr("stroke-width", d => widthScale(d.weight))
+    .attr("opacity", 0.55).attr("marker-end", "url(#arrow-" + currentLayer + ")")
+    .on("mouseover mousemove", (event, d) => showTip(`<b>${d.source.id}&rarr;${d.target.id}</b><br>${LAYER_LABEL[currentLayer]}: ${d.weight.toFixed(3)}`, event))
+    .on("mouseout", hideTip);
+
+  const selfSel = edgeLayer.selectAll("path.self").data(self, d => d.source.id || d.source);
+  selfSel.exit().remove();
+  const selfEnter = selfSel.enter().append("path").attr("class", "edge self");
+  selfEnter.merge(selfSel)
+    .attr("stroke", color).attr("stroke-width", d => widthScale(d.weight))
+    .attr("opacity", 0.55).attr("marker-end", "url(#arrow-" + currentLayer + ")")
+    .on("mouseover mousemove", (event, d) => showTip(`<b>${d.source.id || d.source} self-bond</b><br>${LAYER_LABEL[currentLayer]}: ${d.weight.toFixed(3)}`, event))
+    .on("mouseout", hideTip);
+
+  const nodeSel = nodeLayer.selectAll("g.node").data(nodes, d => d.id);
+  const nodeEnter = nodeSel.enter().append("g").attr("class", "node").call(drag);
+  nodeEnter.append("circle").attr("class", "health-ring");
+  nodeEnter.append("circle").attr("class", "main");
+  const nodeMerged = nodeEnter.merge(nodeSel);
+  nodeMerged.select("circle.health-ring")
+    .attr("r", d => rScale(d.w) + 5)
+    .attr("fill", "none")
+    .attr("stroke", d => d.ks >= 0 ? "#2f8f5b" : "#b3453a")
+    .attr("stroke-width", d => ringScale(Math.abs(d.ks)))
+    .attr("opacity", 0.75);
+  nodeMerged.select("circle.main")
+    .attr("r", d => rScale(d.w))
+    .attr("fill", d => CATEGORY_COLOR[d.category])
+    .on("mouseover mousemove", (event, d) => showTip(
+      `<b>${d.id}</b>${d === pivot ? " &#9733; pivot" : ""}<br>${d.category}<br>w=${d.w} &nbsp; K&minus;S=${d.ks}<br>C=${d.C} K=${d.K} S=${d.S} A=${d.A}`, event))
+    .on("mouseout", hideTip);
+
+  const pivotRingSel = nodeMerged.filter(d => d === pivot).selectAll("circle.pivot-ring").data(d => [d]);
+  pivotRingSel.enter().append("circle").attr("class", "pivot-ring")
+    .merge(pivotRingSel).attr("r", rScale(pivot.w) + 12);
+
+  const labelSel = labelLayer.selectAll("text.node-label").data(nodes, d => d.id);
+  labelSel.enter().append("text").attr("class", "node-label").merge(labelSel).text(d => d.id);
+
+  positionAll();
+  document.getElementById("rate-note").innerHTML = RATE_NOTE[currentLayer];
+}
+
+function positionAll() {
+  edgeLayer.selectAll("path.cross").attr("d", edgePath);
+  edgeLayer.selectAll("path.self").attr("d", d => selfLoopPath(nodeById[d.source.id || d.source]));
+  nodeLayer.selectAll("g.node").attr("transform", d => `translate(${d.x},${d.y})`);
+  labelLayer.selectAll("text.node-label")
+    .attr("x", d => d.x).attr("y", d => d.y + rScale(d.w) + 16);
+}
+
+function ticked() { positionAll(); }
+
+const buttonWrap = d3.select("#layer-buttons");
+Object.keys(LAYER_LABEL).forEach(layer => {
+  buttonWrap.append("button")
+    .attr("class", "layer-btn" + (layer === currentLayer ? " active" : ""))
+    .style("background", layer === currentLayer ? LAYER_COLOR[layer] : "")
+    .style("border-color", layer === currentLayer ? LAYER_COLOR[layer] : "")
+    .text(LAYER_LABEL[layer])
+    .on("click", function () {
+      d3.selectAll(".layer-btn").classed("active", false).style("background", "").style("border-color", "");
+      d3.select(this).classed("active", true).style("background", LAYER_COLOR[layer]).style("border-color", LAYER_COLOR[layer]);
+      setLayer(layer);
+    });
+});
+
+d3.select("#threshold").on("input", function () {
+  threshold = +this.value;
+  d3.select("#threshold-val").text("showing edges ≥ " + threshold.toFixed(2));
+  setLayer(currentLayer);
+});
+
+d3.select("#rotate-toggle").on("change", function () { rotating = this.checked; });
+
+// Continuous slow rotation around the pivot, independent of simulation cooling.
+const DEG_PER_SEC = 3; // full revolution ~ 2 minutes
+let rotTimer = d3.timer((elapsed) => {
+  if (rotating) {
+    const angle = (elapsed / 1000) * DEG_PER_SEC;
+    rotG.attr("transform", `rotate(${angle},${cx},${cy})`);
+  }
+});
+
+setLayer(currentLayer);
+</script>
+</body>
+</html>
