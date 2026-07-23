@@ -12,55 +12,66 @@
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--ink); }
   #wrap { display: flex; flex-wrap: wrap; gap: 16px; padding: 16px; }
-  #panel { flex: 0 0 270px; background: white; border: 1px solid #e2ddd0; border-radius: 10px; padding: 14px 16px; }
+  #panel { flex: 0 0 290px; background: white; border: 1px solid #e2ddd0; border-radius: 10px; padding: 14px 16px; }
   #stage { flex: 1 1 640px; background: white; border: 1px solid #e2ddd0; border-radius: 10px; min-width: 480px; }
   h1 { font-size: 16px; margin: 0 0 4px; }
   h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: #777; margin: 18px 0 8px; }
-  .layer-btn { display: block; width: 100%; text-align: left; padding: 7px 10px; margin-bottom: 6px; border-radius: 7px; border: 1px solid #ddd6c4; background: #fff; cursor: pointer; font-size: 13px; transition: background .15s, color .15s, border-color .15s; }
-  .layer-btn:hover { background: #f2efe6; }
+  .layer-btn, .mode-btn { display: block; width: 100%; text-align: left; padding: 7px 10px; margin-bottom: 6px; border-radius: 7px; border: 1px solid #ddd6c4; background: #fff; cursor: pointer; font-size: 13px; transition: background .15s, color .15s, border-color .15s; }
+  .layer-btn:hover, .mode-btn:hover { background: #f2efe6; }
   .layer-btn.active { color: white; border-color: transparent; }
+  .mode-btn.active { background: #333; color: white; border-color: #333; }
+  .mode-row { display: flex; gap: 6px; }
+  .mode-row .mode-btn { flex: 1; text-align: center; font-size: 12px; padding: 6px 4px; }
   .rate-note, .pivot-note { font-size: 11.5px; color: #666; margin: 2px 0 10px; line-height: 1.4; }
   .pivot-note { background: #fbf1e0; border: 1px solid #eadfc4; border-radius: 7px; padding: 8px 9px; }
   .legend-row { display: flex; align-items: center; gap: 8px; font-size: 13px; margin-bottom: 6px; }
   .swatch { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
-  #threshold-row { margin-top: 4px; }
+  #threshold-row { margin-top: 6px; }
   #threshold { width: 100%; }
   #threshold-val { font-size: 12px; color: #666; }
   .toggle-row { display: flex; align-items: center; gap: 8px; font-size: 13px; margin: 6px 0; }
   #tooltip { position: absolute; pointer-events: none; background: rgba(30,30,30,.92); color: white; padding: 6px 9px; border-radius: 6px; font-size: 12px; line-height: 1.4; max-width: 220px; opacity: 0; transition: opacity .1s; z-index: 10; }
-  .node-label { font-size: 12px; font-weight: 600; fill: #222; paint-order: stroke; stroke: #faf8f3; stroke-width: 4px; stroke-linejoin: round; pointer-events: none; text-anchor: middle; }
-  .node circle { stroke: #222; stroke-width: 1.6px; cursor: pointer; }
+  .node-label { font-weight: 600; fill: #fff; paint-order: stroke; stroke: rgba(0,0,0,.45); stroke-width: 2.5px; stroke-linejoin: round; pointer-events: none; text-anchor: middle; dominant-baseline: middle; }
+  .node circle.main { stroke: #222; stroke-width: 1.6px; cursor: pointer; }
   .pivot-ring { fill: none; stroke: #b3453a; stroke-width: 1.6px; stroke-dasharray: 4 3; }
   .edge { fill: none; }
   .info-text { font-size: 12.5px; color: #555; line-height: 1.5; }
   #stage-inner { position: relative; }
+  #manual-hint { font-size: 11.5px; color: #8a5a1f; margin: 4px 0 0; }
+  #download-link { font-size: 12px; color: #2c5f9e; cursor: pointer; text-decoration: underline; }
 </style>
 </head>
 <body>
 <div id="wrap">
   <div id="panel">
     <h1>CAMS / JUNO Multiplex Network</h1>
-    <p class="info-text">8 institutional nodes, 4 metric layers. Bond springs are stiffened or loosened by each node's net K&minus;S (Capacity &minus; Stress); the whole configuration slowly rotates around the most-activated (highest-stress) node.</p>
+    <p class="info-text">8 institutional nodes, 4 ODE-active metric layers plus a structural reference layer. Springs are stiffened/loosened by K&minus;S (bounded); the configuration rotates around a pivot node.</p>
 
     <h2>Layer</h2>
     <div id="layer-buttons"></div>
     <div class="rate-note" id="rate-note"></div>
 
-    <h2>Pivot</h2>
+    <h2>Pivot rule</h2>
+    <div class="mode-row" id="pivot-buttons"></div>
     <div class="pivot-note" id="pivot-note"></div>
+    <div id="manual-hint" style="display:none;">Manual pivot: click any node in the diagram to re-pin it.</div>
 
     <h2>Institutional category</h2>
     <div class="legend-row"><span class="swatch" style="background:var(--gov)"></span>Governance (Helm, Shield, Archive, Lore)</div>
     <div class="legend-row"><span class="swatch" style="background:var(--prod)"></span>Production / Society (Stewards, Craft, Hands, Flow)</div>
-    <p class="info-text">Node size &prop; structural weight <em>w</em>. Node ring thickness &prop; |K&minus;S| (magnitude of net health/stress).</p>
+    <p class="info-text">Node size &prop; structural weight <em>w</em>. Ring color/thickness &prop; sign/magnitude of bounded health = tanh((K&minus;S)/3).</p>
+
+    <h2>Edge filter</h2>
+    <div class="mode-row" id="threshold-mode-buttons"></div>
+    <div id="threshold-row">
+      <input type="range" id="threshold">
+      <div id="threshold-val"></div>
+    </div>
+    <p class="info-text" id="threshold-help"></p>
 
     <h2>Controls</h2>
     <div class="toggle-row"><input type="checkbox" id="rotate-toggle" checked><label for="rotate-toggle">Rotate around pivot node</label></div>
-    <div id="threshold-row">
-      <input type="range" id="threshold" min="0" max="0.4" step="0.01" value="0.1">
-      <div id="threshold-val">showing edges &ge; 0.10</div>
-    </div>
-    <p class="info-text">Springs: bond weight sets base tension; K&minus;S of the two endpoints tightens (healthy) or loosens (stressed) it further. Drag any node to feel the springs.</p>
+    <p class="info-text">Drag any non-pivot node to feel the springs. <span id="download-link">Download data manifest (JSON)</span></p>
   </div>
   <div id="stage">
     <div id="stage-inner"></div>
@@ -73,17 +84,20 @@ const DATA = {"nodes": [{"id": "Helm", "category": "Governance", "w": 0.08, "C":
 
 const CATEGORY_COLOR = { "Governance": "#3d6fb4", "Production/Society": "#e08a2b" };
 const LAYER_COLOR = { backbone: "#555555", stress: "#c0392b", capacity: "#1f8a70", coherence: "#2c5f9e", abstraction: "#8e44ad" };
-const LAYER_LABEL = { backbone: "Backbone (base bonds)", stress: "Stress", capacity: "Capacity", coherence: "Coherence", abstraction: "Abstraction" };
+const LAYER_LABEL = { backbone: "Backbone (reference)", stress: "Stress", capacity: "Capacity", coherence: "Coherence", abstraction: "Abstraction" };
 const RATE_NOTE = {
-  backbone: "Static structure &mdash; the shared skeleton the four metrics move across.",
-  stress: "Medium decay (&gamma;=0.15) but flips into runaway amplification (+0.3&times; excess) once S&gt;6 &mdash; a fast-onset instability layer.",
-  capacity: "Fastest / most nonlinear: coupled gain, drag and logistic-damping terms (0.2&ndash;0.4, &delta;=0.08) &mdash; capacity can swing quickly.",
-  coherence: "Fast relaxation toward neighbourhood average (&alpha;=0.25), continuously dragged down by stress (&beta;=0.12).",
-  abstraction: "Slowest: diffusion rate only 0.05 &mdash; high inertia, interpretive layer changes gradually.",
+  backbone: "Structural reference only, not ODE-active: cams_multiplex_ode() never consumes B_base directly. It's the raw wiring diagram the four metric layers below are derived from &mdash; shown for orientation, not as a fifth dynamical layer.",
+  stress: "ODE-active. Medium decay (&gamma;=0.15) but flips into runaway amplification (+0.3&times; excess) once S&gt;6 &mdash; a fast-onset instability layer.",
+  capacity: "ODE-active. Fastest / most nonlinear: coupled gain, drag and logistic-damping terms (0.2&ndash;0.4, &delta;=0.08) &mdash; capacity can swing quickly.",
+  coherence: "ODE-active. Fast relaxation toward neighbourhood average (&alpha;=0.25), continuously dragged down by stress (&beta;=0.12).",
+  abstraction: "ODE-active. Slowest: diffusion rate only 0.05 &mdash; high inertia, interpretive layer changes gradually.",
 };
+const PIVOT_MODE_LABEL = { stress: "Max stress", ks: "Max |K−S|", manual: "Manual" };
 
 let currentLayer = "backbone";
-let threshold = 0.10;
+let pivotMode = "stress";
+let thresholdMode = "absolute"; // 'absolute' | 'percentile'
+let thresholdValue = 0.10;      // absolute: raw weight; percentile: percent of edges to keep (top X%)
 let rotating = true;
 
 const W = 680, H = 640, cx = W/2, cy = H/2;
@@ -98,7 +112,6 @@ Object.entries(LAYER_COLOR).forEach(([layer, color]) => {
     .append("path").attr("d", "M0,-5L10,0L0,5").attr("fill", color);
 });
 
-// rotating wrapper: everything visual lives inside this <g>
 const rotG = svg.append("g").attr("id", "rot-g");
 const edgeLayer = rotG.append("g");
 const nodeLayer = rotG.append("g");
@@ -107,31 +120,30 @@ const labelLayer = rotG.append("g");
 const nodes = DATA.nodes.map(n => ({ ...n }));
 const nodeById = Object.fromEntries(nodes.map(n => [n.id, n]));
 
-// Pivot = most "activated" node = highest raw Stress in the snapshot.
-const pivot = nodes.reduce((a, b) => (b.S > a.S ? b : a));
-pivot.fx = cx; pivot.fy = cy;
-d3.select("#pivot-note").html(
-  `<b>${pivot.id}</b> &mdash; highest Stress in the initial snapshot (S=${pivot.S}). ` +
-  `Pinned at the centre; the rest of the network orbits it.`
-);
+// --- bounded health transform: tanh((K-S)/3) in (-1, 1) ---
+function health(ks) { return Math.tanh(ks / 3); }
+function healthMult(ks) { return 1 + 0.75 * health(ks); } // ~ (0.25, 1.75), smoothly saturating
 
 const wMax = d3.max(nodes, d => d.w);
-const rScale = d3.scaleSqrt().domain([0, wMax]).range([16, 34]);
-const ksExtent = d3.extent(nodes, d => d.ks);
-const healthScale = d3.scaleLinear().domain(ksExtent).range([0.35, 1.75]).clamp(true);
-const ksAbsMax = d3.max(nodes, d => Math.abs(d.ks));
-const ringScale = d3.scaleLinear().domain([0, ksAbsMax]).range([1, 5]);
+const rScale = d3.scaleSqrt().domain([0, wMax]).range([18, 38]);
+const ringScale = d3.scaleLinear().domain([0, 1]).range([1, 5]).clamp(true);
 
-// initial placement: small jittered circle so the simulation has somewhere to start from
+// Font size per node so the label fits inside that node's own circle.
+function labelFontSize(d) {
+  const r = rScale(d.w);
+  const avail = 2 * r * 0.8;
+  const raw = avail / (d.id.length * 0.62);
+  return Math.max(7.5, Math.min(13, raw));
+}
+
 nodes.forEach((n, i) => {
-  if (n.fx == null) {
-    const a = (Math.PI * 2 * i) / nodes.length;
-    n.x = cx + 140 * Math.cos(a);
-    n.y = cy + 140 * Math.sin(a);
-  } else { n.x = n.fx; n.y = n.fy; }
+  const a = (Math.PI * 2 * i) / nodes.length;
+  n.x = cx + 140 * Math.cos(a);
+  n.y = cy + 140 * Math.sin(a);
 });
 
 let link = [];
+let maxWForLayer = 1;
 const simulation = d3.forceSimulation(nodes)
   .force("charge", d3.forceManyBody().strength(-260))
   .force("collide", d3.forceCollide().radius(d => rScale(d.w) + 6))
@@ -142,17 +154,34 @@ const simulation = d3.forceSimulation(nodes)
 
 function linkDistance(d) {
   const wNorm = d.weight / maxWForLayer;
-  const health = (healthScale(nodeById[d.source.id || d.source].ks) + healthScale(nodeById[d.target.id || d.target].ks)) / 2;
+  const h = (healthMult(nodeById[d.source.id || d.source].ks) + healthMult(nodeById[d.target.id || d.target].ks)) / 2;
   const base = 46 + 170 * (1 - wNorm);
-  return base / health;
+  return base / h;
 }
 function linkStrength(d) {
   const wNorm = d.weight / maxWForLayer;
-  const health = (healthScale(nodeById[d.source.id || d.source].ks) + healthScale(nodeById[d.target.id || d.target].ks)) / 2;
-  return Math.max(0.02, Math.min(1, 0.05 + 0.9 * wNorm * health));
+  const h = (healthMult(nodeById[d.source.id || d.source].ks) + healthMult(nodeById[d.target.id || d.target].ks)) / 2;
+  return Math.max(0.02, Math.min(1, 0.05 + 0.9 * wNorm * h));
 }
 
-let maxWForLayer = 1;
+// --- pivot handling ---
+let pivot = null;
+function pivotCandidate(mode) {
+  if (mode === "stress") return nodes.reduce((a, b) => (b.S > a.S ? b : a));
+  if (mode === "ks") return nodes.reduce((a, b) => (Math.abs(b.ks) > Math.abs(a.ks) ? b : a));
+  return pivot || nodes[0];
+}
+function setPivot(node) {
+  if (pivot) { pivot.fx = null; pivot.fy = null; }
+  pivot = node;
+  pivot.fx = cx; pivot.fy = cy;
+  const reason = pivotMode === "stress" ? `highest Stress (S=${pivot.S})`
+    : pivotMode === "ks" ? `largest |K−S| = ${Math.abs(pivot.ks).toFixed(1)}`
+    : "manually pinned";
+  d3.select("#pivot-note").html(`<b>${pivot.id}</b> &mdash; ${reason}. Pinned at the centre; the rest of the network orbits it.`);
+  simulation.alpha(0.9).restart();
+}
+setPivot(pivotCandidate(pivotMode));
 
 function selfLoopPath(n) {
   let dx = n.x - cx, dy = n.y - cy;
@@ -180,31 +209,61 @@ function showTip(html, event) {
 function hideTip() { tooltip.style("opacity", 0); }
 
 const drag = d3.drag()
+  .clickDistance(3)
   .on("start", (event, d) => { if (!event.active) simulation.alphaTarget(0.3).restart(); if (d !== pivot) { d.fx = d.x; d.fy = d.y; } })
   .on("drag", (event, d) => { if (d !== pivot) { d.fx = event.x; d.fy = event.y; } })
   .on("end", (event, d) => { if (!event.active) simulation.alphaTarget(0); if (d !== pivot) { d.fx = null; d.fy = null; } });
 
+// --- edge filtering: absolute weight vs top-X%-strongest-per-layer ---
+function filteredEdges(layerName) {
+  const raw = DATA.layers[layerName];
+  if (thresholdMode === "absolute") {
+    return raw.filter(e => e.weight >= thresholdValue);
+  }
+  const sorted = [...raw].map(e => e.weight).sort((a, b) => b - a);
+  const keep = Math.max(1, Math.ceil((thresholdValue / 100) * sorted.length));
+  const cutoff = sorted[keep - 1];
+  return raw.filter(e => e.weight >= cutoff);
+}
+
+function updateThresholdUI() {
+  const input = document.getElementById("threshold");
+  const raw = DATA.layers[currentLayer];
+  maxWForLayer = d3.max(raw, d => d.weight) || 1;
+  if (thresholdMode === "absolute") {
+    input.min = 0; input.max = maxWForLayer.toFixed(3); input.step = (maxWForLayer / 100).toFixed(4);
+    if (thresholdValue > maxWForLayer) thresholdValue = +(maxWForLayer * 0.4).toFixed(3);
+    input.value = thresholdValue;
+    d3.select("#threshold-val").text("showing edges ≥ " + thresholdValue.toFixed(3) + " (raw weight, this layer's max = " + maxWForLayer.toFixed(3) + ")");
+    d3.select("#threshold-help").text("Absolute mode: the cutoff is a raw weight value. Because each layer is normalized independently, the same number can mean a different fraction of that layer's strongest bond — switch to percentile mode for a layer-consistent cutoff.");
+  } else {
+    input.min = 1; input.max = 100; input.step = 1;
+    if (thresholdValue > 100 || thresholdValue < 1) thresholdValue = 50;
+    input.value = thresholdValue;
+    d3.select("#threshold-val").text("showing top " + thresholdValue + "% strongest edges");
+    d3.select("#threshold-help").text("Percentile mode: keeps the strongest X% of edges in the currently selected layer, however their raw weights compare across layers.");
+  }
+}
+
 function setLayer(layerName) {
   currentLayer = layerName;
-  const raw = DATA.layers[layerName];
-  maxWForLayer = d3.max(raw, d => d.weight) || 1;
-  link = raw.filter(e => e.weight >= threshold).map(e => ({ ...e }));
-  simulation.force("link", d3.forceLink(link).id(d => d.id)
-    .distance(linkDistance).strength(linkStrength));
+  updateThresholdUI();
+  link = filteredEdges(layerName).map(e => ({ ...e }));
+  simulation.force("link", d3.forceLink(link).id(d => d.id).distance(linkDistance).strength(linkStrength));
   simulation.alpha(0.9).restart();
   draw();
 }
 
 function draw() {
   const color = LAYER_COLOR[currentLayer];
-  const self = link.filter(d => (d.source.id || d.source) === (d.target.id || d.target));
   const trueCross = link.filter(d => (d.source.id || d.source) !== (d.target.id || d.target));
+  const self = link.filter(d => (d.source.id || d.source) === (d.target.id || d.target));
   const widthScale = d3.scaleLinear().domain([0, maxWForLayer]).range([0.6, 6]);
 
   const crossSel = edgeLayer.selectAll("path.cross").data(trueCross, d => d.source.id + "->" + d.target.id);
   crossSel.exit().remove();
-  const crossEnter = crossSel.enter().append("path").attr("class", "edge cross");
-  crossEnter.merge(crossSel)
+  crossSel.enter().append("path").attr("class", "edge cross")
+    .merge(crossSel)
     .attr("stroke", color).attr("stroke-width", d => widthScale(d.weight))
     .attr("opacity", 0.55).attr("marker-end", "url(#arrow-" + currentLayer + ")")
     .on("mouseover mousemove", (event, d) => showTip(`<b>${d.source.id}&rarr;${d.target.id}</b><br>${LAYER_LABEL[currentLayer]}: ${d.weight.toFixed(3)}`, event))
@@ -212,8 +271,8 @@ function draw() {
 
   const selfSel = edgeLayer.selectAll("path.self").data(self, d => d.source.id || d.source);
   selfSel.exit().remove();
-  const selfEnter = selfSel.enter().append("path").attr("class", "edge self");
-  selfEnter.merge(selfSel)
+  selfSel.enter().append("path").attr("class", "edge self")
+    .merge(selfSel)
     .attr("stroke", color).attr("stroke-width", d => widthScale(d.weight))
     .attr("opacity", 0.55).attr("marker-end", "url(#arrow-" + currentLayer + ")")
     .on("mouseover mousemove", (event, d) => showTip(`<b>${d.source.id || d.source} self-bond</b><br>${LAYER_LABEL[currentLayer]}: ${d.weight.toFixed(3)}`, event))
@@ -228,21 +287,26 @@ function draw() {
     .attr("r", d => rScale(d.w) + 5)
     .attr("fill", "none")
     .attr("stroke", d => d.ks >= 0 ? "#2f8f5b" : "#b3453a")
-    .attr("stroke-width", d => ringScale(Math.abs(d.ks)))
+    .attr("stroke-width", d => ringScale(Math.abs(health(d.ks))))
     .attr("opacity", 0.75);
   nodeMerged.select("circle.main")
     .attr("r", d => rScale(d.w))
     .attr("fill", d => CATEGORY_COLOR[d.category])
+    .on("click", (event, d) => { if (pivotMode === "manual") setPivot(d); })
     .on("mouseover mousemove", (event, d) => showTip(
-      `<b>${d.id}</b>${d === pivot ? " &#9733; pivot" : ""}<br>${d.category}<br>w=${d.w} &nbsp; K&minus;S=${d.ks}<br>C=${d.C} K=${d.K} S=${d.S} A=${d.A}`, event))
+      `<b>${d.id}</b>${d === pivot ? " &#9733; pivot" : ""}<br>${d.category}<br>w=${d.w} &nbsp; K&minus;S=${d.ks} &nbsp; health=${health(d.ks).toFixed(2)}<br>C=${d.C} K=${d.K} S=${d.S} A=${d.A}`, event))
     .on("mouseout", hideTip);
 
-  const pivotRingSel = nodeMerged.filter(d => d === pivot).selectAll("circle.pivot-ring").data(d => [d]);
-  pivotRingSel.enter().append("circle").attr("class", "pivot-ring")
-    .merge(pivotRingSel).attr("r", rScale(pivot.w) + 12);
+  nodeMerged.selectAll("circle.pivot-ring").remove();
+  nodeMerged.filter(d => d === pivot).append("circle")
+    .attr("class", "pivot-ring")
+    .attr("r", rScale(pivot.w) + 12);
 
   const labelSel = labelLayer.selectAll("text.node-label").data(nodes, d => d.id);
-  labelSel.enter().append("text").attr("class", "node-label").merge(labelSel).text(d => d.id);
+  labelSel.enter().append("text").attr("class", "node-label")
+    .merge(labelSel)
+    .attr("font-size", d => labelFontSize(d) + "px")
+    .text(d => d.id);
 
   positionAll();
   document.getElementById("rate-note").innerHTML = RATE_NOTE[currentLayer];
@@ -252,8 +316,12 @@ function positionAll() {
   edgeLayer.selectAll("path.cross").attr("d", edgePath);
   edgeLayer.selectAll("path.self").attr("d", d => selfLoopPath(nodeById[d.source.id || d.source]));
   nodeLayer.selectAll("g.node").attr("transform", d => `translate(${d.x},${d.y})`);
+  // Labels sit at the node's own centre (inside the circle); their upright
+  // counter-rotation is applied separately, every animation frame, in the
+  // rotation timer below -- so it stays correct even between simulation ticks.
   labelLayer.selectAll("text.node-label")
-    .attr("x", d => d.x).attr("y", d => d.y + rScale(d.w) + 16);
+    .attr("x", d => d.x).attr("y", d => d.y);
+  applyLabelUpright();
 }
 
 function ticked() { positionAll(); }
@@ -272,21 +340,77 @@ Object.keys(LAYER_LABEL).forEach(layer => {
     });
 });
 
+const pivotWrap = d3.select("#pivot-buttons");
+Object.keys(PIVOT_MODE_LABEL).forEach(mode => {
+  pivotWrap.append("button")
+    .attr("class", "mode-btn" + (mode === pivotMode ? " active" : ""))
+    .text(PIVOT_MODE_LABEL[mode])
+    .on("click", function () {
+      pivotMode = mode;
+      d3.selectAll("#pivot-buttons .mode-btn").classed("active", false);
+      d3.select(this).classed("active", true);
+      document.getElementById("manual-hint").style.display = mode === "manual" ? "block" : "none";
+      if (mode !== "manual") setPivot(pivotCandidate(mode));
+    });
+});
+
+const threshModeWrap = d3.select("#threshold-mode-buttons");
+[["absolute", "Absolute weight"], ["percentile", "Top % strongest"]].forEach(([mode, label]) => {
+  threshModeWrap.append("button")
+    .attr("class", "mode-btn" + (mode === thresholdMode ? " active" : ""))
+    .text(label)
+    .on("click", function () {
+      thresholdMode = mode;
+      thresholdValue = mode === "absolute" ? maxWForLayer * 0.4 : 50;
+      d3.selectAll("#threshold-mode-buttons .mode-btn").classed("active", false);
+      d3.select(this).classed("active", true);
+      setLayer(currentLayer);
+    });
+});
+
 d3.select("#threshold").on("input", function () {
-  threshold = +this.value;
-  d3.select("#threshold-val").text("showing edges ≥ " + threshold.toFixed(2));
-  setLayer(currentLayer);
+  thresholdValue = +this.value;
+  if (thresholdMode === "absolute") {
+    d3.select("#threshold-val").text("showing edges ≥ " + thresholdValue.toFixed(3) + " (raw weight, this layer's max = " + maxWForLayer.toFixed(3) + ")");
+  } else {
+    d3.select("#threshold-val").text("showing top " + thresholdValue + "% strongest edges");
+  }
+  link = filteredEdges(currentLayer).map(e => ({ ...e }));
+  simulation.force("link", d3.forceLink(link).id(d => d.id).distance(linkDistance).strength(linkStrength));
+  simulation.alpha(0.7).restart();
+  draw();
 });
 
 d3.select("#rotate-toggle").on("change", function () { rotating = this.checked; });
 
-// Continuous slow rotation around the pivot, independent of simulation cooling.
-const DEG_PER_SEC = 3; // full revolution ~ 2 minutes
-let rotTimer = d3.timer((elapsed) => {
+d3.select("#download-link").on("click", () => {
+  const blob = new Blob([JSON.stringify(DATA, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "cams_network_data.json";
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+});
+
+const DEG_PER_SEC = 3;
+let orbitAngle = 0;
+let lastElapsed = 0;
+
+// Counter-rotate each label around its own current point so it stays
+// upright on screen no matter how far the diagram has orbited.
+function applyLabelUpright() {
+  labelLayer.selectAll("text.node-label")
+    .attr("transform", d => `rotate(${-orbitAngle},${d.x},${d.y})`);
+}
+
+d3.timer((elapsed) => {
+  const dt = elapsed - lastElapsed;
+  lastElapsed = elapsed;
   if (rotating) {
-    const angle = (elapsed / 1000) * DEG_PER_SEC;
-    rotG.attr("transform", `rotate(${angle},${cx},${cy})`);
+    orbitAngle += (dt / 1000) * DEG_PER_SEC;
+    rotG.attr("transform", `rotate(${orbitAngle},${cx},${cy})`);
   }
+  applyLabelUpright();
 });
 
 setLayer(currentLayer);
