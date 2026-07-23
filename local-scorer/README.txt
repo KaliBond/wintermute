@@ -1,81 +1,81 @@
-CAMS Scorer — local edition
-============================
+CAMS Scorer — local edition (universal)
+=========================================
 
 Score any country, company, or city on the eight CAMS nodes, using your
-own OpenAI or Kimi (Moonshot AI) account. Nothing is sent to Neural
-Nations — this runs entirely on your machine and talks directly to
-whichever provider you choose.
+own account with the provider of your choice: OpenAI, Grok (xAI), Claude
+(Anthropic), or Kimi (Moonshot AI). Nothing is sent to Neural Nations —
+this runs entirely on your machine and talks directly to whichever
+provider you pick.
 
-Five versions are provided:
-   cams-scorer-gui.exe        Windows app (OpenAI), double-click, no command line
-   cams-scorer.exe            Windows command-line version (OpenAI)
-   cams-scorer-linux          Linux / WSL command-line version (OpenAI)
-   cams-scorer-gui-kimi.exe   Windows app (Kimi), double-click, no command line
-   cams-scorer-kimi.exe       Windows command-line version (Kimi)
+Three versions are provided:
+   cams-scorer-gui-universal.exe   Windows app, double-click, pick a provider from a dropdown
+   cams-scorer-universal.exe       Windows command-line version, provider is the first argument
+   cams-scorer-linux               Linux / WSL command-line version — older single-provider (OpenAI) build
 
-The Kimi edition is Windows-only for now, and runs are capped at 10
-years and 3 passes per request (3 passes carries roughly 85% of the
-ensemble signal).
+The universal edition (Windows) supports all four providers and is
+capped at a 9-year range and a choice of 1, 3, or 5 passes per request
+(3 passes carries roughly 85% of the ensemble signal, so it's a
+reasonable middle ground; 5 is the most reliable, 1 the fastest). The
+Linux binary is the older OpenAI-only build and does not share these
+caps or the provider choice.
 
-GUI VERSIONS — easiest
+GUI VERSION — easiest
 ------------------------
-1. Double-click cams-scorer-gui.exe (OpenAI) or cams-scorer-gui-kimi.exe
-   (Kimi) to open it.
-2. On first launch it asks for your API key:
+1. Double-click cams-scorer-gui-universal.exe to open it.
+2. Pick a provider from the dropdown: OpenAI, Grok, Claude, or Kimi.
+3. The first time you use a given provider, it asks for that provider's
+   API key:
      OpenAI — https://platform.openai.com/api-keys
+     Grok   — https://console.x.ai
+     Claude — https://console.anthropic.com/settings/keys
      Kimi   — https://platform.moonshot.ai/console/api-keys
-   It's saved locally in plain text — %APPDATA%\CAMSScorer\config.json
-   (OpenAI) or %APPDATA%\CAMSScorerKimi\config.json (Kimi) — so you
-   won't be asked again.
-3. Fill in the form (what to score, name, years, number of passes)
-   and click "Run scoring pass".
-4. Results appear in the table and are saved as CSV files in
+   Each provider's key is saved separately, in plain text, at
+   %APPDATA%\CAMSScorerUniversal\config.json, so switching providers
+   later won't lose the others.
+4. Fill in the form (what to score, name, years, number of passes —
+   1, 3, or 5) and click "Run scoring pass".
+5. Results appear in the table and are saved as CSV files in
    Documents\CAMS Scorer Output — click "Open output folder" to find
    them.
 
-COMMAND-LINE VERSIONS — setup (one-time)
+COMMAND-LINE VERSION — setup (one-time)
 ------------------------------------------
-1. Get an API key:
-     OpenAI — https://platform.openai.com/api-keys
-     Kimi   — https://platform.moonshot.ai/console/api-keys
-2. Set it as an environment variable before running:
+1. Get an API key for whichever provider you want (see URLs above).
+2. Set the matching environment variable before running:
 
    Windows (PowerShell):
-       $env:OPENAI_API_KEY = "sk-..."     (OpenAI edition)
-       $env:KIMI_API_KEY = "sk-..."       (Kimi edition)
+       $env:OPENAI_API_KEY = "sk-..."       (for the openai provider)
+       $env:XAI_API_KEY = "xai-..."         (for the grok provider)
+       $env:ANTHROPIC_API_KEY = "sk-ant-..." (for the claude provider)
+       $env:KIMI_API_KEY = "sk-..."         (for the kimi provider)
 
    Windows (cmd.exe):
        set OPENAI_API_KEY=sk-...
+       set XAI_API_KEY=xai-...
+       set ANTHROPIC_API_KEY=sk-ant-...
        set KIMI_API_KEY=sk-...
 
-   Linux / WSL (OpenAI edition only):
-       export OPENAI_API_KEY="sk-..."
-       chmod +x cams-scorer-linux   (first time only)
+USAGE
+-----
+   cams-scorer-universal.exe <provider> <country|company|city> <entity> <start_year> [end_year] [options]
 
-USAGE (command-line versions)
-------------------------------
-   cams-scorer.exe <country|company|city> <entity> <start_year> [end_year] [options]       (Windows, OpenAI)
-   cams-scorer-kimi.exe <country|company|city> <entity> <start_year> [end_year] [options]   (Windows, Kimi)
-   ./cams-scorer-linux <country|company|city> <entity> <start_year> [end_year] [options]    (Linux/WSL, OpenAI)
+   <provider> is one of: openai, grok, claude, kimi
 
 Examples:
-   cams-scorer.exe country USA 2020 2024
-   cams-scorer.exe company Tesla 2023
-   cams-scorer.exe city Detroit 2019 2023 --passes 5
-
-   cams-scorer-kimi.exe country USA 2020 2024
-   cams-scorer-kimi.exe company Tesla 2023
-   cams-scorer-kimi.exe city Detroit 2019 2023 --passes 3
+   cams-scorer-universal.exe openai country USA 2020 2024
+   cams-scorer-universal.exe grok company Tesla 2023
+   cams-scorer-universal.exe claude city Detroit 2019 2023 --passes 2
+   cams-scorer-universal.exe kimi country Japan 2023
 
 Options:
-   --passes N        number of isolated scoring passes (OpenAI default 5; Kimi default and max 3)
-   --min-passes N    minimum valid passes required per cell (default: min(3, passes))
-   --model NAME      model to use (OpenAI default: gpt-5, or set OPENAI_MODEL;
-                      Kimi default: kimi-k3, or set KIMI_MODEL)
+   --passes N        number of isolated scoring passes, one of 1, 3, 5 (default 3)
+   --min-passes N    minimum valid passes required per cell (default: passes)
+   --model NAME      model override (default per provider: gpt-5 for OpenAI,
+                      grok-4.5 for Grok, claude-sonnet-5 for Claude, kimi-k3 for Kimi)
    --out PREFIX      output filename prefix (default: derived from entity name)
 
-The Kimi edition also enforces a 10-year cap on the start_year..end_year
-range (the OpenAI edition has no server-side cap on the local build).
+Runs are capped at a 9-year range (start_year..end_year) regardless of
+provider, and passes must be 1, 3, or 5.
 
 OUTPUT
 ------
@@ -83,9 +83,18 @@ Two CSV files are written to the current folder:
    <entity>_cams_scores.csv     — ensemble mean per node (Coherence, Capacity, Stress, Abstraction)
    <entity>_cams_envelope.csv   — standard deviation + pass count per cell (uncertainty)
 
+LINUX / WSL (older, OpenAI-only build)
+-----------------------------------------
+   export OPENAI_API_KEY="sk-..."
+   chmod +x cams-scorer-linux   (first time only)
+   ./cams-scorer-linux <country|company|city> <entity> <start_year> [end_year] [--passes N]
+
+This build predates the universal edition: no provider choice, no
+9-year/1-3-5-pass cap, default 5 passes.
+
 NOTES
 -----
-- Each pass is a separate live model call — a multi-pass run typically takes several minutes.
+- Each pass is a separate live model call — a 3-pass run typically takes a couple of minutes.
 - This performs raw scoring only (no Node Value, Bond Strength, or diagnosis).
   See neuralnations.org for the full CAMS calculation pipeline and published datasets.
 - Cost is billed to your own account, at your provider's usual rates.

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>CAMS Scorer — Local Edition — Neural Nations</title>
-    <meta name="description" content="Download the standalone CAMS Scorer for Windows or Linux. Score any country, company, or city on your own machine, using your own OpenAI or Kimi account.">
+    <meta name="description" content="Download the standalone CAMS Scorer for Windows. Score any country, company, or city on your own machine, using your own OpenAI, Grok, Claude, or Kimi account.">
     <meta name="robots" content="noindex, nofollow">
     <link rel="canonical" href="https://neuralnations.org/cams-scorer-local">
 
@@ -81,53 +81,37 @@
 
     <div class="card" style="padding:34px 32px 30px;">
         <div class="ls-hero">
-            <div class="ls-eyebrow">Neural Nations · CAMS Raw Scorer · Local Edition</div>
+            <div class="ls-eyebrow">Neural Nations · CAMS Raw Scorer · Local Edition · Universal</div>
             <h1>CAMS Scorer — Local Edition</h1>
-            <p>A standalone tool that runs the same CAMS raw-scoring ensemble as the <a href="cams-scorer.html">online CAMS Scorer</a>, entirely on your own machine, using your own OpenAI or Kimi (Moonshot AI) account. Nothing is sent to Neural Nations — the tool talks directly to your chosen provider with your key, and you're billed directly by them at your account's own rates. A simple point-and-click app is available for Windows — no command line needed.</p>
+            <p>A standalone Windows tool that runs the same CAMS raw-scoring ensemble as the <a href="cams-scorer.html">online CAMS Scorer</a>, entirely on your own machine, using your own key for the provider of your choice — <strong>OpenAI, Grok (xAI), Claude (Anthropic), or Kimi (Moonshot AI)</strong>. Nothing is sent to Neural Nations — the tool talks directly to whichever provider you pick, and you're billed directly by them at your account's own rates. Runs are capped at a 9-year range and a choice of 1, 3, or 5 passes per request, whichever provider you use.</p>
         </div>
 
-        <p class="section-label" style="margin-top:6px;">OpenAI edition</p>
+        <p class="section-label" style="margin-top:6px;">Universal edition — Windows, all four providers</p>
 
         <div class="ls-dl-card" style="background:#2F6F7D;">
             <div class="ls-dl-meta">
-                <div class="name" style="color:#fff;">cams-scorer-gui.exe <span style="font-size:0.7rem;font-weight:700;background:#F5F1E4;color:#2F6F7D;padding:2px 8px;border-radius:10px;vertical-align:middle;">EASIEST</span></div>
-                <div class="sub" style="color:#dceef2;">Windows app · ~22 MB · double-click to open, no command line needed</div>
+                <div class="name" style="color:#fff;">cams-scorer-gui-universal.exe <span style="font-size:0.7rem;font-weight:700;background:#F5F1E4;color:#2F6F7D;padding:2px 8px;border-radius:10px;vertical-align:middle;">EASIEST</span></div>
+                <div class="sub" style="color:#dceef2;">Windows app · ~23 MB · double-click to open, pick a provider from a dropdown, no command line needed</div>
             </div>
-            <a href="local-scorer/cams-scorer-gui.exe" class="ls-dl-btn" download>Download</a>
+            <a href="local-scorer/cams-scorer-gui-universal.exe" class="ls-dl-btn" download>Download</a>
         </div>
 
         <div class="ls-dl-card">
             <div class="ls-dl-meta">
-                <div class="name">cams-scorer.exe</div>
-                <div class="sub">Windows command line (advanced) · ~19 MB</div>
+                <div class="name">cams-scorer-universal.exe</div>
+                <div class="sub">Windows command line (advanced) · ~20 MB</div>
             </div>
-            <a href="local-scorer/cams-scorer.exe" class="ls-dl-btn" download>Download</a>
+            <a href="local-scorer/cams-scorer-universal.exe" class="ls-dl-btn" download>Download</a>
         </div>
+
+        <p class="section-label" style="margin-top:22px;">Linux / WSL <span style="font-size:0.7rem;font-weight:700;background:#E3DAC0;color:#55606a;padding:2px 8px;border-radius:10px;vertical-align:middle;text-transform:none;letter-spacing:normal;">OpenAI only</span></p>
 
         <div class="ls-dl-card">
             <div class="ls-dl-meta">
                 <div class="name">cams-scorer-linux</div>
-                <div class="sub">Linux / WSL command line (x86-64) · ~16 MB</div>
+                <div class="sub">Linux / WSL command line (x86-64), OpenAI only · ~16 MB</div>
             </div>
             <a href="local-scorer/cams-scorer-linux" class="ls-dl-btn" download>Download</a>
-        </div>
-
-        <p class="section-label" style="margin-top:22px;">Kimi edition <span style="font-size:0.7rem;font-weight:700;background:#E3DAC0;color:#55606a;padding:2px 8px;border-radius:10px;vertical-align:middle;text-transform:none;letter-spacing:normal;">Windows only</span></p>
-
-        <div class="ls-dl-card" style="background:#2F6F7D;">
-            <div class="ls-dl-meta">
-                <div class="name" style="color:#fff;">cams-scorer-gui-kimi.exe <span style="font-size:0.7rem;font-weight:700;background:#F5F1E4;color:#2F6F7D;padding:2px 8px;border-radius:10px;vertical-align:middle;">EASIEST</span></div>
-                <div class="sub" style="color:#dceef2;">Windows app · ~22 MB · double-click to open, no command line needed</div>
-            </div>
-            <a href="local-scorer/cams-scorer-gui-kimi.exe" class="ls-dl-btn" download>Download</a>
-        </div>
-
-        <div class="ls-dl-card">
-            <div class="ls-dl-meta">
-                <div class="name">cams-scorer-kimi.exe</div>
-                <div class="sub">Windows command line (advanced) · ~19 MB</div>
-            </div>
-            <a href="local-scorer/cams-scorer-kimi.exe" class="ls-dl-btn" download>Download</a>
         </div>
 
         <div class="ls-warn">Windows SmartScreen will likely flag these on first run, since they're new, unsigned executables from an independent publisher. Click <strong>"More info" → "Run anyway"</strong> if you trust the source. You can also read the <a href="local-scorer/README.txt">plain-text README</a> or inspect the <a href="https://github.com/KaliBond/wintermute" target="_blank">source repo</a> first.</div>
@@ -136,62 +120,43 @@
     <div class="card">
         <p class="section-label">Using the app (recommended for most people)</p>
         <ol class="ls-steps">
-            <li>Download <code>cams-scorer-gui.exe</code> above and double-click it to open.</li>
-            <li>The first time it opens, it'll ask for your OpenAI API key — get one at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a> and paste it in. It's saved on your PC so you won't be asked again.</li>
-            <li>Choose what you're scoring (country, company, or city), type the name, pick a year range, and click <strong>Run scoring pass</strong>.</li>
+            <li>Download <code>cams-scorer-gui-universal.exe</code> above and double-click it to open.</li>
+            <li>Pick a provider from the dropdown — OpenAI, Grok, Claude, or Kimi.</li>
+            <li>The first time you use a given provider, it'll ask for that provider's API key: <a href="https://platform.openai.com/api-keys" target="_blank">OpenAI</a>, <a href="https://console.x.ai" target="_blank">Grok</a>, <a href="https://console.anthropic.com/settings/keys" target="_blank">Claude</a>, or <a href="https://platform.moonshot.ai/console/api-keys" target="_blank">Kimi</a>. Each provider's key is saved separately on your PC, so switching providers later won't lose the others.</li>
+            <li>Choose what you're scoring (country, company, or city), type the name, pick a year range (max 9 years), and a pass count (1, 3, or 5), then click <strong>Run scoring pass</strong>.</li>
             <li>Watch the progress log, then see the scores appear in the table. Results are also saved as CSV files in your <strong>Documents\CAMS Scorer Output</strong> folder — click <strong>Open output folder</strong> to find them.</li>
         </ol>
+        <p style="font-size:0.9rem;color:#55606a;line-height:1.6;margin-top:14px;">3 passes carries roughly 85% of the ensemble signal relative to a larger run, so it's a reasonable ceiling for a single pass of research; 1 or 2 passes trade some of that reliability for speed.</p>
     </div>
 
     <div class="card">
         <p class="section-label">Using the command line (advanced)</p>
         <ol class="ls-steps">
-            <li>Get an OpenAI API key at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a>.</li>
-            <li>Open a terminal (PowerShell) in the folder where you saved <code>cams-scorer.exe</code>.</li>
-            <li>Set your key for the session: <code>$env:OPENAI_API_KEY = "sk-..."</code></li>
-            <li>Run a scoring pass — see examples below.</li>
+            <li>Get an API key for whichever provider you want: <a href="https://platform.openai.com/api-keys" target="_blank">OpenAI</a>, <a href="https://console.x.ai" target="_blank">Grok</a>, <a href="https://console.anthropic.com/settings/keys" target="_blank">Claude</a>, or <a href="https://platform.moonshot.ai/console/api-keys" target="_blank">Kimi</a>.</li>
+            <li>Open a terminal (PowerShell) in the folder where you saved <code>cams-scorer-universal.exe</code>.</li>
+            <li>Set the matching key for the session: <code>$env:OPENAI_API_KEY</code>, <code>$env:XAI_API_KEY</code>, <code>$env:ANTHROPIC_API_KEY</code>, or <code>$env:KIMI_API_KEY</code> — whichever provider you're passing as the first argument.</li>
+            <li>Run a scoring pass, naming the provider first — see examples below. Runs are capped at a 9-year range and 1, 3, or 5 passes.</li>
         </ol>
-        <pre class="ls-code"><span class="c"># country, single year, default 5 passes</span>
-.\cams-scorer.exe country USA 2020 2024
+        <pre class="ls-code"><span class="c"># OpenAI, country, single year, default 3 passes</span>
+$env:OPENAI_API_KEY = "sk-..."
+.\cams-scorer-universal.exe openai country USA 2020 2024
 
-<span class="c"># company</span>
-.\cams-scorer.exe company Tesla 2023
+<span class="c"># Grok, company</span>
+$env:XAI_API_KEY = "xai-..."
+.\cams-scorer-universal.exe grok company Tesla 2023
 
-<span class="c"># city, fewer passes, faster</span>
-.\cams-scorer.exe city Detroit 2019 2023 --passes 3</pre>
+<span class="c"># Claude, city, fewer passes, faster</span>
+$env:ANTHROPIC_API_KEY = "sk-ant-..."
+.\cams-scorer-universal.exe claude city Detroit 2019 2023 --passes 2
+
+<span class="c"># Kimi, country</span>
+$env:KIMI_API_KEY = "sk-..."
+.\cams-scorer-universal.exe kimi country Japan 2023</pre>
+        <p style="font-size:0.9rem;color:#55606a;line-height:1.6;margin-top:14px;">Each pass is a separate live model call — a 3-pass run typically takes a couple of minutes. Two CSVs are written to the current folder: <code>&lt;entity&gt;_cams_scores.csv</code> (ensemble mean per node) and <code>&lt;entity&gt;_cams_envelope.csv</code> (uncertainty — standard deviation and valid-pass count per cell). This is raw scoring only — no Node Value, Bond Strength, or diagnosis. See <a href="model.html">the model page</a> for the full CAMS calculation pipeline.</p>
     </div>
 
     <div class="card">
-        <p class="section-label">Using the Kimi app</p>
-        <ol class="ls-steps">
-            <li>Download <code>cams-scorer-gui-kimi.exe</code> above and double-click it to open.</li>
-            <li>The first time it opens, it'll ask for your Kimi API key — get one at <a href="https://platform.moonshot.ai/console/api-keys" target="_blank">platform.moonshot.ai/console/api-keys</a> and paste it in. It's saved on your PC so you won't be asked again.</li>
-            <li>Choose what you're scoring (country, company, or city), type the name, pick a year range, and click <strong>Run scoring pass</strong>.</li>
-            <li>Watch the progress log, then see the scores appear in the table. Results are also saved as CSV files in your <strong>Documents\CAMS Scorer Output</strong> folder — click <strong>Open output folder</strong> to find them.</li>
-        </ol>
-        <p style="font-size:0.9rem;color:#55606a;line-height:1.6;margin-top:14px;">The Kimi edition is capped at 10 years and 3 passes per run — 3 passes carries roughly 85% of the ensemble signal, so it's a reasonable ceiling for a single pass of research.</p>
-    </div>
-
-    <div class="card">
-        <p class="section-label">Using the Kimi command line (advanced)</p>
-        <ol class="ls-steps">
-            <li>Get a Kimi API key at <a href="https://platform.moonshot.ai/console/api-keys" target="_blank">platform.moonshot.ai/console/api-keys</a>.</li>
-            <li>Open a terminal (PowerShell) in the folder where you saved <code>cams-scorer-kimi.exe</code>.</li>
-            <li>Set your key for the session: <code>$env:KIMI_API_KEY = "sk-..."</code></li>
-            <li>Run a scoring pass — see examples below. Runs are capped at 10 years and 3 passes.</li>
-        </ol>
-        <pre class="ls-code"><span class="c"># country, single year, default 3 passes</span>
-.\cams-scorer-kimi.exe country USA 2020 2024
-
-<span class="c"># company</span>
-.\cams-scorer-kimi.exe company Tesla 2023
-
-<span class="c"># city, fewer passes, faster</span>
-.\cams-scorer-kimi.exe city Detroit 2019 2023 --passes 3</pre>
-    </div>
-
-    <div class="card">
-        <p class="section-label">Setup — Linux / WSL</p>
+        <p class="section-label">Setup — Linux / WSL (OpenAI only)</p>
         <ol class="ls-steps">
             <li>Get an OpenAI API key at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a>.</li>
             <li>Open a terminal in the folder where you saved <code>cams-scorer-linux</code>, then mark it executable: <code>chmod +x cams-scorer-linux</code></li>
@@ -206,7 +171,7 @@
 
 <span class="c"># city, fewer passes, faster</span>
 ./cams-scorer-linux city Detroit 2019 2023 --passes 3</pre>
-        <p style="font-size:0.9rem;color:#55606a;line-height:1.6;margin-top:14px;">Each pass is a separate live model call — a 5-pass run typically takes several minutes. Two CSVs are written to the current folder: <code>&lt;entity&gt;_cams_scores.csv</code> (ensemble mean per node) and <code>&lt;entity&gt;_cams_envelope.csv</code> (uncertainty — standard deviation and valid-pass count per cell). This is raw scoring only — no Node Value, Bond Strength, or diagnosis. See <a href="model.html">the model page</a> for the full CAMS calculation pipeline.</p>
+        <p style="font-size:0.9rem;color:#55606a;line-height:1.6;margin-top:14px;">The Linux binary is the older single-provider (OpenAI) build and doesn't share the universal edition's 9-year/1-3-5-pass caps or provider choice. Windows users should use the universal edition above instead.</p>
     </div>
 
 </div>
