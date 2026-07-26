@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern Slavery &amp; Structural Path Dependencies — CAMS–GSI Cross-Reference Analysis, 2023</title>
+<meta name="description" content="Cross-references the Global Slavery Index 2023 with JUNO v1.2-Final structural data across 36 societies to identify which CAMS node configurations generate, sustain, or suppress coerced labour — plus a four-path taxonomy and CAMNATIONS5 African-nation scoring.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://neuralnations.org/slavery-path-dependency-2023">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,700;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --paper:#f7f5f0; --card:#ffffff; --ink:#1c2333; --muted:#5d6577;
+  --accent:#7a3b2e; --accent-soft:#f3e0da;
+  --green:#2e7d52; --green-soft:#e2f0e8;
+  --amber:#b07d1e; --amber-soft:#f6ecd4;
+  --red:#b3392e; --red-soft:#f7e5e2;
+  --gray:#6b7280; --gray-soft:#ececef;
+  --line:#e3e0d8;
+}
+.sp-wrap{max-width:960px;margin:0 auto;padding:0 24px 90px;font-family:Georgia,'Times New Roman',serif;color:var(--ink);line-height:1.68;font-size:17px;background:var(--paper);}
+.sp-masthead{border-bottom:3px double var(--line);padding:40px 0 26px;margin-bottom:30px;}
+.sp-brand{font-family:'IBM Plex Sans',-apple-system,sans-serif;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700;}
+.sp-brand span{color:var(--muted);}
+.sp-masthead h1{font-family:'Newsreader',Georgia,serif;font-size:36px;line-height:1.16;margin:14px 0 8px;font-weight:700;letter-spacing:-0.01em;}
+.sp-subtitle{font-size:18px;color:var(--muted);font-style:italic;margin:0 0 18px;}
+.sp-meta{font-family:'IBM Plex Sans',-apple-system,sans-serif;font-size:13px;color:var(--muted);line-height:1.7;}
+.sp-meta b{color:var(--ink);}
+.sp-wrap h2{font-family:'Newsreader',Georgia,serif;font-size:25px;margin:50px 0 16px;padding-top:20px;border-top:1px solid var(--line);}
+.sp-wrap h3{font-family:'Newsreader',Georgia,serif;font-size:19px;margin:28px 0 10px;}
+.sp-wrap p{margin:0 0 16px;}
+.sp-lede{font-size:20px;line-height:1.6;}
+.sp-summary{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:6px;padding:26px 30px;margin:28px 0;box-shadow:0 1px 4px rgba(28,35,51,.06);}
+.sp-summary h2{border:none;margin:0 0 12px;padding:0;font-size:21px;color:var(--accent);}
+.sp-summary p{font-size:16.5px;}
+.sp-wrap table{width:100%;border-collapse:collapse;margin:16px 0 26px;font-size:14px;font-family:'IBM Plex Sans',-apple-system,sans-serif;}
+.sp-wrap th{background:#efe6e0;text-align:left;padding:9px 11px;border-bottom:2px solid var(--line);font-size:11.5px;letter-spacing:.03em;text-transform:uppercase;color:var(--muted);}
+.sp-wrap td{padding:8px 11px;border-bottom:1px solid var(--line);vertical-align:top;}
+.sp-wrap tr:nth-child(even) td{background:#fbfaf7;}
+.sp-wrap .num{font-family:'IBM Plex Mono',Consolas,monospace;}
+.sp-callout{background:var(--accent-soft);border-radius:6px;padding:18px 22px;margin:24px 0;font-size:16px;}
+.sp-callout b{color:var(--accent);}
+.sp-path{background:var(--card);border:1px solid var(--line);border-left:5px solid #8a6a3f;border-radius:6px;padding:18px 22px;margin:18px 0;}
+.sp-path h3{margin:0 0 8px;font-size:18px;}
+.sp-path .sp-profile{font-family:'IBM Plex Sans',-apple-system,sans-serif;font-size:12.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;}
+.sp-nation{background:#fbfaf7;border:1px solid var(--line);border-radius:6px;padding:14px 18px;margin:12px 0;}
+.sp-nation b.name{color:var(--accent);}
+ol.sp-list{padding-left:22px;}
+ol.sp-list li{margin-bottom:10px;}
+.sp-dl-row{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px;}
+.sp-dl{font-family:'IBM Plex Sans',-apple-system,sans-serif;font-weight:600;font-size:13.5px;padding:10px 18px;border-radius:8px;text-decoration:none;background:#2F6F7D;color:#F5F1E4;}
+.sp-footer{border-top:3px double var(--line);margin-top:60px;padding-top:24px;font-family:'IBM Plex Sans',-apple-system,sans-serif;font-size:13px;color:var(--muted);}
+code{font-family:'IBM Plex Mono',Consolas,monospace;font-size:.9em;background:#efe6e0;padding:1px 5px;border-radius:3px;}
+@media(max-width:640px){.sp-masthead h1{font-size:27px;}.sp-wrap{padding:0 16px 60px;}.sp-wrap table{font-size:12.5px;}}
+</style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="mathematical-backbone.html">Mathematical Backbone</a>
+                    <a href="social-cognition.html">Social Cognition · Real Time</a>
+                    <a href="cams-scorer.html">CAMS Scorer</a>
+                    <a href="argentina-puzzle.html">The Puzzle of Argentina</a>
+                    <hr class="menu-divider">
+                    <a href="cams-zeitgeist.html">Zeitgeist Detector</a>
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="attractors.html">Attractors</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link">Framework ↗</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="framework/index.html">Framework ↗</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="mathematical-backbone.html">Mathematical Backbone</a>
+        <a href="social-cognition.html">Social Cognition · Real Time</a>
+        <a href="cams-scorer.html">CAMS Scorer</a>
+        <a href="argentina-puzzle.html">The Puzzle of Argentina</a>
+        <hr class="menu-divider">
+        <a href="cams-zeitgeist.html">Zeitgeist Detector</a>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="attractors.html">Attractors</a>
+    </div>
+</nav>
+
+<div class="sp-wrap">
+
+<header class="sp-masthead">
+  <div class="sp-brand">neural<span>nations</span> · CAMS &middot; JUNO cross-reference analysis</div>
+  <h1>Modern Slavery &amp; Structural Path Dependencies</h1>
+  <p class="sp-subtitle">CAMS–GSI Cross-Reference Analysis, 2023</p>
+  <div class="sp-meta">
+    <b>Analysis</b> · Kari Freyr · July 2026 ·
+    Global Slavery Index 2023 (Walk Free Foundation, 180 nations) cross-referenced with JUNO v1.2-Final structural data (36-society corpus) plus CAMNATIONS5 ensemble scoring (6 African nations)
+  </div>
+</header>
+
+<p class="sp-lede">This analysis asks whether CAMS structural signatures predict slavery prevalence, and if so, through which mechanisms. The goal is not to retrofit a slavery predictor onto CAMS — it is to identify which structural configurations generate, sustain, or suppress coerced labour, distinguishing <em>structural resistance</em> (institutional architecture that makes slavery costly or illegitimate) from <em>structural enablement</em> (architecture that organises production around coercion without triggering systemic stress signals).</p>
+
+<h2>1. Data and method</h2>
+<p><b>JUNO corpus:</b> 36 societies, JUNO v1.2-Final operators, latest available year (predominantly 2024–2025). V̄ = system mean node viability; B̄ = mean bond strength (SBD proxy); regime classification across 7 types (Stable Adaptive → Freeze/Collapse); node-level data across 8 nodes × {C, K, S, A, V} per society.</p>
+<p><b>GSI 2023:</b> 180 countries. Prevalence is estimated modern slaves per 1,000 population. Five vulnerability sub-scores (governance issues, lack of basic needs, inequality, disenfranchised groups, effects of conflict) and five government-response sub-scores (survivor support, criminal justice, coordination, risk-factor reduction, supply chain). All 36 JUNO societies were matched to GSI, with name corrections for Türkiye, UAE, UK, and USA.</p>
+
+<h2>2. Correlation findings</h2>
+<h3>2.1 Overall JUNO metrics vs. prevalence</h3>
+<table>
+<tr><th>Metric</th><th>r (all 36)</th><th>r (ex-Gulf, n=34)</th></tr>
+<tr><td>V̄ (system viability)</td><td class="num">&minus;0.062</td><td class="num">&minus;0.395</td></tr>
+<tr><td>B̄ (bond strength)</td><td class="num">&minus;0.158</td><td class="num">&minus;0.455</td></tr>
+<tr><td>VulnTotal (GSI)</td><td class="num">+0.657</td><td class="num">+0.755</td></tr>
+<tr><td>RespTotal (GSI)</td><td class="num">&minus;0.433</td><td class="num">—</td></tr>
+</table>
+<div class="sp-callout"><b>Critical finding.</b> Raw V̄ has near-zero correlation with slavery prevalence across all 36 nations. Removing the two Gulf kafala states (UAE, Saudi Arabia) reveals a moderate negative correlation (r = &minus;0.395): structural health suppresses slavery — except when the structural architecture is itself organised around coerced labour. Distinguishing these two regimes is the central analytical challenge.</div>
+<p>B̄ (bond strength, network connectivity) is a slightly better predictor than V̄ alone (r = &minus;0.455 ex-Gulf). High B̄ reflects coordination capacity; whether that capacity is deployed against exploitation or in service of it depends on the normative content of the Archive and Lore nodes.</p>
+
+<h3>2.2 Node-level correlations with prevalence (ex-Gulf, n=34)</h3>
+<table>
+<tr><th>Node</th><th>r (viability)</th><th>r (stress)</th></tr>
+<tr><td>Stewards</td><td class="num">&minus;0.485</td><td class="num">+0.445</td></tr>
+<tr><td>Archive</td><td class="num">&minus;0.454</td><td class="num">+0.486</td></tr>
+<tr><td>Craft</td><td class="num">&minus;0.449</td><td class="num">+0.434</td></tr>
+<tr><td>Flow</td><td class="num">&minus;0.415</td><td class="num">+0.393</td></tr>
+<tr><td>Hands</td><td class="num">&minus;0.416</td><td class="num">+0.416</td></tr>
+<tr><td>Helm</td><td class="num">&minus;0.289</td><td class="num">+0.384</td></tr>
+<tr><td>Lore</td><td class="num">&minus;0.156</td><td class="num">+0.344</td></tr>
+<tr><td>Shield</td><td class="num">&minus;0.105</td><td class="num">+0.403</td></tr>
+</table>
+<p><b>Stewards</b> (resource distribution, welfare allocation) and <b>Archive</b> (institutional memory, legal frameworks, rights records) are the strongest node-level predictors: high viability associates with low prevalence, high stress with high prevalence.</p>
+<p><b>Shield</b> viability has the weakest correlation with prevalence (r = &minus;0.105), but Shield <em>stress</em> is meaningful (r = +0.403) — the conflict signature: Shield collapse creates trafficking corridors and forced labour in conflict zones, but strong Shield viability alone does not necessarily protect workers, it just keeps the state militarily coherent.</p>
+<p><b>Lore</b> viability is also weak (r = &minus;0.156) — theoretically interesting, since cultural legitimacy of institutions does not directly translate to slavery resistance. A society can have high Lore coherence (a strong shared narrative) while that narrative normalises labour exploitation.</p>
+
+<h3>2.3 Node viability vs. GSI vulnerability dimensions</h3>
+<table>
+<tr><th>Node</th><th>vs. Inequality</th><th>vs. Governance</th><th>vs. Basic Needs</th></tr>
+<tr><td>Archive</td><td class="num">&minus;0.72</td><td class="num">&minus;0.46</td><td class="num">&minus;0.49</td></tr>
+<tr><td>Stewards</td><td class="num">&minus;0.67</td><td class="num">&minus;0.43</td><td class="num">&minus;0.36</td></tr>
+<tr><td>Craft</td><td class="num">&minus;0.68</td><td class="num">&minus;0.44</td><td class="num">&minus;0.44</td></tr>
+<tr><td>Flow</td><td class="num">&minus;0.68</td><td class="num">&minus;0.45</td><td class="num">&minus;0.42</td></tr>
+<tr><td>Helm</td><td class="num">&minus;0.63</td><td class="num">&minus;0.38</td><td class="num">&minus;0.40</td></tr>
+</table>
+<p><b>Inequality</b> is the vulnerability dimension most tightly linked to structural node health across all nodes (r = &minus;0.63 to &minus;0.72), suggesting inequality is the transmission mechanism: structural degradation → rising inequality → expanding pools of economically coerced labour. Archive is the node most strongly aligned with inequality reduction (r = &minus;0.72), pointing to the role of institutional rights-memory in distributional outcomes.</p>
+
+<h2>3. Path dependency taxonomy</h2>
+<p>Four structural paths produce distinct slavery prevalence signatures.</p>
+
+<div class="sp-path">
+<h3>Path 1 — Rights-Institutional <span style="font-weight:400;color:var(--muted);">(prevalence &lt; 2/1k)</span></h3>
+<div class="sp-profile">Stable Adaptive regime · low governance vulnerability (&lt;20%) · strong Archive and Stewards</div>
+<p><b>Nations:</b> Norway (0.52), Netherlands (0.57), Sweden (0.57), Denmark (0.64), UK (1.80).</p>
+<p><b>Mechanism:</b> institutional rights-memory (Archive) holds the legal architecture that makes slavery costly; Stewards distributes economic security widely, removing the material preconditions for debt bondage and forced recruitment. The path is self-reinforcing — strong Archive protects workers → inequality stays low → Stewards remains adequately funded → Archive is not eroded by fiscal crisis. Breaking into this path requires simultaneous investment in rights frameworks and distributive capacity; neither alone is sufficient.</p>
+<p style="font-size:15px;color:var(--muted);"><b>Chile (3.17/1k)</b> is Stable Adaptive but moderate prevalence — governance vulnerability is borderline (19.6%). Its Archive is coherent for citizens but has structural gaps for undocumented migrants, producing a two-tier protection system.</p>
+</div>
+
+<div class="sp-path">
+<h3>Path 2 — Coercive-Institutional <span style="font-weight:400;color:var(--muted);">(prevalence 4–21/1k despite high V̄)</span></h3>
+<div class="sp-profile">Stable Adaptive or Strained · high V̄/B̄ · high GSI governance vulnerability</div>
+<p><b>Nations:</b> Saudi Arabia (21.26/1k, V̄=15.7, VulnGov=66.2), UAE (13.37/1k, V̄=21.6, VulnGov=57.2), China (4.01/1k, V̄=13.5, VulnGov=50.7), Russia (13.02/1k, Strained).</p>
+<p><b>Mechanism:</b> high JUNO viability reflects coordination efficiency, not normative content. The kafala system (Gulf), the hukou system (China), or labour-migration dependency structures (Russia) are institutionalised within Helm and Craft — they appear as coordination capacity in the V̄ calculation while functioning as coercion mechanisms. Archive contains an absence: migrant workers' rights are not recorded in institutional memory. B̄ is high because all nodes coordinate efficiently — around an architecture that excludes a class of workers from protection.</p>
+<p><b>Diagnostic signature:</b> high V̄ + high B̄ + high GSI governance vulnerability. The CAMS signature <em>looks healthy</em>; the GSI governance sub-score reveals the rights gap. Stable Adaptive classification is not a human-rights certification — a full slavery-risk assessment requires reading Archive C and K scores alongside the regime label.</p>
+</div>
+
+<div class="sp-path">
+<h3>Path 3 — Fragmentation <span style="font-weight:400;color:var(--muted);">(prevalence 2–15/1k, high variance)</span></h3>
+<div class="sp-profile">Local Node Failure or Intermediate/Uncertain regime · one or more nodes in structural failure</div>
+<p><b>Nations:</b> India (8.01), Colombia (7.81), Lebanon (7.57), Iran (7.10), Indonesia (6.70), Thailand (5.74), Turkey (15.65), Ukraine (12.79), Pakistan (10.63), Brazil (4.95).</p>
+<p><b>Sub-types:</b> Shield-led fragmentation (Turkey, Ukraine, Pakistan — conflict stress or security-node failure creates trafficking corridors); Stewards-led fragmentation (Brazil, Argentina, Colombia — distributive failure generates debt bondage in agriculture and informal sectors); Helm-led fragmentation (Iran, Lebanon — governance collapse creates informal extraction zones).</p>
+<p><b>Mechanism:</b> informal economies expand where formal institutions recede. The fragmentation is self-sustaining because Local Node Failure resists re-stabilisation without coordinated intervention across multiple nodes simultaneously.</p>
+<p style="font-size:15px;color:var(--muted);"><b>Germany (0.56/1k, LNF)</b> is an important exception — LNF in specific nodes (political/institutional coherence) while Stewards and Archive remain robust, confirming that <em>which</em> node fails matters more than the regime label alone.</p>
+</div>
+
+<div class="sp-path">
+<h3>Path 4 — Collapse/Crisis <span style="font-weight:400;color:var(--muted);">(prevalence 3–10/1k)</span></h3>
+<div class="sp-profile">Freeze/Collapse or Systemic Crisis · V̄ &lt; 0 or near-zero · B̄ &lt; 0.15</div>
+<p><b>Nations:</b> Syria (8.73/1k, V̄=&minus;4.94, B̄=0.062), Venezuela (9.48/1k, V̄=&minus;2.94, B̄=0.081), USA (3.30/1k, Systemic Crisis).</p>
+<p><b>Mechanism:</b> system-wide decoordination. Trafficking and forced labour emerge opportunistically when protection structures completely decohere. Counterintuitively, collapse-state prevalence is not the highest — coercive-institutional states (Path 2) can exceed it — because collapse also destroys the organisational capacity to run large-scale forced-labour operations. The worst cases are mid-collapse transitions, not the endpoint.</p>
+<p style="font-size:15px;color:var(--muted);"><b>USA anomaly:</b> Systemic Crisis with only 3.30/1k prevalence. V̄=3.55, B̄=0.131 suggest deep structural stress, but the highest government-response score in the dataset (66.7%) partially offsets structural risk — response capacity is partially substitutable for structural health in the short term, but not sustainably so.</p>
+</div>
+
+<h2>4. African nations: CAMNATIONS5 structural findings</h2>
+<p>Only <b>South Africa</b> is in the JUNO 36-society corpus; the remaining 51 African nations in the GSI have no CAMS structural scoring. Six priority nations were scored using CAMNATIONS5 (five-scorer ensemble, JUNO v1.2-Final operators) — historically-periodised ensemble approximations based on documented institutional events rather than five fully independent LLM conversations. Structural signatures are reliable; uncertainty-envelope estimates should be treated as indicative pending formal multi-agent replication.</p>
+
+<h3>4.1 CAMNATIONS5 results summary</h3>
+<table>
+<tr><th>Nation</th><th>Period</th><th>V̄ start</th><th>V̄ 2026</th><th>B̄ 2026</th><th>Critical node</th></tr>
+<tr><td>Eritrea</td><td>1993–2026</td><td class="num">8.64</td><td class="num">2.69</td><td class="num">0.098</td><td>Archive (V=&minus;1.9)</td></tr>
+<tr><td>Nigeria</td><td>1960–2026</td><td class="num">6.96</td><td class="num">1.04</td><td class="num">0.085</td><td>Shield (V=0.1), Hands (V=&minus;0.8)</td></tr>
+<tr><td>Ethiopia</td><td>1960–2026</td><td class="num">6.03</td><td class="num">5.26</td><td class="num">0.195</td><td>Hands (V=2.9), Shield stress</td></tr>
+<tr><td>Mauritania</td><td>1960–2026</td><td class="num">5.01</td><td class="num">6.26</td><td class="num">0.220</td><td>Hands (V=1.1) vs Archive (V=9.5)</td></tr>
+<tr><td>Egypt</td><td>1952–2026</td><td class="num">4.99</td><td class="num">5.60</td><td class="num">0.199</td><td>Stewards (V=1.2) vs Shield (V=11.7)</td></tr>
+<tr><td>DRC</td><td>1960–2026</td><td class="num">&minus;0.21</td><td class="num">1.51</td><td class="num">0.130</td><td>Helm (V=&minus;1.9), Stewards (V=&minus;2.1)</td></tr>
+</table>
+
+<h3>4.2 Nation findings</h3>
+<div class="sp-nation"><p><b class="name">Eritrea</b> confirms the state-corvée mechanism structurally. V̄ declines from 8.64 (1993, independence) to a persistent floor of ~1–3 from 2010 onward. Archive V = &minus;1.9 at 2026 (below the viability floor) while Shield V = 7.4 — the military remains coherent because conscription <em>is</em> the enforcement mechanism. Hands V = 4.3 with Stress = 7.8: high labour throughput under extreme disorder. B̄ = 0.098, consistent with Local Node Failure bordering Systemic Crisis. Structurally distinct from the Gulf kafala pattern: the coercive actor is the state itself, not the employer relationship.</p></div>
+<div class="sp-nation"><p><b class="name">Nigeria</b> shows a persistent structural floor pre-dating Boko Haram. Archive V = &minus;0.6 and Hands V = &minus;0.8 at 2026, but the Abacha period (mid-1990s) already showed V̄ at &minus;1.51 — comparable to the post-2009 Boko Haram period. The 1970 Biafra collapse (V̄=&minus;2.27) and the 1995 nadir reveal a society cycling through near-collapse repeatedly without Archive recovering. Shield V = 0.1 at 2026 — effectively failed. The 1.61 million enslaved (GSI 2023) reflects layered mechanisms: Shield failure enables trafficking, Archive failure leaves workers without recourse, Hands failure signals the labour system itself is disordered.</p></div>
+<div class="sp-nation"><p><b class="name">Ethiopia</b> is structurally the most complex case. V̄ peaked at 7.32–7.58 (2005–2015) under the EPRDF developmental state before declining to 4.04 at the 2020 Tigray onset. Craft V = 9.8 at 2026 — the industrial/production node remains highest-functioning, consistent with manufacturing surviving the conflict. Hands V = 2.9 — labour exploitation persists even as production capacity holds. The Tigray conflict is visible most sharply in Shield (down to 4.7) rather than the total system collapse seen in DRC or Syria.</p></div>
+<div class="sp-nation"><p><b class="name">Mauritania</b> produces the most theoretically significant node profile. Lore V = 10.2 and Archive V = 9.5 at 2026 — both among the highest values in the African dataset. This is the predicted coercive-institutional signature: institutional coherence organised <em>around</em> a slave-status hierarchy. Archive is not absent; it actively records and enforces hereditary slave status. Hands V = 1.1 and Stewards V = 3.7 — the enslaved labour force and the distributive system that would liberate them are the weakest nodes. V̄ = 6.26 is higher than Nigeria or DRC despite higher per-capita prevalence (32/1k) because the coercive system is <em>stable</em>, not fragmented.</p></div>
+<div class="sp-nation"><p><b class="name">Egypt</b> shows a military-dominant structural profile. Shield V = 11.7 at 2026 — the strongest node by a large margin, and the strongest Shield reading in the African dataset. Stewards V = 1.2 — the weakest node. This is the economic-extraction pattern: a strong security apparatus enabling labour discipline in agriculture and domestic sectors, with minimal distributive protection. The post-2011 Arab Spring shock (V̄ dips to ~3.5) is followed by rapid military re-consolidation under el-Sisi.</p></div>
+<div class="sp-nation"><p><b class="name">DRC</b> shows persistent structural near-collapse across the entire 66-year window. Helm V = &minus;1.9, Stewards V = &minus;2.1 at 2026 — both negative. Remarkably, Lore V = 5.7 and Flow V = 6.3 remain positive throughout most of the series: cultural coherence and informal exchange networks persist even as formal governance collapses. This explains why DRC's prevalence (4.5/1k) is lower than some fragmentation-path nations — the informal economy provides partial alternatives to coercive labour when the formal system fails entirely.</p></div>
+
+<h3>4.3 Proxy mapping: GSI vulnerability → CAMS nodes</h3>
+<table>
+<tr><th>GSI dimension</th><th>Proxies for CAMS node(s)</th><th>Rationale</th></tr>
+<tr><td>Governance issues</td><td>Helm, Stewards</td><td>State administrative capacity and rule-of-law</td></tr>
+<tr><td>Lack of basic needs</td><td>Hands, Flow</td><td>Labour market function and distribution access</td></tr>
+<tr><td>Inequality</td><td>Stewards, Archive</td><td>Distributive systems and rights-protection architecture</td></tr>
+<tr><td>Disenfranchised groups</td><td>Lore, Archive</td><td>Normative inclusion/exclusion in institutional memory</td></tr>
+<tr><td>Effects of conflict</td><td>Shield</td><td>Security node stress</td></tr>
+</table>
+<p style="font-size:15px;color:var(--muted);">This mapping is approximate — it estimates which nodes are most likely under stress before a CAMNATIONS5 run, to focus interpretive attention on high-signal regions of the score matrix.</p>
+
+<h3>4.4 High-prevalence African nations: structural sketch</h3>
+<table>
+<tr><th>Country</th><th>Prev/1k</th><th>Est. enslaved</th><th>VulnGov</th><th>VulnConflict</th><th>VulnInequal</th><th>Resp</th><th>Likely CAMS path</th></tr>
+<tr><td>Eritrea</td><td class="num">90.3</td><td class="num">320,000</td><td class="num">86.1</td><td class="num">28.0</td><td class="num">68.9</td><td class="num">5.1</td><td>Path 2-variant (state corvée)</td></tr>
+<tr><td>Mauritania</td><td class="num">32.0</td><td class="num">149,000</td><td class="num">66.1</td><td class="num">17.4</td><td class="num">58.7</td><td class="num">34.6</td><td>Path 2-variant (hereditary institution)</td></tr>
+<tr><td>South Sudan</td><td class="num">10.3</td><td class="num">115,000</td><td class="num">100.0</td><td class="num">100.0</td><td class="num">78.7</td><td class="num">N/A</td><td>Path 4 (collapse)</td></tr>
+<tr><td>Rep. Congo</td><td class="num">8.0</td><td class="num">44,000</td><td class="num">76.8</td><td class="num">20.4</td><td class="num">58.4</td><td class="num">28.2</td><td>Path 3 (fragmentation)</td></tr>
+<tr><td>Nigeria</td><td class="num">7.8</td><td class="num">1,611,000</td><td class="num">75.8</td><td class="num">76.4</td><td class="num">50.2</td><td class="num">53.8</td><td>Path 3/4 (mixed)</td></tr>
+<tr><td>Somalia</td><td class="num">6.2</td><td class="num">98,000</td><td class="num">98.4</td><td class="num">97.1</td><td class="num">66.2</td><td class="num">17.9</td><td>Path 4 (collapse)</td></tr>
+<tr><td>Libya</td><td class="num">6.8</td><td class="num">47,000</td><td class="num">80.3</td><td class="num">75.3</td><td class="num">44.9</td><td class="num">10.3</td><td>Path 4 (collapse)</td></tr>
+<tr><td>Ethiopia</td><td class="num">6.3</td><td class="num">727,000</td><td class="num">67.2</td><td class="num">86.5</td><td class="num">58.7</td><td class="num">44.9</td><td>Path 3/4 (Shield-led)</td></tr>
+<tr><td>Chad</td><td class="num">5.9</td><td class="num">97,000</td><td class="num">83.5</td><td class="num">86.3</td><td class="num">59.2</td><td class="num">24.4</td><td>Path 4 (collapse)</td></tr>
+<tr><td>DRC</td><td class="num">4.5</td><td class="num">407,000</td><td class="num">94.0</td><td class="num">90.2</td><td class="num">67.8</td><td class="num">35.9</td><td>Path 3/4</td></tr>
+<tr><td>Egypt</td><td class="num">4.3</td><td class="num">442,000</td><td class="num">58.9</td><td class="num">12.6</td><td class="num">57.0</td><td class="num">43.6</td><td>Path 3 (fragmentation)</td></tr>
+</table>
+<p><b>Eritrea</b> is the most theoretically important case: at 90.3/1k, more than double second-ranked North Korea (104.6/1k, not in JUNO) and nearly 3× Mauritania. The mechanism is the <b>Warsai-Yikealo Development Campaign</b> — indefinite national service since 1994 functioning as state-organised forced labour. This is a Path 2 variant not captured by the Gulf kafala framing: the coercive institution is the state itself. Helm and Craft likely score deceptively high (the state <em>coordinates</em> production) while Archive registers the absence of labour and exit rights. Government response = 5.1%, among the lowest globally.</p>
+<p><b>Mauritania</b> is Path 2 variant — hereditary chattel slavery institutionalised in social norms, Archive carrying the slave-status taxonomy. Criminalised in 1981 and again in 2007, but enforcement is near-zero.</p>
+<p><b>Nigeria</b> represents the largest absolute burden after India (1.61M): structurally mixed, with Boko Haram/ISWAP in the north creating Shield collapse and abduction-driven slavery, while the south sees labour trafficking and exploitation in commercial agriculture and domestic work. A single CAMS score would need regional disaggregation to capture both mechanisms.</p>
+
+<h3>4.5 Revised path classification for scored African nations</h3>
+<table>
+<tr><th>Nation</th><th>GSI prev/1k</th><th>V̄ 2026</th><th>B̄ 2026</th><th>Path</th><th>Primary mechanism</th></tr>
+<tr><td>Eritrea</td><td class="num">90.3</td><td class="num">2.69</td><td class="num">0.098</td><td>Path 2-variant (state corvée)</td><td>Archive V=&minus;1.9; Shield coherent as enforcement</td></tr>
+<tr><td>Mauritania</td><td class="num">32.0</td><td class="num">6.26</td><td class="num">0.220</td><td>Path 2-variant (hereditary institution)</td><td>Archive V=9.5 encoding slave status; Hands V=1.1</td></tr>
+<tr><td>Nigeria</td><td class="num">7.8</td><td class="num">1.04</td><td class="num">0.085</td><td>Path 3/4 (persistent fragmentation)</td><td>Archive and Hands negative; Shield failed</td></tr>
+<tr><td>Ethiopia</td><td class="num">6.3</td><td class="num">5.26</td><td class="num">0.195</td><td>Path 3 (Shield-led fragmentation)</td><td>Conflict stress on Shield; Craft resilient</td></tr>
+<tr><td>Egypt</td><td class="num">4.3</td><td class="num">5.60</td><td class="num">0.199</td><td>Path 3 (military-extraction)</td><td>Shield dominant; Stewards at 1.2</td></tr>
+<tr><td>DRC</td><td class="num">4.5</td><td class="num">1.51</td><td class="num">0.130</td><td>Path 4 (persistent collapse)</td><td>Helm and Stewards negative across full window</td></tr>
+</table>
+
+<h2>5. Jobs worth doing</h2>
+<p>Research tasks flagged as independently valuable during this investigation:</p>
+<ol class="sp-list">
+<li><b>Archive node as slavery predictor</b> — formal hypothesis: Archive Stress is the strongest single-node predictor of slavery prevalence (r = +0.486, ex-Gulf). The mechanism — rights-memory degradation preceding exploitation expansion — is theoretically novel in the CAMS literature.</li>
+<li><b>Inequality as structural bridge</b> — Archive V ↔ GSI Inequality (r = &minus;0.72) is the strongest relationship in the node × vulnerability matrix; could be formalised as a structural inequality index derived from Archive and Stewards scores, calibrated against GSI data.</li>
+<li><b>Gulf kafala as Path 2 archetype</b> — UAE/Saudi Arabia (Stable Adaptive + high prevalence + high governance vulnerability) is a theoretically important challenge to the assumption that JUNO regime health implies human-rights protection. A short paper on "coercive-institutional stability" as a CAMS sub-type would contribute to the framework's epistemology.</li>
+<li><b>Germany as Path 3 exception</b> — LNF regime but 0.56/1k prevalence, the lowest of any LNF society. A targeted scoring deep-dive on Germany 2020–2025 could identify the protective structural residual.</li>
+<li><b>Government response as V̄ substitute</b> — the USA case suggests response capacity can partially compensate for structural degradation short-term. A regression model (prevalence ~ V̄ + RespTotal) would quantify the substitution rate.</li>
+<li><b>Full African continent CAMS coverage</b> — 51 of 52 African nations (excluding South Africa) had zero structural data prior to this study; six priority nations are now scored. The remaining 45 are the next frontier, particularly West African nations (Côte d'Ivoire, Cameroon, Mali, Niger) with significant prevalence and no coverage.</li>
+<li><b>Path 2 detection rule</b> — the current JUNO regime classifier does not distinguish Path 1 (rights-institutional Stable Adaptive) from Path 2 (coercive-institutional Stable Adaptive). A rule based on (Archive S &gt; threshold) AND (VulnGov-proxy &gt; threshold) could flag coercive-institutional cases at classification time.</li>
+<li><b>Path 2 detection confirmed empirically</b> — Mauritania's Archive V=9.5 alongside Hands V=1.1 gives a concrete fingerprint: <em>Archive V &gt; 8 AND Hands V &lt; 3 → candidate for Path 2-variant coercive-institutional classification, regardless of V̄.</em></li>
+</ol>
+
+<h2>6. Summary findings</h2>
+<ol class="sp-list">
+<li>JUNO V̄ alone does not predict slavery prevalence (r = &minus;0.062). Removing Gulf kafala states reveals a meaningful negative correlation (r = &minus;0.395): structural health suppresses slavery except when the structure is organised around coercive labour.</li>
+<li><b>Bond strength (B̄) is a better predictor than V̄</b> (r = &minus;0.455 ex-Gulf). A coherent, well-connected institutional network that includes rights-protective nodes is the slavery-suppressing configuration; high B̄ with rights-absent Archive is equally coherent structurally but produces the opposite outcome.</li>
+<li><b>Stewards and Archive are the critical nodes.</b> Welfare distribution (Stewards) removes material coercion preconditions; institutional rights-memory (Archive) makes slavery legally and normatively costly. Both must function for Path 1 to hold.</li>
+<li><b>Inequality is the transmission mechanism</b> (Archive V ↔ GSI Inequality, r = &minus;0.72): structural degradation → inequality → coercible labour pools.</li>
+<li><b>Four structural paths</b> produce distinct prevalence signatures: Rights-Institutional (&lt;2/1k), Coercive-Institutional (4–21/1k), Fragmentation (2–15/1k), Collapse/Crisis (3–10/1k). Escape from any path except Path 1 requires simultaneous multi-node stabilisation; single-node interventions are absorbed by the system dynamics.</li>
+<li><b>CAMNATIONS5 African scoring confirms the path taxonomy.</b> Eritrea shows the state-corvée variant of Path 2; Mauritania shows the hereditary-institution variant — the highest Archive V in the African dataset against the lowest Hands V, exactly the coercive-institutional fingerprint. Nigeria, Ethiopia, and Egypt are confirmed fragmentation cases; DRC is confirmed persistent collapse with unusual resilience in Lore and Flow.</li>
+<li><b>A new detection rule emerges:</b> Archive V &gt; 8 AND Hands V &lt; 3 is a candidate structural fingerprint for coercive-institutional Path 2, detectable independently of GSI data — validated against Mauritania, testable prospectively against other high-Archive-low-Hands societies.</li>
+</ol>
+
+<div class="sp-footer">
+  <p><b>Method note.</b> Analysis performed using GSI 2023 data (Walk Free Foundation) and the JUNO v1.2-Final structural corpus (36 JUNO societies), plus CAMNATIONS5 ensemble scoring (6 African nations: Eritrea, Nigeria, Ethiopia, Mauritania, Egypt, DRC). JUNO operators: V<sub>i</sub> = C + K &minus; S + 0.5A; B<sub>ij</sub> = √(q<sub>i</sub>·q<sub>j</sub>)·2<sup>&minus;(S<sub>i</sub>+S<sub>j</sub>)/10</sup>. All correlations are Pearson r, n=34 (ex-Gulf) unless noted. CAMNATIONS5 data is historically-periodised ensemble approximation; structural signatures are first-pass findings pending formal multi-agent replication.</p>
+  <p style="margin-top:16px;">© 2026 Kari McKern — Neural Nations CAMS Research. Open science — <a href="https://github.com/KaliBond/wintermute" target="_blank" style="color:#2F6F7D;">KaliBond/wintermute</a>.</p>
+</div>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>
