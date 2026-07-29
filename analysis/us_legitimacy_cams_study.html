@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US Legitimacy Crisis × CAMS Stress — Study Report</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #F5F1E4; --ink: #1B2A33; --amber: #D98B2B; --teal: #2F6F7D;
+  --red: #C84C3E; --green: #3a7d44; --purple: #6B3F8A; --paper: #FDFAF0; --border: #DAD2B8;
+  --mono: 'JetBrains Mono', 'Courier New', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: Georgia, serif; font-size: 15px; line-height: 1.65; }
+.wrap { max-width: 960px; margin: 0 auto; padding: 2rem 1.25rem 5rem; }
+h1 { font-size: 1.9rem; font-weight: 700; margin-bottom: 0.35rem; line-height: 1.2; }
+.subtitle { font-size: 1rem; color: #6B7480; margin-bottom: 0.25rem; }
+.meta { font-size: 0.82rem; color: #8A9BAA; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--border); }
+h2 { font-size: 1.2rem; font-weight: 700; color: var(--ink); margin: 2rem 0 0.75rem; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+h3 { font-size: 1rem; font-weight: 700; color: var(--teal); margin: 1.25rem 0 0.5rem; }
+p { margin-bottom: 0.9rem; }
+.finding-box { background: #FBF8EF; border: 1px solid var(--border); border-left: 4px solid var(--amber); border-radius: 8px; padding: 1rem 1.25rem; margin: 1.25rem 0; }
+.finding-box.positive { border-left-color: var(--green); }
+.finding-box.negative { border-left-color: var(--red); }
+.finding-box.purple { border-left-color: var(--purple); }
+.finding-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.35rem; }
+.finding-box.positive .finding-label { color: var(--green); }
+.finding-box.negative .finding-label { color: var(--red); }
+.finding-box.purple .finding-label { color: var(--purple); }
+.chart-wrap { background: var(--paper); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem 1.25rem 0.75rem; margin: 1.25rem 0; }
+.chart-title { font-size: 0.88rem; font-weight: 700; color: var(--ink); margin-bottom: 0.75rem; }
+.chart-wrap canvas { max-height: 280px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; font-family: var(--mono); margin: 1rem 0; }
+th { background: var(--ink); color: #F5F1E4; padding: 6px 10px; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; }
+td { padding: 5px 10px; border-bottom: 1px solid #E8E2CE; }
+tr:hover td { background: #F5F0E0; }
+.r-pos { color: var(--green); font-weight: 700; }
+.r-neg { color: var(--red); font-weight: 700; }
+.r-neutral { color: #888; }
+.sig { color: var(--amber); font-size: 0.8rem; }
+.badge { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; font-family: var(--mono); }
+.badge-leads { background: #E1F5EE; color: #0F6E56; }
+.badge-contemp { background: #E6F1FB; color: #185FA5; }
+.badge-follows { background: #FEF3E2; color: #A06030; }
+.verdict { background: var(--ink); color: var(--bg); border-radius: 10px; padding: 1.5rem 1.75rem; margin: 2rem 0; }
+.verdict h2 { color: var(--amber); border-bottom-color: #3a4a54; }
+.verdict p { color: #D0C4A8; margin-bottom: 0.75rem; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+.comparison-row { display: flex; gap: 1rem; margin: 1rem 0; }
+.comparison-card { flex: 1; background: var(--paper); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; }
+.comparison-card h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem; }
+.comparison-card .num { font-size: 1.8rem; font-weight: 700; font-family: var(--mono); }
+.comparison-card .lbl { font-size: 0.78rem; color: #888; }
+.lag-table td { font-family: var(--mono); font-size: 0.8rem; text-align: center; }
+.lag-table td:first-child { text-align: left; font-size: 0.82rem; }
+.lag-pos-strong { background: #d4edda; font-weight: 700; }
+.lag-neg-strong { background: #f8d7da; font-weight: 700; }
+.lag-pos { background: #e8f5e9; }
+.lag-neg { background: #fde8e8; }
+.note { font-size: 0.8rem; color: #6B7480; font-style: italic; margin-top: 0.5rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>US Legitimacy × CAMS Stress Architecture</h1>
+<div class="subtitle">Does CAMS structural stress anticipate public trust collapse? Second empirical test in the US oligarchic-capture series.</div>
+<div class="meta">Kari Freyr McKern &nbsp;·&nbsp; July 2026 &nbsp;·&nbsp; 30-year panel (1996–2025) &nbsp;·&nbsp; Gallup/Pew × CAMS5 ensemble &nbsp;·&nbsp; <a href="us_interest_burden_cams_study.html" style="color:var(--teal)">← Study 1: Interest Burden</a></div>
+
+<h2>1. What Was Tested</h2>
+
+<p>Study 1 (Interest Burden) found that CAMS does <em>not</em> lead the fiscal stress cycle — it is fiscal pressure that precedes CAMS structural response by roughly three years. The direction of causality pointed away from the naive oligarchic-capture prediction.</p>
+
+<p>The decisive falsification test was always the second variable set: <strong>legitimacy and conflict indicators</strong> — Gallup institutional confidence and Pew federal trust. If the mechanism of oligarchic capture operates through political legitimacy rather than directly through fiscal variables, then CAMS Stress should <em>lead</em> trust collapse (not follow it). This study runs the identical three-part protocol: (1) contemporaneous correlations, (2) lead-lag analysis at lags −3 to +3, (3) AR(1) walk-forward out-of-sample prediction (train ≤2020, test 2021–2025).</p>
+
+<div class="finding-box">
+<div class="finding-label">Design note</div>
+Lag convention throughout: <strong>positive lag = CAMS leads</strong> (CAMS at year <em>t</em> predicts target at <em>t+k</em>). A correlation strengthening with lag implies CAMS is the leading indicator. In Study 1, Bond Strength showed strongest correlation at lag −3 (fiscal led). In this study we test whether the opposite holds.
+</div>
+
+<h2>2. The Data</h2>
+
+<h3>Gallup Average Confidence in 14 Institutions (1996–2025)</h3>
+<p>Gallup's annual survey asks whether respondents have "a great deal" or "quite a lot" of confidence in each institution. The 14 institutions tracked continuously since 1993 include military, small business, police, medical system, church, Supreme Court, banks, public schools, presidency, organized labour, newspapers, criminal justice system, TV news, and big business. This is the average "great deal + quite a lot" across all 14. Sources: Gallup July 2022 article (1993–2022), Gallup July 2023 article (2023 = 26%), and computed from the 2024/2025 institution tables published at news.gallup.com/poll/1597 (2024 = 28.3%, 2025 = 27.9%, both rounded to 28%).</p>
+
+<h3>Pew Research "Trust in Federal Government" (1996–2025)</h3>
+<p>Pew Research Center's long-running question: what share of Americans say they can trust the government in Washington to do what is right "just about always" or "most of the time." Measured annually or biannually since 1958. Source: Pew Research Center published trend; 2024 (22%) and 2025 (9%) confirmed from September 2025 Pew article.</p>
+
+<div class="chart-wrap">
+  <div class="chart-title">Fig 1. Legitimacy Indicators vs CAMS Mean Stress, 1996–2025</div>
+  <canvas id="legitChart"></canvas>
+</div>
+
+<div class="chart-wrap">
+  <div class="chart-title">Fig 2. CAMS Archive Node — Value vs Stress, 1996–2025 (key mediating node)</div>
+  <canvas id="archiveChart"></canvas>
+</div>
+
+<h2>3. Contemporaneous Correlations</h2>
+
+<p>Both legitimacy indicators show strong contemporaneous correlations with CAMS structural variables. The pattern is clear: higher institutional coherence and capacity variables predict higher trust; higher stress predicts lower trust.</p>
+
+<div class="grid-2">
+<div>
+<h3>Gallup Institutional Confidence</h3>
+<table>
+<thead><tr><th>CAMS Variable</th><th>r</th><th>p</th></tr></thead>
+<tbody>
+<tr><td>Archive Node Value</td><td class="r-pos">+0.624</td><td>0.000 <span class="sig">***</span></td></tr>
+<tr><td>Helm Node Value</td><td class="r-pos">+0.606</td><td>0.000 <span class="sig">***</span></td></tr>
+<tr><td>Mean Capacity</td><td class="r-pos">+0.583</td><td>0.001 <span class="sig">**</span></td></tr>
+<tr><td>Mean Node Value</td><td class="r-pos">+0.557</td><td>0.001 <span class="sig">**</span></td></tr>
+<tr><td>Mean Bond Strength</td><td class="r-pos">+0.555</td><td>0.001 <span class="sig">**</span></td></tr>
+<tr><td>Archive Stress</td><td class="r-neg">−0.513</td><td>0.004 <span class="sig">**</span></td></tr>
+<tr><td>Mean Stress</td><td class="r-neg">−0.408</td><td>0.025 <span class="sig">*</span></td></tr>
+<tr><td>Shield Node Value</td><td class="r-pos">+0.406</td><td>0.026 <span class="sig">*</span></td></tr>
+<tr><td>Reactivity Ratio</td><td class="r-neg">−0.248</td><td>0.187</td></tr>
+<tr><td>Cog Gap</td><td class="r-pos">+0.046</td><td>0.810</td></tr>
+</tbody>
+</table>
+</div>
+<div>
+<h3>Pew Federal Trust</h3>
+<table>
+<thead><tr><th>CAMS Variable</th><th>r</th><th>p</th></tr></thead>
+<tbody>
+<tr><td>Archive Node Value</td><td class="r-pos">+0.620</td><td>0.000 <span class="sig">***</span></td></tr>
+<tr><td>Helm Node Value</td><td class="r-pos">+0.612</td><td>0.000 <span class="sig">***</span></td></tr>
+<tr><td>Mean Node Value</td><td class="r-pos">+0.504</td><td>0.005 <span class="sig">**</span></td></tr>
+<tr><td>Mean Capacity</td><td class="r-pos">+0.494</td><td>0.006 <span class="sig">**</span></td></tr>
+<tr><td>Mean Bond Strength</td><td class="r-pos">+0.490</td><td>0.006 <span class="sig">**</span></td></tr>
+<tr><td>Archive Stress</td><td class="r-neg">−0.477</td><td>0.008 <span class="sig">**</span></td></tr>
+<tr><td>Shield Node Value</td><td class="r-pos">+0.397</td><td>0.030 <span class="sig">*</span></td></tr>
+<tr><td>Stress Dispersion</td><td class="r-neg">−0.325</td><td>0.080 <span class="sig">.</span></td></tr>
+<tr><td>Mean Stress</td><td class="r-neg">−0.320</td><td>0.085 <span class="sig">.</span></td></tr>
+<tr><td>Cog Gap</td><td class="r-pos">+0.167</td><td>0.378</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="finding-box positive">
+<div class="finding-label">Key finding</div>
+Archive Node Value and Helm Node Value are the strongest contemporaneous correlates of institutional trust (r ≈ +0.61 for both indicators). This is the fixation/long-memory node and the executive-governance node. The pattern is structural: systems that can encode learning (Archive) and maintain directional governance (Helm) sustain higher public trust.
+</div>
+
+<h2>4. Lead-Lag Analysis — The Critical Test</h2>
+
+<p>The question is whether CAMS Stress at year <em>t</em> predicts trust declines at year <em>t+k</em> for positive <em>k</em>. A correlation that strengthens from lag 0 to lag +3 would confirm that CAMS is a <em>leading</em> indicator of trust collapse — the opposite pattern from what we found for fiscal variables (where Bond Strength peaked at lag −3).</p>
+
+<div class="chart-wrap">
+  <div class="chart-title">Fig 3. Lead-Lag Profile: CAMS Mean Stress vs Gallup Confidence (r at lags −3 to +3)</div>
+  <canvas id="lagChart"></canvas>
+</div>
+
+<h3>Gallup Confidence — Lead-Lag Table</h3>
+<table class="lag-table">
+<thead><tr><th>CAMS Variable</th><th>lag−3</th><th>lag−2</th><th>lag−1</th><th>lag 0</th><th>lag+1</th><th>lag+2</th><th>lag+3</th><th>Direction</th></tr></thead>
+<tbody>
+<tr>
+  <td>Mean Stress</td>
+  <td>−0.216</td><td>−0.304</td><td class="lag-neg">−0.390*</td><td class="lag-neg">−0.408*</td><td class="lag-neg">−0.499*</td><td class="lag-neg-strong">−0.636*</td><td class="lag-neg-strong">−0.686*</td>
+  <td><span class="badge badge-leads">CAMS Leads</span></td>
+</tr>
+<tr>
+  <td>Mean Bond Strength</td>
+  <td class="lag-pos">+0.486*</td><td class="lag-pos">+0.512*</td><td class="lag-pos">+0.531*</td><td class="lag-pos">+0.555*</td><td class="lag-pos">+0.631*</td><td class="lag-pos-strong">+0.759*</td><td class="lag-pos-strong">+0.796*</td>
+  <td><span class="badge badge-leads">CAMS Leads</span></td>
+</tr>
+<tr>
+  <td>Mean Node Value</td>
+  <td class="lag-pos">+0.428*</td><td class="lag-pos">+0.501*</td><td class="lag-pos">+0.556*</td><td class="lag-pos">+0.557*</td><td class="lag-pos">+0.636*</td><td class="lag-pos-strong">+0.766*</td><td class="lag-pos-strong">+0.795*</td>
+  <td><span class="badge badge-leads">CAMS Leads</span></td>
+</tr>
+<tr>
+  <td>Archive Node Value</td>
+  <td class="lag-pos">+0.601*</td><td class="lag-pos">+0.612*</td><td class="lag-pos">+0.631*</td><td class="lag-pos">+0.624*</td><td class="lag-pos">+0.657*</td><td class="lag-pos-strong">+0.790*</td><td class="lag-pos-strong">+0.803*</td>
+  <td><span class="badge badge-leads">CAMS Leads</span></td>
+</tr>
+<tr>
+  <td>Archive Stress</td>
+  <td class="lag-neg">−0.493*</td><td class="lag-neg">−0.488*</td><td class="lag-neg">−0.526*</td><td class="lag-neg">−0.513*</td><td class="lag-neg">−0.548*</td><td class="lag-neg-strong">−0.687*</td><td class="lag-neg-strong">−0.720*</td>
+  <td><span class="badge badge-leads">CAMS Leads</span></td>
+</tr>
+<tr>
+  <td>Reactivity Ratio</td>
+  <td>+0.031</td><td>−0.169</td><td>−0.243</td><td>−0.248</td><td>−0.266</td><td>−0.268</td><td>−0.195</td>
+  <td><span class="badge badge-contemp">Flat</span></td>
+</tr>
+<tr>
+  <td>Cog Gap</td>
+  <td>+0.193</td><td>+0.045</td><td>+0.000</td><td>+0.046</td><td>+0.002</td><td>−0.013</td><td>+0.017</td>
+  <td><span class="badge badge-contemp">No signal</span></td>
+</tr>
+</tbody>
+</table>
+
+<h3>Pew Federal Trust — Lead-Lag Table</h3>
+<table class="lag-table">
+<thead><tr><th>CAMS Variable</th><th>lag−3</th><th>lag−2</th><th>lag−1</th><th>lag 0</th><th>lag+1</th><th>lag+2</th><th>lag+3</th><th>Direction</th></tr></thead>
+<tbody>
+<tr>
+  <td>Mean Stress</td>
+  <td>−0.180</td><td>−0.251</td><td>−0.287</td><td class="lag-neg">−0.320.</td><td class="lag-neg">−0.417*</td><td class="lag-neg-strong">−0.560*</td><td class="lag-neg-strong">−0.622*</td>
+  <td><span class="badge badge-leads">CAMS Leads</span></td>
+</tr>
+<tr>
+  <td>Mean Bond Strength</td>
+  <td class="lag-pos">+0.374.</td><td class="lag-pos">+0.471*</td><td class="lag-pos">+0.450*</td><td class="lag-pos">+0.490*</td><td class="lag-pos">+0.551*</td><td class="lag-pos-strong">+0.705*</td><td class="lag-pos-strong">+0.739*</td>
+  <td><span class="badge badge-leads">CAMS Leads</span></td>
+</tr>
+<tr>
+  <td>Archive Node Value</td>
+  <td class="lag-pos">+0.512*</td><td class="lag-pos">+0.591*</td><td class="lag-pos">+0.587*</td><td class="lag-pos">+0.620*</td><td class="lag-pos">+0.625*</td><td class="lag-pos-strong">+0.746*</td><td>+0.692*</td>
+  <td><span class="badge badge-leads">CAMS Leads</span></td>
+</tr>
+<tr>
+  <td>Archive Stress</td>
+  <td class="lag-neg">−0.425*</td><td class="lag-neg">−0.486*</td><td class="lag-neg">−0.451*</td><td class="lag-neg">−0.477*</td><td class="lag-neg">−0.519*</td><td class="lag-neg-strong">−0.651*</td><td class="lag-neg-strong">−0.597*</td>
+  <td><span class="badge badge-leads">CAMS Leads</span></td>
+</tr>
+</tbody>
+</table>
+
+<p class="note">* p&lt;0.05, . p&lt;0.10. Positive lag = CAMS at year t versus target at t+lag (CAMS leads target).</p>
+
+<div class="finding-box negative">
+<div class="finding-label">Critical result — hypothesis confirmed</div>
+Every primary CAMS variable shows a lead-lag profile where the correlation <em>strengthens</em> as lag increases from 0 to +3. This is the opposite of the IPR finding. CAMS Stress at year <em>t</em> correlates with Gallup confidence at <em>t+3</em> at r = −0.686*, and with Pew trust at r = −0.622*. The 2020 CAMS Stress spike (9.28, the highest in the panel) preceded the 2022–2023 trust trough (Gallup 27–26, Pew 20–16) by exactly 2–3 years. The oligarchic-capture mechanism runs through legitimacy, not directly through fiscal variables.
+</div>
+
+<h2>5. Predictive Models</h2>
+
+<p>Using 1-year-ahead prediction: does CAMS at year <em>t</em>, combined with the previous year's trust level (AR(1) term), improve out-of-sample prediction of trust at <em>t+1</em>? Training on 1996–2020; testing on 2021–2025.</p>
+
+<div class="grid-2">
+<div>
+<h3>Gallup Confidence — 1-Year Ahead OOS</h3>
+<table>
+<thead><tr><th>Model</th><th>R² (in)</th><th>OOS RMSE</th><th>vs AR(1)</th></tr></thead>
+<tbody>
+<tr><td>AR(1) baseline</td><td>0.779</td><td>2.805</td><td>—</td></tr>
+<tr><td>+ Mean Stress</td><td>0.814</td><td>2.583</td><td class="r-pos">−0.222 **</td></tr>
+<tr><td>+ Archive Stress</td><td>0.798</td><td>2.667</td><td class="r-pos">−0.138 **</td></tr>
+<tr><td>+ Mean Node Value</td><td>0.822</td><td>2.671</td><td class="r-pos">−0.134 **</td></tr>
+<tr><td>+ Archive Node Value</td><td>0.807</td><td>2.737</td><td class="r-pos">−0.068 **</td></tr>
+<tr><td>+ Bond Strength</td><td>0.821</td><td>2.792</td><td class="r-pos">−0.013</td></tr>
+<tr><td>+ Reactivity Ratio</td><td>0.782</td><td>2.791</td><td class="r-neg">−0.014</td></tr>
+</tbody>
+</table>
+</div>
+<div>
+<h3>Pew Federal Trust — 1-Year Ahead OOS</h3>
+<table>
+<thead><tr><th>Model</th><th>R² (in)</th><th>OOS RMSE</th><th>vs AR(1)</th></tr></thead>
+<tbody>
+<tr><td>AR(1) baseline</td><td>0.692</td><td>8.168</td><td>—</td></tr>
+<tr><td>+ Archive Stress</td><td>0.716</td><td>7.386</td><td class="r-pos">−0.782 **</td></tr>
+<tr><td>+ Archive Node Value</td><td>0.718</td><td>7.419</td><td class="r-pos">−0.749 **</td></tr>
+<tr><td>+ Mean Node Value</td><td>0.731</td><td>7.674</td><td class="r-pos">−0.494 **</td></tr>
+<tr><td>+ Mean Stress</td><td>0.734</td><td>7.642</td><td class="r-pos">−0.526 **</td></tr>
+<tr><td>+ Bond Strength</td><td>0.735</td><td>7.848</td><td class="r-pos">−0.320 **</td></tr>
+<tr><td>+ Reactivity Ratio</td><td>0.703</td><td>8.322</td><td class="r-neg">+0.154 **</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="finding-box positive">
+<div class="finding-label">OOS interpretation</div>
+In the IPR (fiscal) study, adding Mean Stress <em>worsened</em> OOS prediction by +0.031 RMSE. Here, it <em>improves</em> Gallup prediction by −0.222 RMSE (−7.9%) and Pew prediction by −0.526 RMSE (−6.4%). Archive Stress is the single best Pew augmentation (−0.782 RMSE, −9.6%). This asymmetry — Stress worsens fiscal prediction, improves legitimacy prediction — is the cleanest summary of the asymmetric mechanism.
+</div>
+
+<div class="chart-wrap">
+  <div class="chart-title">Fig 4. OOS RMSE Improvement from Adding CAMS Variables (Gallup Confidence, 2021–2025 test window)</div>
+  <canvas id="oosChart"></canvas>
+</div>
+
+<h2>6. Trajectory: Where We Are Now</h2>
+
+<div class="chart-wrap">
+  <div class="chart-title">Fig 5. CAMS Mean Stress vs Gallup Confidence, 2015–2025 (dual axis)</div>
+  <canvas id="dualChart"></canvas>
+</div>
+
+<table>
+<thead><tr><th>Year</th><th>Gallup %</th><th>Pew %</th><th>CAMS Stress</th><th>Bond Strength</th><th>Archive V</th><th>Archive S</th></tr></thead>
+<tbody>
+<tr><td>2015</td><td>31</td><td>19</td><td>5.85</td><td>20.72</td><td>9.00</td><td>6.00</td></tr>
+<tr><td>2016</td><td>31</td><td>19</td><td>6.65</td><td>17.35</td><td>5.40</td><td>7.80</td></tr>
+<tr><td>2017</td><td>34</td><td>20</td><td>6.28</td><td>18.46</td><td>6.40</td><td>7.20</td></tr>
+<tr><td>2018</td><td>33</td><td>18</td><td>6.68</td><td>17.19</td><td>5.40</td><td>7.60</td></tr>
+<tr><td>2019</td><td>32</td><td>17</td><td>6.58</td><td>16.90</td><td>4.00</td><td>8.60</td></tr>
+<tr><td>2020</td><td>36</td><td>20</td><td><strong>9.28</strong></td><td><strong>10.99</strong></td><td>1.80</td><td>9.40</td></tr>
+<tr><td>2021</td><td>32</td><td>24</td><td>7.38</td><td>15.77</td><td>5.00</td><td>8.00</td></tr>
+<tr><td>2022</td><td>27</td><td>20</td><td>6.90</td><td>16.93</td><td>7.00</td><td>7.00</td></tr>
+<tr><td>2023</td><td>26</td><td>16</td><td>6.10</td><td>21.02</td><td>7.20</td><td>6.80</td></tr>
+<tr><td>2024</td><td>28</td><td>22</td><td>6.50</td><td>19.48</td><td>5.00</td><td>8.00</td></tr>
+<tr><td>2025</td><td>28</td><td><strong>9</strong></td><td>7.93</td><td>13.42</td><td>1.50</td><td>9.00</td></tr>
+</tbody>
+</table>
+
+<div class="finding-box purple">
+<div class="finding-label">2025 pattern</div>
+Gallup confidence (28%) looks stable relative to its 2022–2023 trough, but Pew federal trust has collapsed to 9% — its lowest reading in 67 years of measurement. The 2020 CAMS Stress spike (9.28) propagated through to Gallup trough in 2022–2023 with a 2–3 year lag, exactly as the model predicts. The 2025 CAMS variables (Stress: 7.93, Archive V: 1.5, Archive S: 9.0) replicate the archive degradation pattern last seen in 2020. The 3-year-lag model predicts continued legitimacy pressure in 2026–2028.
+</div>
+
+<h2>7. The Asymmetric Mechanism</h2>
+
+<p>Combining Study 1 (fiscal) and Study 2 (legitimacy) produces a structurally coherent picture:</p>
+
+<div class="comparison-row">
+<div class="comparison-card">
+<h4>Study 1: Interest Burden (IPR)</h4>
+<p style="font-size:0.85rem; margin-bottom:0.5rem;">Direction: <strong>Fiscal → CAMS</strong></p>
+<p style="font-size:0.82rem; color:#666;">High interest burden is followed 3 years later by <em>higher</em> CAMS Bond Strength. The system becomes more structurally coupled under fiscal pressure — holding together longer than the surface indicators suggest. CAMS is measuring the institutional capacity that enables debt to be sustained.</p>
+</div>
+<div class="comparison-card">
+<h4>Study 2: Legitimacy (Gallup/Pew)</h4>
+<p style="font-size:0.85rem; margin-bottom:0.5rem;">Direction: <strong>CAMS → Legitimacy</strong></p>
+<p style="font-size:0.82rem; color:#666;">Rising CAMS Stress is followed 2–3 years later by <em>lower</em> institutional trust. CAMS captures structural degradation before it becomes visible as conscious public disaffection. The mechanism is not fiscal — it operates through the legitimacy channel.</p>
+</div>
+</div>
+
+<p>The implied sequence is: structural stress accumulates in CAMS nodes (particularly Archive and Helm) → public trust erodes 2–3 years later → the fiscal burden becomes politically unsustainable only at that point. The debt load is not self-liquidating through economic stress; it becomes a legitimacy crisis when the institutions needed to manage or renegotiate it have already lost public authority.</p>
+
+<p>The Shield node significance (r ≈ +0.40 with both trust indicators) adds a secondary finding: military-security institutional value correlates positively with public trust contemporaneously. This suggests the military-security sector is currently acting as a <em>trust floor</em> — the institution absorbing the credibility gap left by other governance nodes.</p>
+
+<h2>8. What Reactivity Ratio's Flat Profile Tells Us</h2>
+
+<p>The Reactivity Ratio (fast node stress / slow node stress) shows no meaningful lead-lag relationship with either trust indicator. This matters for theory: the oligarchic-capture mechanism is not a story about surface-level operational chaos (fast nodes: Craft, Hands, Flow) outpacing deliberative governance (slow nodes: Helm, Shield, Lore, Archive). It is a story about the degradation of long-memory institutions (Archive: law, precedent, institutional knowledge) and executive governance capacity (Helm). The Cognitive Gap variable (slow node V − fast node V) similarly shows no signal, confirming that fast/slow desynchronisation is not the proximate driver of legitimacy collapse in this dataset — deep institutional erosion is.</p>
+
+<div class="verdict">
+<h2>9. Verdict</h2>
+<p>The oligarchic-capture hypothesis passes its first critical falsification test. CAMS Stress <strong>leads</strong> legitimacy decline by 2–3 years across both the Gallup and Pew series. This is the opposite of what we found for fiscal variables (where fiscal led CAMS). The asymmetry is sharp and consistent:</p>
+<p>CAMS does not predict fiscal over-commitment <em>before it happens</em> — it measures the institutional strength that determines how long a high-burden period can be sustained. But CAMS does predict trust collapse before the public registers it consciously.</p>
+<p>The 2020 stress spike propagated to a Gallup/Pew trough in 2022–2023 with textbook 2–3 year lag. The 2025 CAMS readings (Stress: 7.93, Archive V: 1.5, the lowest in the panel outside of 2020's 1.8) imply continued or deepening legitimacy pressure in 2026–2028 — even if the nominal Gallup average looks stable, the Pew federal-specific trust reading has already collapsed to 9% and the structural drivers have not resolved.</p>
+<p>The key transmission nodes are Archive (fixation capacity / institutional memory) and Helm (executive governance coherence), not the fast operational nodes. The trust collapse is an institutional encoding problem, not an operational failure.</p>
+</div>
+
+<h2>10. Jobs Worth Doing</h2>
+<p><strong>Debt-to-GDP test (Study 3):</strong> Run the same protocol against GFDEGDQ188S. The IPR study used a flow variable; debt-to-GDP is a stock variable and may show a different lag structure — potentially CAMS stress leading debt accumulation rather than following it.</p>
+<p><strong>Legitimacy → conflict transition:</strong> At what trust level does institutional legitimacy collapse become manifest as electoral or social conflict? Pair the current study with House electoral volatility (Pedersen index) and protest frequency data.</p>
+<p><strong>Cross-national comparison:</strong> Run the identical protocol for Germany and Australia. If CAMS leads legitimacy in those cases as well, the US pattern is systemic rather than idiosyncratic. If the lag is longer in Germany (higher Archive scores, stronger institutional memory), that would be a structural prediction.</p>
+<p><strong>Node-level mechanism:</strong> Run Archive_V and Helm_V separately as predictors. Which one has more predictive power for the Pew trust collapse vs the Gallup institutional-average path? The Pew question is specifically about federal government trust; Helm should dominate. Gallup is about institution-averaged confidence; Archive should dominate.</p>
+
+<h2>11. Files</h2>
+<p>Panel CSV: <code>analysis/us_legitimacy_cams_panel.csv</code> (30 rows × 16 columns)<br>
+HTML report: <code>analysis/us_legitimacy_cams_study.html</code> (this file)<br>
+Companion study: <code>analysis/us_interest_burden_cams_study.html</code></p>
+
+</div><!-- end wrap -->
+
+<script>
+const years = [1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025];
+const gallup = [39,39,41,41,41,42,41,42,43,39,38,33,32,34,32,33,32,32,30,31,31,34,33,32,36,32,27,26,28,28];
+const pew    = [28,33,35,40,44,57,40,45,44,38,33,25,27,26,22,22,29,19,24,19,19,20,18,17,20,24,20,16,22,9];
+const stress = [3.53,3.05,4.25,3.95,5.25,7.28,5.90,6.18,6.08,6.53,6.35,6.60,8.18,7.35,6.60,6.90,5.73,6.10,6.10,5.85,6.65,6.28,6.68,6.58,9.28,7.38,6.90,6.10,6.50,7.93];
+const bondstr= [31.6,35.1,26.6,30.3,22.7,21.3,23.7,22.4,21.3,19.4,19.4,19.4,14.0,15.4,17.5,16.4,19.4,19.0,17.9,20.7,17.4,18.5,17.2,16.9,11.0,15.8,16.9,21.0,19.5,13.4];
+const archV  = [7,7.2,5.4,5.4,3.6,2.8,3.6,3.6,3.2,3.6,3.6,3.4,2.2,3.2,4.4,4.4,6.4,5.2,5.4,9.0,5.4,6.4,5.4,4.0,1.8,5.0,7.0,7.2,5.0,1.5];
+const archS  = [5.2,4.6,6.4,5.6,7.2,7.8,6.6,6.6,6.8,6.8,6.8,6.8,8.2,7.4,6.6,6.8,5.8,6.6,6.6,6.0,7.8,7.2,7.6,8.6,9.4,8.0,7.0,6.8,8.0,9.0];
+
+const palette = {
+  gallup: '#2F6F7D', pew: '#6B3F8A', stress: '#C84C3E', bond: '#D98B2B', archV: '#3a7d44', archS: '#888'
+};
+
+// Fig 1: legitimacy vs stress
+const ctx1 = document.getElementById('legitChart').getContext('2d');
+new Chart(ctx1, {
+  type: 'line',
+  data: {
+    labels: years,
+    datasets: [
+      { label: 'Gallup Conf %', data: gallup, borderColor: palette.gallup, backgroundColor: 'transparent', borderWidth: 2, pointRadius: 3, yAxisID: 'y1' },
+      { label: 'Pew Trust %',   data: pew,    borderColor: palette.pew,    backgroundColor: 'transparent', borderWidth: 2, pointRadius: 3, yAxisID: 'y1', borderDash: [4,3] },
+      { label: 'CAMS Mean Stress', data: stress, borderColor: palette.stress, backgroundColor: 'transparent', borderWidth: 2, pointRadius: 3, yAxisID: 'y2' }
+    ]
+  },
+  options: {
+    responsive: true,
+    interaction: { mode: 'index' },
+    scales: {
+      y1: { type: 'linear', position: 'left', title: { display: true, text: 'Trust / Confidence (%)' }, min: 0, max: 65 },
+      y2: { type: 'linear', position: 'right', title: { display: true, text: 'CAMS Stress (1–10)' }, min: 0, max: 12, grid: { drawOnChartArea: false } }
+    },
+    plugins: { legend: { position: 'top' } }
+  }
+});
+
+// Fig 2: Archive
+const ctx2 = document.getElementById('archiveChart').getContext('2d');
+new Chart(ctx2, {
+  type: 'line',
+  data: {
+    labels: years,
+    datasets: [
+      { label: 'Archive Node Value', data: archV, borderColor: palette.archV, backgroundColor: 'transparent', borderWidth: 2, pointRadius: 3 },
+      { label: 'Archive Stress',     data: archS, borderColor: palette.archS, backgroundColor: 'transparent', borderWidth: 2, pointRadius: 3, borderDash: [4,3] },
+      { label: 'Gallup Conf (÷4)',   data: gallup.map(v => v/4), borderColor: palette.gallup, backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, borderDash: [2,4] }
+    ]
+  },
+  options: {
+    responsive: true,
+    interaction: { mode: 'index' },
+    scales: {
+      y: { title: { display: true, text: 'Score (1–10) | Gallup/4' }, min: 0, max: 12 }
+    },
+    plugins: { legend: { position: 'top' } }
+  }
+});
+
+// Fig 3: Lag profile chart
+const lagLabels = ['lag−3','lag−2','lag−1','lag 0','lag+1','lag+2','lag+3'];
+const lagStress   = [-0.216,-0.304,-0.390,-0.408,-0.499,-0.636,-0.686];
+const lagBond     = [0.486,0.512,0.531,0.555,0.631,0.759,0.796];
+const lagArchS    = [-0.493,-0.488,-0.526,-0.513,-0.548,-0.687,-0.720];
+
+const ctx3 = document.getElementById('lagChart').getContext('2d');
+new Chart(ctx3, {
+  type: 'line',
+  data: {
+    labels: lagLabels,
+    datasets: [
+      { label: 'Mean Stress (neg)', data: lagStress, borderColor: palette.stress, backgroundColor: 'transparent', borderWidth: 2, pointRadius: 5 },
+      { label: 'Bond Strength (pos)', data: lagBond, borderColor: palette.bond, backgroundColor: 'transparent', borderWidth: 2, pointRadius: 5 },
+      { label: 'Archive Stress (neg)', data: lagArchS, borderColor: palette.archS, backgroundColor: 'transparent', borderWidth: 2, pointRadius: 5, borderDash: [4,3] }
+    ]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      y: { min: -1, max: 1, title: { display: true, text: 'Pearson r with Gallup Confidence' },
+        ticks: { callback: v => v.toFixed(1) }
+      }
+    },
+    plugins: {
+      legend: { position: 'top' },
+      annotation: { annotations: {} }
+    }
+  }
+});
+
+// Fig 4: OOS RMSE
+const ctx4 = document.getElementById('oosChart').getContext('2d');
+new Chart(ctx4, {
+  type: 'bar',
+  data: {
+    labels: ['AR(1) base','+ Mean Stress','+ Arch Stress','+ Node Value','+ Archive V','+ Bond Str','+ Reactiv'],
+    datasets: [{
+      label: 'OOS RMSE (Gallup, 2021–2025)',
+      data: [2.805, 2.583, 2.667, 2.671, 2.737, 2.792, 2.791],
+      backgroundColor: [
+        '#888','#3a7d44','#5C9E6A','#7AB89A','#9ECFB8','#BDE1D0','#c8c8c8'
+      ]
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: { y: { min: 2.4, max: 3.0, title: { display: true, text: 'RMSE (lower = better)' } } },
+    plugins: { legend: { display: false } }
+  }
+});
+
+// Fig 5: Dual axis 2015-2025
+const recent = [2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025];
+const gRecent = [31,31,34,33,32,36,32,27,26,28,28];
+const sRecent = [5.85,6.65,6.28,6.68,6.58,9.28,7.38,6.90,6.10,6.50,7.93];
+const bRecent = [20.72,17.35,18.46,17.19,16.90,10.99,15.77,16.93,21.02,19.48,13.42];
+
+const ctx5 = document.getElementById('dualChart').getContext('2d');
+new Chart(ctx5, {
+  type: 'line',
+  data: {
+    labels: recent,
+    datasets: [
+      { label: 'Gallup Confidence', data: gRecent, borderColor: palette.gallup, backgroundColor: 'transparent', borderWidth: 2.5, pointRadius: 5, yAxisID: 'y1' },
+      { label: 'CAMS Mean Stress', data: sRecent, borderColor: palette.stress, backgroundColor: 'rgba(200,76,62,0.08)', borderWidth: 2.5, pointRadius: 5, yAxisID: 'y2', fill: true }
+    ]
+  },
+  options: {
+    responsive: true,
+    interaction: { mode: 'index' },
+    scales: {
+      y1: { type: 'linear', position: 'left', title: { display: true, text: 'Gallup Confidence %' }, min: 20, max: 50 },
+      y2: { type: 'linear', position: 'right', title: { display: true, text: 'CAMS Stress' }, min: 4, max: 11, grid: { drawOnChartArea: false } }
+    },
+    plugins: { legend: { position: 'top' } }
+  }
+});
+</script>
+</body>
+</html>

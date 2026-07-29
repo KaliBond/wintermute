@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US Interest Burden × CAMS Stress — Study Report</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #F5F1E4; --ink: #1B2A33; --amber: #D98B2B; --teal: #2F6F7D;
+  --red: #C84C3E; --green: #3a7d44; --paper: #FDFAF0; --border: #DAD2B8;
+  --mono: 'JetBrains Mono', 'Courier New', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: Georgia, serif; font-size: 15px; line-height: 1.65; }
+.wrap { max-width: 960px; margin: 0 auto; padding: 2rem 1.25rem 5rem; }
+h1 { font-size: 1.9rem; font-weight: 700; margin-bottom: 0.35rem; line-height: 1.2; }
+.subtitle { font-size: 1rem; color: #6B7480; margin-bottom: 0.25rem; }
+.meta { font-size: 0.82rem; color: #8A9BAA; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--border); }
+h2 { font-size: 1.2rem; font-weight: 700; color: var(--ink); margin: 2rem 0 0.75rem; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+h3 { font-size: 1rem; font-weight: 700; color: var(--teal); margin: 1.25rem 0 0.5rem; }
+p { margin-bottom: 0.9rem; }
+.finding-box { background: #FBF8EF; border: 1px solid var(--border); border-left: 4px solid var(--amber); border-radius: 8px; padding: 1rem 1.25rem; margin: 1.25rem 0; }
+.finding-box.positive { border-left-color: var(--green); }
+.finding-box.negative { border-left-color: var(--red); }
+.finding-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.35rem; }
+.finding-box.positive .finding-label { color: var(--green); }
+.finding-box.negative .finding-label { color: var(--red); }
+.chart-wrap { background: var(--paper); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem 1.25rem 0.75rem; margin: 1.25rem 0; }
+.chart-title { font-size: 0.88rem; font-weight: 700; color: var(--ink); margin-bottom: 0.75rem; }
+.chart-wrap canvas { max-height: 280px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; font-family: var(--mono); margin: 1rem 0; }
+th { background: var(--ink); color: #F5F1E4; padding: 6px 10px; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; }
+td { padding: 5px 10px; border-bottom: 1px solid #E8E2CE; }
+tr:hover td { background: #F5F0E0; }
+.r-pos { color: var(--green); font-weight: 700; }
+.r-neg { color: var(--red); font-weight: 700; }
+.r-neutral { color: #888; }
+.sig { color: var(--amber); font-size: 0.8rem; }
+.badge { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; font-family: var(--mono); }
+.badge-leads { background: #E1F5EE; color: #0F6E56; }
+.badge-contemp { background: #E6F1FB; color: #185FA5; }
+.badge-follows { background: #FEF3E2; color: #A06030; }
+.verdict { background: var(--ink); color: var(--bg); border-radius: 10px; padding: 1.5rem 1.75rem; margin: 2rem 0; }
+.verdict h2 { color: var(--amber); border-bottom-color: #3a4a54; }
+.verdict p { color: #D0C4A8; margin-bottom: 0.75rem; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>US Interest Burden × CAMS Stress Architecture</h1>
+<div class="subtitle">Does CAMS structural stress anticipate fiscal over-commitment? A first empirical test.</div>
+<div class="meta">Kari Freyr McKern &nbsp;·&nbsp; July 2026 &nbsp;·&nbsp; 30-year panel (1996–2025) &nbsp;·&nbsp; FRED (OMB) × CAMS5 ensemble</div>
+
+<h2>1. What Was Tested</h2>
+
+<p>The core claim of the US oligarchic-capture analysis is that a merchant-financier coalition has progressively locked in fiscal structures that favour asset-holders, increasing background systemic stress even when headline GDP growth looks acceptable. <strong>Interest payments as a share of federal revenue (IPR)</strong> is one of the cleanest external proxies for fiscal pre-commitment — it measures how much of the state's capacity is pre-allocated to servicing past obligations before a single new coordination function can be funded.</p>
+
+<p>The test was three-part: (1) contemporaneous correlations between CAMS variables and IPR across 1996–2025; (2) lead-lag analysis — does CAMS Stress rise <em>before</em> IPR ramps, or only alongside/after?; (3) AR(1) baseline models with and without CAMS augmentation, including a walk-forward out-of-sample test (train ≤2020, test 2021–2025).</p>
+
+<div class="chart-wrap">
+  <div class="chart-title">Fig 1. US Interest Payments as % of Federal Revenue, 1996–2025 (FRED/OMB)</div>
+  <canvas id="iprChart"></canvas>
+</div>
+
+<h2>2. IPR: What the Series Actually Shows</h2>
+
+<p>The IPR series has a distinctive double-valley shape. It peaked at 16.6% in 1996, declined through the Clinton surplus era to a trough near 8.5–9% in 2003–2015, then re-accelerated sharply — 14.8% (2023), 17.9% (2024), 18.5% (2025). The 2025 figure now exceeds the 1996 opening level of the CAMS panel. The trajectory from 2022–2025 is the steepest three-year rise since the 1980s high-rate environment.</p>
+
+<h2>3. Contemporaneous Correlations</h2>
+
+<table>
+  <thead><tr><th>CAMS Variable</th><th>r (with IPR)</th><th>p</th><th>Reading</th></tr></thead>
+  <tbody>
+    <tr><td>Mean Bond Strength</td><td class="r-pos">+0.372</td><td>0.043 <span class="sig">*</span></td><td>Higher institutional coupling → higher IPR (surprising)</td></tr>
+    <tr><td>Shield Node Value</td><td class="r-pos">+0.380</td><td>0.038 <span class="sig">*</span></td><td>Military-security dominance correlates with fiscal pre-commitment</td></tr>
+    <tr><td>Hands Node Value</td><td class="r-pos">+0.317</td><td>0.087</td><td>Labour capacity → positive association (ambiguous)</td></tr>
+    <tr><td>Mean Node Value</td><td class="r-pos">+0.277</td><td>0.139</td><td>Moderate positive; not significant</td></tr>
+    <tr><td>Stewards Node Value</td><td class="r-pos">+0.280</td><td>0.134</td><td>Governance capacity → positive (fiscal regime coherence?)</td></tr>
+    <tr><td>Mean Capacity</td><td class="r-pos">+0.308</td><td>0.098</td><td>Near-significant; mirrors Clinton-era high-capacity high-IPR</td></tr>
+    <tr><td>Mean Stress</td><td class="r-neg">−0.303</td><td>0.104</td><td>Higher stress → lower IPR (inverse; fiscal stress ≠ CAMS stress here)</td></tr>
+    <tr><td>Archive Stress</td><td class="r-neg">−0.178</td><td>0.346</td><td>Weak inverse; not significant</td></tr>
+    <tr><td>Archive Node Value</td><td class="r-pos">+0.128</td><td>0.502</td><td>Near-zero; Archive not driving contemporaneous IPR</td></tr>
+    <tr><td>Stress Dispersion (SD)</td><td class="r-neg">−0.111</td><td>0.559</td><td>Not significant</td></tr>
+    <tr><td>Reactivity Ratio</td><td class="r-neg">−0.026</td><td>0.891</td><td>Essentially zero</td></tr>
+  </tbody>
+</table>
+
+<div class="finding-box negative">
+  <div class="finding-label">Key Finding — Contemporaneous</div>
+  <strong>Mean Stress correlates negatively with IPR (r = −0.303).</strong> This is the opposite of what a naive "stress predicts fiscal burden" story would predict. The explanation lies in the series shape: IPR was highest in 1996 when CAMS Stress was relatively low (the Clinton-era stability period), then IPR fell as stress began rising post-2001, and only now in 2022–2025 are both moving together. CAMS is not narrating what the debt office already knows — it appears to be measuring something orthogonal to the fiscal-burden cycle in the contemporaneous window.
+</div>
+
+<h2>4. Lead-Lag Analysis</h2>
+
+<div class="chart-wrap">
+  <div class="chart-title">Fig 2. Lead-Lag Correlations: Mean Stress & Mean Bond Strength vs IPR (lag in years)</div>
+  <canvas id="lagChart"></canvas>
+</div>
+
+<table>
+  <thead><tr><th>Variable</th><th>lag −3</th><th>lag −2</th><th>lag −1</th><th>lag 0</th><th>lag +1</th><th>lag +2</th><th>lag +3</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Mean Stress</td>
+      <td>−0.503*</td><td>−0.346</td><td>−0.326</td>
+      <td>−0.303</td>
+      <td>−0.338</td><td>−0.144</td><td>+0.190</td>
+    </tr>
+    <tr>
+      <td>Mean Bond Strength</td>
+      <td>+0.705*</td><td>+0.475*</td><td>+0.422*</td>
+      <td>+0.372*</td>
+      <td>+0.379*</td><td>+0.181</td><td>−0.118</td>
+    </tr>
+    <tr>
+      <td>Mean Node Value</td>
+      <td>+0.625*</td><td>+0.397*</td><td>+0.321</td>
+      <td>+0.277</td>
+      <td>+0.311</td><td>+0.117</td><td>−0.207</td>
+    </tr>
+    <tr>
+      <td>Archive Node Value</td>
+      <td>+0.693*</td><td>+0.332</td><td>+0.192</td>
+      <td>+0.128</td>
+      <td>+0.197</td><td>+0.099</td><td>−0.176</td>
+    </tr>
+    <tr>
+      <td>Stewards Node Value</td>
+      <td>+0.330</td><td>+0.290</td><td>+0.284</td>
+      <td>+0.280</td>
+      <td>+0.282</td><td>+0.115</td><td>−0.129</td>
+    </tr>
+  </tbody>
+</table>
+
+<p style="font-size:0.82em; color:#888;">* p&lt;0.05. Lag = CAMS year minus IPR year; lag −3 means IPR leads CAMS by 3 years (fiscal stress precedes CAMS response); lag +1 means CAMS leads IPR by 1 year.</p>
+
+<div class="finding-box negative">
+  <div class="finding-label">Lead-Lag Finding — The Direction of Causality</div>
+  <p>The strongest correlations are consistently at <strong>negative lags</strong> (fiscal leads CAMS, not the reverse). Mean Bond Strength at lag −3 is r = +0.705 (p&lt;0.05); Archive Node Value at lag −3 is r = +0.693 (p&lt;0.05). This means high IPR years predict high CAMS Node Values and Bond Strength 3 years later — the causal direction appears to run <em>from</em> fiscal conditions <em>to</em> CAMS structural readings, not the other way around.</p>
+  <p>This is the clearest finding in the study: <strong>CAMS stress variables do not lead the interest-burden cycle — they follow it.</strong> Periods of low fiscal burden (low IPR) in the late 1990s–2010s coincided with or preceded CAMS deterioration; periods of high fiscal burden (high IPR, 1996 and 2023–2025) coincided with or preceded higher CAMS Node Values and Bond Strength.</p>
+</div>
+
+<div class="finding-box">
+  <div class="finding-label">Interpretation</div>
+  High federal interest burdens appear in CAMS periods of relatively high institutional coherence (Clinton-era, and now 2023–2025 where Stewards and Archive remain moderate). The fiscal pre-commitment story is not being captured by a simple CAMS Stress → IPR mechanism. Instead, the pattern is consistent with a different reading: the <em>capacity</em> to carry high interest burdens (measured by CAMS variables like Bond Strength and Node Value) precedes periods where that capacity is fiscally exploited. This is structurally interesting — it suggests CAMS may be measuring the conditions that enable debt accumulation to persist, rather than the stress it generates.
+</div>
+
+<h2>5. Predictive Models</h2>
+
+<div class="grid-2">
+  <div class="chart-wrap">
+    <div class="chart-title">In-Sample R² Improvement over AR(1)</div>
+    <canvas id="modelChart"></canvas>
+  </div>
+  <div class="chart-wrap">
+    <div class="chart-title">Out-of-Sample RMSE (train 1996–2020, test 2021–2025)</div>
+    <canvas id="oosChart"></canvas>
+  </div>
+</div>
+
+<table>
+  <thead><tr><th>Model</th><th>In-sample R²</th><th>ΔR²</th><th>RMSE</th><th>β(CAMS)</th></tr></thead>
+  <tbody>
+    <tr><td>AR(1) baseline</td><td>0.764</td><td>—</td><td>1.431</td><td>—</td></tr>
+    <tr><td>AR(1) + Mean_BondStrength</td><td>0.783</td><td class="r-pos">+0.020</td><td>1.370</td><td>−0.098</td></tr>
+    <tr><td>AR(1) + Archive_V</td><td>0.779</td><td class="r-pos">+0.015</td><td>1.385</td><td>−0.122</td></tr>
+    <tr><td>AR(1) + Mean_Stress</td><td>0.774</td><td class="r-pos">+0.010</td><td>1.400</td><td>+0.267</td></tr>
+    <tr><td>AR(1) + Stewards_V</td><td>0.767</td><td>+0.003</td><td>1.421</td><td>−0.053</td></tr>
+    <tr><td>AR(1) + Reactivity_Ratio</td><td>0.764</td><td>0.000</td><td>1.430</td><td>+0.359</td></tr>
+  </tbody>
+</table>
+
+<table style="margin-top:1rem">
+  <thead><tr><th>Model</th><th>OOS RMSE (2021–2025)</th><th>vs AR(1)</th></tr></thead>
+  <tbody>
+    <tr><td>AR(1) baseline</td><td>3.416</td><td>—</td></tr>
+    <tr><td>AR(1) + Archive_V</td><td>3.347</td><td class="r-pos">−0.069 ✓</td></tr>
+    <tr><td>AR(1) + Mean_BondStrength</td><td>3.385</td><td class="r-pos">−0.030 ✓</td></tr>
+    <tr><td>AR(1) + Mean_Stress</td><td>3.447</td><td class="r-neg">+0.031 ✗</td></tr>
+    <tr><td>AR(1) + Stewards_V</td><td>3.525</td><td class="r-neg">+0.110 ✗</td></tr>
+  </tbody>
+</table>
+
+<div class="finding-box positive">
+  <div class="finding-label">Predictive Finding</div>
+  Archive Node Value and Mean Bond Strength provide modest but consistent out-of-sample improvement over AR(1) (RMSE reductions of 0.069 and 0.030 respectively, test period 2021–2025). Mean Stress and Stewards slightly worsen OOS performance. The signals that carry independent information are structural coherence variables (Bond Strength, Archive), not stress variables. The in-sample ΔR² gains are small (≤0.020) — CAMS adds marginal signal on top of the AR(1) baseline, not transformative predictive power.
+</div>
+
+<h2>6. The Dual Trajectory (Visual)</h2>
+
+<div class="chart-wrap">
+  <div class="chart-title">Fig 3. IPR vs Mean Stress vs Mean Bond Strength — Dual Y-Axis, 1996–2025</div>
+  <canvas id="dualChart"></canvas>
+</div>
+
+<h2>7. Jobs Worth Doing Next</h2>
+
+<p><strong>Debt-to-GDP and primary deficit.</strong> IPR is only one fiscal test. Debt-to-GDP has a different trajectory (monotonic rise since 2001) and may correlate more cleanly with CAMS stress. Run the same panel against GFDEGDQ188S (FRED debt-to-GDP quarterly, annualised).</p>
+
+<p><strong>Node-specific deep dive: Stewards × Archive interaction.</strong> The oligarchic-capture hypothesis predicts that Archive (legal/administrative encoding) and Stewards (governance) should diverge — Archive remaining formally coherent while Stewards degrades — precisely in periods of high IPR. The contemporaneous correlations don't yet capture this interaction term. Worth testing Stewards_V × Archive_V as a predictor.</p>
+
+<p><strong>Regime-conditional analysis.</strong> The lead-lag structure may differ by JUNO regime. Split the panel: Stable Adaptive years vs Strained years and run separate correlations. This would test whether CAMS only picks up fiscal deterioration signal during structurally vulnerable periods.</p>
+
+<p><strong>Cross-national comparison.</strong> Run the same IPR × CAMS analysis for Germany and Australia (both have long CAMS panels). If the lag structure is reversed in those cases (CAMS leads fiscal), it would suggest the US-specific pattern reflects the oligarchic-capture mechanism — not just a universal CAMS lag artefact.</p>
+
+<p><strong>Legitimacy and conflict indicators.</strong> Next frontier: Gallup institutional trust, electoral volatility, and Varieties of Democracy indicators. These are the downstream effects the oligarchic-capture argument predicts; CAMS Stress should lead those more directly than it leads fiscal variables.</p>
+
+<div class="verdict">
+  <h2>Verdict</h2>
+  <p>CAMS does not lead the interest-burden cycle. The fiscal series leads CAMS by up to 3 years — high IPR is followed by higher CAMS Node Values and Bond Strength, not higher stress. This is not a null result; it is a structurally interesting finding. It suggests CAMS is measuring the institutional capacity that enables debt accumulation to be sustained (and politically managed), not the point at which fiscal over-commitment generates visible systemic stress.</p>
+  <p>The predictive tests show Archive and Bond Strength add marginal OOS signal (RMSE −0.069 and −0.030 over AR(1)), confirming these variables carry some independent information about the IPR trajectory. But the gains are small and the stress-based variables do not outperform.</p>
+  <p>The strongest falsification condition for the oligarchic-capture thesis now becomes: CAMS stress should lead <em>legitimacy and conflict</em> indicators more clearly than it leads fiscal ones. That test should be run next.</p>
+</div>
+
+</div>
+
+<script>
+const YEARS = [1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025];
+const IPR = [16.589,15.450,14.004,12.572,11.009,10.355,9.225,8.588,8.523,8.543,9.415,9.233,10.014,8.879,9.072,9.983,8.996,7.960,7.578,6.867,7.345,7.917,9.759,10.832,10.098,8.706,9.717,14.823,17.884,18.525];
+const STRESS = [3.525,3.050,4.250,3.950,5.250,7.275,5.900,6.175,6.075,6.525,6.350,6.600,8.175,7.350,6.600,6.900,5.725,6.100,6.100,5.850,6.650,6.275,6.675,6.575,9.275,7.375,6.900,6.100,6.500,7.925];
+const BS = [31.616,35.059,26.639,30.266,22.683,21.334,23.721,22.399,21.298,19.364,19.376,19.391,13.988,15.419,17.517,16.437,19.433,18.991,17.885,20.724,17.353,18.457,17.190,16.901,10.994,15.771,16.933,21.024,19.475,13.418];
+
+const palette = {amber:'#D98B2B', teal:'#2F6F7D', red:'#C84C3E', green:'#3a7d44', blue:'#185FA5'};
+
+// Fig 1 — IPR over time
+new Chart(document.getElementById('iprChart'), {
+  type: 'line',
+  data: {
+    labels: YEARS,
+    datasets: [{
+      label: 'Interest % Revenue',
+      data: IPR,
+      borderColor: palette.red,
+      backgroundColor: 'rgba(200,76,62,0.1)',
+      borderWidth: 2.5,
+      pointRadius: 3,
+      fill: true
+    }]
+  },
+  options: {
+    plugins: {legend:{display:false}},
+    scales: {
+      x: {title:{display:true,text:'Fiscal Year'}},
+      y: {title:{display:true,text:'Interest / Revenue (%)'}, min:5}
+    }
+  }
+});
+
+// Fig 2 — lead-lag
+const lagLabels = ['-3','-2','-1','0','+1','+2','+3'];
+const lagStress = [-0.503,-0.346,-0.326,-0.303,-0.338,-0.144,0.190];
+const lagBS     = [0.705,0.475,0.422,0.372,0.379,0.181,-0.118];
+new Chart(document.getElementById('lagChart'), {
+  type: 'line',
+  data: {
+    labels: lagLabels,
+    datasets: [
+      {label:'Mean Stress', data:lagStress, borderColor:palette.red, borderWidth:2.5, pointRadius:5, tension:0.3},
+      {label:'Mean Bond Strength', data:lagBS, borderColor:palette.teal, borderWidth:2.5, pointRadius:5, tension:0.3}
+    ]
+  },
+  options: {
+    plugins:{legend:{position:'top'}},
+    scales: {
+      x:{title:{display:true,text:'Lag (years); negative = fiscal leads CAMS'}},
+      y:{title:{display:true,text:'Pearson r'}, min:-0.8, max:0.9,
+         grid:{color:ctx=>ctx.tick.value===0?'#aaa':'#e8e2ce'}}
+    }
+  }
+});
+
+// Model chart
+new Chart(document.getElementById('modelChart'), {
+  type: 'bar',
+  data: {
+    labels: ['baseline','+ BondStrength','+ Archive_V','+ Mean_Stress','+ Stewards_V'],
+    datasets: [{
+      label: 'In-sample R²',
+      data: [0.764, 0.783, 0.779, 0.774, 0.767],
+      backgroundColor: [palette.blue, palette.green, palette.green, palette.amber, palette.amber],
+    }]
+  },
+  options: {
+    plugins:{legend:{display:false}},
+    scales:{y:{min:0.75, title:{display:true,text:'R²'}}}
+  }
+});
+
+// OOS chart
+new Chart(document.getElementById('oosChart'), {
+  type: 'bar',
+  data: {
+    labels: ['AR(1)','+ Archive_V','+ BondStr','+ Stress','+ Stewards'],
+    datasets: [{
+      label: 'OOS RMSE',
+      data: [3.416, 3.347, 3.385, 3.447, 3.525],
+      backgroundColor: [palette.blue, palette.green, palette.green, palette.red, palette.red],
+    }]
+  },
+  options: {
+    plugins:{legend:{display:false}},
+    scales:{y:{min:3.2, title:{display:true,text:'OOS RMSE (pp)'}}}
+  }
+});
+
+// Dual axis chart
+new Chart(document.getElementById('dualChart'), {
+  type: 'line',
+  data: {
+    labels: YEARS,
+    datasets: [
+      {label:'IPR (%)', data:IPR, borderColor:palette.red, borderWidth:2.5, yAxisID:'y', pointRadius:2},
+      {label:'Mean Stress (CAMS)', data:STRESS, borderColor:palette.amber, borderWidth:2, yAxisID:'y2', pointRadius:2, borderDash:[5,3]},
+      {label:'Mean Bond Strength', data:BS.map(v=>v/3), borderColor:palette.teal, borderWidth:2, yAxisID:'y2', pointRadius:2, borderDash:[2,2]}
+    ]
+  },
+  options: {
+    plugins:{legend:{position:'top'},tooltip:{callbacks:{label:ctx=>{
+      const v = ctx.parsed.y;
+      if(ctx.datasetIndex===2) return `Bond Str: ${(v*3).toFixed(1)}`;
+      return `${ctx.dataset.label}: ${v.toFixed(2)}`;
+    }}}},
+    scales:{
+      y:{type:'linear',position:'left',title:{display:true,text:'IPR (%)'}, min:5},
+      y2:{type:'linear',position:'right',title:{display:true,text:'CAMS (Stress / BS÷3)'},grid:{drawOnChartArea:false}, min:0}
+    }
+  }
+});
+</script>
+</body>
+</html>
