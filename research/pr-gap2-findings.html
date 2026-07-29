@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PR-GAP-2: What We Found — CAMS as a Leading Indicator of Societal Rupture | Neural Nations Project</title>
-<meta name="description" content="44 societies, 4,541 society-years, 126 coded rupture events. Combined-model AUC 0.652 for predicting societal rupture from CAMS structural coordination metrics alone — with South Africa, Venezuela, and the USA all currently at or above their own historical stress maxima.">
+<meta name="description" content="44 societies, 4,541 society-years, 126 coded rupture events. Leave-one-country-out cross-validation reaches AUC 0.740 for deficit crises once coordination transitions are correctly separated out — with South Africa, Venezuela, and the USA all currently at or above their own historical stress maxima.">
 <meta name="author" content="Kari Freyr McKern">
 <meta property="og:title" content="PR-GAP-2: What We Found — CAMS as a Leading Indicator of Societal Rupture">
-<meta property="og:description" content="44 societies, 4,541 society-years, 126 rupture events. Combined-model AUC 0.652. The rupture signal lives in slow structural degradation, not fast operational noise.">
+<meta property="og:description" content="44 societies, 4,541 society-years, 126 rupture events. LOSO AUC 0.740 for deficit crises. The rupture signal lives in slow structural degradation, not fast operational noise.">
 <meta property="og:url" content="https://neuralnations.org/research/pr-gap2-findings.html">
 <meta property="og:type" content="article">
 <meta name="robots" content="index, follow">
@@ -127,49 +127,57 @@ tbody tr:last-child td { border-bottom: 2px solid #7a1f1f; }
 
 <div class="abstract-box">
   <div class="abstract-title">Summary</div>
-  <p>The study tested one question: does CAMS &mdash; a framework that scores institutional coordination capacity across eight nodes &mdash; contain genuine predictive signal for societal ruptures, measurable before events occurred, rather than fitted after the fact? Across 44 societies, 4,541 society-years (1900&ndash;2025), and 126 coded rupture events, the answer is yes: a combined structural model reaches AUC 0.652 using only CAMS coordination metrics, no political, economic, or demographic covariates. The signal lives in slow-node degradation &mdash; institutional memory, governance capacity, inter-node coupling &mdash; not in fast-node operational noise. As of 2025, South Africa, Venezuela, and the USA are each at or above their own all-time CAMS stress readings.</p>
+  <p>The study tested one question: does CAMS &mdash; a framework that scores institutional coordination capacity across eight nodes &mdash; contain genuine predictive signal for societal ruptures, measurable before events occurred, rather than fitted after the fact? Across 44 societies, 4,541 society-years (1900&ndash;2025), and 126 coded rupture events, tested with honest leave-one-country-out cross-validation, the answer is: not for ruptures in general (AUC 0.563, not significant) &mdash; but yes, strongly, once ruptures are correctly split into two structurally different types. Restricting to <em>deficit crises</em> (institutional coordination capacity already failed beforehand, n = 76 of 126) reaches AUC 0.740 (p &lt; .001), using only CAMS coordination metrics, no political, economic, or demographic covariates. Panel-wide, rising stress suppresses expressed institutional cognition in 41/42 societies and coordination strength in 42/42 &mdash; the mechanism holds almost everywhere, not just around crises. As of 2025, South Africa, Venezuela, and the USA are each at or above their own all-time CAMS stress readings.</p>
 </div>
 
 <hr class="section-rule">
 
 <p>The study tested one question: does CAMS contain genuine predictive signal for societal ruptures &mdash; not retrospective narrative-fitting, but actual forewarning measurable before events occurred?</p>
 
-<p>The answer is yes.</p>
+<p>The answer is: not for ruptures in general &mdash; but yes, strongly, once two structurally different kinds of "rupture" are correctly told apart.</p>
 
 <h2>The Panel</h2>
 <p>44 societies, 1900&ndash;2025, 4,541 society-years, 126 rupture events coded across 40 societies (coups, civil wars, revolutions, regime collapses, economic crises). A society-year was flagged "rupture-incoming" if an event occurred within the following three years &mdash; 334 pre-rupture years against 4,117 calm years, a 7.5% base rate.</p>
 
-<h2>What the Numbers Show</h2>
-<p>Every primary CAMS variable differs significantly between pre-rupture and calm years. Mean Stress in the three years before rupture averages 6.27 versus 5.36 in calm periods (p &lt; 0.001). Helm Node Value (executive governance health) is 7.06 before ruptures versus 9.69 in calm periods. Bond Strength &mdash; how tightly the eight nodes are coupled &mdash; is 0.237 pre-rupture versus 0.297 in calm years. In AUC terms (0.5 = chance, 1.0 = perfect): Mean Stress scores 0.648, Bond Strength 0.641, S/K Ratio 0.637. A combined logistic model reaches AUC 0.652. For context, political science early-warning models using richer covariates &mdash; income, democracy scores, ethnicity, prior conflict history &mdash; typically land in the 0.68&ndash;0.75 range. Getting to 0.652 from structural coordination metrics alone is a meaningful result.</p>
+<h2>Two Structural Regularities, Confirmed at Panel Scale</h2>
+<p>Before testing rupture prediction, two basic claims were checked across all 44 societies' full histories: does rising stress suppress a society's <em>expressed institutional cognition</em> (its capacity to turn accumulated knowledge into coordinated action), and does it suppress <em>coordination strength</em> between institutions? Stress suppressed expressed cognition in 41 of 42 evaluable societies (mean &rho; = &minus;0.860) and suppressed coordination strength in all 42 (mean &rho; = &minus;0.910). This isn't a crisis-window pattern &mdash; it holds across each society's entire observed history, spanning every world region and political system in the panel. The sole exception, India, turns out to be a scoring-resolution artifact rather than a real counter-example (below).</p>
+
+<h2>Not Every Rupture Is the Same Kind of Event</h2>
+<p>The first pass treated all 126 coded ruptures as one outcome and tested it properly: leave-one-country-out cross-validation, trained on 43 societies, evaluated blind on the 44th, repeated for every country. Pooled, the result barely clears chance &mdash; AUC 0.563, not significant (p = .087). That's the honest answer to the wrong question. Splitting ruptures by whether the society's expressed cognition had already inverted in the three years beforehand separates 76 <b>deficit crises</b> (coordination capacity already failed) from 41 <b>coordination transitions</b> (institutions still functioning &mdash; negotiated handovers, independence declarations, some coups in states with intact capacity) and 9 events with insufficient data. Evaluated on deficit crises alone, the same cross-validation reaches AUC = 0.740 (p &lt; .001), with 26 of 29 evaluable countries scoring above chance. The model wasn't failing on the full panel &mdash; it was correctly telling two different processes apart. This split was derived from the CAMS data alone, before checking how well any model predicted either group.</p>
+
+<table>
+<thead><tr><th>Model</th><th>Outcome</th><th>Countries</th><th>Mean LOSO AUC</th><th>p</th></tr></thead>
+<tbody>
+<tr><td>Structural baseline</td><td>All 126 ruptures (pooled)</td><td class="num">37</td><td class="num">0.563</td><td>.087</td></tr>
+<tr><td>Structural baseline</td><td><b>Deficit crises only</b></td><td class="num">29</td><td class="num"><strong>0.740</strong></td><td><strong>&lt;.001</strong></td></tr>
+<tr><td>+ Dream-composition</td><td>Deficit crises only</td><td class="num">29</td><td class="num">0.763</td><td>&lt;.001</td></tr>
+</tbody>
+</table>
+<p style="font-size:10pt;color:var(--muted);">For context, published early-warning models combining income, democracy scores, ethnicity, and conflict history typically land at AUC 0.68&ndash;0.75. The deficit-crisis figure above uses none of that.</p>
+
+<h2>What the Descriptive Numbers Show</h2>
+<p>Simple in-sample comparisons make the same point more intuitively, though they overstate confidence on their own. Mean Stress in the three years before any coded rupture averages 6.27 versus 5.36 in calm periods (p &lt; 0.001). Helm Node Value (executive governance health) is 7.06 before ruptures versus 9.69 in calm periods. Bond Strength &mdash; how tightly the eight nodes are coupled &mdash; is 0.237 pre-rupture versus 0.297 in calm years. Taken individually, Mean Stress scores AUC 0.648, Bond Strength 0.641, S/K Ratio 0.637 &mdash; all above chance, none of them held-out-country tested.</p>
 
 <h2>What Doesn't Predict Rupture</h2>
 <p>The Reactivity Ratio &mdash; fast operational nodes stressed relative to slow structural nodes &mdash; scores AUC 0.515, essentially chance. The rupture signal is not real-time operational chaos. It is slow structural degradation in the nodes that hold institutional memory, legal authority, and governance capacity. A society can be operationally chaotic for years without rupturing. What precedes rupture is the quiet erosion of the slow nodes.</p>
 
-<h2>The Mechanism, in One Line</h2>
-<p>Dominant logistic coefficients: Bond Strength (&beta; = &minus;0.54, low coupling &rarr; rupture) and Mean Stress (&beta; = +0.38). Stress rising while nodes decouple from each other is the canonical pre-rupture signature.</p>
+<h2>Where the Model Doesn't Work</h2>
+<p>Three countries scored below chance on the deficit-crisis test: Russia (0.366), Nigeria (0.420), Indonesia (0.481). Nigeria and Indonesia are event-compression cases &mdash; military coups and rapid authoritarian collapses where structural deterioration happened over weeks to months, not the two-to-three-year window the model scans. Russia combines classification ambiguity across very different eras (1905, 1917, 1991) with high scorer uncertainty for the Soviet period, where institutional opacity was often the point. The model detects <em>gradual</em> structural decay; fast-onset and historically ambiguous ruptures sit outside its scope.</p>
+
+<h2>A Scoring Artifact: The India Exception</h2>
+<p>India's stress readings take only 9 distinct values across 73 scored years and climb in an almost straight line from 1950 to 2010, with capacity rising in parallel a few points above it &mdash; so expressed cognition (capacity minus stress) rises too, mechanically, not because stress was generating more cognition. The scores register no change at all during the 1975&ndash;77 Emergency, India's most acute authoritarian episode in the panel: there isn't enough resolution in the data to test the claim. Excluding India, the stress-suppresses-cognition result is 41 of 41 evaluable societies.</p>
 
 <div class="finding finding-critical">
 <strong>The 2025 alarm</strong>
-Three societies are currently at or above their own all-time CAMS stress readings within the 125-year panel. South Africa is at 105% of its 1985 late-apartheid peak. Venezuela is at 104% of its 1989 petroleum-crisis reading. The United States is at 104% of its 1932 Great Depression reading &mdash; meaning 2025 US CAMS stress exceeds the worst year of the Depression in structural coordination terms. South Africa's Archive Node Value (institutional memory, legal fixation capacity) collapsed 10 points in five years (7.5 &rarr; &minus;2.5), a degradation rate with no parallel in the panel outside active state-collapse events. The US Archive Node has dropped from 9.5 to 6.5 over the same period.
+Three societies are currently at or above their own all-time CAMS stress readings within the 125-year panel. South Africa is at 105% of its 1985 late-apartheid peak. Venezuela is at 104% of its 1989 petroleum-crisis reading. The United States is at 104% of its 1932 Great Depression reading &mdash; meaning 2025 US CAMS stress exceeds the worst year of the Depression in structural coordination terms. South Africa's Archive Node Value (institutional memory, legal fixation capacity) collapsed 10 points in five years (7.5 &rarr; &minus;2.5), a degradation rate with no parallel in the panel outside active state-collapse events. The US Archive Node has dropped from 9.5 to 6.5 over the same period. All three carry elevated deficit-crisis probability within a 3-year window.
 </div>
-
-<table>
-<thead><tr><th>Variable</th><th>AUC</th><th>Direction</th></tr></thead>
-<tbody>
-<tr><td>Mean Stress</td><td class="num">0.648</td><td>Higher &rarr; rupture</td></tr>
-<tr><td>Bond Strength</td><td class="num">0.641</td><td>Lower &rarr; rupture</td></tr>
-<tr><td>S/K Ratio</td><td class="num">0.637</td><td>Higher &rarr; rupture</td></tr>
-<tr><td>Combined model</td><td class="num"><strong>0.652</strong></td><td>&mdash;</td></tr>
-<tr><td>Reactivity Ratio</td><td class="num">0.515</td><td>Near-chance</td></tr>
-</tbody>
-</table>
 
 <h2>The One Thing the Model Can't Tell You</h2>
 <p>Whether current high-stress readings resolve through institutional reform or through rupture requires qualitative judgment about political agency that no metric system can provide. The model assigns elevated rupture probability; it cannot assign probability to the branch where the system pulls back.</p>
 
 <hr class="section-rule">
 
-<p style="font-size:10.5pt; color:#444;">This result sits alongside two earlier single-country studies on the United States &mdash; Study 1 on interest-burden absorption and Study 2 on legitimacy erosion &mdash; and points to the same underlying mechanism at both scales: CAMS slow-node degradation leads observable downstream outcomes (legitimacy erosion by 2&ndash;3 years, rupture incidence by 1&ndash;3 years), while fast-node metrics carry no signal.</p>
+<p style="font-size:10.5pt; color:#444;">This result sits alongside two earlier single-country studies on the United States &mdash; Study 1 on interest-burden absorption and Study 2 on legitimacy erosion &mdash; and points to the same underlying mechanism at both scales: CAMS slow-node degradation leads observable downstream outcomes (legitimacy erosion by 2&ndash;3 years, deficit-crisis rupture by 1&ndash;3 years), while fast-node metrics carry no signal. Findings above are drawn from a manuscript in preparation and are pending replication on a held-out panel.</p>
 
 <div class="dl-row">
     <a class="dl" href="/pr-gap2-rupture-study.html">Full findings, tables &amp; charts</a>
