@@ -37,7 +37,7 @@ Panel: 30 year-observations, 1996–2025.
 | 2024 | 28 | 22 | 6.5 | 19.5 |
 | 2025 | 28 | **9** | 7.9 | 13.4 |
 
-The 2020 CAMS Stress spike (9.28, highest in the panel) preceded the 2022–2023 trust trough (Gallup 27–26, Pew 20–16) by 2–3 years. The 2025 Pew reading (9%) is the lowest in 67 years of Pew measurement.
+The 2020 CAMS Stress spike (9.28, highest in the panel) preceded the 2022–2023 trust trough (Gallup 27–26, Pew 20–16) by 2–3 years. The 2025 Pew reading (9%) is the lowest in this panel's series — though an independent check of Pew's own September 2025 release finds a reported overall topline nearer 17%, so the 9% figure here is unconfirmed pending reconciliation of question wording/subgroup against that source.
 
 ---
 
@@ -102,7 +102,7 @@ Lag convention: positive lag = CAMS at year t predicts target at t+lag (CAMS lea
 | Archive Node Value | +0.512* | +0.591* | +0.587* | +0.620* | +0.625* | +0.746* | +0.692* | CAMS Leads |
 | Archive Stress | −0.425* | −0.486* | −0.451* | −0.477* | −0.519* | −0.651* | **−0.597*** | CAMS Leads |
 
-**Critical result:** Every primary CAMS variable shows a lead-lag profile where the correlation *strengthens* as lag increases from 0 to +3. This is the **exact opposite** of the IPR study pattern (where Bond Strength peaked at lag −3, meaning fiscal led CAMS). The oligarchic-capture mechanism routes through legitimacy, not directly through fiscal variables.
+**Critical result:** Nearly every primary CAMS variable shows a lead-lag profile where the correlation *strengthens* as lag increases from 0 to +3 — the reverse of the IPR study pattern (where Bond Strength peaked at lag −3, meaning fiscal led CAMS). Two exceptions on the Pew side: Archive Node Value peaks at lag+2 (+0.746*) and eases to +0.692* at +3; Archive Stress peaks at lag+2 (−0.651*) and eases to −0.597* at +3. This is consistent with the legitimacy channel running independently of the fiscal one, though the pattern was found by scanning seven lags across multiple variables and two targets, so it should be treated as a strong prior rather than a single preregistered result.
 
 ---
 
@@ -152,7 +152,7 @@ The implied sequence: structural stress accumulates in CAMS nodes (Archive, Helm
 
 ## 7. Verdict
 
-The oligarchic-capture hypothesis passes its first critical falsification test. CAMS Stress **leads** legitimacy decline by 2–3 years. The mechanism is not fiscal — it operates through the legitimacy channel. The 2025 CAMS readings (Stress 7.93, Archive V 1.5) replicate the structural signature of 2020 (Stress 9.28, Archive V 1.8). The 3-year-lag model implies continued legitimacy pressure in 2026–2028.
+The legitimacy-channel hypothesis passes its first falsification test. CAMS Stress **leads** legitimacy decline by 2–3 years, and the mechanism runs through legitimacy rather than fiscal absorption. Oligarchic capture is a plausible upstream driver of that channel but is not measured directly here, so it remains a candidate interpretation, not a tested one. The 2025 CAMS readings (Stress 7.93, Archive V 1.5 — the lowest in the entire panel, below 2020's previous low of 1.8) replicate — and in Archive V's case exceed — the structural signature of 2020 (Stress 9.28). The 3-year-lag model implies continued legitimacy pressure in 2026–2028, a forecast resting on a five-point out-of-sample window and worth treating as a working hypothesis rather than a settled prediction.
 
 ---
 
