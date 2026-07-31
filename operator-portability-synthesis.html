@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operator Portability in CAMS — Synthesis &amp; Verification Trail</title>
+<meta name="description" content="Canonical CAMS operators are structurally portable across corporate and national domains but parametrically non-invariant, confirmed by two independent computational audits. The companion Soil-Bond Index (η_soil) paper and its Norway baseline are explicitly paused pending rework.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://neuralnations.org/operator-portability-synthesis">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,700;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --paper:#f7f5f0; --card:#ffffff; --ink:#1c2333; --muted:#5d6577;
+  --accent:#2F6F7D; --accent-soft:#e9f2f4;
+  --green:#2e7d52; --green-soft:#e2f0e8;
+  --amber:#b07d1e; --amber-soft:#f6ecd4;
+  --red:#b3392e; --red-soft:#f7e5e2;
+  --gray:#6b7280; --gray-soft:#ececef;
+  --line:#e3e0d8;
+}
+.sp-wrap{max-width:960px;margin:0 auto;padding:0 24px 90px;font-family:Georgia,'Times New Roman',serif;color:var(--ink);line-height:1.68;font-size:17px;background:var(--paper);}
+.sp-masthead{border-bottom:3px double var(--line);padding:40px 0 26px;margin-bottom:30px;}
+.sp-brand{font-family:'IBM Plex Sans',-apple-system,sans-serif;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700;}
+.sp-brand span{color:var(--muted);}
+.sp-masthead h1{font-family:'Newsreader',Georgia,serif;font-size:34px;line-height:1.18;margin:14px 0 8px;font-weight:700;letter-spacing:-0.01em;}
+.sp-subtitle{font-size:18px;color:var(--muted);font-style:italic;margin:0 0 18px;}
+.sp-meta{font-family:'IBM Plex Sans',-apple-system,sans-serif;font-size:13px;color:var(--muted);line-height:1.7;}
+.sp-meta b{color:var(--ink);}
+.sp-wrap h2{font-family:'Newsreader',Georgia,serif;font-size:24px;margin:46px 0 16px;padding-top:20px;border-top:1px solid var(--line);}
+.sp-wrap h3{font-family:'Newsreader',Georgia,serif;font-size:18px;margin:26px 0 10px;}
+.sp-wrap p{margin:0 0 16px;}
+.sp-lede{font-size:20px;line-height:1.6;}
+.sp-summary{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:6px;padding:26px 30px;margin:28px 0;box-shadow:0 1px 4px rgba(28,35,51,.06);}
+.sp-summary h2{border:none;margin:0 0 12px;padding:0;font-size:21px;color:var(--accent);}
+.sp-summary p{font-size:16.5px;}
+.sp-wrap table{width:100%;border-collapse:collapse;margin:16px 0 26px;font-size:14px;font-family:'IBM Plex Sans',-apple-system,sans-serif;}
+.sp-wrap th{background:#eaf1f2;text-align:left;padding:9px 11px;border-bottom:2px solid var(--line);font-size:11.5px;letter-spacing:.03em;text-transform:uppercase;color:var(--muted);}
+.sp-wrap td{padding:8px 11px;border-bottom:1px solid var(--line);vertical-align:top;}
+.sp-wrap tr:nth-child(even) td{background:#fbfaf7;}
+.sp-wrap .num{font-family:'IBM Plex Mono',Consolas,monospace;}
+.sp-callout{background:var(--accent-soft);border-radius:6px;padding:18px 22px;margin:24px 0;font-size:16px;}
+.sp-callout b{color:var(--accent);}
+.sp-callout.paused{background:var(--amber-soft);}
+.sp-callout.paused b{color:var(--amber);}
+.status-pill{display:inline-block;font-family:'IBM Plex Sans',-apple-system,sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-left:8px;vertical-align:middle;}
+.status-pill.confirmed{background:var(--green-soft);color:var(--green);}
+.status-pill.paused{background:var(--amber-soft);color:var(--amber);}
+.status-pill.preliminary{background:var(--gray-soft);color:var(--gray);}
+.sp-dl-row{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px;}
+.sp-dl{font-family:'IBM Plex Sans',-apple-system,sans-serif;font-weight:600;font-size:13.5px;padding:10px 18px;border-radius:8px;text-decoration:none;background:#2F6F7D;color:#F5F1E4;}
+.sp-dl.alt{background:var(--amber);}
+.sp-dl.muted{background:var(--gray);}
+.sp-footer{border-top:3px double var(--line);margin-top:60px;padding-top:24px;font-family:'IBM Plex Sans',-apple-system,sans-serif;font-size:13px;color:var(--muted);}
+code{font-family:'IBM Plex Mono',Consolas,monospace;font-size:.9em;background:#eaf1f2;padding:1px 5px;border-radius:3px;}
+@media(max-width:640px){.sp-masthead h1{font-size:26px;}.sp-wrap{padding:0 16px 60px;}.sp-wrap table{font-size:12.5px;}}
+</style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="mathematical-backbone.html">Mathematical Backbone</a>
+                    <a href="social-cognition.html">Social Cognition · Real Time</a>
+                    <a href="cams-scorer.html">CAMS Scorer</a>
+                    <a href="argentina-puzzle.html">The Puzzle of Argentina</a>
+                    <hr class="menu-divider">
+                    <a href="cams-zeitgeist.html">Zeitgeist Detector</a>
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="attractors.html">Attractors</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link">Framework ↗</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="framework/index.html">Framework ↗</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="mathematical-backbone.html">Mathematical Backbone</a>
+        <a href="social-cognition.html">Social Cognition · Real Time</a>
+        <a href="cams-scorer.html">CAMS Scorer</a>
+        <a href="argentina-puzzle.html">The Puzzle of Argentina</a>
+        <hr class="menu-divider">
+        <a href="cams-zeitgeist.html">Zeitgeist Detector</a>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="attractors.html">Attractors</a>
+    </div>
+</nav>
+
+<div class="sp-wrap">
+
+<header class="sp-masthead">
+  <div class="sp-brand">neural<span>nations</span> &middot; CAMS &middot; Operator Portability</div>
+  <h1>Same Grammar, Different Regimes — Portability Across Corporate and National CAMS</h1>
+  <p class="sp-subtitle">A synthesis paper, plus the full verification trail behind it — including what's still paused</p>
+  <div class="sp-meta">
+    <b>Kari Freyr McKern</b> &middot; Neural Nations Research &middot; 31 July 2026 &middot;
+    Two independent computational audits, a 9-firm corporate panel, and two national historical panels (Denmark, France)
+  </div>
+</header>
+
+<p class="sp-lede">Can the same eight-node coordination scoring apply to a corporation and a country without cheating? The short answer: the operators transfer cleanly (structural portability), but their calibration does not (parametric non-invariance) — a firm's "normal" bond strength and a nation's "normal" bond strength are different numbers on the same ruler, not the same number.</p>
+
+<p>This page is the entry point to a small cluster of related documents produced together: a synthesis paper drawing the confirmed findings together, the formal Operator Portability Proposition write-up, and two independent computational-recomputation audits that checked every reported statistic against raw data before any of it was allowed to stand. A companion paper on the Soil-Bond Index (η_soil) and its Norway baseline is deliberately <b>not</b> part of the confirmed findings below — the second audit found real problems with it, and it's paused pending a rework. That's reported here too, not hidden.</p>
+
+<div class="sp-summary">
+<h2>Headline</h2>
+<p><b>Confirmed</b> — canonical CAMS operators (aggregate bond strength <i>B̄</i>, algebraic connectivity <i>λ₂</i>) are structurally portable across a 9-firm corporate panel and two national historical panels (Denmark 1752–2025, France 1850–2026), while remaining parametrically non-invariant: out-of-sample firms run +10.4%/+12.2% higher in <i>B̄</i>/<i>λ₂</i>; France behaves as a "bridge" entity (94.9% containment within the corporate band) while Denmark is a clean "separation" case (19.3% containment). A stricter within-corporate diagnostic further shows that even a single firm-invariant <i>B̄</i>–<i>λ₂</i> slope is formally rejected (p=0.008) — non-invariance operates within the corporate class, not only across the corporate/national boundary.</p>
+</div>
+
+<h2>1. What's confirmed <span class="status-pill confirmed">Confirmed</span></h2>
+<p>Two independent recomputation passes — each working directly from raw eight-node Coherence/Capacity/Stress/Abstraction scores, never from a paper's own summary tables — confirm:</p>
+<ul style="padding-left:22px;">
+<li><b>Structural portability (P.4.1):</b> <i>B̄</i>–<i>λ₂</i> correlation ≥ 0.93 across every held-out firm and every entity tested; the computational grammar transfers without needing a different equation per domain.</li>
+<li><b>Parametric non-invariance (P.4.2):</b> Kolmogorov–Smirnov and Mann–Whitney tests reject distributional equality between in-sample and out-of-sample firms, and between each national panel and the pooled corporate distribution.</li>
+<li><b>Threshold relativity (P.4.3):</b> entity- or class-specific percentile baselines are required; a universal absolute cutoff produces uncontrolled false-positive rates. (One status-table entry mis-stated this criterion's own threshold in an earlier draft — corrected in the synthesis.)</li>
+<li><b>Bridge entities exist (P.4.4):</b> France overlaps substantially with the corporate distribution; Denmark does not. Overlap is the exception, not license to pool classes.</li>
+</ul>
+
+<h2>2. What's preliminary <span class="status-pill preliminary">Preliminary</span></h2>
+<p>A corporate <b>functional-variability</b> result — that firms concentrate operational shock-absorption in specific nodes (Craft, for three manufacturing firms; Flow, for a digital-platform firm) rather than suppressing variability outright — is included in the synthesis but explicitly flagged as not yet through the same audit standard applied to the results above.</p>
+
+<h2>3. What's paused <span class="status-pill paused">Paused</span></h2>
+<div class="sp-callout paused">
+<b>The Soil-Bond Index (η_soil) and its Norway baseline are excluded from the confirmed findings.</b> A second, more thorough audit found: reported t-statistics that match neither Student's nor Welch's test on the named files; a Germany source file silently missing its entire 1949–1989 division-era range; a composite metric that discriminates crisis years <i>worse</i> than one of its own numerator components (Archive bond strength alone, AUC 0.907 vs. the composite's 0.861); an internally self-contradicting hypothesis (H2 predicts crises always show high dispersion, but the paper's own "Coherent Collapse" regime is defined by low dispersion); and named "regime attractors" resting on one example society each with no clustering or classification test run. Because the Norway baseline is computed entirely via η_soil, it inherits every one of these open problems. Both are being reworked to the same standard as the confirmed findings above before they're added back.</div>
+
+<h2>4. Files &amp; downloads</h2>
+<p>Open science — the synthesis, the formal proposition write-up, the source manuscript covering the paused η_soil/Norway/functional-variability work, and both audit passes are all available below.</p>
+<div class="sp-dl-row">
+    <a class="sp-dl" href="https://github.com/KaliBond/wintermute/blob/main/analysis/operator_portability_synthesis.md" target="_blank">Synthesis paper (Markdown)</a>
+    <a class="sp-dl" href="papers/operator_portability_writeup.pdf" target="_blank">Operator Portability Proposition (PDF)</a>
+    <a class="sp-dl muted" href="papers/operator_portability_norway_functional_variability.pdf" target="_blank">Norway / functional-variability manuscript (PDF, Norway section paused)</a>
+    <a class="sp-dl alt" href="analysis/CAMS_Verification_and_Errata_Report.docx" target="_blank">Audit v1 (DOCX)</a>
+    <a class="sp-dl alt" href="analysis/CAMS_Computational_Reproduction_and_Errata_Audit_v2.docx" target="_blank">Audit v2 — supersedes v1 (DOCX)</a>
+</div>
+
+<div class="sp-footer">
+  <p><b>Method note.</b> All operators recomputed independently from raw Coherence/Capacity/Stress/Abstraction node scores across two audit passes, never from a paper's own summary tables. Corporate panel: 9 firms, 2006–2026 (4 in-sample, 5 held out). National panels: Denmark 1752–2025, France 1850–2026. The Soil-Bond Index and Norway baseline are excluded from confirmed findings pending rework — see Section 3 above.</p>
+  <p style="margin-top:16px;">&copy; 2026 Kari McKern &mdash; Neural Nations CAMS Research. Open science &mdash; <a href="https://github.com/KaliBond/wintermute" target="_blank" style="color:#2F6F7D;">KaliBond/wintermute</a>.</p>
+</div>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>
