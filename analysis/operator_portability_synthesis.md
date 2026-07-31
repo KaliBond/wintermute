@@ -87,7 +87,24 @@ Let 𝒪 = {*Vᵢ, qᵢ, Wᵢⱼ, B̄, λ₂*} denote the canonical operator set
 | Out-of-sample | 0.975 | 105 | < 1×10⁻⁶⁸ |
 | Entity-level range (9 firms) | 0.933–0.994 | — | — |
 
-The regression slope difference between in-sample and out-of-sample groups is 6.4%. This confirms the spectral architecture is domain-portable within the corporate class: the operators compute a mathematically consistent relationship without parameter retuning, whether or not a firm was used to define the discriminating band in the first place.
+The regression slope difference between in-sample and out-of-sample groups is 6.4%. This confirms the spectral architecture is domain-portable within the corporate class: the operators compute a mathematically consistent relationship, whether or not a firm was used to define the discriminating band in the first place.
+
+### 3.1a Formal within-corporate covariance diagnostic
+
+A stricter test than the pooled correlation above asks whether all four in-sample firms share *one* *B̄*/*λ₂* mapping, rather than merely showing high correlations individually. Three nested models were compared on the 84 firm-years (one common intercept and slope; a common slope with firm-specific intercepts; fully firm-specific intercepts and slopes), with residual-permutation tests (10,000 permutations):
+
+| Diagnostic | Result | Interpretation |
+|---|---|---|
+| Pooled correlation | *r* = 0.9875 | Very strong common coupling |
+| Pooled linear fit | *λ₂* = −0.0044 + 7.0126 *B̄* | 97.5% of pooled variance explained |
+| Firm-specific intercept improvement | *p* = 0.019 | Baseline differences remain |
+| Firm-specific slope improvement | *p* = 0.008 | Exact common slope is rejected |
+| Firm linear-slope range | 5.529–7.866 | Material parameter variation |
+| Firm log-log exponent range | 0.811–1.143 | No single scaling exponent demonstrated |
+
+Leave-one-firm-out prediction remained useful for CATL, General Motors, and Tencent (predictive *R²* = 0.984, 0.937, 0.918) but was markedly weaker for BYD (*R²* = 0.616, with a positive prediction bias of 0.083 *λ₂* units). **This qualifies the portability claim above**: the pooled relationship generalises and is useful for prediction, but a strictly firm-invariant slope and intercept are formally rejected — parametric non-invariance operates *within* the corporate class, not only across the corporate/national boundary (§4).
+
+**Interpretation boundary:** *B̄* and *λ₂* are both computed from the same fully-connected (K₈) weight matrix, so they are not fully independent evidence of two unrelated operators co-varying — under this topology they are mechanically expected to correlate near *r* ≈ 0.98 (see also §3.4, item 3). The result demonstrates stable mathematical coupling under the chosen representation; it does not by itself establish that the representation measures the same latent construct across organisational scales.
 
 ### 3.2 Parametric non-invariance
 
@@ -149,7 +166,7 @@ Traditional reliability framing treats node-value variability (*V*_range, the ra
 
 ### 6.2 Preliminary finding
 
-Analysing standard-deviation envelopes across the four firms suggests distinct strategies for managing this resonance. Across the three manufacturing firms (GM, BYD, CATL), the **Craft** node consistently shows the highest functional variability (*V*_range between 1.86 and 2.57), while Tencent — a digital-platform firm — shows lower Craft variability (1.71) and higher Flow and Shield variability instead. The reading offered is that hardware-centric architectures concentrate operational variability in Craft, shielding upstream functions (Lore, Helm) from resonance cascades, while a platform architecture routes that variability through different nodes entirely.
+Analysing standard-deviation envelopes across the four firms suggests distinct strategies for managing this resonance. Across the three manufacturing firms (GM, BYD, CATL), the **Craft** node consistently shows the highest functional variability (*V*_range between 1.86 and 2.57), while Tencent — a digital-platform firm — shows lower Craft variability (1.71) and higher Flow variability instead (1.95). *Correction: an earlier draft of this section also attributed elevated variability to Tencent's Shield node; recomputation shows Shield's mean V_range (1.10) is lower than Craft's, not higher, so only Flow displaces Craft as the top-variability node for Tencent.* The reading offered is that hardware-centric architectures concentrate operational variability in Craft, shielding upstream functions (Lore, Helm) from resonance cascades, while a platform architecture routes at least part of that variability through a different node (Flow).
 
 This is a plausible and theoretically motivated pattern, consistent with the same four firms' already-confirmed structural coupling (§3.1: entity-level ρ(*B̄, λ₂*) = 0.955–0.992). But unlike the results in Sections 3–5, it has not been independently recomputed from raw scores, checked for the same class of issues that were found in the paused η_soil work (test-statistic identification, temporal dependence, incremental value against simpler quantities), or tested against a held-out panel. It is reported here as a candidate direction, not a confirmed result.
 
@@ -170,6 +187,8 @@ The functional-variability extension (§6) is promising but preliminary in a spe
 ### 7.3 Why η_soil and Norway are excluded here
 
 A second, more thorough audit of the η_soil paper found problems that go beyond wording: reported t-statistics that do not correspond to any standard test; a Germany dataset silently missing its entire 1949–1989 division-era range; a composite metric that discriminates crisis years *worse* than one of its own numerator components (Archive bond strength alone); an internally self-contradicting H2; and H3's "regime attractors" resting on one example society each with no clustering or classification test. Because the Norway baseline in the companion Norway/functional-variability manuscript is computed entirely via η_soil, it inherits all of these open problems and is excluded from this synthesis for the same reason. Both will be revisited once the η_soil paper has been reworked to the same standard applied here.
+
+A subsequent, file-hashed reproduction pass corroborated every one of these findings independently — matching circular-shift p-values to three decimal places, confirming the Archive-bond-strength-outperforms-composite result (AUC 0.907 vs. 0.861), and adding a formal claim-boundary framework (supported / supported-with-qualification / not established) along with specific-value corrections for Australia (1963 η_soil = 0.2335, not 0.263; 1911 at 0.2477 is the true series maximum; mean S_Hands = 7.252, not 7.81; *r*(η_soil, mean V) = 0.651, not "above 0.82"). This material is retained as source input for the eventual η_soil rework rather than added here, since η_soil itself remains out of scope for this synthesis.
 
 ---
 
