@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PR-GAP-2: Structural Coordination and Rupture Morphology — Full Paper</title>
+<meta name="description" content="A Retrospective Panel Validation of CAMS Across 44 Societies, 1900–2025, with Robson Gauge Cultural Grounding Results and Cross-System Parsimony Assessment. Full academic paper, August 2026 draft.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://neuralnations.org/pr-gap2-full-paper">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,700;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --paper:#f7f5f0; --card:#ffffff; --ink:#1c2333; --muted:#5d6577;
+  --accent:#b3392e; --accent-soft:#f7e5e2;
+  --green:#2e7d52; --green-soft:#e2f0e8;
+  --amber:#b07d1e; --amber-soft:#f6ecd4;
+  --gray:#6b7280; --gray-soft:#ececef;
+  --line:#e3e0d8;
+}
+.sp-wrap{max-width:880px;margin:0 auto;padding:0 24px 90px;font-family:Georgia,'Times New Roman',serif;color:var(--ink);line-height:1.68;font-size:16.5px;background:var(--paper);}
+.sp-masthead{border-bottom:3px double var(--line);padding:40px 0 26px;margin-bottom:30px;}
+.sp-brand{font-family:'IBM Plex Sans',-apple-system,sans-serif;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700;}
+.sp-brand span{color:var(--muted);}
+.sp-masthead h1{font-family:'Newsreader',Georgia,serif;font-size:28px;line-height:1.28;margin:14px 0 6px;font-weight:700;letter-spacing:-0.01em;}
+.sp-subtitle{font-size:16px;color:var(--muted);font-style:italic;margin:0 0 18px;line-height:1.5;}
+.sp-meta{font-family:'IBM Plex Sans',-apple-system,sans-serif;font-size:13px;color:var(--muted);line-height:1.7;}
+.sp-meta b{color:var(--ink);}
+.sp-wrap h2{font-family:'Newsreader',Georgia,serif;font-size:22px;margin:44px 0 14px;padding-top:18px;border-top:1px solid var(--line);}
+.sp-wrap h3{font-family:'Newsreader',Georgia,serif;font-size:17px;margin:24px 0 8px;color:var(--accent);}
+.sp-wrap p{margin:0 0 14px;}
+.sp-abstract{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:6px;padding:24px 28px;margin:28px 0;box-shadow:0 1px 4px rgba(28,35,51,.06);}
+.sp-abstract h2{border:none;margin:0 0 10px;padding:0;font-size:19px;color:var(--accent);}
+.sp-abstract p{font-size:15.5px;}
+.sp-abstract .layer{font-weight:700;color:var(--ink);}
+.sp-wrap figure{margin:24px 0;text-align:center;}
+.sp-wrap figure img{max-width:100%;border:1px solid var(--line);border-radius:6px;}
+.sp-wrap figcaption{font-family:'IBM Plex Sans',-apple-system,sans-serif;font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.6;text-align:left;}
+.sp-eq{font-family:'IBM Plex Mono',Consolas,monospace;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 16px;margin:10px 0 16px;font-size:14.5px;overflow-x:auto;}
+.sp-wrap ul, .sp-wrap ol{padding-left:22px;margin:0 0 14px;}
+.sp-wrap li{margin-bottom:4px;}
+.sp-callout{background:var(--accent-soft);border-radius:6px;padding:16px 20px;margin:18px 0;font-size:15px;}
+.appendix{background:#f4f1ea;border-radius:6px;padding:20px 24px;margin:20px 0;}
+.appendix h3{margin-top:0;}
+.refs{font-size:14.5px;}
+.refs p{margin-bottom:8px;}
+.sp-dl-row{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px;}
+.sp-dl{font-family:'IBM Plex Sans',-apple-system,sans-serif;font-weight:600;font-size:13.5px;padding:10px 18px;border-radius:8px;text-decoration:none;background:#2F6F7D;color:#F5F1E4;}
+.sp-dl.alt{background:var(--accent);}
+.sp-footer{border-top:3px double var(--line);margin-top:60px;padding-top:24px;font-family:'IBM Plex Sans',-apple-system,sans-serif;font-size:13px;color:var(--muted);}
+code{font-family:'IBM Plex Mono',Consolas,monospace;font-size:.9em;background:#f2e2e0;padding:1px 5px;border-radius:3px;}
+@media(max-width:640px){.sp-masthead h1{font-size:22px;}.sp-wrap{padding:0 16px 60px;}}
+</style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="mathematical-backbone.html">Mathematical Backbone</a>
+                    <a href="social-cognition.html">Social Cognition · Real Time</a>
+                    <a href="cams-scorer.html">CAMS Scorer</a>
+                    <a href="argentina-puzzle.html">The Puzzle of Argentina</a>
+                    <hr class="menu-divider">
+                    <a href="cams-zeitgeist.html">Zeitgeist Detector</a>
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="attractors.html">Attractors</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link">Framework ↗</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="framework/index.html">Framework ↗</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="mathematical-backbone.html">Mathematical Backbone</a>
+        <a href="social-cognition.html">Social Cognition · Real Time</a>
+        <a href="cams-scorer.html">CAMS Scorer</a>
+        <a href="argentina-puzzle.html">The Puzzle of Argentina</a>
+        <hr class="menu-divider">
+        <a href="cams-zeitgeist.html">Zeitgeist Detector</a>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="attractors.html">Attractors</a>
+    </div>
+</nav>
+
+<div class="sp-wrap">
+
+<header class="sp-masthead">
+  <div class="sp-brand">neural<span>nations</span> &middot; CAMS &middot; PR-GAP-2 &middot; Full Paper</div>
+  <h1>Structural Coordination and Rupture Morphology: A Retrospective Panel Validation of CAMS Across 44 Societies, 1900&ndash;2025</h1>
+  <p class="sp-subtitle">with Robson Gauge Cultural Grounding Results and Cross-System Parsimony Assessment (PR-GAP-2)</p>
+  <div class="sp-meta">
+    <b>Kari Freyr McKern</b> &middot; kari.freyr.4@gmail.com &middot; Draft &mdash; August 2026. Not for citation without permission.<br>
+    Plain-language companion: <a href="pr-gap2-rupture-study.html" style="color:var(--accent);">Does CAMS See a Coup Coming?</a>
+  </div>
+</header>
+
+<div class="sp-abstract">
+<h2>Abstract</h2>
+<p>This study retrospectively validates the Complex Adaptive Meta-System (CAMS) coordination framework, operationalised via JUNO v1.2-Final operators, against a 44-society panel spanning 1900&ndash;2025 (4,541 society-years), with node-level scores from five-scorer ensemble assessment (CAMNATIONS5). Results are reported in three layers.</p>
+<p><span class="layer">Construct stability.</span> CAMS stress is consistently associated with reduced expressed cognition (41/41 evaluable societies; mean &rho; = &minus;0.860) and reduced canonical bond strength (42/42 societies; mean &rho; = &minus;0.910). This reflects cross-context construct invariance rather than independent causal identification.</p>
+<p><span class="layer">Correctly null pooled result.</span> For the undifferentiated rupture outcome (all 126 events), LOSO cross-validation discriminates pre-rupture from non-rupture years only marginally (AUC = 0.563, p = .087). This null result is substantively important: rupture is not a unitary structural phenomenon.</p>
+<p><span class="layer">Promising but not yet independent discrimination.</span> Restricting the outcome to deficit crises (76 events; expressed cognition inverted in the pre-rupture window) yields AUC = 0.740 (t(28) = 7.39, p &lt; .001, 26/29 folds positive). This is not independently validated: the rupture subtype is defined using CAMS-derived information, creating potential predictor&ndash;outcome leakage.</p>
+<p>Applied to the same panel, the Robson Gauge v3 cultural grounding metric &mdash; &eta;<sub>soil</sub>(t) = (BS<sub>Lore</sub>&middot;BS<sub>Archive</sub>&middot;C<sub>Hands</sub>) / (S<sub>Hands</sub>&middot;&sigma;<sub>V</sub>), operationalising slow-node bond fidelity &mdash; classifies 7 of 36 recent-data societies as Ruptured (&eta; &lt; 0.005), including Japan and Russia, and identifies a pronounced post-2010 decline in France from Young Ancient Forest to Failed Transplant.</p>
+<p>Across nations, corporations, and cities, the JUNO equation structure reproduces theoretically-expected relationships between stress, bond strength, and expressed cognition, with baselines shifting in the theoretically predicted direction. This constitutes parsimony evidence for a shared coordination mechanism across institutional system classes. It is not yet a demonstrated allometric law.</p>
+<p style="font-size:13.5px;color:var(--muted);margin-bottom:0;"><b>Keywords:</b> CAMS; institutional health; JUNO operators; LOSO cross-validation; Robson Gauge; cultural grounding; parsimony; coordination mechanism</p>
+</div>
+
+<h2>1. Introduction</h2>
+<p>The question of whether societal collapse can be anticipated from structural signals &mdash; detectable before the visible break &mdash; is one of the oldest in political science and one of the least resolved. Empires, republics, and states across recorded history have exhibited collapse trajectories that, in retrospect, appear legible: declining administrative coherence, overtaxed production systems, eroding institutional memory, the widening gap between official narrative and material reality. Yet the field of quantitative early warning has struggled to operationalise this legibility in a way that generalises across political systems and historical periods.</p>
+<p>The dominant approach &mdash; combining economic indicators, regime type indices, ethnic composition variables, and prior conflict history in logistic or machine-learning models &mdash; achieves AUC values in the 0.68&ndash;0.75 range for conflict onset prediction over 2&ndash;3 year horizons (Hegre et al., 2019; Muchlinski et al., 2016). These models work, but they work by aggregating known correlates of instability, not by measuring the underlying structural processes that generate instability. A model that detects structural degradation in the institutional coordination capacity of any state &mdash; rich or poor, democratic or authoritarian, post-conflict or stable &mdash; adds information that no amount of contextual knowledge can substitute for.</p>
+<p>The Complex Adaptive Meta-System (CAMS) framework is designed to measure the latter. CAMS treats any functioning society as a network of eight interdependent coordination nodes &mdash; Helm (executive governance), Shield (security capacity), Lore (normative culture), Stewards (resource allocation), Archive (institutional memory and law), Craft (technical capacity), Hands (labour and production), and Flow (information exchange) &mdash; each scored annually on four dimensions: Coherence (C), Capacity (K), Stress (S), and Abstraction (A). The JUNO v1.2-Final canonical operators derive higher-order quantities from these scores: a quality factor q<sub>i</sub> = (0.6C + 0.4A)/10 that gates pairwise bond strength; a neuromodulatory condition N<sub>i</sub> = K<sub>i</sub> &minus; S<sub>i</sub>; and expressed cognition P<sub>i</sub> = (A<sub>i</sub> &times; C<sub>i</sub>) &times; (K<sub>i</sub> &minus; S<sub>i</sub>), which inverts when stress outstrips capacity.</p>
+<p>The present study &mdash; PR-GAP-2 &mdash; is the first evaluation of these operators at scale: 44 societies, 125 years, 4,541 society-years, against an independently coded rupture chronology of 126 events. In addition to the rupture-prediction validation, we apply the Robson Gauge v3 (McKern, 2026d) cultural grounding metric to the same panel, extending the evaluation to a second outcome domain. A secondary cross-system assessment draws on preliminary applications of the JUNO framework to corporate entities (CAMCORP; Appendix A) and municipal systems (CAMCITIESM5; Appendix B), where the same operators produce theoretically-expected results at different institutional scales.</p>
+<p>Two primary questions are addressed. First, do the JUNO operators behave as theoretically predicted at panel scale &mdash; specifically, does stress consistently suppress expressed cognition and bond strength? Second, does the structural coordination framework discriminate pre-rupture from non-rupture periods at above-chance rates in leave-one-society-out cross-validation, and does rupture-morphology stratification improve discrimination? A third question, arising from the cross-system evidence, concerns whether the observed pattern of results &mdash; consistent operator behaviour at the panel level with baselines shifting in theoretically expected directions &mdash; constitutes parsimony evidence for a shared coordination mechanism across institutional classes.</p>
+
+<h2>2. Methods</h2>
+<h3>2.1 Panel Construction</h3>
+<p>The PR-GAP-2 panel comprises 44 societies selected to maximise geographic diversity, political system heterogeneity, and temporal coverage within the 1900&ndash;2025 observation window, prior to outcome inspection. The panel spans Africa, the Americas, Asia-Pacific, Europe, and the Middle East and Central Asia, covering parliamentary democracies, single-party states, military regimes, constitutional monarchies, and theocratic republics. The panel yields 4,541 society-years of node-level CAMS data, with an average observation length of 103 years per society.</p>
+<h3>2.2 CAMS Scoring Protocol</h3>
+<p>Node-level C/K/S/A scores were generated using the CAMNATIONS5 five-scorer ensemble protocol (McKern, 2026c). Five independent scoring passes are conducted per society; cross-pass peeking is prohibited. The ensemble mean is computed at each (Society, Year, Node, Dimension) cell. The panel mean stress score is 3.76 (SD = 1.93); mean capacity is 5.82 (SD = 1.77). Ensemble standard deviations average 0.84 per cell, indicating moderate scorer agreement.</p>
+<h3>2.3 JUNO v1.2-Final Canonical Operators</h3>
+<p>All derived metrics use the JUNO v1.2-Final canonical formulation. Node-level quantities:</p>
+<div class="sp-eq">
+Quality factor:  q<sub>i</sub> = (0.6C<sub>i</sub> + 0.4A<sub>i</sub>)/10  &isin; (0, 1]<br>
+Node value:  V<sub>i</sub> = C<sub>i</sub> + K<sub>i</sub> &minus; S<sub>i</sub> + 0.5A<sub>i</sub><br>
+Neuromodulatory condition:  N<sub>i</sub> = K<sub>i</sub> &minus; S<sub>i</sub>  (negative when S &gt; K)<br>
+Expressed cognition:  P<sub>i</sub> = (A<sub>i</sub> &times; C<sub>i</sub>) &times; (K<sub>i</sub> &minus; S<sub>i</sub>)  (inverts under cognitive deficit)<br>
+Pairwise bond strength:  B<sub>ij</sub> = &radic;(q<sub>i</sub>&middot;q<sub>j</sub>) &middot; 2<sup>&minus;(S<sub>i</sub>+S<sub>j</sub>)/10</sup>
+</div>
+<p>System bond strength B<sub>t</sub> is the mean of per-node mean bond strengths across all seven pairwise bonds per node.</p>
+<h3>2.4 Rupture Chronology and Classification</h3>
+<p>A rupture chronology of 126 events was compiled using: the Cline Center Coup d'&Eacute;tat Project (v2.0); V-Dem Episode of Regime Transformation v15; and Reinhart/Rogoff crisis data, supplemented with expert annotation. Events represent discontinuous institutional reorganisation affecting governance, security, or legal structures. Inter-rater agreement on inclusion/exclusion: &kappa; = 0.82 on a 30-event sample.</p>
+<p>Ruptures were classified by the sign of mean expressed cognition in the three-year pre-rupture window: P&#772; &lt; 0 = deficit crisis (n = 76); P&#772; &gt; 0 = coordination transition (n = 41); insufficient data (n = 9).</p>
+<h3>2.5 Robson Gauge v3</h3>
+<p>The Robson Gauge v3 (McKern, 2026d) measures slow-node cultural grounding via:</p>
+<div class="sp-eq">
+&eta;<sub>soil</sub>(t) = (BS<sub>Lore</sub>(t) &middot; BS<sub>Archive</sub>(t) &middot; C<sub>Hands</sub>(t)) / (S<sub>Hands</sub>(t) &middot; &sigma;<sub>V</sub>(t) + &epsilon;)
+</div>
+<p>where &epsilon; = 2.0, &sigma;<sub>V</sub> is the population standard deviation of all eight node values V<sub>i</sub> per society-year, and BS<sub>i</sub> denotes mean bond strength of node i across its seven pairwise bonds. The numerator captures slow-node bond fidelity (Lore and Archive) multiplied by Hands capacity; the denominator scales by Hands stress and system-wide node dispersion. Six path types are defined:</p>
+<ul>
+<li><b>Deep Ancient Forest</b> (&eta; &gt; 0.15, &sigma;<sub>V</sub> &lt; 2.0)</li>
+<li><b>Greenhouse Garden</b> (&eta; &gt; 0.15, &sigma;<sub>V</sub> &ge; 2.0)</li>
+<li><b>Young Ancient Forest</b> (0.08 &le; &eta; &le; 0.15, &sigma;<sub>V</sub> &lt; 2.0)</li>
+<li><b>Standard Transplant</b> (&eta; &lt; 0.08, &sigma;<sub>V</sub> &gt; 2.0)</li>
+<li><b>Failed Transplant</b> (&eta; &lt; 0.02, &sigma;<sub>V</sub> &gt; 3.5)</li>
+<li><b>Ruptured</b> (&eta; &lt; 0.005)</li>
+</ul>
+<p>&eta;<sub>soil</sub> was computed for all 4,541 society-years in the PR-GAP-2 panel. Societies with &sigma;<sub>V</sub> &lt; 0.3 in the scoring data (India, Thailand, Pakistan, Israel, Palestine &mdash; reflecting epoch-level scoring collapse rather than genuine node homogeneity) are flagged as potential artifacts and excluded from path-type interpretation.</p>
+<h3>2.6 Statistical Analysis</h3>
+<p>T1 and T2 were evaluated using within-society Spearman correlations between system stress and (a) mean expressed cognition and (b) canonical bond strength. LOSO cross-validation used logistic regression with L2 regularisation (C = 1.0), trained on k&minus;1 societies and evaluated on the held-out society; evaluable n = 37 (all ruptures) and 29 (deficit crises). Fold-level AUC values were tested against chance using one-sample t-tests. Bootstrap confidence intervals were computed with 10,000 resamples.</p>
+
+<h2>3. Results</h2>
+<h3>3.1 Structural Coherence (T1 and T2)</h3>
+<p>T1 predicted a negative within-society correlation between system stress (S&#772;) and mean expressed cognition (P&#772;). This was supported in 41 of 42 evaluable societies (97.6%), mean &rho;&#772; = &minus;0.860 (range &minus;0.987 to &minus;0.456). The sole exception was India (&rho; = +0.861, p &lt; .0001) &mdash; confirmed by sub-analysis as a secular-trend scoring artifact rather than a substantive finding (Section 4.3).</p>
+<p>T2 predicted a negative within-society correlation between system stress and canonical bond strength B<sub>t</sub>. This was supported in all 42 evaluable societies (100%), mean &rho;&#772; = &minus;0.910 (range &minus;0.992 to &minus;0.658). Canonical bond strength is suppressed under elevated stress in every society and historical period in the panel.</p>
+<p>Both results confirm that the JUNO v1.2-Final operators behave as theoretically expected at panel scale.</p>
+
+<figure>
+  <img src="pr-gap2-fig2-t1-t2-distribution.png" alt="Distribution of per-society Spearman correlation coefficients for T1 (stress vs expressed cognition) and T2 (stress vs bond strength)">
+  <figcaption><b>Figure 2.</b> Distribution of per-society Spearman &rho; values for T1 (stress vs expressed cognition, left) and T2 (stress vs bond strength, right). India is shown separately in T1 (&rho; = +0.861, confirmed artifact).</figcaption>
+</figure>
+
+<h3>3.2 Rupture Classification</h3>
+<p>Of the 126 coded ruptures, 76 (60.3%) were deficit crises (P&#772; &lt; 0 in the three-year pre-rupture window), 41 (32.5%) were coordination transitions (P&#772; &gt; 0), and 9 (7.1%) had insufficient pre-event data. Coordination transitions &mdash; including independence declarations, negotiated regime changes, and postwar reconstitution events &mdash; are structurally distinct: expressed cognition is positive, bond strength stable or elevated, and the system reorganising rather than collapsing. Conflating them with deficit crises in a single undifferentiated rupture outcome constitutes a misspecification of the prediction target.</p>
+
+<h3>3.3 LOSO Results</h3>
+<p><b>Full rupture outcome.</b> For the undifferentiated rupture outcome (Rupture_Incoming = 1 in the three years prior to any coded event), neither legacy-variable nor canonical-variable baseline models distinguished pre-rupture from non-rupture years above chance: canonical baseline AUC = 0.563, t(36) = 1.76, p = .087. The null result is substantively important &mdash; it confirms that CAMS does not generically predict all forms of institutional discontinuity under a single model.</p>
+<p><b>Deficit crisis outcome.</b> Stratifying to deficit crises produced a substantially different result. The canonical baseline achieved mean LOSO AUC = 0.740 (median 0.754; 95% CI: [0.682, 0.796]), with 26 of 29 evaluable folds above chance, t(28) = 7.39, p &lt; .001. Adding NCT-v2 Dream-composition variables increased performance to AUC = 0.763 (t(28) = 8.82, p &lt; .001), all 29 folds positive.</p>
+<p>Three societies produced sub-chance LOSO AUC on the deficit-crisis outcome: Russia (0.366), Nigeria (0.420), and Indonesia (0.481). All three combine fast-onset rupture events and/or high scorer uncertainty in the pre-event period &mdash; conditions under which the 3-year gradual degradation signal would be attenuated or absent.</p>
+
+<figure>
+  <img src="pr-gap2-fig1-loso-auc.png" alt="Per-society LOSO AUC for the deficit-crisis outcome, sorted ascending, n=29 evaluable societies">
+  <figcaption><b>Figure 1.</b> Per-society LOSO AUC for the deficit-crisis outcome (canonical baseline, n = 29 evaluable societies), sorted ascending. Dashed vertical line: chance (AUC = 0.5). Dotted line: panel mean (0.740). Red bars: sub-chance folds.</figcaption>
+</figure>
+
+<h3>3.4 Robson Gauge &mdash; Path-Type Results</h3>
+<p>&eta;<sub>soil</sub> was computed for all 4,541 society-years. Figure 3 shows the &eta;<sub>soil</sub> &times; &sigma;<sub>V</sub> path-type plane for recent-period (2018&ndash;2022) means across the 36 societies with data in that window, supplemented by most-recent-available data for the remaining eight societies.</p>
+
+<figure>
+  <img src="pr-gap2-fig3-robson-gauge-plane.png" alt="PR-GAP-2 Robson Gauge path-type plane, sigma_V vs eta_soil, 44 societies">
+  <figcaption><b>Figure 3.</b> PR-GAP-2 Robson Gauge path-type plane. X-axis: &sigma;<sub>V</sub> (node value dispersion); Y-axis: &eta;<sub>soil</sub> (log scale). Coloured regions denote path types. Open circles: scoring-artifact flag (&sigma;<sub>V</sub> &lt; 0.3). Triangles: historical data only.</figcaption>
+</figure>
+
+<p>Seven societies are classified as Ruptured (&eta; &lt; 0.005) in the recent period: Japan, Russia, South Africa, Argentina, Venezuela, Nigeria, and Afghanistan. Two are Failed Transplant (&eta; &lt; 0.02, &sigma;<sub>V</sub> &gt; 3.5): France and Egypt. The most counterintuitive finding is Japan: &eta; &asymp; 0.001, &sigma;<sub>V</sub> &asymp; 5.3 consistently since 2010, reflecting extreme node dispersion alongside severely compressed slow-node bond fidelity. Japan's Ruptured classification does not reflect a recent deterioration but a sustained configuration predating the observation window for this panel.</p>
+<p>France presents a historically legible decline: &eta; &asymp; 0.148 in the 1960s (Young Ancient Forest), holding near that level through the 1980s&ndash;90s, then falling sharply after 2010 to the current Failed Transplant reading (&eta; = 0.015, &sigma;<sub>V</sub> = 4.1). Estonia leads the panel at &eta; &asymp; 0.90 (Deep Ancient Forest), consistent with its post-Soviet institutional reconstruction trajectory. Five societies with &sigma;<sub>V</sub> &lt; 0.3 &mdash; India, Thailand, Pakistan, Israel, Palestine &mdash; are excluded from path-type interpretation as their low dispersion values are consistent with epoch-level scoring producing uniform node scores.</p>
+<p>Singapore's trajectory is the most volatile in the panel: Deep Ancient Forest (1988&ndash;96), collapse at the Asian Financial Crisis (1997&ndash;98), partial recovery (2000&ndash;07), second decline (2008&ndash;14), and return to Deep Ancient Forest in 2024&ndash;25.</p>
+
+<h3>3.5 Longitudinal Cultural Grounding Trajectories</h3>
+
+<figure>
+  <img src="pr-gap2-fig4-longitudinal-trajectories.png" alt="Longitudinal eta_soil decade means for France and Singapore across their full panel observation windows">
+  <figcaption><b>Figure 4.</b> Longitudinal cultural grounding trajectories (&eta;<sub>soil</sub>, decade means) for France and Singapore. Dashed horizontal lines mark Deep Ancient Forest (0.15), Young Ancient Forest (0.08), and Ruptured (0.005) thresholds. Vertical lines mark major exogenous shocks.</figcaption>
+</figure>
+
+<p>Both societies exhibit pronounced volatility relative to the panel median, with inflection points correlated with major external shocks (Great Depression, Asian Financial Crisis, Global Financial Crisis, COVID-19). France's peak cultural grounding in the 1960s and its sustained post-2010 decline are consistent with the Robson paper's characterisation of France as a historical exemplar of institutionalised slow-node accumulation, now under structural pressure. Singapore's oscillations reflect the particular vulnerability of a high-throughput coordination system to disruptions in Lore-Archive bond fidelity &mdash; its highest &eta;<sub>soil</sub> values correspond to the Lee Kuan Yew period of deep state-building (1988&ndash;96).</p>
+
+<h2>4. Discussion</h2>
+<h3>4.1 The Estimand Problem and Its Resolution</h3>
+<p>The central methodological finding is that the CAMS structural framework was not failing to predict political rupture &mdash; it was correctly discriminating between two event types that the rupture chronology conflates. When all 126 coded events are treated as a homogeneous outcome, accuracy is marginal (AUC &asymp; 0.563, p = .087). When restricted to deficit crises, accuracy rises to AUC = 0.740 (p &lt; .001), with 26 of 29 evaluable folds above chance.</p>
+<p>This is not a post-hoc exclusion. The deficit/transition distinction is structurally motivated by the JUNO formalism: expressed cognition P = (A &times; C) &times; (K &minus; S) is theoretically positive under conditions of coordinated institutional capacity and inverts when stress outstrips capacity. A rupture preceded by negative P is one in which the system's coordination capacity has already failed; a rupture preceded by positive P is one in which the system is reorganising under maintained coordination &mdash; a fundamentally different process that a model of structural degradation should not be expected to predict from the same inputs. The deficit/transition stratification is a precision improvement in the specification of the estimand, not a restriction of scope to exclude inconvenient cases.</p>
+<p>The parallel to the ESCH CAMS v3.2-R framework is instructive. In that framework, societies with &kappa; &ge; 0.35 (high bond coherence relative to the &Lambda; threshold) are classified as BUFFERING attractors &mdash; systems that absorb stress events without structural reorganisation. PR-GAP-2 coordination transitions correspond closely to this attractor type. The v3.2-R framework predicts that BUFFERING systems do not transition to collapse under the same causal mechanism as STRESS-CYCLING or DEGRADED systems. The present results corroborate that prediction empirically across a 125-year panel.</p>
+
+<h3>4.2 Mechanism: Structural Degradation Preceding Visible Collapse</h3>
+<p>The T1 and T2 results establish that stress suppresses both expressed cognition (41/42 societies) and canonical bond strength (42/42 societies) at panel scale. These are structural regularities across the full time series, not predictions about crisis windows specifically. They confirm that the JUNO operators behave as theoretically expected: elevated stress diminishes the neuromodulatory condition N = K &minus; S, gating expressed cognition P; simultaneously, stress suppresses the quality factors q<sub>i</sub> that determine pairwise bond strength B<sub>ij</sub>. Both channels degrade coordination capacity under sustained stress, consistently across societies spanning every major world region and political system type in the panel.</p>
+<p>The convergence of these regularities with the rupture-prediction result suggests a coherent mechanistic account. The structural degradation signature detectable in the 2&ndash;3 years prior to a deficit crisis reflects the progressive inversion of expressed cognition as cumulative stress drives N increasingly negative across nodes. Bond strength falls as q<sub>i</sub> values decline, reducing coupling between institutional functions. The system becomes less able to translate its remaining knowledge and organisational capacity into coordinated action, and increasingly reactive to small perturbations rather than able to absorb them.</p>
+
+<h3>4.3 The India Exception: A Scoring Artifact</h3>
+<p>India is the sole society for which T1 fails: &rho;(S&#772;, P&#772;) = +0.861 (p &lt; .0001). A time-stratified sub-analysis indicates this reflects a data-quality issue, not a substantive institutional dynamic. India's CAMS data contains only 9 unique Mean_S values across 73 assessed years (scoring resolution = 0.12), increasing monotonically from 1.125 in 1950 to 4.625 by 2010. Mean_K increases in parallel, consistently approximately 3 units above Mean_S. Consequently N = K &minus; S is positive in every year and increases over time at the same rate as S, producing a positive T1 result driven by secular-trend confounding rather than any causal relationship. During the Emergency period (1975&ndash;77) &mdash; the most acute authoritarian contraction in modern Indian history &mdash; Mean_S remains unchanged at 1.000: the scorers registered no stress signal. India is excluded from the T1 inference; T1 support is reported as 41 of 41 evaluable societies.</p>
+
+<h3>4.4 Scope Conditions</h3>
+<p>The three sub-chance LOSO folds clarify the model's scope conditions. Nigeria and Indonesia are cases of event compression: their coded deficit crises are fast-onset military coups or rapid authoritarian collapses not detectable at the 3-year degradation-signal horizon. Russia combines multi-era classification ambiguity with high scorer uncertainty in the Soviet period: the 1991 dissolution registers as a deficit crisis by the P &lt; 0 criterion while simultaneously exhibiting coordination-transition features at the sub-national level for successor states. Russia may require a richer rupture typology than the binary deficit/transition classification.</p>
+
+<h3>4.5 Parsimony Evidence for a Shared Coordination Mechanism</h3>
+<p>The equation structure of the JUNO operators has now reproduced theoretically-expected results across several institutional system classes. In PR-GAP-2, the same operators that suppress bond strength and expressed cognition under elevated stress also discriminate pre-collapse from non-collapse years at AUC = 0.740 &mdash; using only internal structural variables, with no economic, demographic, or conflict-history inputs. In the Robson Gauge, the same bond-strength formula and node-value dispersion that structure the &eta;<sub>soil</sub> numerator and denominator produce a coherent path-type taxonomy across 44 societies and 125 years, with historically legible trajectories for France, Singapore, Estonia, and others. In preliminary applications to corporate entities (CAMCORP; Appendix A) and municipal systems (CAMCITIESM5; Appendix B), the same operators produce stress-bond and stress-cognition relationships in the theoretically expected direction, with baselines shifting consistently across system type.</p>
+<p>The parsimony argument is specific. The JUNO operators were not independently derived for each system class; a single equation set produces consistent behaviour across entities that differ by orders of magnitude in scale, legal form, membership structure, and observational context. When the same functional form recurs across such diverse systems, and consistently produces results in the predicted direction rather than in arbitrary or reversed directions, this is evidence &mdash; not proof &mdash; that the operators are measuring something real about the underlying coordination process rather than exploiting data-specific correlations. The replication is structural rather than statistical: the evidence is the consistency of direction and shape across classes, not a test of a shared parameter value.</p>
+<p>This is not a demonstrated allometric law. An allometric law in the sense of West, Brown and Enquist (1997) requires: (a) a theoretically derived scaling relationship between a quantity and system size, (b) empirical confirmation of that relationship across multiple orders of magnitude, and (c) a mechanism (typically network geometry or metabolic constraints) explaining the scaling exponent. None of these three conditions are met in the present evidence. What is met is the more modest claim: the equation structure has reproduced, baselines have shifted in the theoretically expected direction, and no system class examined to date has shown the relationship inverting or collapsing. That is parsimony evidence for a shared coordination mechanism &mdash; a prior, not a law. It motivates the design of a proper allometric test, which would require: systematic variation in system size across comparable entities within a class; a derivation of the predicted scaling relationship from first principles; and a dataset sufficient to fit and test the scaling exponent.</p>
+
+<h3>4.6 Contemporary Structural Alerts</h3>
+<p>Three panel societies currently sit at or near the upper bound of their own observed stress series. South Africa's 2023&ndash;2025 SK_Ratio (3.00) is the highest recorded value in its full 1900&ndash;2025 series. Venezuela's 2025 SK_Ratio (5.77) ties 2018 for the highest value in its observed coverage. The United States' 2025 SK_Ratio (1.48) is the third-highest in its 126-year series, exceeded only by 1931&ndash;1932.</p>
+<div class="sp-callout"><b>These readings represent structural alerts</b> &mdash; configurations in which the CAMS framework has historically been associated with higher rates of deficit crisis &mdash; not calibrated near-term collapse probabilities. This study has not estimated calibrated probabilities, false-alarm rates, or detection thresholds for any society, and none should be inferred from a society's current structural position. Historically, societies at elevated structural stress have resolved through institutional reform as well as through rupture; the model discriminates structural configurations associated with deficit crisis in retrospect and cannot determine which path a given currently-elevated society will take.</div>
+
+<h3>4.7 Limitations</h3>
+<p>Rupture chronology quality is more reliable post-1945. Scorer uncertainty is elevated for pre-1950 authoritarian regimes and societies with limited historiographic coverage. The 3-year pre-rupture detection window is a design choice not derived from the CAMS formalism; the optimal horizon for deficit crises has not been systematically evaluated. Restricting the outcome to deficit crises reduces the evaluable sample from 37 to 29 societies, and replication in a held-out panel is desirable before treating the 0.740 AUC as stable. The estimand restriction also creates potential predictor&ndash;outcome leakage: the deficit/transition classification uses CAMS-derived P, and LOSO cannot fully remove this circularity. The decisive next step &mdash; external, CAMS-blinded rupture-morphology classification &mdash; is the subject of the planned PR-GAP-3 study. Annual scoring resolution audits are needed for all low-resolution societies in the panel.</p>
+
+<h3>4.8 Conclusion</h3>
+<p>PR-GAP-2 establishes three findings with reasonable confidence. First, at panel scale, CAMS system stress consistently suppresses expressed cognition (41/41 evaluable societies) and canonical bond strength (42/42 societies), validating the JUNO v1.2-Final operators in the direction the theory predicts. Second, the canonical structural framework discriminates deficit crises from non-crisis periods at AUC = 0.740 in leave-one-society-out cross-validation, with 26 of 29 evaluable folds above chance. Third, this discrimination does not extend to coordination transitions, consistent with the theoretical expectation that coordinated institutional reorganisation and structural collapse are driven by different mechanisms.</p>
+<p>The Robson Gauge application to the same panel produces a coherent cultural grounding taxonomy with historically legible trajectories, extending the evaluation to a second outcome domain under the same equation structure. Across PR-GAP-2, Robson Gauge, and preliminary corporate and municipal applications, the JUNO operators reproduce theoretically-expected relationships between stress, bond strength, and expressed cognition. This constitutes parsimony evidence for a shared coordination mechanism &mdash; not yet a demonstrated allometric law, but a prior strong enough to motivate the design of a proper scaling test.</p>
+
+<h2>References</h2>
+<div class="refs">
+<p>Blair, R. A., &amp; Sambanis, N. (2020). Forecasting civil wars: Theory and structure in an age of "Big Data." <i>Journal of Conflict Resolution, 64</i>(10), 1885&ndash;1915.</p>
+<p>Goldstone, J. A., Bates, R. H., Epstein, D. L., Gurr, T. R., Lustik, M. B., Marshall, M. G., Ulfelder, J., &amp; Woodward, M. (2010). A global model for forecasting political instability. <i>American Journal of Political Science, 54</i>(1), 190&ndash;208.</p>
+<p>Hegre, H., Nyg&aring;rd, H. M., &amp; Landsverk, P. (2019). Can we predict armed conflict? How the first 9 years of published forecasts stand up to reality. <i>Journal of Peace Research, 56</i>(2), 153&ndash;165.</p>
+<p>McKern, K. F. (2026a). The herd beneath the institution: Symbolic grooming, managerial decoupling, and collective rupture. <i>Wintermute Working Papers.</i></p>
+<p>McKern, K. F. (2026b). ESCH CAMS v3.2-R: Eight-node bipartite network, three topologies, and the Re-Coupling Theorem. <i>Wintermute Working Papers.</i></p>
+<p>McKern, K. F. (2026c). CAMNATIONS5: A five-scorer ensemble protocol for CAMS longitudinal assessment. <i>Wintermute Working Papers.</i></p>
+<p>McKern, K. F. (2026d). Robson Gauge v3: Cultural grounding as slow-node bond fidelity. <i>Wintermute Working Papers.</i></p>
+<p>Muchlinski, D., Siroky, D., He, J., &amp; Kocher, M. (2016). Comparing random forest with logistic regression for predicting class-imbalanced civil war onset data. <i>Political Analysis, 24</i>(1), 87&ndash;103.</p>
+<p>West, G. B., Brown, J. H., &amp; Enquist, B. J. (1997). A general model for the origin of allometric scaling laws in biology. <i>Science, 276</i>(5309), 122&ndash;126.</p>
+<p><i>JUNO &times; CAMS Derivate Recomputation and Thesis Validation.</i> (2026). Internal validation report.</p>
+</div>
+
+<div class="appendix">
+<h3>Appendix A: Cross-System Application &mdash; Corporate Entities (CAMCORP)</h3>
+<p>The JUNO operators have been applied to corporate entities under the CAMCORP protocol (McKern, 2026e). In this mapping, the eight CAMS nodes are anchored to corporate functions: Helm &rarr; Board and executive governance; Shield &rarr; Risk management and legal compliance; Lore &rarr; Organisational culture and brand coherence; Stewards &rarr; Finance and capital allocation; Archive &rarr; Institutional memory, documentation, and process; Craft &rarr; Product development and technical capacity; Hands &rarr; Operations and workforce; Flow &rarr; Information exchange and market intelligence.</p>
+<p>C/K/S/A scores are assessed annually using the CAMCORP5 ensemble protocol. Preliminary applications to a diverse set of corporate entities across sectors (technology, financial services, manufacturing, and public institutions) show that:</p>
+<p><b>T1 reproduces.</b> Within-entity correlations between system stress and expressed cognition are negative in the theoretically expected direction across evaluated entities and years. The relationship does not invert under high-growth or high-stress periods, consistent with PR-GAP-2 T1 results at the national level.</p>
+<p><b>T2 reproduces.</b> Canonical bond strength B<sub>t</sub> is suppressed under elevated stress in evaluated corporate entities, consistent with the 42/42 result at the national level.</p>
+<p><b>Baseline levels differ.</b> Mean &eta;<sub>soil</sub> values for corporate entities tend to be higher than national-level baselines, reflecting the tighter organisational coupling possible in bounded institutional structures. &sigma;<sub>V</sub> distributions are narrower, consistent with fewer degrees of freedom in node-level variation. These baseline differences are in the theoretically expected direction: more bounded systems should exhibit tighter node coupling and lower internal dispersion.</p>
+<p>These preliminary results do not constitute a CAMCORP validation study equivalent to PR-GAP-2: they lack a preregistered outcome measure, an independent rupture chronology, and LOSO cross-validation. They are reported as cross-system evidence that the JUNO equation structure reproduces theoretically-expected relationships at the corporate scale. A CAMCORP validation study (PR-CORP-1) is in preparation.</p>
+</div>
+
+<div class="appendix">
+<h3>Appendix B: Cross-System Application &mdash; Municipal Systems (CAMCITIESM5)</h3>
+<p>The JUNO operators have been applied to municipal and city-level institutional systems under the CAMCITIESM5 protocol (McKern, 2026f). In this mapping, nodes are anchored to urban coordination functions: Helm &rarr; City government and executive administration; Shield &rarr; Public safety and emergency management; Lore &rarr; Civic culture and community identity; Stewards &rarr; Budget, infrastructure, and resource allocation; Archive &rarr; Planning systems, legal frameworks, and institutional memory; Craft &rarr; Economic development and technical capacity; Hands &rarr; Service delivery and public works; Flow &rarr; Media, communication, and civic information exchange.</p>
+<p>Preliminary applications to a set of municipal entities across governance types (strong-mayor, council-manager, and regional authority structures) show T1 and T2 reproduction in the expected direction, with the stress-cognition and stress-bond-strength relationships holding at the city level. &eta;<sub>soil</sub> trajectories for assessed cities show coherent variation across periods of administrative reform, fiscal stress, and population change.</p>
+<p>Notable patterns include: cities undergoing rapid post-industrial restructuring show pronounced &sigma;<sub>V</sub> increases consistent with the Standard Transplant or Failed Transplant classification; cities with stable administrative traditions and high civic engagement show lower &sigma;<sub>V</sub> and higher &eta;<sub>soil</sub> baselines. Robson Gauge path-type trajectories for cities appear to be more volatile on a per-decade basis than national-level trajectories, reflecting the smaller scale and tighter coupling of city systems to exogenous economic and demographic shocks.</p>
+<p>As with the CAMCORP results, the CAMCITIESM5 evidence is reported as cross-system direction evidence, not as a validated prediction study. A city-level panel validation (PR-CITY-1) is in preparation.</p>
+</div>
+
+<h2>Files &amp; downloads</h2>
+<div class="sp-dl-row">
+    <a class="sp-dl" href="analysis/pr_gap2_paper.docx" target="_blank">Full paper (DOCX)</a>
+    <a class="sp-dl alt" href="pr-gap2-rupture-study.html">Plain-language companion</a>
+    <a class="sp-dl alt" href="analysis/pr_gap2_panel_derived.csv" target="_blank">Society-year panel CSV</a>
+    <a class="sp-dl alt" href="analysis/pr_gap2_ruptures.csv" target="_blank">Rupture chronology CSV</a>
+</div>
+
+<div class="sp-footer">
+  <p><b>Correspondence:</b> kari.freyr.4@gmail.com &middot; Analysis code and data: <code>wintermute/analysis/</code></p>
+  <p style="margin-top:16px;">&copy; 2026 Kari McKern &mdash; Neural Nations CAMS Research. Open science &mdash; <a href="https://github.com/KaliBond/wintermute" target="_blank" style="color:#2F6F7D;">KaliBond/wintermute</a>.</p>
+</div>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>
