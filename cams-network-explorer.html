@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAMS Network Explorer — Institutional Weather</title>
+<meta name="description" content="Interactive 8-node CAMS/JUNO network dynamics explorer. Where is the system under stress, where is it resilient, and what intervention would change the trajectory? Bounded exploratory dynamics, not calibrated prediction.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://neuralnations.org/cams-network-explorer">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F1E4; --card:#FDFAF0; --ink:#1B2A33; --muted:#6B7480;
+  --amber:#D98B2B; --amber-soft:#fbecd4;
+  --teal:#2F6F7D; --teal-soft:#e3eff1;
+  --red:#C84C3E; --red-soft:#fbe6e3;
+  --green:#3a7d44; --green-soft:#e5f0e6;
+  --line:#DAD2B8;
+}
+*{box-sizing:border-box;}
+body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',-apple-system,sans-serif;margin:0;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 80px;}
+.masthead{border-bottom:3px double var(--line);padding:32px 0 20px;margin-bottom:24px;}
+.brand{font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);font-weight:700;}
+.masthead h1{font-family:'Newsreader',Georgia,serif;font-size:30px;margin:12px 0 6px;font-weight:700;}
+.masthead p{color:var(--muted);font-size:15.5px;max-width:760px;line-height:1.55;margin:0 0 8px;}
+.badge-warn{display:inline-flex;align-items:center;gap:8px;background:var(--amber-soft);border:1px solid var(--amber);color:#7a5313;font-size:13px;font-weight:600;padding:8px 14px;border-radius:8px;margin-top:10px;}
+.grid{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start;}
+@media(max-width:900px){.grid{grid-template-columns:1fr;}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:18px;}
+.card h2{font-family:'Newsreader',Georgia,serif;font-size:17px;margin:0 0 12px;color:var(--teal);}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+button.pill{font-family:inherit;font-size:12.5px;font-weight:600;padding:7px 13px;border-radius:20px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:all .15s;}
+button.pill:hover{border-color:var(--teal);}
+button.pill.active{background:var(--teal);border-color:var(--teal);color:#fff;}
+button.pill.layer-btn.active{background:var(--amber);border-color:var(--amber);}
+.scrub-row{display:flex;align-items:center;gap:10px;margin:10px 0 4px;}
+.scrub-row input[type=range]{flex:1;}
+#tLabel{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);min-width:64px;text-align:right;}
+button.iconbtn{border:1px solid var(--line);background:#fff;border-radius:6px;padding:6px 10px;font-size:13px;cursor:pointer;}
+button.iconbtn:hover{border-color:var(--teal);}
+#graphWrap{position:relative;}
+canvas{display:block;width:100%;background:var(--card);border-radius:8px;}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted);margin-top:8px;}
+.legend span{display:inline-flex;align-items:center;gap:5px;}
+.swatch{width:11px;height:11px;border-radius:50%;display:inline-block;}
+.layer-note{font-size:13px;color:var(--muted);background:var(--teal-soft);border-radius:6px;padding:10px 12px;margin-top:10px;line-height:1.5;}
+table.mini{width:100%;border-collapse:collapse;font-size:12.5px;font-family:'IBM Plex Mono',monospace;}
+table.mini th{text-align:left;color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.03em;padding:4px 6px;border-bottom:1px solid var(--line);}
+table.mini td{padding:4px 6px;border-bottom:1px solid #ece5cc;}
+.rank-item{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #ece5cc;font-size:13px;}
+.rank-item:last-child{border-bottom:none;}
+.rank-item .lbl{color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.02em;}
+.rank-item .val{font-family:'IBM Plex Mono',monospace;font-weight:600;}
+select, .selnode{font-family:inherit;font-size:13px;padding:6px 8px;border-radius:6px;border:1px solid var(--line);background:#fff;}
+.compare-box{display:flex;gap:10px;}
+.compare-col{flex:1;background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;font-size:12.5px;}
+.compare-col h4{margin:0 0 6px;font-size:13px;color:var(--teal);}
+.compare-col .line{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;padding:2px 0;}
+.interv-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0;}
+.interv-grid label{font-size:12px;color:var(--muted);display:block;margin-bottom:3px;}
+input[type=number]{width:100%;padding:5px 7px;border:1px solid var(--line);border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:13px;}
+.footer{border-top:2px solid var(--line);margin-top:20px;padding-top:16px;font-size:12.5px;color:var(--muted);}
+.footer a{color:var(--teal);}
+</style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="mathematical-backbone.html">Mathematical Backbone</a>
+                    <a href="social-cognition.html">Social Cognition · Real Time</a>
+                    <a href="cams-scorer.html">CAMS Scorer</a>
+                    <a href="argentina-puzzle.html">The Puzzle of Argentina</a>
+                    <hr class="menu-divider">
+                    <a href="cams-zeitgeist.html">Zeitgeist Detector</a>
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="attractors.html">Attractors</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link">Framework ↗</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">GitHub</a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="explore.html">Explore</a>
+        <a href="datasets.html">Datasets</a>
+    </div>
+</nav>
+
+<div class="wrap">
+<header class="masthead">
+  <div class="brand">neural nations &middot; CAMS/JUNO &middot; Network Explorer</div>
+  <h1>Institutional Weather</h1>
+  <p>Where is the system under stress, where is it resilient, and what intervention would change the trajectory? An 8-node CAMS/JUNO coordination network, integrated live in your browser &mdash; pick a scenario, scrub through time, or nudge a node yourself and watch the rest of the system respond.</p>
+  <div class="badge-warn">&#9888;&nbsp; Bounded exploratory CAMS/JUNO dynamics &mdash; boundary-clamped to the valid 0&ndash;10 scale, but the interior dynamics are not calibrated against real institutional data. Treat trajectories as illustrative, not predictive.</div>
+</header>
+
+<div class="grid">
+  <div>
+    <div class="card">
+      <h2>Scenario</h2>
+      <div class="row" id="scenarioRow"></div>
+      <h2 style="margin-top:16px;">Layer</h2>
+      <div class="row" id="layerRow"></div>
+      <div class="layer-note" id="layerNote"></div>
+    </div>
+
+    <div class="card">
+      <h2>Trajectory</h2>
+      <div class="scrub-row">
+        <button class="iconbtn" id="playBtn">&#9654; Play</button>
+        <input type="range" id="tScrub" min="0" max="399" value="0" step="1">
+        <span id="tLabel">t = 0.0</span>
+      </div>
+      <div id="graphWrap">
+        <canvas id="graphCanvas" width="760" height="520"></canvas>
+      </div>
+      <div class="legend" id="legendRow"></div>
+      <p style="font-size:12px;color:var(--muted);margin-top:10px;">Node colour = current layer value (darker/redder = higher). Edge thickness = coupling weight between nodes in this model's bond-topology matrix. Click a node to add it to the comparison panel &rarr;</p>
+    </div>
+  </div>
+
+  <div>
+    <div class="card">
+      <h2>Criticality ranking</h2>
+      <div id="rankBox"></div>
+    </div>
+
+    <div class="card">
+      <h2>Node comparison <span style="font-weight:400;color:var(--muted);font-size:12px;">(click 2 nodes)</span></h2>
+      <div class="compare-box" id="compareBox">
+        <div class="compare-col" id="compareA"><h4>&mdash;</h4></div>
+        <div class="compare-col" id="compareB"><h4>&mdash;</h4></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Intervention</h2>
+      <select id="intervNode" style="width:100%;margin-bottom:8px;"></select>
+      <div class="interv-grid">
+        <div><label>&Delta; Coherence</label><input type="number" id="dC" value="0" step="0.5"></div>
+        <div><label>&Delta; Capacity</label><input type="number" id="dK" value="0" step="0.5"></div>
+        <div><label>&Delta; Stress</label><input type="number" id="dS" value="0" step="0.5"></div>
+        <div><label>&Delta; Abstraction</label><input type="number" id="dA" value="0" step="0.5"></div>
+      </div>
+      <button class="iconbtn" id="applyInterv" style="width:100%;">Apply &amp; re-run trajectory</button>
+      <button class="iconbtn" id="resetInterv" style="width:100%;margin-top:6px;">Reset intervention</button>
+    </div>
+
+    <div class="card">
+      <h2>Export</h2>
+      <div class="row">
+        <button class="iconbtn" id="exportJson">Export state (JSON)</button>
+        <button class="iconbtn" id="exportPng">Export graph (PNG)</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p><b>Method note.</b> Ports the fixed-and-stabilised <code>cams_network_skeleton.py</code> ODE engine to JavaScript (fixed-step RK4, dt=0.05): the canonical JUNO node-value formula V = C+K&minus;S+0.5A on an 8-node &times; 4-metric (32-dimensional) system, with a general derivative clamp keeping every metric inside [0,10] regardless of the interior terms. The example bond-topology matrix and coefficients are unchanged from the Python skeleton and have not been calibrated against real institutional data &mdash; see the <a href="https://github.com/KaliBond/wintermute/blob/main/cams_network_skeleton.py" target="_blank">source skeleton</a> for the documented stability history (three unbounded-growth bugs found and fixed) and known calibration gap (Capacity has no interior self-damping term; long trajectories can settle at a degenerate boundary equilibrium rather than an interpretable fixed point).</p>
+  <p style="margin-top:10px;">&copy; 2026 Kari McKern &mdash; Neural Nations CAMS Research. Open science &mdash; <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</div>
+</div>
+
+<script>
+// ============================================================
+// CAMS/JUNO network ODE engine -- JS port of cams_network_skeleton.py
+// ============================================================
+const NODES = ["Helm","Shield","Archive","Lore","Stewards","Craft","Hands","Flow"];
+const N = NODES.length;
+const METRICS = ["C","K","S","A"];
+const M = METRICS.length;
+
+const NODE_MEANING = {
+  Helm: "Executive governance", Shield: "Security capacity", Archive: "Institutional memory & law",
+  Lore: "Normative culture", Stewards: "Resource allocation", Craft: "Technical capacity",
+  Hands: "Labour & production", Flow: "Information exchange"
+};
+const LAYER_MEANING = {
+  S: "Stress = pressure exposure. Higher means the node is under more load than it can currently metabolise.",
+  K: "Capacity = support and throughput. The node's ability to absorb stress and do work.",
+  C: "Coherence = alignment influence. How closely this node's state tracks its network neighbours.",
+  A: "Abstraction = interpretive / narrative transmission. Slow-moving, tied to how the node frames what's happening."
+};
+const LAYER_COLOR = { S: [200,76,62], K: [58,125,68], C: [47,111,125], A: [217,139,43] };
+
+// Rows = receiver, columns = sender (unchanged from the Python skeleton)
+const B_EXAMPLE = [
+  [0.4,0.6,0.3,0.5,0.2,0.1,0.1,0.2],
+  [0.5,0.3,0.2,0.4,0.1,0.1,0.2,0.1],
+  [0.2,0.1,0.5,0.6,0.3,0.2,0.1,0.1],
+  [0.4,0.3,0.5,0.4,0.2,0.1,0.1,0.2],
+  [0.2,0.1,0.3,0.2,0.4,0.3,0.4,0.3],
+  [0.1,0.1,0.2,0.1,0.3,0.5,0.4,0.3],
+  [0.1,0.2,0.1,0.1,0.4,0.3,0.4,0.5],
+  [0.2,0.1,0.1,0.2,0.3,0.4,0.5,0.3]
+];
+const W_EXAMPLE = [0.08,0.10,0.09,0.09,0.12,0.14,0.20,0.18];
+
+const PARAMS = { gamma:0.30, delta:0.08, alpha:0.25, beta:0.12, S_max:10.0, K_max:10.0 };
+
+function junoV(C,K,S,A){ return C + K - S + 0.5*A; }
+
+function clampDeriv(value, deriv, lo=0.0, hi=10.0){
+  if (value <= lo && deriv < 0) return 0.0;
+  if (value >= hi && deriv > 0) return 0.0;
+  return deriv;
+}
+
+// y is a flat Float64Array of length 32: [C0,K0,S0,A0, C1,K1,...]
+function camsOde(y, B, w, p){
+  const dydt = new Float64Array(N*M);
+  for (let i=0;i<N;i++){
+    const C=y[i*M+0], K=y[i*M+1], S=y[i*M+2], A=y[i*M+3];
+
+    // Stress transport
+    let inflowS = 0;
+    for (let j=0;j<N;j++) inflowS += B[i][j]*w[j]*y[j*M+2];
+    let dS = inflowS - p.gamma*S;
+    if (S > 6.0) dS += 0.3*(S-6.0)*Math.max(0.0, 1.0 - S/p.S_max);
+
+    // Capacity transport
+    let outflowK = 0;
+    for (let k=0;k<N;k++) outflowK += B[k][i]*w[i]*y[k*M+1];
+    const Kpos = Math.max(K, 0.0);
+    const growthFactor = Math.min(Math.max(1.0 - Kpos/p.K_max, 0.0), 1.0);
+    const stressFactor = Math.min(Math.max(1.0 - S/10.0, 0.0), 1.0);
+    let dK = -outflowK + 0.4*Kpos*growthFactor*stressFactor - p.delta*K*S;
+    if (NODES[i]==="Craft" || NODES[i]==="Hands" || NODES[i]==="Stewards"){
+      dK += 0.15*Math.max(0, 8-S);
+    }
+
+    // Coherence
+    let sumB=0, sumBC=0;
+    for (let j=0;j<N;j++){ sumB += B[i][j]; sumBC += B[i][j]*y[j*M+0]; }
+    const neighbourC = sumBC/(sumB+1e-9);
+    const dC = p.alpha*(neighbourC - C) - p.beta*S;
+
+    // Abstraction
+    const dA = 0.02*Math.max(0, C-5) - 0.01*S;
+
+    dydt[i*M+0] = clampDeriv(C, dC);
+    dydt[i*M+1] = clampDeriv(K, dK);
+    dydt[i*M+2] = clampDeriv(S, dS);
+    dydt[i*M+3] = clampDeriv(A, dA);
+  }
+  return dydt;
+}
+
+function addScaled(y, dy, h){
+  const out = new Float64Array(y.length);
+  for (let i=0;i<y.length;i++) out[i] = y[i] + h*dy[i];
+  return out;
+}
+
+function rk4Step(y, dt, B, w, p){
+  const k1 = camsOde(y, B, w, p);
+  const k2 = camsOde(addScaled(y,k1,dt/2), B, w, p);
+  const k3 = camsOde(addScaled(y,k2,dt/2), B, w, p);
+  const k4 = camsOde(addScaled(y,k3,dt), B, w, p);
+  const out = new Float64Array(y.length);
+  for (let i=0;i<y.length;i++){
+    let v = y[i] + dt/6*(k1[i]+2*k2[i]+2*k3[i]+k4[i]);
+    out[i] = Math.min(Math.max(v, 0.0), 10.0); // belt-and-suspenders clip
+  }
+  return out;
+}
+
+function integrate(y0, tMax, dt){
+  const nSteps = Math.round(tMax/dt);
+  const states = [y0.slice()];
+  const times = [0];
+  let y = y0.slice();
+  for (let s=0; s<nSteps; s++){
+    y = rk4Step(y, dt, B_EXAMPLE, W_EXAMPLE, PARAMS);
+    states.push(y.slice());
+    times.push((s+1)*dt);
+  }
+  return { states, times };
+}
+
+function packState(initDict){
+  const y = new Float64Array(N*M);
+  NODES.forEach((node,i)=>{
+    METRICS.forEach((m,j)=>{ y[i*M+j] = initDict[node][m]; });
+  });
+  return y;
+}
+
+// ============================================================
+// Scenarios
+// ============================================================
+const BASELINE = {
+  Helm:     {C:5.2,K:6.1,S:4.8,A:5.5},
+  Shield:   {C:6.0,K:5.8,S:5.5,A:4.9},
+  Archive:  {C:5.8,K:5.5,S:4.2,A:6.2},
+  Lore:     {C:4.9,K:5.0,S:5.8,A:5.7},
+  Stewards: {C:5.5,K:6.4,S:4.0,A:5.1},
+  Craft:    {C:6.2,K:7.0,S:3.8,A:5.4},
+  Hands:    {C:5.0,K:6.8,S:5.2,A:4.3},
+  Flow:     {C:5.7,K:6.5,S:4.5,A:4.8}
+};
+
+function cloneInit(base){
+  const out = {};
+  NODES.forEach(n => out[n] = Object.assign({}, base[n]));
+  return out;
+}
+function clampInit(init){
+  NODES.forEach(n => METRICS.forEach(m => { init[n][m] = Math.min(Math.max(init[n][m],0),10); }));
+  return init;
+}
+
+const SCENARIOS = {
+  baseline: { label:"Baseline", build: () => clampInit(cloneInit(BASELINE)) },
+  hands_stress: { label:"Hands stress pulse", build: () => { const s=clampInit(cloneInit(BASELINE)); s.Hands.S += 4.5; return s; } },
+  lore_shock: { label:"Lore coherence shock", build: () => { const s=clampInit(cloneInit(BASELINE)); s.Lore.C -= 4.0; return s; } },
+  craft_loss: { label:"Craft capacity loss", build: () => { const s=clampInit(cloneInit(BASELINE)); s.Craft.K -= 4.5; return s; } },
+  shield_stabilize: { label:"Shield stabilization", build: () => { const s=clampInit(cloneInit(BASELINE)); s.Shield.C += 2.5; s.Shield.S -= 2.5; return s; } },
+  flow_bottleneck: { label:"Flow bottleneck", build: () => { const s=clampInit(cloneInit(BASELINE)); s.Flow.K -= 3.0; s.Flow.S += 2.5; return s; } }
+};
+
+// ============================================================
+// App state
+// ============================================================
+let currentScenario = "baseline";
+let currentLayer = "S";
+let intervention = null; // {node, dC, dK, dS, dA}
+let trajectory = integrate(packState(SCENARIOS.baseline.build()), 20, 0.05);
+let scrubIndex = 0;
+let selectedNodes = [];
+let playing = false;
+let lastFrameTime = null;
+let playAccum = 0;
+
+function buildInitWithIntervention(){
+  const init = SCENARIOS[currentScenario].build();
+  if (intervention){
+    init[intervention.node].C += intervention.dC;
+    init[intervention.node].K += intervention.dK;
+    init[intervention.node].S += intervention.dS;
+    init[intervention.node].A += intervention.dA;
+  }
+  return clampInit(init);
+}
+
+function recompute(){
+  trajectory = integrate(packState(buildInitWithIntervention()), 20, 0.05);
+  scrubIndex = Math.min(scrubIndex, trajectory.states.length-1);
+  render();
+}
+
+// ============================================================
+// UI: scenario + layer rows
+// ============================================================
+const scenarioRow = document.getElementById('scenarioRow');
+Object.keys(SCENARIOS).forEach(key => {
+  const btn = document.createElement('button');
+  btn.className = 'pill' + (key===currentScenario ? ' active' : '');
+  btn.textContent = SCENARIOS[key].label;
+  btn.onclick = () => {
+    currentScenario = key;
+    [...scenarioRow.children].forEach(c=>c.classList.remove('active'));
+    btn.classList.add('active');
+    recompute();
+  };
+  scenarioRow.appendChild(btn);
+});
+
+const layerRow = document.getElementById('layerRow');
+const layerNote = document.getElementById('layerNote');
+const LAYER_LABELS = {S:"Stress", K:"Capacity", C:"Coherence", A:"Abstraction"};
+Object.keys(LAYER_LABELS).forEach(key => {
+  const btn = document.createElement('button');
+  btn.className = 'pill layer-btn' + (key===currentLayer ? ' active' : '');
+  btn.textContent = LAYER_LABELS[key];
+  btn.onclick = () => {
+    currentLayer = key;
+    [...layerRow.children].forEach(c=>c.classList.remove('active'));
+    btn.classList.add('active');
+    layerNote.textContent = LAYER_MEANING[key];
+    render();
+  };
+  layerRow.appendChild(btn);
+});
+layerNote.textContent = LAYER_MEANING[currentLayer];
+
+// Intervention node select
+const intervSel = document.getElementById('intervNode');
+NODES.forEach(n => { const o=document.createElement('option'); o.value=n; o.textContent=n; intervSel.appendChild(o); });
+
+document.getElementById('applyInterv').onclick = () => {
+  intervention = {
+    node: intervSel.value,
+    dC: parseFloat(document.getElementById('dC').value)||0,
+    dK: parseFloat(document.getElementById('dK').value)||0,
+    dS: parseFloat(document.getElementById('dS').value)||0,
+    dA: parseFloat(document.getElementById('dA').value)||0
+  };
+  recompute();
+};
+document.getElementById('resetInterv').onclick = () => {
+  intervention = null;
+  ['dC','dK','dS','dA'].forEach(id => document.getElementById(id).value = 0);
+  recompute();
+};
+
+// ============================================================
+// Scrubber
+// ============================================================
+const tScrub = document.getElementById('tScrub');
+const tLabel = document.getElementById('tLabel');
+tScrub.max = 399;
+tScrub.oninput = () => { scrubIndex = parseInt(tScrub.value,10); render(); };
+
+document.getElementById('playBtn').onclick = () => {
+  playing = !playing;
+  document.getElementById('playBtn').textContent = playing ? '⏸ Pause' : '▶ Play';
+};
+
+// ============================================================
+// Canvas rendering + weighted-bond spring physics
+// ============================================================
+// Node layout is not fixed -- positions are particles connected by springs
+// whose rest length is set by bond weight (stronger bond = shorter rest
+// length, pulling nodes closer together), plus mutual repulsion (so the
+// graph doesn't collapse to a point), a weak central gravity (keeps the
+// cluster on-canvas), and a stress-scaled jitter (more stressed nodes
+// visibly shake more). Same family of dynamics as the CAMS Historical
+// Telescope's spring-physics model, adapted to this 8-node topology.
+const canvas = document.getElementById('graphCanvas');
+const ctx = canvas.getContext('2d');
+const CX = 380, CY = 260, R = 170;
+
+const PHYSICS = { stiffness: 0.06, damping: 0.90, repulsion: 2600, gravity: 0.05, restMin: 45, restMax: 150, jitterBase: 3 };
+
+const positions = NODES.map((_,i) => {
+  const ang = -Math.PI/2 + i*2*Math.PI/N;
+  return { x: CX + R*Math.cos(ang), y: CY + R*Math.sin(ang), vx: 0, vy: 0 };
+});
+
+function bondWeight(i,j){ return (B_EXAMPLE[i][j] + B_EXAMPLE[j][i]) / 2; }
+// B_EXAMPLE weights range roughly 0.1-0.6 across this topology
+const W_MIN = 0.1, W_MAX = 0.6;
+
+function stepPhysics(dt, stateForJitter){
+  const fx = new Array(N).fill(0), fy = new Array(N).fill(0);
+
+  for (let i=0;i<N;i++){
+    for (let j=i+1;j<N;j++){
+      const dx = positions[j].x - positions[i].x, dy = positions[j].y - positions[i].y;
+      const dist = Math.max(Math.sqrt(dx*dx+dy*dy), 1);
+
+      // spring: rest length shrinks as bond weight grows (stronger bond -> closer)
+      const wNorm = Math.min(Math.max((bondWeight(i,j)-W_MIN)/(W_MAX-W_MIN), 0), 1);
+      const restLength = PHYSICS.restMax - wNorm*(PHYSICS.restMax-PHYSICS.restMin);
+      const springF = PHYSICS.stiffness * (dist - restLength);
+      const sx = springF*dx/dist, sy = springF*dy/dist;
+      fx[i]+=sx; fy[i]+=sy; fx[j]-=sx; fy[j]-=sy;
+
+      // mutual repulsion so the cluster can't collapse regardless of bonds
+      const repF = PHYSICS.repulsion/(dist*dist);
+      const rx = repF*dx/dist, ry = repF*dy/dist;
+      fx[i]-=rx; fy[i]-=ry; fx[j]+=rx; fy[j]+=ry;
+    }
+    // weak central gravity, keeps the cluster roughly on-canvas
+    fx[i] += (CX - positions[i].x) * PHYSICS.gravity;
+    fy[i] += (CY - positions[i].y) * PHYSICS.gravity;
+    // stress jitter: nodes under more stress shake more
+    const stressVal = stateForJitter ? stateForJitter[i*M+2] : 0;
+    const jitterAmp = PHYSICS.jitterBase * (0.3 + stressVal/10);
+    fx[i] += (Math.random()-0.5) * jitterAmp;
+    fy[i] += (Math.random()-0.5) * jitterAmp;
+  }
+
+  for (let i=0;i<N;i++){
+    positions[i].vx = (positions[i].vx + fx[i]*dt) * PHYSICS.damping;
+    positions[i].vy = (positions[i].vy + fy[i]*dt) * PHYSICS.damping;
+    positions[i].x += positions[i].vx * dt;
+    positions[i].y += positions[i].vy * dt;
+    // soft canvas-edge containment
+    positions[i].x = Math.min(Math.max(positions[i].x, 40), canvas.width-40);
+    positions[i].y = Math.min(Math.max(positions[i].y, 40), canvas.height-40);
+  }
+}
+
+function lerpColor(rgb, t){
+  // t in [0,1]: 0 = light background tint, 1 = full color
+  const bg = [253,250,240];
+  return `rgb(${Math.round(bg[0]+(rgb[0]-bg[0])*t)},${Math.round(bg[1]+(rgb[1]-bg[1])*t)},${Math.round(bg[2]+(rgb[2]-bg[2])*t)})`;
+}
+
+function currentState(){ return trajectory.states[scrubIndex]; }
+
+function getMetric(y, i, metric){ return y[i*M + METRICS.indexOf(metric)]; }
+
+function render(){
+  const y = currentState();
+  tLabel.textContent = 't = ' + trajectory.times[scrubIndex].toFixed(1);
+
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  // edges
+  for (let i=0;i<N;i++){
+    for (let j=0;j<N;j++){
+      if (i>=j) continue;
+      const w = (B_EXAMPLE[i][j] + B_EXAMPLE[j][i]) / 2;
+      ctx.strokeStyle = `rgba(107,116,128,${0.15 + w*0.5})`;
+      ctx.lineWidth = 0.5 + w*4;
+      ctx.beginPath();
+      ctx.moveTo(positions[i].x, positions[i].y);
+      ctx.lineTo(positions[j].x, positions[j].y);
+      ctx.stroke();
+    }
+  }
+
+  // nodes
+  const rgb = LAYER_COLOR[currentLayer];
+  for (let i=0;i<N;i++){
+    const val = getMetric(y, i, currentLayer);
+    const t = Math.min(Math.max(val/10, 0), 1);
+    const isSelected = selectedNodes.includes(i);
+    ctx.beginPath();
+    ctx.arc(positions[i].x, positions[i].y, 30, 0, 2*Math.PI);
+    ctx.fillStyle = lerpColor(rgb, t);
+    ctx.fill();
+    ctx.lineWidth = isSelected ? 3.5 : 1.5;
+    ctx.strokeStyle = isSelected ? '#1B2A33' : '#DAD2B8';
+    ctx.stroke();
+
+    ctx.fillStyle = t > 0.55 ? '#fff' : '#1B2A33';
+    ctx.font = '600 12px IBM Plex Sans, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(NODES[i], positions[i].x, positions[i].y - 4);
+    ctx.font = '11px IBM Plex Mono, monospace';
+    ctx.fillText(val.toFixed(1), positions[i].x, positions[i].y + 10);
+  }
+
+  renderLegend();
+  renderRanking(y);
+  renderCompare(y);
+}
+
+function renderLegend(){
+  const legend = document.getElementById('legendRow');
+  legend.innerHTML = '';
+  const rgb = LAYER_COLOR[currentLayer];
+  [0,0.33,0.66,1].forEach(t => {
+    const span = document.createElement('span');
+    span.innerHTML = `<span class="swatch" style="background:${lerpColor(rgb,t)}"></span> ${(t*10).toFixed(0)}`;
+    legend.appendChild(span);
+  });
+}
+
+function renderRanking(y){
+  const box = document.getElementById('rankBox');
+  const vals = NODES.map((n,i) => ({
+    node:n, C:getMetric(y,i,'C'), K:getMetric(y,i,'K'), S:getMetric(y,i,'S'), A:getMetric(y,i,'A'),
+    V: junoV(getMetric(y,i,'C'),getMetric(y,i,'K'),getMetric(y,i,'S'),getMetric(y,i,'A')),
+    centrality: B_EXAMPLE[i].reduce((a,b)=>a+b,0) + B_EXAMPLE.reduce((a,row)=>a+row[i],0)
+  }));
+  const mostStressed = [...vals].sort((a,b)=>b.S-a.S)[0];
+  const mostDepleted = [...vals].sort((a,b)=>a.K-b.K)[0];
+  const mostFragile = [...vals].sort((a,b)=>a.V-b.V)[0];
+  const mostStabilizing = [...vals].sort((a,b)=>b.K-a.K)[0];
+  const mostCentral = [...vals].sort((a,b)=>b.centrality-a.centrality)[0];
+  const rows = [
+    ['Most stressed', mostStressed.node, mostStressed.S],
+    ['Most depleted (lowest capacity)', mostDepleted.node, mostDepleted.K],
+    ['Most fragile (lowest V)', mostFragile.node, mostFragile.V],
+    ['Most stabilizing (highest capacity)', mostStabilizing.node, mostStabilizing.K],
+    ['Most central (coupling weight)', mostCentral.node, mostCentral.centrality]
+  ];
+  box.innerHTML = rows.map(r => `<div class="rank-item"><div><div class="lbl">${r[0]}</div><b>${r[1]}</b></div><div class="val">${r[2].toFixed(2)}</div></div>`).join('');
+}
+
+function nodeDetail(y, i){
+  const C=getMetric(y,i,'C'), K=getMetric(y,i,'K'), S=getMetric(y,i,'S'), A=getMetric(y,i,'A');
+  let bestOut = {j:-1,w:-1}, bestIn = {j:-1,w:-1};
+  for (let j=0;j<N;j++){
+    if (j===i) continue;
+    if (B_EXAMPLE[j][i] > bestOut.w) bestOut = {j, w:B_EXAMPLE[j][i]}; // i sends to j: row j, col i
+    if (B_EXAMPLE[i][j] > bestIn.w) bestIn = {j, w:B_EXAMPLE[i][j]};   // i receives from j
+  }
+  return {
+    node: NODES[i], C, K, S, A, KminusS: (K-S).toFixed(2), V: junoV(C,K,S,A).toFixed(2),
+    outTo: bestOut.j>=0 ? `${NODES[bestOut.j]} (${bestOut.w.toFixed(2)})` : '—',
+    inFrom: bestIn.j>=0 ? `${NODES[bestIn.j]} (${bestIn.w.toFixed(2)})` : '—'
+  };
+}
+
+function renderCompareCol(id, y, i){
+  const el = document.getElementById(id);
+  if (i===undefined){ el.innerHTML = '<h4>&mdash;</h4><p style="color:var(--muted);font-size:12px;">Click a node</p>'; return; }
+  const d = nodeDetail(y,i);
+  el.innerHTML = `<h4>${d.node}</h4>
+    <div class="line"><span>V</span><span>${d.V}</span></div>
+    <div class="line"><span>K&minus;S</span><span>${d.KminusS}</span></div>
+    <div class="line"><span>Stress</span><span>${d.S.toFixed(2)}</span></div>
+    <div class="line"><span>Capacity</span><span>${d.K.toFixed(2)}</span></div>
+    <div class="line"><span>Strongest in</span><span>${d.inFrom}</span></div>
+    <div class="line"><span>Strongest out</span><span>${d.outTo}</span></div>`;
+}
+
+function renderCompare(y){
+  renderCompareCol('compareA', y, selectedNodes[0]);
+  renderCompareCol('compareB', y, selectedNodes[1]);
+}
+
+canvas.addEventListener('click', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width, scaleY = canvas.height / rect.height;
+  const mx = (e.clientX - rect.left) * scaleX, my = (e.clientY - rect.top) * scaleY;
+  for (let i=0;i<N;i++){
+    const dx = mx - positions[i].x, dy = my - positions[i].y;
+    if (dx*dx + dy*dy < 30*30){
+      if (selectedNodes.includes(i)) selectedNodes = selectedNodes.filter(x=>x!==i);
+      else { selectedNodes.push(i); if (selectedNodes.length>2) selectedNodes.shift(); }
+      render();
+      return;
+    }
+  }
+});
+
+// ============================================================
+// Export
+// ============================================================
+document.getElementById('exportJson').onclick = () => {
+  const y = currentState();
+  const out = { t: trajectory.times[scrubIndex], scenario: currentScenario, intervention, nodes:{} };
+  NODES.forEach((n,i) => { out.nodes[n] = { C:getMetric(y,i,'C'), K:getMetric(y,i,'K'), S:getMetric(y,i,'S'), A:getMetric(y,i,'A'), V:junoV(getMetric(y,i,'C'),getMetric(y,i,'K'),getMetric(y,i,'S'),getMetric(y,i,'A')) }; });
+  const blob = new Blob([JSON.stringify(out,null,2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `cams-network-snapshot-t${out.t.toFixed(1)}.json`;
+  a.click();
+};
+document.getElementById('exportPng').onclick = () => {
+  const a = document.createElement('a');
+  a.href = canvas.toDataURL('image/png');
+  a.download = `cams-network-graph-t${trajectory.times[scrubIndex].toFixed(1)}.png`;
+  a.click();
+};
+
+// ============================================================
+// Continuous animation loop: bond-weighted spring physics runs all the
+// time (independent of scrubbing), and drives trajectory playback too
+// ============================================================
+function frame(now){
+  if (lastFrameTime === null) lastFrameTime = now;
+  const dt = Math.min((now - lastFrameTime) / 1000, 0.05); // clamp for stability
+  lastFrameTime = now;
+
+  stepPhysics(dt * 60, currentState()); // scale so PHYSICS constants feel right at ~60fps
+
+  if (playing){
+    playAccum += dt;
+    if (playAccum > 0.03){ // advance ~2 trajectory steps per ~30ms, matching prior feel
+      playAccum = 0;
+      scrubIndex = (scrubIndex + 2) % trajectory.states.length;
+      tScrub.value = scrubIndex;
+    }
+  }
+
+  render();
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+<script src="nav.js"></script>
+</body>
+</html>
