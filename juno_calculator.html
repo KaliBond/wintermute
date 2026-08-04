@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JUNO Formulation — CAMS Calculator</title>
+<style>
+:root {
+  --bg: #F5F1E4; --paper: #FDFAF0; --ink: #1B2A33;
+  --amber: #D98B2B; --teal: #2F6F7D; --red: #C84C3E;
+  --border: #DAD2B8; --font: Georgia, serif; --mono: 'Courier New', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 14px; padding: 1.5rem; }
+h1 { font-size: 1.4rem; margin-bottom: 0.2rem; }
+.sub { font-size: 0.8rem; color: #5A6A74; margin-bottom: 1.4rem; }
+.layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.panel { background: var(--paper); border: 1px solid var(--border); border-radius: 6px; padding: 1.1rem; }
+h2 { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #5A6A74; margin-bottom: 0.9rem; }
+table { width: 100%; border-collapse: collapse; }
+th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: #5A6A74; border-bottom: 1px solid var(--border); padding: 0.3rem 0.4rem; text-align: center; }
+th:first-child { text-align: left; }
+td { padding: 0.3rem 0.4rem; border-bottom: 1px solid #ECE8D8; text-align: center; }
+td:first-child { text-align: left; font-weight: 600; }
+td.slow { color: var(--teal); }
+td.fast { color: var(--amber); }
+input[type=number] {
+  width: 50px; padding: 3px 5px; border: 1px solid var(--border); border-radius: 3px;
+  background: var(--bg); color: var(--ink); font-family: var(--mono); font-size: 0.85rem; text-align: center;
+}
+input[type=number]:focus { outline: 2px solid var(--amber); }
+.btn { background: var(--amber); color: white; border: none; border-radius: 4px; padding: 0.5rem 1.4rem;
+  font-family: var(--font); font-size: 0.9rem; cursor: pointer; margin-top: 0.9rem; }
+.btn:hover { background: #B87820; }
+.result-table td { font-family: var(--mono); font-size: 0.82rem; }
+.v-pos { color: var(--teal); font-weight: 700; }
+.v-neg { color: var(--red); font-weight: 700; }
+.metrics { margin-top: 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+.metric-card { background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 0.6rem 0.8rem; }
+.metric-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.07em; color: #5A6A74; }
+.metric-val { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; margin-top: 0.1rem; }
+.metric-val.ok { color: var(--teal); }
+.metric-val.warn { color: var(--amber); }
+.metric-val.crit { color: var(--red); }
+.basin-box { margin-top: 1rem; padding: 0.7rem 0.9rem; border-radius: 4px; border: 1px solid var(--border);
+  font-size: 0.85rem; background: var(--bg); }
+.basin-name { font-weight: 700; font-size: 1rem; margin-bottom: 0.2rem; }
+pre.csv-out { font-family: var(--mono); font-size: 0.72rem; background: #EDE9D8; border: 1px solid var(--border);
+  border-radius: 4px; padding: 0.7rem; white-space: pre; overflow-x: auto; margin-top: 0.8rem; }
+.copy-btn { background: var(--teal); color: white; border: none; border-radius: 3px; padding: 0.3rem 0.8rem;
+  font-size: 0.75rem; cursor: pointer; margin-top: 0.4rem; }
+.copy-btn:hover { background: #1E5060; }
+.robson-box { margin-top: 1rem; padding: 0.7rem 0.9rem; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); }
+.info-block { font-size: 0.75rem; color: #5A6A74; line-height: 1.55; margin-top: 1.2rem; }
+.info-block code { background: #ECE8D8; padding: 1px 4px; border-radius: 2px; font-family: var(--mono); }
+select { padding: 3px 6px; border: 1px solid var(--border); border-radius: 3px; background: var(--bg);
+  color: var(--ink); font-family: var(--font); font-size: 0.85rem; }
+.entity-row { display: flex; gap: 0.8rem; align-items: center; margin-bottom: 1rem; }
+label { font-size: 0.82rem; color: #5A6A74; }
+input[type=text] { padding: 4px 8px; border: 1px solid var(--border); border-radius: 3px;
+  background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 0.85rem; width: 120px; }
+input[type=number].year-in { width: 70px; }
+</style>
+</head>
+<body>
+
+<h1>JUNO Formulation — CAMS Calculator</h1>
+<div class="sub">Complex Adaptive Meta-System · JUNO v1.2-Final · Score 8 nodes × 4 dimensions → Node Value &amp; Bond Strength</div>
+
+<div class="entity-row">
+  <div><label>Entity</label><br><input type="text" id="society" value="Society" placeholder="Nation / Corp / City"></div>
+  <div><label>Year</label><br><input type="number" id="year" value="2024" min="1" max="2100" class="year-in"></div>
+  <div><label>Type</label><br>
+    <select id="entity-type" onchange="applyMapping()">
+      <option value="nation">Nation</option>
+      <option value="corp">Corporation</option>
+      <option value="city">City</option>
+    </select>
+  </div>
+  <div style="margin-top:1.1rem"><button class="btn" onclick="calc()">Compute ▶</button></div>
+</div>
+
+<div class="layout">
+<div class="panel">
+<h2>Raw Scores (integers 1–10)</h2>
+<table>
+<thead><tr><th>Node</th><th>Function</th><th>C</th><th>K</th><th>S</th><th>A</th></tr></thead>
+<tbody id="score-table"></tbody>
+</table>
+<div class="info-block">
+  <strong>C</strong> = Coherence (internal integration) &nbsp;·&nbsp;
+  <strong>K</strong> = Capacity (demonstrated delivery) &nbsp;·&nbsp;
+  <strong>S</strong> = Stress (entropy production rate) &nbsp;·&nbsp;
+  <strong>A</strong> = Abstraction (planning sophistication)<br>
+  Score operational truth, not formal structure. S = disorder produced, not external pressure.
+</div>
+</div>
+
+<div class="panel">
+<h2>JUNO Results</h2>
+<table>
+<thead><tr><th>Node</th><th>V</th><th>BS</th><th>q</th></tr></thead>
+<tbody id="result-table"><tr><td colspan="4" style="color:#9AA;padding:1rem;text-align:center">Click Compute ▶</td></tr></tbody>
+</table>
+<div class="metrics" id="metrics-panel" style="display:none">
+  <div class="metric-card"><div class="metric-label">S/K Ratio</div><div class="metric-val" id="m-sk">—</div></div>
+  <div class="metric-card"><div class="metric-label">System Bond Λ</div><div class="metric-val" id="m-lambda">—</div></div>
+  <div class="metric-card"><div class="metric-label">Praetorian Index</div><div class="metric-val" id="m-praet">—</div></div>
+  <div class="metric-card"><div class="metric-label">Cognitive Gap</div><div class="metric-val" id="m-cog">—</div></div>
+</div>
+<div class="basin-box" id="basin-box" style="display:none">
+  <div class="metric-label">Attractor Basin</div>
+  <div class="basin-name" id="basin-name">—</div>
+  <div id="basin-sub" style="font-size:0.78rem;color:#5A6A74;margin-top:0.2rem"></div>
+</div>
+<div class="robson-box" id="robson-box" style="display:none">
+  <div class="metric-label">Robson Gauge η_soil</div>
+  <div style="font-family:var(--mono);font-size:1rem;font-weight:700;margin:0.2rem 0" id="robson-val">—</div>
+  <div style="font-size:0.78rem;color:#5A6A74" id="robson-path">—</div>
+</div>
+<pre class="csv-out" id="csv-out" style="display:none"></pre>
+<button class="copy-btn" id="copy-btn" style="display:none" onclick="copyCSV()">Copy CSV</button>
+</div>
+</div>
+
+<script>
+const NODES = ['Helm','Shield','Lore','Stewards','Craft','Hands','Archive','Flow'];
+const SLOW = ['Helm','Lore','Archive','Stewards'];
+const FAST = ['Shield','Craft','Hands','Flow'];
+
+const FUNCTIONS = {
+  nation: {
+    Helm:'Strategic direction & executive',
+    Shield:'Security, order, coercive force',
+    Lore:'Knowledge, culture, legitimation',
+    Stewards:'Resources, capital allocation',
+    Craft:'Skilled production & professional',
+    Hands:'Labour & basic throughput',
+    Archive:'Memory, records, continuity',
+    Flow:'Commerce, trade, logistics'
+  },
+  corp: {
+    Helm:'Board / C-suite direction',
+    Shield:'Risk management, legal/compliance',
+    Lore:'R&D, IP, organisational culture',
+    Stewards:'Finance, capital allocation',
+    Craft:'Operations, product development',
+    Hands:'Front-line labour, service delivery',
+    Archive:'Data systems, knowledge mgmt',
+    Flow:'Sales, distribution, supply chain'
+  },
+  city: {
+    Helm:'Council, planning authority',
+    Shield:'Police, fire, emergency mgmt',
+    Lore:'Education, culture, civic identity',
+    Stewards:'Municipal finance, development',
+    Craft:'Infrastructure & utilities',
+    Hands:'Municipal workforce, sanitation',
+    Archive:'Records, permits, planning memory',
+    Flow:'Commerce, transport, circulation'
+  }
+};
+
+const DEFAULTS = {
+  Helm:{C:7,K:6,S:4,A:6},Shield:{C:6,K:6,S:3,A:5},
+  Lore:{C:7,K:7,S:3,A:7},Stewards:{C:6,K:7,S:4,A:6},
+  Craft:{C:7,K:7,S:3,A:7},Hands:{C:6,K:6,S:4,A:5},
+  Archive:{C:7,K:6,S:3,A:6},Flow:{C:7,K:7,S:3,A:6}
+};
+
+function buildTable() {
+  const t = document.getElementById('score-table');
+  const type = document.getElementById('entity-type').value;
+  const fns = FUNCTIONS[type];
+  t.innerHTML = NODES.map(n => {
+    const loop = SLOW.includes(n) ? 'slow' : 'fast';
+    const d = DEFAULTS[n];
+    return `<tr>
+      <td class="${loop}">${n}</td>
+      <td style="font-size:0.72rem;color:#5A6A74;max-width:140px">${fns[n]}</td>
+      <td><input type="number" id="${n}_C" min="1" max="10" value="${d.C}"></td>
+      <td><input type="number" id="${n}_K" min="1" max="10" value="${d.K}"></td>
+      <td><input type="number" id="${n}_S" min="1" max="10" value="${d.S}"></td>
+      <td><input type="number" id="${n}_A" min="1" max="10" value="${d.A}"></td>
+    </tr>`;
+  }).join('');
+}
+
+function applyMapping() { buildTable(); }
+
+function getScores() {
+  const sc = {};
+  NODES.forEach(n => {
+    sc[n] = {
+      C: Math.min(10,Math.max(1,+document.getElementById(n+'_C').value||5)),
+      K: Math.min(10,Math.max(1,+document.getElementById(n+'_K').value||5)),
+      S: Math.min(10,Math.max(1,+document.getElementById(n+'_S').value||5)),
+      A: Math.min(10,Math.max(1,+document.getElementById(n+'_A').value||5))
+    };
+  });
+  return sc;
+}
+
+function calc() {
+  const sc = getScores();
+  const q = {}, V = {}, BS = {};
+
+  NODES.forEach(n => {
+    q[n] = (0.6*sc[n].C + 0.4*sc[n].A)/10;
+    V[n] = sc[n].C + sc[n].K - sc[n].S + 0.5*sc[n].A;
+  });
+
+  NODES.forEach((n,i) => {
+    const bonds = NODES.map((m,j) => {
+      if(i===j) return null;
+      return Math.sqrt(q[n]*q[m]) * Math.pow(2, -(sc[n].S+sc[m].S)/10);
+    }).filter(x=>x!==null);
+    BS[n] = bonds.reduce((a,b)=>a+b,0)/bonds.length;
+  });
+
+  // Results table
+  const rt = document.getElementById('result-table');
+  rt.innerHTML = NODES.map(n => {
+    const loop = SLOW.includes(n)?'slow':'fast';
+    const vcls = V[n]>=0?'v-pos':'v-neg';
+    return `<tr>
+      <td class="${loop}">${n}</td>
+      <td class="${vcls}">${V[n].toFixed(2)}</td>
+      <td>${BS[n].toFixed(4)}</td>
+      <td style="font-size:0.75rem;color:#7A8A94">${q[n].toFixed(3)}</td>
+    </tr>`;
+  }).join('');
+
+  // System metrics
+  const meanS = NODES.reduce((a,n)=>a+sc[n].S,0)/8;
+  const meanK = NODES.reduce((a,n)=>a+sc[n].K,0)/8;
+  const sk = meanS/meanK;
+  const lambda = NODES.reduce((a,n)=>a+BS[n],0)/8;
+  const praet = V['Shield']-V['Helm'];
+  const slowV = SLOW.reduce((a,n)=>a+V[n],0)/SLOW.length;
+  const fastV = FAST.reduce((a,n)=>a+V[n],0)/FAST.length;
+  const cogGap = slowV-fastV;
+
+  const skEl = document.getElementById('m-sk');
+  skEl.textContent = sk.toFixed(3);
+  skEl.className = 'metric-val'+(sk<0.8?' ok':sk<1.2?' warn':' crit');
+
+  const lamEl = document.getElementById('m-lambda');
+  lamEl.textContent = lambda.toFixed(4);
+  lamEl.className = 'metric-val'+(lambda>0.35?' ok':lambda>0.25?' warn':' crit');
+
+  const praetEl = document.getElementById('m-praet');
+  praetEl.textContent = praet.toFixed(2);
+  praetEl.className = 'metric-val'+(praet<0?' ok':praet<2?' warn':' crit');
+
+  const cogEl = document.getElementById('m-cog');
+  cogEl.textContent = cogGap.toFixed(2);
+  cogEl.className = 'metric-val'+(cogGap>0?' ok':cogGap>-3?' warn':' crit');
+
+  document.getElementById('metrics-panel').style.display='grid';
+
+  // Basin
+  let basin='Sovereign Optimum', basinSub='sk<0.8, Λ>0.45 — peak coordination';
+  if(sk>1.4 && NODES.filter(n=>V[n]<0).length>=2){ basin='Collapse Cascade'; basinSub='Multiple nodes negative; systemic failure in progress'; }
+  else if(sk>1.2 && lambda<0.30){ basin='Fragmentation'; basinSub='Stress exceeding capacity; bonds failing simultaneously'; }
+  else if(lambda<0.25){ basin='Bond Decay'; basinSub='Coupling failing without acute stress; institutional disconnection'; }
+  else if(cogGap<-3){ basin='Cognitive Capture'; basinSub='Fast loop outpacing slow loop; legitimacy at risk'; }
+  else if(praet>2){ basin='Praetorian Drift'; basinSub='Shield significantly outvalues Helm; executive authority eroding'; }
+  else if(sk>1.0){ basin='Fragmentation'; basinSub='Stress exceeding capacity; watch cascade risk'; }
+  else if(sk>0.8){ basin='Managed Tension'; basinSub='Stress present but system absorbing through intact bonds'; }
+
+  document.getElementById('basin-name').textContent = basin;
+  document.getElementById('basin-sub').textContent = basinSub;
+  document.getElementById('basin-box').style.display='block';
+
+  // Robson Gauge
+  const nodeVals = NODES.map(n=>V[n]);
+  const meanV = nodeVals.reduce((a,b)=>a+b,0)/8;
+  const sigmaV = Math.sqrt(nodeVals.reduce((a,v)=>a+Math.pow(v-meanV,2),0)/8);
+  const eta = (BS['Lore']*BS['Archive']*sc['Hands'].C)/(sc['Hands'].S*sigmaV+2.0);
+
+  let path;
+  if(eta<0.005) path='Ruptured';
+  else if(eta<0.02&&sigmaV>3.5) path='Failed Transplant';
+  else if(eta<0.08&&sigmaV>2.0) path='Standard Transplant';
+  else if(eta>0.15&&sigmaV<2.0) path='Deep Ancient Forest';
+  else if(eta>0.15&&sigmaV>=2.0) path='Greenhouse Garden';
+  else if(eta>=0.08&&eta<=0.15&&sigmaV<2.0) path='Young Ancient Forest';
+  else path='Intermediate / Uncertain';
+
+  document.getElementById('robson-val').textContent = eta.toFixed(5)+' (σ_V = '+sigmaV.toFixed(3)+')';
+  document.getElementById('robson-path').textContent = 'Path: '+path;
+  document.getElementById('robson-box').style.display='block';
+
+  // CSV
+  const soc = document.getElementById('society').value||'Society';
+  const yr  = document.getElementById('year').value||'2024';
+  let csv = 'Society,Year,Node,Coherence,Capacity,Stress,Abstraction,Node Value,Bond Strength\n';
+  NODES.forEach(n=>{
+    csv+=`${soc},${yr},${n},${sc[n].C},${sc[n].K},${sc[n].S},${sc[n].A},${V[n].toFixed(3)},${BS[n].toFixed(5)}\n`;
+  });
+
+  document.getElementById('csv-out').textContent = csv.trim();
+  document.getElementById('csv-out').style.display='block';
+  document.getElementById('copy-btn').style.display='inline-block';
+}
+
+function copyCSV() {
+  const txt = document.getElementById('csv-out').textContent;
+  navigator.clipboard.writeText(txt).then(()=>{
+    document.getElementById('copy-btn').textContent='Copied ✓';
+    setTimeout(()=>document.getElementById('copy-btn').textContent='Copy CSV',1500);
+  });
+}
+
+buildTable();
+</script>
+
+<div class="info-block" style="max-width:860px;margin-top:1.5rem">
+  <strong>JUNO v1.2-Final formulas:</strong><br>
+  <code>V = C + K − S + 0.5·A</code> &nbsp;·&nbsp;
+  <code>q = (0.6·C + 0.4·A) / 10</code> &nbsp;·&nbsp;
+  <code>B_ij = √(q_i·q_j) · 2^(−(S_i+S_j)/10)</code> &nbsp;·&nbsp;
+  <code>BS_i = mean(B_ij, j≠i)</code><br><br>
+  <strong>Robson Gauge:</strong> <code>η = (BS_Lore · BS_Archive · C_Hands) / (S_Hands · σ_V + 2.0)</code>
+  where σ_V = std of 8 Node Values (ddof=0).<br><br>
+  Slow loop (teal): Helm, Lore, Archive, Stewards &nbsp;·&nbsp; Fast loop (amber): Shield, Craft, Hands, Flow
+</div>
+
+</body>
+</html>

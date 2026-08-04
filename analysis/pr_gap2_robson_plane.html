@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PR-GAP-2 Robson Gauge — Path-Type Plane (46 Societies)</title>
+<style>
+:root {
+  --bg: #F5F1E4; --ink: #1B2A33; --amber: #D98B2B; --teal: #2F6F7D;
+  --red: #C84C3E; --border: #DAD2B8; --paper: #FDFAF0;
+  --font: 'Georgia', serif; --mono: 'Courier New', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 14px; }
+h1 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.3rem; }
+.subtitle { font-size: 0.82rem; color: #5A6A74; margin-bottom: 1.2rem; }
+.container { max-width: 1050px; margin: 0 auto; padding: 1.5rem; }
+.layout { display: grid; grid-template-columns: 1fr 280px; gap: 1.5rem; align-items: start; }
+canvas { cursor: crosshair; border: 1px solid var(--border); border-radius: 4px; background: var(--paper); }
+.tooltip {
+  position: fixed; background: var(--paper); border: 1px solid var(--border);
+  border-radius: 6px; padding: 0.7rem 0.9rem; pointer-events: none;
+  font-size: 0.8rem; line-height: 1.55; max-width: 240px; display: none;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12); z-index: 100;
+}
+.tooltip-name { font-weight: 700; font-size: 0.92rem; margin-bottom: 0.3rem; }
+.tooltip-path { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+.tooltip-row { display: flex; justify-content: space-between; gap: 1rem; }
+.tooltip-val { font-family: var(--mono); color: #3A4A54; }
+.tooltip-flag { margin-top: 0.4rem; font-size: 0.72rem; color: var(--amber); font-style: italic; }
+.tooltip-oldflag { margin-top: 0.3rem; font-size: 0.72rem; color: #C84C3E; font-style: italic; }
+
+.legend { font-size: 0.8rem; }
+.legend h3 { font-size: 0.82rem; font-weight: 700; margin-bottom: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: #5A6A74; }
+.legend-item { display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.45rem; }
+.legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; margin-top: 2px; }
+.legend-text { line-height: 1.35; }
+.legend-label { font-weight: 600; }
+.legend-sub { color: #5A6A74; font-size: 0.73rem; }
+.legend-divider { border: none; border-top: 1px solid var(--border); margin: 0.8rem 0; }
+.note-box { background: #FBF5E8; border: 1px solid #E8DAAA; border-radius: 5px; padding: 0.65rem 0.8rem; font-size: 0.75rem; line-height: 1.5; color: #4A3A1A; margin-top: 0.8rem; }
+.note-box strong { color: #7A5A1A; }
+.footer-note { margin-top: 1.1rem; font-size: 0.73rem; color: #8A9BAA; line-height: 1.55; }
+.title-row { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 0.25rem; }
+.badge-ct { font-size: 0.7rem; background: #EDF4F7; border: 1px solid var(--border); border-radius: 3px; padding: 2px 7px; color: #5A6A74; font-family: var(--mono); }
+
+/* Timeline mini-chart */
+.traj-box { margin-top: 0.9rem; border-top: 1px solid var(--border); padding-top: 0.8rem; }
+.traj-box h4 { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #5A6A74; margin-bottom: 0.45rem; }
+canvas#trajCanvas { border: 1px solid var(--border); border-radius: 3px; background: var(--paper); }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="title-row">
+    <h1>PR-GAP-2 Robson Gauge: Path-Type Plane</h1>
+    <span class="badge-ct">44 societies + USA &amp; Iceland CAMS5 ensembles (2000-2026)</span>
+  </div>
+  <div class="subtitle">η_soil (slow-node cultural grounding) × σ_V (node dispersion). Log η axis. Hover for detail.</div>
+
+  <div class="layout">
+    <div>
+      <canvas id="mainCanvas" width="720" height="540"></canvas>
+      <div class="footer-note">
+        Regions: η > 0.15 and σ &lt; 2.0 = Deep Ancient Forest; η > 0.15 and σ ≥ 2.0 = Greenhouse Garden; 0.08–0.15 and σ &lt; 2.0 = Young Ancient Forest; η &lt; 0.08 and σ > 2.0 = Standard Transplant; η &lt; 0.02 and σ > 3.5 = Failed Transplant; η &lt; 0.005 = Ruptured.
+        Dashed markers: India / Thailand / Pakistan / Israel / Palestine — low σ likely reflects epoch-level scoring artifact. Canada / Netherlands / Denmark / Türkiye — historical data only. ◆ USA (CAMS5): five-scorer ensemble 2000-2026, 2020-2024 mean plotted; compares to PR-GAP-2 USA (Standard Transplant, η=0.019).
+      </div>
+    </div>
+
+    <div class="legend">
+      <h3>Path Types</h3>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#2F7D5A"></div>
+        <div class="legend-text"><div class="legend-label">Deep Ancient Forest</div><div class="legend-sub">η > 0.15, σ &lt; 2.0</div></div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#B8CC7D"></div>
+        <div class="legend-text"><div class="legend-label">Greenhouse Garden</div><div class="legend-sub">η > 0.15, σ ≥ 2.0</div></div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#7DB87D"></div>
+        <div class="legend-text"><div class="legend-label">Young Ancient Forest</div><div class="legend-sub">0.08–0.15, σ &lt; 2.0</div></div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#D98B2B"></div>
+        <div class="legend-text"><div class="legend-label">Standard Transplant</div><div class="legend-sub">η &lt; 0.08, σ > 2.0</div></div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#C84C3E"></div>
+        <div class="legend-text"><div class="legend-label">Failed Transplant</div><div class="legend-sub">η &lt; 0.02, σ > 3.5</div></div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#8B0000"></div>
+        <div class="legend-text"><div class="legend-label">Ruptured</div><div class="legend-sub">η &lt; 0.005</div></div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#8A9BAA"></div>
+        <div class="legend-text"><div class="legend-label">Intermediate</div><div class="legend-sub">Unclassified zone</div></div>
+      </div>
+
+      <hr class="legend-divider">
+      <h3>Symbols</h3>
+      <div style="font-size:0.78rem;line-height:1.6;color:#4A5A64;">
+        <div>● Filled = clean data</div>
+        <div>◌ Dashed outline = scoring artifact flag</div>
+        <div>▲ Triangle = historical data only</div>
+      </div>
+
+      <div class="note-box">
+        <strong>Note on low-σ outliers.</strong> India, Thailand, Pakistan, Israel, Palestine show σ_V &lt; 0.3, inflating η by suppressing the denominator. This is likely epoch-level scoring producing uniform node scores. Results should be treated as artifacts, not institutional findings.
+      </div>
+
+      <div class="traj-box">
+        <h4>Trajectory (hover a society)</h4>
+        <canvas id="trajCanvas" width="260" height="120"></canvas>
+        <div id="trajLabel" style="font-size:0.72rem;color:#8A9BAA;margin-top:0.3rem;">—</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tooltip" id="tooltip">
+  <div class="tooltip-name" id="tt-name"></div>
+  <div class="tooltip-path" id="tt-path"></div>
+  <div class="tooltip-row"><span>η_soil</span><span class="tooltip-val" id="tt-eta"></span></div>
+  <div class="tooltip-row"><span>σ_V</span><span class="tooltip-val" id="tt-sig"></span></div>
+  <div id="tt-note" class="tooltip-flag"></div>
+  <div id="tt-old" class="tooltip-oldflag"></div>
+</div>
+
+<script>
+const DATA = [{"name": "Afghanistan", "eta": 0.00093, "sigma": 1.92, "eta_min": 0.00042, "eta_max": 0.00176, "path": "Ruptured", "color": "#8B0000", "artifact": false, "traj": [{"d": 1900, "e": 0.00608, "s": 2.573}, {"d": 1910, "e": 0.00586, "s": 2.539}, {"d": 1920, "e": 0.01269, "s": 2.306}, {"d": 1930, "e": 0.00658, "s": 2.475}, {"d": 1940, "e": 0.00892, "s": 2.42}, {"d": 1950, "e": 0.01125, "s": 2.364}, {"d": 1960, "e": 0.01576, "s": 2.358}, {"d": 1970, "e": 0.01488, "s": 2.42}, {"d": 1980, "e": 0.00062, "s": 2.892}, {"d": 1990, "e": 0.0004, "s": 2.824}, {"d": 2000, "e": 0.00121, "s": 1.9}, {"d": 2010, "e": 0.00176, "s": 1.92}, {"d": 2020, "e": 0.00065, "s": 1.92}], "old_data": false}, {"name": "Argentina", "eta": 0.00434, "sigma": 1.665, "eta_min": 0.00175, "eta_max": 0.00641, "path": "Ruptured", "color": "#8B0000", "artifact": false, "traj": [{"d": 1950, "e": 0.05143, "s": 0.984}, {"d": 1960, "e": 0.0769, "s": 0.855}, {"d": 1970, "e": 0.00842, "s": 2.26}, {"d": 1980, "e": 0.01468, "s": 2.209}, {"d": 1990, "e": 0.03597, "s": 1.281}, {"d": 2000, "e": 0.02446, "s": 1.403}, {"d": 2010, "e": 0.03033, "s": 0.989}, {"d": 2020, "e": 0.00384, "s": 1.711}], "old_data": false}, {"name": "Australia", "eta": 0.0272, "sigma": 1.668, "eta_min": 0.01515, "eta_max": 0.03763, "path": "Intermediate/Uncertain", "color": "#8A9BAA", "artifact": false, "traj": [{"d": 1900, "e": 0.11783, "s": 1.496}, {"d": 1910, "e": 0.06618, "s": 1.547}, {"d": 1920, "e": 0.04276, "s": 1.491}, {"d": 1930, "e": 0.021, "s": 1.835}, {"d": 1940, "e": 0.08471, "s": 1.264}, {"d": 1950, "e": 0.18161, "s": 1.295}, {"d": 1960, "e": 0.12135, "s": 1.666}, {"d": 1970, "e": 0.03742, "s": 1.956}, {"d": 1980, "e": 0.07286, "s": 1.753}, {"d": 1990, "e": 0.04955, "s": 2.042}, {"d": 2000, "e": 0.0401, "s": 2.421}, {"d": 2010, "e": 0.02687, "s": 2.286}, {"d": 2020, "e": 0.02934, "s": 1.498}], "old_data": false}, {"name": "Brazil", "eta": 0.03448, "sigma": 1.425, "eta_min": 0.01057, "eta_max": 0.0823, "path": "Intermediate/Uncertain", "color": "#8A9BAA", "artifact": false, "traj": [{"d": 1900, "e": 0.0547, "s": 2.194}, {"d": 1910, "e": 0.04201, "s": 1.769}, {"d": 1920, "e": 0.02509, "s": 2.014}, {"d": 1930, "e": 0.03726, "s": 1.865}, {"d": 1940, "e": 0.09809, "s": 1.157}, {"d": 1950, "e": 0.15205, "s": 1.102}, {"d": 1960, "e": 0.04528, "s": 1.479}, {"d": 1970, "e": 0.09362, "s": 1.347}, {"d": 1980, "e": 0.02213, "s": 1.51}, {"d": 1990, "e": 0.03569, "s": 1.416}, {"d": 2000, "e": 0.11605, "s": 1.19}, {"d": 2010, "e": 0.06895, "s": 1.377}, {"d": 2020, "e": 0.03652, "s": 1.458}], "old_data": false}, {"name": "Chile", "eta": 0.04276, "sigma": 1.881, "eta_min": 0.01835, "eta_max": 0.08574, "path": "Intermediate/Uncertain", "color": "#8A9BAA", "artifact": false, "traj": [{"d": 1900, "e": 0.02061, "s": 3.278}, {"d": 1910, "e": 0.02352, "s": 2.873}, {"d": 1920, "e": 0.01921, "s": 2.164}, {"d": 1930, "e": 0.02737, "s": 2.052}, {"d": 1940, "e": 0.05578, "s": 1.683}, {"d": 1950, "e": 0.03767, "s": 2.111}, {"d": 1960, "e": 0.05953, "s": 1.906}, {"d": 1970, "e": 0.01116, "s": 2.98}, {"d": 1980, "e": 0.02163, "s": 2.558}, {"d": 1990, "e": 0.08383, "s": 2.093}, {"d": 2000, "e": 0.09443, "s": 1.905}, {"d": 2010, "e": 0.06757, "s": 1.795}, {"d": 2020, "e": 0.03966, "s": 1.889}], "old_data": false}, {"name": "China", "eta": 0.0447, "sigma": 2.371, "eta_min": 0.02612, "eta_max": 0.08884, "path": "Standard Transplant", "color": "#D98B2B", "artifact": false, "traj": [{"d": 1900, "e": 0.00368, "s": 2.444}, {"d": 1910, "e": 0.0027, "s": 3.243}, {"d": 1920, "e": 0.00592, "s": 3.524}, {"d": 1930, "e": 0.0181, "s": 1.706}, {"d": 1940, "e": 0.00363, "s": 2.018}, {"d": 1950, "e": 0.04336, "s": 1.93}, {"d": 1960, "e": 0.01878, "s": 3.423}, {"d": 1970, "e": 0.03144, "s": 2.082}, {"d": 1980, "e": 0.10433, "s": 1.402}, {"d": 1990, "e": 0.12196, "s": 1.561}, {"d": 2000, "e": 0.18987, "s": 1.508}, {"d": 2010, "e": 0.14103, "s": 1.639}, {"d": 2020, "e": 0.03781, "s": 2.491}], "old_data": false}, {"name": "Colombia", "eta": 0.01591, "sigma": 1.917, "eta_min": 0.00522, "eta_max": 0.02564, "path": "Intermediate/Uncertain", "color": "#8A9BAA", "artifact": false, "traj": [{"d": 1900, "e": 0.00807, "s": 1.937}, {"d": 1910, "e": 0.01684, "s": 2.048}, {"d": 1920, "e": 0.01414, "s": 2.155}, {"d": 1930, "e": 0.01816, "s": 2.003}, {"d": 1940, "e": 0.0172, "s": 2.028}, {"d": 1950, "e": 0.00921, "s": 1.899}, {"d": 1960, "e": 0.01046, "s": 2.172}, {"d": 1970, "e": 0.00884, "s": 2.327}, {"d": 1980, "e": 0.00566, "s": 2.114}, {"d": 1990, "e": 0.00528, "s": 2.208}, {"d": 2000, "e": 0.01279, "s": 1.892}, {"d": 2010, "e": 0.02407, "s": 1.716}, {"d": 2020, "e": 0.01368, "s": 2.001}], "old_data": false}, {"name": "Egypt", "eta": 0.01018, "sigma": 4.505, "eta_min": 0.00112, "eta_max": 0.02449, "path": "Failed Transplant", "color": "#C84C3E", "artifact": false, "traj": [{"d": 1900, "e": 0.03131, "s": 3.118}, {"d": 1910, "e": 0.02328, "s": 4.351}, {"d": 1920, "e": 0.02239, "s": 3.141}, {"d": 1930, "e": 0.02798, "s": 2.825}, {"d": 1940, "e": 0.00785, "s": 3.675}, {"d": 1950, "e": 0.04158, "s": 3.275}, {"d": 1960, "e": 0.05156, "s": 2.764}, {"d": 1970, "e": 0.03346, "s": 2.719}, {"d": 1980, "e": 0.01619, "s": 2.871}, {"d": 1990, "e": 0.01081, "s": 3.606}, {"d": 2000, "e": 0.00967, "s": 4.512}, {"d": 2010, "e": 0.00854, "s": 4.366}, {"d": 2020, "e": 0.00652, "s": 4.626}], "old_data": false}, {"name": "Estonia", "eta": 0.89711, "sigma": 1.252, "eta_min": 0.41024, "eta_max": 1.19838, "path": "Deep Ancient Forest", "color": "#2F7D5A", "artifact": false, "traj": [{"d": 1900, "e": 0.16613, "s": 1.874}, {"d": 1910, "e": 0.14637, "s": 2.644}, {"d": 1920, "e": 0.26692, "s": 1.829}, {"d": 1930, "e": 0.04979, "s": 1.736}, {"d": 1940, "e": 0.0707, "s": 1.44}, {"d": 1950, "e": 0.14799, "s": 1.402}, {"d": 1960, "e": 0.14799, "s": 1.402}, {"d": 1970, "e": 0.14799, "s": 1.402}, {"d": 1980, "e": 0.18553, "s": 1.369}, {"d": 1990, "e": 1.18859, "s": 1.0}, {"d": 2000, "e": 1.04608, "s": 0.979}, {"d": 2010, "e": 1.01987, "s": 1.075}, {"d": 2020, "e": 1.05903, "s": 1.188}], "old_data": false}, {"name": "Finland", "eta": 0.06266, "sigma": 2.477, "eta_min": 0.02552, "eta_max": 0.15511, "path": "Standard Transplant", "color": "#D98B2B", "artifact": false, "traj": [{"d": 1900, "e": 0.03766, "s": 3.665}, {"d": 1910, "e": 0.05691, "s": 2.158}, {"d": 1920, "e": 0.11741, "s": 1.915}, {"d": 1930, "e": 0.11299, "s": 1.529}, {"d": 1940, "e": 0.12613, "s": 1.592}, {"d": 1950, "e": 0.28133, "s": 1.538}, {"d": 1960, "e": 0.35133, "s": 1.575}, {"d": 1970, "e": 0.21846, "s": 1.598}, {"d": 1980, "e": 0.23186, "s": 2.044}, {"d": 1990, "e": 0.27043, "s": 1.754}, {"d": 2000, "e": 0.15963, "s": 2.362}, {"d": 2010, "e": 0.14793, "s": 1.402}, {"d": 2020, "e": 0.02678, "s": 3.119}], "old_data": false}, {"name": "France", "eta": 0.01999, "sigma": 3.798, "eta_min": 0.01435, "eta_max": 0.03636, "path": "Failed Transplant", "color": "#C84C3E", "artifact": false, "traj": [{"d": 1900, "e": 0.05828, "s": 2.039}, {"d": 1910, "e": 0.03209, "s": 2.303}, {"d": 1920, "e": 0.05601, "s": 1.981}, {"d": 1930, "e": 0.01532, "s": 2.729}, {"d": 1940, "e": 0.01556, "s": 2.209}, {"d": 1950, "e": 0.02965, "s": 3.247}, {"d": 1960, "e": 0.1479, "s": 1.517}, {"d": 1970, "e": 0.09996, "s": 2.363}, {"d": 1980, "e": 0.13743, "s": 1.819}, {"d": 1990, "e": 0.13743, "s": 1.819}, {"d": 2000, "e": 0.12137, "s": 2.034}, {"d": 2010, "e": 0.04004, "s": 3.045}, {"d": 2020, "e": 0.01454, "s": 4.07}], "old_data": false}, {"name": "Germany", "eta": 0.03303, "sigma": 1.95, "eta_min": 0.01663, "eta_max": 0.07507, "path": "Intermediate/Uncertain", "color": "#8A9BAA", "artifact": false, "traj": [{"d": 1900, "e": 0.14059, "s": 2.423}, {"d": 1910, "e": 0.0454, "s": 2.992}, {"d": 1920, "e": 0.01582, "s": 3.09}, {"d": 1930, "e": 0.00785, "s": 3.585}, {"d": 1940, "e": 0.00408, "s": 2.889}, {"d": 1950, "e": 0.08389, "s": 2.381}, {"d": 1960, "e": 0.21047, "s": 2.425}, {"d": 1970, "e": 0.11763, "s": 1.873}, {"d": 1980, "e": 0.12172, "s": 1.892}, {"d": 1990, "e": 0.05959, "s": 2.201}, {"d": 2000, "e": 0.0438, "s": 2.99}, {"d": 2010, "e": 0.08549, "s": 2.198}, {"d": 2020, "e": 0.02059, "s": 1.84}], "old_data": false}, {"name": "India", "eta": 0.3538, "sigma": 0.747, "eta_min": 0.3538, "eta_max": 0.3538, "path": "Deep Ancient Forest", "color": "#2F7D5A", "artifact": false, "traj": [{"d": 1950, "e": 0.39409, "s": 1.54}, {"d": 1960, "e": 0.38854, "s": 1.598}, {"d": 1970, "e": 0.3864, "s": 1.536}, {"d": 1980, "e": 0.43264, "s": 0.682}, {"d": 1990, "e": 0.43032, "s": 0.682}, {"d": 2000, "e": 0.41213, "s": 0.683}, {"d": 2010, "e": 0.3538, "s": 0.747}, {"d": 2020, "e": 0.3538, "s": 0.747}], "old_data": false}, {"name": "Indonesia", "eta": 0.00891, "sigma": 2.136, "eta_min": 0.00891, "eta_max": 0.00891, "path": "Standard Transplant", "color": "#D98B2B", "artifact": false, "traj": [{"d": 1940, "e": 0.00314, "s": 2.368}, {"d": 1950, "e": 0.03288, "s": 1.615}, {"d": 1960, "e": 0.02028, "s": 1.771}, {"d": 1970, "e": 0.00769, "s": 1.927}, {"d": 1980, "e": 0.0145, "s": 1.999}, {"d": 1990, "e": 0.01225, "s": 2.027}, {"d": 2000, "e": 0.00891, "s": 2.136}, {"d": 2010, "e": 0.00891, "s": 2.136}, {"d": 2020, "e": 0.00891, "s": 2.136}], "old_data": false}, {"name": "Iran", "eta": 0.00808, "sigma": 1.804, "eta_min": 0.00538, "eta_max": 0.01262, "path": "Intermediate/Uncertain", "color": "#8A9BAA", "artifact": false, "traj": [{"d": 1900, "e": 0.01118, "s": 2.571}, {"d": 1910, "e": 0.00324, "s": 2.504}, {"d": 1920, "e": 0.03214, "s": 1.688}, {"d": 1930, "e": 0.05996, "s": 1.731}, {"d": 1940, "e": 0.02078, "s": 1.772}, {"d": 1950, "e": 0.04581, "s": 1.288}, {"d": 1960, "e": 0.06862, "s": 1.183}, {"d": 1970, "e": 0.04391, "s": 1.715}, {"d": 1980, "e": 0.00727, "s": 2.486}, {"d": 1990, "e": 0.06105, "s": 0.87}, {"d": 2000, "e": 0.03927, "s": 1.106}, {"d": 2010, "e": 0.02754, "s": 1.59}, {"d": 2020, "e": 0.00839, "s": 1.681}], "old_data": false}, {"name": "Iraq", "eta": 0.01255, "sigma": 1.58, "eta_min": 0.00595, "eta_max": 0.01584, "path": "Intermediate/Uncertain", "color": "#8A9BAA", "artifact": false, "traj": [{"d": 1900, "e": 0.00999, "s": 2.236}, {"d": 1910, "e": 0.00574, "s": 2.521}, {"d": 1920, "e": 0.00787, "s": 1.927}, {"d": 1930, "e": 0.00746, "s": 1.968}, {"d": 1940, "e": 0.00664, "s": 2.09}, {"d": 1950, "e": 0.0062, "s": 1.924}, {"d": 1960, "e": 0.00516, "s": 1.818}, {"d": 1970, "e": 0.01874, "s": 1.878}, {"d": 1980, "e": 0.01126, "s": 1.566}, {"d": 1990, "e": 0.00595, "s": 1.619}, {"d": 2000, "e": 0.00276, "s": 1.716}, {"d": 2010, "e": 0.00595, "s": 1.619}, {"d": 2020, "e": 0.01584, "s": 1.56}], "old_data": false}, {"name": "Israel", "eta": 0.13778, "sigma": 0.217, "eta_min": 0.13778, "eta_max": 0.13778, "path": "Young Ancient Forest", "color": "#7DB87D", "artifact": true, "traj": [{"d": 1940, "e": 0.04608, "s": 2.446}, {"d": 1950, "e": 0.11476, "s": 1.619}, {"d": 1960, "e": 0.12594, "s": 1.353}, {"d": 1970, "e": 0.0918, "s": 0.478}, {"d": 1980, "e": 0.13778, "s": 0.217}, {"d": 1990, "e": 0.13778, "s": 0.217}, {"d": 2000, "e": 0.13778, "s": 0.217}, {"d": 2010, "e": 0.13778, "s": 0.217}, {"d": 2020, "e": 0.13778, "s": 0.217}], "old_data": false}, {"name": "Italy", "eta": 0.0113, "sigma": 1.576, "eta_min": 0.0113, "eta_max": 0.0113, "path": "Intermediate/Uncertain", "color": "#8A9BAA", "artifact": false, "traj": [{"d": 1900, "e": 0.0481, "s": 1.854}, {"d": 1910, "e": 0.01674, "s": 1.811}, {"d": 1920, "e": 0.05624, "s": 1.576}, {"d": 1930, "e": 0.04145, "s": 1.576}, {"d": 1940, "e": 0.01476, "s": 1.563}, {"d": 1950, "e": 0.06617, "s": 1.576}, {"d": 1960, "e": 0.0448, "s": 1.576}, {"d": 1970, "e": 0.0448, "s": 1.576}, {"d": 1980, "e": 0.0448, "s": 1.576}, {"d": 1990, "e": 0.0448, "s": 1.576}, {"d": 2000, "e": 0.02233, "s": 1.576}, {"d": 2010, "e": 0.0113, "s": 1.576}, {"d": 2020, "e": 0.0113, "s": 1.576}], "old_data": false}, {"name": "Japan", "eta": 0.001, "sigma": 5.032, "eta_min": 0.00098, "eta_max": 0.00101, "path": "Ruptured", "color": "#8B0000", "artifact": false, "traj": [{"d": 1900, "e": 0.20396, "s": 2.952}, {"d": 1910, "e": 0.2319, "s": 2.724}, {"d": 1920, "e": 0.03718, "s": 5.472}, {"d": 1930, "e": 0.00889, "s": 7.047}, {"d": 1940, "e": 0.01009, "s": 4.697}, {"d": 1950, "e": 1.09038, "s": 0.839}, {"d": 1960, "e": 1.44772, "s": 0.5}, {"d": 1970, "e": 1.13074, "s": 0.842}, {"d": 1980, "e": 1.44772, "s": 0.5}, {"d": 1990, "e": 0.06666, "s": 3.99}, {"d": 2000, "e": 0.0026, "s": 5.341}, {"d": 2010, "e": 0.00114, "s": 5.277}, {"d": 2020, "e": 0.00101, "s": 4.953}], "old_data": false}, {"name": "Lebanon", "eta": 0.01888, "sigma": 1.955, "eta_min": 0.0129, "eta_max": 0.03685, "path": "Intermediate/Uncertain", "color": "#8A9BAA", "artifact": false, "traj": [{"d": 1940, "e": 0.02625, "s": 2.852}, {"d": 1950, "e": 0.02288, "s": 2.61}, {"d": 1960, "e": 0.01523, "s": 2.526}, {"d": 1970, "e": 0.00686, "s": 2.114}, {"d": 1980, "e": 0.00077, "s": 1.9}, {"d": 1990, "e": 0.03062, "s": 1.898}, {"d": 2000, "e": 0.03685, "s": 1.878}, {"d": 2010, "e": 0.03685, "s": 1.878}, {"d": 2020, "e": 0.0129, "s": 1.98}], "old_data": false}, {"name": "New Zealand", "eta": 0.01848, "sigma": 2.164, "eta_min": 0.01167, "eta_max": 0.04169, "path": "Standard Transplant", "color": "#D98B2B", "artifact": false, "traj": [{"d": 1900, "e": 0.1601, "s": 1.617}, {"d": 1910, "e": 0.1117, "s": 1.578}, {"d": 1920, "e": 0.02907, "s": 1.536}, {"d": 1930, "e": 0.04856, "s": 1.114}, {"d": 1940, "e": 0.1733, "s": 1.264}, {"d": 1950, "e": 0.30783, "s": 1.274}, {"d": 1960, "e": 0.28214, "s": 0.928}, {"d": 1970, "e": 0.07438, "s": 1.619}, {"d": 1980, "e": 0.01026, "s": 2.129}, {"d": 1990, "e": 0.04114, "s": 1.551}, {"d": 2000, "e": 0.05144, "s": 2.128}, {"d": 2010, "e": 0.07478, "s": 1.462}, {"d": 2020, "e": 0.01471, "s": 2.331}], "old_data": false}, {"name": "Nigeria", "eta": 0.00077, "sigma": 1.709, "eta_min": 0.00077, "eta_max": 0.00077, "path": "Ruptured", "color": "#8B0000", "artifact": false, "traj": [{"d": 1950, "e": 0.18146, "s": 2.407}, {"d": 1960, "e": 0.07898, "s": 2.005}, {"d": 1970, "e": 0.00077, "s": 1.709}, {"d": 1980, "e": 0.00077, "s": 1.709}, {"d": 1990, "e": 0.00077, "s": 1.709}, {"d": 2000, "e": 0.00077, "s": 1.709}, {"d": 2010, "e": 0.00077, "s": 1.709}, {"d": 2020, "e": 0.00077, "s": 1.709}], "old_data": false}, {"name": "Norway", "eta": 0.07155, "sigma": 2.43, "eta_min": 0.04587, "eta_max": 0.08822, "path": "Standard Transplant", "color": "#D98B2B", "artifact": false, "traj": [{"d": 1900, "e": 0.07779, "s": 2.357}, {"d": 1910, "e": 0.06013, "s": 2.188}, {"d": 1920, "e": 0.03714, "s": 1.989}, {"d": 1930, "e": 0.03927, "s": 2.793}, {"d": 1940, "e": 0.07969, "s": 3.133}, {"d": 1950, "e": 0.2254, "s": 1.501}, {"d": 1960, "e": 0.19782, "s": 1.46}, {"d": 1970, "e": 0.14825, "s": 2.213}, {"d": 1980, "e": 0.11652, "s": 2.4}, {"d": 1990, "e": 0.11882, "s": 2.377}, {"d": 2000, "e": 0.11521, "s": 2.754}, {"d": 2010, "e": 0.07715, "s": 2.792}, {"d": 2020, "e": 0.06875, "s": 2.468}], "old_data": false}, {"name": "Pakistan", "eta": 0.16879, "sigma": 0.165, "eta_min": 0.16879, "eta_max": 0.16879, "path": "Deep Ancient Forest", "color": "#2F7D5A", "artifact": true, "traj": [{"d": 1940, "e": 0.0035, "s": 3.147}, {"d": 1950, "e": 0.07423, "s": 1.475}, {"d": 1960, "e": 0.10791, "s": 1.265}, {"d": 1970, "e": 0.10576, "s": 0.165}, {"d": 1980, "e": 0.12598, "s": 0.165}, {"d": 1990, "e": 0.16879, "s": 0.165}, {"d": 2000, "e": 0.16879, "s": 0.165}, {"d": 2010, "e": 0.16879, "s": 0.165}, {"d": 2020, "e": 0.16879, "s": 0.165}], "old_data": false}, {"name": "Palestine", "eta": 0.08652, "sigma": 0.217, "eta_min": 0.08652, "eta_max": 0.08652, "path": "Young Ancient Forest", "color": "#7DB87D", "artifact": true, "traj": [{"d": 1940, "e": 0.02488, "s": 2.245}, {"d": 1950, "e": 0.05386, "s": 1.5}, {"d": 1960, "e": 0.05386, "s": 1.5}, {"d": 1970, "e": 0.05723, "s": 0.987}, {"d": 1980, "e": 0.08652, "s": 0.217}, {"d": 1990, "e": 0.08652, "s": 0.217}, {"d": 2000, "e": 0.08652, "s": 0.217}, {"d": 2010, "e": 0.08652, "s": 0.217}, {"d": 2020, "e": 0.08652, "s": 0.217}], "old_data": false}, {"name": "Poland", "eta": 0.04403, "sigma": 1.313, "eta_min": 0.03611, "eta_max": 0.05551, "path": "Intermediate/Uncertain", "color": "#8A9BAA", "artifact": false, "traj": [{"d": 1900, "e": 0.00684, "s": 3.573}, {"d": 1910, "e": 0.00753, "s": 2.715}, {"d": 1920, "e": 0.0293, "s": 1.55}, {"d": 1930, "e": 0.02028, "s": 1.835}, {"d": 1940, "e": 0.00816, "s": 1.972}, {"d": 1950, "e": 0.06341, "s": 0.612}, {"d": 1960, "e": 0.07457, "s": 0.5}, {"d": 1970, "e": 0.05633, "s": 0.819}, {"d": 1980, "e": 0.02537, "s": 1.408}, {"d": 1990, "e": 0.03648, "s": 1.427}, {"d": 2000, "e": 0.06696, "s": 1.194}, {"d": 2010, "e": 0.06923, "s": 1.224}, {"d": 2020, "e": 0.04591, "s": 1.251}], "old_data": false}, {"name": "Russia", "eta": 0.00231, "sigma": 6.751, "eta_min": 0.00229, "eta_max": 0.00233, "path": "Ruptured", "color": "#8B0000", "artifact": false, "traj": [{"d": 1900, "e": 0.0074, "s": 3.592}, {"d": 1910, "e": 0.00487, "s": 4.349}, {"d": 1920, "e": 0.0017, "s": 8.112}, {"d": 1930, "e": 0.00065, "s": 7.704}, {"d": 1940, "e": 0.00073, "s": 8.085}, {"d": 1950, "e": 0.0011, "s": 8.547}, {"d": 1960, "e": 0.00194, "s": 7.908}, {"d": 1970, "e": 0.0018, "s": 7.698}, {"d": 1980, "e": 0.00181, "s": 7.5}, {"d": 1990, "e": 0.00137, "s": 6.498}, {"d": 2000, "e": 0.0019, "s": 6.169}, {"d": 2010, "e": 0.00227, "s": 6.528}, {"d": 2020, "e": 0.0023, "s": 6.742}], "old_data": false}, {"name": "Saudi Arabia", "eta": 0.04403, "sigma": 2.264, "eta_min": 0.0289, "eta_max": 0.05311, "path": "Standard Transplant", "color": "#D98B2B", "artifact": false, "traj": [{"d": 1900, "e": 0.01682, "s": 2.763}, {"d": 1910, "e": 0.02089, "s": 2.766}, {"d": 1920, "e": 0.0253, "s": 2.967}, {"d": 1930, "e": 0.0394, "s": 3.014}, {"d": 1940, "e": 0.05634, "s": 2.269}, {"d": 1950, "e": 0.05761, "s": 2.054}, {"d": 1960, "e": 0.05455, "s": 2.06}, {"d": 1970, "e": 0.06847, "s": 2.085}, {"d": 1980, "e": 0.09026, "s": 1.221}, {"d": 1990, "e": 0.05922, "s": 1.061}, {"d": 2000, "e": 0.04513, "s": 1.693}, {"d": 2010, "e": 0.03695, "s": 1.905}, {"d": 2020, "e": 0.04908, "s": 2.376}], "old_data": false}, {"name": "Singapore", "eta": 0.09653, "sigma": 3.135, "eta_min": 0.0141, "eta_max": 0.18971, "path": "Deep Ancient Forest", "color": "#2F7D5A", "artifact": false, "traj": [{"d": 1930, "e": 0.02666, "s": 3.047}, {"d": 1940, "e": 0.01566, "s": 2.326}, {"d": 1950, "e": 0.03055, "s": 2.964}, {"d": 1960, "e": 0.03575, "s": 3.015}, {"d": 1970, "e": 0.08665, "s": 2.714}, {"d": 1980, "e": 0.15726, "s": 2.26}, {"d": 1990, "e": 0.24827, "s": 2.076}, {"d": 2000, "e": 0.14347, "s": 2.471}, {"d": 2010, "e": 0.07737, "s": 3.277}, {"d": 2020, "e": 0.08232, "s": 3.578}], "old_data": false}, {"name": "South Africa", "eta": 0.00408, "sigma": 2.073, "eta_min": 0.0008, "eta_max": 0.01268, "path": "Ruptured", "color": "#8B0000", "artifact": false, "traj": [{"d": 1900, "e": 0.02309, "s": 3.983}, {"d": 1910, "e": 0.03145, "s": 3.854}, {"d": 1920, "e": 0.03145, "s": 3.219}, {"d": 1930, "e": 0.02975, "s": 3.649}, {"d": 1940, "e": 0.02078, "s": 4.131}, {"d": 1950, "e": 0.01189, "s": 4.559}, {"d": 1960, "e": 0.00904, "s": 6.34}, {"d": 1970, "e": 0.01014, "s": 4.139}, {"d": 1980, "e": 0.00841, "s": 3.248}, {"d": 1990, "e": 0.14672, "s": 2.787}, {"d": 2000, "e": 0.08087, "s": 1.731}, {"d": 2010, "e": 0.01952, "s": 1.682}, {"d": 2020, "e": 0.00143, "s": 2.097}], "old_data": false}, {"name": "Sweden", "eta": 0.08262, "sigma": 3.263, "eta_min": 0.04213, "eta_max": 0.139, "path": "Intermediate/Uncertain", "color": "#8A9BAA", "artifact": false, "traj": [{"d": 1900, "e": 0.07321, "s": 3.239}, {"d": 1910, "e": 0.07311, "s": 3.218}, {"d": 1920, "e": 0.14913, "s": 2.505}, {"d": 1930, "e": 0.22481, "s": 2.58}, {"d": 1940, "e": 0.41455, "s": 2.533}, {"d": 1950, "e": 1.04387, "s": 1.29}, {"d": 1960, "e": 0.78748, "s": 1.655}, {"d": 1970, "e": 0.05577, "s": 3.968}, {"d": 1980, "e": 0.13499, "s": 2.625}, {"d": 1990, "e": 0.14062, "s": 3.54}, {"d": 2000, "e": 0.17103, "s": 3.239}, {"d": 2010, "e": 0.05663, "s": 4.575}, {"d": 2020, "e": 0.09637, "s": 3.132}], "old_data": false}, {"name": "Thailand", "eta": 0.37462, "sigma": 0.165, "eta_min": 0.37462, "eta_max": 0.37462, "path": "Deep Ancient Forest", "color": "#2F7D5A", "artifact": true, "traj": [{"d": 1900, "e": 0.05494, "s": 1.903}, {"d": 1910, "e": 0.05494, "s": 1.903}, {"d": 1920, "e": 0.05494, "s": 1.903}, {"d": 1930, "e": 0.11176, "s": 0.563}, {"d": 1940, "e": 0.11324, "s": 0.017}, {"d": 1950, "e": 0.2584, "s": 0.149}, {"d": 1960, "e": 0.2673, "s": 0.165}, {"d": 1970, "e": 0.14764, "s": 1.106}, {"d": 1980, "e": 0.19894, "s": 0.165}, {"d": 1990, "e": 0.22627, "s": 0.165}, {"d": 2000, "e": 0.37462, "s": 0.165}, {"d": 2010, "e": 0.37462, "s": 0.165}, {"d": 2020, "e": 0.37462, "s": 0.165}], "old_data": false}, {"name": "UAE", "eta": 0.82603, "sigma": 0.696, "eta_min": 0.82603, "eta_max": 0.82603, "path": "Deep Ancient Forest", "color": "#2F7D5A", "artifact": false, "traj": [{"d": 1970, "e": 0.07936, "s": 2.883}, {"d": 1980, "e": 0.32925, "s": 1.486}, {"d": 1990, "e": 0.47996, "s": 1.188}, {"d": 2000, "e": 0.30467, "s": 1.526}, {"d": 2010, "e": 0.60615, "s": 0.931}], "old_data": false}, {"name": "USA", "eta": 0.01854, "sigma": 2.592, "eta_min": 0.00534, "eta_max": 0.03619, "path": "Standard Transplant", "color": "#D98B2B", "artifact": false, "traj": [{"d": 1900, "e": 0.0707, "s": 1.89}, {"d": 1910, "e": 0.07758, "s": 1.806}, {"d": 1920, "e": 0.06237, "s": 2.302}, {"d": 1930, "e": 0.02197, "s": 2.291}, {"d": 1940, "e": 0.19048, "s": 1.234}, {"d": 1950, "e": 0.27717, "s": 0.98}, {"d": 1960, "e": 0.1554, "s": 1.497}, {"d": 1970, "e": 0.05822, "s": 1.397}, {"d": 1980, "e": 0.06848, "s": 1.585}, {"d": 1990, "e": 0.17983, "s": 1.309}, {"d": 2000, "e": 0.09292, "s": 1.581}, {"d": 2010, "e": 0.05081, "s": 1.934}, {"d": 2020, "e": 0.01266, "s": 2.589}], "old_data": false}, {"name": "United Kingdom", "eta": 0.02185, "sigma": 2.893, "eta_min": 0.00862, "eta_max": 0.04739, "path": "Standard Transplant", "color": "#D98B2B", "artifact": false, "traj": [{"d": 1900, "e": 0.0622, "s": 3.206}, {"d": 1910, "e": 0.03628, "s": 2.905}, {"d": 1920, "e": 0.0342, "s": 3.459}, {"d": 1930, "e": 0.02698, "s": 3.729}, {"d": 1940, "e": 0.06679, "s": 1.562}, {"d": 1950, "e": 0.14902, "s": 1.589}, {"d": 1960, "e": 0.11865, "s": 1.95}, {"d": 1970, "e": 0.02029, "s": 3.479}, {"d": 1980, "e": 0.02297, "s": 3.875}, {"d": 1990, "e": 0.06478, "s": 2.742}, {"d": 2000, "e": 0.09461, "s": 2.137}, {"d": 2010, "e": 0.0361, "s": 2.712}, {"d": 2020, "e": 0.02248, "s": 2.753}], "old_data": false}, {"name": "Venezuela", "eta": 0.00063, "sigma": 4.229, "eta_min": 0.00015, "eta_max": 0.00141, "path": "Ruptured", "color": "#8B0000", "artifact": false, "traj": [{"d": 1970, "e": 0.10019, "s": 2.682}, {"d": 1980, "e": 0.01271, "s": 3.307}, {"d": 1990, "e": 0.00449, "s": 3.857}, {"d": 2000, "e": 0.02142, "s": 4.502}, {"d": 2010, "e": 0.00441, "s": 4.805}, {"d": 2020, "e": 0.00075, "s": 4.207}], "old_data": false}, {"name": "Canada", "eta": 0.04916, "sigma": 1.924, "eta_min": 0.01038, "eta_max": 0.14338, "path": "Standard Transplant", "color": "#D98B2B", "artifact": false, "traj": [{"d": 1900, "e": 0.06493, "s": 1.664}, {"d": 1910, "e": 0.07234, "s": 2.059}, {"d": 1920, "e": 0.05298, "s": 1.909}], "note": "Most recent data: 1921\u20131925", "old_data": true}, {"name": "Denmark", "eta": 1.31735, "sigma": 3.018, "eta_min": 1.31735, "eta_max": 1.31735, "path": "Greenhouse Garden", "color": "#B8CC7D", "artifact": false, "traj": [{"d": 1900, "e": 1.22227, "s": 1.525}, {"d": 1910, "e": 0.96072, "s": 1.764}, {"d": 1920, "e": 2.30082, "s": 2.376}, {"d": 1930, "e": 1.25264, "s": 1.886}, {"d": 1940, "e": 1.32919, "s": 2.722}, {"d": 1950, "e": 1.31735, "s": 3.018}, {"d": 1960, "e": 1.31735, "s": 3.018}], "note": "Most recent data: 1962\u20131966", "old_data": true}, {"name": "Hong Kong", "eta": 0.04579, "sigma": 1.768, "eta_min": 0.04579, "eta_max": 0.04579, "path": "Intermediate/Uncertain", "color": "#8A9BAA", "artifact": false, "traj": [{"d": 1900, "e": 0.05165, "s": 2.345}, {"d": 1910, "e": 0.02874, "s": 2.136}, {"d": 1920, "e": 0.03658, "s": 1.768}, {"d": 1930, "e": 0.02648, "s": 1.768}, {"d": 1940, "e": 0.00962, "s": 1.768}, {"d": 1950, "e": 0.07028, "s": 1.768}, {"d": 1960, "e": 0.05091, "s": 1.768}, {"d": 1970, "e": 0.06538, "s": 1.768}, {"d": 1980, "e": 0.07028, "s": 1.768}, {"d": 1990, "e": 0.05986, "s": 1.768}, {"d": 2000, "e": 0.03965, "s": 1.768}, {"d": 2010, "e": 0.04579, "s": 1.768}], "note": "Most recent data: 2011\u20132015", "old_data": false}, {"name": "Netherlands", "eta": 0.89929, "sigma": 3.64, "eta_min": 0.89062, "eta_max": 0.91231, "path": "Greenhouse Garden", "color": "#B8CC7D", "artifact": false, "traj": [{"d": 1900, "e": 1.24138, "s": 2.391}, {"d": 1910, "e": 0.84239, "s": 2.533}, {"d": 1920, "e": 0.90352, "s": 3.655}], "note": "Most recent data: 1921\u20131925", "old_data": true}, {"name": "Philippines", "eta": 0.01499, "sigma": 3.445, "eta_min": 0.01082, "eta_max": 0.01903, "path": "Standard Transplant", "color": "#D98B2B", "artifact": false, "traj": [{"d": 1900, "e": 0.02328, "s": 3.227}, {"d": 1910, "e": 0.06256, "s": 2.836}, {"d": 1920, "e": 0.02271, "s": 3.472}, {"d": 1930, "e": 0.01356, "s": 4.394}, {"d": 1940, "e": 0.00578, "s": 2.85}, {"d": 1950, "e": 0.0472, "s": 2.5}, {"d": 1960, "e": 0.01922, "s": 3.503}, {"d": 1970, "e": 0.0056, "s": 4.294}, {"d": 1980, "e": 0.00632, "s": 3.811}, {"d": 1990, "e": 0.01293, "s": 3.031}, {"d": 2000, "e": 0.0062, "s": 2.951}, {"d": 2010, "e": 0.01571, "s": 3.352}], "note": "Most recent data: 2012\u20132016", "old_data": false}, {"name": "Syria", "eta": 0.00024, "sigma": 1.509, "eta_min": 0.00024, "eta_max": 0.00024, "path": "Ruptured", "color": "#8B0000", "artifact": false, "traj": [{"d": 1900, "e": 0.00791, "s": 2.602}, {"d": 1910, "e": 0.00715, "s": 2.058}, {"d": 1920, "e": 0.01319, "s": 1.481}, {"d": 1930, "e": 0.0078, "s": 1.878}, {"d": 1940, "e": 0.00266, "s": 2.109}, {"d": 1950, "e": 0.00174, "s": 2.184}, {"d": 1960, "e": 0.00144, "s": 2.441}, {"d": 1970, "e": 0.00691, "s": 1.591}, {"d": 1980, "e": 0.00702, "s": 1.59}, {"d": 1990, "e": 0.00244, "s": 1.67}, {"d": 2000, "e": 0.00047, "s": 1.413}, {"d": 2010, "e": 0.00024, "s": 1.509}], "note": "Most recent data: 2007\u20132011", "old_data": false}, {"name": "T\u00fcrkiye", "eta": 0.01433, "sigma": 2.568, "eta_min": 0.00338, "eta_max": 0.03002, "path": "Standard Transplant", "color": "#D98B2B", "artifact": false, "traj": [{"d": 1900, "e": 0.00621, "s": 3.78}, {"d": 1910, "e": 0.01166, "s": 2.69}, {"d": 1920, "e": 0.01433, "s": 2.568}], "note": "Most recent data: 1920\u20131924", "old_data": true}, {"name": "Ukraine", "eta": 0.0328, "sigma": 6.018, "eta_min": 0.01722, "eta_max": 0.04643, "path": "Standard Transplant", "color": "#D98B2B", "artifact": false, "traj": [{"d": 1930, "e": 0.0075, "s": 6.522}, {"d": 1940, "e": 0.00383, "s": 6.098}, {"d": 1950, "e": 0.03362, "s": 4.847}, {"d": 1960, "e": 0.02118, "s": 5.775}, {"d": 1970, "e": 0.00993, "s": 5.3}, {"d": 1980, "e": 0.00632, "s": 3.814}, {"d": 1990, "e": 0.02093, "s": 3.599}, {"d": 2000, "e": 0.03123, "s": 3.112}, {"d": 2010, "e": 0.0328, "s": 6.018}], "note": "Most recent data: 2010\u20132014", "old_data": false}, {"name": "Iceland (CAMS5)", "eta": 0.10352, "sigma": 2.256, "eta_min": 0.00425, "eta_max": 0.31586, "path": "Intermediate/Uncertain", "color": "#1B6CA8", "artifact": false, "traj": [{"d":2000,"e":0.31586,"s":2.4759},{"d":2001,"e":0.29492,"s":2.6368},{"d":2002,"e":0.30152,"s":2.488},{"d":2003,"e":0.21395,"s":2.8768},{"d":2004,"e":0.20702,"s":3.0064},{"d":2005,"e":0.16906,"s":3.585},{"d":2006,"e":0.15626,"s":3.2818},{"d":2007,"e":0.08615,"s":3.4727},{"d":2008,"e":0.00453,"s":5.1176},{"d":2009,"e":0.00425,"s":4.5126},{"d":2010,"e":0.00866,"s":4.1653},{"d":2011,"e":0.02235,"s":3.0982},{"d":2012,"e":0.03112,"s":2.7688},{"d":2013,"e":0.11656,"s":1.7957},{"d":2014,"e":0.17768,"s":1.8773},{"d":2015,"e":0.19008,"s":1.7887},{"d":2016,"e":0.0814,"s":2.5507},{"d":2017,"e":0.19933,"s":2.5762},{"d":2018,"e":0.22152,"s":2.3127},{"d":2019,"e":0.22152,"s":2.3127},{"d":2020,"e":0.01495,"s":2.8652},{"d":2021,"e":0.03977,"s":2.3532},{"d":2022,"e":0.04504,"s":2.515},{"d":2023,"e":0.07769,"s":1.9772},{"d":2024,"e":0.11357,"s":2.4153},{"d":2025,"e":0.14065,"s":2.1863},{"d":2026,"e":0.14065,"s":2.1863}], "old_data": false}, {"name": "USA (CAMS5)", "eta": 0.00275, "sigma": 4.597, "eta_min": 0.00024, "eta_max": 0.13701, "path": "Ruptured", "color": "#6A3D9A", "artifact": false, "traj": [{"d": 2000, "e": 0.13701, "s": 2.169}, {"d": 2001, "e": 0.01562, "s": 1.518}, {"d": 2002, "e": 0.01947, "s": 1.659}, {"d": 2003, "e": 0.01171, "s": 2.834}, {"d": 2004, "e": 0.01488, "s": 2.944}, {"d": 2005, "e": 0.00502, "s": 4.034}, {"d": 2006, "e": 0.01524, "s": 3.643}, {"d": 2007, "e": 0.01142, "s": 2.497}, {"d": 2008, "e": 0.00147, "s": 3.661}, {"d": 2009, "e": 0.00318, "s": 3.33}, {"d": 2010, "e": 0.00543, "s": 3.058}, {"d": 2011, "e": 0.00458, "s": 3.303}, {"d": 2012, "e": 0.01573, "s": 2.799}, {"d": 2013, "e": 0.00873, "s": 3.46}, {"d": 2014, "e": 0.00775, "s": 4.037}, {"d": 2015, "e": 0.02748, "s": 2.653}, {"d": 2016, "e": 0.00631, "s": 4.895}, {"d": 2017, "e": 0.0053, "s": 5.82}, {"d": 2018, "e": 0.00474, "s": 5.227}, {"d": 2019, "e": 0.00723, "s": 5.561}, {"d": 2020, "e": 0.00024, "s": 3.826}, {"d": 2021, "e": 0.00229, "s": 3.113}, {"d": 2022, "e": 0.00193, "s": 4.619}, {"d": 2023, "e": 0.00599, "s": 4.924}, {"d": 2024, "e": 0.00332, "s": 6.502}, {"d": 2025, "e": 0.00052, "s": 4.925}, {"d": 2026, "e": 0.0008, "s": 4.729}], "old_data": false, "note": "CAMS5 ensemble (5 scorers), 2000-2026. 2020-2024 mean plotted."}];
+
+const canvas = document.getElementById('mainCanvas');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+const PAD = {top:20, right:30, bottom:55, left:60};
+const PW = W - PAD.left - PAD.right;
+const PH = H - PAD.top - PAD.bottom;
+
+// Axes
+const sigMin = 0, sigMax = 8.2;
+const etaMin = Math.log10(0.00045), etaMax = Math.log10(2.5);
+
+function xScale(sig) { return PAD.left + (sig - sigMin)/(sigMax - sigMin) * PW; }
+function yScale(eta) { return PAD.top + (1 - (Math.log10(Math.max(eta,0.00045)) - etaMin)/(etaMax - etaMin)) * PH; }
+
+// Region fills
+function fillRegion(color, opacity, etaLow, etaHigh, sigLow, sigHigh, label) {
+  ctx.save();
+  ctx.globalAlpha = opacity;
+  ctx.fillStyle = color;
+  const x1 = xScale(sigLow), x2 = xScale(Math.min(sigHigh, sigMax));
+  const y1 = yScale(etaHigh), y2 = yScale(etaLow);
+  ctx.fillRect(x1, y1, x2-x1, y2-y1);
+  ctx.restore();
+}
+
+function drawRegions() {
+  const eMax = Math.pow(10, etaMax);
+  // Ruptured: eta < 0.005, all sigma
+  fillRegion('#8B0000', 0.08, 0.00045, 0.005, 0, sigMax);
+  // Failed Transplant: eta < 0.02, sigma > 3.5
+  fillRegion('#C84C3E', 0.09, 0.005, 0.02, 3.5, sigMax);
+  // Standard Transplant: eta < 0.08, sigma > 2.0
+  fillRegion('#D98B2B', 0.07, 0.02, 0.08, 2.0, sigMax);
+  // Deep Ancient Forest: eta > 0.15, sigma < 2.0
+  fillRegion('#2F7D5A', 0.10, 0.15, eMax, 0, 2.0);
+  // Young Ancient Forest: 0.08-0.15, sigma < 2.0
+  fillRegion('#7DB87D', 0.13, 0.08, 0.15, 0, 2.0);
+  // Greenhouse Garden: eta > 0.15, sigma >= 2.0
+  fillRegion('#B8CC7D', 0.13, 0.15, eMax, 2.0, sigMax);
+
+  // Boundary lines
+  ctx.save();
+  ctx.setLineDash([4,3]);
+  ctx.lineWidth = 0.8;
+  ctx.strokeStyle = '#AAAAAA';
+  // eta = 0.005
+  ctx.beginPath(); ctx.moveTo(PAD.left, yScale(0.005)); ctx.lineTo(PAD.left+PW, yScale(0.005)); ctx.stroke();
+  // eta = 0.02
+  ctx.beginPath(); ctx.moveTo(PAD.left, yScale(0.02)); ctx.lineTo(PAD.left+PW, yScale(0.02)); ctx.stroke();
+  // eta = 0.08
+  ctx.beginPath(); ctx.moveTo(PAD.left, yScale(0.08)); ctx.lineTo(PAD.left+PW, yScale(0.08)); ctx.stroke();
+  // eta = 0.15
+  ctx.beginPath(); ctx.moveTo(PAD.left, yScale(0.15)); ctx.lineTo(PAD.left+PW, yScale(0.15)); ctx.stroke();
+  // sigma = 2.0
+  ctx.beginPath(); ctx.moveTo(xScale(2.0), PAD.top); ctx.lineTo(xScale(2.0), PAD.top+PH); ctx.stroke();
+  // sigma = 3.5
+  ctx.beginPath(); ctx.moveTo(xScale(3.5), PAD.top); ctx.lineTo(xScale(3.5), PAD.top+PH); ctx.stroke();
+  ctx.restore();
+}
+
+function drawAxes() {
+  ctx.save();
+  ctx.strokeStyle = '#8A9BAA';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(PAD.left, PAD.top);
+  ctx.lineTo(PAD.left, PAD.top+PH);
+  ctx.lineTo(PAD.left+PW, PAD.top+PH);
+  ctx.stroke();
+
+  // X ticks
+  ctx.fillStyle = '#5A6A74';
+  ctx.font = '11px Georgia';
+  ctx.textAlign = 'center';
+  for (let s=0; s<=8; s++) {
+    const x = xScale(s);
+    ctx.beginPath(); ctx.moveTo(x, PAD.top+PH); ctx.lineTo(x, PAD.top+PH+4); ctx.stroke();
+    ctx.fillText(s.toString(), x, PAD.top+PH+16);
+  }
+  ctx.font = '12px Georgia';
+  ctx.fillText('σ_V  (node dispersion)', PAD.left+PW/2, H-6);
+
+  // Y ticks (log)
+  const logTicks = [-3, -2.5, -2, -1.5, -1, -0.5, 0, 0.3];
+  const logLabels = ['0.001','','0.01','','0.1','','1.0','2'];
+  ctx.textAlign = 'right';
+  ctx.font = '10px Courier New';
+  logTicks.forEach((lt, i) => {
+    const y = yScale(Math.pow(10,lt));
+    if (y < PAD.top || y > PAD.top+PH) return;
+    ctx.beginPath(); ctx.moveTo(PAD.left, y); ctx.lineTo(PAD.left-4, y); ctx.stroke();
+    if (logLabels[i]) ctx.fillText(logLabels[i], PAD.left-7, y+3.5);
+  });
+  ctx.save();
+  ctx.translate(14, PAD.top+PH/2);
+  ctx.rotate(-Math.PI/2);
+  ctx.textAlign = 'center';
+  ctx.font = '12px Georgia';
+  ctx.fillStyle = '#5A6A74';
+  ctx.fillText('η_soil  (log scale)', 0, 0);
+  ctx.restore();
+
+  ctx.restore();
+}
+
+function computePoints() {
+  return DATA.map(d => ({
+    ...d,
+    cx: xScale(d.sigma),
+    cy: yScale(Math.max(d.eta, 0.00045))
+  }));
+}
+
+function drawPoints(pts, hovered) {
+  pts.forEach((d, i) => {
+    const r = 5.5;
+    const isHovered = hovered === i;
+    const isArtifact = d.artifact;
+    const isOld = d.old_data;
+
+    ctx.save();
+    // Draw point
+    if (isArtifact) {
+      // Dashed circle outline
+      ctx.beginPath();
+      ctx.arc(d.cx, d.cy, r, 0, Math.PI*2);
+      ctx.setLineDash([3,2]);
+      ctx.strokeStyle = d.color;
+      ctx.lineWidth = isHovered ? 2 : 1.5;
+      ctx.stroke();
+      ctx.fillStyle = d.color + '55';
+      ctx.fill();
+    } else if (isOld) {
+      // Triangle
+      ctx.beginPath();
+      ctx.moveTo(d.cx, d.cy - r);
+      ctx.lineTo(d.cx + r*0.87, d.cy + r*0.5);
+      ctx.lineTo(d.cx - r*0.87, d.cy + r*0.5);
+      ctx.closePath();
+      ctx.fillStyle = d.color + (isHovered ? 'EE' : '99');
+      ctx.strokeStyle = d.color;
+      ctx.lineWidth = isHovered ? 2 : 1;
+      ctx.fill();
+      ctx.stroke();
+    } else {
+      ctx.beginPath();
+      ctx.arc(d.cx, d.cy, r, 0, Math.PI*2);
+      ctx.fillStyle = d.color + (isHovered ? 'FF' : 'CC');
+      ctx.fill();
+      ctx.strokeStyle = isHovered ? '#1B2A33' : d.color;
+      ctx.lineWidth = isHovered ? 2 : 0.8;
+      ctx.stroke();
+    }
+
+    // Label
+    ctx.font = isHovered ? 'bold 11px Georgia' : '10px Georgia';
+    ctx.fillStyle = isHovered ? '#1B2A33' : '#3A4A54';
+    ctx.textAlign = 'left';
+    let lx = d.cx + 7;
+    let ly = d.cy + 3;
+
+    // Adjust for edges
+    if (lx + 70 > W-PAD.right) { lx = d.cx - 7; ctx.textAlign = 'right'; }
+
+    ctx.fillText(d.name, lx, ly);
+    ctx.restore();
+  });
+}
+
+let pts = computePoints();
+let hoveredIdx = null;
+
+function draw() {
+  ctx.clearRect(0,0,W,H);
+  drawRegions();
+  drawAxes();
+  drawPoints(pts, hoveredIdx);
+}
+
+draw();
+
+// Tooltip + hover
+const tooltip = document.getElementById('tooltip');
+
+canvas.addEventListener('mousemove', e => {
+  const rect = canvas.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+
+  let closest = null, minDist = 20;
+  pts.forEach((p,i) => {
+    const d = Math.hypot(p.cx-mx, p.cy-my);
+    if (d < minDist) { minDist = d; closest = i; }
+  });
+
+  if (closest !== hoveredIdx) {
+    hoveredIdx = closest;
+    draw();
+  }
+
+  if (closest !== null) {
+    const d = DATA[closest];
+    tooltip.style.display = 'block';
+    tooltip.style.left = (e.clientX+14)+'px';
+    tooltip.style.top = (e.clientY-10)+'px';
+    document.getElementById('tt-name').textContent = d.name;
+    document.getElementById('tt-path').style.color = d.color;
+    document.getElementById('tt-path').textContent = d.path;
+    document.getElementById('tt-eta').textContent = d.eta.toFixed(4);
+    document.getElementById('tt-sig').textContent = d.sigma.toFixed(3);
+    document.getElementById('tt-note').textContent = d.artifact ? '⚠ Low σ — possible scoring artifact' : '';
+    document.getElementById('tt-old').textContent = d.old_data ? (d.note || 'Historical data only') : '';
+    drawTrajectory(d);
+  } else {
+    tooltip.style.display = 'none';
+  }
+});
+
+canvas.addEventListener('mouseleave', () => {
+  tooltip.style.display = 'none';
+  hoveredIdx = null;
+  draw();
+  clearTraj();
+});
+
+// Trajectory mini-chart
+const tc = document.getElementById('trajCanvas');
+const tCtx = tc.getContext('2d');
+const TW = tc.width, TH = tc.height;
+
+function clearTraj() {
+  tCtx.clearRect(0,0,TW,TH);
+  document.getElementById('trajLabel').textContent = '—';
+}
+
+function drawTrajectory(d) {
+  tCtx.clearRect(0,0,TW,TH);
+  const traj = d.traj;
+  if (!traj || traj.length < 2) { clearTraj(); return; }
+
+  document.getElementById('trajLabel').textContent = d.name + ' — η_soil by decade';
+
+  const pad = {t:10,r:10,b:20,l:35};
+  const pw = TW - pad.l - pad.r;
+  const ph = TH - pad.t - pad.b;
+
+  const years = traj.map(r => r.d);
+  const etas = traj.map(r => Math.max(r.e, 0.00045));
+  const yMin = Math.log10(Math.min(...etas)*0.8);
+  const yMax = Math.log10(Math.max(...etas)*1.3);
+  const xMin = Math.min(...years), xMax = Math.max(...years);
+
+  const tx = yr => pad.l + (yr-xMin)/(xMax-xMin)*pw;
+  const ty = eta => pad.t + (1-(Math.log10(eta)-yMin)/(yMax-yMin))*ph;
+
+  tCtx.save();
+  tCtx.strokeStyle = d.color;
+  tCtx.lineWidth = 1.5;
+  tCtx.beginPath();
+  traj.forEach((r,i) => {
+    const x = tx(r.d), y = ty(Math.max(r.e,0.00045));
+    if (i===0) tCtx.moveTo(x,y); else tCtx.lineTo(x,y);
+  });
+  tCtx.stroke();
+
+  // End dot
+  const lastPt = traj[traj.length-1];
+  tCtx.beginPath();
+  tCtx.arc(tx(lastPt.d), ty(Math.max(lastPt.e,0.00045)), 3, 0, Math.PI*2);
+  tCtx.fillStyle = d.color;
+  tCtx.fill();
+
+  // Axis
+  tCtx.strokeStyle = '#CCCCCC';
+  tCtx.lineWidth = 0.8;
+  tCtx.beginPath();
+  tCtx.moveTo(pad.l, pad.t); tCtx.lineTo(pad.l, pad.t+ph);
+  tCtx.lineTo(pad.l+pw, pad.t+ph); tCtx.stroke();
+
+  // X labels
+  tCtx.fillStyle = '#8A9BAA'; tCtx.font = '8px Courier New'; tCtx.textAlign = 'center';
+  [xMin, xMax].forEach(yr => tCtx.fillText(yr, tx(yr), TH-4));
+
+  tCtx.restore();
+}
+</script>
+</body>
+</html>
