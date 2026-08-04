@@ -4,9 +4,8 @@
    holds KIMI_API_KEY server-side and does the Kimi (Moonshot) calls itself.
    This page only sends the site token (below), which is a soft gate, not a
    secret — it ships in public source, so the backend also rate-limits by
-   IP. Only the "country" variant is served live; company/city are gated to
-   a sales inquiry. See CAMS_RAW_SCORER_SUITE/NEURALNATIONS_API.md for the
-   full contract.
+   IP. Country, company, and city are all served live. See
+   CAMS_RAW_SCORER_SUITE/NEURALNATIONS_API.md for the full contract.
    ────────────────────────────────────────────────────────────────────────── */
 (function () {
   "use strict";
@@ -64,7 +63,6 @@
     var endRaw = document.getElementById("cs-end").value.trim();
     var endYear = endRaw ? +endRaw : startYear;
 
-    if (variant !== "country") { setStatus("Company and city scoring are by inquiry — email sales@neuralnations.org.", true); return; }
     if (!entity) { setStatus("Enter an entity to score.", true); return; }
     if (!startYear) { setStatus("Enter a start year.", true); return; }
     if (endYear - startYear + 1 > 10) { setStatus("Runs are capped at 10 years — narrow the range.", true); return; }
