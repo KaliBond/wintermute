@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CAMS-CAN DIY Kit — Practitioner &amp; Skeptic Field Guide — Neural Nations</title>
+    <meta name="description" content="Run CAMS-CAN scoring by hand in a Claude Project, and see the validated reliability evidence behind it. Download the DIY kit — project instructions, schema templates, formulas.">
+    <meta name="keywords" content="CAMS, CAMS-CAN, Neural Nations, DIY kit, peer review, reliability, ICC, Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/cams-diy-kit">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/cams-diy-kit">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:title" content="CAMS-CAN DIY Kit — Practitioner &amp; Skeptic Field Guide">
+    <meta property="og:description" content="Run CAMS-CAN scoring by hand in a Claude Project, and see the validated reliability evidence behind it.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" href="style.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+
+    <style>
+    .dk-hero { max-width: 760px; margin: 0 auto 4px; }
+    .dk-eyebrow { font: 700 0.72rem ui-monospace, monospace; letter-spacing: 0.16em; text-transform: uppercase; color: #2F6F7D; margin-bottom: 14px; }
+    .dk-hero h1 { text-align: left; font-size: 2.15rem; line-height: 1.15; letter-spacing: -0.025em; color: #1B2A33; margin: 0 0 16px; }
+    .dk-hero p { font-size: 1.05rem; line-height: 1.7; color: #3a4750; max-width: 66ch; margin: 0 0 10px; }
+
+    .dk-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 4px; }
+    .dk-chip { font: 600 0.72rem ui-monospace, monospace; letter-spacing: 0.02em; padding: 4px 10px; border-radius: 20px; background: #F0E9D2; color: #55606a; border: 1px solid #DAD2B8; }
+
+    .dk-toggle { display: inline-flex; border: 1px solid #DAD2B8; border-radius: 10px; overflow: hidden; margin: 22px 0 0; }
+    .dk-toggle button { font: 600 0.85rem -apple-system, sans-serif; padding: 8px 16px; border: 0; border-right: 1px solid #DAD2B8; background: #FBF8EF; color: #55606a; cursor: pointer; }
+    .dk-toggle button:last-child { border-right: 0; }
+    .dk-toggle button[aria-pressed="true"] { background: #1B2A33; color: #F5F1E4; }
+    .dk-toggle button:hover:not([aria-pressed="true"]) { color: #1B2A33; }
+
+    body.dk-filter-practitioner [data-track="skeptic"] { display: none; }
+    body.dk-filter-skeptic [data-track="practitioner"] { display: none; }
+
+    .section-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #2F6F7D; margin: 0 0 12px; }
+    .dk-track-tag { font: 700 0.66rem ui-monospace, monospace; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; float: right; }
+    .dk-track-tag.practitioner { background: #F0E9D2; color: #8a5a2b; }
+    .dk-track-tag.skeptic { background: #E3EEF0; color: #2F6F7D; }
+    .dk-track-tag.both { background: #EDE7D4; color: #7f8c8d; }
+
+    .dk-node-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin: 18px 0; }
+    .dk-node-card { background: #FBF8EF; border: 1px solid #DAD2B8; border-radius: 10px; padding: 12px 14px; border-left: 3px solid var(--loop, #DAD2B8); }
+    .dk-node-card.fast { --loop: #B5622E; }
+    .dk-node-card.slow { --loop: #2F6F7D; }
+    .dk-node-name { font-weight: 700; color: #1B2A33; font-size: 1.02rem; }
+    .dk-node-loop { font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: #7f8c8d; margin: 4px 0 6px; }
+    .dk-node-fn { font-size: 0.86rem; color: #55606a; line-height: 1.4; }
+
+    .dk-table-wrap { overflow-x: auto; margin: 16px 0; border: 1px solid #DAD2B8; border-radius: 10px; }
+    table.dk-table { border-collapse: collapse; width: 100%; min-width: 480px; font-size: 0.88rem; background: #fff; }
+    table.dk-table caption { text-align: left; font-size: 0.78rem; color: #7f8c8d; padding: 10px 14px 0; }
+    table.dk-table th, table.dk-table td { padding: 9px 14px; border-bottom: 1px solid #EDE7D4; text-align: left; vertical-align: top; }
+    table.dk-table thead th { background: #F5F1E4; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: #7f8c8d; }
+    table.dk-table tbody tr:last-child td { border-bottom: 0; }
+    table.dk-table td.num { font-variant-numeric: tabular-nums; text-align: right; }
+    .dk-bar-cell { display: flex; align-items: center; gap: 8px; min-width: 150px; }
+    .dk-bar-track { flex: 1; height: 6px; background: #F5F1E4; border: 1px solid #DAD2B8; border-radius: 4px; overflow: hidden; }
+    .dk-bar-fill { height: 100%; background: #2F6F7D; }
+    .dk-bar-val { font-variant-numeric: tabular-nums; font-size: 0.85rem; min-width: 3.4ch; text-align: right; }
+
+    .dk-steps { counter-reset: step; list-style: none; padding: 0; margin: 18px 0; }
+    .dk-steps li { position: relative; padding: 4px 0 4px 34px; margin-bottom: 10px; font-size: 0.95rem; color: #3a4750; line-height: 1.6; }
+    .dk-steps li::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 3px; width: 22px; height: 22px; border-radius: 50%; background: #2F6F7D; color: #F5F1E4; font: 700 0.72rem ui-monospace, monospace; display: flex; align-items: center; justify-content: center; }
+    .dk-steps b { display: block; color: #1B2A33; }
+
+    pre.dk-code { background: #131c24; color: #DCE4E8; border-radius: 10px; padding: 16px 18px; overflow-x: auto; overflow-y: auto; max-height: 340px; font: 500 0.82rem ui-monospace, monospace; line-height: 1.6; margin: 0; }
+    .dk-code-block { border: 1px solid #DAD2B8; border-radius: 10px; overflow: hidden; margin: 18px 0; }
+    .dk-code-head { display: flex; align-items: center; justify-content: space-between; padding: 8px 14px; background: #F5F1E4; border-bottom: 1px solid #DAD2B8; }
+    .dk-code-title { font: 600 0.76rem ui-monospace, monospace; color: #55606a; }
+    .dk-copy-btn { font: 600 0.72rem ui-monospace, monospace; background: #fff; border: 1px solid #DAD2B8; color: #55606a; padding: 4px 10px; border-radius: 6px; cursor: pointer; }
+    .dk-copy-btn:hover { border-color: #2F6F7D; color: #2F6F7D; }
+    .dk-copy-btn.copied { border-color: #2F6F7D; color: #2F6F7D; background: #E3EEF0; }
+
+    .dk-dl-card { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; background: #1B2A33; border-radius: 14px; padding: 22px 26px; margin: 22px 0; }
+    .dk-dl-meta { color: #C9D4D8; }
+    .dk-dl-meta .name { font: 700 1.05rem -apple-system, sans-serif; color: #F5F1E4; margin-bottom: 4px; }
+    .dk-dl-meta .sub { font-size: 0.85rem; color: #9fb0ba; }
+    .dk-dl-btn { font: 700 0.95rem -apple-system, sans-serif; padding: 13px 26px; border-radius: 10px; background: #6FB3C0; color: #0f161c; text-decoration: none; white-space: nowrap; transition: .14s; }
+    .dk-dl-btn:hover { background: #86c2cd; }
+
+    .dk-warn { background: #F4EEDD; border: 1px solid #E3DAC0; border-left: 3px solid #d97706; border-radius: 0 10px 10px 0; padding: 14px 18px; margin: 18px 0; font-size: 0.9rem; color: #55606a; line-height: 1.6; }
+    .dk-note { background: #E3EEF0; border: 1px solid #c8dde1; border-left: 3px solid #2F6F7D; border-radius: 0 10px 10px 0; padding: 14px 18px; margin: 18px 0; font-size: 0.9rem; color: #40545a; line-height: 1.6; }
+    .dk-note ul, .dk-warn ul { margin: 8px 0 0; padding-left: 18px; }
+    .dk-note li, .dk-warn li { margin-bottom: 6px; }
+
+    .dk-formula { background: #FBF8EF; border: 1px solid #DAD2B8; border-radius: 10px; padding: 18px 22px; margin: 16px 0; font: 500 0.92rem ui-monospace, monospace; color: #1B2A33; }
+    .dk-formula div { margin-bottom: 6px; }
+    .dk-formula div:last-child { margin-bottom: 0; }
+    </style>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+
+<div class="container" style="max-width:920px;">
+
+    <div class="card" style="padding:34px 32px 30px;">
+        <div class="dk-hero">
+            <div class="dk-eyebrow">Neural Nations &middot; CAMS-CAN &middot; DIY Kit</div>
+            <h1>The DIY Kit, Handed Off</h1>
+            <p>Everything needed to run CAMS-CAN scoring by hand in a Claude Project &mdash; and
+            everything needed to decide whether to believe what it produces. Four small files,
+            no API key, no installed app: a project-instructions block and two blank schema
+            templates that turn any Claude Project into a working CAMS scorer.</p>
+        </div>
+        <div class="dk-chips">
+            <span class="dk-chip">Rubric: CAMS RAW SCORER v1.2-OPT</span>
+            <span class="dk-chip">Framework: Kari McKern &middot; Neural Nations</span>
+            <span class="dk-chip">Kit status: independent condensation</span>
+            <span class="dk-chip">License: Open Science &middot; Common Property</span>
+        </div>
+        <div class="dk-toggle" role="group" aria-label="Filter by audience">
+            <button type="button" data-filter="all" aria-pressed="true">Everything</button>
+            <button type="button" data-filter="practitioner" aria-pressed="false">How to run it</button>
+            <button type="button" data-filter="skeptic" aria-pressed="false">Why to trust it</button>
+        </div>
+    </div>
+
+    <!-- DOWNLOAD -->
+    <div class="card">
+        <p class="section-label">Get the kit</p>
+        <div class="dk-dl-card">
+            <div class="dk-dl-meta">
+                <div class="name">cams-diy-kit.zip</div>
+                <div class="sub">4 files &middot; ~4 KB &middot; project instructions + two blank schema templates + readme</div>
+            </div>
+            <a href="cams-diy-kit/cams-diy-kit.zip" class="dk-dl-btn" download>Download</a>
+        </div>
+        <p style="font-size:0.9rem;color:#55606a;line-height:1.6;">Or read the pieces first: the
+        <a href="cams-diy-kit/README.txt">plain-text README</a>, the
+        <a href="cams-diy-kit/PROJECT_INSTRUCTIONS.txt">project instructions</a> reproduced in full
+        below, and the two blank <a href="cams-diy-kit/schema_template.csv">schema</a> /
+        <a href="cams-diy-kit/envelope_schema_template.csv">envelope</a> CSV templates.</p>
+    </div>
+
+    <!-- OVERVIEW -->
+    <div class="card" data-track="both">
+        <p class="section-label">What this kit is<span class="dk-track-tag both">Both tracks</span></p>
+        <p style="color:#3a4750;line-height:1.7;">CAMS-CAN models any coordinating human system &mdash;
+        a nation, a company, a city &mdash; as eight institutional nodes, each scored on four
+        dimensions, to surface whether the system is coordinating well or coming apart. This kit
+        packages the scoring rubric into a Claude Project instead of an API key or installed app.</p>
+        <div class="dk-note" style="border-left-color:#DAD2B8;background:#F0E9D2;color:#55606a;">
+            <em>From the kit's own readme:</em> &ldquo;Framework by Kari McKern, Neural Nations
+            &mdash; neuralnations.org / github.com/KaliBond/wintermute. This kit is an independent
+            condensation for hands-on use, not an official Neural Nations release.&rdquo;
+        </div>
+    </div>
+
+    <!-- NODES -->
+    <div class="card" data-track="both">
+        <p class="section-label">The eight nodes<span class="dk-track-tag both">Both tracks</span></p>
+        <p style="color:#3a4750;line-height:1.7;">Every entity is scored on the same eight nodes,
+        split into two coordination loops. The split feeds directly into the Bond Strength formula
+        below: two fast-loop nodes bond at full strength, two slow-loop nodes bond at 0.8, and a
+        fast/slow pair bonds at a discounted 0.6. See <a href="model.html">the model page</a> for
+        the full framework.</p>
+
+        <div class="dk-node-grid">
+            <div class="dk-node-card fast"><div class="dk-node-name">Helm</div><div class="dk-node-loop">Fast loop</div><div class="dk-node-fn">Executive / strategic leadership &mdash; head of state, cabinet, board.</div></div>
+            <div class="dk-node-card fast"><div class="dk-node-name">Shield</div><div class="dk-node-loop">Fast loop</div><div class="dk-node-fn">Defence, coercion, risk &mdash; military, police, security, compliance.</div></div>
+            <div class="dk-node-card slow"><div class="dk-node-name">Lore</div><div class="dk-node-loop">Slow loop</div><div class="dk-node-fn">Cultural narrative &mdash; religion, ideology, media, brand, education.</div></div>
+            <div class="dk-node-card slow"><div class="dk-node-name">Stewards</div><div class="dk-node-loop">Slow loop</div><div class="dk-node-fn">Capital and asset ownership &mdash; landowners, investors, finance.</div></div>
+            <div class="dk-node-card fast"><div class="dk-node-name">Craft</div><div class="dk-node-loop">Fast loop</div><div class="dk-node-fn">Production and technical work &mdash; industry, engineering, R&amp;D.</div></div>
+            <div class="dk-node-card fast"><div class="dk-node-name">Hands</div><div class="dk-node-loop">Fast loop</div><div class="dk-node-fn">Labour and collective execution &mdash; workforce, operations.</div></div>
+            <div class="dk-node-card slow"><div class="dk-node-name">Archive</div><div class="dk-node-loop">Slow loop</div><div class="dk-node-fn">Institutional memory &mdash; records, courts, statistics, systems of record.</div></div>
+            <div class="dk-node-card fast"><div class="dk-node-name">Flow</div><div class="dk-node-loop">Fast loop</div><div class="dk-node-fn">Distribution and markets &mdash; trade, commerce, logistics, sales.</div></div>
+        </div>
+
+        <div class="dk-table-wrap">
+            <table class="dk-table">
+                <caption>Four dimensions, scored 1&ndash;10 as integers, or NA if ungrounded</caption>
+                <thead><tr><th>Dimension</th><th>What it measures</th><th>Anchors</th></tr></thead>
+                <tbody>
+                    <tr><td>Coherence (C)</td><td>Internal alignment and coordination clarity</td><td>9&ndash;10 exceptional &middot; 7&ndash;8 strong &middot; 5&ndash;6 adequate &middot; 3&ndash;4 weak &middot; 1&ndash;2 collapsed</td></tr>
+                    <tr><td>Capacity (K)</td><td>Demonstrated ability to perform the node's function</td><td>9&ndash;10 exceptional &middot; 7&ndash;8 strong &middot; 5&ndash;6 adequate &middot; 3&ndash;4 weak &middot; 1&ndash;2 collapsed</td></tr>
+                    <tr><td>Stress (S)</td><td>Rate of breakdown / entropy production &mdash; not raw pressure</td><td>9&ndash;10 rupture &middot; 7&ndash;8 strained &middot; 5&ndash;6 pressured &middot; 3&ndash;4 stable &middot; 1&ndash;2 thriving</td></tr>
+                    <tr><td>Abstraction (A)</td><td>Operational sophistication, learning, symbolic reach</td><td>9&ndash;10 exceptional &middot; 7&ndash;8 strong &middot; 5&ndash;6 adequate &middot; 3&ndash;4 weak &middot; 1&ndash;2 collapsed</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="dk-table-wrap">
+            <table class="dk-table">
+                <caption>Relabeling for non-nation entities &mdash; same eight nodes, same rules</caption>
+                <thead><tr><th>Node</th><th>Nation (default)</th><th>Corporation</th><th>City</th></tr></thead>
+                <tbody>
+                    <tr><td>Helm</td><td>Head of state, cabinet</td><td>Board / CEO</td><td>Mayor &amp; council</td></tr>
+                    <tr><td>Shield</td><td>Military, police</td><td>Risk &amp; compliance</td><td>Police &amp; fire</td></tr>
+                    <tr><td>Lore</td><td>Religion, media, education</td><td>Brand &amp; culture</td><td>Community &amp; media</td></tr>
+                    <tr><td>Stewards</td><td>Landowners, investors, finance</td><td>Finance</td><td>Property &amp; developers</td></tr>
+                    <tr><td>Craft</td><td>Industry, engineering</td><td>R&amp;D &amp; engineering</td><td>Trades &amp; utilities</td></tr>
+                    <tr><td>Hands</td><td>Workforce, operations</td><td>Workforce &amp; operations</td><td>Municipal workforce</td></tr>
+                    <tr><td>Archive</td><td>Records, courts, statistics</td><td>Systems of record</td><td>Planning &amp; records</td></tr>
+                    <tr><td>Flow</td><td>Trade, commerce, logistics</td><td>Markets &amp; sales</td><td>Local commerce</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- PRACTITIONER -->
+    <div class="card" data-track="practitioner">
+        <p class="section-label">Run it<span class="dk-track-tag practitioner">Practitioner track</span></p>
+        <p style="color:#3a4750;line-height:1.7;">This is the same v1.2-OPT scoring rubric behind the
+        <a href="cams-scorer.html">CAMS Scorer</a> hosted tool and <a href="cams-scorer-local.html">local
+        app</a>, condensed for a Claude Project instead of an API key. Paste the instructions once;
+        every conversation in that project can then score, calculate, and interpret CAMS data on request.</p>
+
+        <ol class="dk-steps">
+            <li><b>Set up once.</b>Paste the project instructions below into a Claude Project's "Project instructions" field.</li>
+            <li><b>&ldquo;Score [X] from [year]&rdquo;</b>Runs the SCORE job for that range &mdash; CSV only, eight rows per year, no prose.</li>
+            <li><b>&ldquo;Now calculate&rdquo; / &ldquo;get node values&rdquo;</b>Runs the CALC job on the latest SCORE output &mdash; adds Node Value and Bond Strength.</li>
+            <li><b>&ldquo;Run five scorers&rdquo; / &ldquo;ensemble&rdquo;</b>Repeats SCORE five times independently, no cross-run peeking, averages per node-year, then runs one CALC pass on the means.</li>
+            <li><b>&ldquo;Switch to corporate/city mapping&rdquo;</b>Relabels the same eight nodes per the table above and keeps scoring the same entity under that lens.</li>
+        </ol>
+
+        <div class="dk-code-block">
+            <div class="dk-code-head">
+                <span class="dk-code-title">PROJECT_INSTRUCTIONS.txt &mdash; paste this whole block</span>
+                <button class="dk-copy-btn" data-copy-target="pi-block" type="button">Copy</button>
+            </div>
+            <pre class="dk-code"><code id="pi-block">CAMS-CAN ANALYSIS — PROJECT INSTRUCTIONS
+Paste this entire block into a Claude Project's "Project instructions" field.
+Any conversation in that project can then score, calculate and interpret CAMS
+data without further setup.
+
+## WHAT THIS PROJECT DOES
+Models a nation, corporation or city as eight interacting institutional nodes,
+each scored on four dimensions, to surface coordination health over time.
+Two jobs, always kept separate:
+  SCORE  — read history/evidence, emit raw integer scores per node-year.
+  CALC   — take raw scores, compute Node Value and Bond Strength. Never
+           invent scores while calculating; never skip calculation while scoring.
+
+## THE EIGHT NODES (canonical order)
+Helm      Executive / strategic leadership (head of state, cabinet, board)
+Shield    Defence / coercion / risk (military, police, security, compliance)
+Lore      Cultural narrative (religion, ideology, media, brand, education)
+Stewards  Capital and asset ownership (landowners, investors, finance)
+Craft     Production and technical work (industry, engineering, R&D)
+Hands     Labour and collective execution (workforce, operations)
+Archive   Institutional memory (records, courts, statistics, systems of record)
+Flow      Distribution and markets (trade, commerce, logistics, sales)
+
+Default mapping is for nations. For a corporation, relabel:
+  Helm=Board/CEO   Shield=Risk & Compliance   Lore=Brand & Culture
+  Stewards=Finance   Craft=R&D & Engineering   Hands=Workforce & Operations
+  Archive=Systems of Record   Flow=Markets & Sales
+For a city, relabel:
+  Helm=Mayor & Council   Shield=Police & Fire   Lore=Community & Media
+  Stewards=Property & Developers   Craft=Trades & Utilities
+  Hands=Municipal Workforce   Archive=Planning & Records   Flow=Local Commerce
+
+## THE FOUR DIMENSIONS (score 1-10 integers, or NA if ungrounded)
+Coherence (C)    internal alignment and coordination clarity
+Capacity (K)     demonstrated ability to perform the node's function
+Stress (S)       rate of breakdown / entropy production, not raw pressure
+Abstraction (A)  operational sophistication, learning, symbolic reach
+
+Anchors, applied per dimension:
+  9-10  exceptional — requires historically unusual evidence
+  7-8   strong / integrated / effective
+  5-6   adequate — functions despite tension
+  3-4   weak / divided / unreliable
+  1-2   collapsed / fragmented / unable to perform
+
+## SCORING RULES
+- Score operational truth, not formal structure or stated intent.
+- Score each node independently; do not smooth for symmetry.
+- A score under 5 or over 8 requires a concrete, named piece of evidence for
+  that specific node. General sentiment or reputation is not evidence.
+- A move of 2+ points from the prior period requires either two distinct
+  pieces of node-specific evidence, or one unmistakable structural break
+  (regime change, bankruptcy, merger, disaster).
+- If evidence is genuinely insufficient for a score, output NA — never guess,
+  never copy the previous period's value by default.
+- Search the web when the subject is recent, obscure, or thinly documented in
+  your training knowledge; do not search to re-confirm well-known history.
+
+## OUTPUT FORMAT — SCORING
+Return CSV only, no prose:
+Society,Year,Node,Coherence,Capacity,Stress,Abstraction
+One row per node, eight rows per year, nodes in the canonical order above.
+
+## FORMULAS — CALCULATION (JUNO v1.0-Final)
+Node Value:
+  NV_i = C_i + K_i - S_i + 0.5*A_i
+
+Bond Strength (per node, mean bond to the other seven):
+  q_i  = clamp((0.6*C_i + 0.4*A_i) / 10, 0, 1)
+  B_ij = T_ij * sqrt(q_i * q_j) * 2^(-(S_i+S_j)/10)
+  BS_i = mean(B_ij for all j != i)
+
+  T_ij topology weight:
+    1.0  both nodes in the fast loop  {Helm, Shield, Craft, Hands, Flow}
+    0.8  both nodes in the slow loop  {Lore, Stewards, Archive}
+    0.6  one fast, one slow (cross-layer)
+
+Stress is the dominant lever: raising S on any node drives its bond to every
+other node down exponentially, regardless of how strong its own Coherence
+and Abstraction are.
+
+## OUTPUT FORMAT — CALCULATION
+Society,Year,Node,Coherence,Capacity,Stress,Abstraction,Node Value,Bond Strength
+Node Value to 1 decimal place, Bond Strength to 4 decimal places.
+
+## EVIDENCE-GATED ENSEMBLE (camnations5n)
+A single pass already illuminates. For a claim that needs to survive scrutiny,
+run five independent passes under the CAMS RAW SCORER v1.2-OPT rubric (no
+cross-pass peeking, no pre-scoring narrative, identical prompt every time),
+propagate NA at the dimension level rather than guessing, then run one CALC
+pass on the surviving means. Report scorer SD, n_eff and NA_rate alongside
+the mean — see schema_template.csv for the envelope columns.
+
+## WHAT TO SAY WHEN ASKED
+"Score [X] from [year]"              -> run SCORE for that range, CSV only.
+"Now calculate" / "get node values"  -> run CALC on the latest SCORE output.
+"Run five scorers" / "ensemble"      -> repeat SCORE five times independently
+  (no cross-run peeking, no averaging mid-run), average C/K/S/A per node-year,
+  then run one CALC pass on the means.
+"Switch to corporate/city mapping"   -> relabel nodes per the mappings above
+  and keep scoring the same entity under that lens.
+
+## SOURCE
+Node architecture, dimensions, and the Node Value / Bond Strength formulas
+follow the CAMS framework published by Kari McKern at neuralnations.org (open
+repository: github.com/KaliBond/wintermute). This instructions block is an
+independent condensation for hands-on use in a Claude Project — not an
+official Neural Nations release.</code></pre>
+        </div>
+
+        <div class="dk-code-block">
+            <div class="dk-code-head">
+                <span class="dk-code-title">schema_template.csv &mdash; one year, eight nodes</span>
+                <button class="dk-copy-btn" data-copy-target="schema-block" type="button">Copy</button>
+            </div>
+            <pre class="dk-code"><code id="schema-block">Society,Year,Node,Coherence,Capacity,Stress,Abstraction,Node Value,Bond Strength
+,,Helm,,,,,,
+,,Shield,,,,,,
+,,Lore,,,,,,
+,,Stewards,,,,,,
+,,Craft,,,,,,
+,,Hands,,,,,,
+,,Archive,,,,,,
+,,Flow,,,,,,</code></pre>
+        </div>
+
+        <div class="dk-code-block">
+            <div class="dk-code-head">
+                <span class="dk-code-title">envelope_schema_template.csv &mdash; for the five-pass ensemble</span>
+                <button class="dk-copy-btn" data-copy-target="envelope-block" type="button">Copy</button>
+            </div>
+            <pre class="dk-code"><code id="envelope-block">Society,Year,Node,C_sd,K_sd,S_sd,A_sd,V_range,V_min,V_max,n_eff,NA_rate
+,,Helm,,,,,,,,,
+,,Shield,,,,,,,,,
+,,Lore,,,,,,,,,
+,,Stewards,,,,,,,,,
+,,Craft,,,,,,,,,
+,,Hands,,,,,,,,,
+,,Archive,,,,,,,,,
+,,Flow,,,,,,,,,</code></pre>
+        </div>
+    </div>
+
+    <!-- SKEPTIC -->
+    <div class="card" data-track="skeptic">
+        <p class="section-label">Trust it &mdash; or don't, on the evidence<span class="dk-track-tag skeptic">Skeptic track</span></p>
+        <p style="color:#3a4750;line-height:1.7;">The rubric is built to make a wrong score hard to
+        produce quietly: every extreme value needs a named reason, every jump needs two independent
+        pieces of evidence or a structural break, and missing evidence has to surface as
+        <code>NA</code>, never a guess. Below is what's been independently measured about how well
+        it actually holds up &mdash; and what hasn't been tested yet. If you want to check our work
+        yourself, see the <a href="peer-review.html">peer review &amp; validation invite</a>.</p>
+
+        <ul style="color:#3a4750;line-height:1.7;padding-left:20px;">
+            <li><strong>Evidence gate.</strong> A score under 5 or over 8 requires a concrete, named piece of evidence for that specific node &mdash; general sentiment or reputation doesn't count.</li>
+            <li><strong>Change gate.</strong> A move of 2+ points from the prior period requires two distinct pieces of node-specific evidence, or one unmistakable structural break &mdash; not a single ambiguous event.</li>
+            <li><strong>No silent carry-forward.</strong> An unchanged score has to mean a genuine re-check found no material change. Insufficient evidence outputs <code>NA</code>, never a copied prior value.</li>
+            <li><strong>Independent-pass integrity.</strong> In a multi-pass ensemble, each pass is scored on its own judgement &mdash; no peeking at other passes, no softening toward an expected mean.</li>
+        </ul>
+
+        <p class="section-label" style="margin-top:26px;">Measured reliability</p>
+        <p style="color:#3a4750;line-height:1.7;">Two independent panels have been run under this
+        family of prompts, each as 18 formal scoring passes nested across three model families
+        (Claude, Grok, Kimi), reduced to intraclass correlation. ICC(2,k) is absolute agreement
+        across the pooled three-model ensemble; ICC(3,k) is consistency &mdash; whether the models
+        agree on relative movement even where their absolute scale differs.</p>
+
+        <div class="dk-table-wrap">
+            <table class="dk-table">
+                <caption>Reliability by panel &mdash; both under the same three-family, 18-pass design</caption>
+                <thead><tr><th>Panel</th><th>Prompt</th><th>ICC(2,k) absolute</th><th>95% CI</th><th>ICC(3,k) consistency</th><th>95% CI</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td>Australia, 2020&ndash;2025</td><td>v1.1</td>
+                        <td class="dk-bar-cell"><div class="dk-bar-track"><div class="dk-bar-fill" style="width:71%"></div></div><span class="dk-bar-val">0.710</span></td>
+                        <td style="color:#7f8c8d;">not reported</td>
+                        <td class="dk-bar-cell"><div class="dk-bar-track"><div class="dk-bar-fill" style="width:88.5%"></div></div><span class="dk-bar-val">0.885</span></td>
+                        <td style="color:#7f8c8d;">not reported</td>
+                    </tr>
+                    <tr>
+                        <td>United States, 2020&ndash;2025</td><td>v1.2-OPT</td>
+                        <td class="dk-bar-cell"><div class="dk-bar-track"><div class="dk-bar-fill" style="width:69.1%"></div></div><span class="dk-bar-val">0.691</span></td>
+                        <td>0.427&ndash;0.813</td>
+                        <td class="dk-bar-cell"><div class="dk-bar-track"><div class="dk-bar-fill" style="width:90.7%"></div></div><span class="dk-bar-val">0.907</span></td>
+                        <td>0.759&ndash;0.962</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="dk-warn">
+            <strong>Read this carefully, not optimistically.</strong>
+            <ul>
+                <li>This is <strong>not</strong> a controlled A/B of the two prompt versions &mdash; country and prompt version changed together. The overlapping confidence intervals are reassuring, not a clean causal claim.</li>
+                <li>The Australia write-up reported ICC point estimates only; the United States replication is the one with full bootstrap CIs on all four statistics.</li>
+                <li>ICC(2,k) sitting well below ICC(3,k) on both panels means the three model families track each other's <em>direction</em> of movement closely, but disagree on absolute scale.</li>
+                <li>Both panels establish scorer reliability and prompt-sensitivity &mdash; not historical criterion validity.</li>
+            </ul>
+        </div>
+
+        <p class="section-label" style="margin-top:22px;">Company and city variants</p>
+        <p style="color:#3a4750;line-height:1.7;">The company and city node mappings above were only
+        brought up to this rubric structure on 2026-08-04, and have not yet had a full reliability
+        study run against them. A smaller 3-pass, single-provider check (Grok, Tesla 2020&ndash;2022
+        and Detroit 2019&ndash;2021, 24 targets each) came back clean &mdash; pairwise raw-score
+        correlation 0.85&ndash;0.92, zero <code>NA</code> cells &mdash; but treat that as an early
+        functional signal, not a validated figure on the order of the two panels above.</p>
+
+        <div class="dk-note">
+            <strong>Not yet established</strong>
+            <ul>
+                <li>Historical criterion validity &mdash; whether scores match actual institutional history, independent of model agreement.</li>
+                <li>Generalisability beyond the two tested country panels, or beyond the small company/city smoke test.</li>
+                <li>A same-panel, same-country controlled comparison of v1.1 against v1.2-OPT.</li>
+                <li>Full reliability study for the company and city variants.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- FORMULAS -->
+    <div class="card" data-track="both">
+        <p class="section-label">The formulas, in full<span class="dk-track-tag both">Both tracks</span></p>
+        <p style="color:#3a4750;line-height:1.7;">Nothing downstream of the raw scores is hidden.
+        CALC takes eight nodes' worth of C/K/S/A and produces two derived figures per node &mdash;
+        both closed-form, both reproducible by hand from the schema template above.</p>
+
+        <div class="dk-formula">
+            <div><strong>NV_i</strong> = C_i + K_i &minus; S_i + 0.5 &times; A_i</div>
+        </div>
+        <p style="color:#55606a;font-size:0.9rem;line-height:1.6;">Node Value rewards Coherence and
+        Capacity, penalises Stress directly, and gives Abstraction half weight.</p>
+
+        <div class="dk-formula">
+            <div><strong>q_i</strong> = clamp((0.6 &times; C_i + 0.4 &times; A_i) / 10, 0, 1)</div>
+            <div><strong>B_ij</strong> = T_ij &times; &radic;(q_i &times; q_j) &times; 2<sup>&minus;(S_i+S_j)/10</sup></div>
+            <div><strong>BS_i</strong> = mean(B_ij for all j &ne; i)</div>
+        </div>
+        <p style="color:#55606a;font-size:0.9rem;line-height:1.6;">Bond Strength is the mean bond
+        from one node to the other seven. Stress is the dominant lever: raising S on any single
+        node drives its bond to <em>every</em> other node down exponentially, regardless of how
+        strong its own Coherence and Abstraction are.</p>
+
+        <div class="dk-table-wrap">
+            <table class="dk-table">
+                <caption>Topology weight T_ij &mdash; the fast/slow split from the node grid above</caption>
+                <thead><tr><th>Pair</th><th class="num">Weight</th></tr></thead>
+                <tbody>
+                    <tr><td>Both nodes in the fast loop {Helm, Shield, Craft, Hands, Flow}</td><td class="num">1.0</td></tr>
+                    <tr><td>Both nodes in the slow loop {Lore, Stewards, Archive}</td><td class="num">0.8</td></tr>
+                    <tr><td>One fast, one slow (cross-layer)</td><td class="num">0.6</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="color:#7f8c8d;font-size:0.82rem;">Formula version: JUNO v1.0-Final. Node Value
+        reported to 1 decimal place, Bond Strength to 4.</p>
+    </div>
+
+    <!-- CTA -->
+    <div class="card" style="text-align:center;background:#2F6F7D;">
+        <h2 style="color:#F5F1E4;margin-bottom:10px;">Think you can break it?</h2>
+        <p style="color:#dceef2;max-width:56ch;margin:0 auto 18px;">Run your own independent pass,
+        audit the evidence rules, or replicate the reliability study. We'd rather know where this
+        framework fails than not know.</p>
+        <a href="peer-review.html" class="dk-dl-btn" style="display:inline-block;">Peer Review &amp; Validation Invite</a>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html" style="color:#2F6F7D;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a>
+        <a href="cams-scorer.html" style="color:#2F6F7D;text-decoration:none;font-size:0.9em;font-weight:600;">CAMS Scorer</a>
+        <a href="peer-review.html" style="color:#2F6F7D;text-decoration:none;font-size:0.9em;font-weight:600;">Peer Review</a>
+        <a href="model.html" style="color:#2F6F7D;text-decoration:none;font-size:0.9em;font-weight:600;">Model</a>
+    </nav>
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Open science — <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+
+<script src="site-chrome.js"></script>
+<script src="nav.js"></script>
+<script>
+(function(){
+    var buttons = document.querySelectorAll('.dk-toggle button');
+    buttons.forEach(function(btn){
+        btn.addEventListener('click', function(){
+            buttons.forEach(function(b){ b.setAttribute('aria-pressed','false'); });
+            btn.setAttribute('aria-pressed','true');
+            document.body.classList.remove('dk-filter-practitioner','dk-filter-skeptic');
+            var f = btn.getAttribute('data-filter');
+            if(f === 'practitioner') document.body.classList.add('dk-filter-practitioner');
+            if(f === 'skeptic') document.body.classList.add('dk-filter-skeptic');
+        });
+    });
+    document.querySelectorAll('.dk-copy-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+            var id = btn.getAttribute('data-copy-target');
+            var el = document.getElementById(id);
+            if(!el) return;
+            var text = el.textContent;
+            var done = function(){
+                var original = btn.textContent;
+                btn.textContent = 'Copied';
+                btn.classList.add('copied');
+                setTimeout(function(){ btn.textContent = original; btn.classList.remove('copied'); }, 1500);
+            };
+            if(navigator.clipboard && navigator.clipboard.writeText){
+                navigator.clipboard.writeText(text).then(done).catch(function(){});
+            }
+        });
+    });
+})();
+</script>
+</body>
+</html>

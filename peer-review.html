@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Peer Review &amp; Validation Invite — CAMS-CAN — Neural Nations</title>
+    <meta name="description" content="An open invitation to independently replicate, audit, and try to break CAMS-CAN — the eight-node institutional coordination framework behind Neural Nations.">
+    <meta name="keywords" content="CAMS, CAMS-CAN, Neural Nations, peer review, validation, reliability, replication, open science">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/peer-review">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/peer-review">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:title" content="Peer Review &amp; Validation Invite — CAMS-CAN">
+    <meta property="og:description" content="An open invitation to independently replicate, audit, and try to break CAMS-CAN.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" href="style.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+
+    <style>
+    .pr-hero { max-width: 760px; margin: 0 auto 4px; }
+    .pr-eyebrow { font: 700 0.72rem ui-monospace, monospace; letter-spacing: 0.16em; text-transform: uppercase; color: #2F6F7D; margin-bottom: 14px; }
+    .pr-hero h1 { text-align: left; font-size: 2.15rem; line-height: 1.15; letter-spacing: -0.025em; color: #1B2A33; margin: 0 0 16px; }
+    .pr-hero p { font-size: 1.05rem; line-height: 1.7; color: #3a4750; max-width: 66ch; margin: 0 0 10px; }
+    .section-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #2F6F7D; margin: 0 0 12px; }
+
+    .pr-path-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 18px 0; }
+    .pr-path { background: #FBF8EF; border: 1px solid #DAD2B8; border-radius: 12px; padding: 18px 20px; border-top: 3px solid #2F6F7D; }
+    .pr-path .n { font: 700 0.7rem ui-monospace, monospace; letter-spacing: 0.08em; text-transform: uppercase; color: #2F6F7D; margin-bottom: 8px; }
+    .pr-path h3 { font-size: 1.02rem; color: #1B2A33; margin: 0 0 8px; }
+    .pr-path p { font-size: 0.88rem; color: #55606a; line-height: 1.55; margin: 0; }
+
+    .pr-table-wrap { overflow-x: auto; margin: 16px 0; border: 1px solid #DAD2B8; border-radius: 10px; }
+    table.pr-table { border-collapse: collapse; width: 100%; min-width: 480px; font-size: 0.88rem; background: #fff; }
+    table.pr-table caption { text-align: left; font-size: 0.78rem; color: #7f8c8d; padding: 10px 14px 0; }
+    table.pr-table th, table.pr-table td { padding: 9px 14px; border-bottom: 1px solid #EDE7D4; text-align: left; }
+    table.pr-table thead th { background: #F5F1E4; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: #7f8c8d; }
+    table.pr-table tbody tr:last-child td { border-bottom: 0; }
+    .pr-bar-cell { display: flex; align-items: center; gap: 8px; min-width: 150px; }
+    .pr-bar-track { flex: 1; height: 6px; background: #F5F1E4; border: 1px solid #DAD2B8; border-radius: 4px; overflow: hidden; }
+    .pr-bar-fill { height: 100%; background: #2F6F7D; }
+    .pr-bar-val { font-variant-numeric: tabular-nums; font-size: 0.85rem; min-width: 3.4ch; text-align: right; }
+
+    .pr-warn { background: #F4EEDD; border: 1px solid #E3DAC0; border-left: 3px solid #d97706; border-radius: 0 10px 10px 0; padding: 14px 18px; margin: 18px 0; font-size: 0.9rem; color: #55606a; line-height: 1.6; }
+    .pr-note { background: #E3EEF0; border: 1px solid #c8dde1; border-left: 3px solid #2F6F7D; border-radius: 0 10px 10px 0; padding: 14px 18px; margin: 18px 0; font-size: 0.9rem; color: #40545a; line-height: 1.6; }
+    .pr-note ul, .pr-warn ul { margin: 8px 0 0; padding-left: 18px; }
+    .pr-note li, .pr-warn li { margin-bottom: 6px; }
+
+    .pr-yes-no { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+    .pr-yes-no > div { border-radius: 12px; padding: 16px 18px; }
+    .pr-yes { background: #eef6ee; border: 1px solid #cfe6cf; }
+    .pr-no { background: #fbeeee; border: 1px solid #e8cccc; }
+    .pr-yes-no h4 { margin: 0 0 8px; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .pr-yes h4 { color: #2e6b2e; }
+    .pr-no h4 { color: #a13b2e; }
+    .pr-yes-no ul { margin: 0; padding-left: 18px; font-size: 0.86rem; color: #3a4750; line-height: 1.55; }
+    .pr-yes-no li { margin-bottom: 6px; }
+    @media (max-width: 640px) { .pr-yes-no { grid-template-columns: 1fr; } }
+
+    .pr-dl-btn { font: 700 0.95rem -apple-system, sans-serif; padding: 13px 26px; border-radius: 10px; background: #6FB3C0; color: #0f161c; text-decoration: none; white-space: nowrap; transition: .14s; display: inline-block; }
+    .pr-dl-btn:hover { background: #86c2cd; }
+
+    .pr-contact-card { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; background: #1B2A33; border-radius: 14px; padding: 22px 26px; margin: 18px 0; }
+    .pr-contact-meta { color: #C9D4D8; }
+    .pr-contact-meta .name { font: 700 1.05rem -apple-system, sans-serif; color: #F5F1E4; margin-bottom: 4px; }
+    .pr-contact-meta .sub { font-size: 0.85rem; color: #9fb0ba; }
+    </style>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+
+<div class="container" style="max-width:920px;">
+
+    <div class="card" style="padding:34px 32px 30px;">
+        <div class="pr-hero">
+            <div class="pr-eyebrow">Neural Nations &middot; Open Science &middot; CAMS-CAN</div>
+            <h1>Help Us Break This &mdash; Or Confirm It</h1>
+            <p>CAMS-CAN is a framework for scoring how well nations, companies, and cities are
+            coordinating internally. It's published as open science because it's meant to be
+            checked, not taken on faith. This page is a standing invitation to do exactly that:
+            replicate a scoring pass, audit the rules, or find where it breaks.</p>
+        </div>
+    </div>
+
+    <!-- WAYS TO CONTRIBUTE -->
+    <div class="card">
+        <p class="section-label">Four ways in</p>
+        <div class="pr-path-grid">
+            <div class="pr-path">
+                <div class="n">01 &middot; Replicate</div>
+                <h3>Run your own pass</h3>
+                <p>Download the <a href="cams-diy-kit.html">DIY kit</a>, score an entity you know
+                well, and compare it against a <a href="datasets.html">published dataset</a>.
+                Disagreement is useful data &mdash; tell us where and why.</p>
+            </div>
+            <div class="pr-path">
+                <div class="n">02 &middot; Audit</div>
+                <h3>Read the rules, not just the output</h3>
+                <p>The evidence gate, the change gate, the NA discipline, and the Node Value / Bond
+                Strength formulas are all public. Find a logical gap or a case the rules don't
+                actually cover.</p>
+            </div>
+            <div class="pr-path">
+                <div class="n">03 &middot; Stress-test</div>
+                <h3>Pick a case built to embarrass it</h3>
+                <p>An entity you expect the framework to score badly &mdash; a fast-moving crisis, an
+                obscure polity, an edge case in the corporate or city mapping. Report exactly what
+                happened, not just that it "felt wrong."</p>
+            </div>
+            <div class="pr-path">
+                <div class="n">04 &middot; Re-measure</div>
+                <h3>Replicate the reliability study</h3>
+                <p>Run a multi-pass ensemble across model providers on a panel we haven't tested, and
+                report ICC or an equivalent agreement statistic back. See the numbers we already have
+                below, so you're extending them, not guessing at the bar.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- WHAT WE'VE FOUND -->
+    <div class="card">
+        <p class="section-label">What we've already found &mdash; check our work</p>
+        <p style="color:#3a4750;line-height:1.7;">Two independent panels have been run under the
+        current scoring rubric, each as 18 formal scoring passes nested across three model families
+        (Claude, Grok, Kimi). Full detail, caveats, and the formulas are on the
+        <a href="cams-diy-kit.html">DIY kit page</a>; the framework's broader limitations are on
+        <a href="validation.html">Validation &amp; Limits</a>. The summary:</p>
+
+        <div class="pr-table-wrap">
+            <table class="pr-table">
+                <caption>Reliability by panel &mdash; both under the same three-family, 18-pass design</caption>
+                <thead><tr><th>Panel</th><th>Prompt</th><th>ICC(2,k) absolute</th><th>ICC(3,k) consistency</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td>Australia, 2020&ndash;2025</td><td>v1.1</td>
+                        <td class="pr-bar-cell"><div class="pr-bar-track"><div class="pr-bar-fill" style="width:71%"></div></div><span class="pr-bar-val">0.710</span></td>
+                        <td class="pr-bar-cell"><div class="pr-bar-track"><div class="pr-bar-fill" style="width:88.5%"></div></div><span class="pr-bar-val">0.885</span></td>
+                    </tr>
+                    <tr>
+                        <td>United States, 2020&ndash;2025</td><td>v1.2-OPT</td>
+                        <td class="pr-bar-cell"><div class="pr-bar-track"><div class="pr-bar-fill" style="width:69.1%"></div></div><span class="pr-bar-val">0.691</span></td>
+                        <td class="pr-bar-cell"><div class="pr-bar-track"><div class="pr-bar-fill" style="width:90.7%"></div></div><span class="pr-bar-val">0.907</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pr-warn">
+            <strong>What this doesn't establish</strong> &mdash; and where a review would help most:
+            <ul>
+                <li>Historical criterion validity &mdash; whether scores match actual institutional history, independent of model agreement.</li>
+                <li>Generalisability beyond two country panels and a small company/city smoke test.</li>
+                <li>A controlled, same-panel comparison of the two prompt versions above (country and prompt version changed together in what we've run).</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- GROUND RULES -->
+    <div class="card">
+        <p class="section-label">What counts as a useful critique</p>
+        <p style="color:#3a4750;line-height:1.7;">We'd rather get one reproducible finding than ten
+        impressions. A critique is easiest to act on when it's structural and specific.</p>
+        <div class="pr-yes-no">
+            <div class="pr-yes">
+                <h4>Useful</h4>
+                <ul>
+                    <li>"Node X scored Y on entity Z, year W &mdash; here's the concrete evidence it contradicts."</li>
+                    <li>"The evidence gate doesn't cover this case: [specific scenario]."</li>
+                    <li>Raw pass CSVs or ICC/agreement statistics from an independent run.</li>
+                    <li>A formula edge case (e.g. clamp behaviour, an undefined ratio) with the exact input that breaks it.</li>
+                </ul>
+            </div>
+            <div class="pr-no">
+                <h4>Hard to act on</h4>
+                <ul>
+                    <li>"This doesn't feel right for [country]" with no node, year, or dimension named.</li>
+                    <li>Disagreement with the framework's premise rather than its execution &mdash; worth discussing, but not a validation finding.</li>
+                    <li>A single ungrounded pass treated as disproof &mdash; the rubric expects multi-pass ensembles for exactly this reason.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- START HERE -->
+    <div class="card" style="text-align:center;">
+        <p class="section-label" style="justify-content:center;">Start here</p>
+        <p style="color:#3a4750;line-height:1.7;max-width:56ch;margin:0 auto 16px;">Get the same
+        four files used in every review above &mdash; project instructions and two blank schema
+        templates, ready to paste into a Claude Project.</p>
+        <a href="cams-diy-kit.html" class="pr-dl-btn">Get the DIY Kit</a>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="card">
+        <p class="section-label">Send it in</p>
+        <div class="pr-contact-card">
+            <div class="pr-contact-meta">
+                <div class="name">Kari McKern &mdash; Research Inquiries</div>
+                <div class="sub">Findings, replications, and formal critiques welcome by email</div>
+            </div>
+            <a href="mailto:kari.freyr.4@gmail.com" class="pr-dl-btn">kari.freyr.4@gmail.com</a>
+        </div>
+        <p style="color:#55606a;font-size:0.9rem;line-height:1.6;">Or open an issue or pull request
+        directly against the source: <a href="https://github.com/KaliBond/wintermute" target="_blank">github.com/KaliBond/wintermute</a>.
+        Everything here &mdash; framework, datasets, scoring tools, and this page &mdash; is licensed
+        as open science under Common Property terms: fork it, run it, publish what you find.</p>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html" style="color:#2F6F7D;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a>
+        <a href="cams-diy-kit.html" style="color:#2F6F7D;text-decoration:none;font-size:0.9em;font-weight:600;">DIY Kit</a>
+        <a href="validation.html" style="color:#2F6F7D;text-decoration:none;font-size:0.9em;font-weight:600;">Validation &amp; Limits</a>
+        <a href="datasets.html" style="color:#2F6F7D;text-decoration:none;font-size:0.9em;font-weight:600;">Datasets</a>
+    </nav>
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Open science — <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+
+<script src="site-chrome.js"></script>
+<script src="nav.js"></script>
+</body>
+</html>
