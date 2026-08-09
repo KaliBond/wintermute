@@ -110,7 +110,7 @@
     return o;
   }
 
-  function setProse(paras) {
+  function setProse(paras, bullets) {
     var prose = modal.querySelector('.es-prose');
     prose.innerHTML = '';
     paras.forEach(function (t) {
@@ -118,6 +118,29 @@
       p.textContent = t;
       prose.appendChild(p);
     });
+    if (bullets && bullets.length) {
+      var ul = document.createElement('ul');
+      ul.className = 'es-bullets';
+      bullets.forEach(function (b) {
+        var li = document.createElement('li');
+        li.textContent = b;
+        ul.appendChild(li);
+      });
+      prose.appendChild(ul);
+    }
+  }
+
+  // ── Per-item result cache (localStorage) ────────────────────
+  var CACHE_PREFIX = 'es-cache:';
+  function cacheKey(item) { return CACHE_PREFIX + (item.href || item.name || ''); }
+  function readCache(item) {
+    try {
+      var raw = localStorage.getItem(cacheKey(item));
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  }
+  function writeCache(item, result) {
+    try { localStorage.setItem(cacheKey(item), JSON.stringify(result)); } catch (e) {}
   }
 
   // open()                    → site-level "What is Neural Nations?"
@@ -139,7 +162,12 @@
       modal.classList.add('es-open');
       document.body.style.overflow = 'hidden';
       modal.querySelector('.es-close').focus();
-      regenerate();   // immediately generate for this item
+      var cached = readCache(currentItem);
+      if (cached) {
+        setProse(cached.paras, cached.bullets);
+      } else {
+        regenerate();   // immediately generate for this item
+      }
     } else {
       // Site-level: canonical default text, regenerate optional.
       titleEl.textContent = opts.title || 'What is Neural Nations?';
@@ -177,8 +205,10 @@
     btn.disabled = true;
     body.classList.add('es-busy');
 
-    generate().then(function (paras) {
-      setProse(paras);
+    var item = currentItem;
+    generate().then(function (result) {
+      setProse(result.paras, result.bullets);
+      if (item) writeCache(item, result);
     }).catch(function () {
       // graceful fallback to a pre-written variant
       setProse(FALLBACKS[fbIndex % FALLBACKS.length]);
@@ -210,12 +240,13 @@
       (body
         ? "Base it on the actual text above — summarise its real argument, findings, or what the tool actually does. Be specific to this " + label + ", not generic about CAMS."
         : "Base it on the title and blurb; decode any technical terms into everyday language.") + "\nRules:\n" +
-      "- 110 to 170 words, 2 short paragraphs.\n" +
+      "- 220 to 260 words total, 2 to 3 short paragraphs.\n" +
       "- No jargon, no equations, no Greek letters, no buzzwords. Translate technical terms into everyday language.\n" +
-      "- Be concrete about what the reader will actually find, learn, or be able to do.\n" +
+      "- Be concrete about what the reader will actually find, learn, or be able to do — specific findings, numbers, methods, or capabilities from the text above, not generic CAMS description.\n" +
       "- Warm and clear, not promotional. Do not oversell or invent findings not present in the text.\n" +
-      "- No greeting, no title, no markdown, no bullet points. Plain prose only.\n\n" +
-      "Return only the explanation text.";
+      "- No greeting, no title, no markdown within the paragraphs.\n\n" +
+      "After the paragraphs, add a line that says exactly KEY POINTS: followed by 2 to 3 bullet lines, each starting with '- ', each a single concrete, specific highlight (a real finding, number, method, or thing the reader can do) drawn from the text above — not a restatement of the intro. Skip this section only if you truly have nothing specific to add.\n\n" +
+      "Return only that: the paragraphs, then the KEY POINTS section.";
   }
 
   // Site-level: explain Neural Nations / CAMS in general.
@@ -237,12 +268,23 @@
   }
 
   function toParas(text) {
-    var paras = String(text || '').trim().split(/\n\s*\n+/)
+    var raw = String(text || '').trim();
+    var split = raw.split(/\n\s*KEY POINTS:?\s*\n?/i);
+    var proseText = split[0];
+    var bulletText = split.length > 1 ? split[1] : '';
+
+    var paras = proseText.trim().split(/\n\s*\n+/)
       .map(function (s) { return s.replace(/\s+/g, ' ').trim(); })
       .filter(Boolean);
     if (!paras.length) throw new Error('empty');
-    aiCache.push(paras);
-    return paras;
+
+    var bullets = bulletText.split(/\n+/)
+      .map(function (s) { return s.replace(/^[\s\-\u2022*]+/, '').trim(); })
+      .filter(Boolean);
+
+    var result = { paras: paras, bullets: bullets };
+    aiCache.push(result);
+    return result;
   }
 
   // OpenAI-compatible chat completion — works for Kimi/Moonshot, Grok/xAI,
@@ -399,9 +441,9 @@
     return new Promise(function (resolve) {
       setTimeout(function () {
         if (currentItem) {
-          resolve(itemFallback(currentItem));
+          resolve({ paras: itemFallback(currentItem), bullets: [] });
         } else {
-          resolve(FALLBACKS[fbIndex % FALLBACKS.length]);
+          resolve({ paras: FALLBACKS[fbIndex % FALLBACKS.length], bullets: [] });
           fbIndex++;
         }
       }, 550);

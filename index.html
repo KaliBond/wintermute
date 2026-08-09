@@ -476,9 +476,10 @@
 <script src="nav.js"></script>
 <script>
 window.EXPLAIN_SIMPLY_CONFIG = {
-  endpoint: 'https://api.moonshot.ai/v1/chat/completions',
-  model: 'kimi-k2-0905-preview',
-  apiKey: 'sk-G6B3zXe3sVqpWVmoqY796HGeFFeZfMxxCDXI4KxKgGXQI6tP'
+  endpoint: 'https://explain-simply-proxy.YOUR-SUBDOMAIN.workers.dev',
+  model: 'kimi-k2-0905-preview'
+  // No apiKey — the Worker at `endpoint` holds it server-side.
+  // See workers/explain-simply-proxy/README.md to deploy and fill in the URL above.
 };
 </script>
 <script src="explain-simply.js"></script>

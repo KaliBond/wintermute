@@ -140,6 +140,36 @@
 }
 .es-prose p:last-child { margin-bottom: 0; }
 .es-prose.es-loading { opacity: 0.32; }
+.es-bullets {
+    list-style: none;
+    margin: 4px 0 16px;
+    padding: 14px 16px;
+    background: #EDE7D4;
+    border: 1px solid #DAD2B8;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.es-bullets:last-child { margin-bottom: 0; }
+.es-bullets li {
+    font-family: Georgia, 'Source Serif 4', 'Times New Roman', serif;
+    font-size: 0.96em;
+    line-height: 1.55;
+    color: #1B2A33;
+    padding-left: 20px;
+    position: relative;
+}
+.es-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #2F6F7D;
+}
 
 /* Skeleton shimmer while generating */
 .es-skeleton {
