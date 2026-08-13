@@ -1,0 +1,69 @@
+[
+  {
+    "criterion": "FC1 \u2014 Stress-Capacity Anti-Correlation",
+    "status": "PASS",
+    "median_rho_per_year": -0.5549,
+    "mean_rho_per_year": -0.4668,
+    "pct_negative": 82.85,
+    "ttest_vs_minus0.5_t": NaN,
+    "ttest_vs_minus0.5_p": NaN,
+    "pooled_rho": -0.407,
+    "pooled_p": 0.0,
+    "n_society_years": 3860,
+    "threshold": "median \u03c1 < -0.5"
+  },
+  {
+    "criterion": "FC2 \u2014 Three-Tier Crisis Composite (proxy)",
+    "status": "PASS",
+    "note": "JUNO_v2.1 secondary tier omitted; using \u0394V\u0304<-12% proxy",
+    "primary_Vmin_lt4_hit_pct": 95.48,
+    "primary_Vmin_lt4_fp_pct": 0.0,
+    "secondary_dVmean_lt12_hit_pct": 27.68,
+    "secondary_dVmean_lt12_fp_pct": 1.55,
+    "acute_sigma_rate_gt0.5_hit_pct": 20.88,
+    "acute_sigma_rate_gt0.5_fp_pct": 13.69,
+    "composite_any_tier_hit_pct": 98.43,
+    "composite_any_tier_fp_pct": 14.26,
+    "n_crisis_years": 1528,
+    "n_stable_years": 1227
+  },
+  {
+    "criterion": "FC3 \u2014 Common-Latent-Factor (PCA)",
+    "status": "FAIL",
+    "pc1_variance_explained": 0.8328,
+    "pc2_variance_explained": 0.0466,
+    "pc3_variance_explained": 0.043,
+    "kaiser_effective_dim": 1,
+    "pc1_all_positive": false,
+    "pc1_min_loading": -0.3688,
+    "n_obs": 3860
+  },
+  {
+    "criterion": "FC4 \u2014 Bond-Health Coupling",
+    "status": "PASS",
+    "pooled_per_node_r": 0.9291,
+    "pooled_per_node_p": 0.0,
+    "system_level_r": 0.9564,
+    "system_level_p": 0.0,
+    "median_per_society_r": 0.9767,
+    "n_societies_tested": 34,
+    "threshold": "\u03c1 > 0.50"
+  },
+  {
+    "criterion": "FC5 \u2014 Shield Ranking",
+    "status": "FAIL",
+    "median_rank_in_stable_years": 6.0,
+    "pct_top_half": 30.97,
+    "shield_vs_system_B_r": 0.9305,
+    "shield_vs_system_B_p": 0.0,
+    "n_stable_years_tested": 1227
+  },
+  {
+    "criterion": "FC6 \u2014 \u03bb\u2082 Degradation Prior to Crisis",
+    "status": "PARTIAL FAIL",
+    "pct_declining_3yr_pre_crisis": 0.0,
+    "n_crisis_onsets_tested": 144,
+    "median_mk_tau": 0.0,
+    "note": "Threshold: >33% of crises show pre-decline (v3.2-R achieved 1/3)"
+  }
+]

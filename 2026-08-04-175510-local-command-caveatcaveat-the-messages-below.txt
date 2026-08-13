@@ -1,0 +1,2451 @@
+ ▐▛███▜▌   Claude Code v2.1.220
+▝▜█████▛▘  Sonnet 5 · Claude Pro
+  ▘▘ ▝▝    ~\wintermute
+
+ ‼ Your login expires in 3 days · run /login to renew
+
+   Tackle your toughest work with Opus 5. Switch anytime with /model.
+
+> /clear                                                                        
+
+> LOOK AT THE RATER EXECUTABLE Here is the full rewritten template:             
+                                                                                
+  ---                                                                           
+                                                                                
+  **CAMS RAW SCORER: COUNTRIES v1.2-OPT**                                       
+                                                                                
+  ```                                                                           
+  Entity,Year,Node,Coherence,Capacity,Stress,Abstraction                        
+  UNITED_STATES,2020,Helm,5,6,7,5                                               
+  ```                                                                           
+                                                                                
+  ## OUTPUT CONTRACT                                                            
+                                                                                
+  Return ONLY CSV. No prose. No headers beyond the schema line. No markdown. No 
+  evidence notes.                                                               
+  No Node Value. No Bond Strength. No SHI. No confidence labels. No             
+  interpolation. No smoothing.                                                  
+                                                                                
+  ## PROHIBITED OPERATIONS → REQUIRED ACTIONS                                   
+                                                                                
+  | Prohibited | Required Instead |                                             
+  |---|---|                                                                     
+  | Explain or justify scores. | Emit CSV rows only. |                          
+  | Narrativise or diagnose. | Score demonstrated function against the node     
+  definition. |                                                                 
+  | Interpolate or smooth across years. | Use `NA` for missing evidence; never  
+  copy prior-year values. |                                                     
+  | Compute derived metrics. | Output raw C,K,S,A only. |                       
+  | Score from national sentiment or reputation. | Score from concrete          
+  functional indicators per node. |                                             
+  | Treat a single headline as evidence for all nodes. | Evaluate each node     
+  against its own evidence. |                                                   
+                                                                                
+  ## INPUTS                                                                     
+                                                                                
+  country_or_polity: {COUNTRY}                                                  
+  start_year: {START}                                                           
+  end_year: {END}                                                               
+  scorer_pass: {PASS}                                                           
+                                                                                
+  If start_year > end_year, return only the header line with no rows.           
+                                                                                
+  ## TIME CONVENTION                                                            
+                                                                                
+  Each year represents institutional condition at 31 December. If the final     
+  year is in progress at your knowledge cutoff, score only evidenced material   
+  through that cutoff; do not project to year-end.                              
+                                                                                
+  When scoring year *t*, use 31 December of year *t-1* as the baseline. A score 
+  unchanged from *t-1* is valid ONLY if a genuine re-check finds no material    
+  functional change. Default repetition is prohibited.                          
+                                                                                
+  ## DATA USE                                                                   
+                                                                                
+  Use corpus knowledge first. Use targeted web search when:                     
+  - the year is recent or current;                                              
+  - the polity is obscure or thinly represented;                                
+  - the period involves coups, wars, sanctions, constitutional crises, or major 
+  institutional transition;                                                     
+  - governance, military, economic, fiscal, or administrative facts are         
+  uncertain.                                                                    
+                                                                                
+  Do not over-search well-established historical periods. Do not cite sources   
+  in output.                                                                    
+                                                                                
+  If evidence is genuinely insufficient for a specific score, output `NA` for   
+  that score only. Do not infer from adjacent years. An unchanged score must    
+  mean "no material functional change was found," not "value reused because     
+  nothing new was checked."                                                     
+                                                                                
+  ## EVIDENCE GATE (Apply per node-year before scoring)                         
+                                                                                
+  For [Node] in [Year], confirm ALL three before any non-NA score:              
+  - [ ] One concrete indicator of functional performance observed.              
+  - [ ] One concrete indicator of                                               
+  ──── (94 lines hidden) ────────────────────────────────────────────────────── 
+  e, little learning or continuity. |                                           
+                                                                                
+  ## TRANSITIONS                                                                
+                                                                                
+  Do not automatically score transitions as crises. For regime changes,         
+  revolutions, wars, occupations, or collapses, score the observed coordination 
+  dynamics:                                                                     
+  - Did the node maintain coordination?                                         
+  - Could it perform its function?                                              
+  - Was change managed or chaotic?                                              
+  - Was breakdown occurring, or only pressure?                                  
+                                                                                
+  Managed transition → moderate stress. Chaotic rupture → high stress.          
+  Successful adaptation → may preserve coherence and capacity.                  
+                                                                                
+  ## INDEPENDENT PASS INTEGRITY                                                 
+                                                                                
+  This is one isolated scorer_pass. Score entirely on your own judgement        
+  against this rubric. Do not adjust toward an expected ensemble mean. Do not   
+  soften or exaggerate to make multi-pass spread look tighter. Divergence       
+  between independent passes is minimised by following this rubric precisely,   
+  not by guessing at consensus.                                                 
+                                                                                
+  ## OUTPUT FORMAT                                                              
+                                                                                
+  First line must be exactly:                                                   
+  `Entity,Year,Node,Coherence,Capacity,Stress,Abstraction`                      
+                                                                                
+  Then rows sorted by year ascending, then node order:                          
+  Helm,Shield,Lore,Stewards,Craft,Hands,Archive,Flow.                           
+                                                                                
+  All scores integers 1-10 or `NA`. No decimals. No blanks. No extra columns.   
+                                                                                
+  ---                                                                           
+                                                                                
+  **What changed and why:**                                                     
+                                                                                
+  | Change | Benefit |                                                          
+  |---|---|                                                                     
+  | **Schema-first** with example row at top | Anchors output format            
+  immediately; reduces format leakage and parsing errors. |                     
+  | **Prohibited → Required register** | Replaces scattered negative            
+  instructions with scannable paired commands; cuts ambiguity. |                
+  | **Evidence Gate (3 checks, per node-year)** | Forces evidence-to-node       
+  linkage before any number is generated; directly addresses the circularity    
+  vulnerability from your peer audit. |                                         
+  | **Upstream Constraints** | Hard rules applied during generation (Δ≥2, score 
+  extremes, no silent repetition); eliminates costly post-hoc revision. |       
+  | **Node: Function + Boundary + Common Error** | Compresses definitions while 
+  adding bias-correctors at point of scoring; targets the GPT/Gemini            
+  divergence your cross-rater audit found. |                                    
+  | **Metric calibration anchors** | Concrete score descriptions reduce         
+  inter-rater variance without adding theory. |                                 
+  | **Adjacent-year baseline rule** | Makes temporal consistency an explicit    
+  generation constraint, not a retrospective check. |                           
+  | **Cut: philosophy preamble, prose discipline section, retrospective         
+  integrity check** | ~35% token reduction; removes redundant interpretive      
+  load. |                                                                       
+                                                                                
+  Download the file: [CAMS_RAW_SCORER_COUNTRIES_v1.2-OPT.txt](sandbox:///mnt/ag 
+  ents/output/CAMS_RAW_SCORER_COUNTRIES_v1.2-OPT.txt)                           
+
+  Searched for 1 pattern, read 1 file, listed 1 directory, recalled 1 memory (ctrl+o to expand)
+
+● I checked the live prompt in cams_country_raw_scorer.py (the actual
+  COUNTRY_PROMPT, currently v1.1, built into the scorer suite that both the
+  hosted tool and the local exe call). Comparing it to the v1.2-OPT rewrite you
+  pasted:
+
+  What v1.2-OPT preserves faithfully: node definitions/boundaries, the canonical
+  node order, the hard-won Craft asymmetric caveat (added 2026-08-02 after the
+  Kimi run over-penalized Australia's productivity), the temporal-consistency
+  Δ≥2 rule, independent-pass integrity, the NA-for-insufficient-evidence rule,
+  and the metric anchors. This isn't a naive rewrite — it tracked the
+  substantive content closely.
+
+  What it actually changes, not just trims:
+  - It restructures the evidence check as a strict per-node-year gate applied
+  before scoring (checkboxes), which is a slightly harder-edged version of
+  v1.1's "evidence-before-score discipline."
+  - It drops the FINAL INTEGRITY CHECK section entirely — v1.1's retrospective
+  self-audit (re-examine the three largest year-over-year jumps, re-check any
+  score <5/>8, re-check unchanged nodes, before responding). The "what changed"
+  table frames this as removing "redundant interpretive load," but that's
+  asserted, not demonstrated.
+
+  That last point matters for a specific reason: the interim reliability result
+  you have on file (ICC(2,k)=0.710, ICC(3,k)=0.885, 18 passes on the Australia
+  panel, written up 2026-08-02) was measured against v1.1 with that
+  upstream+downstream double-check design. Swapping to v1.2-OPT means the
+  deployed prompt no longer matches what was validated — the upstream-only
+  design might hold up just as well, or might not, but that's an empirical
+  question, not something the token-reduction rationale settles on its own.
+
+● User answered Claude's questions:
+  ⎿  · How do you want to handle the v1.2-OPT rewrite relative to the live v1.1 
+     prompt in cams_country_raw_scorer.py? → Swap in v1.2-OPT, re-run 
+     reliability check
+
+  Searched for 1 pattern, read 2 files (ctrl+o to expand)
+  ⎿  Loaded wintermute\CLAUDE.md
+
+● Update(C:/Users/julie/OneDrive/Documents/corporate
+        CAMS/CAMS_RAW_SCORER_SUITE/cams_country_raw_scorer.py)
+  ⎿  Added 111 lines, removed 218 lines
+      37  }
+      38  
+      39  
+      40 -COUNTRY_PROMPT = """# CAMS RAW SCORER: COUNTRIES v1.1          
+      40 +COUNTRY_PROMPT = """# CAMS RAW SCORER: COUNTRIES v1.2-OPT      
+      41  
+      42 -You are a CAMS raw measurement pass for countries, polities, re
+         -gimes, empires, and national societies.                        
+      42 +Entity,Year,Node,Coherence,Capacity,Stress,Abstraction         
+      43 +UNITED_STATES,2020,Helm,5,6,7,5                                
+      44  
+      44 -Your task is to score human organisation as social cognition an
+         -d activation. The eight CAMS nodes are measurement categories, 
+         -not narrative characters. Use them to catch structural signal w
+         -ithout imprinting myth, diagnosis, or interpretation onto the h
+         -istorical material.                                            
+      45 +## OUTPUT CONTRACT                                             
+      46  
+      46 -You are measuring raw institutional state only.                
+      47 +Return ONLY CSV. No prose. No headers beyond the schema line. N
+         +o markdown. No evidence notes.                                 
+      48 +No Node Value. No Bond Strength. No SHI. No confidence labels. 
+         +No interpolation. No smoothing.                                
+      49  
+      48 -Do not explain.                                                
+      49 -Do not justify.                                                
+      50 -Do not diagnose.                                               
+      51 -Do not narrativise.                                            
+      52 -Do not calculate downstream metrics.                           
+      53 -Do not compute Node Value.                                     
+      54 -Do not compute Bond Strength.                                  
+      55 -Do not compute SHI.                                            
+      56 -Do not produce confidence labels.                              
+      57 -Do not produce evidence notes.                                 
+      58 -Do not interpolate.                                            
+      59 -Do not smooth across years.                                    
+      60 -Do not force continuity across missing evidence.               
+      50 +## PROHIBITED OPERATIONS -> REQUIRED ACTIONS                   
+      51  
+      62 -The rules below (through INDEPENDENT PASS INTEGRITY) are checks
+         - you run silently before you write                             
+      63 -each score. None of them change what you output: the output is 
+         -still CSV only, exactly the columns                            
+      64 -specified in OUTPUT FORMAT, with no evidence, no notes, and no 
+         -explanation attached.                                          
+      52 +| Prohibited | Required Instead |                              
+      53 +|---|---|                                                      
+      54 +| Explain or justify scores. | Emit CSV rows only. |           
+      55 +| Narrativise or diagnose. | Score demonstrated function agains
+         +t the node definition. |                                       
+      56 +| Interpolate or smooth across years. | Use `NA` for missing ev
+         +idence; never copy prior-year values. |                        
+      57 +| Compute derived metrics. | Output raw C,K,S,A only. |        
+      58 +| Score from national sentiment or reputation. | Score from con
+         +crete functional indicators per node. |                        
+      59 +| Treat a single headline as evidence for all nodes. | Evaluate
+         + each node against its own evidence. |                         
+      60  
+      66 -Return only CSV.                                               
+      67 -                                                               
+      61  ## INPUTS
+      62  
+      63  country_or_polity: {entity}
+     ...
+       65  end_year: {end_year}
+       66  scorer_pass: {pass_index}
+       67  
+       75 -If start_year > end_year, return only:                        
+       68 +If start_year > end_year, return only the header line with no 
+          +rows.                                                         
+       69  
+       77 -Entity,Year,Node,Coherence,Capacity,Stress,Abstraction        
+       78 -                                                              
+       79 -with no rows.                                                 
+       80 -                                                              
+       70  ## TIME CONVENTION
+       71  
+       83 -Each year's scores represent the institutional condition as it
+          - stood at 31 December of that year —                          
+       84 -not an average of events across the year. If the final request
+          -ed year is still in progress at your                          
+       85 -knowledge cutoff, score only what is evidenced through that cu
+          -toff; do not project forward to a                             
+       86 -year-end that hasn't happened yet.                            
+       72 +Each year represents institutional condition at 31 December. I
+          +f the final year is in progress at your knowledge cutoff, scor
+          +e only evidenced material through that cutoff; do not project 
+          +to year-end.                                                  
+       73  
+       74 +When scoring year *t*, use 31 December of year *t-1* as the ba
+          +seline. A score unchanged from *t-1* is valid ONLY if a genuin
+          +e re-check finds no material functional change. Default repeti
+          +tion is prohibited.                                           
+       75 +                                                              
+       76  ## DATA USE
+       77  
+       90 -Use corpus knowledge first.                                   
+       91 -                                                              
+       92 -Use targeted web search when:                                 
+       93 -                                                              
+       78 +Use corpus knowledge first. Use targeted web search when:     
+       79  - the year is recent or current;
+       95 -- the country is obscure or thinly represented in corpus knowl
+          -edge;                                                         
+       96 -- the period involves coups, revolutions, wars, sanctions, par
+          -titions, state collapse, constitutional crises, or major insti
+          -tutional transition;                                          
+       97 -- governance, military, economic, trade, fiscal, or administra
+          -tive facts are uncertain;                                     
+       98 -- current operational facts may differ from corpus memory.    
+       80 +- the polity is obscure or thinly represented;                
+       81 +- the period involves coups, wars, sanctions, constitutional c
+          +rises, or major institutional transition;                     
+       82 +- governance, military, economic, fiscal, or administrative fa
+          +cts are uncertain.                                            
+       83  
+      100 -Do not over-search well-established historical periods.       
+      101 -Do not cite sources in the output.                            
+       84 +Do not over-search well-established historical periods. Do not
+          + cite sources in output.                                      
+       85  
+      103 -If evidence is genuinely insufficient for a specific score, ou
+          -tput `NA` for that score — this is                            
+      104 -the only signal for insufficient evidence; there is no other v
+          -alue for it. Do not infer a value                             
+      105 -merely because adjacent years have values, and do not copy, ex
+          -trapolate, or silently repeat a                               
+      106 -previous year's value. An unchanged score must mean "no materi
+          -al functional change was found," not                          
+      107 -"value reused because nothing new was checked."               
+       86 +If evidence is genuinely insufficient for a specific score, ou
+          +tput `NA` for that score only. Do not infer from adjacent year
+          +s. An unchanged score must mean "no material functional change
+          + was found," not "value reused because nothing new was checked
+          +."                                                            
+       87  
+      109 -## CORE MEASUREMENT PRINCIPLE                                 
+       88 +## EVIDENCE GATE (Apply per node-year before scoring)         
+       89  
+      111 -Score demonstrated function, not theoretical potential.       
+      112 -Score actual coordination, not formal structure.              
+      113 -Score breakdown rate, not external pressure.                  
+      114 -Score operational sophistication, not aspiration or ideology. 
+      115 -Score the node's ability to perform its canonical function — n
+          -ever its reputation, moral                                    
+      116 -desirability, ideological alignment, or public popularity.    
+       90 +For [Node] in [Year], confirm ALL three before any non-NA scor
+          +e:                                                            
+       91 +- [ ] One concrete indicator of functional performance observe
+          +d.                                                            
+       92 +- [ ] One concrete indicator of strain, failure, or limitation
+          + observed.                                                    
+       93 +- [ ] Mechanism connecting that evidence to THIS node's specif
+          +ic function identified.                                       
+       94  
+      118 -A controversial institution may retain high Capacity. A succes
+          -sful institution may operate under                            
+      119 -high Stress. High Stress does not automatically reduce Coheren
+          -ce or Capacity. A single event must                           
+      120 -not automatically move all four dimensions — check each dimens
+          -ion against its own definition before                         
+      121 -moving it.                                                    
+       95 +If any box unchecked -> score `NA` for all four dimensions of 
+          +this node-year.                                               
+       96  
+      123 -## EVIDENCE-BEFORE-SCORE DISCIPLINE                           
+       97 +Public trust, media controversy, referendum results, and histo
+          +rical guilt may raise Stress but do NOT by themselves establis
+          +h loss of Capacity or Coherence.                              
+       98  
+      125 -Before assigning any node's four scores for a year, confirm si
+          -lently that you can identify: at                              
+      126 -least one concrete indicator of functional performance, at lea
+          -st one concrete indicator of strain,                          
+      127 -failure, or limitation, and the mechanism connecting that evid
+          -ence to what this specific node                               
+      128 -measures. If you cannot identify these, the score is not evide
+          -nced — use `NA` rather than guess.                            
+      129 -Do not begin from a national narrative or a single headline ev
+          -ent and translate it uniformly across                         
+      130 -all eight nodes; each node is scored against its own function 
+          -and its own evidence.                                         
+       99 +## UPSTREAM CONSTRAINTS (Apply during generation, not after)  
+      100  
+      132 -Do not treat public trust, national narrative consensus, refer
+          -endum results, media controversy, or                          
+      133 -historical guilt as a direct measure of any node's Capacity or
+          - Coherence — these may raise Stress,                          
+      134 -but they do not by themselves establish functional failure.   
+      101 +1. **Delta >= 2 points** on any dimension requires EITHER two 
+          +distinct node-specific evidence pieces OR one unmistakable str
+          +uctural discontinuity (regime collapse, war onset, currency cr
+          +isis, partition). General sentiment or a single ambiguous even
+          +t is insufficient.                                            
+      102 +2. **Score < 5 or > 8** requires explicit functional evidence.
+          + Controversy, criticism, or popularity do not suffice for <5. 
+          +Absence of problems does not suffice for >8.                  
+      103 +3. **All four dimensions unchanged from *t-1*** is permitted O
+          +NLY after re-checking evidence for that node-year. Silent repe
+          +tition is prohibited.                                         
+      104 +4. A single national event must not automatically move all eig
+          +ht nodes. Each node moves on its own evidence.                
+      105  
+      136 -## TEMPORAL CONSISTENCY                                       
+      106 +## NODES (Canonical order: Helm,Shield,Lore,Stewards,Craft,Han
+          +ds,Archive,Flow)                                              
+      107  
+      138 -Whether or not the previous year is part of this request, scor
+          -e each year against what you know (or                         
+      139 -can find) about the immediately preceding year's condition, no
+          -t from a blank slate:                                         
+      108 +### Helm                                                      
+      109 +- **Function:** Executive coordination, state strategy, politi
+          +cal centre, governing command.                                
+      110 +- **Boundary:** Election victories and parliamentary majoritie
+          +s raise Coherence, not Capacity. Capacity is demonstrated exec
+          +ution, not mandate. Orderly transfer of power is positive evid
+          +ence of system continuity even when the outgoing government wa
+          +s dysfunctional.                                              
+      111 +- **Common Error:** Scoring administrative competence from leg
+          +islative drama, approval ratings, or partisan conflict.       
+      112  
+      141 -- A movement of more than one integer point on any dimension r
+          -equires either two distinct                                   
+      142 -  node-specific pieces of evidence, or one unmistakable struct
+          -ural discontinuity (e.g. regime                               
+      143 -  collapse, war onset, currency crisis) — not general sentimen
+          -t or a single ambiguous event.                                
+      144 -- If all four dimensions for a node come out completely unchan
+          -ged from the previous year, that must                         
+      145 -  reflect a genuine finding of no material change — re-check t
+          -he evidence for that node-year before                         
+      146 -  leaving it unchanged, rather than defaulting to repetition. 
+      113 +### Shield                                                    
+      114 +- **Function:** Military, police, intelligence, border control
+          +, internal order, territorial defence.                        
+      115 +- **Boundary:** Coercive and protective capacity. Budget size 
+          +or equipment lists do not demonstrate operational coordination
+          +.                                                             
+      116 +- **Common Error:** Conflating spending with functional readin
+          +ess; ignoring civil-mission strain or politicisation.         
+      117  
+      148 -## INDEPENDENT PASS INTEGRITY                                 
+      118 +### Lore                                                      
+      119 +- **Function:** Education, universities, knowledge institution
+          +s, religion, media, public meaning, legitimacy production, sha
+          +red understanding.                                            
+      120 +- **Boundary:** Covers production, validation, and circulation
+          + of knowledge through science, universities, professional expe
+          +rtise, and epistemic media. Public disagreement or misinformat
+          +ion may reduce Coherence and raise Stress without eliminating 
+          +technical Capacity or Abstraction.                            
+      121 +- **Common Error:** Scoring ideological alignment as Capacity;
+          + conflating narrative contestation with institutional collapse
+          +.                                                             
+      122  
+      150 -This is one isolated scorer_pass. Score it entirely on your ow
+          -n judgement against the rubric above.                         
+      151 -Do not adjust toward what you expect an ensemble mean or anoth
+          -er pass to look like, and do not                              
+      152 -soften or exaggerate a score to make the eventual multi-pass s
+          -pread look tighter or more decisive.                          
+      153 -Divergence between independent passes is minimised by followin
+          -g this rubric precisely, not by                               
+      154 -guessing at consensus.                                        
+      123 +### Stewards                                                  
+      124 +- **Function:** Landholders, capital owners, fiscal elites, st
+          +ate-linked asset managers, major investors, resource allocatio
+          +n, ownership power.                                           
+      125 +- **Boundary:** Owners and managers of stored resources and lo
+          +ng-lived assets specifically. NOT the civil service, environme
+          +ntal ministry, or government generally (those are Helm or Arch
+          +ive).                                                         
+      126 +- **Common Error:** Substituting state fiscal policy or bureau
+          +cratic administration for private/asset-holding stewardship.  
+      127  
+      156 -## NODES                                                      
+      128 +### Craft                                                     
+      129 +- **Function:** Skilled trades, professions, engineers, manufa
+          +cturing systems, technical classes, specialised production.   
+      130 +- **Boundary:** Productive transformation and technical/indust
+          +rial competence. Asset appreciation and commodity revenue do N
+          +OT demonstrate Craft strength. Weak productivity growth or dei
+          +ndustrialisation may reduce Craft, but <8 requires evidence of
+          + widespread inability to perform productive transformation—not
+          + merely declining competitiveness or an unpopular industrial p
+          +olicy.                                                        
+      131 +- **Common Error:** Scoring market value of holdings as produc
+          +tive capacity.                                                
+      132  
+      158 -Use exactly these eight nodes, in this exact order for every y
+          -ear:                                                          
+      133 +### Hands                                                     
+      134 +- **Function:** Mass labour, agricultural labour, industrial l
+          +abour, service labour, bodily mobilisation, demographic work c
+          +apacity.                                                      
+      135 +- **Boundary:** Low unemployment raises Capacity but does NOT 
+          +cancel out housing, wage, precarity, or cost-of-living Stress.
+          + Both may be true simultaneously.                             
+      136 +- **Common Error:** Using unemployment as the sole signal and 
+          +ignoring structural precarity or wage stagnation.             
+      137  
+      160 -Helm, Shield, Lore, Stewards, Craft, Hands, Archive, Flow     
+      138 +### Archive                                                   
+      139 +- **Function:** Bureaucracy, law, courts, records, statistics,
+          + civil service, institutional memory, continuity across time. 
+      140 +- **Boundary:** Preservation, retrieval, and transmission of i
+          +nstitutional memory—records, precedent, legal continuity, admi
+          +nistrative routines, accumulated organisational knowledge. Pub
+          +lic trust or media controversy may raise Stress but do NOT by 
+          +themselves establish loss of Capacity.                        
+      141 +- **Common Error:** Using national narrative consensus or hist
+          +orical guilt as direct measures of bureaucratic function.     
+      142  
+      162 -## NODE DEFINITIONS FOR COUNTRIES                             
+      143 +### Flow                                                      
+      144 +- **Function:** Commerce, finance, markets, merchants, logisti
+          +cs, ports, trade, currency, banking, circulation of goods and 
+          +value.                                                        
+      145 +- **Boundary:** Measures whether exchange and circulation are 
+          +functioning, not whether an interruption was justified. A bord
+          +er closure or supply interruption may create high Stress even 
+          +when the policy is protective.                                
+      146 +- **Common Error:** Scoring policy intent rather than operatio
+          +nal circulation function.                                     
+      147  
+      164 -Helm:                                                         
+      165 -Executive coordination, state strategy, political centre, gove
+          -rning command, ability to formulate and execute decisions acro
+          -ss the polity.                                                
+      166 -An election victory or a new parliamentary majority may raise 
+          -authority and Coherence, but must not automatically raise admi
+          -nistrative Capacity — capacity is demonstrated by execution, n
+          -ot by mandate. An orderly transfer of power is positive eviden
+          -ce of system continuity even when the outgoing government was 
+          -itself dysfunctional.                                         
+      167 -                                                              
+      168 -Shield:                                                       
+      169 -Military, police, intelligence, border control, internal order
+          -, territorial defence, coercive and protective capacity.      
+      170 -                                                              
+      171 -Lore:                                                         
+      172 -Education, universities, knowledge institutions, religion, med
+          -ia, ideology, public meaning, legitimacy production, shared un
+          -derstanding.                                                  
+      173 -This node covers the production, validation, and circulation o
+          -f knowledge through science, universities, professional expert
+          -ise, education, and epistemic media. Public disagreement or th
+          -e spread of misinformation may reduce Coherence and raise Stre
+          -ss without by itself eliminating technical Capacity or Abstrac
+          -tion.                                                         
+      174 -                                                              
+      175 -Stewards:                                                     
+      176 -Landholders, capital owners, fiscal elites, state-linked asset
+          - managers, major investors, resource allocation, ownership pow
+          -er.                                                           
+      177 -This node is owners and managers of stored resources and long-
+          -lived assets specifically — landholders, farmers, estate manag
+          -ers, financial and physical asset managers, lessors. Do not su
+          -bstitute the civil service, an environmental ministry, or the 
+          -government generally for Stewards; those belong to Helm or Arc
+          -hive.                                                         
+      178 -                                                              
+      179 -Craft:                                                        
+      180 -Skilled trades, professions, engineers, manufacturing systems,
+          - technical classes, specialised production.                   
+      181 -Asset appreciation and commodity revenue do not by themselves 
+          -demonstrate Craft strength — Craft is productive transformatio
+          -n and technical/industrial competence, not the market value of
+          - what the country happens to hold.                            
+      182 -Weak productivity growth, deindustrialisation, or a housing-co
+          -nstruction slump may reduce Craft, but a score below 8 require
+          -s evidence of widespread inability to perform productive trans
+          -formation — not merely declining competitiveness, a weak produ
+          -ctivity print, or an unpopular industrial policy.             
+      183 -                                                              
+      184 -Hands:                                                        
+      185 -Mass labour, agricultural labour, industrial labour, service l
+          -abour, bodily mobilisation, demographic work capacity.        
+      186 -Low unemployment raises Capacity but does not cancel out housi
+          -ng, wage, precarity, or cost-of-living Stress — those are sepa
+          -rate signals and both may be true at once.                    
+      187 -                                                              
+      188 -Archive:                                                      
+      189 -Bureaucracy, law, courts, records, statistics, civil service, 
+          -institutional memory, continuity across time.                 
+      190 -This node is the preservation, retrieval, and transmission of 
+          -institutional memory: records, precedent, legal continuity, ad
+          -ministrative routines, accumulated organisational knowledge. D
+          -o not use public trust, national narrative consensus, referend
+          -um agreement, media controversy, or historical guilt as a dire
+          -ct measure of Archive — these may raise Archive's Stress, but 
+          -they do not by themselves establish a loss of Capacity.       
+      191 -                                                              
+      192 -Flow:                                                         
+      193 -Commerce, finance, markets, merchants, logistics, ports, trade
+          -, currency, banking, circulation of goods and value.          
+      194 -A border closure or supply interruption may create high Stress
+          - even when the policy producing it is protective or, by its ow
+          -n logic, successful — Flow measures whether exchange and circu
+          -lation are functioning, not whether the interruption was justi
+          -fied.                                                         
+      195 -                                                              
+      148  ## METRICS
+      149  
+      198 -For every node, assign:                                       
+      150 +For every node, assign integer 1-10 or `NA`.                  
+      151  
+      200 -Coherence:                                                    
+      201 -Internal alignment and coordination clarity.                  
+      152 +### Coherence: Internal alignment and coordination clarity.   
+      153 +| Score | Anchor |                                            
+      154 +|---|---|                                                     
+      155 +| 9-10 | Exceptionally unified or seamless. Requires historica
+          +lly unusual alignment evidence. |                             
+      156 +| 7-8 | Integrated, strongly aligned. |                       
+      157 +| 5-6 | Functional, coordinated despite tension. |            
+      158 +| 3-4 | Divided, factional, inconsistent. |                   
+      159 +| 1-2 | Fragmented, paralysed, openly conflicting. |          
+      160  
+      203 -1-2 = fragmented, paralysed, openly conflicting               
+      204 -3-4 = divided, factional, inconsistent                        
+      205 -5-6 = functional, coordinated despite tension                 
+      206 -7-8 = integrated, strongly aligned                            
+      207 -9-10 = exceptionally unified or seamless                      
+      161 +### Capacity: Demonstrated ability to perform the node functio
+          +n.                                                            
+      162 +| Score | Anchor |                                            
+      163 +|---|---|                                                     
+      164 +| 9-10 | Dominant or exceptional. Requires comprehensive, hist
+          +orically unusual performance evidence. |                      
+      165 +| 7-8 | Strong, effective, resilient. |                       
+      166 +| 5-6 | Adequate, performs core function. |                   
+      167 +| 3-4 | Weak, insufficient, unreliable. |                     
+      168 +| 1-2 | Collapsed or unable to function. |                    
+      169  
+      209 -Capacity:                                                     
+      210 -Demonstrated ability to perform the node function.            
+      170 +### Stress: Rate of breakdown or entropy production.          
+      171 +| Score | Anchor |                                            
+      172 +|---|---|                                                     
+      173 +| 9-10 | Rupture, active collapse or severe breakdown. |      
+      174 +| 7-8 | Strained, visible degradation. |                      
+      175 +| 5-6 | Pressured, stretched but functioning. |               
+      176 +| 3-4 | Stable, challenges managed. |                         
+      177 +| 1-2 | Thriving, low breakdown, strengthening. |             
+      178  
+      212 -1-2 = collapsed or unable to function                         
+      213 -3-4 = weak, insufficient, unreliable                          
+      214 -5-6 = adequate, performs core function                        
+      215 -7-8 = strong, effective, resilient                            
+      216 -9-10 = dominant or exceptional                                
+      179 +### Abstraction: Operational sophistication, learning capacity
+          +, symbolic and modelling depth.                               
+      180 +| Score | Anchor |                                            
+      181 +|---|---|                                                     
+      182 +| 9-10 | Frontier sophistication or transformative learning ca
+          +pacity. Requires exceptional evidence. |                      
+      183 +| 7-8 | Advanced modelling, adaptation, institutional learning
+          +. |                                                           
+      184 +| 5-6 | Functional learning and procedural sophistication. |  
+      185 +| 3-4 | Basic systems, limited adaptation. |                  
+      186 +| 1-2 | Reactive, little learning or continuity. |            
+      187  
+      218 -Stress:                                                       
+      219 -Rate of breakdown or entropy production.                      
+      220 -                                                              
+      221 -This is not external pressure. It is degradation under load.  
+      222 -                                                              
+      223 -1-2 = thriving, low breakdown, strengthening                  
+      224 -3-4 = stable, challenges managed                              
+      225 -5-6 = pressured, stretched but functioning                    
+      226 -7-8 = strained, visible degradation                           
+      227 -9-10 = rupture, active collapse or severe breakdown           
+      228 -                                                              
+      229 -Abstraction:                                                  
+      230 -Operational sophistication, learning capacity, symbolic and mo
+          -delling depth.                                                
+      231 -                                                              
+      232 -1-2 = reactive, little learning or continuity                 
+      233 -3-4 = basic systems, limited adaptation                       
+      234 -5-6 = functional learning and procedural sophistication       
+      235 -7-8 = advanced modelling, adaptation, institutional learning  
+      236 -9-10 = frontier sophistication or transformative learning capa
+          -city                                                          
+      237 -                                                              
+      238 -On every dimension above, a score of 9-10 requires explicit ev
+          -idence of exceptional, comprehensive,                         
+      239 -historically unusual performance — not just an absence of prob
+          -lems. A score below 5 requires                                
+      240 -evidence of serious functional impairment specifically — not m
+          -erely controversy, criticism, or                              
+      241 -dissatisfaction directed at the institution.                  
+      242 -                                                              
+      188  ## TRANSITIONS
+      189  
+      245 -Do not automatically score transitions as crises.             
+      246 -                                                              
+      247 -For regime changes, revolutions, negotiated transitions, wars,
+          - occupations, independence moments, partitions, or collapses, 
+          -score the observed coordination dynamics:                     
+      248 -                                                              
+      190 +Do not automatically score transitions as crises. For regime c
+          +hanges, revolutions, wars, occupations, or collapses, score th
+          +e observed coordination dynamics:                             
+      191  - Did the node maintain coordination?
+      192  - Could it perform its function?
+      193  - Was change managed or chaotic?
+      194  - Was breakdown occurring, or only pressure?
+      195  
+      254 -Managed transition may have moderate stress.                  
+      255 -Chaotic rupture should have high stress.                      
+      256 -Successful adaptation may preserve coherence and capacity.    
+      196 +Managed transition -> moderate stress. Chaotic rupture -> high
+          + stress. Successful adaptation -> may preserve coherence and c
+          +apacity.                                                      
+      197  
+      258 -## SCORING RULES                                              
+      198 +## INDEPENDENT PASS INTEGRITY                                 
+      199  
+      260 -Scores must be integers from 1 to 10, or `NA`.                
+      200 +This is one isolated scorer_pass. Score entirely on your own j
+          +udgement against this rubric. Do not adjust toward an expected
+          + ensemble mean. Do not soften or exaggerate to make multi-pass
+          + spread look tighter. Divergence between independent passes is
+          + minimised by following this rubric precisely, not by guessing
+          + at consensus.                                                
+      201  
+      262 -Use `NA` only when evidence is genuinely insufficient.        
+      263 -                                                              
+      264 -Do not output decimals.                                       
+      265 -Do not output blanks.                                         
+      266 -Do not add columns.                                           
+      267 -Do not add comments.                                          
+      268 -Do not add Markdown headings.                                 
+      269 -Do not wrap the CSV in explanation.                           
+      270 -                                                              
+      271 -Rows must be sorted by year ascending, then node order:       
+      272 -                                                              
+      273 -Helm,Shield,Lore,Stewards,Craft,Hands,Archive,Flow            
+      274 -                                                              
+      202  ## OUTPUT FORMAT
+      203  
+      277 -Output only this CSV schema:                                  
+      204 +First line must be exactly:                                   
+      205 +`Entity,Year,Node,Coherence,Capacity,Stress,Abstraction`      
+      206  
+      279 -Entity,Year,Node,Coherence,Capacity,Stress,Abstraction        
+      207 +Then rows sorted by year ascending, then node order: Helm,Shie
+          +ld,Lore,Stewards,Craft,Hands,Archive,Flow.                    
+      208  
+      281 -The first line of the response must be exactly:               
+      282 -                                                              
+      283 -Entity,Year,Node,Coherence,Capacity,Stress,Abstraction        
+      284 -                                                              
+      285 -No prose before or after the CSV.                             
+      286 -                                                              
+      287 -## FINAL INTEGRITY CHECK                                      
+      288 -                                                              
+      289 -Before responding, silently re-examine your own scores and rev
+          -ise any that fail this check — do not                         
+      290 -report the check itself, just fix what it finds:              
+      291 -                                                              
+      292 -- identify the three largest year-over-year changes you made a
+          -nd confirm each has the evidence                              
+      293 -  TEMPORAL CONSISTENCY requires;                              
+      294 -- identify any score below 5 or above 8 and confirm it rests o
+          -n functional evidence, not controversy                        
+      295 -  or sentiment;                                               
+      296 -- identify any node whose four dimensions are completely uncha
+          -nged from the previous year and                               
+      297 -  confirm that reflects a real re-check, not a default;       
+      298 -- identify any judgement you made primarily from a narrative o
+          -r reputation rather than functional                           
+      299 -  evidence, and correct it.                                   
+      300 -                                                              
+      301 -Revise a score only when this check finds the evidence-to-node
+          - connection is actually defective. Do                         
+      302 -not adjust scores merely to make the resulting trajectory look
+          - smoother or more dramatic.                                   
+      303 -                                                              
+      304 -Then verify the mechanical output requirements:               
+      305 -                                                              
+      306 -- output is CSV only;                                         
+      307 -- header is exact;                                            
+      308 -- no prose appears;                                           
+      309 -- every requested year has rows unless impossible;            
+      310 -- each year has the eight nodes in canonical order;           
+      311 -- all scores are integers 1-10 or `NA`;                       
+      312 -- no Node Value appears;                                      
+      313 -- no Bond Strength appears;                                   
+      314 -- no SHI appears;                                             
+      315 -- no explanation appears;                                     
+      316 -- no interpolation was used.                                  
+      209 +All scores integers 1-10 or `NA`. No decimals. No blanks. No e
+          +xtra columns.                                                 
+      210  """
+      211  
+      212  
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The prompt formats cleanly. Now let's run the existing test suite to make sure
+  nothing downstream broke, and check if TESTING.md documents how tests are
+  run.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The prompt is live in cams_country_raw_scorer.py (v1.1 → v1.2-OPT),
+  syntax-checked and format-verified. One thing I can't do from here: the actual
+  reliability re-run needs live API calls across your four providers, and per
+  my notes your Anthropic/xAI/Kimi keys live in your own PowerShell session, not
+  this shell — same constraint that blocked me verifying the pause_turn fix in
+  the Aug 2 session. So the re-run has to happen through your GUI/CLI on the
+  Australia 2020–2025 panel (same 18-pass, 3-provider design as the v1.1 study),
+  and I can help crunch the ICC numbers once you paste back the pass CSVs.
+
+  Let me record this in memory so it isn't lost.
+
+  Wrote 1 memory (ctrl+o to expand)
+
+● Done. Summary:
+
+  - Replaced COUNTRY_PROMPT in cams_country_raw_scorer.py with the v1.2-OPT
+  template you pasted, mapping its placeholders onto the code's existing
+  {entity}/{start_year}/{end_year}/{pass_index} — compiles and formats cleanly.
+  - Confirmed before merging that v1.2-OPT preserved the hard-won parts (Craft's
+  asymmetric caveat, temporal Δ≥2 rule, node boundaries, NA discipline,
+  independent-pass integrity) and only substantively dropped the FINAL INTEGRITY
+  CHECK retrospective self-audit in favor of upstream-only checks.
+  - That's the one open risk: the ICC(2,k)=0.710 / ICC(3,k)=0.885 reliability
+  result on file was measured against v1.1 with that audit section included, so
+  it doesn't automatically carry over. I can't run the re-validation myself
+  (needs your provider keys, which live in your own shell), but once you run the
+  same 18-pass/3-provider Australia 2020–2025 panel and paste back the CSVs, I
+  can redo the ICC/bootstrap analysis here.
+  - Logged all of this to the CAMS Scorer project memory so it's not lost
+  between sessions.
+
+✻ Brewed for 3m 27s
+
+> im doing validation of the old one and new one now. Let you know the results  
+
+● Sounds good — I'll wait for your results before touching the prompt further.
+  Let me know how the v1.1 vs v1.2-OPT comparison comes out.
+
+✻ Crunched for 6s
+
+※ recap: We're revising the CAMS country scorer prompt (v1.1 to v1.2-OPT) and you're now running validation to compare the two versions. Next: share your validation results so we can check reliability held up.
+
+> kimi run failed Scoring country 'UNITED STATES' 2020-2025 with 3 passes on    
+  Kimi (Moonshot) (kimi-k3)…                                                    
+    pass 1/3…                                                                   
+    pass 1/3 — ok                                                               
+    pass 2/3…                                                                   
+    pass 2/3 — ok                                                               
+    pass 3/3…                                                                   
+    pass 3/3 — FAILED (Request timed out.)                                      
+  ERROR: only 2 of 3 passes succeeded (need 3).                                 
+                                                                                
+
+  Searched for 3 patterns, read 1 file (ctrl+o to expand)
+> i'm running it again. took forever                                            
+
+● Got it — let it run. While it was going I traced the timeout: make_client()
+  for Kimi just does OpenAI(api_key=..., base_url="https://api.moonshot.ai/v1")
+  with no explicit timeout=, so it's on the SDK's default (10 min). Pass 3 hit
+  that ceiling on a search-heavy turn inside the MAX_TOOL_ROUNDTRIPS loop.
+
+  This is a plumbing issue, not something the v1.2-OPT rewrite caused — same
+  client code path under v1.1. I won't touch it mid-run since a code change
+  right now would contaminate your v1.1-vs-v1.2-OPT comparison. If it times out
+  again on the retry, that's worth fixing (raise the timeout and/or retry the
+  specific failed pass instead of discarding the whole ensemble run) — let me
+  know and I'll do it after your validation numbers are in, applied identically
+  to both prompt versions so the comparison stays fair.
+
+✻ Worked for 44s
+
+※ recap: You're validating the new v1.2-OPT CAMS scoring prompt against the old v1.1 version. The Kimi run timed out on pass 3 and you're rerunning it now; next step is to see if it completes.
+
+> # Final report: United States CAMS scoring experiment                         
+                                                                                
+  ## Executive judgement                                                        
+                                                                                
+  The scoring experiment succeeded as a reliability test.                       
+                                                                                
+  Across Claude, Grok and Kimi, the models recover a strongly shared relative   
+  morphology of the United States institutional system. Absolute calibration    
+  remains model-dependent, but node ordering and structural pattern are highly  
+  reproducible.                                                                 
+                                                                                
+  The strongest substantive result is a cross-model **2025 Archive rupture**.   
+  All three families independently score falling Coherence and Capacity, rising 
+  Stress, and declining Node Value. Unlike most 2025 nodes, they also converge  
+  closely on Archive’s absolute 2025 value.                                     
+                                                                                
+  ## Experimental design and integrity                                          
+                                                                                
+  * Period: 2020–2025                                                           
+  * Targets: 48 node-years, six years × eight nodes                             
+  * Models: Claude, Grok and Kimi                                               
+  * Two independent batches per model                                           
+  * Three passes per batch                                                      
+  * Total: 18 formal passes nested within three model families                  
+  * Manual Kimi pass excluded from the formal ensemble and retained as an       
+  interface control                                                             
+                                                                                
+  All six score files and six envelopes are distinct. Every batch contains the  
+  complete canonical grid, three observations per dimension, no duplicated      
+  node-years, and no mathematically impossible mean/SD combinations.            
+                                                                                
+  ## Batch repeatability                                                        
+                                                                                
+  | Model  | Raw correlation |   Raw MAE | V correlation |     V MAE |          
+  | ------ | --------------: | --------: | ------------: | --------: |          
+  | Claude |           0.933 |     0.319 |         0.931 |     1.015 |          
+  | Grok   |       **0.971** | **0.209** |     **0.963** | **0.515** |          
+  | Kimi   |           0.950 |     0.235 |         0.953 |     0.603 |          
+                                                                                
+  All three families are highly repeatable. Grok is the most deterministic;     
+  Claude is somewhat more variable but still strongly stable.                   
+                                                                                
+  Six-pass pooled dimension uncertainty is low:                                 
+                                                                                
+  | Model  |   Mean SD | Median SD | Maximum SD |                               
+  | ------ | --------: | --------: | ---------: |                               
+  | Claude |     0.431 |     0.519 |       1.38 |                               
+  | Grok   | **0.363** |     0.402 |   **0.89** |                               
+  | Kimi   |     0.404 |     0.519 |       1.09 |                               
+                                                                                
+  No pooled dimension SD exceeds 2.                                             
+                                                                                
+  ## Calibration differences                                                    
+                                                                                
+  | Model                  |    C |    K |    S |    A | Overall V |            
+  | ---------------------- | ---: | ---: | ---: | ---: | --------: |            
+  | Claude                 | 4.77 | 5.87 | 6.88 | 5.64 |  **6.58** |            
+  | Grok                   | 5.07 | 7.02 | 6.48 | 7.56 |  **9.39** |            
+  | Kimi                   | 5.86 | 7.05 | 5.83 | 6.96 | **10.55** |            
+  | Equal-family consensus | 5.23 | 6.65 | 6.40 | 6.72 |  **8.84** |            
+                                                                                
+  Claude is persist                                                             
+  ──── (251 lines hidden) ───────────────────────────────────────────────────── 
+  8 |     6.40 | **−2.78** |                                                    
+  | Kimi      |    11.45 |     6.23 | **−5.23** |                               
+  | Consensus | **9.36** | **5.88** | **−3.48** |                               
+                                                                                
+  Consensus dimensional change:                                                 
+                                                                                
+  * Coherence: **−0.87**                                                        
+  * Capacity: **−0.82**                                                         
+  * Stress: **+1.55**                                                           
+  * Abstraction: **−0.50**                                                      
+                                                                                
+  The 2025 Archive estimates are unusually close: 5.00, 6.40 and 6.23, giving a 
+  between-model SD of only **0.76** and a range of **1.40**. Archive is         
+  therefore the least model-dependent 2025 node, despite the families’ large    
+  overall calibration differences.                                              
+                                                                                
+  This supports a specific interpretation: weakening precedent, administrative  
+  continuity, organisational memory and routine coordination, coupled with      
+  sharply rising functional load. The direction is robust; Kimi assigns the     
+  greatest magnitude.                                                           
+                                                                                
+  ## Manual Kimi control                                                        
+                                                                                
+  The direct Kimi pass differs substantially from the application ensemble:     
+                                                                                
+  * Formal Kimi V is 3.44 points higher on average.                             
+  * Formal C, K and A are systematically higher.                                
+  * Formal Stress is 1.10 points lower.                                         
+  * Raw-dimension correlation is only 0.445.                                    
+                                                                                
+  Nevertheless:                                                                 
+                                                                                
+  * Node-year V correlation remains **0.806**.                                  
+  * Manual Archive decline: **−6.50**                                           
+  * Formal six-pass Kimi Archive decline: **−5.23**                             
+                                                                                
+  The interface materially changes calibration but preserves much of the        
+  morphology. Model identity alone is therefore insufficient provenance. The    
+  application should record exact model ID, endpoint, prompt hash, system       
+  context, inference settings and application version.                          
+                                                                                
+  ## What the experiment establishes                                            
+                                                                                
+  A defensible summary is:                                                      
+                                                                                
+  > Using 18 scoring passes nested within three model families, the revised     
+  CAMS protocol recovered a common relative morphology of the United States     
+  institutional system despite persistent differences in absolute calibration.  
+  Average-measure consistency was strong, ICC(3,k)=0.907, clustered 95%         
+  interval 0.759–0.962, while absolute agreement was more moderate,             
+  ICC(2,k)=0.691, interval 0.427–0.813. The most robust contemporary finding    
+  was a cross-model deterioration of the Archive node in 2025.                  
+                                                                                
+  This establishes scoring reliability and reproducible structural information  
+  capture. It does not by itself establish historical truth or criterion        
+  validity. External indicators, expert adjudication and additional societies   
+  remain necessary.                                                             
+                                                                                
+  For future runs, the application should also retain raw pass-level scores and 
+  emit `V_min`, `V_max` and `V_range`. The current envelopes permit pooled      
+  dimension uncertainty but not exact pass-level Node Value uncertainty or      
+  cross-dimension covariance.                                                   
+                                                                                
+
+● This closes the open validation loop cleanly: v1.2-OPT's reliability holds —
+  ICC(2,k)=0.691 / ICC(3,k)=0.907 on the US 2020–2025 panel, essentially
+  matching v1.1's Australia result (0.710 / 0.885) with overlapping clustered
+  CIs. Dropping the FINAL INTEGRITY CHECK didn't cost you measurable
+  reliability.
+
+  One honest caveat worth flagging: this isn't a strict same-panel A/B (same
+  country, two prompt versions) — it's v1.2-OPT/US compared against the earlier
+  v1.1/Australia result. Different country, different prompt version, both
+  confounded together. The overlapping CIs are reassuring, but if you ever want
+  a clean causal claim ("v1.2-OPT vs v1.1, nothing else changed"), that needs
+  the same panel run under both prompts. Given the numbers are this close,
+  that's probably not worth the API spend right now — just flagging it so the
+  write-up doesn't overclaim.
+
+  The report also surfaces two concrete follow-ups: recording exact provenance
+  (model ID, endpoint, prompt hash, inference settings) per pass, and emitting
+  V_min/V_max/V_range in the envelope output instead of just pooled SD.
+
+● User answered Claude's questions:
+  ⎿  · What should I do with this result? → Just record it in memory for now
+
+> the testing panned out we need to fix cities and corporations in the windows  
+  scorer next                                                                   
+
+  Wrote 1 memory (ctrl+o to expand)
+
+● Now let's look at the city/company scorers to scope what needs fixing.
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+> look at the scripts first                                                     
+
+  Read 2 files (ctrl+o to expand)
+
+● Both cams_company_raw_scorer.py and cams_city_raw_scorer.py monkeypatch
+  core.COUNTRY_PROMPT at import time — that's the intentional (if fragile)
+  mechanism cams_universal_scorer.py relies on to snapshot all three variant
+  prompts. Confirmed both are still on the v1.0 prompt: no time convention, no
+  evidence-before-score discipline, no temporal-consistency Δ≥2 rule, no
+  independent-pass integrity, no evidentiary threshold for 9-10/below-5 scores —
+  just the older "do not / verify" list. That's the gap to close, using the
+  same structure just validated for countries.
+
+  I'll port the v1.2-OPT structure (schema-first, Prohibited→Required table,
+  Evidence Gate, Upstream Constraints, per-node Function/Boundary/Common-Error,
+  metric anchor tables) into both, keeping each variant's own domain-specific
+  node definitions, DATA USE triggers, and TRANSITIONS examples (those are
+  already good and company/city-specific) — versioned v1.1-OPT since these are
+  jumping straight from v1.0 into the validated structural format.
+
+● Update(C:/Users/julie/OneDrive/Documents/corporate
+        CAMS/CAMS_RAW_SCORER_SUITE/cams_company_raw_scorer.py)
+  ⎿  Added 110 lines, removed 133 lines
+      12  import cams_country_raw_scorer as core
+      13  
+      14  
+      15 -core.COUNTRY_PROMPT = """# CAMS RAW SCORER: COMPANIES v1.0     
+      15 +core.COUNTRY_PROMPT = """# CAMS RAW SCORER: COMPANIES v1.1-OPT 
+      16  
+      17  You are a CAMS raw measurement pass for companies, nonprofits, 
+          universities, agencies, platforms, and large organisations.
+      18  
+      19 -Your task is to score human organisation as social cognition an
+         -d activation. The eight CAMS nodes are measurement categories, 
+         -not narrative characters. Use them to catch structural signal w
+         -ithout imprinting myth, diagnosis, or interpretation onto the o
+         -rganisation.                                                   
+      19 +Entity,Year,Node,Coherence,Capacity,Stress,Abstraction         
+      20 +TESLA,2022,Helm,5,6,7,5                                        
+      21  
+      21 -You are measuring raw organisational state only.               
+      22 +## OUTPUT CONTRACT                                             
+      23  
+      23 -Do not explain.                                                
+      24 -Do not justify.                                                
+      25 -Do not diagnose.                                               
+      26 -Do not narrativise.                                            
+      27 -Do not calculate downstream metrics.                           
+      28 -Do not compute Node Value.                                     
+      29 -Do not compute Bond Strength.                                  
+      30 -Do not compute SHI.                                            
+      31 -Do not produce confidence labels.                              
+      32 -Do not produce evidence notes.                                 
+      33 -Do not interpolate.                                            
+      34 -Do not smooth across years.                                    
+      35 -Do not force continuity across missing evidence.               
+      24 +Return ONLY CSV. No prose. No headers beyond the schema line. N
+         +o markdown. No evidence notes.                                 
+      25 +No Node Value. No Bond Strength. No SHI. No confidence labels. 
+         +No interpolation. No smoothing.                                
+      26  
+      37 -Return only CSV.                                               
+      27 +## PROHIBITED OPERATIONS -> REQUIRED ACTIONS                   
+      28  
+      29 +| Prohibited | Required Instead |                              
+      30 +|---|---|                                                      
+      31 +| Explain or justify scores. | Emit CSV rows only. |           
+      32 +| Narrativise or diagnose. | Score demonstrated function agains
+         +t the node definition. |                                       
+      33 +| Interpolate or smooth across years. | Use `NA` for missing ev
+         +idence; never copy prior-year values. |                        
+      34 +| Compute derived metrics. | Output raw C,K,S,A only. |        
+      35 +| Score from brand sentiment, press coverage, or stock price al
+         +one. | Score from concrete functional/operational indicators pe
+         +r node. |                                                      
+      36 +| Treat a single headline as evidence for all nodes. | Evaluate
+         + each node against its own evidence. |                         
+      37 +                                                               
+      38  ## INPUTS
+      39  
+      40  company_or_organisation: {entity}
+     ...
+       42  end_year: {end_year}
+       43  scorer_pass: {pass_index}
+       44  
+       46 -If start_year > end_year, return only:                        
+       45 +If start_year > end_year, return only the header line with no 
+          +rows.                                                         
+       46  
+       48 -Entity,Year,Node,Coherence,Capacity,Stress,Abstraction        
+       47 +## TIME CONVENTION                                            
+       48  
+       50 -with no rows.                                                 
+       49 +Each year represents organisational condition at 31 December. 
+          +If the final year is in progress at your knowledge cutoff, sco
+          +re only evidenced material through that cutoff; do not project
+          + to year-end.                                                 
+       50  
+       51 +When scoring year *t*, use 31 December of year *t-1* as the ba
+          +seline. A score unchanged from *t-1* is valid ONLY if a genuin
+          +e re-check finds no material functional change. Default repeti
+          +tion is prohibited.                                           
+       52 +                                                              
+       53  ## DATA USE
+       54  
+       54 -Use corpus knowledge first.                                   
+       55 -                                                              
+       56 -Use targeted web search when:                                 
+       57 -                                                              
+       55 +Use corpus knowledge first. Use targeted web search when:     
+       56  - the year is recent or current;
+       57  - the organisation is private, obscure, recently restructured,
+            or thinly represented in corpus knowledge;
+       58  - filings, annual reports, investor decks, earnings, or audite
+           d statements are needed;
+       59  - layoffs, restructures, acquisitions, lawsuits, regulatory ac
+           tions, outages, recalls, safety events, executive turnover, or
+            board changes occurred;
+       60  - revenue, margin, cash, debt, users, market share, product pe
+           rformance, or operational facts may differ from corpus memory.
+       61  
+       64 -Do not cite sources in the output.                            
+       62 +Do not over-search well-established periods. Do not cite sourc
+          +es in output.                                                 
+       63  
+       66 -If evidence is genuinely insufficient for a specific score, ou
+          -tput `NA` for that score.                                     
+       67 -Do not infer a value merely because adjacent years have values
+          -.                                                             
+       64 +If evidence is genuinely insufficient for a specific score, ou
+          +tput `NA` for that score only. Do not infer from adjacent year
+          +s. An unchanged score must mean "no material functional change
+          + was found," not "value reused because nothing new was checked
+          +."                                                            
+       65  
+       69 -## CORE MEASUREMENT PRINCIPLE                                 
+       66 +## EVIDENCE GATE (Apply per node-year before scoring)         
+       67  
+       71 -Score what is operationally true for the organisation in that 
+          -year.                                                         
+       68 +For [Node] in [Year], confirm ALL three before any non-NA scor
+          +e:                                                            
+       69 +- [ ] One concrete indicator of functional performance observe
+          +d.                                                            
+       70 +- [ ] One concrete indicator of strain, failure, or limitation
+          + observed.                                                    
+       71 +- [ ] Mechanism connecting that evidence to THIS node's specif
+          +ic function identified.                                       
+       72  
+       73 -Score demonstrated function, not theoretical potential.       
+       74 -Score actual coordination, not formal structure.              
+       75 -Score breakdown rate, not external pressure.                  
+       76 -Score operational sophistication, not aspiration, brand claim,
+          - or strategy deck language.                                   
+       73 +If any box unchecked -> score `NA` for all four dimensions of 
+          +this node-year.                                               
+       74  
+       78 -## NODES                                                      
+       75 +Brand controversy, press sentiment, a single viral incident, o
+          +r stock-price movement may raise Stress but do NOT by themselv
+          +es establish loss of Capacity or Coherence.                   
+       76  
+       80 -Use exactly these eight nodes, in this exact order for every y
+          -ear:                                                          
+       77 +## UPSTREAM CONSTRAINTS (Apply during generation, not after)  
+       78  
+       82 -Helm, Shield, Lore, Stewards, Craft, Hands, Archive, Flow     
+       79 +1. **Delta >= 2 points** on any dimension requires EITHER two 
+          +distinct node-specific evidence pieces OR one unmistakable str
+          +uctural discontinuity (bankruptcy, forced restructuring, CEO/b
+          +oard ouster, major acquisition or divestiture). General sentim
+          +ent or a single ambiguous event is insufficient.              
+       80 +2. **Score < 5 or > 8** requires explicit functional evidence.
+          + Controversy, criticism, or popularity do not suffice for <5. 
+          +Absence of problems does not suffice for >8.                  
+       81 +3. **All four dimensions unchanged from *t-1*** is permitted O
+          +NLY after re-checking evidence for that node-year. Silent repe
+          +tition is prohibited.                                         
+       82 +4. A single company event must not automatically move all eigh
+          +t nodes. Each node moves on its own evidence.                 
+       83  
+       84 -## NODE DEFINITIONS FOR COMPANIES                             
+       84 +## NODES (Canonical order: Helm,Shield,Lore,Stewards,Craft,Han
+          +ds,Archive,Flow)                                              
+       85  
+       86 -Helm:                                                         
+       87 -Executive leadership, board alignment, strategic decision-maki
+          -ng, operating cadence, ability to coordinate the organisation 
+          -around decisions.                                             
+       86 +### Helm                                                      
+       87 +- **Function:** Executive leadership, board alignment, strateg
+          +ic decision-making, operating cadence, ability to coordinate t
+          +he organisation around decisions.                             
+       88 +- **Boundary:** Capacity is demonstrated coordinated execution
+          + (product shipped, strategy followed through, orderly successi
+          +on), not stock price moves or media profile. A leadership tran
+          +sition is positive evidence of continuity even when the outgoi
+          +ng leadership was dysfunctional.                              
+       89 +- **Common Error:** Scoring Helm from investor sentiment, CEO 
+          +charisma, or a single quarter's stock performance rather than 
+          +demonstrated coordination.                                    
+       90  
+       89 -Shield:                                                       
+       90 -Legal, compliance, risk, cybersecurity, physical security, tru
+          -st and safety, institutional defence, ability to protect the o
+          -rganisation from operational and regulatory harm.             
+       91 +### Shield                                                    
+       92 +- **Function:** Legal, compliance, risk, cybersecurity, physic
+          +al security, trust and safety, institutional defence.         
+       93 +- **Boundary:** Headcount or budget in legal/compliance/securi
+          +ty does not by itself demonstrate protective capacity — look f
+          +or outcomes (breach containment, audit results, litigation res
+          +olution, regulatory standing).                                
+       94 +- **Common Error:** Conflating department size with functional
+          + readiness, or scoring a scandal as automatic Shield failure w
+          +hen the underlying defensive function still operated.         
+       95  
+       92 -Lore:                                                         
+       93 -Research, knowledge, internal doctrine, brand meaning, culture
+          -, training, public narrative, legitimacy, shared understanding
+          - of what the organisation is doing.                           
+       96 +### Lore                                                      
+       97 +- **Function:** Research, knowledge, internal doctrine, brand 
+          +meaning, culture, training, public narrative, legitimacy, shar
+          +ed understanding of what the organisation is doing.           
+       98 +- **Boundary:** Distinguish narrative contestation (raises Str
+          +ess) from actual breakdown in R&D, knowledge production, or tr
+          +aining pipelines.                                             
+       99 +- **Common Error:** Scoring Lore purely from PR sentiment or a
+          + single viral controversy rather than evidence about knowledge
+          +/culture institutions actually functioning.                   
+      100  
+       95 -Stewards:                                                     
+       96 -Capital allocation, investors, treasury, budgeting, assets, go
+          -vernance of resources, ability to deploy stored power producti
+          -vely.                                                         
+      101 +### Stewards                                                  
+      102 +- **Function:** Capital allocation, investors, treasury, budge
+          +ting, assets, governance of resources, ability to deploy store
+          +d power productively.                                         
+      103 +- **Boundary:** This is capital-allocation/treasury/investor s
+          +tewardship specifically. A rising valuation is not itself evid
+          +ence of Capacity — look at actual capital-allocation decisions
+          +, treasury health, budgeting discipline.                      
+      104 +- **Common Error:** Substituting market capitalisation or valu
+          +ation hype for demonstrated capital-stewardship competence.   
+      105  
+       98 -Craft:                                                        
+       99 -Engineering, product, design, professional expertise, technica
+          -l execution, specialised production of the organisation's core
+          - goods or services.                                           
+      106 +### Craft                                                     
+      107 +- **Function:** Engineering, product, design, professional exp
+          +ertise, technical execution, specialised production of the org
+          +anisation's core goods or services.                           
+      108 +- **Boundary:** Revenue or market-share growth does not by its
+          +elf establish Craft strength — Craft is the technical/producti
+          +on competence itself. <8 requires evidence of genuine producti
+          +on/engineering impairment, not merely competitive pressure or 
+          +one bad launch.                                               
+      109 +- **Common Error:** Scoring Craft from sales performance rathe
+          +r than product/engineering execution evidence.                
+      110  
+      101 -Hands:                                                        
+      102 -Operations, support, frontline workforce, fulfilment, implemen
+          -tation labour, customer service, production and maintenance wo
+          -rk.                                                           
+      111 +### Hands                                                     
+      112 +- **Function:** Operations, support, frontline workforce, fulf
+          +ilment, implementation labour, customer service, production an
+          +d maintenance work.                                           
+      113 +- **Boundary:** A layoff announcement does not automatically r
+          +ead as a Capacity signal — assess whether frontline/operationa
+          +l work is actually being performed reliably.                  
+      114 +- **Common Error:** Treating headcount changes alone as eviden
+          +ce, without evidence of actual operational impact.            
+      115  
+      104 -Archive:                                                      
+      105 -Data, documentation, records, institutional memory, process co
+          -ntinuity, knowledge management, analytics, audit trails.      
+      116 +### Archive                                                   
+      117 +- **Function:** Data, documentation, records, institutional me
+          +mory, process continuity, knowledge management, analytics, aud
+          +it trails.                                                    
+      118 +- **Boundary:** Public controversy or distrust does not by its
+          +elf establish loss of Capacity — distinguish reputational Stre
+          +ss from a documented records/data-integrity/audit-trail failur
+          +e.                                                            
+      119 +- **Common Error:** Using scandal coverage as a stand-in for a
+          + demonstrated internal-records or compliance failure.         
+      120  
+      107 -Flow:                                                         
+      108 -Sales, distribution, partnerships, supply chain, revenue circu
+          -lation, customer acquisition, payments, logistics, market acce
+          -ss.                                                           
+      121 +### Flow                                                      
+      122 +- **Function:** Sales, distribution, partnerships, supply chai
+          +n, revenue circulation, customer acquisition, payments, logist
+          +ics, market access.                                           
+      123 +- **Boundary:** A deliberate, strategically sound supply-chain
+          + change (e.g. vendor diversification) can still create high St
+          +ress even when the underlying logic is sound — Flow measures w
+          +hether exchange and circulation are functioning, not whether t
+          +he change was wise.                                           
+      124 +- **Common Error:** Scoring the wisdom of a strategic decision
+          + rather than whether commerce/distribution/circulation is actu
+          +ally working.                                                 
+      125  
+      126  ## METRICS
+      127  
+      112 -For every node, assign:                                       
+      128 +For every node, assign integer 1-10 or `NA`.                  
+      129  
+      114 -Coherence:                                                    
+      115 -Internal alignment and coordination clarity.                  
+      130 +### Coherence: Internal alignment and coordination clarity.   
+      131 +| Score | Anchor |                                            
+      132 +|---|---|                                                     
+      133 +| 9-10 | Exceptionally unified or seamless. Requires unusually
+          + strong alignment evidence. |                                 
+      134 +| 7-8 | Integrated, strongly aligned. |                       
+      135 +| 5-6 | Functional, coordinated despite tension. |            
+      136 +| 3-4 | Divided, factional, inconsistent. |                   
+      137 +| 1-2 | Fragmented, paralysed, openly conflicting. |          
+      138  
+      117 -1-2 = fragmented, paralysed, openly conflicting               
+      118 -3-4 = divided, factional, inconsistent                        
+      119 -5-6 = functional, coordinated despite tension                 
+      120 -7-8 = integrated, strongly aligned                            
+      121 -9-10 = exceptionally unified or seamless                      
+      139 +### Capacity: Demonstrated ability to perform the node functio
+          +n.                                                            
+      140 +| Score | Anchor |                                            
+      141 +|---|---|                                                     
+      142 +| 9-10 | Dominant or exceptional. Requires comprehensive, unus
+          +ually strong performance evidence. |                          
+      143 +| 7-8 | Strong, effective, resilient. |                       
+      144 +| 5-6 | Adequate, performs core function. |                   
+      145 +| 3-4 | Weak, insufficient, unreliable. |                     
+      146 +| 1-2 | Collapsed or unable to function. |                    
+      147  
+      123 -Capacity:                                                     
+      124 -Demonstrated ability to perform the node function.            
+      148 +### Stress: Rate of breakdown or entropy production.          
+      149 +| Score | Anchor |                                            
+      150 +|---|---|                                                     
+      151 +| 9-10 | Rupture, active collapse or severe breakdown. |      
+      152 +| 7-8 | Strained, visible degradation. |                      
+      153 +| 5-6 | Pressured, stretched but functioning. |               
+      154 +| 3-4 | Stable, challenges managed. |                         
+      155 +| 1-2 | Thriving, low breakdown, strengthening. |             
+      156  
+      126 -1-2 = collapsed or unable to function                         
+      127 -3-4 = weak, insufficient, unreliable                          
+      128 -5-6 = adequate, performs core function                        
+      129 -7-8 = strong, effective, resilient                            
+      130 -9-10 = dominant or exceptional                                
+      157 +### Abstraction: Operational sophistication, learning capacity
+          +, symbolic and modelling depth.                               
+      158 +| Score | Anchor |                                            
+      159 +|---|---|                                                     
+      160 +| 9-10 | Frontier sophistication or transformative learning ca
+          +pacity. Requires exceptional evidence. |                      
+      161 +| 7-8 | Advanced modelling, adaptation, institutional learning
+          +. |                                                           
+      162 +| 5-6 | Functional learning and procedural sophistication. |  
+      163 +| 3-4 | Basic systems, limited adaptation. |                  
+      164 +| 1-2 | Reactive, little learning or continuity. |            
+      165  
+      132 -Stress:                                                       
+      133 -Rate of breakdown or entropy production.                      
+      134 -                                                              
+      135 -This is not external pressure. It is degradation under load.  
+      136 -                                                              
+      137 -1-2 = thriving, low breakdown, strengthening                  
+      138 -3-4 = stable, challenges managed                              
+      139 -5-6 = pressured, stretched but functioning                    
+      140 -7-8 = strained, visible degradation                           
+      141 -9-10 = rupture, active collapse or severe breakdown           
+      142 -                                                              
+      143 -Abstraction:                                                  
+      144 -Operational sophistication, learning capacity, symbolic and mo
+          -delling depth.                                                
+      145 -                                                              
+      146 -1-2 = reactive, little learning or continuity                 
+      147 -3-4 = basic systems, limited adaptation                       
+      148 -5-6 = functional learning and procedural sophistication       
+      149 -7-8 = advanced modelling, adaptation, institutional learning  
+      150 -9-10 = frontier sophistication or transformative learning capa
+          -city                                                          
+      151 -                                                              
+      166  ## TRANSITIONS
+      167  
+      154 -Do not automatically score transitions as crises.             
+      155 -                                                              
+      156 -For CEO changes, pivots, acquisitions, bankruptcies, restructu
+          -res, scandals, product failures, regulatory shocks, layoffs, o
+          -r IPOs, score the observed coordination dynamics:             
+      157 -                                                              
+      168 +Do not automatically score transitions as crises. For CEO chan
+          +ges, pivots, acquisitions, bankruptcies, restructures, scandal
+          +s, product failures, regulatory shocks, layoffs, or IPOs, scor
+          +e the observed coordination dynamics:                         
+      169  - Did the node maintain coordination?
+      170  - Could it perform its function?
+      171  - Was change managed or chaotic?
+      172  - Was breakdown occurring, or only pressure?
+      173  
+      163 -Managed transition may have moderate stress.                  
+      164 -Chaotic rupture should have high stress.                      
+      165 -Successful adaptation may preserve coherence and capacity.    
+      174 +Managed transition -> moderate stress. Chaotic rupture -> high
+          + stress. Successful adaptation -> may preserve coherence and c
+          +apacity.                                                      
+      175  
+      167 -## SCORING RULES                                              
+      176 +## INDEPENDENT PASS INTEGRITY                                 
+      177  
+      169 -Scores must be integers from 1 to 10, or `NA`.                
+      178 +This is one isolated scorer_pass. Score entirely on your own j
+          +udgement against this rubric. Do not adjust toward an expected
+          + ensemble mean. Do not soften or exaggerate to make multi-pass
+          + spread look tighter. Divergence between independent passes is
+          + minimised by following this rubric precisely, not by guessing
+          + at consensus.                                                
+      179  
+      171 -Use `NA` only when evidence is genuinely insufficient.        
+      172 -                                                              
+      173 -Do not output decimals.                                       
+      174 -Do not output blanks.                                         
+      175 -Do not add columns.                                           
+      176 -Do not add comments.                                          
+      177 -Do not add Markdown headings.                                 
+      178 -Do not wrap the CSV in explanation.                           
+      179 -                                                              
+      180 -Rows must be sorted by year ascending, then node order:       
+      181 -                                                              
+      182 -Helm,Shield,Lore,Stewards,Craft,Hands,Archive,Flow            
+      183 -                                                              
+      180  ## OUTPUT FORMAT
+      181  
+      186 -Output only this CSV schema:                                  
+      182 +First line must be exactly:                                   
+      183 +`Entity,Year,Node,Coherence,Capacity,Stress,Abstraction`      
+      184  
+      188 -Entity,Year,Node,Coherence,Capacity,Stress,Abstraction        
+      185 +Then rows sorted by year ascending, then node order: Helm,Shie
+          +ld,Lore,Stewards,Craft,Hands,Archive,Flow.                    
+      186  
+      190 -The first line of the response must be exactly:               
+      191 -                                                              
+      192 -Entity,Year,Node,Coherence,Capacity,Stress,Abstraction        
+      193 -                                                              
+      194 -No prose before or after the CSV.                             
+      195 -                                                              
+      196 -## FINAL INTEGRITY CHECK                                      
+      197 -                                                              
+      198 -Before responding, verify:                                    
+      199 -                                                              
+      200 -- output is CSV only;                                         
+      201 -- header is exact;                                            
+      202 -- no prose appears;                                           
+      203 -- every requested year has rows unless impossible;            
+      204 -- each year has the eight nodes in canonical order;           
+      205 -- all scores are integers 1-10 or `NA`;                       
+      206 -- no Node Value appears;                                      
+      207 -- no Bond Strength appears;                                   
+      208 -- no SHI appears;                                             
+      209 -- no explanation appears;                                     
+      210 -- no interpolation was used.                                  
+      187 +All scores integers 1-10 or `NA`. No decimals. No blanks. No e
+          +xtra columns.                                                 
+      188  """
+      189  
+      190  
+
+● Now the city prompt, same structure applied to the existing city node
+  definitions:
+
+● Update(C:/Users/julie/OneDrive/Documents/corporate
+        CAMS/CAMS_RAW_SCORER_SUITE/cams_city_raw_scorer.py)
+  ⎿  Added 110 lines, removed 133 lines
+      12  import cams_country_raw_scorer as core
+      13  
+      14  
+      15 -core.COUNTRY_PROMPT = """# CAMS RAW SCORER: CITIES v1.0        
+      15 +core.COUNTRY_PROMPT = """# CAMS RAW SCORER: CITIES v1.1-OPT    
+      16  
+      17  You are a CAMS raw measurement pass for cities, metro areas, ci
+          ty-states, counties, local governments, and urban systems.
+      18  
+      19 -Your task is to score human organisation as social cognition an
+         -d activation. The eight CAMS nodes are measurement categories, 
+         -not narrative characters. Use them to catch structural signal w
+         -ithout imprinting myth, diagnosis, or interpretation onto the c
+         -ity.                                                           
+      19 +Entity,Year,Node,Coherence,Capacity,Stress,Abstraction         
+      20 +DETROIT,2019,Helm,5,6,7,5                                      
+      21  
+      21 -You are measuring raw urban organisational state only.         
+      22 +## OUTPUT CONTRACT                                             
+      23  
+      23 -Do not explain.                                                
+      24 -Do not justify.                                                
+      25 -Do not diagnose.                                               
+      26 -Do not narrativise.                                            
+      27 -Do not calculate downstream metrics.                           
+      28 -Do not compute Node Value.                                     
+      29 -Do not compute Bond Strength.                                  
+      30 -Do not compute SHI.                                            
+      31 -Do not produce confidence labels.                              
+      32 -Do not produce evidence notes.                                 
+      33 -Do not interpolate.                                            
+      34 -Do not smooth across years.                                    
+      35 -Do not force continuity across missing evidence.               
+      24 +Return ONLY CSV. No prose. No headers beyond the schema line. N
+         +o markdown. No evidence notes.                                 
+      25 +No Node Value. No Bond Strength. No SHI. No confidence labels. 
+         +No interpolation. No smoothing.                                
+      26  
+      37 -Return only CSV.                                               
+      27 +## PROHIBITED OPERATIONS -> REQUIRED ACTIONS                   
+      28  
+      29 +| Prohibited | Required Instead |                              
+      30 +|---|---|                                                      
+      31 +| Explain or justify scores. | Emit CSV rows only. |           
+      32 +| Narrativise or diagnose. | Score demonstrated function agains
+         +t the node definition. |                                       
+      33 +| Interpolate or smooth across years. | Use `NA` for missing ev
+         +idence; never copy prior-year values. |                        
+      34 +| Compute derived metrics. | Output raw C,K,S,A only. |        
+      35 +| Score from civic branding, planning rhetoric, or political co
+         +ntroversy alone. | Score from concrete functional/operational i
+         +ndicators per node. |                                          
+      36 +| Treat a single headline as evidence for all nodes. | Evaluate
+         + each node against its own evidence. |                         
+      37 +                                                               
+      38  ## INPUTS
+      39  
+      40  city_or_metro: {entity}
+     ...
+       42  end_year: {end_year}
+       43  scorer_pass: {pass_index}
+       44  
+       46 -If start_year > end_year, return only:                        
+       45 +If start_year > end_year, return only the header line with no 
+          +rows.                                                         
+       46  
+       48 -Entity,Year,Node,Coherence,Capacity,Stress,Abstraction        
+       47 +## TIME CONVENTION                                            
+       48  
+       50 -with no rows.                                                 
+       49 +Each year represents urban-institutional condition at 31 Decem
+          +ber. If the final year is in progress at your knowledge cutoff
+          +, score only evidenced material through that cutoff; do not pr
+          +oject to year-end.                                            
+       50  
+       51 +When scoring year *t*, use 31 December of year *t-1* as the ba
+          +seline. A score unchanged from *t-1* is valid ONLY if a genuin
+          +e re-check finds no material functional change. Default repeti
+          +tion is prohibited.                                           
+       52 +                                                              
+       53  ## DATA USE
+       54  
+       54 -Use corpus knowledge first.                                   
+       55 -                                                              
+       56 -Use targeted web search when:                                 
+       57 -                                                              
+       55 +Use corpus knowledge first. Use targeted web search when:     
+       56  - the year is recent or current;
+       57  - the city is obscure, small, or thinly represented in corpus 
+           knowledge;
+       58  - city budgets, audits, fiscal stress, bond ratings, or receiv
+           ership status are needed;
+       59  - crime, policing, emergency response, disaster recovery, hous
+           ing, homelessness, infrastructure, transport, or utility facts
+            are needed;
+       60  - population change, migration, employment, local industry, ma
+           yoral turnover, council crisis, corruption, or administrative 
+           breakdown may differ from corpus memory.
+       61  
+       64 -Do not cite sources in the output.                            
+       62 +Do not over-search well-established periods. Do not cite sourc
+          +es in output.                                                 
+       63  
+       66 -If evidence is genuinely insufficient for a specific score, ou
+          -tput `NA` for that score.                                     
+       67 -Do not infer a value merely because adjacent years have values
+          -.                                                             
+       64 +If evidence is genuinely insufficient for a specific score, ou
+          +tput `NA` for that score only. Do not infer from adjacent year
+          +s. An unchanged score must mean "no material functional change
+          + was found," not "value reused because nothing new was checked
+          +."                                                            
+       65  
+       69 -## CORE MEASUREMENT PRINCIPLE                                 
+       66 +## EVIDENCE GATE (Apply per node-year before scoring)         
+       67  
+       71 -Score what is operationally true for the city or metro system 
+          -in that year.                                                 
+       68 +For [Node] in [Year], confirm ALL three before any non-NA scor
+          +e:                                                            
+       69 +- [ ] One concrete indicator of functional performance observe
+          +d.                                                            
+       70 +- [ ] One concrete indicator of strain, failure, or limitation
+          + observed.                                                    
+       71 +- [ ] Mechanism connecting that evidence to THIS node's specif
+          +ic function identified.                                       
+       72  
+       73 -Score demonstrated function, not theoretical potential.       
+       74 -Score actual coordination, not formal structure.              
+       75 -Score breakdown rate, not external pressure.                  
+       76 -Score operational sophistication, not civic aspiration, brandi
+          -ng, or planning rhetoric.                                     
+       73 +If any box unchecked -> score `NA` for all four dimensions of 
+          +this node-year.                                               
+       74  
+       78 -## NODES                                                      
+       75 +Political controversy, media coverage of city hall, a referend
+          +um result, or public distrust may raise Stress but do NOT by t
+          +hemselves establish loss of Capacity or Coherence.            
+       76  
+       80 -Use exactly these eight nodes, in this exact order for every y
+          -ear:                                                          
+       77 +## UPSTREAM CONSTRAINTS (Apply during generation, not after)  
+       78  
+       82 -Helm, Shield, Lore, Stewards, Craft, Hands, Archive, Flow     
+       79 +1. **Delta >= 2 points** on any dimension requires EITHER two 
+          +distinct node-specific evidence pieces OR one unmistakable str
+          +uctural discontinuity (fiscal emergency/receivership, natural 
+          +disaster, mayoral removal, state takeover). General sentiment 
+          +or a single ambiguous event is insufficient.                  
+       80 +2. **Score < 5 or > 8** requires explicit functional evidence.
+          + Controversy, criticism, or popularity do not suffice for <5. 
+          +Absence of problems does not suffice for >8.                  
+       81 +3. **All four dimensions unchanged from *t-1*** is permitted O
+          +NLY after re-checking evidence for that node-year. Silent repe
+          +tition is prohibited.                                         
+       82 +4. A single citywide event must not automatically move all eig
+          +ht nodes. Each node moves on its own evidence.                
+       83  
+       84 -## NODE DEFINITIONS FOR CITIES                                
+       84 +## NODES (Canonical order: Helm,Shield,Lore,Stewards,Craft,Han
+          +ds,Archive,Flow)                                              
+       85  
+       86 -Helm:                                                         
+       87 -Mayor, council, city manager, metropolitan governance, plannin
+          -g leadership, administrative command, ability to coordinate ci
+          -tywide decisions.                                             
+       86 +### Helm                                                      
+       87 +- **Function:** Mayor, council, city manager, metropolitan gov
+          +ernance, planning leadership, administrative command, ability 
+          +to coordinate citywide decisions.                             
+       88 +- **Boundary:** An election result or a popular mayor raises C
+          +oherence, not Capacity — capacity is demonstrated by actual ex
+          +ecution of citywide coordination (budget passed and executed, 
+          +services delivered, orderly transition).                      
+       89 +- **Common Error:** Scoring Helm from approval polling or part
+          +isan council conflict rather than demonstrated administrative 
+          +execution.                                                    
+       90  
+       89 -Shield:                                                       
+       90 -Police, fire, emergency management, public safety, disaster re
+          -sponse, code enforcement, public order and protection.        
+       91 +### Shield                                                    
+       92 +- **Function:** Police, fire, emergency management, public saf
+          +ety, disaster response, code enforcement, public order and pro
+          +tection.                                                      
+       93 +- **Boundary:** Public-safety budget size or headcount is not 
+          +itself evidence of functional capacity — look at outcomes (res
+          +ponse times, disaster response, code enforcement, actual crime
+          +/safety trend).                                               
+       94 +- **Common Error:** Conflating spending or headcount with oper
+          +ational readiness, or scoring a high-profile incident as autom
+          +atic system collapse when the underlying capacity held.       
+       95  
+       92 -Lore:                                                         
+       93 -Schools, universities, libraries, civic culture, local media, 
+          -public legitimacy, shared urban identity, knowledge and meanin
+          -g production.                                                 
+       96 +### Lore                                                      
+       97 +- **Function:** Schools, universities, libraries, civic cultur
+          +e, local media, public legitimacy, shared urban identity, know
+          +ledge and meaning production.                                 
+       98 +- **Boundary:** Distinguish narrative contestation (raises Str
+          +ess) from actual breakdown of knowledge institutions themselve
+          +s (school system function, library/library-system operation, l
+          +ocal press capacity).                                         
+       99 +- **Common Error:** Scoring Lore from political controversy ov
+          +er curricula or civic policy rather than evidence about instit
+          +utions actually functioning.                                  
+      100  
+       95 -Stewards:                                                     
+       96 -Real estate, land use, developers, tax base, bond market acces
+          -s, capital investment, major property holders, fiscal resource
+          - allocation.                                                  
+      101 +### Stewards                                                  
+      102 +- **Function:** Real estate, land use, developers, tax base, b
+          +ond market access, capital investment, major property holders,
+          + fiscal resource allocation.                                  
+      103 +- **Boundary:** This is the capital-holder/tax-base/bond-marke
+          +t function specifically. Do not substitute general city-budget
+          + rhetoric or government fiscal policy statements for this node
+          +; those belong to Helm or Archive.                            
+      104 +- **Common Error:** Treating city budget announcements as Stew
+          +ards evidence rather than the underlying capital-holder/tax-ba
+          +se condition (bond ratings, development activity, tax-base hea
+          +lth).                                                         
+      105  
+       98 -Craft:                                                        
+       99 -Skilled local industries, construction, trades, professional s
+          -ervices, healthcare capacity, technical services, specialised 
+          -urban production.                                             
+      106 +### Craft                                                     
+      107 +- **Function:** Skilled local industries, construction, trades
+          +, professional services, healthcare capacity, technical servic
+          +es, specialised urban production.                             
+      108 +- **Boundary:** A booming real-estate market or construction h
+          +eadlines do not by themselves establish Craft strength — Craft
+          + is the technical/trade/production competence itself. <8 requi
+          +res evidence of genuine inability to perform skilled work, not
+          + just a slowdown or an unpopular zoning decision.             
+      109 +- **Common Error:** Scoring Craft from property values or deve
+          +lopment volume rather than production/trade capacity.         
+      110  
+      101 -Hands:                                                        
+      102 -Frontline workers, service labour, care work, sanitation, main
+          -tenance, transit labour, basic urban work capacity.           
+      111 +### Hands                                                     
+      112 +- **Function:** Frontline workers, service labour, care work, 
+          +sanitation, maintenance, transit labour, basic urban work capa
+          +city.                                                         
+      113 +- **Boundary:** Low citywide unemployment raises Capacity but 
+          +does not cancel out precarity, housing cost, or wage stress am
+          +ong frontline/service workers — both may be true at once.     
+      114 +- **Common Error:** Using the citywide unemployment rate as th
+          +e sole signal, ignoring transit/sanitation/care-work strain.  
+      115  
+      104 -Archive:                                                      
+      105 -Planning records, permitting, courts, municipal records, admin
+          -istrative continuity, civic memory, data systems, code and reg
+          -ulatory memory.                                               
+      116 +### Archive                                                   
+      117 +- **Function:** Planning records, permitting, courts, municipa
+          +l records, administrative continuity, civic memory, data syste
+          +ms, code and regulatory memory.                               
+      118 +- **Boundary:** Public distrust of city hall or a political sc
+          +andal does not by itself establish a loss of Capacity — distin
+          +guish reputational Stress from an actual breakdown in permitti
+          +ng, courts, or municipal-record systems.                      
+      119 +- **Common Error:** Using scandal coverage as a stand-in for d
+          +emonstrated administrative/records failure.                   
+      120  
+      107 -Flow:                                                         
+      108 -Transport, utilities, ports, roads, transit, commuting, commer
+          -ce, logistics, payments, water, power, waste, circulation of p
+          -eople and goods.                                              
+      121 +### Flow                                                      
+      122 +- **Function:** Transport, utilities, ports, roads, transit, c
+          +ommuting, commerce, logistics, payments, water, power, waste, 
+          +circulation of people and goods.                              
+      123 +- **Boundary:** A disruptive but well-justified infrastructure
+          + project (e.g. a planned transit shutdown for repair) can stil
+          +l create high Stress even when it is the right call — Flow mea
+          +sures whether transport/utilities/commerce are actually functi
+          +oning, not whether the disruption was justified.              
+      124 +- **Common Error:** Scoring the policy rationale rather than t
+          +he operational circulation function itself.                   
+      125  
+      126  ## METRICS
+      127  
+      112 -For every node, assign:                                       
+      128 +For every node, assign integer 1-10 or `NA`.                  
+      129  
+      114 -Coherence:                                                    
+      115 -Internal alignment and coordination clarity.                  
+      130 +### Coherence: Internal alignment and coordination clarity.   
+      131 +| Score | Anchor |                                            
+      132 +|---|---|                                                     
+      133 +| 9-10 | Exceptionally unified or seamless. Requires unusually
+          + strong alignment evidence. |                                 
+      134 +| 7-8 | Integrated, strongly aligned. |                       
+      135 +| 5-6 | Functional, coordinated despite tension. |            
+      136 +| 3-4 | Divided, factional, inconsistent. |                   
+      137 +| 1-2 | Fragmented, paralysed, openly conflicting. |          
+      138  
+      117 -1-2 = fragmented, paralysed, openly conflicting               
+      118 -3-4 = divided, factional, inconsistent                        
+      119 -5-6 = functional, coordinated despite tension                 
+      120 -7-8 = integrated, strongly aligned                            
+      121 -9-10 = exceptionally unified or seamless                      
+      139 +### Capacity: Demonstrated ability to perform the node functio
+          +n.                                                            
+      140 +| Score | Anchor |                                            
+      141 +|---|---|                                                     
+      142 +| 9-10 | Dominant or exceptional. Requires comprehensive, unus
+          +ually strong performance evidence. |                          
+      143 +| 7-8 | Strong, effective, resilient. |                       
+      144 +| 5-6 | Adequate, performs core function. |                   
+      145 +| 3-4 | Weak, insufficient, unreliable. |                     
+      146 +| 1-2 | Collapsed or unable to function. |                    
+      147  
+      123 -Capacity:                                                     
+      124 -Demonstrated ability to perform the node function.            
+      148 +### Stress: Rate of breakdown or entropy production.          
+      149 +| Score | Anchor |                                            
+      150 +|---|---|                                                     
+      151 +| 9-10 | Rupture, active collapse or severe breakdown. |      
+      152 +| 7-8 | Strained, visible degradation. |                      
+      153 +| 5-6 | Pressured, stretched but functioning. |               
+      154 +| 3-4 | Stable, challenges managed. |                         
+      155 +| 1-2 | Thriving, low breakdown, strengthening. |             
+      156  
+      126 -1-2 = collapsed or unable to function                         
+      127 -3-4 = weak, insufficient, unreliable                          
+      128 -5-6 = adequate, performs core function                        
+      129 -7-8 = strong, effective, resilient                            
+      130 -9-10 = dominant or exceptional                                
+      157 +### Abstraction: Operational sophistication, learning capacity
+          +, symbolic and modelling depth.                               
+      158 +| Score | Anchor |                                            
+      159 +|---|---|                                                     
+      160 +| 9-10 | Frontier sophistication or transformative learning ca
+          +pacity. Requires exceptional evidence. |                      
+      161 +| 7-8 | Advanced modelling, adaptation, institutional learning
+          +. |                                                           
+      162 +| 5-6 | Functional learning and procedural sophistication. |  
+      163 +| 3-4 | Basic systems, limited adaptation. |                  
+      164 +| 1-2 | Reactive, little learning or continuity. |            
+      165  
+      132 -Stress:                                                       
+      133 -Rate of breakdown or entropy production.                      
+      134 -                                                              
+      135 -This is not external pressure. It is degradation under load.  
+      136 -                                                              
+      137 -1-2 = thriving, low breakdown, strengthening                  
+      138 -3-4 = stable, challenges managed                              
+      139 -5-6 = pressured, stretched but functioning                    
+      140 -7-8 = strained, visible degradation                           
+      141 -9-10 = rupture, active collapse or severe breakdown           
+      142 -                                                              
+      143 -Abstraction:                                                  
+      144 -Operational sophistication, learning capacity, symbolic and mo
+          -delling depth.                                                
+      145 -                                                              
+      146 -1-2 = reactive, little learning or continuity                 
+      147 -3-4 = basic systems, limited adaptation                       
+      148 -5-6 = functional learning and procedural sophistication       
+      149 -7-8 = advanced modelling, adaptation, institutional learning  
+      150 -9-10 = frontier sophistication or transformative learning capa
+          -city                                                          
+      151 -                                                              
+      166  ## TRANSITIONS
+      167  
+      154 -Do not automatically score transitions as crises.             
+      155 -                                                              
+      156 -For disasters, fiscal emergencies, population shocks, corrupti
+          -on crises, mayoral transitions, policing crises, infrastructur
+          -e failures, deindustrialisation, boom periods, or recovery per
+          -iods, score the observed coordination dynamics:               
+      157 -                                                              
+      168 +Do not automatically score transitions as crises. For disaster
+          +s, fiscal emergencies, population shocks, corruption crises, m
+          +ayoral transitions, policing crises, infrastructure failures, 
+          +deindustrialisation, boom periods, or recovery periods, score 
+          +the observed coordination dynamics:                           
+      169  - Did the node maintain coordination?
+      170  - Could it perform its function?
+      171  - Was change managed or chaotic?
+      172  - Was breakdown occurring, or only pressure?
+      173  
+      163 -Managed transition may have moderate stress.                  
+      164 -Chaotic rupture should have high stress.                      
+      165 -Successful adaptation may preserve coherence and capacity.    
+      174 +Managed transition -> moderate stress. Chaotic rupture -> high
+          + stress. Successful adaptation -> may preserve coherence and c
+          +apacity.                                                      
+      175  
+      167 -## SCORING RULES                                              
+      176 +## INDEPENDENT PASS INTEGRITY                                 
+      177  
+      169 -Scores must be integers from 1 to 10, or `NA`.                
+      178 +This is one isolated scorer_pass. Score entirely on your own j
+          +udgement against this rubric. Do not adjust toward an expected
+          + ensemble mean. Do not soften or exaggerate to make multi-pass
+          + spread look tighter. Divergence between independent passes is
+          + minimised by following this rubric precisely, not by guessing
+          + at consensus.                                                
+      179  
+      171 -Use `NA` only when evidence is genuinely insufficient.        
+      172 -                                                              
+      173 -Do not output decimals.                                       
+      174 -Do not output blanks.                                         
+      175 -Do not add columns.                                           
+      176 -Do not add comments.                                          
+      177 -Do not add Markdown headings.                                 
+      178 -Do not wrap the CSV in explanation.                           
+      179 -                                                              
+      180 -Rows must be sorted by year ascending, then node order:       
+      181 -                                                              
+      182 -Helm,Shield,Lore,Stewards,Craft,Hands,Archive,Flow            
+      183 -                                                              
+      180  ## OUTPUT FORMAT
+      181  
+      186 -Output only this CSV schema:                                  
+      182 +First line must be exactly:                                   
+      183 +`Entity,Year,Node,Coherence,Capacity,Stress,Abstraction`      
+      184  
+      188 -Entity,Year,Node,Coherence,Capacity,Stress,Abstraction        
+      185 +Then rows sorted by year ascending, then node order: Helm,Shie
+          +ld,Lore,Stewards,Craft,Hands,Archive,Flow.                    
+      186  
+      190 -The first line of the response must be exactly:               
+      191 -                                                              
+      192 -Entity,Year,Node,Coherence,Capacity,Stress,Abstraction        
+      193 -                                                              
+      194 -No prose before or after the CSV.                             
+      195 -                                                              
+      196 -## FINAL INTEGRITY CHECK                                      
+      197 -                                                              
+      198 -Before responding, verify:                                    
+      199 -                                                              
+      200 -- output is CSV only;                                         
+      201 -- header is exact;                                            
+      202 -- no prose appears;                                           
+      203 -- every requested year has rows unless impossible;            
+      204 -- each year has the eight nodes in canonical order;           
+      205 -- all scores are integers 1-10 or `NA`;                       
+      206 -- no Node Value appears;                                      
+      207 -- no Bond Strength appears;                                   
+      208 -- no SHI appears;                                             
+      209 -- no explanation appears;                                     
+      210 -- no interpolation was used.                                  
+      187 +All scores integers 1-10 or `NA`. No decimals. No blanks. No e
+          +xtra columns.                                                 
+      188  """
+      189  
+      190  
+
+● Now let's verify both compile and format correctly through the actual import
+  chain the universal scorer uses.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Good — cams_web_api.py doesn't touch company/city (matches the memory note
+  that the hosted tool only serves country), and there are no stale version
+  strings in the docs to update. Let me update the project memory with what
+  changed.
+
+  Recalled 1 memory, wrote 1 memory (ctrl+o to expand)
+
+● Both cams_company_raw_scorer.py (v1.0 → v1.1-OPT) and cams_city_raw_scorer.py
+  (v1.0 → v1.1-OPT) are rewritten into the same structural format as the live
+  country prompt — schema-first, Prohibited→Required table, per-node Evidence
+  Gate, Upstream Constraints, Function/Boundary/Common-Error per node, metric
+  anchor tables, Independent Pass Integrity. Verified through the actual
+  cams_universal_scorer.build_prompt() path (the fragile import-time monkeypatch
+  mechanism), not just each file standalone — all three variants
+  (country/company/city) compile and format cleanly.
+
+  Ready for you to run through the Windows GUI/CLI whenever you want to
+  live-test company and city scoring. No reliability check has been run for
+  these two yet — that's the natural next step once you've confirmed they work
+  end-to-end, same pattern as the country panels.
+
+✻ Churned for 4m 32s
+
+> have you rebuilt the windows app yet                                          
+
+● No — I only edited the source .py files (cams_company_raw_scorer.py,
+  cams_city_raw_scorer.py) and verified them via the Python import path, not
+  through PyInstaller. The .exes in dist/ still reflect the old code.
+
+  Given the prior incident where a rebuild shipped a crash-on-launch that only
+  surfaced from an actual run (not just "process stayed alive"), I want to
+  rebuild and then actually drive the GUI through a company/city scoring flow
+  before calling it done — not just confirm the build succeeded.
+
+● User declined to answer questions
+  ⎿  · Want me to rebuild the universal CLI/GUI exes now? (Yes, rebuild both and
+     verify locally / Not yet — you test the source first)
+● What would you like to clarify?
+
+✻ Baked for 16s
+
+> i have the keys in the local json, I have to go through keys otherwise.       
+
+● That clarifies it — since your provider keys are already saved in the GUI's
+  local config (%APPDATA%\CAMSScorerUniversal\config.json), running the
+  unpackaged cams_universal_gui.py directly picks those up with no extra key
+  entry, so there's no reason to burn a PyInstaller rebuild before confirming
+  the new company/city prompts actually work.
+
+  Go ahead and run python cams_universal_gui.py from the source tree and try a
+  company and a city scoring pass. I'll hold off on rebuilding the .exes until
+  you've validated the prompts live — then I'll rebuild and smoke-test before
+  anything touches the download page.
+
+✻ Churned for 12s
+
+> Go ahead and run python cams_universal_gui.py from the source tree and try a  
+  company and a city scoring pass. I'll hold off on rebuilding the .exes until  
+  you've validated the prompts live — then I'll rebuild and smoke-test before   
+  anything touches the download page. i don't have the skills bro               
+
+  Made 3 scratchpad edits +50 -6, searched for 1 pattern, read 2 files, ran 4 shell commands (ctrl+o to expand)
+
+● Both smoke-tested clean on Grok. Since Claude was the most bug-prone provider
+  historically (truncation, pause_turn), let me also verify that path still
+  holds with the new prompt structure before calling this good.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Both providers came back clean — correct 8-row canonical grid, validate_rows
+  passed, no truncation or pause_turn issues on Claude. I ran this for you
+  directly (via the source, using the keys already saved in your local
+  config.json — never printed or logged the keys themselves), since you didn't
+  want to drive the GUI by hand.
+
+  Status: the new v1.1-OPT company/city prompts are live-verified against Grok
+  and Claude, single-pass smoke tests, both variants. Not yet done: a full
+  multi-pass ensemble run or PyInstaller rebuild.
+
+● User answered Claude's questions:
+  ⎿  · Smoke tests passed on Grok and Claude for both company and city. What 
+     next? → Run a fuller multi-pass test first
+
+  Made 1 scratchpad edit +112, read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● Good, signature matches my script. Now let's run the full multi-pass test.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Multi-pass test came back clean on both variants:
+
+  ┌─────────────────┬──────────────────────────┬───────────────────────────┐
+  │                 │     Company (Tesla)      │      City (Detroit)       │
+  ├─────────────────┼──────────────────────────┼───────────────────────────┤
+  │ Passes          │ 3/3                      │ 3/3                       │
+  │ succeeded       │                          │                           │
+  ├─────────────────┼──────────────────────────┼───────────────────────────┤
+  │ Pairwise        │ 0.88, 0.88, 0.88         │ 0.89, 0.92, 0.85          │
+  │ correlation     │                          │                           │
+  ├─────────────────┼──────────────────────────┼───────────────────────────┤
+  │ Pairwise MAE    │ ~0.26                    │ ~0.35–0.45                │
+  ├─────────────────┼──────────────────────────┼───────────────────────────┤
+  │ Ensemble        │ 24 rows, max pooled SD   │ 24 rows, max pooled SD    │
+  │                 │ 0.58, 0 NA cells         │ 1.00, 0 NA cells          │
+  └─────────────────┴──────────────────────────┴───────────────────────────┘
+
+  No crashes, no truncation, no NA gaps, ensemble math produces sane numbers —
+  well under the "no pooled SD exceeds 2" bar from the country study.
+  Correlations (0.85–0.92) are a bit lower than Grok's single-provider 0.971
+  from the full US country study, but that's not an apples-to-apples comparison
+  — this was a smaller 3-year/24-target sample on a single provider, not the
+  6-year/48-target, cross-batch design. Read this as "the new prompts work and
+  produce reasonably consistent scores," not as a formal reliability number.
+
+  Wrote 1 memory (ctrl+o to expand)
+
+● Logged. Ready to rebuild the .exes whenever you say go — that's the last step
+  before anything touches the download page.
+
+✻ Crunched for 13m 28s
+
+> rebuild the exe                                                               
+
+  Listed 1 directory (ctrl+o to expand)
+
+● Found it. Rebuilding both the CLI and GUI universal exes now — each takes ~3–4
+  minutes, so running in the background.
+
+  Ran 2 shell commands (ctrl+o to expand)
+● Both builds kicked off in the background (CLI and GUI, in parallel — they
+  write to separate build//dist/ subfolders so this is safe). I'll wait for both
+  to finish, then actually drive the rebuilt GUI through a company/city pass
+  before calling it done, per the lesson from the last shipped crash.
+
+✻ Crunched for 19s
+
+※ recap: Rebuilding the CAMS Scorer Windows app with new company/city prompt logic; both CLI and GUI exes are compiling in the background now. Next: once done, actually run the rebuilt GUI through a real scoring pass to confirm it works before shipping.
+
+● Background command "Rebuild the universal CLI exe from its PyInstaller spec"
+completed (exit code 0)
+
+  Read 1 file (ctrl+o to expand)
+
+● CLI exe rebuilt cleanly — PyInstaller detected the cams_city_raw_scorer.py
+  change and rebuilt through to dist/cams-scorer-universal.exe. Now let's
+  smoke-test it before moving on.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Background command "Rebuild the universal GUI exe from its PyInstaller spec"
+completed (exit code 0)
+
+● CLI exe works cleanly on the company variant. Let's confirm the city variant
+  too, then check the GUI build output before testing the GUI exe itself.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● CLI exe confirmed clean on both variants against a real Grok call. Now the GUI
+  build output:
+
+  Read 1 file, ran 2 shell commands (ctrl+o to expand)
+
+● The GUI's actual variant-selection code — not just the shared scorer module —
+  ran cleanly through Company, City, and Country, each producing a valid prompt
+  dialog with no exceptions. This is the same verification method that caught
+  the earlier font-size crash, run against the exact source that was just frozen
+  into the exe.
+
+  One more packaging sanity check — launch the actual frozen .exe and confirm it
+  doesn't die on startup.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Cleaned up the leftover window. Both verification passes came back clean: the
+  exe stayed alive after launch (no immediate crash), and I've now closed it.
+
+  Summary — both exes rebuilt and verified:
+  - dist/cams-scorer-universal.exe (CLI): real Grok calls succeeded for both
+  company (Tesla) and city (Detroit), correct 8-row output, clean exit codes.
+  - dist/cams-scorer-gui-universal.exe (GUI): the source's actual App class was
+  driven through Company/City/Country variant selection and the "view
+  instructions" dialog with no exceptions; the frozen exe itself launched and
+  stayed alive.
+
+  Nothing has touched the live download page
+  (neuralnations.org/cams-scorer-local) yet — that's a separate, visible step.
+  Let me know when you want that pushed.
+
+✻ Sautéed for 4m 24s
+
+> if it works, push it.                                                         
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● This matches an exact precedent — commit 46a607a "Rebuild universal scorer
+  exes: scoring discipline v1.1 + GUI polish" is the same pattern for the last
+  prompt-discipline update. No separate deploy step; the site serves straight
+  from this repo. Copying the fresh exes over now.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Only the two exe files changed — none of the unrelated untracked files
+  (analysis CSVs, JUNO docs) in the working tree are touched. Committing and
+  pushing just those two.
+
+  Committed 9948fd0 (ctrl+o to expand)
+
+● Committed clean — only the two exe files, unrelated untracked files left
+  alone. Pushing now.
+
+  Pushed to main (ctrl+o to expand)
+
+● Pushed (52b51b2..9948fd0). The live download page at
+  neuralnations.org/cams-scorer-local now serves the rebuilt exes with the
+  v1.2-OPT country / v1.1-OPT company / v1.1-OPT city prompts. Updating memory
+  to close this out.
+
+  Wrote 1 memory (ctrl+o to expand)
+
+● Done. Both rebuilt exes (country v1.2-OPT, company/city v1.1-OPT) are live on
+  neuralnations.org/cams-scorer-local, pushed as 9948fd0. Verified at every
+  stage — source-level, frozen-CLI-against-a-real-provider, and
+  frozen-GUI-launch — before anything went out.
+✻ Cooked for 1m 18s
+
+> \look at the zip file in downloads I want you to extrACT IT ANd build a       
+  proffesional hand off page for praticioners and skeptics alike                
+
+  Listed 1 directory (ctrl+o to expand)
+
+● The most likely match is DIY CAMS rater and analysis tool.zip (Aug 4, today,
+  directly on-topic with the rater work we've been doing). Let's extract it.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Small kit — let me read all four files.
+
+  Read 4 files (ctrl+o to expand)
+
+● Skill(artifact-design)
+  ⎿  Successfully loaded skill
+
+● Skill(dataviz)
+  ⎿  Successfully loaded skill
+
+> pad it out if you need too :-)                                                
+
+  Made 1 scratchpad edit +757, read 1 file, ran 6 shell commands (ctrl+o to expand)
+
+● Now publishing as an Artifact.
+
+● Artifact(C:\Users\julie\AppData\Local\Temp\claude\C--Users-julie\c66abcac-764a
+          -4b33-b21c-65a97e58534d\scratchpad\cams-can-handoff.html)
+  ⎿  Published ⧉ 
+     https://claude.ai/code/artifact/572cf368-3af6-4366-9aff-87fb0aa08623
+
+● Published: ⧉ 
+  https://claude.ai/code/artifact/572cf368-3af6-4366-9aff-87fb0aa08623
+
+  Extracted DIY CAMS rater and analysis tool.zip — a small four-file kit
+  (project instructions, two blank schema templates, a readme) meant for running
+  CAMS-CAN scoring inside a Claude Project, no API key needed. Built a single
+  handoff page structured as two tracks under one roof, with a toggle to filter
+  by audience:
+
+  - Run it (practitioner): the numbered SCORE/CALC/ensemble workflow, the full
+  project-instructions block and both schema templates as copy-button code
+  blocks, and the nation/corporation/city relabeling table.
+  - Trust it (skeptic): the evidence and change gates verbatim, the actual
+  measured reliability — Australia (v1.1: ICC(2,k)=0.710, ICC(3,k)=0.885) and US
+  (v1.2-OPT: 0.691/0.907 with full bootstrap CIs) — plus an explicit callout
+  that this isn't a controlled A/B between prompt versions, and a clear "not yet
+  established" list (criterion validity, generalizability, company/city ICC).
+  - Shared: the eight-node grid color-coded by fast/slow bond-topology loop,
+  dimension anchors, and the Node Value / Bond Strength formulas in full.
+
+  Design: a document-forward treatment (Cambria/Constantia serif pairing,
+  JetBrains-style mono for data, warm parchment ground) with a copper/teal
+  accent pair that's literally the framework's own fast-loop/slow-loop split,
+  not decorative — validated colorblind-safe via the palette checker. It's
+  private by default; use the share menu on the page if you want to hand it to
+  someone.
+
+✻ Brewed for 9m 51s
+
+> ok, make a copy for our site use the default neutralnations.org/ style guide  
+  include a link to a zip file with the goods create a invite peer review and   
+  validation page, put it there                                                 
+
+  Read 1 file, ran 1 shell command, recalled 2 memories (ctrl+o to expand)
+
+> and link to it from explore                                                   
+
+  Read 4 files, ran 4 shell commands (ctrl+o to expand)
+● Write(cams-diy-kit.html)
+  ⎿  Wrote 547 lines to cams-diy-kit.html
+       1 <!DOCTYPE html>
+       3 <head>
+       4     <meta charset="UTF-8">
+         cale=1.0">
+       7     <title>CAMS-CAN DIY Kit — Practitioner &amp; Skeptic Field G
+         uide — Neural Nations</title>
+         nd in a Claude Project, and see the validated reliability eviden
+         ce behind it. Download the DIY kit — project instructions, schem
+       9     <meta name="keywords" content="CAMS, CAMS-CAN, Neural Nation
+      10     <meta name="robots" content="index, follow">
+     … +864 lines (ctrl+o to expand)
+
+● Write(peer-review.html)
+  ⎿  Wrote 234 lines to peer-review.html
+       1 <!DOCTYPE html>
+       3 <head>
+       5     <meta name="viewport" content="width=device-width, initial-s
+         cale=1.0">
+       7     <title>Peer Review &amp; Validation Invite — CAMS-CAN — Neur
+       8     <meta name="description" content="An open invitation to inde
+         t-node institutional coordination framework behind Neural Nation
+         s.">
+         s, peer review, validation, reliability, replication, open scien
+      10     <meta name="robots" content="index, follow">
+     … +344 lines (ctrl+o to expand)
+
+● Now adding both to the Explore page, matching the existing artifact-grid card
+  pattern.
+
+● Update(explore.html)
+  ⎿  Added 10 lines
+      224                      CAMS Scorer — Local Edition (Universal)
+      225                      <span style="display:block; font-size:0.82
+           em; color:#888; margin-top:3px;">Download a standalone Windows
+            app that runs the same raw-scoring ensemble on your own machi
+           ne, using your own key for OpenAI, Grok, Claude, or Kimi — cou
+           ntry, company, or city, up to a 9-year range, 1/3/5 passes.</s
+           pan>
+      226                  </a>
+      227 +                <a href="cams-diy-kit.html" class="artifact-li
+          +nk" style="border-color:#2F6F7D; background:#f0f8fa;">        
+      228 +                    <span class="badge badge-tool">Tool</span>
+          +<span class="badge badge-new">new</span>                      
+      229 +                    CAMS-CAN DIY Kit                          
+      230 +                    <span style="display:block; font-size:0.82
+          +em; color:#888; margin-top:3px;">Run CAMS-CAN scoring by hand 
+          +in a Claude Project — no API key, no install. Copy-paste proje
+          +ct instructions and schema templates, plus the full validated 
+          +reliability record (ICC by panel) for skeptics.</span>        
+      231 +                </a>                                          
+      232 +                <a href="peer-review.html" class="artifact-lin
+          +k" style="border-color:#2F6F7D; background:#f0f8fa;">         
+      233 +                    <span class="badge badge-tool">Tool</span>
+          +<span class="badge badge-new">new</span>                      
+      234 +                    Peer Review &amp; Validation Invite       
+      235 +                    <span style="display:block; font-size:0.82
+          +em; color:#888; margin-top:3px;">An open invitation to indepen
+          +dently replicate, audit, or stress-test CAMS-CAN. What's alrea
+          +dy been measured, what hasn't, and how to send in a finding.</
+          +span>                                                         
+      236 +                </a>                                          
+      237                  <a href="cams-advanced-analysis.html" class="a
+           rtifact-link"><span class="badge badge-tool">Tool</span><span 
+           class="badge badge-beta">beta</span> CAMS Advanced Analysis <s
+           pan style="display:block; font-size:0.82em; color:#888; margin
+           -top:3px;">In-browser deep-dive into derived CAMS metrics — dD
+           IG (dynamic Δ in governance), Dyad Fields 𝒫(t)/𝒴(t), Phase-Spa
+           ce Attractors, and coordination headroom. No upload needed; lo
+           ads the CAMS index directly.</span></a>
+      238                  <a href="status_report.html" class="artifact-l
+           ink" style="border-color:#C84C3E; background:#fdf5f4;">
+      239                      <span class="badge badge-tool">Tool</span>
+           <span class="badge badge-new">new</span>
+
+  Ran 3 shell commands (ctrl+o to expand)
+
+● Now let's do a quick visual sanity check by opening the pages in a browser
+  before pushing to production.
+
+  Called claude-in-chrome, ran 2 shell commands (ctrl+o to expand)
+
+● Background command "Start a local HTTP server to preview the new pages in a
+browser" completed (exit code 0)
+
+● Server's up. Now let's actually look at the pages in a browser.
+
+  Called claude-in-chrome 4 times (ctrl+o to expand)
+
+● Nav and hero render correctly. Let me check further down and test the
+  toggle/copy interactions, plus scan for console errors.
+
+  Called claude-in-chrome 13 times (ctrl+o to expand)
+● Good — that confirms it was a stuck tab, not a page bug. Continuing
+  verification on the fresh tab.
+
+  Called claude-in-chrome 7 times (ctrl+o to expand)
+
+● Found a real bug: the CSS filter selectors target section[data-track=...] but
+  the markup uses <div class="card" data-track=...> — so toggling never actually
+  hides anything. Fixing it.
+
+● API Error: Response stalled mid-stream. The response above may be 
+  incomplete.
+
+✻ Baked for 33m 14s
+
+※ recap: You're upgrading the CAMS scorer's prompts and shipping the results; the country/company/city exes are rebuilt and pushed live. Just now I built and published the practitioner/skeptic handoff page for the DIY CAMS kit; next is to check the link and decide if it should go on the site.
+
+> all ok                                                                        
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(cams-diy-kit.html)
+  ⎿  Added 2 lines, removed 2 lines
+      42      .dk-toggle button[aria-pressed="true"] { background: #1B2A3
+          3; color: #F5F1E4; }
+      43      .dk-toggle button:hover:not([aria-pressed="true"]) { color:
+           #1B2A33; }
+      44  
+      45 -    body.dk-filter-practitioner section[data-track="skeptic"] {
+         - display: none; }                                              
+      46 -    body.dk-filter-skeptic section[data-track="practitioner"] {
+         - display: none; }                                              
+      45 +    body.dk-filter-practitioner [data-track="skeptic"] { displa
+         +y: none; }                                                     
+      46 +    body.dk-filter-skeptic [data-track="practitioner"] { displa
+         +y: none; }                                                     
+      47  
+      48      .section-label { font-size: 0.72rem; font-weight: 700; text
+          -transform: uppercase; letter-spacing: 0.12em; color: #2F6F7D; 
+          margin: 0 0 12px; }
+      49      .dk-track-tag { font: 700 0.66rem ui-monospace, monospace; 
+          letter-spacing: 0.06em; text-transform: uppercase; padding: 3px
+           9px; border-radius: 20px; float: right; }
+
+● Now let's re-verify the fix on the live page.
+
+  Called claude-in-chrome 4 times (ctrl+o to expand)
+
+● Tab's responsive. Let me force a fresh reload to pick up the CSS fix, then
+  re-test the toggle.
+
+  Called claude-in-chrome 2 times (ctrl+o to expand)
+
+● Toggle now works correctly in both directions. Let's check the copy button and
+  console errors, then quickly sanity-check peer-review.html.
+
+  Called claude-in-chrome 4 times (ctrl+o to expand)
+
+> just push it and i'll look at it. is this thread getting too long             
+
+● Stopping the browser checks — pushing now. (Thread length: it's fine, older
+  parts get auto-summarized as we go, so no need to worry or clear unless you
+  want a fresh start.)
+
+  Committed 9c97413, pushed to main, ran 2 shell commands (ctrl+o to expand)
+
+> link to it all from explore                                                   
+
+● That's already done — I added both as cards in Explore's "Validated Tools"
+  grid in the same commit:
+
+  Ran 1 shell command (ctrl+o to expand)
+
+> explore                                                                       
+> pardon                                                                        
+
+● Confirmed — both new pages (cams-diy-kit.html and peer-review.html) are
+  already linked as cards in Explore's "Validated Tools" grid, right after the
+  CAMS Scorer entries, pushed live in commit 9c97413.
+
+  Everything's shipped:
+  - cams-diy-kit.html — the practitioner/skeptic handoff page, site-styled, with
+  a download link to cams-diy-kit/cams-diy-kit.zip ("the goods")
+  - peer-review.html — the peer review & validation invite page
+  - Both linked from explore.html
+
+  Go take a look — let me know if anything looks off once it's live on
+  Cloudflare Pages.
+
+✻ Worked for 12m 53s

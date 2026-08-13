@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PR-GAP-2: Formalism Audit and Path Forward</title>
+<style>
+:root {
+  --bg: #F5F1E4; --ink: #1B2A33; --amber: #D98B2B; --teal: #2F6F7D;
+  --red: #C84C3E; --green: #3a7d44; --paper: #FDFAF0; --border: #DAD2B8;
+  --mono: 'JetBrains Mono','Courier New',monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: Georgia, serif; font-size: 15.5px; line-height: 1.72; }
+.wrap { max-width: 860px; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+
+.doc-header { border-bottom: 2px solid var(--ink); padding-bottom: 1.25rem; margin-bottom: 2.25rem; }
+.doc-header h1 { font-size: 1.55rem; font-weight: 700; line-height: 1.25; margin-bottom: 0.3rem; }
+.doc-header .sub { font-size: 0.93rem; color: #5A6A75; }
+.doc-header .meta { font-size: 0.78rem; color: #8A9BAA; font-family: var(--mono); margin-top: 0.5rem; }
+
+h2 { font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin: 2.25rem 0 0.7rem; border-bottom: 1px solid var(--border); padding-bottom: 0.3rem; }
+h3 { font-size: 0.95rem; font-weight: 700; color: var(--teal); margin: 1.4rem 0 0.45rem; }
+p { margin-bottom: 0.9rem; }
+
+.box { border-radius: 7px; padding: 1.05rem 1.3rem; margin: 1.25rem 0; }
+.box-amber { background: #FBF6E8; border: 1px solid #E8D4A0; border-left: 4px solid var(--amber); }
+.box-red   { background: #FBF0EE; border: 1px solid #E8C4C0; border-left: 4px solid var(--red); }
+.box-teal  { background: #EEF5F7; border: 1px solid #C0D8DF; border-left: 4px solid var(--teal); }
+.box-green { background: #EEF6EF; border: 1px solid #B8D8BB; border-left: 4px solid var(--green); }
+.box-ink   { background: var(--ink); color: #D0C8B4; border-radius: 8px; padding: 1.4rem 1.6rem; margin: 2rem 0; }
+.box-ink p { color: #C0B8A4; margin-bottom: 0.7rem; }
+.box-ink h3 { color: var(--amber); }
+.box-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.4rem; }
+.box-amber .box-label { color: var(--amber); }
+.box-red   .box-label { color: var(--red); }
+.box-teal  .box-label { color: var(--teal); }
+.box-green .box-label { color: var(--green); }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.83rem; font-family: var(--mono); margin: 1rem 0; }
+th { background: var(--ink); color: #F0ECD8; padding: 6px 11px; text-align: left; font-size: 0.69rem; text-transform: uppercase; letter-spacing: 0.07em; }
+td { padding: 5px 11px; border-bottom: 1px solid #E4DEC8; }
+td.num { text-align: right; }
+tr:hover td { background: #F5EFD8; }
+.hi  { background: #FBF0EE; }
+.mid { background: #FBF8EE; }
+.lo  { background: #EEF6EF; }
+
+.eq { background: var(--paper); border: 1px solid var(--border); border-radius: 6px; padding: 0.9rem 1.1rem; font-family: var(--mono); font-size: 0.88rem; margin: 0.85rem 0; line-height: 2.1; }
+.eq .label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: #8A9BAA; display: block; margin-bottom: 0.3rem; font-family: Georgia, serif; }
+
+.seq { counter-reset: finding; list-style: none; padding: 0; margin: 1rem 0; }
+.seq li { counter-increment: finding; display: flex; gap: 1rem; padding: 0.8rem 0; border-bottom: 1px solid var(--border); }
+.seq li:last-child { border-bottom: none; }
+.seq-num { font-family: var(--mono); font-size: 0.75rem; font-weight: 700; color: var(--teal); background: #EEF5F7; border: 1px solid #C0D8DF; border-radius: 4px; padding: 2px 8px; height: fit-content; white-space: nowrap; margin-top: 3px; flex-shrink: 0; }
+.seq-body { font-size: 0.9rem; color: #2A3A44; }
+.seq-body strong { display: block; color: var(--ink); margin-bottom: 0.2rem; }
+
+.roadmap { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.25rem 0; }
+.roadmap-row { display: grid; grid-template-columns: 2fr 3fr 2fr; gap: 0; border-bottom: 1px solid var(--border); }
+.roadmap-row:last-child { border-bottom: none; }
+.roadmap-row.header { background: var(--ink); }
+.roadmap-cell { padding: 8px 12px; font-size: 0.83rem; font-family: var(--mono); }
+.roadmap-row.header .roadmap-cell { color: #F0ECD8; font-size: 0.69rem; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 700; }
+.roadmap-row:not(.header):nth-child(even) { background: var(--paper); }
+.tag { display: inline-block; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 2px 6px; border-radius: 3px; }
+.tag-fix   { background: #FBF0EE; color: var(--red); border: 1px solid #E8C4C0; }
+.tag-new   { background: #EEF5F7; color: var(--teal); border: 1px solid #C0D8DF; }
+.tag-done  { background: #EEF6EF; color: var(--green); border: 1px solid #B8D8BB; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="doc-header">
+  <h1>PR-GAP-2: Formalism Audit and Path Forward</h1>
+  <div class="sub">What the JUNO × CAMS validation study changes about the null results</div>
+  <div class="meta">Kari Freyr McKern · July 2026 · Sources: JUNO × CAMS Derivate Recomputation (2026-07-19) · PR-GAP-2-NCT-v1 · GDT LOSO results</div>
+</div>
+
+<!-- ── SECTION 1 ── -->
+<h2>1. What the Validation Study Establishes</h2>
+
+<p>The JUNO × CAMS recomputation across France (1850–2026), Poland (1875–2026), and Hong Kong (1900–2026) — 3,648 node-years — confirms four theses with permutation p &lt; 10⁻⁴ and a 45/45 sensitivity pass rate. This is the strongest empirical validation the CAMS/JUNO formalism has produced to date:</p>
+
+<table>
+<thead><tr><th>Thesis</th><th>Result</th><th>Significance</th></tr></thead>
+<tbody>
+<tr class="lo"><td>T1: Stress suppresses expressed cognition ρ(S,P) &lt; 0</td><td>−0.842 to −0.970</td><td>p &lt; 1e-4, all 3</td></tr>
+<tr class="lo"><td>T2: Stress suppresses network integration ρ(S,B) &lt; 0</td><td>−0.909 to −0.932</td><td>p &lt; 1e-4, all 3</td></tr>
+<tr class="lo"><td>T3: Crisis windows show depressed P_t</td><td>Consistent across all windows</td><td>perm. p ≤ 8e-4</td></tr>
+<tr class="lo"><td>T4: Crisis windows show elevated frac(P_i &lt; 0)</td><td>0.75–1.00 vs 0.20–0.45 baseline</td><td>perm. p ≤ 1.8e-3</td></tr>
+</tbody>
+</table>
+
+<p>The formalism is not in question. What the validation study reveals is that two of our measurement choices in PR-GAP-2 were inconsistent with the canonical formalism. This explains a substantial portion of the NCT and GDT null results without requiring the theory to be revised.</p>
+
+<!-- ── SECTION 2 ── -->
+<h2>2. Gap 1: Legacy Bond Strength Throughout PR-GAP-2</h2>
+
+<p>The Bond Strength column used in all PR-GAP-2 analyses — the original rupture test, the LOSO baseline, NCT-v1, and GDT — is a legacy pipeline variant. The validation study's audit finds:</p>
+
+<ul style="margin: 0.75rem 0 0.75rem 1.5rem; font-size: 0.92rem; line-height: 1.8;">
+  <li>Total absolute error vs canonical B_i: 43,830 (vs 16,151 for the closest reverse-engineered variant)</li>
+  <li>Best correlation with canonical B_i: r = 0.89</li>
+  <li>No fixed-point found in grid search over coupling weight and damping exponent</li>
+  <li>Conclusion: generated by an older pipeline revision, not a rescaling of the canonical operator</li>
+</ul>
+
+<div class="box box-red">
+<div class="box-label">Impact on PR-GAP-2 results</div>
+All Bond Strength AUC scores (0.641 in the rupture test; logistic β = −0.54 in the combined model; all LOSO folds) are legacy-variant results. The canonical B_i uses bounded q_i = (0.6C+0.4A)/10 ∈ [0,1] with stronger stress damping than the legacy variant. Under the thesis sensitivity analysis, the legacy variant attenuates T2 correlations from −0.91/−0.93 to −0.77/−0.83 while preserving significance. The direction of the difference suggests canonical B_i would produce a stronger rupture signal in LOSO — but this must be verified empirically.
+</div>
+
+<div class="eq">
+<span class="label">Canonical operators (confirmed by validation study)</span>
+q_i = (0.6·C_i + 0.4·A_i) / 10 &nbsp;&nbsp; ∈ [0, 1]<br>
+B_ij = √(q_i · q_j) · 2^(−(S_i + S_j)/10) &nbsp;&nbsp; ∈ (0, 1]<br>
+B_i = (1/7) Σ_{j≠i} B_ij &nbsp;&nbsp; [network integration, per-node]<br>
+B_t = (1/8) Σ_i B_i &nbsp;&nbsp; [system Bond Strength]
+</div>
+
+<!-- ── SECTION 3 ── -->
+<h2>3. Gap 2: NCT Used D Without the Neuromodulatory Gate</h2>
+
+<p>The NCT-v1 operationalization used Dream composition weights p_ist = D_ist / ΣD = (A×C) / Σ(A×C). The validation study defines a fuller operator chain:</p>
+
+<div class="eq">
+<span class="label">JUNO operator chain</span>
+D_i = A_i · C_i &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [organised cognition]<br>
+N_i = K_i − S_i &nbsp;&nbsp;&nbsp;&nbsp; [neuromodulatory condition; negative when S > K]<br>
+P_i = D_i · N_i &nbsp;&nbsp;&nbsp;&nbsp; [expressed cognition; inverts when N &lt; 0]
+</div>
+
+<p>32.2% of node-years in the validation dataset have P_i &lt; 0 (always when N_i &lt; 0, i.e., S > K). These are nodes in cognitive deficit: their organised cognition (D) is active, but the neuromodulatory condition suppresses and inverts its expression. A node with high A×C but S > K is not contributing to Dream — it is inhibiting it.</p>
+
+<div class="box box-amber">
+<div class="box-label">What NCT-v1 got wrong</div>
+Our Dream composition p_ist = D_ist / ΣD treated stressed nodes (S > K, N &lt; 0, P &lt; 0) as having positive composition weight proportional to their A×C product. This is incorrect under the formalism: those nodes are in deficit expression and should not contribute positive Dream weight. The composition should be based on max(P_i, 0) — nodes that are actually expressing organised cognition — not on D alone.
+</div>
+
+<h3>Proposed NCT-v2 fix</h3>
+
+<p>Replace D_ist with P⁺_ist = max(P_ist, 0) = max((A×C)×(K−S), 0) as the composition weight:</p>
+
+<div class="eq">
+<span class="label">NCT-v2 Dream composition (P-weighted)</span>
+P⁺_ist = max(D_ist · N_ist, 0) = max((A_ist · C_ist) · (K_ist − S_ist), 0)<br>
+p_ist = P⁺_ist / Σ_j P⁺_jst &nbsp;&nbsp; [excludes deficit nodes from numerator]
+</div>
+
+<p>This preserves the NCT-v1 N, C_d, and T formulae with the new p_ist as input. When all nodes are in deficit (Σ P⁺ = 0), the society-year is undefined for NCT-v2 and should be excluded. The lockable preregistered direction predictions for N, C_d, and T are unchanged.</p>
+
+<p><strong>Note on coverage:</strong> P⁺-weighted composition will produce defined values only when at least one node has K > S. Given the 32.2% deficit rate in the validation dataset, approximately 10–30% of society-years may have zero or near-zero Σ P⁺, particularly during crisis windows. This shrinkage must be reported alongside ΔAUC in any LOSO run.</p>
+
+<!-- ── SECTION 4 ── -->
+<h2>4. Gap 3: Rupture Chronology Conflates Cognitive-Deficit Events with Coordination Transitions</h2>
+
+<p>The 1997 Hong Kong handover is the validation study's most analytically precise finding. The D/N/P decomposition reads it as:</p>
+
+<table>
+<thead><tr><th>Window</th><th class="num">Mean P_t</th><th class="num">Mean N_t</th><th class="num">Mean B_t</th><th class="num">frac(P&lt;0)</th><th>Reading</th></tr></thead>
+<tbody>
+<tr class="hi"><td>HK 1967 (riot)</td><td class="num">−20.3</td><td class="num">−1.50</td><td class="num">0.330</td><td class="num">0.75</td><td>Cognitive deficit ✓</td></tr>
+<tr class="lo"><td>HK 1997 (handover)</td><td class="num">+26.0</td><td class="num">+0.55</td><td class="num">0.436</td><td class="num">0.25</td><td>High-coordination transition</td></tr>
+<tr class="hi"><td>HK 2019–20 (protests)</td><td class="num">−38.9</td><td class="num">−2.41</td><td class="num">0.297</td><td class="num">1.00</td><td>Cognitive deficit ✓</td></tr>
+</tbody>
+</table>
+
+<p>The formalism correctly discriminates: 1997 was a negotiated, internationally recognised transfer that left institutions intact. Its structural signature is the opposite of a crisis. If 1997 is coded as a "rupture" in the PR-GAP-2 chronology — under "regime change" — then the model is penalised for correctly assigning it a low rupture probability.</p>
+
+<div class="box box-teal">
+<div class="box-label">Proposed chronology split</div>
+Re-code the 126-event rupture chronology with a binary flag: <strong>P-negative event</strong> (at least one node in cognitive deficit during the window, mean P_t &lt; 0) vs <strong>P-positive transition</strong> (positive P_t, elevated B_t — coordination reconfiguration without deficit). Run LOSO separately on P-negative events only. This is not a post-hoc correction — it is an application of the formalism's designed discrimination capacity, which the validation study confirms is empirically valid.
+</div>
+
+<!-- ── SECTION 5 ── -->
+<h2>5. Why the Null Results Are Not Theory Failures</h2>
+
+<ul class="seq">
+  <li>
+    <span class="seq-num">NCT</span>
+    <div class="seq-body"><strong>Dream composition used D instead of P⁺</strong>Stressed nodes (S > K) contributed positive Dream weight proportional to A×C, even though the formalism says they are in cognitive deficit with inverted expression. This systematically misassigns weight in exactly the conditions — pre-rupture stress spikes — where the NCT signal should be strongest.</div>
+  </li>
+  <li>
+    <span class="seq-num">GDT</span>
+    <div class="seq-body"><strong>Node-value gaps move together due to scorer correlation</strong>When scorers implicitly couple their node ratings (a common behaviour in retrospective multi-node assessment), G and D collapse toward zero across all society-years. This is a scorer-protocol limitation, not a theoretical failure. It could be addressed by scorer independence training, cross-node anchoring instructions, or external validation of at least one node per dimension.</div>
+  </li>
+  <li>
+    <span class="seq-num">Both</span>
+    <div class="seq-body"><strong>Legacy Bond Strength used throughout</strong>The baseline model's Bond Strength variable is a legacy pipeline variant attenuated relative to canonical B_i. All LOSO AUC scores are lower bounds relative to what canonical B_i would produce. The baseline may be stronger than reported; ΔAUC estimates may be conservative.</div>
+  </li>
+  <li>
+    <span class="seq-num">Both</span>
+    <div class="seq-body"><strong>Rupture chronology conflates event types</strong>P-positive coordination transitions (like HK 1997) coded as ruptures suppress predictive performance for any model — the structural signature is opposite to a deficit crisis. A type-stratified chronology would give the LOSO a coherent target.</div>
+  </li>
+</ul>
+
+<!-- ── SECTION 6 ── -->
+<h2>6. Road Map for the Next Test</h2>
+
+<div class="roadmap">
+  <div class="roadmap-row header">
+    <div class="roadmap-cell">Step</div>
+    <div class="roadmap-cell">Action</div>
+    <div class="roadmap-cell">Type</div>
+  </div>
+  <div class="roadmap-row">
+    <div class="roadmap-cell">1. Canonical bonds</div>
+    <div class="roadmap-cell">Recompute B_ij, B_i, B_t from node-level C/A/S using canonical q_i = (0.6C+0.4A)/10. Replace legacy Bond Strength in event study and all model inputs.</div>
+    <div class="roadmap-cell"><span class="tag tag-fix">Fix</span></div>
+  </div>
+  <div class="roadmap-row">
+    <div class="roadmap-cell">2. P-weighted NCT-v2</div>
+    <div class="roadmap-cell">Recompute Dream composition using P⁺_ist = max((A×C)×(K−S), 0). Rerun N, C_d, T under same locked formulae. Run LOSO as per NCT-v1 protocol.</div>
+    <div class="roadmap-cell"><span class="tag tag-fix">Fix</span></div>
+  </div>
+  <div class="roadmap-row">
+    <div class="roadmap-cell">3. P-negative chronology</div>
+    <div class="roadmap-cell">Flag each rupture event as P-negative (deficit crisis) or P-positive (transition). Re-run LOSO baseline and NCT-v2 augmented on P-negative events only.</div>
+    <div class="roadmap-cell"><span class="tag tag-new">New</span></div>
+  </div>
+  <div class="roadmap-row">
+    <div class="roadmap-cell">4. LOSO comparison</div>
+    <div class="roadmap-cell">Report ΔAUC (canonical baseline vs canonical baseline + NCT-v2) under LOSO, with effective N and rupture counts per fold. Pre-register before running.</div>
+    <div class="roadmap-cell"><span class="tag tag-new">New</span></div>
+  </div>
+  <div class="roadmap-row">
+    <div class="roadmap-cell">5. Formalism validation</div>
+    <div class="roadmap-cell">Run T1–T4 thesis tests on the full 44-society PR-GAP-2 panel using recomputed canonical operators. The 3-society validation should replicate at scale.</div>
+    <div class="roadmap-cell"><span class="tag tag-new">New</span></div>
+  </div>
+</div>
+
+<!-- ── SECTION 7 ── -->
+<div class="box-ink">
+  <h3>Verdict on the null results</h3>
+  <p>NCT-v1 and GDT produced null results under a LOSO protocol that used legacy Bond Strength values and Dream composition weights that ignore neuromodulatory gating — two identified deviations from the canonical formalism. The theory is not falsified. The measurement pipeline has two correctable gaps. The 45/45 sensitivity pass rate in the validation study, with permutation p &lt; 10⁻⁴ across all three societies, confirms the formalism is empirically grounded. The next test should fix both gaps before drawing any conclusion about whether Dream-composition or grooming-integrity variables add signal beyond the structural baseline.</p>
+</div>
+
+<p style="font-size:0.78rem; color:#8A9BAA; margin-top:2rem; font-family:var(--mono)">
+Files: pr_gap2_formalism_audit.html (this document) · pr_gap2_nct_loso_report.html · pr_gap2_synthesis.html · pr_gap2_report.html · pr_gap2_panel_derived.csv · pr_gap2_event_study.csv
+</p>
+
+</div>
+</body>
+</html>

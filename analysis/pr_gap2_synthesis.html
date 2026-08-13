@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PR-GAP-2: Findings, Corrections, and Path Forward</title>
+<style>
+:root {
+  --bg: #F5F1E4; --ink: #1B2A33; --amber: #D98B2B; --teal: #2F6F7D;
+  --red: #C84C3E; --green: #3a7d44; --paper: #FDFAF0; --border: #DAD2B8;
+  --mono: 'JetBrains Mono', 'Courier New', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: Georgia, 'Times New Roman', serif; font-size: 15.5px; line-height: 1.7; }
+.wrap { max-width: 860px; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+
+/* Header */
+.doc-header { border-bottom: 2px solid var(--ink); padding-bottom: 1.5rem; margin-bottom: 2.5rem; }
+.doc-header h1 { font-size: 1.65rem; font-weight: 700; line-height: 1.25; margin-bottom: 0.4rem; }
+.doc-header .sub { font-size: 0.95rem; color: #5A6A75; margin-bottom: 0.2rem; }
+.doc-header .meta { font-size: 0.8rem; color: #8A9BAA; font-family: var(--mono); margin-top: 0.5rem; }
+
+/* Sections */
+h2 { font-size: 1.05rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink); margin: 2.5rem 0 0.75rem; border-bottom: 1px solid var(--border); padding-bottom: 0.35rem; }
+h3 { font-size: 0.95rem; font-weight: 700; color: var(--teal); margin: 1.5rem 0 0.5rem; }
+p { margin-bottom: 0.9rem; }
+
+/* Callout boxes */
+.box { border-radius: 8px; padding: 1.1rem 1.35rem; margin: 1.5rem 0; }
+.box-amber { background: #FBF6E8; border: 1px solid #E8D4A0; border-left: 4px solid var(--amber); }
+.box-red   { background: #FBF0EE; border: 1px solid #E8C4C0; border-left: 4px solid var(--red); }
+.box-teal  { background: #EEF5F7; border: 1px solid #C0D8DF; border-left: 4px solid var(--teal); }
+.box-green { background: #EEF6EF; border: 1px solid #B8D8BB; border-left: 4px solid var(--green); }
+.box-ink   { background: var(--ink); color: #D8CCB4; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+.box-ink h3 { color: var(--amber); margin-top: 0; }
+.box-ink p  { color: #C8BCAA; }
+.box-label  { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.4rem; }
+.box-amber .box-label { color: var(--amber); }
+.box-red   .box-label { color: var(--red); }
+.box-teal  .box-label { color: var(--teal); }
+.box-green .box-label { color: var(--green); }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; font-size: 0.84rem; font-family: var(--mono); margin: 1.25rem 0; }
+th { background: var(--ink); color: #F0ECD8; padding: 7px 12px; text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; }
+td { padding: 6px 12px; border-bottom: 1px solid #E4DEC8; vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #F5EFD8; }
+.hi  { background: #FBF0EE; }
+.mid { background: #FBF8EE; }
+.lo  { background: #EEF6EF; }
+.num { text-align: right; font-family: var(--mono); }
+.pos { color: var(--green); }
+.neg { color: var(--red); }
+
+/* Corrections list */
+.corrections { list-style: none; padding: 0; margin: 1rem 0; }
+.corrections li { display: flex; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+.corrections li:last-child { border-bottom: none; }
+.c-num { font-family: var(--mono); font-size: 0.75rem; font-weight: 700; color: var(--red); background: #FBF0EE; border: 1px solid #E8C4C0; border-radius: 4px; padding: 2px 7px; height: fit-content; white-space: nowrap; margin-top: 2px; flex-shrink: 0; }
+.c-body strong { display: block; color: var(--ink); margin-bottom: 0.2rem; }
+.c-body { color: #3A4A54; }
+
+/* Equation block */
+.eq { background: var(--paper); border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.25rem; font-family: var(--mono); font-size: 0.88rem; margin: 1rem 0; line-height: 2; }
+.eq .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: #8A9BAA; display: block; margin-bottom: 0.35rem; font-family: Georgia, serif; }
+
+/* Comparison block */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: 8px; overflow: hidden; margin: 1.25rem 0; }
+.compare-cell { background: var(--paper); padding: 1rem 1.25rem; }
+.compare-cell h4 { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.6rem; }
+.compare-cell.baseline h4 { color: var(--teal); }
+.compare-cell.augmented h4 { color: var(--amber); }
+.compare-cell ul { list-style: none; padding: 0; font-size: 0.88rem; font-family: var(--mono); }
+.compare-cell ul li { padding: 3px 0; border-bottom: 1px solid #E8E2CE; }
+.compare-cell ul li:last-child { border-bottom: none; }
+@media (max-width: 600px) { .compare { grid-template-columns: 1fr; } }
+
+/* Footer */
+.footer { font-size: 0.8rem; color: #8A9BAA; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); font-family: var(--mono); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="doc-header">
+  <h1>PR-GAP-2: Findings, Corrections, and Path Forward</h1>
+  <div class="sub">CAMS as a Rupture Indicator — Cross-National Panel 1900–2025</div>
+  <div class="meta">Kari Freyr McKern &nbsp;·&nbsp; July 2026 &nbsp;·&nbsp; 44 societies · 4,541 society-years · 126 rupture events</div>
+</div>
+
+<!-- ── SECTION 1 ── -->
+<h2>1. What the Study Found</h2>
+
+<p>PR-GAP-2 tested whether CAMS eight-node coordination scores carry genuine forewarning signal for societal ruptures. The panel covers 44 societies from 1900 to 2025. 126 rupture events — coups, civil wars, revolutions, regime collapses, economic crises — were coded from the Cline Center Coup d'État Project v2.2.2, V-Dem ERT v15, and Reinhart/Rogoff crisis data. A society-year was flagged <em>rupture-incoming</em> if an event followed within three years, yielding 334 pre-rupture years against 4,117 calm years (7.5% base rate).</p>
+
+<h3>Mean Differences: Pre-Rupture vs Calm</h3>
+<table>
+<thead><tr><th>Variable</th><th class="num">Pre-Rupture</th><th class="num">Calm</th><th class="num">Difference</th><th>Direction</th></tr></thead>
+<tbody>
+<tr class="hi"><td>Mean Stress</td><td class="num">6.27</td><td class="num">5.36</td><td class="num neg">+0.91</td><td>Higher → rupture</td></tr>
+<tr class="hi"><td>S/K Ratio</td><td class="num">1.39</td><td class="num">1.06</td><td class="num neg">+0.33</td><td>Higher → rupture</td></tr>
+<tr class="hi"><td>Archive Stress</td><td class="num">5.71</td><td class="num">4.86</td><td class="num neg">+0.85</td><td>Higher → rupture</td></tr>
+<tr class="mid"><td>Mean Bond Strength</td><td class="num">0.237</td><td class="num">0.297</td><td class="num neg">−0.060</td><td>Lower → rupture</td></tr>
+<tr class="mid"><td>Mean Node Value</td><td class="num">7.16</td><td class="num">9.45</td><td class="num neg">−2.29</td><td>Lower → rupture</td></tr>
+<tr class="mid"><td>Helm Node Value</td><td class="num">7.06</td><td class="num">9.69</td><td class="num neg">−2.64</td><td>Lower → rupture</td></tr>
+<tr class="mid"><td>Archive Node Value</td><td class="num">8.15</td><td class="num">10.44</td><td class="num neg">−2.29</td><td>Lower → rupture</td></tr>
+<tr><td>Reactivity Ratio</td><td class="num">—</td><td class="num">—</td><td class="num">≈ 0</td><td>No signal</td></tr>
+</tbody>
+</table>
+
+<h3>AUC Scores (Individual Variables)</h3>
+<table>
+<thead><tr><th>Variable</th><th class="num">AUC</th><th>Note</th></tr></thead>
+<tbody>
+<tr class="lo"><td>Mean Stress</td><td class="num">0.648</td><td>Strongest single variable</td></tr>
+<tr class="lo"><td>Bond Strength</td><td class="num">0.641</td><td>Coupling collapse</td></tr>
+<tr class="lo"><td>S/K Ratio</td><td class="num">0.637</td><td>Stress-capacity gap</td></tr>
+<tr class="lo"><td>Archive Stress</td><td class="num">0.628</td><td>Memory/legal stress</td></tr>
+<tr class="lo"><td>Helm Node Value</td><td class="num">0.628</td><td>Governance capacity</td></tr>
+<tr><td>Mean Node Value</td><td class="num">0.627</td><td>System health</td></tr>
+<tr><td>Archive Node Value</td><td class="num">0.604</td><td>Fixation capacity</td></tr>
+<tr class="hi"><td>Reactivity Ratio</td><td class="num">0.515</td><td>Effectively chance — not a rupture signal</td></tr>
+<tr class="lo"><td><strong>Combined logistic</strong></td><td class="num"><strong>0.652</strong></td><td>Stress + Bond + Archive V/S + S/K</td></tr>
+</tbody>
+</table>
+
+<div class="box box-teal">
+<div class="box-label">Mechanism</div>
+The dominant logistic coefficients are Bond Strength (β = −0.54) and Mean Stress (β = +0.38). The pre-rupture signature is <strong>stress rising while nodes decouple from each other</strong> — not fast-node operational chaos. Reactivity Ratio at AUC 0.515 confirms that operational turbulence alone is not the rupture signal; slow-node structural erosion (Archive, Helm, coupling) is.
+</div>
+
+<h3>2025 Alarm Readings</h3>
+<p>Three societies are currently at or above their own all-time CAMS stress readings within the 1900–2025 panel:</p>
+<table>
+<thead><tr><th>Society</th><th class="num">2025 Stress</th><th>Historical Peak</th><th class="num">% of Peak</th><th>Archive V Change</th></tr></thead>
+<tbody>
+<tr class="hi"><td>South Africa</td><td class="num">9.75</td><td>1985 (late apartheid)</td><td class="num neg">105%</td><td>7.5 → −2.5 (2020–25)</td></tr>
+<tr class="hi"><td>Venezuela</td><td class="num">9.38</td><td>1989 (petroleum crisis)</td><td class="num neg">104%</td><td>severe</td></tr>
+<tr class="hi"><td>USA</td><td class="num">7.33</td><td>1932 (Great Depression)</td><td class="num neg">104%</td><td>9.5 → 6.5 (2020–25)</td></tr>
+</tbody>
+</table>
+<p>South Africa's Archive Node collapse (7.5 → −2.5 in five years) has no parallel in the panel outside active state-collapse events such as Afghanistan post-2001.</p>
+
+<!-- ── SECTION 2 ── -->
+<h2>2. Methodological Corrections</h2>
+
+<p>Eight corrections were accepted following initial reporting. They substantially narrow what the results can claim.</p>
+
+<ul class="corrections">
+  <li>
+    <span class="c-num">C1</span>
+    <div class="c-body"><strong>Retrospective scoring</strong> Scores were produced with full knowledge of subsequent history. A value dated three years before a rupture is not an ex-ante forecast if scorers knew what followed. The AUC measures retrospective discrimination, not prospective prediction.</div>
+  </li>
+  <li>
+    <span class="c-num">C2</span>
+    <div class="c-body"><strong>No out-of-sample holdout</strong> No leave-one-society-out or temporal holdout was run. AUC 0.652 is in-sample over the same panel used for evaluation. Optimism from in-sample evaluation is unknown in magnitude.</div>
+  </li>
+  <li>
+    <span class="c-num">C3</span>
+    <div class="c-body"><strong>Selection optimism</strong> Five predictors were selected and evaluated on the same panel. This introduces selection optimism that inflates the apparent combined AUC beyond what a pre-specified model would achieve.</div>
+  </li>
+  <li>
+    <span class="c-num">C4</span>
+    <div class="c-body"><strong>Overlapping windows invalidate p-values</strong> Three-year outcome windows create serial correlation between adjacent society-years. Standard p-values assume independence. The p &lt; 0.001 figures are not valid under this structure. Clustered standard errors by society, or block bootstrap, would widen confidence intervals substantially.</div>
+  </li>
+  <li>
+    <span class="c-num">C5</span>
+    <div class="c-body"><strong>"Every variable significant" is driven by N</strong> With 4,541 autocorrelated observations, even small effect sizes pass standard significance thresholds. Statistical significance across all variables is partly a sample-size artefact, not an effect-size endorsement.</div>
+  </li>
+  <li>
+    <span class="c-num">C6</span>
+    <div class="c-body"><strong>AUC comparison is invalid</strong> The 0.68–0.75 range from political-science early-warning models applies to different outcome definitions, time horizons, and validation protocols. Comparing 0.652 against that benchmark without identical evaluation conditions is not valid.</div>
+  </li>
+  <li>
+    <span class="c-num">C7</span>
+    <div class="c-body"><strong>2025 alarms lack calibrated probabilities</strong> The alarm readings do not carry calibrated rupture probabilities, scorer uncertainty intervals, or protection against scoring-model drift between historical and contemporary assessments.</div>
+  </li>
+  <li>
+    <span class="c-num">C8</span>
+    <div class="c-body"><strong>Dream-composition variables were not tested</strong> The tested variables exclude Dream path deviation (N), Dream concentration (C), and Dream-weighted bond support (T). PR-GAP-2 cannot speak to the narrative-layer hypothesis.</div>
+  </li>
+</ul>
+
+<!-- ── SECTION 3 ── -->
+<h2>3. The Defensible Conclusion</h2>
+
+<div class="box box-ink">
+  <p style="font-size:1.05rem; color:#F0ECD8; font-style:italic; margin-bottom:0.75rem;">
+    "Retrospective CAMS Stress, coupling, and slow-node measures contain moderate rupture-discrimination signal in a cross-national historical panel. Prospective validity and out-of-society generalization remain unestablished."
+  </p>
+  <p>What survives all eight corrections: the mean-difference pattern is real and consistent across variables and regions. Bond Strength declining while Stress rises is a structural signature that precedes ruptures in the retrospective record. Whether it would do so prospectively, in unseen societies, under pre-registered conditions, is not yet known.</p>
+</div>
+
+<!-- ── SECTION 4 ── -->
+<h2>4. What PR-GAP-2 Actually Delivers</h2>
+
+<p>The genuine contribution is a <strong>validated baseline model</strong>: Stress + Bond Strength + slow-node health (Helm Node Value, Archive Node Value, Archive Stress). This baseline can now serve as the fixed comparison arm for testing the Dream-composition layer. Without a clean baseline established first, any augmented model is untethered — it is not possible to isolate the marginal contribution of N, C, and T variables without knowing what the structural baseline achieves.</p>
+
+<p>PR-GAP-2 establishes that baseline. It does not test the narrative-layer hypothesis itself.</p>
+
+<!-- ── SECTION 5 ── -->
+<h2>5. The Next Test: Dream-Composition LOSO</h2>
+
+<p>The Dream-composition variables to be added:</p>
+
+<div class="eq">
+  <span class="label">Variable definitions</span>
+  N = Dream path deviation (distance from expected trajectory given prior node state)<br>
+  C = Dream concentration (occupational narrative clustering coefficient)<br>
+  T = Dream-weighted bond support (bond strength reweighted by narrative coherence)
+</div>
+
+<p>The test is leave-one-society-out (LOSO) cross-validation. Each society is withheld in turn; the model trains on the remaining 43 societies; AUC is computed on the held-out society. This is repeated for both model specifications below:</p>
+
+<div class="compare">
+  <div class="compare-cell baseline">
+    <h4>Baseline</h4>
+    <ul>
+      <li>Mean Stress</li>
+      <li>Bond Strength</li>
+      <li>Helm Node Value</li>
+      <li>Archive Node Value</li>
+      <li>Archive Stress</li>
+    </ul>
+  </div>
+  <div class="compare-cell augmented">
+    <h4>Baseline + Dream</h4>
+    <ul>
+      <li>Mean Stress</li>
+      <li>Bond Strength</li>
+      <li>Helm Node Value</li>
+      <li>Archive Node Value</li>
+      <li>Archive Stress</li>
+      <li><strong>+ N</strong> (path deviation)</li>
+      <li><strong>+ C</strong> (concentration)</li>
+      <li><strong>+ T</strong> (weighted bond support)</li>
+    </ul>
+  </div>
+</div>
+
+<p>The target quantity is <strong>ΔAUC</strong>: the difference between augmented and baseline AUC, evaluated on held-out societies under LOSO. A positive ΔAUC that is robust across hold-out folds would constitute evidence that assembled occupational narratives add predictive signal beyond the already-visible stress-and-decoupling mechanism. A ΔAUC near zero would indicate that the narrative layer is redundant given what structural variables already capture.</p>
+
+<div class="box box-green">
+  <div class="box-label">Readiness</div>
+  The panel infrastructure is in place: society-year rows, rupture flags, three-year outcome windows, derived structural metrics. N, C, and T need to be operationalized from existing scored data before the LOSO test can run. That operationalization is the remaining prerequisite.
+</div>
+
+<div class="footer">
+  Files: pr_gap2_panel_derived.csv (4,541 rows × 19 cols) · pr_gap2_ruptures.csv (126 events) · pr_gap2_event_study.csv (4,451 rows with Rupture_Incoming flag) · pr_gap2_report.html (full interactive report)
+</div>
+
+</div><!-- end wrap -->
+</body>
+</html>
