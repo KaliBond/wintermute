@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CAMS Temporal Inelasticity — Results</title>
+<style>
+:root { color-scheme: light }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: #F5F1E4;
+  color: #1B2A33;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 4rem;
+  line-height: 1.7;
+}
+h1 { font-size: 1.8rem; font-weight: 700; color: #1B2A33; margin-bottom: 0.25rem }
+.subtitle { font-size: 0.9rem; color: #5a7282; font-family: 'JetBrains Mono', monospace; margin-bottom: 2rem }
+h2 { font-size: 1.1rem; font-weight: 700; color: #2F6F7D; margin: 2rem 0 0.75rem; border-bottom: 1px solid #d6d0c0; padding-bottom: 0.3rem }
+h3 { font-size: 0.95rem; font-weight: 700; color: #1B2A33; margin: 1.25rem 0 0.4rem }
+p { margin-bottom: 0.9rem; font-size: 0.95rem }
+code { font-family: 'JetBrains Mono', 'Courier New', monospace; background: #ece8d8; padding: 1px 5px; border-radius: 3px; font-size: 0.85rem }
+.formula {
+  background: #ece8d8;
+  border-left: 3px solid #2F6F7D;
+  padding: 0.75rem 1rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  margin: 0.75rem 0 1rem;
+  border-radius: 0 4px 4px 0;
+  line-height: 1.8;
+}
+table { border-collapse: collapse; width: 100%; font-size: 0.88rem; margin: 0.75rem 0 1.25rem }
+th { background: #2F6F7D; color: #fff; text-align: left; padding: 6px 12px; font-weight: 600; font-size: 0.83rem }
+td { padding: 5px 12px; border-bottom: 1px solid #ddd6c0 }
+tr:nth-child(even) td { background: #ece8d8 }
+.tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-family: monospace;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-weight: 600;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.tag-cross { background: #d4e8f5; color: #185FA5 }
+.tag-slow { background: #d4ede4; color: #0F6E56 }
+.tag-fast { background: #faeeda; color: #854F0B }
+.finding {
+  background: #fff;
+  border: 1px solid #d6d0c0;
+  border-left: 4px solid #2F6F7D;
+  border-radius: 0 8px 8px 0;
+  padding: 0.85rem 1rem;
+  margin: 0.75rem 0;
+}
+.finding.amber { border-left-color: #D98B2B }
+.finding.red { border-left-color: #C84C3E }
+.finding.green { border-left-color: #2F6F7D }
+.finding p { margin: 0; font-size: 0.9rem }
+.finding strong { color: #1B2A33 }
+.society-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 0.75rem 0 1.25rem;
+}
+.soc-card {
+  background: #fff;
+  border: 1px solid #d6d0c0;
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+}
+.soc-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #2F6F7D }
+.soc-pair { font-family: monospace; font-size: 0.8rem; color: #1B2A33; margin: 2px 0 }
+.soc-label { font-size: 0.75rem; color: #5a7282; margin-top: 0.4rem; font-style: italic }
+.rank1-box {
+  background: #fff8f0;
+  border: 1px solid #e8cfa0;
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  margin: 0.75rem 0;
+  font-size: 0.9rem;
+}
+.section-note { font-size: 0.82rem; color: #5a7282; font-style: italic; margin-top: -0.5rem; margin-bottom: 1rem }
+.pill {
+  display: inline-block;
+  background: #2F6F7D;
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin: 2px;
+  font-family: monospace;
+}
+.pill.amber { background: #D98B2B }
+.pill.red { background: #C84C3E }
+</style>
+</head>
+<body>
+
+<h1>CAMS Temporal Inelasticity</h1>
+<div class="subtitle">Pilot study · Cuba (1990–2026) · Iceland (2000–2026) · ASPI (2003–2026) · 2026-08-15</div>
+
+<h2>1. The Problem: JUNO Bonds Are Rank-1</h2>
+
+<p>The JUNO v1.2 bond formula factors completely into a product of node-level weights:</p>
+
+<div class="formula">
+B<sub>ij</sub> = √(q<sub>i</sub> · q<sub>j</sub>) × 2<sup>−(S<sub>i</sub>+S<sub>j</sub>)/10</sup>
+     = [√q<sub>i</sub> · 2<sup>−S<sub>i</sub>/10</sup>] × [√q<sub>j</sub> · 2<sup>−S<sub>j</sub>/10</sup>]
+     = w<sub>i</sub> · w<sub>j</sub>
+</div>
+
+<p>The bond matrix <strong>B = w⊗w</strong> is the outer product of a single vector with itself. It is rank-1. Every row is proportional to every other row. There is <em>no pair-specific information anywhere in the matrix</em> — only node-level weights. lam2 (Laplacian algebraic connectivity) computed from this matrix is therefore also algebraically constrained rather than empirically discovered.</p>
+
+<div class="rank1-box">
+<strong>Consequence:</strong> the current JUNO framework can identify which nodes are strong or weak, but cannot detect whether Helm–Archive is more or less tightly coupled than Helm–Lore. Both bonds are entirely determined by the node weights. The graph structure is not discovered from data; it is imposed by the formula.
+</div>
+
+<h2>2. Temporal Inelasticity: A Pair-Specific Coupling Measure</h2>
+
+<p>If history becomes structure (the path-dependence thesis), coupling should leave a measurable trace in how nodes move relative to each other over time. A strongly coupled pair should show a stable <em>relative configuration</em> — it can move through node-score space together while resisting being pulled apart.</p>
+
+<div class="formula">
+R<sub>ij</sub>(t)  = x<sub>i</sub>(t) − x<sub>j</sub>(t)         <span style="color:#5a7282">← relative configuration (Node Value difference)</span>
+ΔR<sub>ij</sub>(t) = R<sub>ij</sub>(t+1) − R<sub>ij</sub>(t)     <span style="color:#5a7282">← year-on-year change in relative position</span>
+
+I<sub>ij</sub> = 1 − Var(ΔR<sub>ij</sub>) / [Var(Δx<sub>i</sub>) + Var(Δx<sub>j</sub>)]
+</div>
+
+<p><strong>Interpretation:</strong> I<sub>ij</sub> near 1 → the pair's relative position is extremely stable despite individual node movement (rigid coupling). I<sub>ij</sub> near 0 → relative position varies as much as the nodes themselves (no coupling beyond coincidental co-movement). Negative → movements amplify divergence.</p>
+
+<h3>Coupling classification</h3>
+<table>
+  <tr><th>Class</th><th>Condition</th><th>Meaning</th></tr>
+  <tr><td>Rigid</td><td>I<sub>ij</sub> &gt; 0.7</td><td>Relative configuration resistant to displacement</td></tr>
+  <tr><td>Loosely associated</td><td>0.3 – 0.7</td><td>Some tendency to co-move, separable under pressure</td></tr>
+  <tr><td>Directionally constrained</td><td>0.3 – 0.7 and |asymmetry| &gt; 1.0</td><td>One node consistently drives the other</td></tr>
+  <tr><td>Weakly coupled</td><td>I<sub>ij</sub> &lt; 0.3</td><td>Nodes move largely independently</td></tr>
+</table>
+
+<h3>Directional asymmetry (conditional response)</h3>
+
+<div class="formula">
+CR<sub>j←i</sub> = mean Δx<sub>j</sub>(t+1)  over years where |Δx<sub>i</sub>(t)| &gt; 1σ
+Asymmetry      = |CR<sub>j←i</sub>| − |CR<sub>i←j</sub>|   (positive = i drives j)
+</div>
+
+<h2>3. Universal Findings</h2>
+<p class="section-note">Consistent across Cuba, Iceland, and ASPI — three radically different system types.</p>
+
+<h3>Most universally rigid pairs (cross-society means)</h3>
+<table>
+  <tr><th>Pair</th><th>Mean I</th><th>Std</th><th>Loop</th></tr>
+  <tr><td><strong>Stewards–Flow</strong></td><td>0.822</td><td>0.101</td><td><span class="tag tag-cross">Cross</span></td></tr>
+  <tr><td>Hands–Flow</td><td>0.740</td><td>0.176</td><td><span class="tag tag-fast">Fast–Fast</span></td></tr>
+  <tr><td>Stewards–Hands</td><td>0.730</td><td>0.176</td><td><span class="tag tag-cross">Cross</span></td></tr>
+  <tr><td>Helm–Archive</td><td>0.650</td><td>0.172</td><td><span class="tag tag-slow">Slow–Slow</span></td></tr>
+  <tr><td>Hands–Archive</td><td>0.629</td><td>0.053</td><td><span class="tag tag-cross">Cross</span></td></tr>
+</table>
+
+<div class="finding green">
+<p><strong>The economic triad is the universal structural core.</strong> Stewards–Flow–Hands forms the most rigid cluster in all three societies. Finance, commerce, and labour stay tightly coupled regardless of political system, size, or entity type. This suggests economic coordination is the load-bearing architecture of institutional systems.</p>
+</div>
+
+<div class="finding red">
+<p><strong>Shield is universally elastic.</strong> Shield is the most weakly coupled node in Cuba, Iceland, AND ASPI — three completely different system types. Cuba Shield–Stewards I=0.102; Iceland Shield–Hands I=0.099, Shield–Flow I=0.101; ASPI Shield–Craft I=0.225. Security/coercive functions move independently of institutional coordination in all three cases. Shield either leads discontinuously at crisis moments or is insulated from normal institutional flux. It does not stay in lockstep with anything.</p>
+</div>
+
+<div class="finding amber">
+<p><strong>Slow–Slow pairs are more inelastic than Cross-loop pairs.</strong> The hypothesis that cross-loop pairs would be most rigid (as the stability mechanism) was incorrect. Slow nodes co-move because they share longer institutional timescales — not because cross-loop coupling is stronger. Cross-loop stability may only manifest during crisis intervals, not across full-trajectory averages.</p>
+</div>
+
+<h2>4. Society-Specific Signatures</h2>
+
+<div class="society-grid">
+  <div class="soc-card">
+    <div class="soc-name">Cuba</div>
+    <div class="soc-pair">Craft–Hands  I=0.911 ★</div>
+    <div class="soc-pair">Stewards–Hands  I=0.804</div>
+    <div class="soc-pair">Craft–Flow  I=0.778</div>
+    <div class="soc-label">Most rigid in dataset. Command economy: production and labour structurally locked. Flow receives asymmetric pull from Craft, Hands, Helm, Lore — everything drives commerce, commerce drives nothing.</div>
+  </div>
+  <div class="soc-card">
+    <div class="soc-name">Iceland</div>
+    <div class="soc-pair">Stewards–Flow  I=0.939 ★</div>
+    <div class="soc-pair">Hands–Flow  I=0.900</div>
+    <div class="soc-pair">Helm–Archive  I=0.847</div>
+    <div class="soc-label">Small open economy: finance and commerce are most tightly coupled. Helm–Archive rigid — strategic direction and memory stay aligned. Shield is directionally dominant when it moves (drives Stewards, Flow, Archive) but decoupled in normal times.</div>
+  </div>
+  <div class="soc-card">
+    <div class="soc-name">ASPI</div>
+    <div class="soc-pair">Stewards–Flow  I=0.771</div>
+    <div class="soc-pair">Helm–Flow  I=0.680</div>
+    <div class="soc-pair">Shield–Archive  I=0.672</div>
+    <div class="soc-label">Most elastic of the three — only 1 rigid pair. Relationships between functions reorganise readily. Stewards dominates Flow asymmetrically (asym=+0.825). Craft–Hands are loosely coupled — unusual for an organisation.</div>
+  </div>
+</div>
+
+<h2>5. Theoretical Implications</h2>
+
+<h3>Elasticity structure as the deeper invariant</h3>
+<p>If a society can traverse large regions of node-score space while its I<sub>ij</sub> matrix remains stable, then the elasticity structure is more characteristic of the society than its current node scores. "What kind of system this is" may be better described by the 28-element inelasticity vector than by the 32-element contemporaneous CAMS profile. This would make coupling structure the deeper invariant — closer to what we mean by "institutional character."</p>
+
+<h3>Path dependence as measurable inelasticity</h3>
+<p>Path-dependent constraint predicts that historically embedded couplings should be more inelastic than recently formed ones — even when absolute node scores are similar. Ancient Forest societies should show higher mean I<sub>ij</sub> than Greenhouse Garden or Ruptured societies, particularly in Slow–Slow and Archive-involving pairs. This is a testable consequence that extends the Robson Gauge into a trajectory-based prediction.</p>
+
+<h3>The Shield anomaly needs theory</h3>
+<p>The universal Shield finding is not predicted by any current CAMS theory. Three possible explanations deserve testing: (1) coercive functions respond to a different threat signal than the rest of the system, so they move asynchronously; (2) Shield is subject to political insulation that decouples it from economic and cultural dynamics; (3) Shield scores are inherently noisier to assess, and the elasticity is partly a measurement artefact. The fact that Shield becomes directionally dominant in Iceland during stress (when it moves, it drives Archive, Stewards, Flow) suggests explanation (1) or (2) rather than (3).</p>
+
+<h2>6. Next Steps</h2>
+
+<p>
+<span class="pill">Add societies</span> Run on USA, Germany, China, Sweden, Thailand (telescope_2 dataset) to increase cross-society n to 8+.<br>
+<span class="pill amber">Crisis windows</span> Recompute I<sub>ij</sub> separately for crisis intervals and normal intervals to test whether cross-loop rigidity appears under stress.<br>
+<span class="pill amber">Robson link</span> Correlate η_soil with mean I<sub>ij</sub> across Archive/Lore pairs — tests whether Robson Gauge is already capturing inelasticity implicitly.<br>
+<span class="pill red">Shield theory</span> Design a targeted test: does Shield elasticity predict praetorian basin transitions better than Shield node value alone?<br>
+<span class="pill">cams-calc v1.3</span> Add I<sub>ij</sub> computation to cams-calc for societies with ≥10 years of data. Output as Block 3.
+</p>
+
+<hr style="border:none;border-top:1px solid #d6d0c0;margin:2rem 0 1rem">
+<p style="font-size:0.8rem;color:#5a7282">CAMS Temporal Inelasticity Pilot · cams_inelasticity.py · wintermute repo · 2026-08-15</p>
+
+</body>
+</html>

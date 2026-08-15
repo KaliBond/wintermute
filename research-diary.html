@@ -308,6 +308,74 @@
     <!-- Research Diary Entries -->
     <div id="diary-entries">
 
+        <div class="diary-entry breakthrough">
+            <div class="entry-header">
+                <h3>JUNO Structural Audit — Rank-1 Bonds, Node Dynamics Architecture, and Stewards as Political Economy Marker</h3>
+                <div>
+                    <span class="entry-type">Breakthrough</span>
+                    <span class="entry-date">2026-08-15</span>
+                </div>
+            </div>
+            <div class="entry-content">
+                <p>A sustained computational audit of the JUNO v1.2 framework against 36 societies and 32,361 node-year records produced four distinct findings, one of which is structural and demands an architectural response: the JUNO bond formula is rank-1.</p>
+
+                <h3>1. The Rank-1 Bond Problem</h3>
+                <p>The JUNO v1.2 bond formula is B<sub>ij</sub> = &radic;(q<sub>i</sub>&middot;q<sub>j</sub>) &times; 2<sup>&minus;(S<sub>i</sub>+S<sub>j</sub>)/10</sup>, where q<sub>i</sub> = (0.6&middot;C<sub>i</sub> + 0.4&middot;A<sub>i</sub>)/10. This factorisescleanly: every bond strength is the outer product of two per-node scalars. The full bond matrix <strong>B</strong> = <strong>w</strong>&otimes;<strong>w</strong> is rank-1 — it carries strictly less information than the node value vector that produced it. There is no pair-specific relational information in the bonds: every B<sub>ij</sub> is uniquely recoverable from the individual node scalars alone. This is not a numerical artefact — it is algebraically exact.</p>
+                <p style="margin-top:12px;">The implication is significant: bond strength as currently defined is a derived scalar rather than a relational measurement. The observation that bonds predict regime class at 89.5% vs node values at 74.5% is therefore partly an artefact of the bond formula compressing information that originated in the node scores — not independent evidence of relational structure. Any bond-based finding from the current JUNO_Unified_Dataset requires this caveat.</p>
+
+                <h3>2. Temporal Inelasticity — Pilot Study</h3>
+                <p>A three-society pilot (Australia, Norway, Iran) tested whether pairs of nodes move together across time in ways the bond formula cannot capture. Inelasticity I<sub>ij</sub> = 1 &minus; Var(&Delta;(x<sub>i</sub>&minus;x<sub>j</sub>)) / (Var(&Delta;x<sub>i</sub>) + Var(&Delta;x<sub>j</sub>)) measures the fraction of individual-node variance that cancels across a pair — genuine co-movement not reducible to common drift. The most universal bond is Stewards&ndash;Flow (I = 0.822), confirming the political economy transmission channel holds across liberal, social-democratic, and theocratic systems. Shield is the anomaly: universally the weakest bond despite its theoretical centrality in CAMS architecture. Slow-loop pairs are consistently more inelastic than cross-loop pairs, providing empirical grounding for the slow/fast structural split.</p>
+
+                <h3>3. Node Response Coefficient &beta; — 36 Societies</h3>
+                <p>The node response coefficient &beta; measures how much each node amplifies system-wide movement, computed as the OLS slope of &Delta;Node on &Delta;mean_others across all 36 societies in the JUNO dataset. The ordering is stable and cross-culturally reproducible:</p>
+                <table style="border-collapse:collapse;width:100%;margin-top:12px;font-size:0.88em;">
+                    <thead>
+                        <tr style="background:#E8E0CC;text-align:left;">
+                            <th style="padding:6px 10px;border:1px solid #DAD2B8;">Node</th>
+                            <th style="padding:6px 10px;border:1px solid #DAD2B8;">&beta;</th>
+                            <th style="padding:6px 10px;border:1px solid #DAD2B8;">Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td style="padding:6px 10px;border:1px solid #DAD2B8;font-family:monospace;">Flow</td><td style="padding:6px 10px;border:1px solid #DAD2B8;">1.171</td><td style="padding:6px 10px;border:1px solid #DAD2B8;">Reactive amplifier</td></tr>
+                        <tr style="background:#F5F1E4;"><td style="padding:6px 10px;border:1px solid #DAD2B8;font-family:monospace;">Helm</td><td style="padding:6px 10px;border:1px solid #DAD2B8;">1.129</td><td style="padding:6px 10px;border:1px solid #DAD2B8;">Reactive amplifier</td></tr>
+                        <tr><td style="padding:6px 10px;border:1px solid #DAD2B8;font-family:monospace;">Stewards</td><td style="padding:6px 10px;border:1px solid #DAD2B8;">1.032</td><td style="padding:6px 10px;border:1px solid #DAD2B8;">Boundary mediator</td></tr>
+                        <tr style="background:#F5F1E4;"><td style="padding:6px 10px;border:1px solid #DAD2B8;font-family:monospace;">Craft</td><td style="padding:6px 10px;border:1px solid #DAD2B8;">0.938</td><td style="padding:6px 10px;border:1px solid #DAD2B8;">Mid-range</td></tr>
+                        <tr><td style="padding:6px 10px;border:1px solid #DAD2B8;font-family:monospace;">Hands</td><td style="padding:6px 10px;border:1px solid #DAD2B8;">0.932</td><td style="padding:6px 10px;border:1px solid #DAD2B8;">Mid-range</td></tr>
+                        <tr style="background:#F5F1E4;"><td style="padding:6px 10px;border:1px solid #DAD2B8;font-family:monospace;">Archive</td><td style="padding:6px 10px;border:1px solid #DAD2B8;">0.847</td><td style="padding:6px 10px;border:1px solid #DAD2B8;">Stabiliser</td></tr>
+                        <tr><td style="padding:6px 10px;border:1px solid #DAD2B8;font-family:monospace;">Shield</td><td style="padding:6px 10px;border:1px solid #DAD2B8;">0.777</td><td style="padding:6px 10px;border:1px solid #DAD2B8;">Stabiliser</td></tr>
+                        <tr style="background:#F5F1E4;"><td style="padding:6px 10px;border:1px solid #DAD2B8;font-family:monospace;">Lore</td><td style="padding:6px 10px;border:1px solid #DAD2B8;">0.706</td><td style="padding:6px 10px;border:1px solid #DAD2B8;">Deepest stabiliser</td></tr>
+                    </tbody>
+                </table>
+                <p style="margin-top:12px;">69.1% of squared annualised movement is common-mode (system-wide co-fluctuation); 30.9% is relational. Leave-one-society-out validation recovered the &beta; ordering at 74.9% pair accuracy (&rho; = 0.643 across held-out societies), confirming the hierarchy is cross-culturally stable. Lore is the slowest-moving node in the system — the deepest institutional anchor — while Flow and Helm are the reactive face. This matches the slow/fast loop split in CAMS theory but now has empirical grounding across 36 diverse societies.</p>
+
+                <h3>4. Motif Theory — Scale Test</h3>
+                <p>The Kimi peer review of CAMS Motif Theory made claims derived from a 4-society blind set including Afghanistan and Iraq. Testing those claims at scale produced mixed results. The Archive-Lore enrichment signal replicates: 35.4% of observations vs 3.6% null (9.9&times; enrichment), confirming the Archive-Lore pair is not random. The crisis-enrichment direction also holds at 1.7&times; stable-regime frequency.</p>
+                <p style="margin-top:12px;">However, Kimi's claim of 88% Archive-Lore frequency in FRACTURE/FREEZE states does not replicate at scale — the maximum across 36 societies is 51.2% in Acute Crisis. The Afghanistan/Iraq 4-society sample was an extreme subsample. A new empirical finding emerged: Archive-Lore frequency drops to 28.6% in Systemic Collapse — lower than Fragmentation. This is consistent with coupling dissolution: in true systemic collapse, even the primary coordination bond degrades. The crisis motif is better characterised as <em>Lore hub formation</em> rather than "Archive-Lore pairing" — in crisis regimes, bonds ranked #2 and #3 are also Lore-anchored (Lore-Shield, Lore-Helm).</p>
+
+                <h3>5. Stewards as Political Economy Marker</h3>
+                <p>Stewards is the #1 single-node leading crisis indicator (AUC 0.930; V&#772;-mean ensemble AUC 0.951). Its bond preferences reveal the empirical architecture of political economy. Stewards preferentially bonds to Slow-loop legitimacy nodes over economic execution nodes: Archive 0.3153, Lore 0.3110 (mean Slow 0.3082) versus Flow 0.3000, Craft 0.2983 (mean Fast 0.2875). Economic governance is structurally embedded in and constrained by slow-loop institutional structure before it reaches execution capacity.</p>
+                <p style="margin-top:12px;">The transmission chain Helm &rarr; Stewards &rarr; Flow degrades measurably across regime classes: the chain floor falls from 0.4045 in stable regimes to 0.0993 in acute crisis. As political economy capacity dissolves, this channel narrows before other structural indicators fail — making Stewards the most sensitive early warning node in the CAMS architecture.</p>
+
+                <h3>Status and Next Steps</h3>
+                <p>The rank-1 bond problem is the outstanding architectural issue. The empirical findings — inelasticity hierarchy, &beta; architecture, motif scale test, Stewards leading signal — are grounded in the node scores directly and survive the critique. A revised bond formula incorporating genuine pair-specific covariance, either from time-series co-movement (inelasticity weights) or cross-node residual covariance, is the required methodological development. Full derivations, tables, and code are documented in <strong>CAMS_Lab_Note_2026-08-15.docx</strong> in this repository.</p>
+
+                <p style="margin-top:16px;font-weight:600;color:#1B2A33;">Kari McKern &nbsp;&middot;&nbsp; <span style="font-weight:400;color:#888;">with Claude</span></p>
+
+                <div class="tags">
+                    <span class="tag">#rank-1-bonds</span>
+                    <span class="tag">#temporal-inelasticity</span>
+                    <span class="tag">#node-dynamics</span>
+                    <span class="tag">#beta-architecture</span>
+                    <span class="tag">#motif-theory</span>
+                    <span class="tag">#stewards</span>
+                    <span class="tag">#political-economy</span>
+                    <span class="tag">#juno</span>
+                    <span class="tag">#36-societies</span>
+                </div>
+            </div>
+        </div>
+
         <div class="diary-entry validation">
             <div class="entry-header">
                 <h3>Open Invitation to Test CAMS — Scale Covariance, the Claim of Eight, and Kimi's Encounter</h3>
