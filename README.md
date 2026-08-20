@@ -12,27 +12,34 @@
 
 ## How to cite
 
-[![DOI](https://img.shields.io/badge/DOI-pending--Zenodo--release-lightgrey)](docs/VERSION_HISTORY.md)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22029112.svg)](https://doi.org/10.5281/zenodo.22029112)
 
-This repository mints two kinds of DOI once released on Zenodo:
+This repository has two kinds of DOI, minted 2026-08-20 when `v1.0.0` was
+published:
 
-- **Concept DOI** — resolves to the *latest* version always. Cite this when
-  referring to the CAMS/JUNO framework generally.
-- **Version DOI** — fixed to one exact release. Cite this when referring to
-  a specific analysis, so a reader who follows an old citation years from
-  now lands on the code and data as they existed at that time, not on
-  whatever the framework has since become.
+- **Concept DOI (`10.5281/zenodo.22029112`)** — resolves to the *latest*
+  version always. Cite this when referring to the CAMS/JUNO framework
+  generally.
+- **Version DOI (`10.5281/zenodo.22029113`)** — fixed to `v1.0.0`
+  specifically. Cite this when referring to this exact release, so a
+  reader who follows the citation years from now lands on the code and
+  data as they existed at this point, not on whatever the framework has
+  since become.
 
-*(Both DOIs are pending — this repository has not yet had its first Zenodo
-release. This section will be updated with real DOIs at that point; nothing
-below is a placeholder standing in for a real value.)*
-
-Plain-text citation:
+Plain-text citation (general/concept):
 
 ```
 McKern, K. F. (2026). CAMS (Complex Adaptive Model State) / JUNO: A
 Framework for Societal Coordination Analysis [Computer software]. Zenodo.
-https://doi.org/PENDING
+https://doi.org/10.5281/zenodo.22029112
+```
+
+Plain-text citation (this specific release):
+
+```
+McKern, K. F. (2026). CAMS (Complex Adaptive Model State) / JUNO: A
+Framework for Societal Coordination Analysis (v1.0.0) [Computer software].
+Zenodo. https://doi.org/10.5281/zenodo.22029113
 ```
 
 BibTeX:
@@ -43,8 +50,9 @@ BibTeX:
   title   = {{CAMS (Complex Adaptive Model State) / JUNO: A Framework for
              Societal Coordination Analysis}},
   year    = {2026},
+  version = {1.0.0},
   publisher = {Zenodo},
-  doi     = {PENDING},
+  doi     = {10.5281/zenodo.22029112},
   url     = {https://github.com/KaliBond/wintermute}
 }
 ```

@@ -13,10 +13,13 @@ authors:
     affiliation: "Independent Researcher"
 repository-code: "https://github.com/KaliBond/wintermute"
 url: "https://neuralnations.org"
-# doi: PENDING — publishing the GitHub release triggers the GitHub-Zenodo
-#   webhook integration, which archives this repo and mints its own DOI
-#   automatically. Add that DOI here once minted; do not use any DOI from
-#   a separately/manually created Zenodo upload (a different deposit).
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22029112"
+    description: "Concept DOI - always resolves to the latest version. Cite this for the framework generally."
+  - type: doi
+    value: "10.5281/zenodo.22029113"
+    description: "Version DOI for v1.0.0 specifically. Cite this for this exact release."
 abstract: >-
   CAMS (Complex Adaptive Model State) / JUNO is a measurement framework for how societies absorb adaptive
   stress, rendering a society's institutional record as eight recurring
@@ -37,6 +40,5 @@ keywords:
   - institutional coordination
   - CAMS
 license: MIT
-version: "PENDING"  # set to the actual tag (e.g. 1.0.0) at release time
-# date-released: PENDING — set to the real release date when v1.0.0 is
-#   published; do not fill in before then.
+version: "1.0.0"
+date-released: "2026-08-20"

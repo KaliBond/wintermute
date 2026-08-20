@@ -3,11 +3,12 @@
 One record per artefact, in the order they should be deposited. Each
 section is metadata to paste into a new Zenodo upload — title, description,
 upload type, keywords, licence, and how it should link to the others via
-`related_identifiers`. None of these have been deposited yet; DOIs below are
-literally `PENDING` until each record is actually created.
+`related_identifiers`. None of the items below (papers, dataset, rubrics)
+have been deposited yet; the code release itself (item 8) has, as of
+2026-08-20 — see below.
 
-Every deposit should relate back to the concept DOI of this repository
-(`isSupplementTo` or `isDerivedFrom`, once minted) and to
+Every deposit should relate back to this repository's concept DOI,
+**`10.5281/zenodo.22029112`** (`isSupplementTo` or `isDerivedFrom`), and to
 `https://neuralnations.org` (`isSupplementTo`).
 
 ---
@@ -225,23 +226,27 @@ own stable release point, rather than conflating the two collections.
 
 ---
 
-## 8. Code Release
+## 8. Code Release — Done, 2026-08-20
 
-**Scope:** this repository itself, tagged `v1.0.0` (see the unpublished
-release draft). This is not a separate manual Zenodo upload — publishing
-the GitHub release triggers the existing GitHub–Zenodo integration, which
-archives the repository and mints the **concept DOI** that every other
-deposit above should reference.
+**Status: complete.** `v1.0.0` was tagged and published at
+`github.com/KaliBond/wintermute/releases/tag/v1.0.0`, triggering the
+GitHub–Zenodo webhook automatically. Result:
 
-**Title:** (from `CITATION.cff` / `.zenodo.json` — kept identical to both,
-per the instruction that they must not contradict each other)
+- **Concept DOI:** `10.5281/zenodo.22029112` (always resolves to latest)
+- **Version DOI:** `10.5281/zenodo.22029113` (this specific release)
+- **Zenodo record:** `https://zenodo.org/records/22029113`
 
-**Upload type:** software
-**Keywords:** (as in `.zenodo.json`)
-**Licence:** MIT (code) — note this differs from the CC-BY-4.0 covering
-every other deposit in this manifest; the Zenodo record for the code
-release should state MIT explicitly rather than inherit CC-BY-4.0 by
-default.
-**Related identifiers:** every deposit above should reference this one as
-`isSupplementTo`; this one should not need to reference them individually
-(the repository is the root of the citation graph).
+Title, description, and keywords were pulled automatically from
+`CITATION.cff`/`.zenodo.json` at publish time and match both exactly, as
+required.
+
+**Related identifiers:** every deposit above should reference this record
+(concept DOI `10.5281/zenodo.22029112`) as `isSupplementTo`; this one does
+not need to reference them individually (the repository is the root of the
+citation graph).
+
+**Note found during the Zenodo dashboard check:** there is also an empty
+draft upload ("No title / No description") dated the same day sitting in
+the account's uploads list, separate from both this record and the
+previously-flagged abandoned manual draft (`zenodo.org/uploads/22028005`).
+Not touched — worth a look next time you're in the Zenodo dashboard.
