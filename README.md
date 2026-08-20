@@ -3,6 +3,62 @@
 
 ![CAMS Logo](https://img.shields.io/badge/CAMS-v2.3-blue) ![License](https://img.shields.io/badge/License-Open%20Science-green) ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 
+> **Note on this README:** much of the technical description below (node
+> names, bond formula, "predicts civilisational resilience" framing) reflects
+> the v2.3 formulation and has since been superseded. See
+> [`docs/VERSION_HISTORY.md`](docs/VERSION_HISTORY.md) for what changed and
+> why, and [`juno/JUNO_v1.2-Final_Formalism.md`](juno/JUNO_v1.2-Final_Formalism.md)
+> for the current locked operator spec.
+
+## How to cite
+
+[![DOI](https://img.shields.io/badge/DOI-pending--Zenodo--release-lightgrey)](docs/VERSION_HISTORY.md)
+
+This repository mints two kinds of DOI once released on Zenodo:
+
+- **Concept DOI** — resolves to the *latest* version always. Cite this when
+  referring to the CAMS/JUNO framework generally.
+- **Version DOI** — fixed to one exact release. Cite this when referring to
+  a specific analysis, so a reader who follows an old citation years from
+  now lands on the code and data as they existed at that time, not on
+  whatever the framework has since become.
+
+*(Both DOIs are pending — this repository has not yet had its first Zenodo
+release. This section will be updated with real DOIs at that point; nothing
+below is a placeholder standing in for a real value.)*
+
+Plain-text citation:
+
+```
+McKern, K. F. (2026). CAMS/JUNO: A Complex Adaptive Systems Framework for
+Societal Coordination Analysis [Computer software]. Zenodo.
+https://doi.org/PENDING
+```
+
+BibTeX:
+
+```bibtex
+@software{mckern_cams_juno,
+  author  = {McKern, Kari Freyr},
+  title   = {{CAMS/JUNO: A Complex Adaptive Systems Framework for Societal
+             Coordination Analysis}},
+  year    = {2026},
+  publisher = {Zenodo},
+  doi     = {PENDING},
+  url     = {https://github.com/KaliBond/wintermute}
+}
+```
+
+## Licensing
+
+- **Code** (scripts, tools, analysis pipelines) — [MIT](LICENSE)
+- **Content** (papers, datasets, documentation, scoring rubrics/protocols) —
+  [CC-BY-4.0](LICENSE-CONTENT)
+
+Reuse of the CAMS/JUNO framework, its datasets, or its scoring protocols
+requires citation under CC-BY-4.0's attribution term — see "How to cite"
+above.
+
 **Purpose**: CAMS represents a society as a dynamic 8×4 state matrix, bridging the mythic layer (Lore, Archive) with executive interfaces (Helm, Stewards) through to material foundations (Shield, Craft, Hands, Flow). Effective coupling coordination between these three ontological layers defines societal health and predicts civilisational resilience or collapse.
 
 ## 🌡️ Core Architecture

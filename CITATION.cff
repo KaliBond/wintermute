@@ -1,47 +1,42 @@
+# NOTE: "title" below is a working title pending the user's confirmation of
+# the canonical current expansion of "CAMS" — repository evidence shows at
+# least five distinct public expansions used at different times (see
+# docs/VERSION_HISTORY.md, section "What CAMS Stands For"). This title
+# avoids committing to any single one until that's settled.
 cff-version: 1.2.0
-title: "CAMS Framework: Complex Adaptive Metrics of Society"
+title: "CAMS/JUNO: A Complex Adaptive Systems Framework for Societal Coordination Analysis"
 message: "If you use this software, please cite it as below."
 type: software
 authors:
   - family-names: McKern
-    given-names: Kari
+    given-names: Kari Freyr
     email: kari.freyr.4@gmail.com
     orcid: "https://orcid.org/0009-0007-9045-0505"
     affiliation: "Independent Researcher"
-# AI assistance acknowledged in methodology section
-repository-code: "https://github.com/kalibond/wintermute"
-url: "https://github.com/kalibond/wintermute"
+repository-code: "https://github.com/KaliBond/wintermute"
+url: "https://neuralnations.org"
+# doi: PENDING — this repository has not yet had a Zenodo release. Add the
+#   concept DOI here once minted (do not invent one before then).
 abstract: >-
-  CAMS Framework v2.3 implements thermodynamic Complex Adaptive Systems analysis
-  for societal dynamics. The framework models 8 institutional nodes with
-  4 state variables each, using entropy flows, phase transitions, and
-  mathematical formulations to analyze civilizational resilience, adaptation,
-  and thermodynamic behavior across historical and contemporary societies.
-  Note: The neural network hypothesis has been falsified (December 2025).
+  CAMS/JUNO is a measurement framework for how societies absorb adaptive
+  stress, rendering a society's institutional record as eight recurring
+  functional nodes (Helm, Shield, Lore, Archive, Stewards, Craft, Hands,
+  Flow), each scored annually on coherence, capacity, stress and
+  abstraction, from which node viability and inter-node bond strength are
+  computed. The framework places a society in its structural family,
+  identifies which functions carry deformation under stress, and tracks
+  whether a society routes stress through the same functions across
+  separated historical episodes. It is diagnostic and morphological, not
+  predictive: it does not forecast outcomes, and claims about recovery
+  trajectories remain untested pending further validation.
 keywords:
   - complex adaptive systems
-  - thermodynamics
-  - entropy analysis
-  - societal analysis
-  - phase transitions
-  - institutional modeling
-  - civilizational studies
-  - social complexity
-  - systems science
+  - civilisational analysis
+  - computational social science
+  - network analysis
+  - institutional coordination
+  - CAMS
 license: MIT
-version: "2.3"
-date-released: "2025-08-15"
-preferred-citation:
-  type: article
-  title: "CAMS Framework: A Thermodynamic Approach to Complex Adaptive Societal Metrics"
-  authors:
-    - family-names: McKern
-      given-names: Kari
-      email: kari.freyr.4@gmail.com
-  # journal: "Complex Systems Research Journal"  # Update when published
-  year: 2025
-  # volume: placeholder — update when published
-  # issue: placeholder — update when published
-  # start: placeholder — update when published
-  # end: placeholder — update when published
-  # doi: placeholder — update when published
+version: "PENDING"  # set to the actual tag (e.g. 1.0.0) at release time
+# date-released: PENDING — set to the real release date when v1.0.0 is
+#   published; do not fill in before then.
