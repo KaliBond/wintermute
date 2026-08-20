@@ -28,14 +28,21 @@ The most recent operator specification (`juno/JUNO_v1.2-Final_Formalism.md`,
 (registered 6 July 2026) both use "CAMS" bare, without spelling out the
 acronym at all.
 
-**Resolved 2026-08-20:** none of the six expansions above had been declared
+**Resolved 2026-08-20.** None of the six expansions above had been declared
 canonical anywhere in the repository — each document simply asserted its
-own. The author has now confirmed the canonical expansion going forward is
-**Complex Adaptive Model State**. `CITATION.cff` and `.zenodo.json` have
-been updated to *"CAMS (Complex Adaptive Model State) / JUNO: A Framework
-for Societal Coordination Analysis"* accordingly. The six expansions in the
-table above remain as the historical record of what the acronym has
-publicly meant at different points; they are superseded, not deleted.
+own. Per the author: **Complex Adaptive Model State has always been the
+intended canonical name.** The variation across documents did not come from
+the author changing her mind about the name; it came from different AI
+assistants, across different sessions and documents, independently
+renaming the acronym on their own initiative while drafting — described by
+the author as "a bit of a joke." The six expansions in the table above are
+therefore artefacts of that pattern, not a genuine evolution of the
+framework's identity, and are left in the table as historical record rather
+than treated as a real naming timeline.
+
+`CITATION.cff` and `.zenodo.json` have been updated to *"CAMS (Complex
+Adaptive Model State) / JUNO: A Framework for Societal Coordination
+Analysis"* accordingly.
 
 ## Version and Formulation Timeline
 
