@@ -166,6 +166,12 @@ matching that description exactly. Two candidates exist:
 - `juno/JUNO_Unified_Dataset.csv` — the JUNO-1.0 unified panel, currently
   48 societies / 43,400 node-year records (see this repository's commit
   history for the most current count).
+- A third count exists in `neuralnations.org/cams-project-history` (dated
+  April 2026): "38 societies, 45 series, 39,351 records." This appears to
+  be a snapshot of the collection's size at that specific point in time,
+  not a separately-maintained fourth dataset — but it confirms the
+  collection has been counted at least three different ways at three
+  different times, none of which is exactly "50 societies."
 
 Please confirm which of these — or whether a different, specifically
 50-society cut — is the intended deposit before this section is finalised.

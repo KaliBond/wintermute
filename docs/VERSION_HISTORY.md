@@ -41,15 +41,17 @@ publicly meant at different points; they are superseded, not deleted.
 
 | Date | Version / Milestone | What changed | What it superseded |
 |---|---|---|---|
-| 27 Sep 2024 | Origin | Framework conceived; described in `CAMS-CAN-MASTER-REFERENCE.md` as developed "collaboration with AI as forcing function for logical rigor." First public appearance: *Pearls and Irritations*, Oct 2024. | — |
+| Jul 2024 | Conceptual origin | Per `neuralnations.org/cams-project-history` (Apr 2026): CAMS originated "around July 2024," initially in collaboration with GPT, motivated by a Socratic problem (distinguishing truth from persuasion) rather than a research plan. | — |
+| 27 Sep 2024 | Repository origin | Per `CAMS-CAN-MASTER-REFERENCE.md`: "collaboration with AI as forcing function for logical rigor." Matches this repository's actual git history (first commit 4 Oct 2024). | — |
+| 14 Oct 2024 | First public appearance | *Pearls and Irritations*, "Staving off the collapse of Western civilisation: A personal..." — independently verified externally (johnmenadue.com, dated 14 Oct 2024). | — |
 | Sep 2024 | v0.1-draft | Eight-node architecture proposed; four canonical metrics defined; Node Value formula introduced; scored on 8 test societies. | — |
 | Jul 2025 | v0.5 | Eight-node canonical architecture confirmed; state-space formalization begun. | — |
-| Jul 2025 | RD-002 | Eight functional nodes adopted as canonical, under the names **Executive, Army, Knowledge, Property, Trades, Labor, Memory, Commerce** — explicitly superseding an earlier **ten-node** variant. | 10-node model |
-| Aug 2025 | v0.6 | Framework applied to corporate cases (Boeing, GM, BYD, Tesla) as well as national ones. | — |
-| Sep 2025 | v0.7 | "CAMS-CAN terminology standardized (eliminated inconsistencies with 'Helm/Executive', etc.)" — i.e. as of this point, **"Executive"** was the standardized/canonical name and **"Helm"** an informal variant being phased out. | Mixed Helm/Executive usage |
-| Nov 2025 | v0.8 / RD-001 | Stress sign convention fixed: stress is always positive (1–10), never negative. Described as a correction of a "thermodynamic inconsistency." | Signed/negative stress encoding |
-| Dec 2025 | (undated exact day) | A "neural network hypothesis" for the framework is stated (in the now-superseded `CITATION.cff`) to have been tested and falsified. **Flagged:** no repository document describes what this hypothesis was or how it was tested; only the falsification is recorded. | Neural-network framing of the model |
-| Jan 2026 | v0.9 | Thermodynamic formalization (τ, ε, R) completed; critical-slowing/bifurcation thresholds documented; 32+ society dataset completed. | — |
+| Jul 2025 | RD-002 | Per `CAMS-CAN-MASTER-REFERENCE.md`: eight functional nodes adopted as canonical, under the names **Executive, Army, Knowledge, Property, Trades, Labor, Memory, Commerce** — explicitly superseding an earlier **ten-node** variant. **This conflicts with `cams-project-history`** (below) — flagged, not resolved. | 10-node model |
+| Aug 2025 | v0.6 / "CAMS-CAN hypothesis" | Per `cams-project-history`: framework extended to corporate organisations (GM, BYD, Tesla), introducing the Network Synchronisation metric and inhibitory-dominance criterion; separate Boeing case study (1990–2025). "CAMS-CAN" used here as the name of the corporate-extension hypothesis specifically — a third, narrower sense of "CAN" alongside the "Catch-All Network" reading elsewhere. | — |
+| Sep 2025 | v0.7 | Per `CAMS-CAN-MASTER-REFERENCE.md`: "CAMS-CAN terminology standardized (eliminated inconsistencies with 'Helm/Executive', etc.)" — read by that document as fixing on "Executive." **But `cams-project-history` (Apr 2026) describes Helm/Shield/Lore/Archive/Stewards/Craft/Hands/Flow as already in place "by the time substantive Claude conversations began,"** with no mention of an Executive-named phase at all, and this repository's own `research-diary.html` already uses Helm/Shield/Lore publicly by Feb 2026. **These two of the author's own reconstructions disagree; not resolved here.** Separately, this same month a thermodynamic/entropy formalization was validated against Norway, Singapore, USA, and China data, and the deliberative-vs-reactive governance-mode distinction was formalised. | Mixed Helm/Executive usage (disputed) |
+| Nov 2025 | v0.8 / RD-001 | Stress sign convention fixed: stress is always positive (1–10), never negative. `CAMS-CAN-MASTER-REFERENCE.md` describes this as eliminating signed encoding entirely. **`cams-project-history`'s account of the same month reads differently** — it describes the resolution as clarifying that negative values mean functional stress and positive values mean loss of coherence, i.e. retaining a signed convention. The current live dataset (`JUNO_Unified_Dataset.csv`) uses positive-only (1–10) stress, matching the master-reference account, not the history-page one. | Signed/negative stress encoding |
+| Dec 2025 | 16 Jan 2025 entry, corrected | **Resolved 2026-08-20.** `research-diary.html` records the original claim in full: a "Thermodynamic Breakthrough" entry (dated 2025-01-16, attributed to "the NNORG team") asserted societies "definitively exhibit quantifiable neural network properties," mapping institutional nodes to neurons and stress signals to neurotransmitters, citing 83% historical-prediction accuracy, "Inhibitory Dominance" (72% of nodes with stress–coherence r < −0.3), and named numerical thresholds (SPE < 1.5, NS < 0.6, API < 0.1). A December 2025 correction banner on the same entry states the hypothesis "has been falsified" and that "the neuroscience analogy has been abandoned in favor of pure thermodynamic analysis," while stating the underlying empirical findings (the 83% figure, the thresholds, cross-cultural consistency) "remain valid." No external description of the falsification test was found. | Neural-network framing of the model |
+| Jan 2026 | v0.9 | Thermodynamic formalization (τ, ε, R) completed; critical-slowing/bifurcation thresholds documented; 32+ society dataset completed. Separately, per `cams-project-history`: a "canonical node-mapping correction" fixed **Shield = military/defence (not welfare institutions)** and **Stewards = landowners/asset management (not welfare state)**, changing the interpretation of Sweden's 1990s banking crisis in the existing dataset. | — |
 | 8 Apr 2026 | v1.0-RC1 | `CAMS-CAN-MASTER-REFERENCE.md` declared "single source of truth," status release-candidate. Eight-node model, four metrics, and Node Value formula (`V = C + K − S + 0.5A`) confirmed. Bond Strength denominator and Decay Index weights left explicitly unfinalized. | v0.9 |
 | ~Apr 2026 | CAMS v3.2-R (referenced in separate project notes) | **Flagged:** this version label appears in prior working notes as roughly contemporaneous with v1.0-RC1 above; the repository does not make clear whether these are the same milestone under two names or genuinely separate branches. Author to confirm. | — |
 | ~Jun 2026 | CAMS v2.4 / "CAMS-CAN v1.0-Final" | New bond-strength formula adopted (`B_ij = √(q_i·q_j)·2^(−(S_i+S_j)/10)`, the "JUNO coupling-quality form"), replacing the v3.2 exponential form (retired "per RD-003" — **RD-003 itself is referenced in code comments but no dated decision record for it was found; flagged**). ESCH/cognitive-activation formula corrected: a blanket clamp that had been silently forcing the metric positive (and disabling one of the crisis-detection triggers) was removed. Laplacian connectivity switched from a normalised form (found to be non-discriminating on this corpus) to the raw form. Calibration of regime thresholds dated 2026-06-09 in code comments. | CAMS v3.2 bond formula; clamped ESCH; normalised Laplacian |
@@ -73,10 +75,21 @@ smooth story would be.
   from the framework's own past refutations. This is a real narrowing, not
   a wording change — the earlier framing asserted a predictive capability;
   the current one explicitly disclaims it pending further evidence.
-- **A stated hypothesis was falsified.** A "neural network hypothesis" for
-  the framework is recorded as falsified in December 2025. The repository
-  does not retain a document describing what was tested or how — flagged
-  above.
+- **A stated hypothesis was falsified.** The neural-network framing of the
+  model (see table above) was tested and abandoned in December 2025, with
+  the correction left in place on the original diary entry rather than the
+  entry being quietly edited or removed.
+- **An overstated public claim was caught and retracted before publication,
+  not after.** `neuralnations.org/cams-project-history` (Apr 2026) records
+  that draft materials had described a "formal broadcast interview on TIO
+  Talks," and states plainly that this is not represented in the published
+  history because it overstates what actually occurred (a conversation with
+  Warwick Powell, not a produced broadcast). The same document also records
+  specific overclaiming phrases removed from draft public-positioning
+  material for *The Architecture of Civilisation* — "first operational
+  predictive framework," "applied statistical mechanics," "high
+  retrodictive prediction" — as a deliberate editorial policy, not a
+  one-off correction.
 - **A load-bearing formula was found unstable and retired.** The v14
   `crisis_size` compound variable was found to diverge under chronic-crisis
   conditions and was retired rather than patched; intensity and duration
@@ -124,14 +137,36 @@ Rather than guess, these are listed here for confirmation:
 1. ~~Which CAMS acronym expansion (if any) is now canonical~~ — **resolved
    2026-08-20: "Complex Adaptive Model State."** See table above.
 2. Whether "CAMS v3.2-R (April 2026)" and "v1.0-RC1 (8 April 2026)" refer to
-   the same milestone or two different ones.
-3. The date and rationale of the second node-naming change (Executive/Army/
-   Knowledge/... back to Helm/Shield/Lore/...) between April and June 2026.
+   the same milestone or two different ones. **Still open** — the newly
+   found `cams-project-history` page doesn't mention either label.
+3. ~~The date and rationale of the second node-naming change~~ — **partially
+   resolved, but now a different and arguably more interesting problem: two
+   of the author's own reconstructed histories directly disagree** about
+   whether Helm/Shield/Lore/... was the naming from the outset
+   (`cams-project-history`, Apr 2026) or whether Executive/Army/Knowledge/...
+   was standardized as canonical in Sep 2025 and only reverted later
+   (`CAMS-CAN-MASTER-REFERENCE.md`, Apr 2026 — the same month as the other
+   document). Both are dated the same month and contradict each other on a
+   basic fact. This isn't resolvable from repository evidence; it needs the
+   author's memory, not further searching.
 4. A dated decision record for RD-003 (bond-formula retirement), referenced
    in code comments (`juno_backcalc.py`) but not found as a dated entry
-   anywhere in the repository.
-5. What the "neural network hypothesis" (falsified December 2025) actually
-   claimed, if a description exists outside the repository.
+   anywhere in the repository, including `cams-project-history`. **Still
+   open.**
+5. ~~What the "neural network hypothesis" actually claimed~~ — **resolved**:
+   full original claim recovered from `research-diary.html`'s 2025-01-16
+   entry. See table above.
 6. The actual version number and release date for this repository's first
    tagged release, to be filled into `CITATION.cff`, `.zenodo.json`, and
    this document once decided (see the unpublished `v1.0.0` release draft).
+7. **New, found during research:** `CAMS-CAN-MASTER-REFERENCE.md`'s Nov-2025
+   account of the stress-sign-convention fix (RD-001: positive-only,
+   1–10) does not match `cams-project-history`'s account of the same month
+   (a signed convention retained, with a clarified meaning). The current
+   live dataset uses positive-only, matching RD-001 — but the discrepancy
+   between the two histories is itself unresolved.
+8. **New, found during research:** the "10-node predecessor" that RD-002
+   says the eight-node model superseded (Jul 2025) isn't mentioned at all
+   in `cams-project-history`, which describes eight nodes as present "by
+   the time substantive Claude conversations began." No date or
+   description of the ten-node variant has been found anywhere.
