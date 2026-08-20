@@ -44,6 +44,15 @@ than treated as a real naming timeline.
 Adaptive Model State) / JUNO: A Framework for Societal Coordination
 Analysis"* accordingly.
 
+### Why "JUNO"
+
+Per the author: named for Juno, Jupiter's wife in Roman mythology, associated
+with the ability to see through clouds — a deliberate echo of NASA's Juno
+mission, whose instruments were built to see through Jupiter's cloud layer
+to the structure beneath. The resonance with CAMS/JUNO's own aim — reading
+structural signal through the "clouds" of historical narrative — is
+intentional.
+
 ## Version and Formulation Timeline
 
 | Date | Version / Milestone | What changed | What it superseded |
