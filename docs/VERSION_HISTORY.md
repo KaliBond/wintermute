@@ -62,7 +62,7 @@ intentional.
 | 14 Oct 2024 | First public appearance | *Pearls and Irritations*, "Staving off the collapse of Western civilisation: A personal..." — independently verified externally (johnmenadue.com, dated 14 Oct 2024). | — |
 | Sep 2024 | v0.1-draft | Eight-node architecture proposed; four canonical metrics defined; Node Value formula introduced; scored on 8 test societies. | — |
 | Jul 2025 | v0.5 | Eight-node canonical architecture confirmed; state-space formalization begun. | — |
-| Jul 2025 | RD-002 | Per `CAMS-CAN-MASTER-REFERENCE.md`: eight functional nodes adopted as canonical, under the names **Executive, Army, Knowledge, Property, Trades, Labor, Memory, Commerce** — explicitly superseding an earlier **ten-node** variant. **This conflicts with `cams-project-history`** (below) — flagged, not resolved. | 10-node model |
+| Jul 2025 | RD-002 | Per `CAMS-CAN-MASTER-REFERENCE.md`: eight functional nodes adopted as canonical, under the names **Executive, Army, Knowledge, Property, Trades, Labor, Memory, Commerce** — the document itself claims this superseded an earlier "ten-node" variant. **The author states this is simply incorrect: there was never a ten-node version.** The actual predecessor was a **nine-node** variant that included a **"checksums" node**, which "didn't work" and was dropped, arriving at the current eight. This is a factual error in `CAMS-CAN-MASTER-REFERENCE.md` itself, not an ambiguity — corrected here per the author, 2026-08-20. | 9-node variant (with a non-functional "checksums" node) |
 | Aug 2025 | v0.6 / "CAMS-CAN hypothesis" | Per `cams-project-history`: framework extended to corporate organisations (GM, BYD, Tesla), introducing the Network Synchronisation metric and inhibitory-dominance criterion; separate Boeing case study (1990–2025). "CAMS-CAN" used here as the name of the corporate-extension hypothesis specifically — a third, narrower sense of "CAN" alongside the "Catch-All Network" reading elsewhere. | — |
 | Sep 2025 | v0.7 | Per `CAMS-CAN-MASTER-REFERENCE.md`: "CAMS-CAN terminology standardized (eliminated inconsistencies with 'Helm/Executive', etc.)" — read by that document as fixing on "Executive." **But `cams-project-history` (Apr 2026) describes Helm/Shield/Lore/Archive/Stewards/Craft/Hands/Flow as already in place "by the time substantive Claude conversations began,"** with no mention of an Executive-named phase at all, and this repository's own `research-diary.html` already uses Helm/Shield/Lore publicly by Feb 2026. **These two of the author's own reconstructions disagree; not resolved here.** Separately, this same month a thermodynamic/entropy formalization was validated against Norway, Singapore, USA, and China data, and the deliberative-vs-reactive governance-mode distinction was formalised. | Mixed Helm/Executive usage (disputed) |
 | Nov 2025 | v0.8 / RD-001 | Stress sign convention fixed: stress is always positive (1–10), never negative. `CAMS-CAN-MASTER-REFERENCE.md` describes this as eliminating signed encoding entirely. **`cams-project-history`'s account of the same month reads differently** — it describes the resolution as clarifying that negative values mean functional stress and positive values mean loss of coherence, i.e. retaining a signed convention. The current live dataset (`JUNO_Unified_Dataset.csv`) uses positive-only (1–10) stress, matching the master-reference account, not the history-page one. | Signed/negative stress encoding |
@@ -185,8 +185,9 @@ Rather than guess, these are listed here for confirmation:
    (a signed convention retained, with a clarified meaning). The current
    live dataset uses positive-only, matching RD-001 — but the discrepancy
    between the two histories is itself unresolved.
-8. **New, found during research:** the "10-node predecessor" that RD-002
-   says the eight-node model superseded (Jul 2025) isn't mentioned at all
-   in `cams-project-history`, which describes eight nodes as present "by
-   the time substantive Claude conversations began." No date or
-   description of the ten-node variant has been found anywhere.
+8. ~~The "10-node predecessor" RD-002 claims~~ — **resolved 2026-08-20: RD-002
+   is simply wrong.** There was never a ten-node version. The author
+   confirms the actual predecessor was a nine-node variant including a
+   "checksums" node that didn't work and was dropped. See table above.
+   (Timing of this nine-node experiment relative to Jul 2025's RD-002 date
+   is not established — not a hard blocker for citation purposes.)
