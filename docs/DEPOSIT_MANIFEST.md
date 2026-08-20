@@ -156,48 +156,42 @@ and `research/`.
 
 ## 6. The Dataset
 
-**Flagged before drafting this section:** the instruction refers to "the
-50-society dataset," but the repository does not contain a single dataset
-matching that description exactly. Two candidates exist:
+**Resolved 2026-08-20.** The author confirmed the intended deposit by
+pointing to `neuralnations.org/datasets`, which describes the collection as
+"41,519 CAMS records across 43 societies and **50 historical series**" —
+i.e. "the 50-society dataset" was shorthand for the 50-*series* count,
+referring to `cleaned_datasets/`, not the separate JUNO unified panel
+(`juno/JUNO_Unified_Dataset.csv`, 48 societies / 43,400 records — a
+different, newer collection). Note "series" ≠ "societies" here: several
+societies have more than one series (different scorer, different time
+window, or ensemble-mean vs envelope), which is why 50 series spans only
+43 societies.
 
-- `cleaned_datasets/` — the general dataset collection, described elsewhere
-  on the site as "43 societies and 50 historical series" (50 *series*,
-  not societies — several societies have more than one series).
-- `juno/JUNO_Unified_Dataset.csv` — the JUNO-1.0 unified panel, currently
-  48 societies / 43,400 node-year records (see this repository's commit
-  history for the most current count).
-- A third count exists in `neuralnations.org/cams-project-history` (dated
-  April 2026): "38 societies, 45 series, 39,351 records." This appears to
-  be a snapshot of the collection's size at that specific point in time,
-  not a separately-maintained fourth dataset — but it confirms the
-  collection has been counted at least three different ways at three
-  different times, none of which is exactly "50 societies."
+**Title:** CAMS Cleaned Dataset Collection — 43 Societies, 50 Historical Series
 
-Please confirm which of these — or whether a different, specifically
-50-society cut — is the intended deposit before this section is finalised.
-Draft below assumes the JUNO unified panel, as the more actively maintained
-and better-documented of the two; adjust the counts if the other is meant.
-
-**Title:** JUNO Unified Dataset — CAMS Node Scores Across [N] Societies
-
-**Description (Zenodo, ~180 words, template):**
-> This dataset contains annual CAMS/JUNO node scores for [N] societies,
-> [record count] node-year observations spanning [year range]. Each row
-> records one of eight functional nodes (Helm, Shield, Lore, Archive,
-> Stewards, Craft, Hands, Flow) for one society-year, scored on four
-> dimensions — Coherence, Capacity, Stress, Abstraction — by a multi-model
-> LLM ensemble following the CAMS/JUNO scoring protocol (see the companion
-> scoring-rubrics deposit). Node Value and Bond Strength are derived
-> quantities computed from the raw scores using the locked JUNO-1.0
-> formalism. This is a research dataset produced by AI-assisted historical
-> and institutional scoring, not primary archival data; it should be
+**Description (Zenodo, ~180 words):**
+> This dataset collection contains 41,519 CAMS node-score records across
+> 50 historical series spanning 43 societies. Each series records one of
+> eight functional nodes (Helm, Shield, Lore, Archive, Stewards, Craft,
+> Hands, Flow) per year, scored on four dimensions — Coherence, Capacity,
+> Stress, Abstraction — by a multi-model LLM ensemble (GPT, Grok, Gemini).
+> Several societies have more than one series in this collection (distinct
+> scorer runs, time windows, or ensemble-mean vs envelope/uncertainty
+> pairs), which is why 50 series covers 43 rather than 50 societies. Node
+> Value and Bond Strength are derived quantities computed from the raw
+> scores. This is a research dataset produced by AI-assisted historical and
+> institutional scoring, not primary archival data, and should be
 > understood and cited as such. Intended audience: researchers wanting to
-> reuse, replicate, or extend the CAMS/JUNO scoring corpus.
+> reuse, replicate, or extend the CAMS scoring corpus.
 
 **Upload type:** dataset
-**Keywords:** node scores, longitudinal panel, institutional coordination, CAMS, JUNO
+**Keywords:** node scores, longitudinal panel, institutional coordination, CAMS
 **Licence:** CC-BY-4.0
-**Related identifiers:** `isSupplementTo` this repository; `isReferencedBy` the working papers and formal papers that use it.
+**Related identifiers:** `isSupplementTo` this repository and
+`neuralnations.org/datasets`; `isReferencedBy` the working papers and
+formal papers that use it. Consider a separate, later deposit for the
+newer JUNO unified panel (48 societies / 43,400 records) once it has its
+own stable release point, rather than conflating the two collections.
 
 ---
 
