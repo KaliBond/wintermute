@@ -1,27 +1,27 @@
 JUNO-1.0 vs CAMS-v3.2 Concordance Report
 ==================================================
-Societies  : ['Argentina', 'Australia', 'Brazil', 'Canada', 'Chile', 'China', 'Colombia', 'Denmark', 'France', 'Germany', 'Hong Kong', 'India', 'Indonesia', 'Iran', 'Iraq', 'Israel', 'Italy', 'Japan', 'Lebanon', 'Netherlands', 'Norway', 'Pakistan', 'Poland', 'Russia', 'Saudi Arabia', 'Singapore', 'South Africa', 'Sweden', 'Syria', 'Thailand', 'Turkey', 'UAE', 'UK', 'USA', 'Ukraine', 'Venezuela']
-Years      : 20–2026
-Obs (node) : 32,264
+Societies  : ['Argentina', 'Australia', 'Brazil', 'Cambodia', 'Canada', 'Chile', 'China', 'Colombia', 'Democratic Republic of the Congo', 'Denmark', 'Egypt', 'Ethiopia', 'France', 'Germany', 'Greece', 'Hong Kong', 'India', 'Indonesia', 'Iran', 'Iraq', 'Israel', 'Italy', 'Japan', 'Laos', 'Latvia', 'Lebanon', 'Mauritania', 'Mongolia', 'Netherlands', 'New Zealand', 'Nigeria', 'Norway', 'Pakistan', 'Philippines', 'Poland', 'Russia', 'Saudi Arabia', 'Singapore', 'South Africa', 'Sweden', 'Syria', 'Thailand', 'Turkey', 'UAE', 'UK', 'USA', 'Ukraine', 'Venezuela']
+Years      : 1750–2026
+Obs (node) : 43,400
 
 Bond Strength (per-node):
-  Overall  Spearman ρ = 0.9496  MAE = 21.7019
+  Overall  Spearman ρ = 0.9571  MAE = 19.6462
   Note: MAE is cross-scale (JUNO ∈[0,1], CAMS-v3.2 ~[0.7,64]); Spearman is scale-invariant.
 
 Per-node Spearman ρ:
-  Helm       ρ = 0.9523  MAE = 22.3245
-  Shield     ρ = 0.9482  MAE = 21.2471
-  Lore       ρ = 0.9316  MAE = 22.9651
-  Stewards   ρ = 0.9538  MAE = 21.6049
-  Craft      ρ = 0.9490  MAE = 21.8376
-  Hands      ρ = 0.9541  MAE = 18.1532
-  Archive    ρ = 0.9471  MAE = 23.3167
-  Flow       ρ = 0.9513  MAE = 22.1661
+  Helm       ρ = 0.9585  MAE = 20.3503
+  Shield     ρ = 0.9547  MAE = 19.3590
+  Lore       ρ = 0.9402  MAE = 21.1679
+  Stewards   ρ = 0.9636  MAE = 18.9498
+  Craft      ρ = 0.9547  MAE = 19.6945
+  Hands      ρ = 0.9605  MAE = 16.6359
+  Archive    ρ = 0.9559  MAE = 21.1048
+  Flow       ρ = 0.9606  MAE = 19.9074
 
 System-level metrics (Spearman ρ, scale-invariant):
-  System Bond Density  : 0.9491
-  Decay Index          : 0.9746
-  λ₂ Connectivity      : 0.9467
+  System Bond Density  : 0.9562
+  Decay Index          : 0.9731
+  λ₂ Connectivity      : 0.9589
 
 Interpretation:
   ρ > 0.95 → formalisms agree on rank ordering (same crises, same hierarchy).
@@ -33,13 +33,18 @@ Per-society SBD concordance:
   Argentina            ρ = 0.9957  n=77
   Australia            ρ = 0.9671  n=152
   Brazil               ρ = 0.9762  n=146
+  Cambodia             ρ = 0.9543  n=177
   Canada               ρ = 0.9617  n=33
   Chile                ρ = 0.9707  n=152
   China                ρ = 0.9868  n=226
   Colombia             ρ = 0.9154  n=152
+  Democratic Republic of the Congo ρ = 0.9552  n=67
   Denmark              ρ = 0.9962  n=114
+  Egypt                ρ = 0.7951  n=75
+  Ethiopia             ρ = 0.9558  n=67
   France               ρ = 0.9549  n=177
   Germany              ρ = 0.9552  n=147
+  Greece               ρ = 0.9927  n=152
   Hong Kong            ρ = 0.9285  n=116
   India                ρ = 0.9729  n=31
   Indonesia            ρ = 1.0000  n=85
@@ -48,10 +53,17 @@ Per-society SBD concordance:
   Israel               ρ = 0.9990  n=80
   Italy                ρ = 0.9120  n=124
   Japan                ρ = 0.9819  n=152
+  Laos                 ρ = 0.9631  n=152
+  Latvia               ρ = 0.9794  n=113
   Lebanon              ρ = 0.9957  n=83
+  Mauritania           ρ = 0.8560  n=67
+  Mongolia             ρ = 0.9713  n=177
   Netherlands          ρ = 0.9825  n=54
+  New Zealand          ρ = 0.9698  n=152
+  Nigeria              ρ = 0.9963  n=67
   Norway               ρ = 0.9658  n=147
   Pakistan             ρ = 0.9778  n=78
+  Philippines          ρ = 0.9840  n=126
   Poland               ρ = 0.9726  n=152
   Russia               ρ = 0.8460  n=227
   Saudi Arabia         ρ = 0.8809  n=126
