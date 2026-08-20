@@ -28,14 +28,14 @@ The most recent operator specification (`juno/JUNO_v1.2-Final_Formalism.md`,
 (registered 6 July 2026) both use "CAMS" bare, without spelling out the
 acronym at all.
 
-**Flagged for the author:** none of the above is declared as *the* canonical
-expansion anywhere in the repository — each document simply asserts its own.
-The most recent prose usage is "Complex Adaptive Meta-System," but recency
-alone isn't a declaration. Please confirm which (if any) is now official;
-`CITATION.cff` and `.zenodo.json` currently use a working title —
-*"CAMS/JUNO: A Complex Adaptive Systems Framework for Societal Coordination
-Analysis"* — chosen specifically to avoid committing to an unconfirmed
-expansion.
+**Resolved 2026-08-20:** none of the six expansions above had been declared
+canonical anywhere in the repository — each document simply asserted its
+own. The author has now confirmed the canonical expansion going forward is
+**Complex Adaptive Model State**. `CITATION.cff` and `.zenodo.json` have
+been updated to *"CAMS (Complex Adaptive Model State) / JUNO: A Framework
+for Societal Coordination Analysis"* accordingly. The six expansions in the
+table above remain as the historical record of what the acronym has
+publicly meant at different points; they are superseded, not deleted.
 
 ## Version and Formulation Timeline
 
@@ -121,7 +121,8 @@ prediction on data that did not exist when the model was specified.
 
 Rather than guess, these are listed here for confirmation:
 
-1. Which CAMS acronym expansion (if any) is now canonical — see table above.
+1. ~~Which CAMS acronym expansion (if any) is now canonical~~ — **resolved
+   2026-08-20: "Complex Adaptive Model State."** See table above.
 2. Whether "CAMS v3.2-R (April 2026)" and "v1.0-RC1 (8 April 2026)" refer to
    the same milestone or two different ones.
 3. The date and rationale of the second node-naming change (Executive/Army/

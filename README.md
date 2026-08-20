@@ -30,8 +30,8 @@ below is a placeholder standing in for a real value.)*
 Plain-text citation:
 
 ```
-McKern, K. F. (2026). CAMS/JUNO: A Complex Adaptive Systems Framework for
-Societal Coordination Analysis [Computer software]. Zenodo.
+McKern, K. F. (2026). CAMS (Complex Adaptive Model State) / JUNO: A
+Framework for Societal Coordination Analysis [Computer software]. Zenodo.
 https://doi.org/PENDING
 ```
 
@@ -40,8 +40,8 @@ BibTeX:
 ```bibtex
 @software{mckern_cams_juno,
   author  = {McKern, Kari Freyr},
-  title   = {{CAMS/JUNO: A Complex Adaptive Systems Framework for Societal
-             Coordination Analysis}},
+  title   = {{CAMS (Complex Adaptive Model State) / JUNO: A Framework for
+             Societal Coordination Analysis}},
   year    = {2026},
   publisher = {Zenodo},
   doi     = {PENDING},
