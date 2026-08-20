@@ -665,7 +665,11 @@
   function init(){
     if(!window.JUNO_DATA){ setTimeout(init, 60); return; }
     data = window.JUNO_DATA;
-    data.societies.forEach(s=>{ byName[s.name]=s; });
+    data.societies.forEach(s=>{
+      byName[s.name]=s;
+      const last = s.series[s.series.length-1];
+      s.latest = { year: last.y, vmean: last.V, regime: last.R };
+    });
     renderSidebar();
     renderDetail();
   }
