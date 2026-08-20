@@ -15,8 +15,10 @@ authors:
     affiliation: "Independent Researcher"
 repository-code: "https://github.com/KaliBond/wintermute"
 url: "https://neuralnations.org"
-# doi: PENDING — this repository has not yet had a Zenodo release. Add the
-#   concept DOI here once minted (do not invent one before then).
+# doi: PENDING — publishing the GitHub release triggers the GitHub-Zenodo
+#   webhook integration, which archives this repo and mints its own DOI
+#   automatically. Add that DOI here once minted; do not use any DOI from
+#   a separately/manually created Zenodo upload (a different deposit).
 abstract: >-
   CAMS/JUNO is a measurement framework for how societies absorb adaptive
   stress, rendering a society's institutional record as eight recurring
