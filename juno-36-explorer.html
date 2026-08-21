@@ -317,6 +317,53 @@
     return           {label:'Failing',  color:'#C0392B'};
   }
 
+  // ── Algebraic connectivity (lambda2) from the canonical bond matrix ──
+  // B_ij = sqrt(q_i*q_j) * 2^-((S_i+S_j)/10), q_i = clip((0.6C+0.4A)/10, 0, null)
+  // matching cams_framework_v2_4.py's bond_matrix()/algebraic_connectivity().
+  function jacobiEigen(matrix){
+    const n = matrix.length;
+    const a = matrix.map(row=>row.slice());
+    for(let iter=0; iter<100; iter++){
+      let max=0, p=0, q=1;
+      for(let i=0;i<n;i++) for(let j=i+1;j<n;j++){
+        const v = Math.abs(a[i][j]);
+        if(v>max){ max=v; p=i; q=j; }
+      }
+      if(max < 1e-12) break;
+      const tau = (a[q][q]-a[p][p])/(2*a[p][q]);
+      const t = tau>=0 ? 1/(tau+Math.sqrt(1+tau*tau)) : 1/(tau-Math.sqrt(1+tau*tau));
+      const c = 1/Math.sqrt(1+t*t), s = t*c;
+      const app=a[p][p], aqq=a[q][q], apq=a[p][q];
+      a[p][p]=app-t*apq; a[q][q]=aqq+t*apq; a[p][q]=0; a[q][p]=0;
+      for(let r=0;r<n;r++){
+        if(r===p||r===q) continue;
+        const arp=a[r][p], arq=a[r][q];
+        a[r][p]=c*arp-s*arq; a[p][r]=a[r][p];
+        a[r][q]=s*arp+c*arq; a[q][r]=a[r][q];
+      }
+    }
+    return a.map((_,i)=>a[i][i]).sort((x,y)=>x-y);
+  }
+
+  function bondMatrixFromNodes(nodesObj){
+    const n = NODE_ORDER.length;
+    const q = NODE_ORDER.map(nm=>Math.max(0, (0.6*nodesObj[nm].C + 0.4*nodesObj[nm].A)/10));
+    const S = NODE_ORDER.map(nm=>nodesObj[nm].S);
+    const B = Array.from({length:n},()=>new Array(n).fill(0));
+    for(let i=0;i<n;i++) for(let j=0;j<n;j++){
+      if(i===j) continue;
+      B[i][j] = Math.sqrt(q[i]*q[j]) * Math.pow(2, -(S[i]+S[j])/10);
+    }
+    return B;
+  }
+
+  function computeLambda2(nodesObj){
+    const B = bondMatrixFromNodes(nodesObj);
+    const deg = B.map(row=>row.reduce((a,b)=>a+b,0));
+    const L = B.map((row,i)=>row.map((b,j)=>i===j?deg[i]:-b));
+    return jacobiEigen(L)[1];
+  }
+
   let _vmax = null;
   function globalVMax(data){
     if(_vmax) return _vmax;
@@ -527,8 +574,8 @@
     // metric tiles
     const tiles = [
       {label:'System Health V̄', color:'#2F6F7D', value:lat.vmean.toFixed(1), sub:'mean node value, latest year'},
-      {label:'Bond Density ρ',   color:'#D98B2B', value:lat.sbd.toFixed(3),   sub:'system bond density (SBD)'},
-      {label:'Algebraic λ₂',color:'#8A5BB8', value:lat.l2.toFixed(2),    sub:'Fiedler connectivity'},
+      {label:'Bond Density ρ',   color:'#D98B2B', value:lat.sbd!=null?lat.sbd.toFixed(3):'…',   sub:'system bond density (SBD)'},
+      {label:'Algebraic λ₂',color:'#8A5BB8', value:lat.l2!=null?lat.l2.toFixed(2):'…',    sub:'Fiedler connectivity'},
       {label:'Regime',                color:rco,        value:cur.years,             sub:'years in record'}
     ].map((t,i)=>`<div class="metric-tile" style="${i===3?'border-right:0;':''}">
       <div class="metric-tile-label">${t.label}</div>
@@ -547,8 +594,9 @@
     const legend = REGIME_ORDER.map(r=>`<span class="regime-legend-item"><span class="regime-legend-swatch" style="background:${rc(r)};"></span>${r}</span>`).join('');
 
     // node cards
-    const nodeCards = NODE_ORDER.filter(nm=>lat.nodes[nm]).map(nm=>{
-      const n = lat.nodes[nm];
+    const nodes = lat.nodes || {};
+    const nodeCards = NODE_ORDER.filter(nm=>nodes[nm]).map(nm=>{
+      const n = nodes[nm];
       const meta = NODE_META[nm] || {c:'#5A6E78', layer:''};
       const st = nodeStatus(n);
       const dims = ['C','K','S','A'].map(k=>`<div class="node-dim-row">
@@ -576,9 +624,9 @@
     }).join('');
 
     // node tally
-    const nFail = NODE_ORDER.filter(nm=>lat.nodes[nm]&&nodeStatus(lat.nodes[nm]).label==='Failing').length;
-    const nWarn = NODE_ORDER.filter(nm=>lat.nodes[nm]&&nodeStatus(lat.nodes[nm]).label==='Strained').length;
-    const nOk   = NODE_ORDER.filter(nm=>lat.nodes[nm]&&nodeStatus(lat.nodes[nm]).label==='Healthy').length;
+    const nFail = NODE_ORDER.filter(nm=>nodes[nm]&&nodeStatus(nodes[nm]).label==='Failing').length;
+    const nWarn = NODE_ORDER.filter(nm=>nodes[nm]&&nodeStatus(nodes[nm]).label==='Strained').length;
+    const nOk   = NODE_ORDER.filter(nm=>nodes[nm]&&nodeStatus(nodes[nm]).label==='Healthy').length;
     const tally = [
       {label:'Healthy', n:nOk,   color:'#3E8E5E'},
       {label:'Strained',n:nWarn, color:'#C28A1E'},
@@ -668,10 +716,26 @@
     data.societies.forEach(s=>{
       byName[s.name]=s;
       const last = s.series[s.series.length-1];
-      s.latest = { year: last.y, vmean: last.V, regime: last.R };
+      s.latest = { year: last.y, vmean: last.V, regime: last.R, sbd: last.SBD };
+      s.minYear = s.series[0].y;
+      s.maxYear = last.y;
+      s.years = s.series.length;
     });
     renderSidebar();
     renderDetail();
+
+    // Per-node breakdown + algebraic connectivity (lambda2) live in the
+    // richer juno_full.json, not juno_data.js — merge in once fetched so
+    // the node cards / lambda2 tile fill in without blocking first paint.
+    fetch('data/juno_full.json').then(r=>r.json()).then(full=>{
+      data.societies.forEach(s=>{
+        const f = full.societies && full.societies[s.name];
+        if(!f || !f.nodes) return;
+        s.latest.nodes = f.nodes;
+        s.latest.l2 = computeLambda2(f.nodes);
+      });
+      renderDetail();
+    }).catch(()=>{ /* node cards / lambda2 tile just stay in their loading state */ });
   }
   init();
 })();
