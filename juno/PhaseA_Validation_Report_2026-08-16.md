@@ -4,6 +4,8 @@
 **Dataset:** JUNO_Unified_Dataset.csv (36 societies, 32,361 rows, 20–2026 CE)  
 **Protocol source:** JUNO_36_PhaseA_Dataset_Mapping.md (compiled 2026-08-14)
 
+**Addendum (2026-08-28):** `Bond_Strength_Calc` was realigned on 2026-08-28 (PR #1). Node-labelled re-run (aligned vs legacy vs published): [`PhaseA_Rerun_BondAlignment_2026-08-28.md`](PhaseA_Rerun_BondAlignment_2026-08-28.md). This file’s conclusions are not rewritten here.
+
 ---
 
 ## Test 1 — SIPRI × Shield (security-coordinated configuration)
