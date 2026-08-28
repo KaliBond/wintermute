@@ -38,3 +38,7 @@ Incomplete society-years (missing C/K/S/A or not exactly eight nodes): none in t
 1. Revert the PR that introduced the aligned column, **or**
 2. Restore `Bond_Strength_Calc` from `Bond_Strength_Calc_legacy` on every row, **or**
 3. Replace `juno/JUNO_Unified_Dataset.csv` with `juno/backups/JUNO_Unified_Dataset_pre_bond_fix_20260828.csv` (that backup has no legacy column; it is the pre-fix file).
+
+## 2026–2028 out-of-sample prediction freeze
+
+The twelve 2026–2028 holdout claims (plus the USA–Argentina similarity claim, labelled as similarity not prediction) are frozen in [`OOS_PREDICTIONS_2026-2028.md`](OOS_PREDICTIONS_2026-2028.md), dated 28 August 2026 (Sydney), quoting the 10 June 2026 lock. Later work may **score** that list; it must not edit it. JUNO v1.2 is not externally validated until this holdout is scored.
