@@ -308,6 +308,35 @@
     <!-- Research Diary Entries -->
     <div id="diary-entries">
 
+        <div class="diary-entry methodology">
+            <div class="entry-header">
+                <h3>Realigning a Bond Column, Re-Checking Phase A, and Locking the 2026&ndash;2028 Predictions</h3>
+                <div>
+                    <span class="entry-type">Methodology</span>
+                    <span class="entry-date">2026-08-28</span>
+                </div>
+            </div>
+            <div class="entry-content">
+                <p>Three small, deliberately unglamorous jobs, done in one pass and recorded rather than folded in silently.</p>
+
+                <p style="margin-top:12px;"><strong>1. A misaligned column, fixed.</strong> In <code>JUNO_Unified_Dataset.csv</code>, the per-node mean bond strength (<code>Bond_Strength_Calc</code>) held the correct <em>set</em> of eight values for each society-year but had them shuffled against the Node labels &mdash; exact alignment in only 5 of 5,425 complete society-years (and those five are years where all eight means are equal). The scramble entered on 20 August, when twelve societies were added to the panel. The column is now recomputed from raw Coherence / Capacity / Stress / Abstraction and written aligned to each row's node; the pre-fix values are kept as <code>Bond_Strength_Calc_legacy</code> for rollback. <code>SBD_Calc</code> and &lambda;&#8322; already matched recomputation and were left untouched. Verifier: <code>juno/verify_bond_alignment.py</code>.</p>
+
+                <p style="margin-top:12px;"><strong>2. Phase A re-checked &mdash; it holds.</strong> The node-labelled Phase A tests (Shield &times; military expenditure, Shield &times; V-Dem) were re-run against the realigned column. It turns out the 16 August Phase A already read an aligned Shield bond, so the published World Bank result (r&nbsp;=&nbsp;&minus;0.128 cross-section, null within-society) and the Shield &times; V-Dem panel (<code>v2x_rule</code> +0.417, <code>v2x_libdem</code> +0.304, and the per-society developmental / post-imperial split) reproduce to the reported precision. The legacy column is a counterfactual of the 20&ndash;28 August window, not the 16 August report. Two gaps that the fix neither causes nor closes: the SIPRI-real +0.251 figure does not reproduce from public SIPRI v1.2 (a missing Drive extract; sign is negative on the public data), and the Australia-only T3a depth pilot (n&nbsp;=&nbsp;131) is not reproducible from the in-repo V-Dem file. Both are unrecovered source files, not alignment reversals. Full account: <a href="https://github.com/KaliBond/wintermute/blob/main/juno/PhaseA_Rerun_BondAlignment_2026-08-28.md" target="_blank" style="color:#2F6F7D;">Phase A re-run note</a>.</p>
+
+                <p style="margin-top:12px;"><strong>3. The 2026&ndash;2028 predictions, frozen.</strong> The twelve falsifiable predictions from Table 12 of the <a href="research/cams-validation-2026.html" style="color:#2F6F7D;">10 June 2026 paper</a> are now locked verbatim in a dated register. Later work may mark them HIT / MISS / UNSCORABLE; it may not reword a claim, shift a threshold, or drop an analogue. The 12 July six-nation memo (which adds Iran and drops the UK, Ukraine and the cross-corpus claim) is recorded as a delta, not a replacement. The USA 2024&ndash;2026 vs Argentina Dirty War 0.97 figure is tagged as a similarity claim, not one of the twelve. JUNO v1.2 is not externally validated until this holdout is scored &mdash; and scoring waits for the years to close. Register: <a href="https://github.com/KaliBond/wintermute/blob/main/juno/OOS_PREDICTIONS_2026-2028.md" target="_blank" style="color:#2F6F7D;">Frozen 2026&ndash;2028 OOS Prediction Register</a>.</p>
+
+                <p style="margin-top:16px;font-weight:600;color:#1B2A33;">Kari McKern &nbsp;&middot;&nbsp; <span style="font-weight:400;color:#888;">with Claude</span></p>
+
+                <div class="tags">
+                    <span class="tag">#bond-alignment</span>
+                    <span class="tag">#phase-a</span>
+                    <span class="tag">#oos-predictions</span>
+                    <span class="tag">#pre-registration</span>
+                    <span class="tag">#data-hygiene</span>
+                </div>
+            </div>
+        </div>
+
         <div class="diary-entry research-milestone">
             <div class="entry-header">
                 <h3>The Borrowed Nation — Five Essays on Australian Strategic Dependency</h3>
