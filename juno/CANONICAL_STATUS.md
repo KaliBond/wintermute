@@ -42,3 +42,7 @@ Incomplete society-years (missing C/K/S/A or not exactly eight nodes): none in t
 ## 2026–2028 out-of-sample prediction freeze
 
 The twelve 2026–2028 holdout claims (plus the USA–Argentina similarity claim, labelled as similarity not prediction) are frozen in [`OOS_PREDICTIONS_2026-2028.md`](OOS_PREDICTIONS_2026-2028.md), dated 28 August 2026 (Sydney), quoting the 10 June 2026 lock. Later work may **score** that list; it must not edit it. JUNO v1.2 is not externally validated until this holdout is scored.
+
+## Related (Epiphenomenon)
+
+Exploratory Hansard horse-race note (10 Sep 2026): [`Epiphenomenon_HorseRace_2026-09-10.md`](Epiphenomenon_HorseRace_2026-09-10.md) — place beside OOS freeze; not a JUNO validation claim.
