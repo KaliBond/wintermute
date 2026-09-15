@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Short History of CAMS — Neural Nations</title>
+<meta name="description" content="How CAMS — an instrument for measuring the health of civilisations — was built, what it has found on settled historical cases, and what it is (and is not) claiming to be.">
+<meta name="author" content="Kari Freyr McKern">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://neuralnations.org/a-short-history-of-cams">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://neuralnations.org/a-short-history-of-cams">
+<meta property="og:site_name" content="Neural Nations">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="A Short History of CAMS — Neural Nations">
+<meta property="og:description" content="How an instrument for measuring the health of civilisations got built — and what it has found, so far, by pointing itself at real history.">
+<meta property="og:image" content="https://neuralnations.org/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="A Short History of CAMS — Neural Nations">
+<meta name="twitter:description" content="How an instrument for measuring the health of civilisations got built — and what it has found on settled historical cases.">
+<meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Source+Sans+3:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink: #161311;
+    --ink-soft: #4a433c;
+    --parchment: #ede7da;
+    --parchment-dim: #ddd4c1;
+    --paper-line: #c9bea7;
+    --ember: #b8541f;
+    --ember-dim: #d97a46;
+    --slate: #3d4a4a;
+    --slate-dim: #5f7070;
+    --gold: #9c7a2e;
+    --surface: #f7f3e9;
+    --card: #ffffff;
+    --shadow: 0 1px 2px rgba(22,19,17,0.06), 0 8px 24px rgba(22,19,17,0.06);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #ece6d9;
+      --ink-soft: #b9b0a0;
+      --parchment: #17140f;
+      --parchment-dim: #211c15;
+      --paper-line: #3a3226;
+      --ember: #e08248;
+      --ember-dim: #b8541f;
+      --slate: #8ea3a3;
+      --slate-dim: #647676;
+      --gold: #cfa74a;
+      --surface: #100d09;
+      --card: #1c1811;
+      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 8px 30px rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #ece6d9;
+    --ink-soft: #b9b0a0;
+    --parchment: #17140f;
+    --parchment-dim: #211c15;
+    --paper-line: #3a3226;
+    --ember: #e08248;
+    --ember-dim: #b8541f;
+    --slate: #8ea3a3;
+    --slate-dim: #647676;
+    --gold: #cfa74a;
+    --surface: #100d09;
+    --card: #1c1811;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 8px 30px rgba(0,0,0,0.5);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { color-scheme: light dark; }
+
+  body {
+    margin: 0;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: 'Source Sans 3', system-ui, sans-serif;
+    padding-inline: max(20px, calc((100vw - 720px) / 2));
+    line-height: 1.65;
+  }
+
+  .page { max-width: 720px; margin: 0 auto; padding-block: 64px 96px; }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ember);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 22px; height: 1px;
+    background: var(--ember);
+    display: inline-block;
+  }
+
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: clamp(2.1rem, 5vw, 3.1rem);
+    line-height: 1.06;
+    letter-spacing: -0.01em;
+    margin: 0 0 20px;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+
+  .standfirst {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 1.28rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 34em;
+    margin: 0 0 8px;
+    text-wrap: balance;
+  }
+
+  .meta-line {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--slate-dim);
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--paper-line);
+  }
+
+  section { margin-top: 76px; }
+  section > h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.7rem;
+    letter-spacing: -0.005em;
+    margin: 0 0 8px;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .section-kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  p { margin: 0 0 1.15em; max-width: 62ch; color: var(--ink); }
+  p.lede { font-size: 1.08rem; }
+  strong { color: var(--ink); font-weight: 600; }
+  em.term { font-style: normal; color: var(--ember); font-weight: 600; }
+
+  a { color: var(--ember); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:hover { color: var(--ember-dim); }
+  a:focus-visible, button:focus-visible, .node:focus-visible {
+    outline: 2px solid var(--ember);
+    outline-offset: 3px;
+  }
+
+  /* ---- Strata timeline ---- */
+  .strata {
+    position: relative;
+    margin-top: 32px;
+    padding-left: 28px;
+    border-left: 2px solid var(--paper-line);
+  }
+  .stratum {
+    position: relative;
+    padding-bottom: 34px;
+  }
+  .stratum:last-child { padding-bottom: 0; }
+  .stratum::before {
+    content: "";
+    position: absolute;
+    left: -33px;
+    top: 4px;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--ember);
+    box-shadow: 0 0 0 4px var(--surface);
+  }
+  .stratum .date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--gold);
+    letter-spacing: 0.03em;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .stratum .label {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.12rem;
+    margin: 0 0 6px;
+    color: var(--ink);
+  }
+  .stratum p { margin-bottom: 0.4em; font-size: 0.97rem; }
+
+  /* ---- Node instrument diagram ---- */
+  .instrument {
+    margin-top: 28px;
+    background: var(--card);
+    border: 1px solid var(--paper-line);
+    border-radius: 4px;
+    box-shadow: var(--shadow);
+    padding: 28px 22px;
+  }
+  .instrument-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  @media (max-width: 560px) {
+    .instrument-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .node {
+    border: 1px solid var(--paper-line);
+    border-radius: 3px;
+    padding: 12px 10px;
+    background: var(--parchment-dim);
+    cursor: default;
+  }
+  .node .n-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    color: var(--slate);
+    display: block;
+    margin-bottom: 5px;
+  }
+  .node .n-name {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.02rem;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .node .n-desc {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+  .instrument-foot {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--paper-line);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--slate-dim);
+  }
+  .instrument-foot .formula { color: var(--ember); }
+
+  /* ---- Findings cards ---- */
+  .findings {
+    display: grid;
+    gap: 14px;
+    margin-top: 28px;
+  }
+  .finding {
+    background: var(--card);
+    border: 1px solid var(--paper-line);
+    border-left: 3px solid var(--ember);
+    border-radius: 2px;
+    padding: 18px 20px;
+    box-shadow: var(--shadow);
+  }
+  .finding .f-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 7px;
+  }
+  .finding p { margin: 0; font-size: 0.96rem; }
+
+  /* ---- Pull quote ---- */
+  blockquote {
+    margin: 36px 0;
+    padding-left: 22px;
+    border-left: 3px solid var(--slate);
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 32em;
+  }
+
+  /* ---- Candour box ---- */
+  .candour {
+    margin-top: 28px;
+    background: var(--parchment-dim);
+    border: 1px solid var(--paper-line);
+    border-radius: 4px;
+    padding: 22px 24px;
+  }
+  .candour .c-head {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--slate);
+    margin-bottom: 10px;
+    display: block;
+  }
+  .candour ul { margin: 0; padding-left: 1.2em; }
+  .candour li { margin-bottom: 8px; font-size: 0.95rem; }
+  .candour li:last-child { margin-bottom: 0; }
+
+  footer {
+    margin-top: 90px;
+    padding-top: 28px;
+    border-top: 1px solid var(--paper-line);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--slate-dim);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  footer a { color: var(--slate); }
+
+  .site-chrome {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 0 0 36px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--paper-line);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .site-chrome a {
+    color: var(--slate);
+    text-decoration: none;
+  }
+  .site-chrome a:hover { color: var(--ember); }
+  .site-chrome .nn { color: var(--ember); font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="site-chrome">
+    <a class="nn" href="index.html">Neural Nations</a>
+    <span>
+      <a href="explore.html">← Explore</a>
+      ·
+      <a href="cams-project-history.html">Conversation-record history</a>
+    </span>
+  </div>
+
+  <div class="eyebrow">Neural Nations · Field Notes</div>
+  <h1>A Short History of CAMS</h1>
+  <p class="standfirst">How an instrument for measuring the health of civilisations got built — and what it has found, so far, by pointing itself at real history.</p>
+  <div class="meta-line">Kari Freyr McKern — ComplexityWorkz / Neural Nations Research — Sydney, Australia</div>
+
+  <section>
+    <span class="section-kicker">Why build it</span>
+    <h2>Most claims about a nation's health are not checkable.</h2>
+    <p class="lede">A commentator says a country is "fracturing," or "resilient," or "in decline," and there is usually no way to test the claim against a rival's claim, or against the same country twenty years earlier, because nobody wrote down what they were actually measuring. CAMS — the Complex Adaptive Model of Societies — started from the suspicion that this doesn't have to be true. If a society is a coordination system, its coordination should be measurable the same way in every era and every country, which means claims about it should be falsifiable the same way a claim in any other science is.</p>
+    <p>Recorded history, on this view, is sediment: every crisis, reform, and rupture a society has lived through is still legible in how its institutions behave later, the way weather is legible in tree rings. CAMS tries to core-sample that record directly — not narrate it, measure it.</p>
+  </section>
+
+  <section>
+    <span class="section-kicker">Method</span>
+    <h2>Eight functions every durable group must solve</h2>
+    <p class="lede">Any group of humans coordinating at scale — a village, a corporation, a nation — appears to need the same eight things done, whatever it calls them. CAMS scores each of the eight on four dimensions every year: how internally aligned it is <em class="term">(Coherence)</em>, how much real capability it commands <em class="term">(Capacity)</em>, how much pressure it's under <em class="term">(Stress)</em>, and how far its official story has drifted from its material reality <em class="term">(Abstraction)</em>.</p>
+
+    <div class="instrument">
+      <div class="instrument-grid">
+        <div class="node" tabindex="0"><span class="n-code">01 · GOVERNANCE</span><span class="n-name">Helm</span><span class="n-desc">Executive leadership; who sets direction and claims the right to act for the whole.</span></div>
+        <div class="node" tabindex="0"><span class="n-code">02 · DEFENCE</span><span class="n-name">Shield</span><span class="n-desc">The monopoly on organised coercion — military, police, protection from threat.</span></div>
+        <div class="node" tabindex="0"><span class="n-code">03 · MEANING</span><span class="n-name">Lore</span><span class="n-desc">Shared narrative and identity — why members recognise each other as one group.</span></div>
+        <div class="node" tabindex="0"><span class="n-code">04 · MEMORY</span><span class="n-name">Archive</span><span class="n-desc">Law, bureaucracy, and record — what lets a society act consistently over time.</span></div>
+        <div class="node" tabindex="0"><span class="n-code">05 · SKILL</span><span class="n-name">Craft</span><span class="n-desc">Technical and intellectual production — the makers and inventors.</span></div>
+        <div class="node" tabindex="0"><span class="n-code">06 · EXCHANGE</span><span class="n-name">Flow</span><span class="n-desc">Trade and circulation — the channel connecting every node to the others and outside.</span></div>
+        <div class="node" tabindex="0"><span class="n-code">07 · CAPITAL</span><span class="n-name">Stewards</span><span class="n-desc">Custodians of property, land, and accumulated wealth.</span></div>
+        <div class="node" tabindex="0"><span class="n-code">08 · LABOUR</span><span class="n-name">Hands</span><span class="n-desc">The working base that generates the material substrate everything else runs on.</span></div>
+      </div>
+      <div class="instrument-foot">
+        Node Value <span class="formula">V = C + K − S + 0.5A</span> · Bond Strength is a derived coupling readout from the same four metrics — useful as a summary of how tightly the nodes move together, not a claim of a fully independent multi-bond graph. Often what frays first is not any single node's score but how the eight stay linked.
+      </div>
+    </div>
+
+    <p style="margin-top:24px;">A score is not read off a spreadsheet the way GDP is. It is a judgment — rendered by independent scorers reading the historical record for that year — which is why CAMS runs five scoring passes per period rather than one, and reports the disagreement between them as part of the result rather than hiding it. Where the evidence is too thin to support a confident number, the newer scoring protocols record that honestly as <em class="term">insufficient evidence</em> rather than guessing.</p>
+  </section>
+
+  <section>
+    <span class="section-kicker">Origin</span>
+    <h2>From a Socratic irritation to a working instrument</h2>
+    <div class="strata">
+      <div class="stratum">
+        <span class="date">Mid 2024</span>
+        <p class="label">An old question, asked of a new collaborator</p>
+        <p>How do you tell knowledge from persuasion — how do you stop a political story from grading its own truth? The project began as that question, put to an AI system, rather than as an equation.</p>
+      </div>
+      <div class="stratum">
+        <span class="date">14 October 2024</span>
+        <p class="label">First formal definition</p>
+        <p>Published under the name <em class="term">Common Adaptive Model State</em>. Eight roles, described informally — Leadership, Warrior Class, Priesthood, and so on — scored on three dimensions, the third then called "Impact."</p>
+      </div>
+      <div class="stratum">
+        <span class="date">Early–mid 2025</span>
+        <p class="label">CAMS, and a fourth dimension</p>
+        <p>"Impact" was replaced by <em class="term">Abstraction</em> once it became clear that what separated resilient societies from brittle ones was internal symbolic honesty, not external reach. The short name "CAMS" enters public use alongside the first scored comparison: Russia, China, the USA, and Singapore, 2000–2025.</p>
+      </div>
+      <div class="stratum">
+        <span class="date">2025 – 2026</span>
+        <p class="label">Functional renaming</p>
+        <p>The eight roles are renamed to Helm, Shield, Lore, Archive, Craft, Flow, Stewards, and Hands — functions any durable collective must solve, rather than roles tied to one historical class structure, so the same instrument can be pointed at any scale.</p>
+      </div>
+      <div class="stratum">
+        <span class="date">2026</span>
+        <p class="label">JUNO and system-level diagnostics</p>
+        <p>A further layer adds whole-system health measures and named regimes a society can occupy in a given year — <em class="term">Stable Adaptive</em>, <em class="term">Strained</em>, <em class="term">Fracture</em> — plus a formal, blind, 229-polity clustering pass to test whether civilisational "types" hold up statistically rather than by assertion.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="section-kicker">Settled cases</span>
+    <h2>Before trusting it on the contested cases, check the face-validity ones</h2>
+    <p class="lede">An instrument earns trust on a disputed question partly by first finding, cleanly and without being told where to look, the crises nobody disputes.</p>
+    <div class="findings">
+      <div class="finding">
+        <span class="f-tag">Australia · 1808</span>
+        <p>The Rum Rebellion registers as the single sharply negative Node Value anywhere in Australia's 200-year record, recovering fully within two years under Macquarie — a governance collapse and rebound the historical record already agrees on.</p>
+      </div>
+      <div class="finding">
+        <span class="f-tag">United States · 1860–65</span>
+        <p>A sealed calibration run against the Civil War passed all eight of its pre-registered structural expectations, correctly isolating the Helm–Shield coordination failure historians already identify as the war's institutional core.</p>
+      </div>
+      <div class="finding">
+        <span class="f-tag">Norway & Singapore · 1940–1945</span>
+        <p>Both nations' occupation years surface, independently, as the deepest trough in their entire measured history — Singapore's alone severe enough to register the model's rarest classification, full systemic collapse — each followed by a full and rapid recovery.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="section-kicker">What the instrument has found</span>
+    <h2>A recurring shape, and one structural surprise</h2>
+    <p class="lede">Run across enough countries, one pattern keeps recurring: a society's material and institutional capacity can stay strong for decades after its capacity for coherent governance and shared meaning has begun a slow decline — the two are not the same thing, and CAMS was built specifically to stop conflating them.</p>
+    <p>The most striking single result, though, sits above any one country. A clustering pass across 229 historical and modern polities — blind to geography, ideology, and regime type — grouped modern China and modern Singapore with Rome at its height, the Ottoman Empire, and the British Empire, on shared structural grounds the source material calls explicitly "a structural finding and not an ideological one." A method built to test intuitions rather than confirm them is only doing its job when it occasionally says something nobody was trying to hear.</p>
+    <blockquote>Something moves the troop beneath the stories the troop tells about itself.</blockquote>
+  </section>
+
+  <section>
+    <span class="section-kicker">Standing</span>
+    <h2>What CAMS is, and isn't, claiming to be</h2>
+    <div class="candour">
+      <span class="c-head">Read this before citing a result</span>
+      <ul>
+        <li>CAMS is a diagnostic instrument, not a predictive oracle. It is independent, ongoing research and has not yet been through formal peer review.</li>
+        <li>Vocabulary and formulas have changed as the method matured — node names, scoring conventions, and classification schemes from 2024 are not identical to 2026's, and results should be read against the version that produced them.</li>
+        <li>Some proposed findings have been tested and discarded outright: a hypothesised "merchant civilisation" stress-suppression signature was checked four independent ways and falsified in every one, and is kept on the record rather than quietly dropped.</li>
+        <li>Every dataset, scoring protocol, and line of code is published openly, specifically so the numbers can be checked rather than taken on trust.</li>
+        <li>The 2026–2028 out-of-sample prediction register is frozen and still unscored — this is a diagnostic instrument under prospective test, not a claim of validated forecast skill.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <span>Neural Nations Research · ComplexityWorkz</span>
+    <span>Open data &amp; code — <a href="https://neuralnations.org">neuralnations.org</a> · <a href="explore.html">Explore</a> · <a href="https://github.com/KaliBond/wintermute">GitHub</a></span>
+  </footer>
+
+</div>
+
+</body>
+</html>
