@@ -1,0 +1,70 @@
+You have two jobs: (A) create the /CAMNATIONSMFIN skill and save it, and (B) launch 10 scorer tasks for USA 2015–2026 and aggregate the results.
+
+═══════════════════════════════════════════════════════
+JOB A — CREATE THE /CAMNATIONSMFIN SKILL
+═══════════════════════════════════════════════════════
+
+Use mcp__cowork__save_skill to save a skill named "CAMNATIONSMFIN" with the following content:
+
+# CAMNATIONSMFIN — Multi-agent evidence-gated CAMS pipeline (FINAL variant)
+
+## What it does
+Evidence-gated, five-scorer ensemble CAMS pipeline using the CAMS RAW SCORER: COUNTRIES v1.2-OPT prompt. Splits the requested year range into two batches with a 1-year overlap seam. The overlap year is scored twice by every scorer (once as the final year of batch 1, once as the first year of batch 2), under different trailing context. This makes the seam channel a diagnostic: seam discrepancy = the context-propagation artefact in raw form.
+
+## Trigger phrases
+"CAMNATIONSMFIN", "camnationsmfin", "/CAMNATIONSMFIN", "final CAMS run", "seam diagnostic CAMS"
+
+## Parameters
+- nation: the country or polity to score
+- start_year: first year of range
+- end_year: last year of range (default 2026, cap to 2026)
+- batch_size: number of years per batch (default 6)
+- overlap: number of shared years between consecutive batches (default 1)
+- signature: true/false — whether to emit a one-sentence dominant signature per node (default false)
+- n_scorers: number of independent scorers per batch (default 5, range 3–7)
+
+## Pipeline
+
+### Step 1 — Compute batch boundaries
+Split [start_year, end_year] into batches of batch_size years with overlap years of overlap at each seam. Each boundary year is scored by BOTH the batch that ends there and the batch that starts there.
+
+### Step 2 — Generate scorer prompts
+For each batch, generate a scorer prompt using the CAMS RAW SCORER: COUNTRIES v1.2-OPT template (full text below). The prompt is identical across all n_scorers passes for a given batch — do not vary it.
+
+### Step 3 — Launch scorer sessions
+Use mcp__dispatch__start_task to launch n_scorers × n_batches sessions. Each session receives the scorer prompt for its batch. Title each session like "CAMNATIONSMFIN {nation} B{n}-S{m}".
+
+### Step 4 — Read transcripts and extract CSV
+Once all sessions complete, use mcp__session_info__read_transcript on each session ID to retrieve the raw CSV output.
+
+### Step 5 — Aggregate
+Apply the aggregation rules:
+- Seam de-dup: at each overlap year, for each scorer, keep the LATER batch's score. Record seam discrepancy.
+- n_eff_d per (Year, Node, Dimension): count of non-NA scores across n_scorers. If n_eff_d ≥ 3: compute mean (1 dp) and sd (ddof=1, 2 dp). Else: NA.
+- n_eff = MIN(n_eff_d across 4 dims) for that node-year.
+- NA_rate = (count of NA scores across n_scorers × 4 dims) / (n_scorers × 4).
+- Node Value = C_mean + K_mean − S_mean + 0.5 × A_mean (NA if any mean is NA).
+- Bond Strength: B_ij = [0.6×C_i×C_j + 0.4×A_i×A_j] × exp(−(S_i+S_j)/20). bond_n = count of computable pairs. If bond_n ≥ 4: emit mean Bond Strength (3 dp). Else NA.
+- V_range/V_min/V_max: computed per (Year,Node) cell from per-scorer Node Values. Fresh per cell.
+- Seam report: emit after Block 2 — SEAM: n_overlap_cells=<n>, mean_abs_diff=<x.xx>, max_abs_diff=<x.xx>
+
+### Step 6 — Save output
+Save Block 1 and Block 2 CSVs to C:\Users\julie\wintermute\juno\{nation}_CAMS_mfin_{start_year}-{end_year}_block1.csv and _block2.csv.
+
+### Step 7 — Report seam diagnostics
+Report: seam year(s), per-node mean seam discrepancy on each dimension, identification of nodes with max_abs_diff ≥ 2 (potential context-propagation artefacts), and whether the discrepancy pattern is uniform across nodes (flag = possible systematic drift) or heterogeneous (flag = genuine institutional transition at seam year).
+
+## Block headers (exact)
+Block 1: Society,Year,Node,Coherence,Capacity,Stress,Abstraction,Node Value,Bond Strength
+Block 2: Society,Year,Node,C_sd,K_sd,S_sd,A_sd,V_range,V_min,V_max,n_eff,NA_rate,bond_n
+
+## CAMS RAW SCORER: COUNTRIES v1.2-OPT TEMPLATE
+
+```
+CAMS RAW SCORER: COUNTRIES v1.2-OPT
+
+country_or_polity: {NATION}
+start_year: {START_YEAR}
+end_year: {END_YEAR}
+
+[Insert full v1.2-OPT prompt body here — see camnationsm5n skill for the canonical text]

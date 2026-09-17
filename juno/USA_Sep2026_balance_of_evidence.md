@@ -1,0 +1,15 @@
+# USA — September 2026 balance of evidence
+
+Public-facing thermometer note. **Body length: exactly 2800 characters including spaces.**
+
+Companions: `USA_mfin_2015-2026_ANALYSIS.md`, `USA_CAMS_mfin_2015-2026_block{1,2}.csv`, `CAMNATIONSMFIN_methodology.txt`, `USA_mfin_RECONCILIATION_CAMSBOT_2026-09-17.md`, `reconciliation_*.csv`.
+
+---
+
+USA — September 2026 (CAMS balance of evidence)
+
+Across roughly a dozen scoring lineages the directional claim is robust: material and institutional capacity (Shield, Stewards, Craft, Flow) has held comparatively better than governance and meaning-making (Helm, Lore), which show chronic multi-decade decline. Vocabularies differ — bifurcation, Perfection Paradox, Hands-Bottleneck, Freeze/Collapse, Polarised/Crisis — but they rhyme. Most series mark 2020 as the sharpest single-year shock and 2020–2026 as the most stressed sustained stretch. An April 2026 sealed prospective-test reading put Bond Strength at 8.986, below a 1933 Depression nadir on that surface, and named a likely Fracture path absent intervention by 2028. Those absolute levels are surface-specific; do not mix them with other panels.
+
+The newest annual CAMNATIONSMFIN ensemble (United States, 2015–2026; n_eff=5; bond_n=28; clean seam at 2020, mean|Δ|=0.54) sharpens the thermometer without settling prediction. Delivered society mean Node Value falls 12.95→7.42 (−43%) and delivered Bond Strength 9.05→5.34 (−41%) in four phases: 2015–19 Helm-led pre-shock erosion with a frozen economic core; 2020 COVID discontinuity (Flow 15.6→7.0); 2021–24 partial rebound that never recovers 2019; 2025–26 second-leg decline. Ordering of damage matters: Helm broke first (2015–17); Archive broke last and hardest (2024–26), so the older “Archive still strong” line must be qualified — on this panel Archive is the 2026 floor (delivered V 4.5; FINAL-spec V 1.5). Lore never rebounds. Shield is most resilient (11.2). Stewards bleed from 15.6→10.0 but remain second-strongest; the working hypothesis that Stewards will fall further under CRE, refinance, input costs, and debt monetisation stays live (falsifier: Stewards V ≥9 through 2027–28).
+
+Metabolically, six of eight 2026 nodes are inverted (Stress>Capacity); only Shield and Stewards keep a surplus. Scorer disagreement tracks transition: widest envelopes on Archive, Stewards, Helm. Caveat: delivered Node Value and Bond Strength deviate from the CAMNATIONSMFIN FINAL aggregation rules (60/96 V cells off V=C+K−S+0.5A; all twelve bond years off the documented B_ij formula). Rankings and the staircase shape survive recompute; absolute levels do not mix with future FINAL-spec runs until raw scorers are re-aggregated. Thermometer, not OOS score: sealed 2026–28 predictions remain unscored. As of September 2026 the USA reads as Helm- and Lore-impaired coordination under residual material strength, with Archive now co-leading the second-leg failure and society coupling on a lower plateau after two step-downs. Filed under juno/ with MFIN blocks, methodology, analysis, and reconciliation CSVs. Re-aggregate from raw scorers before mixing absolute V or Bond with FINAL-spec runs..
