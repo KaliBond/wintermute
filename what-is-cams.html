@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
+    <title>What Is CAMS? — Neural Nations</title>
+    <meta name="description" content="CAMS treats every organised human society as a living coordination system and measures its health the way you'd measure an organism. A plain-language introduction to the eight-node model, the Θ = Φ/Ψ ratio, and why it's built to be proven wrong.">
+    <meta name="keywords" content="CAMS, Neural Nations, what is CAMS, Complex Adaptive Model of Societies, Kari McKern, civilisational complexity">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/what-is-cams">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/what-is-cams">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="What Is CAMS? — Neural Nations">
+    <meta property="og:description" content="CAMS treats every organised human society as a living coordination system and measures its health the way you'd measure an organism. A plain-language introduction to the eight-node model.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="What Is CAMS? — Neural Nations">
+    <meta name="twitter:description" content="A plain-language introduction to CAMS: the eight-node model, the Θ = Φ/Ψ ratio, and why it's built to be proven wrong.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Neural Nations",
+          "url": "https://neuralnations.org",
+          "description": "Open research platform applying CAMS to measure how societies accumulate institutional stress and move toward or away from crisis.",
+          "author": { "@id": "https://neuralnations.org/#kari" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://neuralnations.org/#kari",
+          "name": "Kari McKern",
+          "url": "https://neuralnations.org/cams-project-history",
+          "jobTitle": "Independent Researcher",
+          "description": "Creator of CAMS — the Complex Adaptive Model of Societies. Researcher, former public servant, IT specialist, Sydney Australia.",
+          "sameAs": [
+            "https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/",
+            "https://github.com/KaliBond"
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+    .essay-body {
+        font-size: 1.02em;
+        line-height: 1.85;
+        color: #2c3e50;
+        max-width: 760px;
+    }
+    .essay-body > p { margin-bottom: 1.4em; }
+    .essay-body > p:first-of-type::first-letter {
+        font-size: 1.6em;
+        font-weight: 700;
+        float: left;
+        line-height: 1;
+        margin-right: 4px;
+        color: #1f77b4;
+    }
+    .essay-body h2 {
+        font-size: 1.35em;
+        margin: 2em 0 0.7em;
+        color: #1a0a2e;
+    }
+    .essay-body h2:first-child { margin-top: 0; }
+    .essay-body ul, .essay-body ol {
+        margin: 0 0 1.4em 1.3em;
+        padding: 0;
+    }
+    .essay-body li { margin-bottom: 0.6em; }
+    .essay-body table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.2em 0 1.6em;
+        font-size: 0.93em;
+    }
+    .essay-body th, .essay-body td {
+        text-align: left;
+        padding: 9px 12px;
+        border-bottom: 1px solid #DAD2B8;
+        vertical-align: top;
+    }
+    .essay-body th {
+        background: #F0E9D2;
+        color: #1a0a2e;
+        font-weight: 700;
+    }
+    .formula-block {
+        background: #1e2130;
+        color: #DAD2B8;
+        padding: 14px 20px;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 1.05em;
+        margin: 8px 0 20px;
+        overflow-x: auto;
+    }
+    .pull-quote {
+        border-left: 4px solid #1f77b4;
+        padding: 14px 22px;
+        margin: 28px 0;
+        font-size: 1.05em;
+        font-style: italic;
+        color: #34495e;
+        background: #f5f8ff;
+        border-radius: 0 8px 8px 0;
+    }
+    .next-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 12px;
+        margin-top: 14px;
+    }
+    .next-grid a {
+        display: block;
+        padding: 14px 16px;
+        background: #fff;
+        border: 1px solid #DAD2B8;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #1f77b4;
+        font-weight: 600;
+        font-size: 0.93em;
+        transition: border-color 0.15s;
+    }
+    .next-grid a:hover { border-color: #1f77b4; }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-badge">NN</span>
+            <span class="nav-logo-text">Neural Nations</span>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="start-here.html" class="nav-link">Start Here</a>
+            <a href="model.html" class="nav-link">Model</a>
+            <a href="datasets.html" class="nav-link">Datasets</a>
+            <a href="explore.html" class="nav-link">Explore</a>
+            <div class="nav-dropdown">
+                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
+                <div class="nav-dropdown-menu">
+                    <a href="results.html">Results at a Glance</a>
+                    <a href="validation.html">Validation &amp; Limits</a>
+                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
+                    <a href="cams-failure-modes.html">Failure Modes Map</a>
+                    <a href="failure-modes-story.html">Failure Modes Story</a>
+                    <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+                </div>
+            </div>
+            <a href="research-diary.html" class="nav-link">Research Diary</a>
+            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="framework/index.html" class="nav-link">Framework ↗</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
+            </a>
+            <a href="newsletter.html" class="nav-btn-newsletter">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="index.html">Home</a>
+        <a href="start-here.html">Start Here</a>
+        <a href="model.html">Model</a>
+        <a href="datasets.html">Datasets</a>
+        <a href="explore.html">Explore</a>
+        <a href="research-diary.html">Research Diary</a>
+        <a href="mindscapes.html">Mindscapes</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="framework/index.html">Framework ↗</a>
+        <hr class="mobile-divider">
+        <div class="mobile-section-title">Insights</div>
+        <a href="results.html">Results at a Glance</a>
+        <a href="validation.html">Validation &amp; Limits</a>
+        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
+        <a href="escalation-archetypes.html">Escalation Archetypes</a>
+        <a href="cams-failure-modes.html">Failure Modes Map</a>
+        <a href="failure-modes-story.html">Failure Modes Story</a>
+        <a href="attractors.html">Attractors</a>
+                    <hr class="menu-divider">
+                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="hero-section">
+        <h1>Start Here: What is CAMS?</h1>
+        <p class="hero-subtitle">CAMS — the Complex Adaptive Model of Societies — treats every organised human society as a living coordination system, and measures its health the way you'd measure an organism: not by what it says about itself, but by how well its parts still work together.</p>
+    </div>
+
+    <div class="card">
+        <div class="essay-body">
+
+            <p>This is not another theory about why societies rise and fall. It is a measurement system — calibrated against history, openly published, and built to be proven wrong.</p>
+
+            <h2>Start with a dolphin pod</h2>
+
+            <p>A dolphin pod coordinates hunting, defence, and social rank through direct physical signals. It works beautifully — but it can't scale past what brains and senses can reach. A herd is the same. So is a chimp troop, where grooming and status alliances hold the group together.</p>
+
+            <p>Humans broke that limit with one evolutionary trick: <strong>abstraction</strong>. Language, writing, money, law, titles — symbolic substitutes for grooming and status — let coordination scale from a few dozen individuals to hundreds of millions.</p>
+
+            <p>We call that scaled-up coordination system the <strong>Sybond</strong>. And here is the key claim: the institutions that run it are not arbitrary inventions. Every society, from Rome to a modern corporation, has to solve the same eight survival problems that the pod already solved:</p>
+
+            <table>
+                <thead>
+                    <tr><th>Node</th><th>What it does</th><th>The ancient function it scales up</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Helm</strong></td><td>Strategic direction</td><td>The lead animal choosing the route</td></tr>
+                    <tr><td><strong>Shield</strong></td><td>Security and coercion</td><td>Defence of the group</td></tr>
+                    <tr><td><strong>Lore</strong></td><td>Knowledge, education, meaning</td><td>Shared signals and teaching</td></tr>
+                    <tr><td><strong>Archive</strong></td><td>Memory and records</td><td>Externalised memory</td></tr>
+                    <tr><td><strong>Stewards</strong></td><td>Resource management</td><td>Provisioning and restraint</td></tr>
+                    <tr><td><strong>Craft</strong></td><td>Production and skills</td><td>Tool-making</td></tr>
+                    <tr><td><strong>Hands</strong></td><td>Labour and execution</td><td>The working body of the group</td></tr>
+                    <tr><td><strong>Flow</strong></td><td>Circulation of goods, money, people</td><td>Movement within the range</td></tr>
+                </tbody>
+            </table>
+
+            <p>When these eight functions are well-coupled, societies are resilient. When they decouple, stress accumulates faster than the system can adapt — and coordination fails, often years before anyone notices.</p>
+
+            <h2>Four numbers, one tension</h2>
+
+            <p>Each node, in each era, is scored on four variables from the historical record:</p>
+
+            <ul>
+                <li><strong>Coherence (C)</strong> — shared reality, consensus, accepted baselines</li>
+                <li><strong>Abstraction (A)</strong> — symbolic capacity, externalised memory</li>
+                <li><strong>Capacity (K)</strong> — energy, throughput, the ability to act</li>
+                <li><strong>Stress (S)</strong> — unprocessed entropy: anxiety, ambiguity, overload</li>
+            </ul>
+
+            <p>From these, the whole drama of civilisation reduces to one ratio:</p>
+
+            <div class="formula-block">Θ = Φ / Ψ</div>
+
+            <ul>
+                <li><strong>Ψ = Σ C·A</strong> is the <em>inhibitory scaffolding</em> — the shared reality and symbolic infrastructure (maintained above all by Archive and Stewards) that lets a society deliberate instead of panic.</li>
+                <li><strong>Φ = Σ K·S</strong> is <em>reactive pressure</em> — raw energy multiplied by unprocessed stress.</li>
+            </ul>
+
+            <p>When scaffolding outweighs pressure, a society can argue, plan, and reform. When pressure outruns scaffolding, it falls back on the older, cheaper coordination of <strong>Helm–Shield–Lore</strong>: emergency powers, executive rule, militarised myth. That regression is visible in Rome in 260 AD — and the signature is always the same.</p>
+
+            <h2>The most important insight: abstraction can lie</h2>
+
+            <p>Abstraction is not automatically good. It is powerful while it stays <strong>coupled</strong> to reality — then it amplifies everything a society does. But when Abstraction keeps rising while Coherence collapses and Capacity stagnates, a system starts producing ever more elaborate symbolic output — reports, ideology, currency, rhetoric — with a weakening grip on the territory it describes.</p>
+
+            <p>That decoupling is measurable (the ratio Γ = A/C, and the cognitive surplus σ = A·C·(K−S)). And it explains something history shows over and over: <strong>failing systems look healthy on paper right up to the break.</strong> Rome minted grand coins while the silver ran out.</p>
+
+            <h2>Why take this seriously?</h2>
+
+            <p>Because it is built to be tested, not believed:</p>
+
+            <ul>
+                <li><strong>Preregistered prediction.</strong> CAMS's Relational Inelasticity Hypothesis was frozen — hashed and timestamped — before the holdout data was examined. It predicted the rank-order of coupling across all 28 pairs of nodes. Only one labelling in 40,320 permutations matched the data. That is a prediction that could easily have failed, and didn't.</li>
+                <li><strong>It survives messy data.</strong> Across the USA, Norway, Singapore, China, Japan and more, the framework has been re-run through different scoring pipelines, scales, and conventions. The diagnoses stay structurally identical: Norway's collapse under occupation in 1940, Singapore's total systemic collapse in 1942–45, China's persistent executive-vs-labour asymmetry, America's deepening fracture. Noise changes the numbers; it doesn't change the signal.</li>
+                <li><strong>It predicts, not just explains.</strong> In the Australian archive (55 million Trove documents plus Hansard), domestic institutional deterioration <em>precedes</em> external-threat rhetoric by two to three years — a temporal pattern conventional analysis misses entirely.</li>
+                <li><strong>Everything is open.</strong> Datasets, formulas, and scoring protocols are published freely, precisely so that sceptics can break it. Rigorous scrutiny is not a challenge to this project. It is the point.</li>
+            </ul>
+
+            <div class="pull-quote">Failing systems look healthy on paper right up to the break.</div>
+
+            <h2>The honest fine print</h2>
+
+            <p>CAMS does not claim to be proven. What the evidence currently establishes is that the eight-node system contains <strong>replicable, pair-specific structure</strong> that survives blind testing. What remains open: independent scoring by outside teams, head-to-head competition with rival models, and calibrated forecasting of real-world transitions. Those tests are planned, and the framework's definitions are frozen in advance so the results will mean something either way.</p>
+
+            <p>Nor does CAMS claim to be the final word. The realistic claim is that the true answer will be <strong>CAMS-like</strong>: any successful theory of societies will still have to explain how symbolic coordination at scale is built, what it costs to maintain, and what it looks like when the coupling breaks.</p>
+
+            <h2>The question this project asks</h2>
+
+            <p>Every existing discipline — economics, political science, international relations — quietly assumes that symbolic coordination at scale simply <em>exists</em>, like air. CAMS asks the prior question:</p>
+
+            <div class="pull-quote">What does it cost, in real energy and real coherence, to keep the map attached to the territory — and what happens when the cost stops being paid?</div>
+
+            <p>If you think that question doesn't need asking, the burden of proof is yours: explain how a grooming-sized primate built planetary institutions, why those institutions measurably regress to older and more violent coordination under stress, and why the same eight-function structure keeps showing up across nations, corporations, and blind holdouts — without invoking magic.</p>
+
+            <h2>Where to go next</h2>
+
+            <div class="next-grid">
+                <a href="research-diary.html">→ Research Diary — the work in plain language as it develops</a>
+                <a href="model.html">→ Read the Model — the eight-node system and core formulas</a>
+                <a href="datasets.html">→ Browse the Datasets — scoring methods and open time-series</a>
+                <a href="explore.html">→ Explore the Tools — Mindscapes, Failure Modes, Escalation Archetypes, and more</a>
+            </div>
+
+            <p style="margin-top:1.6em; font-style:italic; color:#6b7280;">"Nations" is almost a misnomer — the same coordination anatomy appears in empires, corporations, and organised collectives of any kind. But it's poetically useful: this is the nervous system of organised human life, made measurable.</p>
+
+        </div>
+
+        <div style="margin-top: 36px; padding-top: 20px; border-top: 1px solid #DAD2B8; display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.92em;">
+            <a href="start-here.html" style="color: #1f77b4;">← Start Here</a>
+            <a href="why-cams.html" style="color: #1f77b4;">Why CAMS Is Not Just Another Macro Model →</a>
+            <a href="faq.html" style="color: #1f77b4;">FAQ →</a>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a>
+        <a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a>
+        <a href="results.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Results</a>
+    </nav>
+    <p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
+</footer>
+<script src="nav.js"></script>
+</body>
+</html>
