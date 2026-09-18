@@ -54,6 +54,13 @@ For Explore and outreach wording (thermometer not crystal ball; JUNO node labels
 - Spec: `juno/CAMNATIONSMFIN_methodology.txt` · reconciliation: `juno/USA_mfin_RECONCILIATION_CAMSBOT_2026-09-17.md`
 - Delivered V/BS deviate from FINAL aggregation; rankings/trajectory robust. Thermometer only — OOS unscored.
 
+## Separate run — 2026-09 staging (Burma, Italy, Netherlands rescore)
+
+Raw Burma (new society) + Italy/Netherlands rescore data run through the v1.2-Final
+bond-alignment kernel and independently verified. NOT merged into
+`JUNO_Unified_Dataset.csv` — see [`SeparateRun_2026-09_README.md`](SeparateRun_2026-09_README.md)
+and [`JUNO_SeparateRun_2026-09_staging.csv`](JUNO_SeparateRun_2026-09_staging.csv).
+
 ## Related (Epiphenomenon)
 
 Exploratory Hansard horse-race note (10 Sep 2026): [`Epiphenomenon_HorseRace_2026-09-10.md`](Epiphenomenon_HorseRace_2026-09-10.md) — place beside OOS freeze; not a JUNO validation claim.

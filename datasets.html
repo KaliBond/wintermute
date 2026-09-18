@@ -1004,6 +1004,63 @@
         </p>
     </div>
 
+    <!-- JUNO v1.2 SEPARATE RUN -->
+    <div class="card" style="border-left: 4px solid #D98B2B;">
+        <p class="section-label" style="color:#D98B2B;">JUNO v1.2-Final &mdash; Separate Run, 2026-09 Staging</p>
+        <div class="method-box" style="border-color:#D98B2B;background:#fffbf0;">
+            <strong>Staging data &mdash; not merged into the canonical 48-society panel.</strong>
+            Three raw datasets run through the v1.2-Final bond-alignment kernel (the same
+            <code>q<sub>i</sub> = (0.6C+0.4A)/10</code>, <code>B<sub>ij</sub> = &radic;(q<sub>i</sub>q<sub>j</sub>)&middot;2<sup>&minus;(S<sub>i</sub>+S<sub>j</sub>)/10</sup></code>
+            operators as <code>JUNO_Unified_Dataset.csv</code>) and independently re-verified with
+            <code>juno/verify_bond_alignment.py</code>: <strong>Burma</strong> (1811&ndash;2026, a society not yet in the
+            48-society panel) and rescores of <strong>Italy</strong> and <strong>Netherlands</strong> (1850&ndash;2026) whose
+            raw C/K/S/A values differ materially from what's currently published for those two societies
+            (1900&ndash;2024). Whether the rescores should supersede the published figures, and whether Burma
+            should be merged in as a 49th society, is an open methodology decision &mdash; not made here.
+            Every row is tagged <code>Run = separate_run_2026-09_staging</code>.
+        </div>
+        <div class="validation-strip" style="margin-top:16px;">
+            <div class="vstat">
+                <div class="vsv" style="color:#D98B2B;">516</div>
+                <div class="vsl">Complete society-years<br>(Burma 163 &middot; Italy 177 &middot; NL 176)</div>
+            </div>
+            <div class="vstat">
+                <div class="vsv" style="color:#D98B2B;">4,128</div>
+                <div class="vsl">Node-rows</div>
+            </div>
+            <div class="vstat">
+                <div class="vsv" style="color:#D98B2B;">&lt;5e-7</div>
+                <div class="vsl">Max deviation vs. independent<br>recomputation (all asserts pass)</div>
+            </div>
+        </div>
+        <p class="region-heading" style="margin-top:20px;">Files</p>
+        <div class="dataset-grid">
+            <div class="dataset-card" style="border-color:#f0d9a8;">
+                <span class="society" style="color:#7a4a00;">JUNO_SeparateRun_2026-09_staging.csv</span>
+                <span class="meta">516 society-years &middot; 4,128 rows &middot; Node_Value_Calc, Bond_Strength_Calc, SBD_Calc, Lambda2_Calc, V_Mean_Calc, V_Min_Calc</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/JUNO_SeparateRun_2026-09_staging.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/JUNO_SeparateRun_2026-09_staging.csv" target="_blank" class="dl" style="color:#2ca02c;border-color:#b0d9b0;">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card" style="border-color:#f0d9a8;">
+                <span class="society" style="color:#7a4a00;">compute_separate_run_2026-09.py</span>
+                <span class="meta">Recomputation script &middot; documents which columns are computed vs. left <code>not_computed</code> and why</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/compute_separate_run_2026-09.py" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/compute_separate_run_2026-09.py" target="_blank" class="dl" style="color:#2ca02c;border-color:#b0d9b0;">Download .py</a>
+                </div>
+            </div>
+            <div class="dataset-card" style="border-color:#f0d9a8;">
+                <span class="society" style="color:#7a4a00;">SeparateRun_2026-09_README.md</span>
+                <span class="meta">Provenance, what's computed vs. not, and the open merge decision</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/SeparateRun_2026-09_README.md" target="_blank">View</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- JUNO BLIND TEST -->
     <div class="card" style="border-left: 4px solid #2E7D52;">
         <p class="section-label" style="color:#2E7D52;">JUNO Blind Test Dataset &mdash; June 2026</p>
