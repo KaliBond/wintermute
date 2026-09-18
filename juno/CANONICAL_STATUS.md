@@ -46,3 +46,10 @@ The twelve 2026–2028 holdout claims (plus the USA–Argentina similarity claim
 ## Public-facing status (12 Sep 2026)
 
 For Explore and outreach wording (thermometer not crystal ball; JUNO node labels; universality from giving ground), see `PUBLIC_STATUS_2026-09-12.md`.
+
+## USA CAMNATIONSMFIN panel (2015–2026)
+
+- Analysis + Sep 2026 2800-char balance note: `juno/USA_mfin_2015-2026_ANALYSIS.md`, `juno/USA_Sep2026_balance_of_evidence.md`
+- Blocks: `juno/USA_CAMS_mfin_2015-2026_block1.csv`, `juno/USA_CAMS_mfin_2015-2026_block2.csv`
+- Spec: `juno/CAMNATIONSMFIN_methodology.txt` · reconciliation: `juno/USA_mfin_RECONCILIATION_CAMSBOT_2026-09-17.md`
+- Delivered V/BS deviate from FINAL aggregation; rankings/trajectory robust. Thermometer only — OOS unscored.
