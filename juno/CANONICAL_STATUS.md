@@ -53,3 +53,7 @@ For Explore and outreach wording (thermometer not crystal ball; JUNO node labels
 - Blocks: `juno/USA_CAMS_mfin_2015-2026_block1.csv`, `juno/USA_CAMS_mfin_2015-2026_block2.csv`
 - Spec: `juno/CAMNATIONSMFIN_methodology.txt` · reconciliation: `juno/USA_mfin_RECONCILIATION_CAMSBOT_2026-09-17.md`
 - Delivered V/BS deviate from FINAL aggregation; rankings/trajectory robust. Thermometer only — OOS unscored.
+
+## Related (Epiphenomenon)
+
+Exploratory Hansard horse-race note (10 Sep 2026): [`Epiphenomenon_HorseRace_2026-09-10.md`](Epiphenomenon_HorseRace_2026-09-10.md) — place beside OOS freeze; not a JUNO validation claim.
