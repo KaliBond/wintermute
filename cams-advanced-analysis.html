@@ -238,6 +238,12 @@
         <div id="status-bar" class="status-bar">Loading dataset index…</div>
     </div>
 
+    <!-- Available datasets -->
+    <div class="card" id="available-datasets-card">
+        <h3 class="section-title" style="margin-top:0;">Available Datasets</h3>
+        <div id="dataset-chip-list" style="display:flex;flex-wrap:wrap;gap:8px;font-size:0.85rem;">Loading…</div>
+    </div>
+
     <!-- Analysis -->
     <div class="card" id="analysis-section" style="display:none;">
         <div class="tab-bar">
@@ -372,6 +378,27 @@
 let CAMS_INDEX = null;
 let DS = null; // { years[], nodes[], wide{yr:{key:val}}, hasBond, societyName }
 
+function renderDatasetChips(data) {
+    const list = document.getElementById('dataset-chip-list');
+    if (!list) return;
+    const nations = Object.keys(data).sort();
+    list.innerHTML = nations.map(n => {
+        const ens = n.includes('ensemble') || n.includes('(ens)');
+        return `<a href="#" onclick="selectAndLoad('${n.replace(/'/g, "\\'")}');return false;"
+                   style="padding:4px 10px;border:1px solid #E0E0E0;border-radius:14px;background:#F6F6F6;
+                          color:#2F6F7D;text-decoration:none;white-space:nowrap;${ens ? 'font-weight:700;' : ''}">${n}</a>`;
+    }).join('');
+}
+
+window.selectAndLoad = function (nation) {
+    const sel = document.getElementById('nation-select');
+    sel.value = nation;
+    if (typeof customSelect === 'function') customSelect('nation-select');
+    loadFromIndex();
+    const target = document.getElementById('analysis-section');
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
 // ══════════════════════════════════════════════════════════════
 // CONSTANTS  (mirrors cams_dyad_cld.py)
 // ══════════════════════════════════════════════════════════════
@@ -418,6 +445,7 @@ fetch('cleaned_datasets/cams_index.json')
             }).join('');
         setStatus(`Index ready — ${nations.length} nations. Select a nation or upload a CSV.`);
         ['nation-select','dig-metric','dig-qx','dig-qy','dig-qshock','dig-era'].forEach(id => customSelect(id));
+        renderDatasetChips(data);
     })
     .catch(e => setStatus('Index load error: ' + e.message, true));
 
@@ -1197,6 +1225,7 @@ function renderSubbrain() {
         sel.value = data[cur] ? cur : '';
         customSelect('nation-select');
         setStatus(`Index ready — ${nations.length} nations. Select a nation or upload a CSV.`);
+        renderDatasetChips(data);
     }
 
     function loadJuno(cb) {
