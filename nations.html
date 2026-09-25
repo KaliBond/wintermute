@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
+    <title>Reports by Nation — Neural Nations</title>
+    <meta name="description" content="Every CAMS report, artefact and dataset on Neural Nations assembled by nation — country studies, mood reports, newsletter issues, external analyses and downloadable data.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/nations">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/nations">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="Reports by Nation — Neural Nations">
+    <meta property="og:description" content="Every CAMS report, artefact and dataset assembled by nation.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+    <style>
+      .nx-wrap { max-width: 1000px; margin: 0 auto; }
+      .nx-stats { text-align: center; color: #5a6670; font-size: 0.92em; margin: -1rem 0 1.5rem; }
+      .nx-tools { position: sticky; top: 64px; z-index: 5; background: #FFFFFF; padding: 12px 0 10px; border-bottom: 1px solid #E0E0E0; margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+      .nx-search { flex: 1 1 260px; box-sizing: border-box; font: inherit; font-size: 1.05em; padding: 11px 14px; border: 1px solid #B8AC98; border-radius: 10px; background: #FFFFFF; color: #1B2A33; }
+      .nx-search:focus { outline: 2px solid #2F6F7D; outline-offset: 1px; }
+      .nx-btn { font: inherit; font-size: 0.85em; padding: 8px 12px; border-radius: 8px; border: 1px solid #E0E0E0; background: #F0F0F0; color: #1B2A33; cursor: pointer; }
+      .nx-btn:hover { border-color: #2F6F7D; }
+
+      .nx-overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 8px 24px; background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 12px; padding: 10px 18px 14px; margin-bottom: 28px; align-items: start; }
+      .nx-overview table { width: 100%; border-collapse: collapse; font-size: 0.88em; }
+      .nx-overview caption { text-align: left; padding: 8px 4px 4px; font-size: 0.8em; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #2F6F7D; }
+      .nx-overview th { font-size: 0.72em; font-weight: 600; color: #5a6670; text-align: right; padding: 2px 4px; }
+      .nx-overview th:first-child { text-align: left; }
+      .nx-overview td { padding: 3px 4px; border-top: 1px solid #F3F3F3; }
+      .nx-overview td:not(:first-child) { text-align: right; color: #5a6670; width: 2.6em; font-variant-numeric: tabular-nums; }
+      .nx-overview a { color: #1f77b4; text-decoration: none; }
+      .nx-overview a:hover { text-decoration: underline; }
+      .nx-legend { font-size: 0.8em; color: #5a6670; margin: 0 0 8px; }
+
+      .nx-region { font-size: 1.4em; margin: 32px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #2F6F7D; }
+      .nx-nation { background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 12px; margin-bottom: 12px; scroll-margin-top: 140px; }
+      .nx-nation > summary { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; padding: 13px 20px; cursor: pointer; list-style: none; }
+      .nx-nation > summary::-webkit-details-marker { display: none; }
+      .nx-nation > summary::before { content: '▸'; color: #2F6F7D; transition: transform .15s; }
+      .nx-nation[open] > summary::before { transform: rotate(90deg); }
+      .nx-nation > summary h3 { margin: 0; font-size: 1.15em; }
+      .nx-counts { font-size: 0.85em; color: #5a6670; }
+      .nx-body { padding: 0 20px 14px 40px; }
+      .nx-body h4 { margin: 14px 0 6px; font-size: 0.8em; text-transform: uppercase; letter-spacing: .06em; color: #2F6F7D; }
+      .nx-note { text-transform: none; letter-spacing: 0; color: #5a6670; font-weight: normal; }
+      .nx-list { list-style: none; margin: 0; padding: 0; }
+      .nx-list li { padding: 8px 0; margin: 0; border-top: 1px solid #EEEEEE; }
+      .nx-list li::before { content: none; }
+      .nx-list li:first-child { border-top: none; }
+      .nx-list a { font-weight: 600; color: #1f77b4; text-decoration: none; margin-right: 6px; }
+      .nx-list a:hover { text-decoration: underline; }
+      .nx-list p { margin: 3px 0 0; font-size: 0.88em; color: #3d4a52; line-height: 1.45; }
+      .nx-type, .nx-multi { display: inline-block; font-size: 0.7em; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; padding: 1px 7px; border-radius: 6px; background: #F0F0F0; border: 1px solid #E0E0E0; color: #3d4a52; vertical-align: 1px; margin-right: 4px; }
+      .nx-multi { background: #FFFFFF; border-style: dashed; color: #5a6670; }
+      .nx-data { margin: 0; font-size: 0.9em; }
+      .nx-data li { margin-bottom: 3px; }
+      .nx-data a { color: #1f77b4; }
+      .nx-data span { color: #5a6670; font-size: 0.9em; }
+      .nx-empty { display: none; text-align: center; color: #5a6670; padding: 30px 0; }
+      .nx-foot { font-size: 0.9em; color: #5a6670; text-align: center; margin: 28px 0 8px; }
+      .nx-foot a { color: #1f77b4; }
+      .nx-hidden { display: none !important; }
+      @media (max-width: 720px) {
+        .nx-overview { columns: 1; }
+        .nx-tools { top: 56px; }
+        .nx-body { padding-left: 16px; padding-right: 14px; }
+        .nx-nation > summary { padding-left: 14px; padding-right: 14px; }
+      }
+    </style>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+<div class="container nx-wrap">
+    <div class="hero-section">
+        <h1>Reports by Nation</h1>
+        <p class="hero-subtitle">Every CAMS study, mood report, newsletter issue, external analysis and dataset, gathered under the nation it covers.</p>
+    </div>
+    <p class="nx-stats"><span id="nx-stats">53 nations · 66 site reports · 60 external artefacts · 140 datasets</span></p>
+
+    <div class="nx-tools" role="search">
+        <input id="nx-q" class="nx-search" type="search" aria-label="Find a nation" placeholder="Find a nation… (press / to focus)" autocomplete="off">
+        <button type="button" class="nx-btn" id="nx-open">Expand all</button>
+        <button type="button" class="nx-btn" id="nx-close">Collapse all</button>
+    </div>
+
+    <p class="nx-legend">Counts per nation: reports on this site · external artefacts · datasets. Click a nation to jump to its reports.</p>
+    <div id="nx-list">
+<!-- NATIONS:START -->
+<div class="nx-overview">
+<table><caption>Americas</caption><thead><tr><th scope="col">Nation</th><th scope="col" title="Reports on this site">Site</th><th scope="col" title="External artefacts">Ext.</th><th scope="col" title="Datasets">Data</th></tr></thead><tbody>
+<tr data-nation="argentina"><td><a href="#argentina">Argentina</a></td><td>3</td><td></td><td>5</td></tr>
+<tr data-nation="brazil"><td><a href="#brazil">Brazil</a></td><td></td><td></td><td>1</td></tr>
+<tr data-nation="canada"><td><a href="#canada">Canada</a></td><td>2</td><td>1</td><td>3</td></tr>
+<tr data-nation="chile"><td><a href="#chile">Chile</a></td><td></td><td></td><td>2</td></tr>
+<tr data-nation="colombia"><td><a href="#colombia">Colombia</a></td><td></td><td></td><td>2</td></tr>
+<tr data-nation="united states"><td><a href="#united-states">United States</a></td><td>14</td><td>6</td><td>8</td></tr>
+<tr data-nation="venezuela"><td><a href="#venezuela">Venezuela</a></td><td></td><td></td><td>1</td></tr>
+</tbody></table>
+<table><caption>Europe</caption><thead><tr><th scope="col">Nation</th><th scope="col" title="Reports on this site">Site</th><th scope="col" title="External artefacts">Ext.</th><th scope="col" title="Datasets">Data</th></tr></thead><tbody>
+<tr data-nation="denmark"><td><a href="#denmark">Denmark</a></td><td>1</td><td>1</td><td>2</td></tr>
+<tr data-nation="finland"><td><a href="#finland">Finland</a></td><td>1</td><td></td><td></td></tr>
+<tr data-nation="france"><td><a href="#france">France</a></td><td>2</td><td>1</td><td>9</td></tr>
+<tr data-nation="germany"><td><a href="#germany">Germany</a></td><td>4</td><td>4</td><td>4</td></tr>
+<tr data-nation="greece"><td><a href="#greece">Greece</a></td><td></td><td>2</td><td>2</td></tr>
+<tr data-nation="italy"><td><a href="#italy">Italy</a></td><td></td><td>1</td><td>2</td></tr>
+<tr data-nation="latvia"><td><a href="#latvia">Latvia</a></td><td></td><td></td><td>1</td></tr>
+<tr data-nation="netherlands"><td><a href="#netherlands">Netherlands</a></td><td>1</td><td></td><td>2</td></tr>
+<tr data-nation="norway"><td><a href="#norway">Norway</a></td><td>6</td><td></td><td>3</td></tr>
+<tr data-nation="poland"><td><a href="#poland">Poland</a></td><td>1</td><td></td><td>2</td></tr>
+<tr data-nation="rome (historical)"><td><a href="#rome-historical">Rome (historical)</a></td><td></td><td>1</td><td>4</td></tr>
+<tr data-nation="russia"><td><a href="#russia">Russia</a></td><td>2</td><td>1</td><td>4</td></tr>
+<tr data-nation="spain"><td><a href="#spain">Spain</a></td><td></td><td></td><td>1</td></tr>
+<tr data-nation="sweden"><td><a href="#sweden">Sweden</a></td><td>1</td><td></td><td>2</td></tr>
+<tr data-nation="ukraine"><td><a href="#ukraine">Ukraine</a></td><td></td><td>3</td><td>1</td></tr>
+<tr data-nation="united kingdom"><td><a href="#united-kingdom">United Kingdom</a></td><td>5</td><td>2</td><td>3</td></tr>
+</tbody></table>
+<table><caption>Middle East &amp; Africa</caption><thead><tr><th scope="col">Nation</th><th scope="col" title="Reports on this site">Site</th><th scope="col" title="External artefacts">Ext.</th><th scope="col" title="Datasets">Data</th></tr></thead><tbody>
+<tr data-nation="dr congo"><td><a href="#dr-congo">DR Congo</a></td><td></td><td></td><td>2</td></tr>
+<tr data-nation="egypt"><td><a href="#egypt">Egypt</a></td><td></td><td></td><td>2</td></tr>
+<tr data-nation="ethiopia"><td><a href="#ethiopia">Ethiopia</a></td><td></td><td></td><td>2</td></tr>
+<tr data-nation="iran"><td><a href="#iran">Iran</a></td><td>2</td><td>7</td><td>7</td></tr>
+<tr data-nation="iraq"><td><a href="#iraq">Iraq</a></td><td></td><td></td><td>2</td></tr>
+<tr data-nation="israel"><td><a href="#israel">Israel</a></td><td></td><td>3</td><td>2</td></tr>
+<tr data-nation="lebanon"><td><a href="#lebanon">Lebanon</a></td><td></td><td></td><td>2</td></tr>
+<tr data-nation="mauritania"><td><a href="#mauritania">Mauritania</a></td><td></td><td></td><td>2</td></tr>
+<tr data-nation="nigeria"><td><a href="#nigeria">Nigeria</a></td><td></td><td></td><td>2</td></tr>
+<tr data-nation="saudi arabia"><td><a href="#saudi-arabia">Saudi Arabia</a></td><td></td><td></td><td>2</td></tr>
+<tr data-nation="south africa"><td><a href="#south-africa">South Africa</a></td><td>1</td><td></td><td>1</td></tr>
+<tr data-nation="syria"><td><a href="#syria">Syria</a></td><td></td><td>1</td><td>2</td></tr>
+<tr data-nation="türkiye"><td><a href="#t-rkiye">Türkiye</a></td><td></td><td></td><td>2</td></tr>
+<tr data-nation="uae"><td><a href="#uae">UAE</a></td><td></td><td></td><td>1</td></tr>
+</tbody></table>
+<table><caption>Asia-Pacific</caption><thead><tr><th scope="col">Nation</th><th scope="col" title="Reports on this site">Site</th><th scope="col" title="External artefacts">Ext.</th><th scope="col" title="Datasets">Data</th></tr></thead><tbody>
+<tr data-nation="afghanistan"><td><a href="#afghanistan">Afghanistan</a></td><td></td><td>1</td><td>1</td></tr>
+<tr data-nation="australia"><td><a href="#australia">Australia</a></td><td>15</td><td>8</td><td>6</td></tr>
+<tr data-nation="cambodia"><td><a href="#cambodia">Cambodia</a></td><td></td><td></td><td>2</td></tr>
+<tr data-nation="china"><td><a href="#china">China</a></td><td>1</td><td>12</td><td>6</td></tr>
+<tr data-nation="hong kong"><td><a href="#hong-kong">Hong Kong</a></td><td>1</td><td></td><td>3</td></tr>
+<tr data-nation="india"><td><a href="#india">India</a></td><td></td><td>1</td><td>4</td></tr>
+<tr data-nation="indonesia"><td><a href="#indonesia">Indonesia</a></td><td></td><td></td><td>2</td></tr>
+<tr data-nation="japan"><td><a href="#japan">Japan</a></td><td></td><td>1</td><td>4</td></tr>
+<tr data-nation="laos"><td><a href="#laos">Laos</a></td><td></td><td></td><td>2</td></tr>
+<tr data-nation="mongolia"><td><a href="#mongolia">Mongolia</a></td><td></td><td></td><td>2</td></tr>
+<tr data-nation="new zealand"><td><a href="#new-zealand">New Zealand</a></td><td>3</td><td>1</td><td>4</td></tr>
+<tr data-nation="pakistan"><td><a href="#pakistan">Pakistan</a></td><td></td><td></td><td>2</td></tr>
+<tr data-nation="philippines"><td><a href="#philippines">Philippines</a></td><td></td><td></td><td>1</td></tr>
+<tr data-nation="singapore"><td><a href="#singapore">Singapore</a></td><td></td><td></td><td>2</td></tr>
+<tr data-nation="taiwan"><td><a href="#taiwan">Taiwan</a></td><td></td><td>1</td><td></td></tr>
+<tr data-nation="thailand"><td><a href="#thailand">Thailand</a></td><td></td><td>1</td><td>4</td></tr>
+</tbody></table>
+</div>
+<h2 class="nx-region" id="americas">Americas</h2>
+<details class="nx-nation" id="argentina" data-nation="argentina"><summary><h3>Argentina</h3><span class="nx-counts">3 on this site · 5 datasets</span></summary><div class="nx-body">
+<h4>Reports on this site</h4><ul class="nx-list">
+<li><a href="argentina-cams-map.html">Argentina CAMS 1950–2026: The Thermodynamic Freeze Attractor</a><span class="nx-type">Map</span></li>
+<li><a href="mindscapes/Argentina_2026_CAMS_Report.html">Argentina — CAMS Mood Report 2024–2026</a><span class="nx-type">Report</span><p>National Mood, Vision‑Affect &amp; Mythic Attractor Report — 2024–2026</p></li>
+<li><a href="argentina-cams-story.html">The Country That Never Dies — Argentina&#x27;s Thermodynamic Freeze 1950–2026</a><span class="nx-type">Study</span><p>Argentina has not been failing. It has been freezing. A CAMS v3.2-R ensemble analysis of Argentina</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Argentina_CAMS5_calc_1950_2026_cleaned.csv" target="_blank" rel="noopener">Argentina CAMS5 calc 1950 2026</a> <span>1950–2026 · 616 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Argentina_CAMS5_ensemble_1950_2026_cleaned.csv" target="_blank" rel="noopener">Argentina CAMS5 ensemble 1950 2026</a> <span>1950–2026 · 616 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Argentina_ENS_1950_2026_cleaned.csv" target="_blank" rel="noopener">Argentina ENS 1950 2026</a> <span>1950–2026 · 616 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Argentina_ENV_1950_2026_cleaned.csv" target="_blank" rel="noopener">Argentina ENV 1950 2026</a> <span>1950–2026 · 616 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Argentina_cam5_1950_2026_cleaned.csv" target="_blank" rel="noopener">Argentina cam5 1950 2026</a> <span>1950–2026 · 616 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="brazil" data-nation="brazil"><summary><h3>Brazil</h3><span class="nx-counts">1 dataset</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/brazil_grok_jan.csv" target="_blank" rel="noopener">Brazil</a> <span>1880–2025 · JUNO nation series</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="canada" data-nation="canada"><summary><h3>Canada</h3><span class="nx-counts">2 on this site · 1 external · 3 datasets</span></summary><div class="nx-body">
+<h4>Reports on this site</h4><ul class="nx-list">
+<li><a href="canada-arc-map.html">Canada — Arc Map</a><span class="nx-type">Map</span></li>
+<li><a href="canada-arc-story.html">The Border Tribe and the Long Listening</a><span class="nx-type">Study</span><p>The first thing to admit is the comfort. Not the abundance — that has been thinning for a decade, and anyone with eyes can see the squeeze in the grocery aisles and the housing pages — but the comfort of not having…</p></li>
+</ul>
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.ai/public/artifacts/c1834cab-dc90-4df7-b74f-86fd13ca69aa" target="_blank" rel="noopener">The Pacific Commonwealth Trio: A CAMS Analysis ↗</a> <span class="nx-multi">comparative</span><p>Australia, NZ, Canada as a Pacific Commonwealth trio; shared institutional heritage in CAMS space.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Canada_cleaned.csv" target="_blank" rel="noopener">Canada</a> <span>1900–1905 · 48 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Canada_ENS_1850_2026_cleaned.csv" target="_blank" rel="noopener">Canada ENS 1850 2026</a> <span>1850–2026 · 264 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Canada_ENV_1850_2026_cleaned.csv" target="_blank" rel="noopener">Canada ENV 1850 2026</a> <span>1850–2026 · 264 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="chile" data-nation="chile"><summary><h3>Chile</h3><span class="nx-counts">2 datasets</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Chile_ENS_1875_2026_cleaned.csv" target="_blank" rel="noopener">Chile ENS 1875 2026</a> <span>1875–2026 · 1,216 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Chile_ENV_1875_2026_cleaned.csv" target="_blank" rel="noopener">Chile ENV 1875 2026</a> <span>1875–2026 · 1,216 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="colombia" data-nation="colombia"><summary><h3>Colombia</h3><span class="nx-counts">2 datasets</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/nations/Colombia_ENS.csv" target="_blank" rel="noopener">Colombia — Ensemble Mean</a> <span>1875–2026 · JUNO nation series</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/nations/Colombia_ENV.csv" target="_blank" rel="noopener">Colombia — Envelope</a> <span>1875–2026 · JUNO nation series</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="united-states" data-nation="united states"><summary><h3>United States</h3><span class="nx-counts">14 on this site · 6 external · 8 datasets</span></summary><div class="nx-body">
+<h4>Reports on this site</h4><ul class="nx-list">
+<li><a href="complex-adaptive-humans-16.html">CAMS: An Historical Telescope — Complex Adaptive Humans #16</a><span class="nx-type">Series</span><p>Issue #16: CAMS as an instrument of observation — not a complete theory of civilisation, but a systematic way of seeing structural patterns where narrative alone cannot reach. Illustrated with the USA at the moment…</p></li>
+<li><a href="complex-adaptive-humans-8.html">Dissociation Before Collapse — Complex Adaptive Humans #8</a><span class="nx-type">Series</span><p>Issue #8: A hidden signal in the CAMS data — cognitive-affective dissociation precedes societal collapse. Kimi, Claude, and GPT analyse the XXU (USA) dataset.</p></li>
+<li><a href="usa-empty-pulpit-detective-panel.html">The Empty Pulpit Investigation — Detective Panel</a><span class="nx-type">Study</span><p>Columbo, Dupin, Holmes, and Marple stress-test the six loops of the Empty Pulpit Map — decisionist spiral, praetorian self-reinforcement, archive drawdown, polarisation engine, and the conditional renewal path.…</p></li>
+<li><a href="the-empty-pulpit-map.html">The Empty Pulpit — Aha! Map</a><span class="nx-type">Map</span></li>
+<li><a href="the-empty-pulpit.html">The Empty Pulpit — United States CAMS Analysis</a><span class="nx-type">Study</span><p>What happens to a republic when the institution that used to do its talking can no longer talk — and the institution that used to do its protecting becomes the only thing still working. CAMS analysis of the USA…</p></li>
+<li><a href="us-covid-cams-map.html">US COVID — Aha! Map</a><span class="nx-type">Map</span></li>
+<li><a href="analysis/us_interest_burden_cams_study.html">US Interest Burden × CAMS Stress — Study Report</a><span class="nx-type">Study</span><p>The core claim of the US oligarchic-capture analysis is that a merchant-financier coalition has progressively locked in fiscal structures that favour asset-holders, increasing background systemic stress even when…</p></li>
+<li><a href="us-legitimacy-cams-study.html">US Legitimacy Crisis × CAMS Stress — Study 2</a><span class="nx-type">Study</span><p>A 30-year panel (1996–2025) testing whether CAMS structural stress leads public trust collapse. CAMS Stress leads Gallup and Pew legitimacy measures by 2–3 years — the exact opposite of the fiscal (Study 1) finding.</p></li>
+<li><a href="analysis/us_legitimacy_cams_study.html">US Legitimacy Crisis × CAMS Stress — Study Report</a><span class="nx-type">Study</span><p>Study 1 (Interest Burden) found that CAMS does not lead the fiscal stress cycle — it is fiscal pressure that precedes CAMS structural response by roughly three years. The direction of causality pointed away from the…</p></li>
+<li><a href="usa-outlook-set.html">USA Outlook Set: 2026–2036</a><span class="nx-type">Study</span><p>Four structurally distinct trajectories the CAMS geometry permits from the present empty-pulpit configuration. CAMS v3.2 ensemble analysis — 2026–2036 scenarios.</p></li>
+<li><a href="usa-empty-pulpit-perspectives.html">Unique Perspectives on the Empty Pulpit</a><span class="nx-type">Study</span><p>Ten thinkers whose published work illuminates, anticipates, or contests the Empty Pulpit analysis — Wolin, Schmitt, Arendt, Lasch, Edelman, Streeck, Gurri, Turchin, Tainter, Mearsheimer.</p></li>
+<li><a href="complex-adaptive-humans-15.html">Crisis in the Middle East: A Quantitative Perspective — Complex Adaptive Humans #15</a><span class="nx-type">Series</span> <span class="nx-multi">comparative</span><p>Issue #15: The US–Iran confrontation is a systems conflict, not merely a nuclear dispute. CAMS reveals a mode mismatch — Ψ-dominant Iran versus a Φ-overloaded US Helm — and traces the path dependency running from…</p></li>
+<li><a href="ensemble-validation.html">Ensemble Validation — CAMS v2.3</a><span class="nx-type">Paper</span> <span class="nx-multi">comparative</span><p>CAMS ensemble scoring validation: the Wright Thesis confirmed with qualifications. Variance reduction, SNR improvement, contestation index, and κ-uncertainty bounds — Germany and USA 1880–2026.</p></li>
+<li><a href="great-power-attractors.html">Three Great-Power Trajectories Against Their Own Historical Attractors</a><span class="nx-type">Findings</span> <span class="nx-multi">comparative</span><p>A JUNO/CAMS results note on bloc-coordination structure and the isolation of the United States trajectory. China, Russia, and the USA measured against their own twentieth-century attractor bands. All three in…</p></li>
+</ul>
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.site/artifacts/aeae0787-83ba-458d-b58b-6173b0d38fa7" target="_blank" rel="noopener">USA National Psyche Analysis ↗</a><p>CAMS psyche profile for the United States; Helm/Lore decoupling and meta-animal fragmentation.</p></li>
+<li><a href="https://claude.site/artifacts/20026db7-9cd7-4380-bf21-d902df4b8de1" target="_blank" rel="noopener">USA as a CAS: The National Psyche ↗</a><p>US as a complex adaptive system; national psyche dynamics and coordination stress indicators.</p></li>
+<li><a href="https://claude.ai/public/artifacts/03c6da4c-f681-4f89-bc5d-3d618621449d" target="_blank" rel="noopener">United States of America ↗</a><p>Comprehensive CAMS profile for the USA; long-run node trajectories and current crisis indicators.</p></li>
+<li><a href="https://claude.ai/public/artifacts/3dfdd7e1-47ee-45f6-a8a2-98a6de81d46e" target="_blank" rel="noopener">China–USA Interactions (2008–2030) ↗</a> <span class="nx-multi">comparative</span><p>China–USA dyadic CAMS analysis 2008–2030; power transition dynamics and coupling evolution.</p></li>
+<li><a href="https://claude.ai/public/artifacts/10172af2-1681-476c-aa89-0c5d8fe55246" target="_blank" rel="noopener">USA–China CAMS Framework Analysis ↗</a> <span class="nx-multi">comparative</span><p>Dyadic CAMS analysis of USA–China coupling; competitive vs convergent coordination dynamics.</p></li>
+<li><a href="https://claude.ai/public/artifacts/6cd304fe-f22e-4199-af49-efe0416d6711" target="_blank" rel="noopener">US–Ukraine ↗</a> <span class="nx-multi">comparative</span><p>Dyadic CAMS analysis of US–Ukraine coordination; coupling asymmetries and dependency dynamics.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/MARKER_USA_1900_2026_ENSEMBLE_MEAN_cleaned.csv" target="_blank" rel="noopener">MARKER USA 1900 2026 ENSEMBLE MEAN</a> <span>1900–2026 · 1,016 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/USA_cleaned.csv" target="_blank" rel="noopener">USA</a> <span>1790–2025 · 1,248 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/USA_Master_cleaned.csv" target="_blank" rel="noopener">USA Master</a> <span>1790–2023 · 960 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/USA_Reconstructed_cleaned.csv" target="_blank" rel="noopener">USA Reconstructed</a> <span>1790–2025 · 1,248 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/USA_cam5_1996_2026_cleaned.csv" target="_blank" rel="noopener">USA cam5 1996 2026</a> <span>1996–2026 · 248 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/nations/USA_ENS.csv" target="_blank" rel="noopener">United States — Ensemble Mean</a> <span>1900–2026 · JUNO nation series</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/nations/USA_ENV.csv" target="_blank" rel="noopener">United States — Envelope</a> <span>1900–2026 · JUNO nation series</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Usa_Maximum_1790-2025_Us_High_Res_2025_(1)_cleaned.csv" target="_blank" rel="noopener">Usa Maximum 1790-2025 Us High Res 2025 (1)</a> <span>1790–2025 · 1,248 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="venezuela" data-nation="venezuela"><summary><h3>Venezuela</h3><span class="nx-counts">1 dataset</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Venezuela_gem_dec1970_2025.csv" target="_blank" rel="noopener">Venezuela</a> <span>1970–2025 · JUNO nation series</span></li>
+</ul>
+</div></details>
+<h2 class="nx-region" id="europe">Europe</h2>
+<details class="nx-nation" id="denmark" data-nation="denmark"><summary><h3>Denmark</h3><span class="nx-counts">1 on this site · 1 external · 2 datasets</span></summary><div class="nx-body">
+<h4>Reports on this site</h4><ul class="nx-list">
+<li><a href="complex-adaptive-humans-13.html">Neutrality, Nordic Systems, and the Discipline of Method — Complex Adaptive Humans #13</a><span class="nx-type">Series</span> <span class="nx-multi">comparative</span><p>Issue #13: Three Nordic architectures, one structural question — how Denmark, Norway, and Sweden built coordination infrastructure before economic expansion, and what that means for the rest of us.</p></li>
+</ul>
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.site/artifacts/38377f30-99de-4004-b493-9de463aea81c" target="_blank" rel="noopener">Denmark ↗</a><p>CAMS profile for Denmark; high-coherence stable democracy benchmark.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Denmark_cleaned.csv" target="_blank" rel="noopener">Denmark</a> <span>1752–2025 · 920 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Denmark_cleaned.csv" target="_blank" rel="noopener">Denmark</a> <span>1752–2025 · JUNO nation series</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="finland" data-nation="finland"><summary><h3>Finland</h3><span class="nx-counts">1 on this site</span></summary><div class="nx-body">
+<h4>Reports on this site</h4><ul class="nx-list">
+<li><a href="complex-adaptive-humans-12.html">Finland Revealed: Meaning from Structure — Complex Adaptive Humans #12</a><span class="nx-type">Series</span><p>Issue #12: Blind CAMS analysis of</p></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="france" data-nation="france"><summary><h3>France</h3><span class="nx-counts">2 on this site · 1 external · 9 datasets</span></summary><div class="nx-body">
+<h4>Reports on this site</h4><ul class="nx-list">
+<li><a href="mindscapes/France_2026_CAMS_Report.html">France — CAMS Mood Report 2024–2026</a><span class="nx-type">Report</span><p>National Mood, Vision–Affect &amp; Mythic Attractor Report — 2024–2026</p></li>
+<li><a href="analysis/pr_gap2_formalism_audit.html">PR-GAP-2: Formalism Audit and Path Forward</a><span class="nx-type">Paper</span> <span class="nx-multi">comparative</span><p>The JUNO × CAMS recomputation across France (1850–2026), Poland (1875–2026), and Hong Kong (1900–2026) — 3,648 node-years — confirms four theses with permutation p &lt; 10⁻⁴ and a 45/45 sensitivity pass rate. This is…</p></li>
+</ul>
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.ai/public/artifacts/32ebdf88-c82d-4fdc-912f-1a5e9cd73f21" target="_blank" rel="noopener">The 13 Laws of History: China, France, and Australia as Complex Adaptive Systems ↗</a> <span class="nx-multi">comparative</span><p>Thirteen proposed laws of historical dynamics illustrated through China, France, and Australia.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/France_cleaned.csv" target="_blank" rel="noopener">France</a> <span>1785–2024 · 400 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/France_cleaned.csv" target="_blank" rel="noopener">France</a> <span>1785–2024 · JUNO nation series</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/France_1785_1800_cleaned.csv" target="_blank" rel="noopener">France 1785 1800</a> <span>1785–2024 · 400 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/France_1800_1830_GEM_cleaned.csv" target="_blank" rel="noopener">France 1800 1830 GEM</a> <span>1800–1830 · 248 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/France_1800_1830_claude_cleaned.csv" target="_blank" rel="noopener">France 1800 1830 claude</a> <span>1800–1830 · 248 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/France_1900_2026_cleaned.csv" target="_blank" rel="noopener">France 1900 2026</a> <span>1900–2026 · 1,016 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/France_ENS_1850_2026_cleaned.csv" target="_blank" rel="noopener">France ENS 1850 2026</a> <span>1850–2026 · 1,416 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/France_ENV_1850_2026_cleaned.csv" target="_blank" rel="noopener">France ENV 1850 2026</a> <span>1850–2026 · 1,416 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/France_Master_3_France_1785_1790_1795_1800_cleaned.csv" target="_blank" rel="noopener">France Master 3 France 1785 1790 1795 1800</a> <span>1785–2024 · 400 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="germany" data-nation="germany"><summary><h3>Germany</h3><span class="nx-counts">4 on this site · 4 external · 4 datasets</span></summary><div class="nx-body">
+<h4>Reports on this site</h4><ul class="nx-list">
+<li><a href="complex-adaptive-humans-23.html">CAMS in Focus: Societies as Evolving Coordination Systems — Complex Adaptive Humans #23</a><span class="nx-type">Series</span><p>Issue #23: Two papers consolidate CAMS — the first as a formal thermodynamic-institutional method, the second within the Extended Evolutionary Synthesis. The German case demonstrates how CAMS distinguishes genuine…</p></li>
+<li><a href="germany-arc-map.html">Germany — Arc Map</a><span class="nx-type">Map</span><p>© 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at KaliBond/wintermute.</p></li>
+<li><a href="germany-arc-story.html">Rebuilding from Rubble — Germany (BRD)</a><span class="nx-type">Study</span><p>How West Germany turned the hardest starting conditions in modern history into the most stable democracy in Europe — and what it cost to do so</p></li>
+<li><a href="ensemble-validation.html">Ensemble Validation — CAMS v2.3</a><span class="nx-type">Paper</span> <span class="nx-multi">comparative</span><p>CAMS ensemble scoring validation: the Wright Thesis confirmed with qualifications. Variance reduction, SNR improvement, contestation index, and κ-uncertainty bounds — Germany and USA 1880–2026.</p></li>
+</ul>
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.site/artifacts/9f1353ee-cbd4-4407-abdc-14d1c15c41ae" target="_blank" rel="noopener">Germany ↗</a><p>CAMS profile for Germany; Weimar collapse, Nazi period, post-war reconstruction signatures.</p></li>
+<li><a href="https://claude.ai/public/artifacts/e4817500-37fb-4d2e-a847-c73e7d82e569" target="_blank" rel="noopener">Germany ↗</a><p>Additional CAMS Germany analysis; post-unification trajectory and current Helm coherence indicators.</p></li>
+<li><a href="https://claude.site/artifacts/a8eecff1-1224-49e2-902b-a3d34ad78549" target="_blank" rel="noopener">Germany 2 ↗</a><p>Second CAMS analysis of Germany with alternative scoring and extended period coverage.</p></li>
+<li><a href="https://claude.ai/public/artifacts/0bd13fb9-d0c0-40b4-946f-176b40600f9e" target="_blank" rel="noopener">Germany vs England: Complex Adaptive Systems ↗</a> <span class="nx-multi">comparative</span><p>Comparative CAMS analysis of Germany and England; divergent modernisation trajectories.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Germany_cleaned.csv" target="_blank" rel="noopener">Germany</a> <span>1750–2025 · 2,199 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Germany_CAMS_1900_2026_cleaned.csv" target="_blank" rel="noopener">Germany CAMS 1900 2026</a> <span>1900–2026 · 1,016 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Germany_ENS_1880_2026_cleaned.csv" target="_blank" rel="noopener">Germany ENS 1880 2026</a> <span>1880–2026 · 1,176 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Germany_ENV_1880_2026_cleaned.csv" target="_blank" rel="noopener">Germany ENV 1880 2026</a> <span>1880–2026 · 1,176 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="greece" data-nation="greece"><summary><h3>Greece</h3><span class="nx-counts">2 external · 2 datasets</span></summary><div class="nx-body">
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.site/artifacts/a72de96f-b2a1-4b78-8a6c-4856c70b924b" target="_blank" rel="noopener">Greek Societal Nodes (1900–2025) ↗</a><p>CAMS node trajectories for Greece; civil war, junta, EU accession, debt crisis phases.</p></li>
+<li><a href="https://claude.ai/public/artifacts/ff819e01-76c7-46a1-aaf3-7ef27ed8cfaf" target="_blank" rel="noopener">The Peloponnesian War Through CAMS ↗</a><p>Athens vs Sparta as two CAMS systems in conflict; coordination failure and collapse.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Greece_ENS_1875_2026_cleaned.csv" target="_blank" rel="noopener">Greece ENS 1875 2026</a> <span>1875–2026 · 1,216 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Greece_ENV_1875_2026_cleaned.csv" target="_blank" rel="noopener">Greece ENV 1875 2026</a> <span>1875–2026 · 1,216 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="italy" data-nation="italy"><summary><h3>Italy</h3><span class="nx-counts">1 external · 2 datasets</span></summary><div class="nx-body">
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.ai/public/artifacts/3d8487c7-bd41-4bad-a7a8-b408661bee21" target="_blank" rel="noopener">Italy ↗</a><p>CAMS profile for Italy; instability patterns and Helm coherence oscillations.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Italy_cleaned.csv" target="_blank" rel="noopener">Italy</a> <span>1900–2024 · 1,080 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Italy19002025_cleaned.csv" target="_blank" rel="noopener">Italy19002025</a> <span>1900–2024 · 1,080 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="latvia" data-nation="latvia"><summary><h3>Latvia</h3><span class="nx-counts">1 dataset</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Latvia_ENS_1901_2025_cleaned.csv" target="_blank" rel="noopener">Latvia ENS 1901 2025</a> <span>1901–2025 · 1,099 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="netherlands" data-nation="netherlands"><summary><h3>Netherlands</h3><span class="nx-counts">1 on this site · 2 datasets</span></summary><div class="nx-body">
+<h4>Reports on this site</h4><ul class="nx-list">
+<li><a href="netherlands-cams-v1-2.html">Netherlands CAMS v1.2</a><span class="nx-type">Study</span><p>A critically contextualised CAMS v1.2 analysis of the Netherlands, covering ecology, social organisation, history, diagnostic metrics, and a mythopoetic paladin overlay.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Netherlands_cleaned.csv" target="_blank" rel="noopener">Netherlands</a> <span>1750–2024 · 440 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Netherlands_cleaned.csv" target="_blank" rel="noopener">Netherlands</a> <span>1750–2024 · JUNO nation series</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="norway" data-nation="norway"><summary><h3>Norway</h3><span class="nx-counts">6 on this site · 3 datasets</span></summary><div class="nx-body">
+<h4>Reports on this site</h4><ul class="nx-list">
+<li><a href="mindscapes/Norway_2026_CAMS_Report.html">Norway — CAMS Mood Report 2023–2025</a><span class="nx-type">Report</span><p>National Mood, Vision–Affect &amp; Mythic Attractor Report — 2023–2025</p></li>
+<li><a href="norway-detective-panel.html">Norway — Detective Panel · The Story That Built a Country</a><span class="nx-type">Study</span><p>A detective panel stress-tests the seven loops of the Norway CAMS map — Fell, Morse, Marple, and Warshawski interrogate the Lore thesis, the fund</p></li>
+<li><a href="norway-outlook-set.html">Norway — Outlook Set 2026–2036</a><span class="nx-type">Study</span><p>Four structurally distinct trajectories for Norway 2026–2036: Orderly Transition, Deferred Transition, Disorderly Shock, and the Exemplary Transition. Tested against the $2.2T fund, the Progress Party surge, and Norway</p></li>
+<li><a href="norway-arc-story.html">Norway — The Story That Built a Country</a><span class="nx-type">Study</span><p>How Norway turned the poorest periphery of Europe into one of the most coherent societies in the modern record — and the single dependency the story now has to survive. CAMS v3.2, 1880–2026.</p></li>
+<li><a href="norway-arc-map.html">Norway — The Story That Built a Country · Aha! Map</a><span class="nx-type">Map</span></li>
+<li><a href="complex-adaptive-humans-13.html">Neutrality, Nordic Systems, and the Discipline of Method — Complex Adaptive Humans #13</a><span class="nx-type">Series</span> <span class="nx-multi">comparative</span><p>Issue #13: Three Nordic architectures, one structural question — how Denmark, Norway, and Sweden built coordination infrastructure before economic expansion, and what that means for the rest of us.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/norway_gem_jan.csv" target="_blank" rel="noopener">Norway</a> <span>1881–2025 · JUNO nation series</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Norway_ENS_1880_2026_cleaned.csv" target="_blank" rel="noopener">Norway ENS 1880 2026</a> <span>1880–2026 · 1,176 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Norway_ENV_1880_2026_cleaned.csv" target="_blank" rel="noopener">Norway ENV 1880 2026</a> <span>1880–2026 · 1,176 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="poland" data-nation="poland"><summary><h3>Poland</h3><span class="nx-counts">1 on this site · 2 datasets</span></summary><div class="nx-body">
+<h4>Reports on this site</h4><ul class="nx-list">
+<li><a href="analysis/pr_gap2_formalism_audit.html">PR-GAP-2: Formalism Audit and Path Forward</a><span class="nx-type">Paper</span> <span class="nx-multi">comparative</span><p>The JUNO × CAMS recomputation across France (1850–2026), Poland (1875–2026), and Hong Kong (1900–2026) — 3,648 node-years — confirms four theses with permutation p &lt; 10⁻⁴ and a 45/45 sensitivity pass rate. This is…</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Poland_ENS_1875_2026_cleaned.csv" target="_blank" rel="noopener">Poland ENS 1875 2026</a> <span>1875–2026 · 1,216 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Poland_ENV_1875_2026_cleaned.csv" target="_blank" rel="noopener">Poland ENV 1875 2026</a> <span>1875–2026 · 1,216 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="rome-historical" data-nation="rome (historical)"><summary><h3>Rome (historical)</h3><span class="nx-counts">1 external · 4 datasets</span></summary><div class="nx-body">
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.ai/public/artifacts/59c02680-6cae-441e-8800-dbafe5033254" target="_blank" rel="noopener">Roman Empire (0 BCE – 425 AD) Dynamic ↗</a><p>Dynamic CAMS analysis of the Roman Empire; collapse signature and node degradation sequence.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/LatimVetus_ENS_460_2010_cleaned.csv" target="_blank" rel="noopener">LatimVetus ENS 460 2010</a> <span>460–2010 · 632 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/LatimVetus_ENV_460_2010_cleaned.csv" target="_blank" rel="noopener">LatimVetus ENV 460 2010</a> <span>460–2010 · 632 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/New_Rome_Ad_5Y_Rome_0_Bce_5Ad_10Ad_15Ad_20_Ad_cleaned.csv" target="_blank" rel="noopener">New Rome Ad 5Y Rome 0 Bce 5Ad 10Ad 15Ad 20 Ad</a> <span>5–425 · 672 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Rome_CAMS_recalculated_cleaned.csv" target="_blank" rel="noopener">Rome CAMS recalculated</a> <span>10–450 · 360 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="russia" data-nation="russia"><summary><h3>Russia</h3><span class="nx-counts">2 on this site · 1 external · 4 datasets</span></summary><div class="nx-body">
+<h4>Reports on this site</h4><ul class="nx-list">
+<li><a href="mindscapes/Russia_2026_CAMS_Report.html">Russia — CAMS Mood Report 2024–2026</a><span class="nx-type">Report</span><p>National Mood, Vision‑Affect &amp; Mythic Attractor Report — 2024–2026</p></li>
+<li><a href="great-power-attractors.html">Three Great-Power Trajectories Against Their Own Historical Attractors</a><span class="nx-type">Findings</span> <span class="nx-multi">comparative</span><p>A JUNO/CAMS results note on bloc-coordination structure and the isolation of the United States trajectory. China, Russia, and the USA measured against their own twentieth-century attractor bands. All three in…</p></li>
+</ul>
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.site/artifacts/fd49a64a-d656-469c-a24b-4310b0fb9470" target="_blank" rel="noopener">Russia as an Invasion-Resisting CAS ↗</a><p>Russia&#x27;s CAS dynamics as an invasion-resisting system; Shield/Stewards node dominance pattern.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Russia_cleaned.csv" target="_blank" rel="noopener">Russia</a> <span>1900–2025 · 1,208 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Russia_1800_1830_claude_cleaned.csv" target="_blank" rel="noopener">Russia 1800 1830 claude</a> <span>1800–1830 · 248 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Russia_ENS_1800_2026_cleaned.csv" target="_blank" rel="noopener">Russia ENS 1800 2026</a> <span>1800–2026 · 1,816 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Russia_ENV_1800_2026_cleaned.csv" target="_blank" rel="noopener">Russia ENV 1800 2026</a> <span>1800–2026 · 1,816 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="spain" data-nation="spain"><summary><h3>Spain</h3><span class="nx-counts">1 dataset</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Spain_1800_1830_cleaned.csv" target="_blank" rel="noopener">Spain 1800 1830</a> <span>1800–1830 · 248 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="sweden" data-nation="sweden"><summary><h3>Sweden</h3><span class="nx-counts">1 on this site · 2 datasets</span></summary><div class="nx-body">
+<h4>Reports on this site</h4><ul class="nx-list">
+<li><a href="complex-adaptive-humans-13.html">Neutrality, Nordic Systems, and the Discipline of Method — Complex Adaptive Humans #13</a><span class="nx-type">Series</span> <span class="nx-multi">comparative</span><p>Issue #13: Three Nordic architectures, one structural question — how Denmark, Norway, and Sweden built coordination infrastructure before economic expansion, and what that means for the rest of us.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Sweden_ENS_1880_2026_cleaned.csv" target="_blank" rel="noopener">Sweden ENS 1880 2026</a> <span>1850–2026 · 152 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Sweden_ENV_1850_2026_cleaned.csv" target="_blank" rel="noopener">Sweden ENV 1850 2026</a> <span>1850–2026 · 152 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="ukraine" data-nation="ukraine"><summary><h3>Ukraine</h3><span class="nx-counts">3 external · 1 dataset</span></summary><div class="nx-body">
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.ai/public/artifacts/7c2b655d-99fb-418a-a7b4-40f36380bf5d" target="_blank" rel="noopener">Ukraine CAMS-CAN Analysis: Systemic Inversion Under Existential Stress ↗</a><p>Ukraine under existential stress; systemic inversion of node priorities and coupling breakdown.</p></li>
+<li><a href="https://claude.ai/public/artifacts/2d020bf9-4710-4d59-8460-265931be7b84" target="_blank" rel="noopener">Ukraine: A Century of Complex Adaptive System Evolution ↗</a><p>Century-long CAMS evolution for Ukraine; Soviet period, independence, and war dynamics.</p></li>
+<li><a href="https://claude.ai/public/artifacts/6cd304fe-f22e-4199-af49-efe0416d6711" target="_blank" rel="noopener">US–Ukraine ↗</a> <span class="nx-multi">comparative</span><p>Dyadic CAMS analysis of US–Ukraine coordination; coupling asymmetries and dependency dynamics.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Ukraine.csv" target="_blank" rel="noopener">Ukraine</a> <span>1980–2025 · JUNO nation series</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="united-kingdom" data-nation="united kingdom"><summary><h3>United Kingdom</h3><span class="nx-counts">5 on this site · 2 external · 3 datasets</span></summary><div class="nx-body">
+<h4>Reports on this site</h4><ul class="nx-list">
+<li><a href="uk-detective-panel.html">The Soft Landing Investigation — Detective Panel</a><span class="nx-type">Study</span><p>Father Brown, Cordelia Gray, Poirot, and Wimsey stress-test the six loops of the Soft Landing Map — the Continuity Engine, the Absorption Trap, the Comfort Blindfold, and the hard question of what Reform, Your Party,…</p></li>
+<li><a href="uk-outlook-set.html">UK — Outlook Set 2026–2036</a><span class="nx-type">Study</span><p>Four structurally distinct trajectories for the UK 2026–2036: The Absorption Holds, The Populist Capture, The Territorial Rupture, and The Renewal Bypass. Tested against the Reform surge, Your Party, and Scottish…</p></li>
+<li><a href="uk-arc-story.html">UK — The Art of the Soft Landing</a><span class="nx-type">Study</span><p>How the United Kingdom became the world</p></li>
+<li><a href="uk-arc-map.html">UK — The Art of the Soft Landing · Aha! Map</a><span class="nx-type">Map</span></li>
+<li><a href="mindscapes/UK_2024-2026_CAMS_Report.html">United Kingdom — CAMS Mood Report 2024–2026</a><span class="nx-type">Report</span><p>National Mood, Vision‑Affect &amp; Mythic Attractor Report — 2024–2026</p></li>
+</ul>
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.ai/public/artifacts/45d175a8-03cf-4f71-8faf-960cabf43ab3" target="_blank" rel="noopener">England: Industrial Revolution ↗</a><p>CAMS analysis of England through the Industrial Revolution; fast-loop node surge and slow-loop lag.</p></li>
+<li><a href="https://claude.ai/public/artifacts/0bd13fb9-d0c0-40b4-946f-176b40600f9e" target="_blank" rel="noopener">Germany vs England: Complex Adaptive Systems ↗</a> <span class="nx-multi">comparative</span><p>Comparative CAMS analysis of Germany and England; divergent modernisation trajectories.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/England_cleaned.csv" target="_blank" rel="noopener">England</a> <span>1750–1900 · 1,224 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/UK_ENS_1880_2026_cleaned.csv" target="_blank" rel="noopener">UK ENS 1880 2026</a> <span>1880–2026 · 1,176 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/UK_ENV_1880_2026_cleaned.csv" target="_blank" rel="noopener">UK ENV 1880 2026</a> <span>1880–2026 · 1,176 records</span></li>
+</ul>
+</div></details>
+<h2 class="nx-region" id="middle-east-africa">Middle East &amp; Africa</h2>
+<details class="nx-nation" id="dr-congo" data-nation="dr congo"><summary><h3>DR Congo</h3><span class="nx-counts">2 datasets</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/DRC_ENS_1960_2026_cleaned.csv" target="_blank" rel="noopener">DRC ENS 1960 2026</a> <span>1960–2026 · 536 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/DRC_ENV_1960_2026_cleaned.csv" target="_blank" rel="noopener">DRC ENV 1960 2026</a> <span>1960–2026 · 536 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="egypt" data-nation="egypt"><summary><h3>Egypt</h3><span class="nx-counts">2 datasets</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Egypt_ENS_1952_2026_cleaned.csv" target="_blank" rel="noopener">Egypt ENS 1952 2026</a> <span>1952–2026 · 600 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Egypt_ENV_1952_2026_cleaned.csv" target="_blank" rel="noopener">Egypt ENV 1952 2026</a> <span>1952–2026 · 600 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="ethiopia" data-nation="ethiopia"><summary><h3>Ethiopia</h3><span class="nx-counts">2 datasets</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Ethiopia_ENS_1960_2026_cleaned.csv" target="_blank" rel="noopener">Ethiopia ENS 1960 2026</a> <span>1960–2026 · 536 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Ethiopia_ENV_1960_2026_cleaned.csv" target="_blank" rel="noopener">Ethiopia ENV 1960 2026</a> <span>1960–2026 · 536 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="iran" data-nation="iran"><summary><h3>Iran</h3><span class="nx-counts">2 on this site · 7 external · 7 datasets</span></summary><div class="nx-body">
+<h4>Reports on this site</h4><ul class="nx-list">
+<li><a href="complex-adaptive-humans-11.html">Spotlight on Iran — Complex Adaptive Humans #11</a><span class="nx-type">Series</span><p>Issue #11: CAMS analysis of Iran 1900–2025. A civilisational state, not a failing modern nation. Kimi, Gemini, Grok, Perplexity, Claude, and GPT — six platforms, one dataset, surprising convergence.</p></li>
+<li><a href="complex-adaptive-humans-15.html">Crisis in the Middle East: A Quantitative Perspective — Complex Adaptive Humans #15</a><span class="nx-type">Series</span> <span class="nx-multi">comparative</span><p>Issue #15: The US–Iran confrontation is a systems conflict, not merely a nuclear dispute. CAMS reveals a mode mismatch — Ψ-dominant Iran versus a Φ-overloaded US Helm — and traces the path dependency running from…</p></li>
+</ul>
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.site/artifacts/6658a914-0a8b-4028-ad1d-bb9f01f13d29" target="_blank" rel="noopener">Iran ↗</a><p>CAMS profile for Iran; Shah period, revolution, Islamic Republic dynamics.</p></li>
+<li><a href="https://claude.ai/public/artifacts/c617830c-10a2-4868-8756-c8fc1d28253f" target="_blank" rel="noopener">Iran ↗</a><p>Second CAMS analysis of Iran; updated scoring with cross-LLM concordance data.</p></li>
+<li><a href="https://claude.ai/public/artifacts/c26a3f17-a891-4bca-91a5-7154dcc21609" target="_blank" rel="noopener">Iran&#x27;s Integrated Pluralism: A Complex Adaptive System Excellence ↗</a><p>Iran&#x27;s integrated pluralism as a CAS strength; high cross-layer coupling and adaptability.</p></li>
+<li><a href="https://claude.ai/public/artifacts/aabf1806-925e-4730-83c8-b3d0fe04aaed" target="_blank" rel="noopener">Iran&#x27;s Political Cycles (1900–2025) ↗</a><p>Full century of Iranian political cycles mapped through CAMS; cyclical stress-release patterns.</p></li>
+<li><a href="https://claude.ai/public/artifacts/7771a159-2ff1-47da-b009-2e9c80762f17" target="_blank" rel="noopener">A Systems Analysis of Israel–Iran Competition ↗</a> <span class="nx-multi">comparative</span><p>Full systems analysis of Israel–Iran competition through CAMS coupling and stress metrics.</p></li>
+<li><a href="https://claude.ai/public/artifacts/d3f74144-799c-48c2-98c1-c743d1585248" target="_blank" rel="noopener">Israel–Iran: Complex Adaptive ↗</a> <span class="nx-multi">comparative</span><p>Israel–Iran dyadic analysis; asymmetric coordination profiles and conflict risk indicators.</p></li>
+<li><a href="https://claude.ai/public/artifacts/3bb54dab-2dca-4ecd-a0fd-647f374dfda8" target="_blank" rel="noopener">Regional Complexity: The Israel–Iran System Through Adaptive Dynamics ↗</a> <span class="nx-multi">comparative</span><p>Regional-level adaptive dynamics model of Israel–Iran; spillover and coupling effects.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Iran_cleaned.csv" target="_blank" rel="noopener">Iran</a> <span>1900–2025 · 920 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Iran_ENS_1875_2026_cleaned.csv" target="_blank" rel="noopener">Iran ENS 1875 2026</a> <span>1875–2026 · 1,216 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Iran_ENV_1875_2026_cleaned.csv" target="_blank" rel="noopener">Iran ENV 1875 2026</a> <span>1875–2026 · 1,216 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Iran_CAMS_ensemble_mean.csv" target="_blank" rel="noopener">Iran — Ensemble Mean</a> <span>5-Agent Ensemble Mean · JUNO nation series</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Iran_CAMS_envelope.csv" target="_blank" rel="noopener">Iran — Envelope</a> <span>Inter-rater SD per node per year · JUNO nation series</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Iran_cleaned.csv" target="_blank" rel="noopener">Iran — Single-scorer (no BS)</a> <span>1900–2025 · JUNO nation series</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/USA_HighRes_cleaned.csv" target="_blank" rel="noopener">USA HighRes</a> <span>1790–2025 · 2,168 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="iraq" data-nation="iraq"><summary><h3>Iraq</h3><span class="nx-counts">2 datasets</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Iraq_cleaned.csv" target="_blank" rel="noopener">Iraq</a> <span>3–2025 · 1,202 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Iraq_cleaned.csv" target="_blank" rel="noopener">Iraq</a> <span>1900–2025 · JUNO nation series</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="israel" data-nation="israel"><summary><h3>Israel</h3><span class="nx-counts">3 external · 2 datasets</span></summary><div class="nx-body">
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.ai/public/artifacts/7771a159-2ff1-47da-b009-2e9c80762f17" target="_blank" rel="noopener">A Systems Analysis of Israel–Iran Competition ↗</a> <span class="nx-multi">comparative</span><p>Full systems analysis of Israel–Iran competition through CAMS coupling and stress metrics.</p></li>
+<li><a href="https://claude.ai/public/artifacts/d3f74144-799c-48c2-98c1-c743d1585248" target="_blank" rel="noopener">Israel–Iran: Complex Adaptive ↗</a> <span class="nx-multi">comparative</span><p>Israel–Iran dyadic analysis; asymmetric coordination profiles and conflict risk indicators.</p></li>
+<li><a href="https://claude.ai/public/artifacts/3bb54dab-2dca-4ecd-a0fd-647f374dfda8" target="_blank" rel="noopener">Regional Complexity: The Israel–Iran System Through Adaptive Dynamics ↗</a> <span class="nx-multi">comparative</span><p>Regional-level adaptive dynamics model of Israel–Iran; spillover and coupling effects.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Israel_cleaned.csv" target="_blank" rel="noopener">Israel</a> <span>1946–2025 · 664 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Israel_cleaned.csv" target="_blank" rel="noopener">Israel</a> <span>1946–2025 · JUNO nation series</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="lebanon" data-nation="lebanon"><summary><h3>Lebanon</h3><span class="nx-counts">2 datasets</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Lebanon_cleaned.csv" target="_blank" rel="noopener">Lebanon</a> <span>1943–2025 · 664 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Lebanon_cleaned.csv" target="_blank" rel="noopener">Lebanon</a> <span>1943–2025 · JUNO nation series</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="mauritania" data-nation="mauritania"><summary><h3>Mauritania</h3><span class="nx-counts">2 datasets</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Mauritania_ENS_1960_2026_cleaned.csv" target="_blank" rel="noopener">Mauritania ENS 1960 2026</a> <span>1960–2026 · 536 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Mauritania_ENV_1960_2026_cleaned.csv" target="_blank" rel="noopener">Mauritania ENV 1960 2026</a> <span>1960–2026 · 536 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="nigeria" data-nation="nigeria"><summary><h3>Nigeria</h3><span class="nx-counts">2 datasets</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Nigeria_ENS_1960_2026_cleaned.csv" target="_blank" rel="noopener">Nigeria ENS 1960 2026</a> <span>1960–2026 · 536 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Nigeria_ENV_1960_2026_cleaned.csv" target="_blank" rel="noopener">Nigeria ENV 1960 2026</a> <span>1960–2026 · 536 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="saudi-arabia" data-nation="saudi arabia"><summary><h3>Saudi Arabia</h3><span class="nx-counts">2 datasets</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Saudi_Arabia_cleaned.csv" target="_blank" rel="noopener">Saudi Arabia</a> <span>1918–2025 · 856 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Saudi_Arabia_cleaned.csv" target="_blank" rel="noopener">Saudi Arabia</a> <span>1918–2025 · JUNO nation series</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="south-africa" data-nation="south africa"><summary><h3>South Africa</h3><span class="nx-counts">1 on this site · 1 dataset</span></summary><div class="nx-body">
+<h4>Reports on this site</h4><ul class="nx-list">
+<li><a href="complex-adaptive-humans-6.html">South Africa in the CAMS Engine — Complex Adaptive Humans #6</a><span class="nx-type">Series</span><p>Issue #6: CAMS analysis of South Africa 1990–2024 — institutional stress accumulation, coordination failure, and the signals of state fragility.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/southafrica_dec_gem.csv" target="_blank" rel="noopener">South Africa</a> <span>1880–2025 · JUNO nation series</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="syria" data-nation="syria"><summary><h3>Syria</h3><span class="nx-counts">1 external · 2 datasets</span></summary><div class="nx-body">
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.ai/public/artifacts/66a51901-3ba6-4cfb-b19e-a247e0fa4c64" target="_blank" rel="noopener">Syria&#x27;s National Psyche: A Complex Adaptive Systems Profile ↗</a><p>CAMS psyche profile for Syria; fragmentation dynamics and multi-actor coordination collapse.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Syria_cleaned.csv" target="_blank" rel="noopener">Syria</a> <span>1893–2025 · 943 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Syria_cleaned.csv" target="_blank" rel="noopener">Syria</a> <span>1893–2024 · JUNO nation series</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="t-rkiye" data-nation="türkiye"><summary><h3>Türkiye</h3><span class="nx-counts">2 datasets</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/nations/Turkiye_ENS.csv" target="_blank" rel="noopener">Türkiye — Ensemble Mean</a> <span>1875–2026 · JUNO nation series</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/nations/Turkiye_ENV.csv" target="_blank" rel="noopener">Türkiye — Envelope</a> <span>1875–2026 · JUNO nation series</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="uae" data-nation="uae"><summary><h3>UAE</h3><span class="nx-counts">1 dataset</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/uae_gem_marc.csv" target="_blank" rel="noopener">UAE</a> <span>1970–2026 · JUNO nation series</span></li>
+</ul>
+</div></details>
+<h2 class="nx-region" id="asia-pacific">Asia-Pacific</h2>
+<details class="nx-nation" id="afghanistan" data-nation="afghanistan"><summary><h3>Afghanistan</h3><span class="nx-counts">1 external · 1 dataset</span></summary><div class="nx-body">
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.site/artifacts/49561618-891a-4bb5-b234-26cdaee2c835" target="_blank" rel="noopener">Afghanistan ↗</a><p>CAMS profile for Afghanistan; state-collapse signatures and persistent low-V attractor.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Afghanistan_cleaned.csv" target="_blank" rel="noopener">Afghanistan</a> <span>1900–2025 · 1,032 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="australia" data-nation="australia"><summary><h3>Australia</h3><span class="nx-counts">15 on this site · 8 external · 6 datasets</span></summary><div class="nx-body">
+<h4>Reports on this site</h4><ul class="nx-list">
+<li><a href="complex-adaptive-humans-14.html">Australia by the Numbers: A Multi-Model Diagnostic — Complex Adaptive Humans #14</a><span class="nx-type">Series</span><p>Issue #14: DeepSeek, Kimi, and Claude independently diagnose Australia</p></li>
+<li><a href="burning-house-detective-panel.html">Australia — Detective Panel · The Burning House Economy</a><span class="nx-type">Study</span><p>Poirot, Salander, Marple, and Holmes interrogate the loop structure of the Burning House Economy map. The fossil rent lock, the enclave transition trap, and the Stewards junction.</p></li>
+<li><a href="epiphenomenon/">Epiphenomenon@Trove</a><span class="nx-type">Series</span><p>A structural analysis of Australian threat discourse, institutional coherence, and civilisational stress across 125 years — using the Complex Adaptive Model System (CAMS) and the National Library of Australia&#x27;s…</p></li>
+<li><a href="complex-adaptive-humans-28.html">First Results from the Epiphenomenon@Trove Study — Complex Adaptive Humans #28</a><span class="nx-type">Series</span><p>Issue #28: When does Australia sense enemies? Trove (55M documents, 1900–1955) and Hansard (2006–2025) crossed with CAMS structural scores. Three regimes — Prosperity Ideology, Stress Projection, Event Response. The…</p></li>
+<li><a href="anxiety-machine.html">The Anxiety Machine — Epiphenomenon@Trove</a><span class="nx-type">Series</span><p>What 125 years of Australian newspapers and two decades of parliamentary Hansard reveal about why we talk about what we talk about — and when</p></li>
+<li><a href="the-borrowed-nation-3.html">The Anxiety Machine — The Borrowed Nation #3</a><span class="nx-type">Series</span><p>Essay Three: 105 years of Trove and Hansard data show Australia</p></li>
+<li><a href="the-borrowed-nation.html">The Borrowed Nation</a><span class="nx-type">Series</span><p>A five-essay CAMS series on Australian strategic dependency: colonial-era node architecture, foreign ownership of the Stewards node, the domestic origins of China-threat discourse, the Flow Paradox, and a…</p></li>
+<li><a href="burning-house-map.html">The Burning House Economy — Aha! Map</a><span class="nx-type">Map</span></li>
+<li><a href="burning-house-story.html">The Burning House Economy — Australia CAMS Analysis</a><span class="nx-type">Study</span><p>How Australia learned to profit from the fire while forgetting it owned the house. A systemic narrative on Australia</p></li>
+<li><a href="the-borrowed-nation-2.html">The Colonised Stewards — The Borrowed Nation #2</a><span class="nx-type">Series</span><p>Essay Two: From the squattocracy to Rio Tinto and BHP, Australia</p></li>
+<li><a href="epiphenomenon/australia-story.html">The Enemy Factory — Epiphenomenon@Trove</a><span class="nx-type">Series</span><p>How Australia learned to need a threat — and why the machinery never stops running.</p></li>
+<li><a href="the-borrowed-nation-4.html">The Flow Paradox — The Borrowed Nation #4</a><span class="nx-type">Series</span><p>Essay Four: China receives 63% of Australia</p></li>
+<li><a href="the-borrowed-nation-1.html">The Inheritance of Dependence — The Borrowed Nation #1</a><span class="nx-type">Series</span><p>Essay One: Why Australia</p></li>
+<li><a href="the-borrowed-nation-5.html">The Road Not Taken — The Borrowed Nation #5</a><span class="nx-type">Series</span><p>Essay Five: A disciplined counterfactual history — what if Australia had built the 2014 Comprehensive Strategic Partnership as the governing framework for its China relationship, instead of the Five Eyes escalation…</p></li>
+<li><a href="epiphenomenon/without-hindcasting.html">Without Hindcasting — Epiphenomenon@Trove</a><span class="nx-type">Series</span><p>Reading structural collapse signals as a contemporary analyst would have — with no foreknowledge of what was coming.</p></li>
+</ul>
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.site/artifacts/8daa1ce0-f21f-4ad1-8be9-69987ab4af27" target="_blank" rel="noopener">Australia ↗</a><p>CAMS node profile for Australia; institutional health 1850–2025.</p></li>
+<li><a href="https://claude.ai/public/artifacts/1ac53e1f-affc-4b36-ab71-5ea624b7dcd0" target="_blank" rel="noopener">Australia ↗</a><p>Second Australia CAMS analysis; updated node scores and strategic outlook.</p></li>
+<li><a href="https://claude.site/artifacts/670fc0cc-7d27-4220-8723-85a5222aa7d9" target="_blank" rel="noopener">Australia&#x27;s Complex Geopolitical Reality ↗</a><p>Australia&#x27;s geopolitical position analysed through CAMS coupling and Stress dynamics.</p></li>
+<li><a href="https://claude.ai/public/artifacts/d344a9e4-dc99-4d10-bffb-97a941a65264" target="_blank" rel="noopener">Australian Election Report ↗</a><p>CAMS analysis of Australian electoral dynamics; Helm/Lore coherence in election cycles.</p></li>
+<li><a href="https://claude.ai/public/artifacts/1838e1da-b8bd-4408-9656-b1234c331461" target="_blank" rel="noopener">CAMS Framework: Australia&#x27;s Strategic Dashboard ↗</a><p>Strategic dashboard for Australia; current node scores and forward-looking regime indicators.</p></li>
+<li><a href="https://claude.site/artifacts/70bf10a2-f6e3-4077-bb47-3a21a0a51768" target="_blank" rel="noopener">Nuclear and Dutton ↗</a><p>Australian nuclear debate through CAMS; Shield node stress and Helm coherence implications.</p></li>
+<li><a href="https://claude.ai/public/artifacts/32ebdf88-c82d-4fdc-912f-1a5e9cd73f21" target="_blank" rel="noopener">The 13 Laws of History: China, France, and Australia as Complex Adaptive Systems ↗</a> <span class="nx-multi">comparative</span><p>Thirteen proposed laws of historical dynamics illustrated through China, France, and Australia.</p></li>
+<li><a href="https://claude.ai/public/artifacts/c1834cab-dc90-4df7-b74f-86fd13ca69aa" target="_blank" rel="noopener">The Pacific Commonwealth Trio: A CAMS Analysis ↗</a> <span class="nx-multi">comparative</span><p>Australia, NZ, Canada as a Pacific Commonwealth trio; shared institutional heritage in CAMS space.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Australia_cleaned.csv" target="_blank" rel="noopener">Australia</a> <span>1900–2024 · 984 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Australia_2026_cleaned.csv" target="_blank" rel="noopener">Australia 2026</a> <span>1895–2026 · 1,055 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Australia_ENS_1875_2026_cleaned.csv" target="_blank" rel="noopener">Australia ENS 1875 2026</a> <span>1875–2026 · 1,216 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Australia_cam5_1996_2026_cleaned.csv" target="_blank" rel="noopener">Australia cam5 1996 2026</a> <span>1996–2026 · 248 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/nations/Australia_ENV.csv" target="_blank" rel="noopener">Australia — Envelope</a> <span>1875–2026 · JUNO nation series</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/IndigenousAustralia_cleaned.csv" target="_blank" rel="noopener">IndigenousAustralia</a> <span>1600–2025 · 144 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="cambodia" data-nation="cambodia"><summary><h3>Cambodia</h3><span class="nx-counts">2 datasets</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Cambodia_ENS_1850_2026_cleaned.csv" target="_blank" rel="noopener">Cambodia ENS 1850 2026</a> <span>1850–2026 · 1,416 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Cambodia_ENV_1850_2026_cleaned.csv" target="_blank" rel="noopener">Cambodia ENV 1850 2026</a> <span>1850–2026 · 1,416 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="china" data-nation="china"><summary><h3>China</h3><span class="nx-counts">1 on this site · 12 external · 6 datasets</span></summary><div class="nx-body">
+<h4>Reports on this site</h4><ul class="nx-list">
+<li><a href="great-power-attractors.html">Three Great-Power Trajectories Against Their Own Historical Attractors</a><span class="nx-type">Findings</span> <span class="nx-multi">comparative</span><p>A JUNO/CAMS results note on bloc-coordination structure and the isolation of the United States trajectory. China, Russia, and the USA measured against their own twentieth-century attractor bands. All three in…</p></li>
+</ul>
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.ai/public/artifacts/0fc40987-e183-4f85-8adb-045e8b8a13d6" target="_blank" rel="noopener">CAMS Data Analysis: Key Insights from China 1900–2025 ↗</a><p>Key insights extracted from the China dataset; turning points and regime transitions.</p></li>
+<li><a href="https://claude.ai/public/artifacts/e8d8fd2a-269c-4556-8957-17391d14bd14" target="_blank" rel="noopener">CAMS Metrics Evolution: China 1900–2025 ↗</a><p>Time-series of all 4 CAMS metrics across 8 nodes for China 1900–2025.</p></li>
+<li><a href="https://claude.site/artifacts/61485454-2f03-406d-ac3b-e5c9fa568f1a" target="_blank" rel="noopener">China ↗</a><p>CAMS profile for China; node trajectories 1900–2025.</p></li>
+<li><a href="https://claude.ai/public/artifacts/9f86eda7-7af3-4865-a453-cc948c391e58" target="_blank" rel="noopener">China ↗</a><p>Third China CAMS analysis; revised node scoring and updated phase-space trajectory.</p></li>
+<li><a href="https://claude.ai/public/artifacts/30953674-2322-45e0-8888-d441e0949f2e" target="_blank" rel="noopener">China (Extended) ↗</a><p>Extended CAMS analysis of China with additional metric breakdowns and phase-space mapping.</p></li>
+<li><a href="https://claude.ai/public/artifacts/97f314c0-9bf9-4f06-aabb-34b78c8ba15a" target="_blank" rel="noopener">China&#x27;s Civilizational Evolution ↗</a><p>Long-run civilisational arc for China; dynasty cycles and attractor patterns.</p></li>
+<li><a href="https://claude.ai/public/artifacts/f37db029-579d-42b6-b9c3-79af411ce332" target="_blank" rel="noopener">China&#x27;s Civilizational Evolution (1900–2025) ↗</a><p>Full civilisational arc for China 1900–2025; attractor mapping and regime classification.</p></li>
+<li><a href="https://claude.site/artifacts/81d07635-2950-4a32-8029-d017701f4463" target="_blank" rel="noopener">China&#x27;s System Transitions (1900–2025) ↗</a><p>Major system transitions in China traced through CAMS phase-space; Republic, Mao, Reform eras.</p></li>
+<li><a href="https://claude.site/artifacts/52e56d01-7452-41aa-93bb-36fad6e5403a" target="_blank" rel="noopener">Chinese Dynasties ↗</a><p>CAMS applied to Chinese dynastic cycles; collapse and reorganisation signatures.</p></li>
+<li><a href="https://claude.ai/public/artifacts/3dfdd7e1-47ee-45f6-a8a2-98a6de81d46e" target="_blank" rel="noopener">China–USA Interactions (2008–2030) ↗</a> <span class="nx-multi">comparative</span><p>China–USA dyadic CAMS analysis 2008–2030; power transition dynamics and coupling evolution.</p></li>
+<li><a href="https://claude.ai/public/artifacts/32ebdf88-c82d-4fdc-912f-1a5e9cd73f21" target="_blank" rel="noopener">The 13 Laws of History: China, France, and Australia as Complex Adaptive Systems ↗</a> <span class="nx-multi">comparative</span><p>Thirteen proposed laws of historical dynamics illustrated through China, France, and Australia.</p></li>
+<li><a href="https://claude.ai/public/artifacts/10172af2-1681-476c-aa89-0c5d8fe55246" target="_blank" rel="noopener">USA–China CAMS Framework Analysis ↗</a> <span class="nx-multi">comparative</span><p>Dyadic CAMS analysis of USA–China coupling; competitive vs convergent coordination dynamics.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/China_Block2_ENV_1800_2025_cleaned.csv" target="_blank" rel="noopener">China Block2 ENV 1800 2025</a> <span>1800–2025 · 1,808 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/China_CAMS_1900_2026_cleaned.csv" target="_blank" rel="noopener">China CAMS 1900 2026</a> <span>1900–2026 · 1,016 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/China_CAMS5_ensemble_1850_2026_cleaned.csv" target="_blank" rel="noopener">China CAMS5 ensemble 1850 2026</a> <span>1850–2026 · 152 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/China_ENS_1800_2025_cleaned.csv" target="_blank" rel="noopener">China ENS 1800 2025</a> <span>1800–2025 · 1,808 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/China_ENV_1800_2025_cleaned.csv" target="_blank" rel="noopener">China ENV 1800 2025</a> <span>1800–2025 · 1,808 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/China_ENV_1850_2026_cleaned.csv" target="_blank" rel="noopener">China ENV 1850 2026</a> <span>1850–2026 · 152 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="hong-kong" data-nation="hong kong"><summary><h3>Hong Kong</h3><span class="nx-counts">1 on this site · 3 datasets</span></summary><div class="nx-body">
+<h4>Reports on this site</h4><ul class="nx-list">
+<li><a href="analysis/pr_gap2_formalism_audit.html">PR-GAP-2: Formalism Audit and Path Forward</a><span class="nx-type">Paper</span> <span class="nx-multi">comparative</span><p>The JUNO × CAMS recomputation across France (1850–2026), Poland (1875–2026), and Hong Kong (1900–2026) — 3,648 node-years — confirms four theses with permutation p &lt; 10⁻⁴ and a 45/45 sensitivity pass rate. This is…</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Hong_Kong_cleaned.csv" target="_blank" rel="noopener">Hong Kong</a> <span>1900–2015 · 952 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Hong_Kong_cleaned.csv" target="_blank" rel="noopener">Hong Kong</a> <span>1900–2015 · JUNO nation series</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Hongkong_Manual_cleaned.csv" target="_blank" rel="noopener">Hongkong Manual</a> <span>1900–2015 · 952 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="india" data-nation="india"><summary><h3>India</h3><span class="nx-counts">1 external · 4 datasets</span></summary><div class="nx-body">
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.ai/public/artifacts/b4f371a8-2a36-4c06-b428-3190c0847570" target="_blank" rel="noopener">India ↗</a><p>CAMS profile for India (signed Stress convention); post-independence institutional evolution.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/India_cleaned.csv" target="_blank" rel="noopener">India</a> <span>1950–2024 · 592 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/India_cleaned.csv" target="_blank" rel="noopener">India</a> <span>1950–2024 · JUNO nation series</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/nations/India_ENS.csv" target="_blank" rel="noopener">India — Ensemble Mean</a> <span>1875–2026 · JUNO nation series</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/nations/India_ENV.csv" target="_blank" rel="noopener">India — Envelope</a> <span>1875–2026 · JUNO nation series</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="indonesia" data-nation="indonesia"><summary><h3>Indonesia</h3><span class="nx-counts">2 datasets</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Indonesia_cleaned.csv" target="_blank" rel="noopener">Indonesia</a> <span>1941–2025 · 680 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Indonesia_cleaned.csv" target="_blank" rel="noopener">Indonesia</a> <span>1941–2025 · JUNO nation series</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="japan" data-nation="japan"><summary><h3>Japan</h3><span class="nx-counts">1 external · 4 datasets</span></summary><div class="nx-body">
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.ai/public/artifacts/016a82c6-fa67-4f6a-8dec-d31965ea93f1" target="_blank" rel="noopener">Strategic Pathways for Japan ↗</a><p>CAMS-based strategic pathways for Japan; Meiji modernisation to post-war stagnation.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Japan_cleaned.csv" target="_blank" rel="noopener">Japan</a> <span>1850–2025 · 1,632 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Japan_cleaned.csv" target="_blank" rel="noopener">Japan</a> <span>1850–2025 · JUNO nation series</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/nations/Japan_ENS.csv" target="_blank" rel="noopener">Japan — Ensemble Mean</a> <span>1875–2026 · JUNO nation series</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/nations/Japan_ENV.csv" target="_blank" rel="noopener">Japan — Envelope</a> <span>1875–2026 · JUNO nation series</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="laos" data-nation="laos"><summary><h3>Laos</h3><span class="nx-counts">2 datasets</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Laos_ENS_1875_2026_cleaned.csv" target="_blank" rel="noopener">Laos ENS 1875 2026</a> <span>1875–2026 · 1,216 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Laos_ENV_1875_2026_cleaned.csv" target="_blank" rel="noopener">Laos ENV 1875 2026</a> <span>1875–2026 · 1,216 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="mongolia" data-nation="mongolia"><summary><h3>Mongolia</h3><span class="nx-counts">2 datasets</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Mongolia_ENS_1850_2026_cleaned.csv" target="_blank" rel="noopener">Mongolia ENS 1850 2026</a> <span>1850–2026 · 1,416 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Mongolia_ENV_1850_2026_cleaned.csv" target="_blank" rel="noopener">Mongolia ENV 1850 2026</a> <span>1850–2026 · 1,416 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="new-zealand" data-nation="new zealand"><summary><h3>New Zealand</h3><span class="nx-counts">3 on this site · 1 external · 4 datasets</span></summary><div class="nx-body">
+<h4>Reports on this site</h4><ul class="nx-list">
+<li><a href="mindscapes/New_Zealand_2026_CAMS_Report.html">New Zealand — CAMS Mood Report 2024–2026</a><span class="nx-type">Report</span><p>National Mood, Vision‑Affect &amp; Mythic Attractor Report — 2024–2026</p></li>
+<li><a href="nz-arc-map.html">New Zealand — Institutional Arc Map</a><span class="nx-type">Map</span><p>Interactive causal loop diagram of New Zealand</p></li>
+<li><a href="nz-arc-story.html">New Zealand&#x27;s Institutional Arc 1900–2026</a><span class="nx-type">Study</span><p>Narrative essay tracing New Zealand</p></li>
+</ul>
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.ai/public/artifacts/c1834cab-dc90-4df7-b74f-86fd13ca69aa" target="_blank" rel="noopener">The Pacific Commonwealth Trio: A CAMS Analysis ↗</a> <span class="nx-multi">comparative</span><p>Australia, NZ, Canada as a Pacific Commonwealth trio; shared institutional heritage in CAMS space.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/New_Zealand_1900_2026_claude_cleaned.csv" target="_blank" rel="noopener">New Zealand 1900 2026 claude</a> <span>1900–2026 · 1,016 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/NewZealand_ENS_1875_2026_cleaned.csv" target="_blank" rel="noopener">NewZealand ENS 1875 2026</a> <span>1875–2026 · 1,216 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/NewZealand_ENV_1875_2026_cleaned.csv" target="_blank" rel="noopener">NewZealand ENV 1875 2026</a> <span>1875–2026 · 1,216 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/NewZealand_Gem_April_cleaned.csv" target="_blank" rel="noopener">NewZealand Gem April</a> <span>1900–2026 · 1,016 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="pakistan" data-nation="pakistan"><summary><h3>Pakistan</h3><span class="nx-counts">2 datasets</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Pakistan_cleaned.csv" target="_blank" rel="noopener">Pakistan</a> <span>1947–2025 · 642 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Pakistan_cleaned.csv" target="_blank" rel="noopener">Pakistan</a> <span>1947–2025 · JUNO nation series</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="philippines" data-nation="philippines"><summary><h3>Philippines</h3><span class="nx-counts">1 dataset</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Philippines_ENS_1880_2016_cleaned.csv" target="_blank" rel="noopener">Philippines ENS 1880 2016</a> <span>1880–2016 · 1,191 records</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="singapore" data-nation="singapore"><summary><h3>Singapore</h3><span class="nx-counts">2 datasets</span></summary><div class="nx-body">
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Singapore_cleaned.csv" target="_blank" rel="noopener">Singapore</a> <span>1935–2025 · 744 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Singapore_cleaned.csv" target="_blank" rel="noopener">Singapore</a> <span>1935–2025 · JUNO nation series</span></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="taiwan" data-nation="taiwan"><summary><h3>Taiwan</h3><span class="nx-counts">1 external</span></summary><div class="nx-body">
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.ai/public/artifacts/634e7228-dfb9-4949-b668-98f5a0d0ec33" target="_blank" rel="noopener">Taiwan ↗</a><p>CAMS profile for Taiwan; high-Abstraction democracy under cross-strait stress.</p></li>
+</ul>
+</div></details>
+<details class="nx-nation" id="thailand" data-nation="thailand"><summary><h3>Thailand</h3><span class="nx-counts">1 external · 4 datasets</span></summary><div class="nx-body">
+<h4>External artefacts <span class="nx-note">(Claude &amp; other AI artefacts, open in a new tab)</span></h4><ul class="nx-list">
+<li><a href="https://claude.site/artifacts/5cb821ef-d4e8-46d1-ad0f-3faf52f0b968" target="_blank" rel="noopener">The Resilient Oscillator: Thailand&#x27;s Meta-Pattern ↗</a><p>Thailand as a resilient oscillating system; coup cycles and recovery patterns in CAMS space.</p></li>
+</ul>
+<h4>Datasets</h4><ul class="nx-data">
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/data/cleaned/Thailand_1850_2025_Thailand_1850_2025_cleaned.csv" target="_blank" rel="noopener">Thailand</a> <span>1850–2025 · JUNO nation series</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Thailand_1850_2025_Thailand_1850_2025_cleaned.csv" target="_blank" rel="noopener">Thailand 1850 2025 Thailand 1850 2025</a> <span>1850–2025 · 1,486 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Thailand_ENS_1850_2026_cleaned.csv" target="_blank" rel="noopener">Thailand ENS 1850 2026</a> <span>1850–2025 · 288 records</span></li>
+<li><a href="https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Thailand_ENV_1850_2025_cleaned.csv" target="_blank" rel="noopener">Thailand ENV 1850 2025</a> <span>1850–2025 · 288 records</span></li>
+</ul>
+</div></details>
+<!-- NATIONS:END -->
+    </div>
+    <p class="nx-empty" id="nx-empty">No nation matches that name.</p>
+
+    <p class="nx-foot">Reports marked <em>comparative</em> cover more than one nation and appear under each. Looking for something else? See <a href="site-index.html">All Pages</a> or the full <a href="datasets.html">Datasets</a> catalogue.</p>
+</div>
+<footer class="footer" id="site-footer"></footer>
+<script src="site-chrome.js"></script>
+<script src="nav.js"></script>
+<script>
+(function () {
+  const q = document.getElementById('nx-q');
+  const nations = [...document.querySelectorAll('.nx-nation')];
+  const rows = [...document.querySelectorAll('.nx-overview tr[data-nation]')];
+  const regionHeads = [...document.querySelectorAll('.nx-region')];
+  const empty = document.getElementById('nx-empty');
+
+  function openFromHash() {
+    const el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (el && el.classList.contains('nx-nation')) { el.open = true; el.scrollIntoView(); }
+  }
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
+
+  function apply() {
+    const t = q.value.trim().toLowerCase();
+    let shown = 0;
+    nations.forEach(n => { const ok = !t || n.dataset.nation.includes(t); n.classList.toggle('nx-hidden', !ok); if (ok) shown++; if (t && ok) n.open = true; });
+    rows.forEach(r => r.classList.toggle('nx-hidden', !!t && !r.dataset.nation.includes(t)));
+    // Hide region headings with no visible nations
+    regionHeads.forEach(h => {
+      let el = h.nextElementSibling, any = false;
+      while (el && !el.classList.contains('nx-region')) { if (el.classList.contains('nx-nation') && !el.classList.contains('nx-hidden')) any = true; el = el.nextElementSibling; }
+      h.classList.toggle('nx-hidden', !any);
+    });
+    document.querySelectorAll('.nx-overview table').forEach(tb =>
+      tb.classList.toggle('nx-hidden', !tb.querySelector('tr[data-nation]:not(.nx-hidden)')));
+    empty.style.display = shown ? 'none' : 'block';
+  }
+  q.addEventListener('input', apply);
+  q.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { const first = nations.find(n => !n.classList.contains('nx-hidden')); if (first) { first.open = true; first.scrollIntoView(); } }
+    if (e.key === 'Escape') { q.value = ''; apply(); }
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && document.activeElement !== q && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); q.focus(); }
+  });
+  document.getElementById('nx-open').onclick = () => nations.forEach(n => n.open = true);
+  document.getElementById('nx-close').onclick = () => nations.forEach(n => n.open = false);
+  // Overview links: open the target before the browser jumps
+  document.querySelectorAll('.nx-overview a').forEach(a => a.addEventListener('click', () => {
+    const el = document.getElementById(a.getAttribute('href').slice(1)); if (el) el.open = true;
+  }));
+})();
+</script>
+</body></html>

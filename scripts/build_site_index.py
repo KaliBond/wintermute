@@ -56,7 +56,7 @@ GROUPS = [
         'coupled-cattle', 'meta-animal-under-the-microscope',
     ]),
     ('Country & Case Studies', 'Study', 'monthly', '0.6', [
-        'the-empty-pulpit', ('the-empty-pulpit-map', 'Map'), 'usa-empty-pulpit-perspectives',
+        ('nations', 'Guide'), 'the-empty-pulpit', ('the-empty-pulpit-map', 'Map'), 'usa-empty-pulpit-perspectives',
         'usa-empty-pulpit-detective-panel', 'usa-outlook-set', 'us-legitimacy-cams-study',
         'analysis/us_legitimacy_cams_study', 'analysis/us_interest_burden_cams_study',
         'uk-arc-story', ('uk-arc-map', 'Map'), 'uk-detective-panel', 'uk-outlook-set',
@@ -85,8 +85,8 @@ GROUPS = [
     ]),
 ]
 
-PRIORITY_OVERRIDE = {'': '1.0'}
-FREQ_OVERRIDE = {'': 'weekly', 'research-diary': 'weekly', 'explore': 'weekly', 'site-index': 'weekly'}
+PRIORITY_OVERRIDE = {'': '1.0', 'nations': '0.8'}
+FREQ_OVERRIDE = {'': 'weekly', 'nations': 'weekly', 'research-diary': 'weekly', 'explore': 'weekly', 'site-index': 'weekly'}
 
 # For pages whose <title> is missing or unhelpful.
 TITLE_OVERRIDE = {
@@ -116,16 +116,29 @@ def href_of(slug):
     return 'index.html' if slug == '' else (slug if slug.endswith('/') else slug + '.html')
 
 
+SWEEP_THRESHOLD = 40  # commits touching this many pages are sitewide nav/style sweeps, not content edits
+
+
 def git_dates():
+    """Last content-change date per file, ignoring sitewide sweep commits.
+
+    A file whose only commits are sweeps falls back to its oldest commit date.
+    """
     log = subprocess.run(['git', 'log', '--format=@%ad', '--date=short', '--name-only', '--', '*.html'],
                          capture_output=True, text=True, encoding='utf-8').stdout
-    last, d = {}, None
+    commits = []  # newest first: (date, [files])
     for line in log.splitlines():
         if line.startswith('@'):
-            d = line[1:]
-        elif line.strip() and line not in last:
-            last[line] = d
-    return last
+            commits.append((line[1:], []))
+        elif line.strip():
+            commits[-1][1].append(line)
+    last, oldest = {}, {}
+    for d, files in commits:
+        for f in files:
+            oldest[f] = d
+            if len(files) < SWEEP_THRESHOLD and f not in last:
+                last[f] = d
+    return {f: last.get(f, oldest[f]) for f in oldest}
 
 
 def clean(s):
@@ -160,7 +173,7 @@ def main():
                              encoding='utf-8').stdout.splitlines()
     dates = {slug_of(f): d for f, d in git_dates().items() if f.endswith('.html')}
     public = {slug_of(f) for f in tracked if not f.startswith(EXCLUDE_PREFIXES)} - EXCLUDE
-    public.add('site-index')
+    public.update({'site-index', 'nations'})
 
     rows, seen = [], set()
     for group, gtype, freq, prio, entries in GROUPS:
