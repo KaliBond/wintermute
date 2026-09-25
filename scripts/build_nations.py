@@ -2,6 +2,7 @@
 
 Usage (from repo root):  python scripts/build_nations.py
 Run after scripts/build_site_index.py (it reuses that script's page list).
+Maintenance checklist: SITE_INDEX_MAINTENANCE.md
 
 Sources:
   1. Site pages listed in build_site_index.GROUPS (title, slug, description)

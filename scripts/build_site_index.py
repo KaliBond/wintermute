@@ -1,6 +1,7 @@
 """Build sitemap.xml and the page list inside site-index.html from one source.
 
 Usage (from repo root):  python scripts/build_site_index.py
+Maintenance checklist: SITE_INDEX_MAINTENANCE.md
 
 Every public page must appear in GROUPS below. The script fails if a listed
 page doesn't exist, is listed twice, or if a tracked page is neither listed
