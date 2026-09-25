@@ -317,6 +317,14 @@
                 </div>
                 <a href="ensemble-validation.html" style="flex-shrink:0; display:inline-block; padding:7px 16px; background:#D98B2B; color:#fff; font-weight:700; font-size:0.92em; border-radius:6px; text-decoration:none; white-space:nowrap;">Ensemble Validation Report →</a>
             </div>
+            <div style="margin-top:12px; padding:14px 18px; background:#FFFFFF; border-left:3px solid #2F6F7D; border-radius:0 8px 8px 0; font-size:0.88em; line-height:1.55;">
+                <strong>A note on ensemble scoring.</strong> Ensemble scoring was introduced to strengthen the CAMS methodology. The earliest series were scored by a single AI model, so every value carried that one scorer's reading of the historical record. An ensemble run has several scorers rate each node-year independently. It then publishes two matched files:
+                <ul style="margin:6px 0 6px;">
+                    <li>the <strong>ensemble mean</strong> (ENS), which averages out any single scorer's quirks;</li>
+                    <li>the <strong>envelope</strong> (ENV), which records how far the scorers disagreed: the standard deviation of each dimension and the range of Node Value.</li>
+                </ul>
+                The envelope turns uncertainty into data, so you can see where a score is firm and where it is contested. Every ensemble on this site is paired with its envelope wherever one exists. The exceptions are listed, with reasons, in <a href="https://github.com/KaliBond/wintermute/blob/main/data/ENVELOPE_STATUS.md" target="_blank" style="color:#2F6F7D;">ENVELOPE_STATUS.md</a>. That list includes a few older single-scorer series that keep the ENS filename so the tools can still load them. All the scorers are large language models trained on overlapping text, so agreement between them shows reproducibility, not full independence.
+            </div>
         </div>
 
         <div style="margin: 16px 0; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
