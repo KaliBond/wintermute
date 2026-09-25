@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
+    <title>All Pages — Neural Nations</title>
+    <meta name="description" content="Every page on Neural Nations in one place — tools, datasets, papers, country studies, maps and series — grouped by topic and searchable.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/site-index">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/site-index">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="All Pages — Neural Nations">
+    <meta property="og:description" content="Every page on Neural Nations in one place, grouped by topic and searchable.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+    <style>
+      .si-wrap { max-width: 960px; margin: 0 auto; }
+      .si-tools { position: sticky; top: 64px; z-index: 5; background: #FFFFFF; padding: 12px 0 10px; border-bottom: 1px solid #E0E0E0; margin-bottom: 20px; }
+      .si-search { width: 100%; box-sizing: border-box; font: inherit; font-size: 1.05em; padding: 12px 14px; border: 1px solid #B8AC98; border-radius: 10px; background: #FFFFFF; color: #1B2A33; }
+      .si-search:focus { outline: 2px solid #2F6F7D; outline-offset: 1px; }
+      .si-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; align-items: center; }
+      .si-chip { font: inherit; font-size: 0.85em; padding: 4px 12px; border-radius: 999px; border: 1px solid #E0E0E0; background: #F0F0F0; color: #1B2A33; cursor: pointer; }
+      .si-chip[aria-pressed="true"] { background: #2F6F7D; border-color: #2F6F7D; color: #FFFFFF; }
+      .si-status { font-size: 0.85em; color: #5a6670; margin-left: auto; }
+      .si-jump { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 0.88em; margin: 0 0 18px; }
+      .si-jump a { color: #1f77b4; text-decoration: none; }
+      .si-jump a:hover { text-decoration: underline; }
+
+      .si-recent { background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; }
+      .si-recent h2 { font-size: 1.1em; margin: 0 0 8px; }
+      .si-recent ol { margin: 0; padding-left: 1.3em; columns: 2; column-gap: 32px; }
+      .si-recent li { break-inside: avoid; margin-bottom: 4px; font-size: 0.93em; }
+      .si-recent time { color: #5a6670; font-size: 0.85em; white-space: nowrap; }
+
+      .si-group { background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 12px; margin-bottom: 16px; }
+      .si-group > summary { display: flex; align-items: center; gap: 10px; padding: 14px 20px; cursor: pointer; list-style: none; }
+      .si-group > summary::-webkit-details-marker { display: none; }
+      .si-group > summary::before { content: '▸'; color: #2F6F7D; transition: transform .15s; }
+      .si-group[open] > summary::before { transform: rotate(90deg); }
+      .si-group > summary h2 { font-size: 1.2em; margin: 0; }
+      .si-count { font-size: 0.8em; color: #5a6670; background: #F0F0F0; border-radius: 999px; padding: 1px 9px; }
+      .si-group ul { list-style: none; margin: 0; padding: 0 20px 12px; }
+      .si-item { padding: 10px 0; border-top: 1px solid #EEEEEE; }
+      .si-item > a { font-weight: 600; color: #1f77b4; text-decoration: none; margin-right: 8px; }
+      .si-item > a:hover { text-decoration: underline; }
+      .si-item time { font-size: 0.8em; color: #5a6670; margin-left: 8px; white-space: nowrap; }
+      .si-item p { margin: 4px 0 0; font-size: 0.9em; color: #3d4a52; line-height: 1.45; }
+      .si-badge { display: inline-block; font-size: 0.72em; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; padding: 1px 8px; border-radius: 6px; background: #F0F0F0; border: 1px solid #E0E0E0; color: #3d4a52; vertical-align: 1px; }
+      .si-tool { border-color: #2F6F7D; color: #2F6F7D; }
+      .si-paper { border-color: #8a5a00; color: #8a5a00; }
+      .si-dataset { border-color: #1f77b4; color: #1f77b4; }
+      .si-map { border-color: #6b4f9e; color: #6b4f9e; }
+      .si-empty { display: none; text-align: center; color: #5a6670; padding: 30px 0; }
+      .si-cross { font-size: 0.9em; color: #5a6670; text-align: center; margin: 28px 0 8px; }
+      .si-cross a { color: #1f77b4; }
+      .si-hidden { display: none !important; }
+      mark { background: #FFE58A; color: inherit; padding: 0 1px; border-radius: 2px; }
+      @media (max-width: 640px) {
+        .si-tools { top: 56px; }
+        .si-recent ol { columns: 1; }
+        .si-group > summary, .si-group ul { padding-left: 14px; padding-right: 14px; }
+        .si-status { margin-left: 0; width: 100%; }
+      }
+    </style>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+<div class="container si-wrap">
+    <div class="hero-section">
+        <h1>All Pages</h1>
+        <p class="hero-subtitle">Every page on Neural Nations, grouped by topic. Start typing to find a paper, tool, dataset or country.</p>
+    </div>
+
+    <div class="si-tools" role="search">
+        <input id="si-q" class="si-search" type="search" aria-label="Search all pages" placeholder="Search pages… (press / to focus)" autocomplete="off">
+        <div class="si-chips" aria-label="Filter by type">
+            <!-- CHIPS:START --><button type="button" class="si-chip" data-type="Dataset" aria-pressed="false">Dataset</button><button type="button" class="si-chip" data-type="Findings" aria-pressed="false">Findings</button><button type="button" class="si-chip" data-type="Guide" aria-pressed="false">Guide</button><button type="button" class="si-chip" data-type="Map" aria-pressed="false">Map</button><button type="button" class="si-chip" data-type="Paper" aria-pressed="false">Paper</button><button type="button" class="si-chip" data-type="Report" aria-pressed="false">Report</button><button type="button" class="si-chip" data-type="Series" aria-pressed="false">Series</button><button type="button" class="si-chip" data-type="Site" aria-pressed="false">Site</button><button type="button" class="si-chip" data-type="Study" aria-pressed="false">Study</button><button type="button" class="si-chip" data-type="Tool" aria-pressed="false">Tool</button><!-- CHIPS:END -->
+            <span class="si-status" id="si-status" aria-live="polite">Showing all <span id="si-total">171</span> pages</span>
+        </div>
+    </div>
+
+    <nav class="si-jump" id="si-jump" aria-label="Jump to section"></nav>
+
+    <div id="si-list">
+<!-- INDEX:START -->
+<section class="si-recent" aria-labelledby="si-recent-h"><h2 id="si-recent-h">Recently updated</h2><ol>
+<li><a href="index.html">Neural Nations — Home</a> <time datetime="2026-09-23">2026-09-23</time></li>
+<li><a href="cams-advanced-analysis.html">CAMS Advanced Analysis</a> <time datetime="2026-09-23">2026-09-23</time></li>
+<li><a href="datasets.html">Open Datasets</a> <time datetime="2026-09-22">2026-09-22</time></li>
+<li><a href="explore.html">Explore</a> <time datetime="2026-09-22">2026-09-22</time></li>
+<li><a href="juno-36-explorer.html">JUNO Dataset Explorer</a> <time datetime="2026-09-22">2026-09-22</time></li>
+<li><a href="meta-animal-under-the-microscope.html">The Meta-Animal Under the Microscope</a> <time datetime="2026-09-22">2026-09-22</time></li>
+<li><a href="research-diary.html">Research Diary</a> <time datetime="2026-09-22">2026-09-22</time></li>
+<li><a href="start-here.html">Start Here</a> <time datetime="2026-09-18">2026-09-18</time></li>
+<li><a href="what-is-cams.html">What Is CAMS?</a> <time datetime="2026-09-18">2026-09-18</time></li>
+<li><a href="response-to-critics.html">A Core Response to Outright Dismissal</a> <time datetime="2026-09-18">2026-09-18</time></li>
+</ol></section>
+<details class="si-group" id="start-here" open><summary><h2>Start Here</h2><span class="si-count">10</span></summary><ul>
+<li class="si-item" data-type="Guide"><a href="index.html">Neural Nations — Home</a><span class="si-badge si-guide">Guide</span><time datetime="2026-09-23">updated 2026-09-23</time><p>CAMS measures how societies accumulate institutional stress and move toward or away from crisis. Open data, open code. 38 societies, 45 historical series, 39,351 records.</p></li>
+<li class="si-item" data-type="Guide"><a href="start-here.html">Start Here</a><span class="si-badge si-guide">Guide</span><time datetime="2026-09-18">updated 2026-09-18</time><p>New to Neural Nations or CAMS? Start here. Three entry points by audience type, a plain-English explainer, and a guide to what</p></li>
+<li class="si-item" data-type="Guide"><a href="what-is-cams.html">What Is CAMS?</a><span class="si-badge si-guide">Guide</span><time datetime="2026-09-18">updated 2026-09-18</time><p>CAMS treats every organised human society as a living coordination system and measures its health the way you</p></li>
+<li class="si-item" data-type="Guide"><a href="why-cams.html">Why CAMS Is Not Just Another Macro Model</a><span class="si-badge si-guide">Guide</span><time datetime="2026-07-13">updated 2026-07-13</time><p>The theoretical case for CAMS: why coordination quality is not the same as structural complexity, and why existing macro models miss the pre-crisis signal.</p></li>
+<li class="si-item" data-type="Guide"><a href="model.html">The CAMS Model</a><span class="si-badge si-guide">Guide</span><time datetime="2026-07-16">updated 2026-07-16</time><p>CAMS models societies as 8-node × 4-metric coordination systems. Full framework documentation: node definitions, formulas, regime classification, validation reports.</p></li>
+<li class="si-item" data-type="Guide"><a href="framework/">CAMS v3.2 Framework</a><span class="si-badge si-guide">Guide</span><time datetime="2026-04-22">updated 2026-04-22</time></li>
+<li class="si-item" data-type="Guide"><a href="faq.html">FAQ</a><span class="si-badge si-guide">Guide</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Frequently asked questions about CAMS: what it is, how scores are produced, what the version labels mean, what the model can and cannot do, and how to get involved.</p></li>
+<li class="si-item" data-type="Guide"><a href="a-short-history-of-cams.html">A Short History of CAMS</a><span class="si-badge si-guide">Guide</span><time datetime="2026-09-15">updated 2026-09-15</time><p>How CAMS — an instrument for measuring the health of civilisations — was built, what it has found on settled historical cases, and what it is (and is not) claiming to be.</p></li>
+<li class="si-item" data-type="Guide"><a href="cams-project-history.html">The CAMS Project: A History</a><span class="si-badge si-guide">Guide</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Chronological reconstruction of CAMS development from mid-2024 through 2026 — including the epistemological origins, theoretical revisions, and open science positioning.</p></li>
+<li class="si-item" data-type="Guide"><a href="cams-foundational-conversations.html">CAMS Foundational Conversations</a><span class="si-badge si-guide">Guide</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Transcripts and summaries of the key theoretical conversations that shaped the CAMS framework — epistemological origins and early formalisations.</p></li>
+</ul></details>
+<details class="si-group" id="results-predictions" open><summary><h2>Results &amp; Predictions</h2><span class="si-count">10</span></summary><ul>
+<li class="si-item" data-type="Findings"><a href="results.html">CAMS Results at a Glance</a><span class="si-badge si-findings">Findings</span><time datetime="2026-06-16">updated 2026-06-16</time><p>What CAMS has actually found across 32+ societies, 5,000 years of history, and 39,000+ data records. Plain-language guide to the most significant results, with honest caveats.</p></li>
+<li class="si-item" data-type="Findings"><a href="validation.html">Validation &amp; Limits — CAMS</a><span class="si-badge si-findings">Findings</span><time datetime="2026-06-16">updated 2026-06-16</time><p>What CAMS has shown, what it has not yet proven, its known limits, and what would strengthen or weaken it. An honest account of where the research programme stands.</p></li>
+<li class="si-item" data-type="Findings"><a href="predictions.html">Predictions</a><span class="si-badge si-findings">Findings</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Out-of-sample prospective predictions for 2027–2028 under the CAMS v1.0-Final graph-theoretic framework. Six nations, registered and certified.</p></li>
+<li class="si-item" data-type="Findings"><a href="status_report.html">CAMS National Diagnostic — 32 Societies</a><span class="si-badge si-findings">Findings</span><time datetime="2026-06-18">updated 2026-06-18</time><p>CAMS v3.2-R observed-only diagnostic for 32 societies. 8-node × 4-metric matrix with active pathology signatures, expected epiphenomena, and historical analogue matching. No projection.</p></li>
+<li class="si-item" data-type="Findings"><a href="escalation-archetypes.html">CAMS Escalation Archetypes</a><span class="si-badge si-findings">Findings</span><time datetime="2026-07-13">updated 2026-07-13</time><p>The five archetypal pathways through which societies escalate from institutional stress to systemic crisis. Visualised as causal loop diagrams.</p></li>
+<li class="si-item" data-type="Findings"><a href="cams-failure-modes.html">CAMS Failure Modes Map</a><span class="si-badge si-findings">Findings</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Interactive causal loop diagram of the four CAMS failure spirals: R1 Flow-Hands death spiral, R2 rent-seeking trap, R3 Shield capture, R4 institutional amnesia.</p></li>
+<li class="si-item" data-type="Findings"><a href="failure-modes-story.html">Failure Modes: How Complex Systems Drift into Collapse</a><span class="si-badge si-findings">Findings</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Narrative exploration of the four CAMS failure modes — from coordinated decline to institutional capture. A readable guide to societal stress pathways.</p></li>
+<li class="si-item" data-type="Findings"><a href="great-power-attractors.html">Three Great-Power Trajectories Against Their Own Historical Attractors</a><span class="si-badge si-findings">Findings</span><time datetime="2026-07-13">updated 2026-07-13</time><p>A JUNO/CAMS results note on bloc-coordination structure and the isolation of the United States trajectory. China, Russia, and the USA measured against their own twentieth-century attractor bands. All three in…</p></li>
+<li class="si-item" data-type="Findings"><a href="applications.html">CAMS in Action</a><span class="si-badge si-findings">Findings</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Applied case studies: CAMS scores for historical and contemporary polities, showing how the framework detects institutional stress before it becomes visible.</p></li>
+<li class="si-item" data-type="Findings"><a href="reports.html">Reports</a><span class="si-badge si-findings">Findings</span><time datetime="2026-06-16">updated 2026-06-16</time><p>CAMS research reports, analytical notebooks, and long-form findings by Kari Freyr McKern.</p></li>
+</ul></details>
+<details class="si-group" id="datasets" open><summary><h2>Datasets</h2><span class="si-count">5</span></summary><ul>
+<li class="si-item" data-type="Dataset"><a href="datasets.html">Open Datasets</a><span class="si-badge si-dataset">Dataset</span><time datetime="2026-09-22">updated 2026-09-22</time><p>95,545 CAMS records across 50 societies and 107 historical series. JUNO-1.0 bond formalism covering 53 societies. Freely downloadable. Scored by GPT + Grok + Gemini ensemble. Scoring methodology, validation reports,…</p></li>
+<li class="si-item" data-type="Dataset"><a href="cams/">CAMS Rich Datasets</a><span class="si-badge si-dataset">Dataset</span><time datetime="2026-05-29">updated 2026-05-29</time><p>Multi-society, multi-corpus structural analysis under one framework. Each country section pairs a primary discourse corpus with the five-scorer CAMS ensemble to produce a shared, comparable structural reading.</p></li>
+<li class="si-item" data-type="Dataset"><a href="epiphenomenon/data.html">Data Explorer — Epiphenomenon@Trove</a><span class="si-badge si-dataset">Dataset</span><time datetime="2026-05-29">updated 2026-05-29</time><p>Explore the underlying data: threat discourse frequencies, Australia&#x27;s structural profile, and WWI/WWII pre-war signals.</p></li>
+<li class="si-item" data-type="Dataset"><a href="repository-access.html">Repository Access</a><span class="si-badge si-dataset">Dataset</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Access the Neural Nations CAMS research repository. Dataset downloads, scoring rubrics, and validation reports.</p></li>
+<li class="si-item" data-type="Dataset"><a href="request-access.html">Request Repository Access</a><span class="si-badge si-dataset">Dataset</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Request access to the full Neural Nations CAMS research repository for academic or practitioner use.</p></li>
+</ul></details>
+<details class="si-group" id="tools-explorers" open><summary><h2>Tools &amp; Explorers</h2><span class="si-count">25</span></summary><ul>
+<li class="si-item" data-type="Tool"><a href="explore.html">Explore</a><span class="si-badge si-tool">Tool</span><time datetime="2026-09-22">updated 2026-09-22</time><p>Interactive tools and validated analyses built on the CAMS framework: Advanced Analysis, Failure Modes, Escalation Archetypes, Mindscapes, and more.</p></li>
+<li class="si-item" data-type="Tool"><a href="cams.html">CAMS Dashboard</a><span class="si-badge si-tool">Tool</span><time datetime="2026-07-13">updated 2026-07-13</time><p>The Neural Nations CAMS dashboard — live node values, bond strengths, and system-level metrics for current and historical societies.</p></li>
+<li class="si-item" data-type="Tool"><a href="cams-scorer.html">CAMS Scorer — Score Any Country, Company, or City</a><span class="si-badge si-tool">Tool</span><time datetime="2026-08-04">updated 2026-08-04</time><p>Run a live CAMS raw scoring pass on any country, company, or city. Three isolated Kimi passes, ensembled into node-level Coherence, Capacity, Stress, and Abstraction with an uncertainty envelope.</p></li>
+<li class="si-item" data-type="Tool"><a href="cams-scorer-local.html">CAMS Scorer — Local Edition</a><span class="si-badge si-tool">Tool</span><time datetime="2026-08-04">updated 2026-08-04</time><p>Download the standalone CAMS Scorer for Windows. Score any country, company, or city on your own machine, using your own OpenAI, Grok, Claude, or Kimi account.</p></li>
+<li class="si-item" data-type="Tool"><a href="cams-explorer.html">CAMS Explorer — Thermodynamics of History</a><span class="si-badge si-tool">Tool</span><time datetime="2026-06-18">updated 2026-06-18</time><p>Interactive CAMS dashboard. Select any of 45 societies, step through history year by year, and watch node values, bond strengths, and Λ(t) update in real time.</p></li>
+<li class="si-item" data-type="Tool"><a href="juno-36-explorer.html">JUNO Dataset Explorer</a><span class="si-badge si-tool">Tool</span><time datetime="2026-09-22">updated 2026-09-22</time><p>Interactive explorer for the JUNO Unified Dataset: 53 societies, 8 nodes, 47,960 scored node-years. Trajectory charts, thermodynamic phase portraits, and per-node health diagnostics.</p></li>
+<li class="si-item" data-type="Tool"><a href="juno_calculator.html">JUNO Formulation — CAMS Calculator</a><span class="si-badge si-tool">Tool</span><time datetime="2026-08-04">updated 2026-08-04</time></li>
+<li class="si-item" data-type="Tool"><a href="cams-interpreter.html">CAMS Interpreter</a><span class="si-badge si-tool">Tool</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Interactive CAMS score interpreter. Enter node values and see V, σ, B_ij, and Λ(t) computed in real time with regime classification.</p></li>
+<li class="si-item" data-type="Tool"><a href="cams-interpreter/">CAMS One-on-One Snapshot</a><span class="si-badge si-tool">Tool</span><time datetime="2026-06-05">updated 2026-06-05</time><p>Select any society and year for a full CAMS diagnostic: attractor basin, activation signals, discourse fingerprints, and pathology flags — computed live from ensemble data.</p></li>
+<li class="si-item" data-type="Tool"><a href="cams-compare/">CAMS Compare</a><span class="si-badge si-tool">Tool</span><time datetime="2026-06-18">updated 2026-06-18</time><p>Two societies, one kernel. Select any two nations and scrub the year slider — V̄, κ, λ₂, phase space, and structural events computed live from the CAMS v3.2-R ensemble.</p></li>
+<li class="si-item" data-type="Tool"><a href="cams-zeitgeist.html">CAMS Zeitgeist Detector</a><span class="si-badge si-tool">Tool</span><time datetime="2026-06-18">updated 2026-06-18</time><p>Real-time CAMS analysis of current civilisational signals — tracking where contemporary polities sit in the CAMS regime space.</p></li>
+<li class="si-item" data-type="Tool"><a href="cams-advanced-analysis.html">CAMS Advanced Analysis</a><span class="si-badge si-tool">Tool</span><time datetime="2026-09-23">updated 2026-09-23</time><p>Deep-dive CAMS visualisations: node trajectories, ESCH stress profiles, cross-layer bond networks, and Λ(t) regime detection across 38 societies.</p></li>
+<li class="si-item" data-type="Tool"><a href="cams-integrated-dashboard.html">CAMS-CAN Integrated Analysis Dashboard</a><span class="si-badge si-tool">Tool</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Combined CAMS and CAN (Coordination Analysis Network) dashboard for integrated civilisational health assessment.</p></li>
+<li class="si-item" data-type="Tool"><a href="cams-network-explorer.html">CAMS Network Explorer — Institutional Weather</a><span class="si-badge si-tool">Tool</span><time datetime="2026-08-01">updated 2026-08-01</time><p>Interactive 8-node CAMS/JUNO network dynamics explorer. Where is the system under stress, where is it resilient, and what intervention would change the trajectory? Bounded exploratory dynamics, not calibrated prediction.</p></li>
+<li class="si-item" data-type="Tool"><a href="attractors.html">CAMS Civilisational Attractor Space</a><span class="si-badge si-tool">Tool</span><time datetime="2026-07-13">updated 2026-07-13</time><p>3D Plotly visualisation of civilisational trajectories as far-from-equilibrium metabolic networks. Isolate, compare, and rotate the attractor landscape of historical polities.</p></li>
+<li class="si-item" data-type="Tool"><a href="cams-3d-attractor.html">CAMS 3D Attractor Space</a><span class="si-badge si-tool">Tool</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Three-dimensional phase-space rendering of CAMS civilisational attractors. Coherence, Stress, and Abstraction as axes of systemic state.</p></li>
+<li class="si-item" data-type="Tool"><a href="cams-coordination.html">How Societies Coordinate</a><span class="si-badge si-tool">Tool</span><time datetime="2026-07-16">updated 2026-07-16</time><p>The CAMS coordination theory: eight functional nodes, four metrics, and the bond network that determines a society</p></li>
+<li class="si-item" data-type="Tool"><a href="seshat-explorer.html">Seshat × CAMS — Cross-Dataset Validation</a><span class="si-badge si-tool">Tool</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Comparing Seshat Social Complexity PC1 against CAMS Λ(t) for Latium Vetus, CE 460–1800. N=14 century-level matched observations. Pearson r = −0.31, Spearman ρ = 0.00.</p></li>
+<li class="si-item" data-type="Tool"><a href="granger-validator.html">Granger Causality Validator</a><span class="si-badge si-tool">Tool</span><time datetime="2026-06-16">updated 2026-06-16</time><p>In-browser synthetic validation suite — three-scenario stress test with adjustable lag, noise, and series length. Tests Granger causality in CAMS-structured time series.</p></li>
+<li class="si-item" data-type="Tool"><a href="cams-telescope/">CAMS · Historical Telescope</a><span class="si-badge si-tool">Tool</span><time datetime="2026-05-06">updated 2026-05-06</time></li>
+<li class="si-item" data-type="Guide"><a href="cams-telescope/guide.html">CAMS · Technical Guide &amp; FAQ</a><span class="si-badge si-guide">Guide</span><time datetime="2026-05-29">updated 2026-05-29</time><p>A working reference for the four CAMS apps in this project — what each metric means, where it comes from, how to read the screens, and which questions the framework can and cannot answer.</p></li>
+<li class="si-item" data-type="Tool"><a href="cams-instrument.html">CAMS Instrument</a><span class="si-badge si-tool">Tool</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Guide Adjust {{ playLabel }} {{ t.label }} {{ year }} Adjust ✕ Play speed {{ o.label }} Phase vertical axis {{ o.label }} Trail persistence{{ adjust.persistence }}% Smoothing{{ adjust.smoothing }} yr Bond lattice {{…</p></li>
+<li class="si-item" data-type="Tool"><a href="cams-morphospace-atlas.html">CAMS Morphospace Atlas</a><span class="si-badge si-tool">Tool</span><time datetime="2026-07-13">updated 2026-07-13</time><p>This atlas formalises the morphospace of civilisational types detectable by CAMS. It gives threshold rules, node‑activation profiles, coupling signatures and decision logic so that a blinded case — an organisation,…</p></li>
+<li class="si-item" data-type="Tool"><a href="mind-reader.html">CAMS Mind Reader</a><span class="si-badge si-tool">Tool</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Read the distributed cognition of any society. The CAMS Mind Reader pipeline computes activation vectors, JUNO bond matrices, and algebraic connectivity to classify how a society is managing — or mismanaging — its…</p></li>
+<li class="si-item" data-type="Guide"><a href="cams-diy-kit.html">CAMS-CAN DIY Kit — Practitioner &amp; Skeptic Field Guide</a><span class="si-badge si-guide">Guide</span><time datetime="2026-08-09">updated 2026-08-09</time><p>Run CAMS-CAN scoring by hand in a Claude Project, and see the validated reliability evidence behind it. Download the DIY kit — project instructions, schema templates, formulas.</p></li>
+</ul></details>
+<details class="si-group" id="papers-validation" open><summary><h2>Papers &amp; Validation</h2><span class="si-count">33</span></summary><ul>
+<li class="si-item" data-type="Paper"><a href="research/">Research</a><span class="si-badge si-paper">Paper</span><time datetime="2026-07-29">updated 2026-07-29</time><p>Working papers, data tools, and empirical analyses from the Neural Nations Project (CAMS framework).</p></li>
+<li class="si-item" data-type="Paper"><a href="research/cams-validation-2026.html">Graph-Theoretic Diagnosis of Societal Collapse: CAMS Validation Across 18 Societies</a><span class="si-badge si-paper">Paper</span><time datetime="2026-07-16">updated 2026-07-16</time><p>Empirical validation of the CAMS framework across 18 societies (10–2026 CE): dimensional collapse, node coupling architectures, and crisis signature matching with 12 falsifiable predictions.</p></li>
+<li class="si-item" data-type="Paper"><a href="research/pr-gap2-findings.html">PR-GAP-2: What We Found — CAMS as a Leading Indicator of Societal Rupture</a><span class="si-badge si-paper">Paper</span><time datetime="2026-07-29">updated 2026-07-29</time><p>44 societies, 4,541 society-years, 126 coded rupture events. Leave-one-country-out cross-validation reaches AUC 0.740 for deficit crises once coordination transitions are correctly separated out — with South Africa,…</p></li>
+<li class="si-item" data-type="Paper"><a href="pr-gap2-full-paper.html">PR-GAP-2: Structural Coordination and Rupture Morphology — Full Paper</a><span class="si-badge si-paper">Paper</span><time datetime="2026-08-01">updated 2026-08-01</time><p>A Retrospective Panel Validation of CAMS Across 44 Societies, 1900–2025, with Robson Gauge Cultural Grounding Results and Cross-System Parsimony Assessment. Full academic paper, August 2026 draft.</p></li>
+<li class="si-item" data-type="Paper"><a href="pr-gap2-rupture-study.html">PR-GAP-2: CAMS as a Leading Indicator of Societal Rupture</a><span class="si-badge si-paper">Paper</span><time datetime="2026-08-01">updated 2026-08-01</time><p>44 societies, 125 years, 126 coups/crises/regime transitions. Leave-one-society-out cross-validation reaches AUC 0.740 for deficit crises once coordination transitions are correctly separated out — using only…</p></li>
+<li class="si-item" data-type="Paper"><a href="analysis/pr_gap2_report.html">PR-GAP-2: CAMS Stress as a Leading Indicator of Societal Rupture</a><span class="si-badge si-paper">Paper</span><time datetime="2026-07-29">updated 2026-07-29</time><p>The primary panel covers 44 societies, most from 1900 through 2025 (shorter spans where sovereignty began later). CAMS scores are from blinded five-scorer ensemble runs (sets 1–3, 5–7) as specified in the assembly…</p></li>
+<li class="si-item" data-type="Paper"><a href="analysis/pr_gap2_synthesis.html">PR-GAP-2: Findings, Corrections, and Path Forward</a><span class="si-badge si-paper">Paper</span><time datetime="2026-08-13">updated 2026-08-13</time><p>PR-GAP-2 tested whether CAMS eight-node coordination scores carry genuine forewarning signal for societal ruptures. The panel covers 44 societies from 1900 to 2025. 126 rupture events — coups, civil wars,…</p></li>
+<li class="si-item" data-type="Paper"><a href="analysis/pr_gap2_formalism_audit.html">PR-GAP-2: Formalism Audit and Path Forward</a><span class="si-badge si-paper">Paper</span><time datetime="2026-08-13">updated 2026-08-13</time><p>The JUNO × CAMS recomputation across France (1850–2026), Poland (1875–2026), and Hong Kong (1900–2026) — 3,648 node-years — confirms four theses with permutation p &lt; 10⁻⁴ and a 45/45 sensitivity pass rate. This is…</p></li>
+<li class="si-item" data-type="Paper"><a href="analysis/pr_gap2_nct_loso_report.html">PR-GAP-2-NCT-v1: LOSO Results</a><span class="si-badge si-paper">Paper</span><time datetime="2026-08-13">updated 2026-08-13</time><p>Three variables were locked before any outcome inspection. The naming convention below resolves the notational collision between node-level Coherence (Cist, used in qist) and aggregate Dream Concentration (Cst,…</p></li>
+<li class="si-item" data-type="Paper"><a href="analysis/pr_gap2_robson_plane.html">PR-GAP-2 Robson Gauge — Path-Type Plane (48 Societies)</a><span class="si-badge si-paper">Paper</span><time datetime="2026-08-13">updated 2026-08-13</time></li>
+<li class="si-item" data-type="Paper"><a href="analysis/pr_gap2_general_audience.html">Can We Read the Warning Signs of Societal Collapse?</a><span class="si-badge si-paper">Paper</span><time datetime="2026-08-13">updated 2026-08-13</time><p>A new study tracks eight markers of institutional health across 44 countries and 125 years — and correctly identifies which political crises were genuine structural collapses, and which were simply change.</p></li>
+<li class="si-item" data-type="Paper"><a href="analysis/inelasticity_results.html">CAMS Temporal Inelasticity — Results</a><span class="si-badge si-paper">Paper</span><time datetime="2026-08-15">updated 2026-08-15</time><p>The JUNO v1.2 bond formula factors completely into a product of node-level weights:</p></li>
+<li class="si-item" data-type="Paper"><a href="juno-v1-2.html">JUNO v1.2-Final</a><span class="si-badge si-paper">Paper</span><time datetime="2026-08-20">updated 2026-08-20</time><p>Production specification for JUNO v1.2-Final. Regime classifier, numerical policy, and reference ranges following the 3,002 society-year blind-corpus test of v1.1.</p></li>
+<li class="si-item" data-type="Paper"><a href="bond-strength-spec.html">Bond Strength — Canonical Specification</a><span class="si-badge si-paper">Paper</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Canonical definition of CAMS Bond Strength (v2.3). Single authoritative specification covering formula, scale, interpretation, worked example, and version history.</p></li>
+<li class="si-item" data-type="Paper"><a href="blind-protocol-v111.html">JUNO/CAMS Blind-Analysis Protocol v1.1.1</a><span class="si-badge si-paper">Paper</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Results of the JUNO/CAMS Blind-Analysis Protocol v1.1.1 cognitive-affective extension experiment. 24 societies across 3 blind sets. MRR improved 0.667 → 0.833; calibration gate failed on conflict states.</p></li>
+<li class="si-item" data-type="Paper"><a href="blind-test.html">JUNO/CAMS Blind Test</a><span class="si-badge si-paper">Paper</span><time datetime="2026-07-14">updated 2026-07-14</time><p>Open blind-analysis challenge for the JUNO/CAMS framework. Load an anonymised dataset and the protocol prompt into any capable LLM and run the five-stage analysis before the unblinding key is revealed.</p></li>
+<li class="si-item" data-type="Paper"><a href="cams-blind-test-assessment.html">CAMS v1.1 Blind Test — Named Scientific Assessment</a><span class="si-badge si-paper">Paper</span><time datetime="2026-07-13">updated 2026-07-13</time><p>The CAMS v1.1 blind test validated eight anonymized societies against a mathematical civilizational model. Core formulas — institutional health, bond strength, and cognitive activation — passed at machine precision.…</p></li>
+<li class="si-item" data-type="Paper"><a href="cams-testing-report-june2026.html">CAMS v1.0.1 — Instrument Test Battery · June 2026</a><span class="si-badge si-paper">Paper</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Full test battery for the CAMS v1.0.1 instrument: corpus verification across 2,532 society-years, JUNO formalism audit, blind scoring control, and pre-registered prospective predictions for 2027–2028.</p></li>
+<li class="si-item" data-type="Paper"><a href="cams5-thesis-validation-report.html">Does a Society Think and Feel? — Testing the CAMS5 Distributed-Cognition Thesis</a><span class="si-badge si-paper">Paper</span><time datetime="2026-07-19">updated 2026-07-19</time><p>Testing the CAMS5 distributed-cognition thesis on 229 society-years of institutional history</p></li>
+<li class="si-item" data-type="Paper"><a href="ensemble-validation.html">Ensemble Validation — CAMS v2.3</a><span class="si-badge si-paper">Paper</span><time datetime="2026-07-13">updated 2026-07-13</time><p>CAMS ensemble scoring validation: the Wright Thesis confirmed with qualifications. Variance reduction, SNR improvement, contestation index, and κ-uncertainty bounds — Germany and USA 1880–2026.</p></li>
+<li class="si-item" data-type="Paper"><a href="paladin-validation.html">When a Metaphor Earns Its Keep — Adversarial Validation of the Paladin Rendering Layer over JUNO</a><span class="si-badge si-paper">Paper</span><time datetime="2026-07-20">updated 2026-07-20</time><p>Adversarial audit and controlled rendering protocol for the Paladin interpretive layer over the JUNO eight-node CAMS field: which claims survive as measurement, which survive only as metaphor, and the discipline that…</p></li>
+<li class="si-item" data-type="Paper"><a href="operator-portability-synthesis.html">Operator Portability in CAMS — Synthesis &amp; Verification Trail</a><span class="si-badge si-paper">Paper</span><time datetime="2026-07-31">updated 2026-07-31</time><p>Canonical CAMS operators are structurally portable across corporate and national domains but parametrically non-invariant, confirmed by two independent computational audits. The companion Soil-Bond Index (η_soil)…</p></li>
+<li class="si-item" data-type="Paper"><a href="peer-review.html">Peer Review &amp; Validation Invite — CAMS-CAN</a><span class="si-badge si-paper">Paper</span><time datetime="2026-08-04">updated 2026-08-04</time><p>An open invitation to independently replicate, audit, and try to break CAMS-CAN — the eight-node institutional coordination framework behind Neural Nations.</p></li>
+<li class="si-item" data-type="Paper"><a href="response-to-critics.html">A Core Response to Outright Dismissal</a><span class="si-badge si-paper">Paper</span><time datetime="2026-09-18">updated 2026-09-18</time><p>CAMS is not offered as a finished doctrine to be accepted on authority. Why outright dismissal is not a scientific refutation, what the evidence currently supports, and the decisive tests that would settle it either way.</p></li>
+<li class="si-item" data-type="Paper"><a href="functional_taxonomy.html">A Functional Taxonomy of Human Social Organisation — Kari Freyr McKern</a><span class="si-badge si-paper">Paper</span><time datetime="2026-06-16">updated 2026-06-16</time><p>A formal taxonomy of social coordination architectures grounded in the CAMS framework. Eight recurring coordination problems, 229 polities, eight empirical clusters.</p></li>
+<li class="si-item" data-type="Paper"><a href="figures.html">Figures — A Functional Taxonomy of Human Social Organisation</a><span class="si-badge si-paper">Paper</span><time datetime="2026-06-16">updated 2026-06-16</time></li>
+<li class="si-item" data-type="Paper"><a href="metabolism-meaning.html">Operational Pressure and Symbolic Integration — CAMS v3.2-R Working Paper</a><span class="si-badge si-paper">Paper</span><time datetime="2026-06-16">updated 2026-06-16</time><p>A dyadic scalar for civilisational coordination diagnosis. CAMS v3.2-R Working Paper v1.1, May 2026.</p></li>
+<li class="si-item" data-type="Paper"><a href="scale-invariance.html">The Scale Invariance Experiment</a><span class="si-badge si-paper">Paper</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Testing whether CAMS Λ(t) is scale-covariant across polity sizes ranging from city-states to modern nation-states. Methodology and results.</p></li>
+<li class="si-item" data-type="Paper"><a href="thermodynamic-jungle.html">Thermodynamic Jungle</a><span class="si-badge si-paper">Paper</span><time datetime="2026-07-13">updated 2026-07-13</time><p>The thermodynamic framing of civilisational dynamics: energy, entropy, and coordination in complex adaptive societies.</p></li>
+<li class="si-item" data-type="Paper"><a href="war.html">CAMS · Deliberative Decay &amp; Lore Misdirection</a><span class="si-badge si-paper">Paper</span><time datetime="2026-06-16">updated 2026-06-16</time><p>A polity can hollow without being hijacked, and can be hijacked without being hollow. These are two distinct failure modes of the civilisational slow-loop — institutional atrophy on one axis, ideological capture on…</p></li>
+<li class="si-item" data-type="Paper"><a href="social-cognition.html">Social Cognition in Real Time — Eight Sub-Brains</a><span class="si-badge si-paper">Paper</span><time datetime="2026-07-16">updated 2026-07-16</time><p>Watch a society think. The eight CAMS nodes rendered as sub-brains, each firing on its ESCH activation σ = A·C·(K−S). Play the timeline and see the distributed institutional mind coordinate, desynchronise, and go…</p></li>
+<li class="si-item" data-type="Paper"><a href="coupled-cattle.html">Coupled Cattle, Tested</a><span class="si-badge si-paper">Paper</span><time datetime="2026-06-16">updated 2026-06-16</time><p>A simulation report testing the stampede-as-phase-transition claim: explosive Kuramoto hysteresis and branching-process contagion models. CAMS working note, June 2026.</p></li>
+<li class="si-item" data-type="Paper"><a href="meta-animal-under-the-microscope.html">The Meta-Animal Under the Microscope</a><span class="si-badge si-paper">Paper</span><time datetime="2026-09-22">updated 2026-09-22</time><p>Every great power narrates itself as exceptional. CAMS applies one functional lens to every society — including its own — and refuses narrative any exemption from comparison.</p></li>
+</ul></details>
+<details class="si-group" id="country-case-studies" open><summary><h2>Country &amp; Case Studies</h2><span class="si-count">30</span></summary><ul>
+<li class="si-item" data-type="Study"><a href="the-empty-pulpit.html">The Empty Pulpit — United States CAMS Analysis</a><span class="si-badge si-study">Study</span><time datetime="2026-07-13">updated 2026-07-13</time><p>What happens to a republic when the institution that used to do its talking can no longer talk — and the institution that used to do its protecting becomes the only thing still working. CAMS analysis of the USA…</p></li>
+<li class="si-item" data-type="Map"><a href="the-empty-pulpit-map.html">The Empty Pulpit — Aha! Map</a><span class="si-badge si-map">Map</span><time datetime="2026-07-13">updated 2026-07-13</time></li>
+<li class="si-item" data-type="Study"><a href="usa-empty-pulpit-perspectives.html">Unique Perspectives on the Empty Pulpit</a><span class="si-badge si-study">Study</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Ten thinkers whose published work illuminates, anticipates, or contests the Empty Pulpit analysis — Wolin, Schmitt, Arendt, Lasch, Edelman, Streeck, Gurri, Turchin, Tainter, Mearsheimer.</p></li>
+<li class="si-item" data-type="Study"><a href="usa-empty-pulpit-detective-panel.html">The Empty Pulpit Investigation — Detective Panel</a><span class="si-badge si-study">Study</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Columbo, Dupin, Holmes, and Marple stress-test the six loops of the Empty Pulpit Map — decisionist spiral, praetorian self-reinforcement, archive drawdown, polarisation engine, and the conditional renewal path.…</p></li>
+<li class="si-item" data-type="Study"><a href="usa-outlook-set.html">USA Outlook Set: 2026–2036</a><span class="si-badge si-study">Study</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Four structurally distinct trajectories the CAMS geometry permits from the present empty-pulpit configuration. CAMS v3.2 ensemble analysis — 2026–2036 scenarios.</p></li>
+<li class="si-item" data-type="Study"><a href="us-legitimacy-cams-study.html">US Legitimacy Crisis × CAMS Stress — Study 2</a><span class="si-badge si-study">Study</span><time datetime="2026-07-30">updated 2026-07-30</time><p>A 30-year panel (1996–2025) testing whether CAMS structural stress leads public trust collapse. CAMS Stress leads Gallup and Pew legitimacy measures by 2–3 years — the exact opposite of the fiscal (Study 1) finding.</p></li>
+<li class="si-item" data-type="Study"><a href="analysis/us_legitimacy_cams_study.html">US Legitimacy Crisis × CAMS Stress — Study Report</a><span class="si-badge si-study">Study</span><time datetime="2026-07-30">updated 2026-07-30</time><p>Study 1 (Interest Burden) found that CAMS does not lead the fiscal stress cycle — it is fiscal pressure that precedes CAMS structural response by roughly three years. The direction of causality pointed away from the…</p></li>
+<li class="si-item" data-type="Study"><a href="analysis/us_interest_burden_cams_study.html">US Interest Burden × CAMS Stress — Study Report</a><span class="si-badge si-study">Study</span><time datetime="2026-07-29">updated 2026-07-29</time><p>The core claim of the US oligarchic-capture analysis is that a merchant-financier coalition has progressively locked in fiscal structures that favour asset-holders, increasing background systemic stress even when…</p></li>
+<li class="si-item" data-type="Study"><a href="uk-arc-story.html">UK — The Art of the Soft Landing</a><span class="si-badge si-study">Study</span><time datetime="2026-07-13">updated 2026-07-13</time><p>How the United Kingdom became the world</p></li>
+<li class="si-item" data-type="Map"><a href="uk-arc-map.html">UK — The Art of the Soft Landing · Aha! Map</a><span class="si-badge si-map">Map</span><time datetime="2026-07-13">updated 2026-07-13</time></li>
+<li class="si-item" data-type="Study"><a href="uk-detective-panel.html">The Soft Landing Investigation — Detective Panel</a><span class="si-badge si-study">Study</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Father Brown, Cordelia Gray, Poirot, and Wimsey stress-test the six loops of the Soft Landing Map — the Continuity Engine, the Absorption Trap, the Comfort Blindfold, and the hard question of what Reform, Your Party,…</p></li>
+<li class="si-item" data-type="Study"><a href="uk-outlook-set.html">UK — Outlook Set 2026–2036</a><span class="si-badge si-study">Study</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Four structurally distinct trajectories for the UK 2026–2036: The Absorption Holds, The Populist Capture, The Territorial Rupture, and The Renewal Bypass. Tested against the Reform surge, Your Party, and Scottish…</p></li>
+<li class="si-item" data-type="Study"><a href="norway-arc-story.html">Norway — The Story That Built a Country</a><span class="si-badge si-study">Study</span><time datetime="2026-07-13">updated 2026-07-13</time><p>How Norway turned the poorest periphery of Europe into one of the most coherent societies in the modern record — and the single dependency the story now has to survive. CAMS v3.2, 1880–2026.</p></li>
+<li class="si-item" data-type="Map"><a href="norway-arc-map.html">Norway — The Story That Built a Country · Aha! Map</a><span class="si-badge si-map">Map</span><time datetime="2026-07-13">updated 2026-07-13</time></li>
+<li class="si-item" data-type="Study"><a href="norway-detective-panel.html">Norway — Detective Panel · The Story That Built a Country</a><span class="si-badge si-study">Study</span><time datetime="2026-07-13">updated 2026-07-13</time><p>A detective panel stress-tests the seven loops of the Norway CAMS map — Fell, Morse, Marple, and Warshawski interrogate the Lore thesis, the fund</p></li>
+<li class="si-item" data-type="Study"><a href="norway-outlook-set.html">Norway — Outlook Set 2026–2036</a><span class="si-badge si-study">Study</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Four structurally distinct trajectories for Norway 2026–2036: Orderly Transition, Deferred Transition, Disorderly Shock, and the Exemplary Transition. Tested against the $2.2T fund, the Progress Party surge, and Norway</p></li>
+<li class="si-item" data-type="Study"><a href="nz-arc-story.html">New Zealand&#x27;s Institutional Arc 1900–2026</a><span class="si-badge si-study">Study</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Narrative essay tracing New Zealand</p></li>
+<li class="si-item" data-type="Map"><a href="nz-arc-map.html">New Zealand — Institutional Arc Map</a><span class="si-badge si-map">Map</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Interactive causal loop diagram of New Zealand</p></li>
+<li class="si-item" data-type="Study"><a href="germany-arc-story.html">Rebuilding from Rubble — Germany (BRD)</a><span class="si-badge si-study">Study</span><time datetime="2026-06-16">updated 2026-06-16</time><p>How West Germany turned the hardest starting conditions in modern history into the most stable democracy in Europe — and what it cost to do so</p></li>
+<li class="si-item" data-type="Map"><a href="germany-arc-map.html">Germany — Arc Map</a><span class="si-badge si-map">Map</span><time datetime="2026-06-16">updated 2026-06-16</time><p>© 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at KaliBond/wintermute.</p></li>
+<li class="si-item" data-type="Study"><a href="canada-arc-story.html">The Border Tribe and the Long Listening</a><span class="si-badge si-study">Study</span><time datetime="2026-06-16">updated 2026-06-16</time><p>The first thing to admit is the comfort. Not the abundance — that has been thinning for a decade, and anyone with eyes can see the squeeze in the grocery aisles and the housing pages — but the comfort of not having…</p></li>
+<li class="si-item" data-type="Map"><a href="canada-arc-map.html">Canada — Arc Map</a><span class="si-badge si-map">Map</span><time datetime="2026-06-16">updated 2026-06-16</time></li>
+<li class="si-item" data-type="Study"><a href="argentina-cams-story.html">The Country That Never Dies — Argentina&#x27;s Thermodynamic Freeze 1950–2026</a><span class="si-badge si-study">Study</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Argentina has not been failing. It has been freezing. A CAMS v3.2-R ensemble analysis of Argentina</p></li>
+<li class="si-item" data-type="Map"><a href="argentina-cams-map.html">Argentina CAMS 1950–2026: The Thermodynamic Freeze Attractor</a><span class="si-badge si-map">Map</span><time datetime="2026-06-16">updated 2026-06-16</time></li>
+<li class="si-item" data-type="Study"><a href="burning-house-story.html">The Burning House Economy — Australia CAMS Analysis</a><span class="si-badge si-study">Study</span><time datetime="2026-07-13">updated 2026-07-13</time><p>How Australia learned to profit from the fire while forgetting it owned the house. A systemic narrative on Australia</p></li>
+<li class="si-item" data-type="Map"><a href="burning-house-map.html">The Burning House Economy — Aha! Map</a><span class="si-badge si-map">Map</span><time datetime="2026-07-13">updated 2026-07-13</time></li>
+<li class="si-item" data-type="Study"><a href="burning-house-detective-panel.html">Australia — Detective Panel · The Burning House Economy</a><span class="si-badge si-study">Study</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Poirot, Salander, Marple, and Holmes interrogate the loop structure of the Burning House Economy map. The fossil rent lock, the enclave transition trap, and the Stewards junction.</p></li>
+<li class="si-item" data-type="Study"><a href="netherlands-cams-v1-2.html">Netherlands CAMS v1.2</a><span class="si-badge si-study">Study</span><time datetime="2026-08-29">updated 2026-08-29</time><p>A critically contextualised CAMS v1.2 analysis of the Netherlands, covering ecology, social organisation, history, diagnostic metrics, and a mythopoetic paladin overlay.</p></li>
+<li class="si-item" data-type="Study"><a href="slavery-path-dependency-2023.html">Modern Slavery &amp; Structural Path Dependencies — CAMS–GSI Cross-Reference Analysis, 2023</a><span class="si-badge si-study">Study</span><time datetime="2026-07-26">updated 2026-07-26</time><p>Cross-references the Global Slavery Index 2023 with JUNO v1.2-Final structural data across 36 societies to identify which CAMS node configurations generate, sustain, or suppress coerced labour — plus a four-path…</p></li>
+<li class="si-item" data-type="Study"><a href="kimi-coordination-analysis.html">Kimi K3, OpenAI Losses, and the AI Coordination Crisis</a><span class="si-badge si-study">Study</span><time datetime="2026-07-30">updated 2026-07-30</time><p>A CAMS coordination-diagnostic analysis of four AI industry signals: Kimi K3, OpenAI finances, household electricity bills, and S&amp;P 500 concentration.</p></li>
+</ul></details>
+<details class="si-group" id="aha-maps" open><summary><h2>Aha! Maps</h2><span class="si-count">4</span></summary><ul>
+<li class="si-item" data-type="Map"><a href="aha-maps.html">Aha! Maps · Bellinger — Systems Library</a><span class="si-badge si-map">Map</span><time datetime="2026-07-20">updated 2026-07-20</time><p>A library of CAMS causal-loop diagrams implemented on Gene Bellinger</p></li>
+<li class="si-item" data-type="Map"><a href="bond-wreck-map.html">The Great Bond Car Wreck — Aha! Map</a><span class="si-badge si-map">Map</span><time datetime="2026-07-13">updated 2026-07-13</time></li>
+<li class="si-item" data-type="Map"><a href="mirror-escalation-map.html">Mirror Escalation — Aha! Map</a><span class="si-badge si-map">Map</span><time datetime="2026-07-20">updated 2026-07-20</time></li>
+<li class="si-item" data-type="Map"><a href="us-covid-cams-map.html">US COVID — Aha! Map</a><span class="si-badge si-map">Map</span><time datetime="2026-07-13">updated 2026-07-13</time></li>
+</ul></details>
+<details class="si-group" id="mindscapes" open><summary><h2>Mindscapes</h2><span class="si-count">7</span></summary><ul>
+<li class="si-item" data-type="Report"><a href="mindscapes.html">Mindscapes — CAMS National Mood Reports</a><span class="si-badge si-report">Report</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Claude-generated Vision–Affect and Mythic Attractor reports for national mood analysis. France and Norway live. Pipeline open.</p></li>
+<li class="si-item" data-type="Report"><a href="mindscapes/Argentina_2026_CAMS_Report.html">Argentina — CAMS Mood Report 2024–2026</a><span class="si-badge si-report">Report</span><time datetime="2026-05-23">updated 2026-05-23</time><p>National Mood, Vision‑Affect &amp; Mythic Attractor Report — 2024–2026</p></li>
+<li class="si-item" data-type="Report"><a href="mindscapes/France_2026_CAMS_Report.html">France — CAMS Mood Report 2024–2026</a><span class="si-badge si-report">Report</span><time datetime="2026-05-23">updated 2026-05-23</time><p>National Mood, Vision–Affect &amp; Mythic Attractor Report — 2024–2026</p></li>
+<li class="si-item" data-type="Report"><a href="mindscapes/New_Zealand_2026_CAMS_Report.html">New Zealand — CAMS Mood Report 2024–2026</a><span class="si-badge si-report">Report</span><time datetime="2026-05-23">updated 2026-05-23</time><p>National Mood, Vision‑Affect &amp; Mythic Attractor Report — 2024–2026</p></li>
+<li class="si-item" data-type="Report"><a href="mindscapes/Norway_2026_CAMS_Report.html">Norway — CAMS Mood Report 2023–2025</a><span class="si-badge si-report">Report</span><time datetime="2026-05-23">updated 2026-05-23</time><p>National Mood, Vision–Affect &amp; Mythic Attractor Report — 2023–2025</p></li>
+<li class="si-item" data-type="Report"><a href="mindscapes/Russia_2026_CAMS_Report.html">Russia — CAMS Mood Report 2024–2026</a><span class="si-badge si-report">Report</span><time datetime="2026-05-23">updated 2026-05-23</time><p>National Mood, Vision‑Affect &amp; Mythic Attractor Report — 2024–2026</p></li>
+<li class="si-item" data-type="Report"><a href="mindscapes/UK_2024-2026_CAMS_Report.html">United Kingdom — CAMS Mood Report 2024–2026</a><span class="si-badge si-report">Report</span><time datetime="2026-05-23">updated 2026-05-23</time><p>National Mood, Vision‑Affect &amp; Mythic Attractor Report — 2024–2026</p></li>
+</ul></details>
+<details class="si-group" id="series-essays" open><summary><h2>Series &amp; Essays</h2><span class="si-count">41</span></summary><ul>
+<li class="si-item" data-type="Series"><a href="newsletter.html">Complex Adaptive Humans — Newsletter</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Subscribe to the Neural Nations newsletter. Research updates, new dataset releases, and plain-language explainers on civilisational complexity.</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-1.html">History as System: The Origin of CAMS — Complex Adaptive Humans #1</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #1: How CAMS emerged from a question about geopolitics and became a framework for reading civilisational dynamics as coordination systems.</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-2.html">Another Demotion — Complex Adaptive Humans #2</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #2: On the epistemological status of social science and why institutional analysis requires a different kind of model.</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-3.html">A Physics-Based Social Science — Complex Adaptive Humans #3</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #3: The thermodynamic and information-theoretic foundations of CAMS — why societies can be modelled as far-from-equilibrium systems.</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-4.html">The Fire in the System — Complex Adaptive Humans #4</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #4: How stress propagates through institutional networks — the CAMS model of cascade failure and systemic crisis.</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-5.html">A Dual-Mode Theory of Societal Cognition — Complex Adaptive Humans #5</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #5: Two modes of societal decision-making — fast reactive and slow deliberative — and how CAMS tracks the balance between them.</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-6.html">South Africa in the CAMS Engine — Complex Adaptive Humans #6</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #6: CAMS analysis of South Africa 1990–2024 — institutional stress accumulation, coordination failure, and the signals of state fragility.</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-7.html">CAMS: The State of the Science — Complex Adaptive Humans #7</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #7: Where CAMS stands as a scientific programme — validation results, open questions, and the research agenda for 2026.</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-8.html">Dissociation Before Collapse — Complex Adaptive Humans #8</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #8: A hidden signal in the CAMS data — cognitive-affective dissociation precedes societal collapse. Kimi, Claude, and GPT analyse the XXU (USA) dataset.</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-9.html">Occam&#x27;s Razor and the Anatomy of Civilisations — Complex Adaptive Humans #9</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #9: Why eight nodes were enough — the origin story of the CAMS framework, from a GPT conversation about nuclear indeterminacy to a minimal, testable anatomy of civilisation.</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-10.html">Testing the Universality of CAMS — Complex Adaptive Humans #10</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #10: Blind CAMS analysis of corporations and institutions — MarkerQ (Qantas), MarkerE (Enron), NVIDIA, and SpaceX. The same diagonal constraint manifold appears across all organisational types.</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-11.html">Spotlight on Iran — Complex Adaptive Humans #11</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #11: CAMS analysis of Iran 1900–2025. A civilisational state, not a failing modern nation. Kimi, Gemini, Grok, Perplexity, Claude, and GPT — six platforms, one dataset, surprising convergence.</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-12.html">Finland Revealed: Meaning from Structure — Complex Adaptive Humans #12</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #12: Blind CAMS analysis of</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-13.html">Neutrality, Nordic Systems, and the Discipline of Method — Complex Adaptive Humans #13</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #13: Three Nordic architectures, one structural question — how Denmark, Norway, and Sweden built coordination infrastructure before economic expansion, and what that means for the rest of us.</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-14.html">Australia by the Numbers: A Multi-Model Diagnostic — Complex Adaptive Humans #14</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #14: DeepSeek, Kimi, and Claude independently diagnose Australia</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-15.html">Crisis in the Middle East: A Quantitative Perspective — Complex Adaptive Humans #15</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #15: The US–Iran confrontation is a systems conflict, not merely a nuclear dispute. CAMS reveals a mode mismatch — Ψ-dominant Iran versus a Φ-overloaded US Helm — and traces the path dependency running from…</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-16.html">CAMS: An Historical Telescope — Complex Adaptive Humans #16</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #16: CAMS as an instrument of observation — not a complete theory of civilisation, but a systematic way of seeing structural patterns where narrative alone cannot reach. Illustrated with the USA at the moment…</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-17.html">CAMS v2.3 — Complex Adaptive Humans #17</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #17: CAMS v2.3 release. A formal specification of the 8×4 state matrix, coordination phase space, and failure mode taxonomy — plus four new analytical tools: dDIG, Dyad Field, Combined Insights, and Phase-Space…</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-18.html">Blind Testing, Dataset Expansion, and the Maturing of the CAMS Platform — Complex Adaptive Humans #18</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #18: 32+ societies, 30,856 records, and a blind test revealing five archetypes — from corporate fraud collapse to 425 years of indigenous memory resilience — using the same mathematics.</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-19.html">Introducing the CAMS Interpreter — Complex Adaptive Humans #19</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #19: The CAMS Interpreter — load a society</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-20.html">The Kool-Aid Acid Test — Complex Adaptive Humans #20</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #20: Five structurally diverse societies, labels stripped, dates jittered, Gaussian noise added. Can CAMS recover the structural personality from raw numbers alone? 92% structural grounding, 1/5 exact…</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-21.html">One Question at a Time — Complex Adaptive Humans #21</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #21: How CAMS was born — a Socratic dialogue with GPT-4, from slime moulds and superorganisms to the Sybond Hypothesis. The laboratory notebook of an idea, preserved in its original heat.</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-22.html">From Framework to Dashboards — Complex Adaptive Humans #22</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #22: The April 2026 platform update — CAMS Explorer, Zeitgeist Detector, Interpreter, Advanced Analysis Dashboard, Mindscapes, and Granger Causality Validator. The instruments for studying societies as complex…</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-23.html">CAMS in Focus: Societies as Evolving Coordination Systems — Complex Adaptive Humans #23</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #23: Two papers consolidate CAMS — the first as a formal thermodynamic-institutional method, the second within the Extended Evolutionary Synthesis. The German case demonstrates how CAMS distinguishes genuine…</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-24.html">Ensemble Datasets, CAMS Mindscapes and a New Telescope — Complex Adaptive Humans #24</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #24: Ensemble sampling yields 75–90% hindcast accuracy. Mindscapes reports generated with zero editorial input. The CAMS Telescope delivers compact structural dossiers — typewriter-style, one society, one year,…</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-25.html">CAMS: Reproducibility Across Platforms — Complex Adaptive Humans #25</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #25: Seven nations tested through Perplexity, Kimi, and Gemini independently. All three converged on identical structural diagnoses. Signal-to-noise above 8:1. Kimi</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-28.html">First Results from the Epiphenomenon@Trove Study — Complex Adaptive Humans #28</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #28: When does Australia sense enemies? Trove (55M documents, 1900–1955) and Hansard (2006–2025) crossed with CAMS structural scores. Three regimes — Prosperity Ideology, Stress Projection, Event Response. The…</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-29.html">Epistemologically Speaking… — Complex Adaptive Humans #29</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #29: CAMS begins not with moral categories, but with coordination. Two epistemological breaks, eight nodes as functional grammar, value-location not value-neutrality — and the deepest claim: civilisation is an…</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-30.html">The Self-Modelling Primate — Complex Adaptive Humans #30</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #30: A profile of CAMS and the intellectual journey behind it — from a Socratic frustration with sophistry, through the insight that a polity is a complex adaptive system and unit of selection, to an eight-node…</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-31.html">Exporting Entropy — Complex Adaptive Humans #31</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #31: Every productive system must dispose of high-entropy outputs somewhere. For two centuries of industrial civilisation, that somewhere has been the atmosphere, water table, and landscape. A thermodynamic…</p></li>
+<li class="si-item" data-type="Series"><a href="complex-adaptive-humans-32.html">The Single Axis of History — Complex Adaptive Humans #32</a><span class="si-badge si-series">Series</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Issue #32: A principal component analysis of 19,008 CAMS data rows across 28 civilisations reveals a single dominant axis — 77.5% of all variance — running from organised structural health to dissipative collapse.…</p></li>
+<li class="si-item" data-type="Series"><a href="the-borrowed-nation.html">The Borrowed Nation</a><span class="si-badge si-series">Series</span><time datetime="2026-08-25">updated 2026-08-25</time><p>A five-essay CAMS series on Australian strategic dependency: colonial-era node architecture, foreign ownership of the Stewards node, the domestic origins of China-threat discourse, the Flow Paradox, and a…</p></li>
+<li class="si-item" data-type="Series"><a href="the-borrowed-nation-1.html">The Inheritance of Dependence — The Borrowed Nation #1</a><span class="si-badge si-series">Series</span><time datetime="2026-08-25">updated 2026-08-25</time><p>Essay One: Why Australia</p></li>
+<li class="si-item" data-type="Series"><a href="the-borrowed-nation-2.html">The Colonised Stewards — The Borrowed Nation #2</a><span class="si-badge si-series">Series</span><time datetime="2026-08-25">updated 2026-08-25</time><p>Essay Two: From the squattocracy to Rio Tinto and BHP, Australia</p></li>
+<li class="si-item" data-type="Series"><a href="the-borrowed-nation-3.html">The Anxiety Machine — The Borrowed Nation #3</a><span class="si-badge si-series">Series</span><time datetime="2026-08-25">updated 2026-08-25</time><p>Essay Three: 105 years of Trove and Hansard data show Australia</p></li>
+<li class="si-item" data-type="Series"><a href="the-borrowed-nation-4.html">The Flow Paradox — The Borrowed Nation #4</a><span class="si-badge si-series">Series</span><time datetime="2026-08-25">updated 2026-08-25</time><p>Essay Four: China receives 63% of Australia</p></li>
+<li class="si-item" data-type="Series"><a href="the-borrowed-nation-5.html">The Road Not Taken — The Borrowed Nation #5</a><span class="si-badge si-series">Series</span><time datetime="2026-08-25">updated 2026-08-25</time><p>Essay Five: A disciplined counterfactual history — what if Australia had built the 2014 Comprehensive Strategic Partnership as the governing framework for its China relationship, instead of the Five Eyes escalation…</p></li>
+<li class="si-item" data-type="Series"><a href="epiphenomenon/">Epiphenomenon@Trove</a><span class="si-badge si-series">Series</span><time datetime="2026-08-25">updated 2026-08-25</time><p>A structural analysis of Australian threat discourse, institutional coherence, and civilisational stress across 125 years — using the Complex Adaptive Model System (CAMS) and the National Library of Australia&#x27;s…</p></li>
+<li class="si-item" data-type="Series"><a href="epiphenomenon/australia-story.html">The Enemy Factory — Epiphenomenon@Trove</a><span class="si-badge si-series">Series</span><time datetime="2026-05-29">updated 2026-05-29</time><p>How Australia learned to need a threat — and why the machinery never stops running.</p></li>
+<li class="si-item" data-type="Series"><a href="epiphenomenon/without-hindcasting.html">Without Hindcasting — Epiphenomenon@Trove</a><span class="si-badge si-series">Series</span><time datetime="2026-05-29">updated 2026-05-29</time><p>Reading structural collapse signals as a contemporary analyst would have — with no foreknowledge of what was coming.</p></li>
+<li class="si-item" data-type="Series"><a href="anxiety-machine.html">The Anxiety Machine — Epiphenomenon@Trove</a><span class="si-badge si-series">Series</span><time datetime="2026-07-13">updated 2026-07-13</time><p>What 125 years of Australian newspapers and two decades of parliamentary Hansard reveal about why we talk about what we talk about — and when</p></li>
+</ul></details>
+<details class="si-group" id="diary-about" open><summary><h2>Diary &amp; About</h2><span class="si-count">6</span></summary><ul>
+<li class="si-item" data-type="Site"><a href="research-diary.html">Research Diary</a><span class="si-badge si-site">Site</span><time datetime="2026-09-22">updated 2026-09-22</time><p>Ongoing development log for the CAMS framework. Results, revisions, blind tests, theoretical extensions, and validation milestones. Plain language throughout.</p></li>
+<li class="si-item" data-type="Site"><a href="site-index.html">All Pages</a><span class="si-badge si-site">Site</span><time datetime="2026-09-25">updated 2026-09-25</time><p>Every page on Neural Nations in one place — tools, datasets, papers, country studies, maps and series — grouped by topic and searchable.</p></li>
+<li class="si-item" data-type="Site"><a href="explore-index.html">Artefact Index</a><span class="si-badge si-site">Site</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Complete index of CAMS research artefacts: visualisations, datasets, interactive tools, and analytical reports.</p></li>
+<li class="si-item" data-type="Site"><a href="grok.html">Grok</a><span class="si-badge si-site">Site</span><time datetime="2026-09-15">updated 2026-09-15</time><p>Deep conceptual explainer for the CAMS framework — for researchers and practitioners who want to understand the theoretical foundations.</p></li>
+<li class="si-item" data-type="Site"><a href="about.html">About Kari McKern</a><span class="si-badge si-site">Site</span><time datetime="2026-07-13">updated 2026-07-13</time><p>Kari McKern — researcher, former public servant, IT specialist, and geopolitical analyst. Creator of CAMS. Based in Sydney, Australia.</p></li>
+<li class="si-item" data-type="Site"><a href="contact.html">Contact &amp; Collaborate</a><span class="si-badge si-site">Site</span><time datetime="2026-06-16">updated 2026-06-16</time><p>Research collaboration, dataset access, peer review, and practitioner enquiries. Three pathways: Scholar, Practitioner, and General Public.</p></li>
+</ul></details>
+<!-- INDEX:END -->
+    </div>
+    <p class="si-empty" id="si-empty">No pages match. Try a shorter word, or clear the type filter.</p>
+
+    <p class="si-cross">Looking for the Claude artefacts published outside this site? See the <a href="explore-index.html">Artefact Index</a>.</p>
+</div>
+<footer class="footer" id="site-footer"></footer>
+<script src="site-chrome.js"></script>
+<script src="nav.js"></script>
+<script>
+(function () {
+  const q = document.getElementById('si-q');
+  const list = document.getElementById('si-list');
+  const groups = [...list.querySelectorAll('.si-group')];
+  const recent = list.querySelector('.si-recent');
+  const items = [...list.querySelectorAll('.si-item')];
+  const chips = [...document.querySelectorAll('.si-chip')];
+  const status = document.getElementById('si-status');
+  const empty = document.getElementById('si-empty');
+  const total = items.length;
+  const active = new Set();
+
+  // Jump links
+  document.getElementById('si-jump').innerHTML = groups.map(g =>
+    `<a href="#${g.id}">${g.querySelector('h2').textContent}</a>`).join('');
+
+  // Cache original text so highlighting can be undone
+  items.forEach(li => {
+    li._a = li.querySelector('a'); li._p = li.querySelector('p');
+    li._aText = li._a.textContent; li._pText = li._p ? li._p.textContent : '';
+    li._group = li.closest('.si-group').querySelector('h2').textContent;
+    li._hay = (li._aText + ' ' + li._pText + ' ' + li._group + ' ' + li.dataset.type).toLowerCase();
+  });
+
+  const escHTML = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const escRe = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  function highlight(text, terms) {
+    if (!terms.length) return escHTML(text);
+    const re = new RegExp('(' + terms.map(escRe).join('|') + ')', 'gi');
+    return text.split(re).map((part, i) => i % 2 ? '<mark>' + escHTML(part) + '</mark>' : escHTML(part)).join('');
+  }
+
+  function apply() {
+    const terms = q.value.toLowerCase().split(/\s+/).filter(Boolean);
+    const filtering = terms.length || active.size;
+    let shown = 0;
+    items.forEach(li => {
+      const ok = (!active.size || active.has(li.dataset.type)) && terms.every(t => li._hay.includes(t));
+      li.classList.toggle('si-hidden', !ok);
+      li._a.innerHTML = highlight(li._aText, terms);
+      if (li._p) li._p.innerHTML = highlight(li._pText, terms);
+      if (ok) shown++;
+    });
+    groups.forEach(g => {
+      const n = g.querySelectorAll('.si-item:not(.si-hidden)').length;
+      g.classList.toggle('si-hidden', n === 0);
+      g.querySelector('.si-count').textContent = n;
+      if (filtering && n) g.open = true;
+    });
+    if (recent) recent.classList.toggle('si-hidden', !!filtering);
+    empty.style.display = shown ? 'none' : 'block';
+    status.textContent = filtering ? `Showing ${shown} of ${total} pages` : `Showing all ${total} pages`;
+  }
+
+  q.addEventListener('input', apply);
+  chips.forEach(c => c.addEventListener('click', () => {
+    const t = c.dataset.type;
+    active.has(t) ? active.delete(t) : active.add(t);
+    c.setAttribute('aria-pressed', active.has(t));
+    apply();
+  }));
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && document.activeElement !== q && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+      e.preventDefault(); q.focus();
+    } else if (e.key === 'Escape' && document.activeElement === q) {
+      q.value = ''; apply();
+    }
+  });
+
+  // Support links like site-index.html?q=norway
+  const initial = new URLSearchParams(location.search).get('q');
+  if (initial) { q.value = initial; apply(); }
+})();
+</script>
+</body></html>

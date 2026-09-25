@@ -29,6 +29,7 @@ const SITE = {
     { label: 'Research Diary', href: 'research-diary.html' },
     { label: 'Mindscapes',     href: 'mindscapes.html' },
     { label: 'FAQ',            href: 'faq.html' },
+    { label: 'All Pages',      href: 'site-index.html' },
     { label: 'Contact',        href: 'contact.html' },
   ],
   frameworkLink: { label: 'Framework ↗', href: 'framework/index.html' },
@@ -40,6 +41,7 @@ const SITE = {
     { label: 'Home',            href: 'index.html' },
     { label: 'Explore',         href: 'explore.html' },
     { label: 'Research Diary',  href: 'research-diary.html' },
+    { label: 'All Pages',       href: 'site-index.html' },
   ],
   footerNote: '© 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions & forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.',
 };
