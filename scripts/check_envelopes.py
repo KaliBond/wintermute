@@ -39,8 +39,10 @@ NO_ENVELOPE = {
     'data/nations/Ukraine_ENS.csv': SINGLE.format('data/cleaned/Ukraine_gem_1930_Jan26.csv (Gemini)'),
     'data/nations/Venezuela_ENS.csv': SINGLE.format('data/cleaned/Venezuela_gem_dec1970_2025.csv (Gemini)'),
     **{f'data/nations/{n}_ENS.csv': MISSING for n in [
-        'Denmark', 'Hong_Kong', 'Indonesia', 'Iraq', 'Israel', 'Italy', 'Latvia', 'Lebanon',
-        'Netherlands', 'Pakistan', 'Philippines', 'Syria']},
+        'Denmark', 'Hong_Kong', 'Indonesia', 'Iraq', 'Israel', 'Latvia', 'Lebanon',
+        'Pakistan', 'Philippines', 'Syria']},
+    **{f'data/nations/{n}_ENS.csv': MISSING + f' (kept as loaded by the tools; a second full set with envelope, 1850-2026, is cleaned_datasets/{n}_ENS_1850_2026)'
+       for n in ['Italy', 'Netherlands']},
     'data/nations/Japan_ENS.csv': MISSING + ' (annual 1875-2026 series, kept as loaded by the tools; the 5-year run is in data/nations/5yr/, and a second full set with envelope, 1850-2026, is cleaned_datasets/Japan_ENS_1850_2026)',
     'data/nations/Sweden_ENS.csv': MISSING + ' (annual series; the 5-year run and its envelope are in data/nations/5yr/)',
     'cleaned_datasets/Latvia_ENS_1901_2025_cleaned.csv': MISSING,

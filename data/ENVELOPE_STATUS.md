@@ -8,7 +8,7 @@ Some older single-scorer series keep the ENS filename because the JUNO tools and
 
 Rule: every ensemble (ENS) file has its envelope (ENV), covering exactly the same society/year/node rows, and no ENV exists without its ENS. Scope: `cleaned_datasets/` and `data/nations/` (the published data).
 
-## Paired (52)
+## Paired (54)
 
 | Ensemble | Envelope | Rows |
 |---|---|---|
@@ -27,10 +27,12 @@ Rule: every ensemble (ENS) file has its envelope (ENV), covering exactly the sam
 | `cleaned_datasets/Germany_ENS_1880_2026_cleaned.csv` | `cleaned_datasets/Germany_ENV_1880_2026_cleaned.csv` | 1,176 |
 | `cleaned_datasets/Greece_ENS_1875_2026_cleaned.csv` | `cleaned_datasets/Greece_ENV_1875_2026_cleaned.csv` | 1,216 |
 | `cleaned_datasets/Iran_ENS_1875_2026_cleaned.csv` | `cleaned_datasets/Iran_ENV_1875_2026_cleaned.csv` | 1,216 |
+| `cleaned_datasets/Italy_ENS_1850_2026_cleaned.csv` | `cleaned_datasets/Italy_ENV_1850_2026_cleaned.csv` | 1,416 |
 | `cleaned_datasets/Japan_ENS_1850_2026_cleaned.csv` | `cleaned_datasets/Japan_ENV_1850_2026_cleaned.csv` | 1,416 |
 | `cleaned_datasets/Laos_ENS_1875_2026_cleaned.csv` | `cleaned_datasets/Laos_ENV_1875_2026_cleaned.csv` | 1,216 |
 | `cleaned_datasets/Mauritania_ENS_1960_2026_cleaned.csv` | `cleaned_datasets/Mauritania_ENV_1960_2026_cleaned.csv` | 536 |
 | `cleaned_datasets/Mongolia_ENS_1850_2026_cleaned.csv` | `cleaned_datasets/Mongolia_ENV_1850_2026_cleaned.csv` | 1,416 |
+| `cleaned_datasets/Netherlands_ENS_1850_2026_cleaned.csv` | `cleaned_datasets/Netherlands_ENV_1850_2026_cleaned.csv` | 1,416 |
 | `cleaned_datasets/NewZealand_ENS_1875_2026_cleaned.csv` | `cleaned_datasets/NewZealand_ENV_1875_2026_cleaned.csv` | 1,216 |
 | `cleaned_datasets/Nigeria_ENS_1960_2026_cleaned.csv` | `cleaned_datasets/Nigeria_ENV_1960_2026_cleaned.csv` | 536 |
 | `cleaned_datasets/Norway_ENS_1880_2026_cleaned.csv` | `cleaned_datasets/Norway_ENV_1880_2026_cleaned.csv` | 1,176 |
@@ -81,11 +83,11 @@ Kept and flagged rather than deleted: the JUNO tools and the published dataset u
 | `data/nations/Indonesia_ENS.csv` | envelope missing: no matching envelope anywhere in the repo; five-scorer re-run needed |
 | `data/nations/Iraq_ENS.csv` | envelope missing: no matching envelope anywhere in the repo; five-scorer re-run needed |
 | `data/nations/Israel_ENS.csv` | envelope missing: no matching envelope anywhere in the repo; five-scorer re-run needed |
-| `data/nations/Italy_ENS.csv` | envelope missing: no matching envelope anywhere in the repo; five-scorer re-run needed |
+| `data/nations/Italy_ENS.csv` | envelope missing: no matching envelope anywhere in the repo; five-scorer re-run needed (kept as loaded by the tools; a second full set with envelope, 1850-2026, is cleaned_datasets/Italy_ENS_1850_2026) |
 | `data/nations/Japan_ENS.csv` | envelope missing: no matching envelope anywhere in the repo; five-scorer re-run needed (annual 1875-2026 series, kept as loaded by the tools; the 5-year run is in data/nations/5yr/, and a second full set with envelope, 1850-2026, is cleaned_datasets/Japan_ENS_1850_2026) |
 | `data/nations/Latvia_ENS.csv` | envelope missing: no matching envelope anywhere in the repo; five-scorer re-run needed |
 | `data/nations/Lebanon_ENS.csv` | envelope missing: no matching envelope anywhere in the repo; five-scorer re-run needed |
-| `data/nations/Netherlands_ENS.csv` | envelope missing: no matching envelope anywhere in the repo; five-scorer re-run needed |
+| `data/nations/Netherlands_ENS.csv` | envelope missing: no matching envelope anywhere in the repo; five-scorer re-run needed (kept as loaded by the tools; a second full set with envelope, 1850-2026, is cleaned_datasets/Netherlands_ENS_1850_2026) |
 | `data/nations/Pakistan_ENS.csv` | envelope missing: no matching envelope anywhere in the repo; five-scorer re-run needed |
 | `data/nations/Philippines_ENS.csv` | envelope missing: no matching envelope anywhere in the repo; five-scorer re-run needed |
 | `data/nations/Saudi_Arabia_ENS.csv` | not an ensemble: identical to single-scorer run data/new_datasets/SaudiA_GPT_feb.csv (GPT); no envelope can exist |

@@ -1,7 +1,7 @@
 {
   "generated": "2026-09-25",
-  "total_files": 108,
-  "total_records": 97153,
+  "total_files": 112,
+  "total_records": 102817,
   "datasets": [
     {
       "filename": "Canada_ENS_1850_2026_cleaned.csv",
@@ -401,6 +401,33 @@
       "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Italy_cleaned.csv"
     },
     {
+      "filename": "Italy_ENS_1850_2026_cleaned.csv",
+      "society": "Italy",
+      "year_start": 1850,
+      "year_end": 2026,
+      "records": 1416,
+      "family": "standard",
+      "region": "Europe",
+      "is_envelope": false,
+      "has_bond_strength": true,
+      "has_node_value": true,
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Italy_ENS_1850_2026_cleaned.csv",
+      "envelope": "Italy_ENV_1850_2026_cleaned.csv"
+    },
+    {
+      "filename": "Italy_ENV_1850_2026_cleaned.csv",
+      "society": "Italy",
+      "year_start": 1850,
+      "year_end": 2026,
+      "records": 1416,
+      "family": "standard",
+      "region": "Europe",
+      "is_envelope": true,
+      "has_bond_strength": false,
+      "has_node_value": false,
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Italy_ENV_1850_2026_cleaned.csv"
+    },
+    {
       "filename": "Netherlands_cleaned.csv",
       "society": "Netherlands",
       "year_start": 1750,
@@ -412,6 +439,33 @@
       "has_node_value": true,
       "region": "Europe",
       "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Netherlands_cleaned.csv"
+    },
+    {
+      "filename": "Netherlands_ENS_1850_2026_cleaned.csv",
+      "society": "Netherlands",
+      "year_start": 1850,
+      "year_end": 2026,
+      "records": 1416,
+      "family": "standard",
+      "region": "Europe",
+      "is_envelope": false,
+      "has_bond_strength": true,
+      "has_node_value": true,
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Netherlands_ENS_1850_2026_cleaned.csv",
+      "envelope": "Netherlands_ENV_1850_2026_cleaned.csv"
+    },
+    {
+      "filename": "Netherlands_ENV_1850_2026_cleaned.csv",
+      "society": "Netherlands",
+      "year_start": 1850,
+      "year_end": 2026,
+      "records": 1416,
+      "family": "standard",
+      "region": "Europe",
+      "is_envelope": true,
+      "has_bond_strength": false,
+      "has_node_value": false,
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Netherlands_ENV_1850_2026_cleaned.csv"
     },
     {
       "filename": "Norway_ENS_1880_2026_cleaned.csv",
