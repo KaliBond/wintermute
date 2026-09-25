@@ -29,6 +29,16 @@ If you forget step 1, `build_site_index.py` **stops with an error** that names t
 - **A page's title or description changed:** re-run both scripts.
 - **Monthly:** re-run both anyway, so the "updated" dates and the "Recently updated" list stay current.
 
+## Datasets: every ensemble needs its envelope
+
+Rule: every ensemble (`*_ENS*`) file in `cleaned_datasets/` or `data/nations/` has its envelope (`*_ENV*`), with the same name except ENS→ENV and exactly the same society/year/node rows. No ENV may exist without its ENS.
+
+After adding, renaming or removing a dataset, run:
+```
+python scripts/check_envelopes.py
+```
+It rewrites `data/ENVELOPE_STATUS.md` and fails if an ENV has no ENS, if an ENV is empty or doesn't match its ENS row for row, or if an ENS has no ENV and isn't listed in `NO_ENVELOPE` with a reason. When a re-run supplies a missing envelope, add the file and delete its `NO_ENVELOPE` entry. Update `datasets.json` / `datasets.html` to match, then re-run `build_nations.py`.
+
 ## Nation matching
 
 Reports are assigned to nations by the name patterns in `NATIONS` (`scripts/build_nations.py`). If a report lands under the wrong country, or is missing from the right one:

@@ -1,7 +1,7 @@
 {
-  "generated": "2026-08-23",
-  "total_files": 107,
-  "total_records": 95545,
+  "generated": "2026-09-25",
+  "total_files": 106,
+  "total_records": 94321,
   "datasets": [
     {
       "filename": "Canada_ENS_1850_2026_cleaned.csv",
@@ -14,7 +14,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "North America",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Canada_ENS_1850_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Canada_ENS_1850_2026_cleaned.csv",
+      "envelope": "Canada_ENV_1850_2026_cleaned.csv"
     },
     {
       "filename": "Canada_ENV_1850_2026_cleaned.csv",
@@ -23,7 +24,7 @@
       "year_end": 2026,
       "records": 264,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "North America",
@@ -105,7 +106,9 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "North America",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/MARKER_USA_1900_2026_ENSEMBLE_MEAN_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/MARKER_USA_1900_2026_ENSEMBLE_MEAN_cleaned.csv",
+      "envelope": null,
+      "envelope_status": "envelope missing: no matching envelope anywhere in the repo; five-scorer re-run needed"
     },
     {
       "filename": "USA_cam5_1996_2026_cleaned.csv",
@@ -144,7 +147,8 @@
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "South America",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Argentina_CAMS5_ensemble_1950_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Argentina_CAMS5_ensemble_1950_2026_cleaned.csv",
+      "envelope": "Argentina_ENV_1950_2026_cleaned.csv"
     },
     {
       "filename": "Argentina_ENS_1950_2026_cleaned.csv",
@@ -157,7 +161,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "South America",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Argentina_ENS_1950_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Argentina_ENS_1950_2026_cleaned.csv",
+      "envelope": "Argentina_ENV_1950_2026_cleaned.csv"
     },
     {
       "filename": "Argentina_ENV_1950_2026_cleaned.csv",
@@ -166,7 +171,7 @@
       "year_end": 2026,
       "records": 616,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "South America",
@@ -287,7 +292,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Europe",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/France_ENS_1850_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/France_ENS_1850_2026_cleaned.csv",
+      "envelope": "France_ENV_1850_2026_cleaned.csv"
     },
     {
       "filename": "France_ENV_1850_2026_cleaned.csv",
@@ -296,7 +302,7 @@
       "year_end": 2026,
       "records": 1416,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Europe",
@@ -339,7 +345,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Europe",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Germany_ENS_1880_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Germany_ENS_1880_2026_cleaned.csv",
+      "envelope": "Germany_ENV_1880_2026_cleaned.csv"
     },
     {
       "filename": "Germany_ENV_1880_2026_cleaned.csv",
@@ -348,7 +355,7 @@
       "year_end": 2026,
       "records": 1176,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Europe",
@@ -417,7 +424,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Europe",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Norway_ENS_1880_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Norway_ENS_1880_2026_cleaned.csv",
+      "envelope": "Norway_ENV_1880_2026_cleaned.csv"
     },
     {
       "filename": "Norway_ENV_1880_2026_cleaned.csv",
@@ -426,7 +434,7 @@
       "year_end": 2026,
       "records": 1176,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Europe",
@@ -456,7 +464,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Europe",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Russia_ENS_1800_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Russia_ENS_1800_2026_cleaned.csv",
+      "envelope": "Russia_ENV_1800_2026_cleaned.csv"
     },
     {
       "filename": "Russia_ENV_1800_2026_cleaned.csv",
@@ -465,7 +474,7 @@
       "year_end": 2026,
       "records": 1816,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Europe",
@@ -498,7 +507,7 @@
       "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Spain_1800_1830_cleaned.csv"
     },
     {
-      "filename": "Sweden_ENS_1880_2026_cleaned.csv",
+      "filename": "Sweden_ENS_1850_2026_cleaned.csv",
       "society": "Sweden",
       "year_start": 1850,
       "year_end": 2026,
@@ -508,7 +517,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Europe",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Sweden_ENS_1880_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Sweden_ENS_1850_2026_cleaned.csv",
+      "envelope": "Sweden_ENV_1850_2026_cleaned.csv"
     },
     {
       "filename": "Sweden_ENV_1850_2026_cleaned.csv",
@@ -517,7 +527,7 @@
       "year_end": 2026,
       "records": 152,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Europe",
@@ -534,7 +544,21 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Asia-Pacific",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Australia_ENS_1875_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Australia_ENS_1875_2026_cleaned.csv",
+      "envelope": "Australia_ENV_1875_2026_cleaned.csv"
+    },
+    {
+      "filename": "Australia_ENV_1875_2026_cleaned.csv",
+      "society": "Australia",
+      "year_start": 1875,
+      "year_end": 2026,
+      "records": 1216,
+      "family": "standard",
+      "is_envelope": true,
+      "has_bond_strength": false,
+      "has_node_value": false,
+      "region": "Asia-Pacific",
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Australia_ENV_1875_2026_cleaned.csv"
     },
     {
       "filename": "Australia_2026_cleaned.csv",
@@ -576,19 +600,6 @@
       "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Australia_cam5_1996_2026_cleaned.csv"
     },
     {
-      "filename": "China_Block2_ENV_1800_2025_cleaned.csv",
-      "society": "China",
-      "year_start": 1800,
-      "year_end": 2025,
-      "records": 1808,
-      "family": "standard",
-      "is_envelope": false,
-      "has_bond_strength": false,
-      "has_node_value": false,
-      "region": "Asia-Pacific",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/China_Block2_ENV_1800_2025_cleaned.csv"
-    },
-    {
       "filename": "China_ENS_1800_2025_cleaned.csv",
       "society": "China",
       "year_start": 1800,
@@ -599,7 +610,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Asia-Pacific",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/China_ENS_1800_2025_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/China_ENS_1800_2025_cleaned.csv",
+      "envelope": "China_ENV_1800_2025_cleaned.csv"
     },
     {
       "filename": "China_ENV_1800_2025_cleaned.csv",
@@ -608,14 +620,14 @@
       "year_end": 2025,
       "records": 1808,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Asia-Pacific",
       "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/China_ENV_1800_2025_cleaned.csv"
     },
     {
-      "filename": "China_CAMS5_ensemble_1850_2026_cleaned.csv",
+      "filename": "China_ENS_1850_2026_cleaned.csv",
       "society": "China",
       "year_start": 1850,
       "year_end": 2026,
@@ -625,7 +637,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Asia-Pacific",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/China_CAMS5_ensemble_1850_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/China_ENS_1850_2026_cleaned.csv",
+      "envelope": "China_ENV_1850_2026_cleaned.csv"
     },
     {
       "filename": "China_ENV_1850_2026_cleaned.csv",
@@ -634,7 +647,7 @@
       "year_end": 2026,
       "records": 152,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Asia-Pacific",
@@ -745,7 +758,7 @@
       "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Thailand_1850_2025_Thailand_1850_2025_cleaned.csv"
     },
     {
-      "filename": "Thailand_ENS_1850_2026_cleaned.csv",
+      "filename": "Thailand_ENS_1850_2025_cleaned.csv",
       "society": "Thailand",
       "year_start": 1850,
       "year_end": 2025,
@@ -755,7 +768,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Asia-Pacific",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Thailand_ENS_1850_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Thailand_ENS_1850_2025_cleaned.csv",
+      "envelope": "Thailand_ENV_1850_2025_cleaned.csv"
     },
     {
       "filename": "Thailand_ENV_1850_2025_cleaned.csv",
@@ -764,7 +778,7 @@
       "year_end": 2025,
       "records": 288,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Asia-Pacific",
@@ -807,7 +821,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Middle East",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Iran_ENS_1875_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Iran_ENS_1875_2026_cleaned.csv",
+      "envelope": "Iran_ENV_1875_2026_cleaned.csv"
     },
     {
       "filename": "Iran_ENV_1875_2026_cleaned.csv",
@@ -816,7 +831,7 @@
       "year_end": 2026,
       "records": 1216,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Middle East",
@@ -898,20 +913,9 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Historical",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/LatimVetus_ENS_460_2010_cleaned.csv"
-    },
-    {
-      "filename": "LatimVetus_ENV_460_2010_cleaned.csv",
-      "society": "Latium Vetus",
-      "year_start": 460,
-      "year_end": 2010,
-      "records": 632,
-      "family": "standard",
-      "is_envelope": false,
-      "has_bond_strength": true,
-      "has_node_value": true,
-      "region": "Historical",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/LatimVetus_ENV_460_2010_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/LatimVetus_ENS_460_2010_cleaned.csv",
+      "envelope": null,
+      "envelope_status": "envelope missing: no matching envelope anywhere in the repo; five-scorer re-run needed (the old ENV file was empty and has been removed)"
     },
     {
       "filename": "Rome_CAMS_recalculated_cleaned.csv",
@@ -963,7 +967,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Other",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Cambodia_ENS_1850_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Cambodia_ENS_1850_2026_cleaned.csv",
+      "envelope": "Cambodia_ENV_1850_2026_cleaned.csv"
     },
     {
       "filename": "Cambodia_ENV_1850_2026_cleaned.csv",
@@ -972,7 +977,7 @@
       "year_end": 2026,
       "records": 1416,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Other",
@@ -989,7 +994,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Other",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Chile_ENS_1875_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Chile_ENS_1875_2026_cleaned.csv",
+      "envelope": "Chile_ENV_1875_2026_cleaned.csv"
     },
     {
       "filename": "Chile_ENV_1875_2026_cleaned.csv",
@@ -998,7 +1004,7 @@
       "year_end": 2026,
       "records": 1216,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Other",
@@ -1015,7 +1021,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Other",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/DRC_ENS_1960_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/DRC_ENS_1960_2026_cleaned.csv",
+      "envelope": "DRC_ENV_1960_2026_cleaned.csv"
     },
     {
       "filename": "DRC_ENV_1960_2026_cleaned.csv",
@@ -1024,7 +1031,7 @@
       "year_end": 2026,
       "records": 536,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Other",
@@ -1041,7 +1048,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Other",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Egypt_ENS_1952_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Egypt_ENS_1952_2026_cleaned.csv",
+      "envelope": "Egypt_ENV_1952_2026_cleaned.csv"
     },
     {
       "filename": "Egypt_ENV_1952_2026_cleaned.csv",
@@ -1050,7 +1058,7 @@
       "year_end": 2026,
       "records": 600,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Other",
@@ -1067,7 +1075,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Other",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Ethiopia_ENS_1960_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Ethiopia_ENS_1960_2026_cleaned.csv",
+      "envelope": "Ethiopia_ENV_1960_2026_cleaned.csv"
     },
     {
       "filename": "Ethiopia_ENV_1960_2026_cleaned.csv",
@@ -1076,7 +1085,7 @@
       "year_end": 2026,
       "records": 536,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Other",
@@ -1093,7 +1102,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Other",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Greece_ENS_1875_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Greece_ENS_1875_2026_cleaned.csv",
+      "envelope": "Greece_ENV_1875_2026_cleaned.csv"
     },
     {
       "filename": "Greece_ENV_1875_2026_cleaned.csv",
@@ -1102,7 +1112,7 @@
       "year_end": 2026,
       "records": 1216,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Other",
@@ -1145,7 +1155,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Other",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Laos_ENS_1875_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Laos_ENS_1875_2026_cleaned.csv",
+      "envelope": "Laos_ENV_1875_2026_cleaned.csv"
     },
     {
       "filename": "Laos_ENV_1875_2026_cleaned.csv",
@@ -1154,7 +1165,7 @@
       "year_end": 2026,
       "records": 1216,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Other",
@@ -1171,7 +1182,9 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Other",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Latvia_ENS_1901_2025_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Latvia_ENS_1901_2025_cleaned.csv",
+      "envelope": null,
+      "envelope_status": "envelope missing: no matching envelope anywhere in the repo; five-scorer re-run needed"
     },
     {
       "filename": "Mauritania_ENS_1960_2026_cleaned.csv",
@@ -1184,7 +1197,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Other",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Mauritania_ENS_1960_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Mauritania_ENS_1960_2026_cleaned.csv",
+      "envelope": "Mauritania_ENV_1960_2026_cleaned.csv"
     },
     {
       "filename": "Mauritania_ENV_1960_2026_cleaned.csv",
@@ -1193,7 +1207,7 @@
       "year_end": 2026,
       "records": 536,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Other",
@@ -1210,7 +1224,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Other",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Mongolia_ENS_1850_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Mongolia_ENS_1850_2026_cleaned.csv",
+      "envelope": "Mongolia_ENV_1850_2026_cleaned.csv"
     },
     {
       "filename": "Mongolia_ENV_1850_2026_cleaned.csv",
@@ -1219,7 +1234,7 @@
       "year_end": 2026,
       "records": 1416,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Other",
@@ -1236,7 +1251,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Other",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/NewZealand_ENS_1875_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/NewZealand_ENS_1875_2026_cleaned.csv",
+      "envelope": "NewZealand_ENV_1875_2026_cleaned.csv"
     },
     {
       "filename": "NewZealand_ENV_1875_2026_cleaned.csv",
@@ -1245,7 +1261,7 @@
       "year_end": 2026,
       "records": 1216,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Other",
@@ -1288,7 +1304,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Other",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Nigeria_ENS_1960_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Nigeria_ENS_1960_2026_cleaned.csv",
+      "envelope": "Nigeria_ENV_1960_2026_cleaned.csv"
     },
     {
       "filename": "Nigeria_ENV_1960_2026_cleaned.csv",
@@ -1297,7 +1314,7 @@
       "year_end": 2026,
       "records": 536,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Other",
@@ -1314,7 +1331,9 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Other",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Philippines_ENS_1880_2016_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Philippines_ENS_1880_2016_cleaned.csv",
+      "envelope": null,
+      "envelope_status": "envelope missing: no matching envelope anywhere in the repo; five-scorer re-run needed"
     },
     {
       "filename": "Poland_ENS_1875_2026_cleaned.csv",
@@ -1327,7 +1346,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Other",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Poland_ENS_1875_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Poland_ENS_1875_2026_cleaned.csv",
+      "envelope": "Poland_ENV_1875_2026_cleaned.csv"
     },
     {
       "filename": "Poland_ENV_1875_2026_cleaned.csv",
@@ -1336,7 +1356,7 @@
       "year_end": 2026,
       "records": 1216,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Other",
@@ -1379,7 +1399,8 @@
       "has_bond_strength": true,
       "has_node_value": true,
       "region": "Other",
-      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/UK_ENS_1880_2026_cleaned.csv"
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/UK_ENS_1880_2026_cleaned.csv",
+      "envelope": "UK_ENV_1880_2026_cleaned.csv"
     },
     {
       "filename": "UK_ENV_1880_2026_cleaned.csv",
@@ -1388,7 +1409,7 @@
       "year_end": 2026,
       "records": 1176,
       "family": "standard",
-      "is_envelope": false,
+      "is_envelope": true,
       "has_bond_strength": false,
       "has_node_value": false,
       "region": "Other",
