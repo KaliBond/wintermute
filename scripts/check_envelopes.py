@@ -41,7 +41,7 @@ NO_ENVELOPE = {
     **{f'data/nations/{n}_ENS.csv': MISSING for n in [
         'Denmark', 'Hong_Kong', 'Indonesia', 'Iraq', 'Israel', 'Italy', 'Latvia', 'Lebanon',
         'Netherlands', 'Pakistan', 'Philippines', 'Syria']},
-    'data/nations/Japan_ENS.csv': MISSING + ' (annual series; the 5-year run and its envelope are in data/nations/5yr/)',
+    'data/nations/Japan_ENS.csv': MISSING + ' (annual 1875-2026 series, kept as loaded by the tools; the 5-year run is in data/nations/5yr/, and a second full set with envelope, 1850-2026, is cleaned_datasets/Japan_ENS_1850_2026)',
     'data/nations/Sweden_ENS.csv': MISSING + ' (annual series; the 5-year run and its envelope are in data/nations/5yr/)',
     'cleaned_datasets/Latvia_ENS_1901_2025_cleaned.csv': MISSING,
     'cleaned_datasets/Philippines_ENS_1880_2016_cleaned.csv': MISSING,

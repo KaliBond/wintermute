@@ -1,7 +1,7 @@
 {
   "generated": "2026-09-25",
-  "total_files": 106,
-  "total_records": 94321,
+  "total_files": 108,
+  "total_records": 97153,
   "datasets": [
     {
       "filename": "Canada_ENS_1850_2026_cleaned.csv",
@@ -717,6 +717,33 @@
       "has_node_value": true,
       "region": "Asia-Pacific",
       "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Japan_cleaned.csv"
+    },
+    {
+      "filename": "Japan_ENS_1850_2026_cleaned.csv",
+      "society": "Japan",
+      "year_start": 1850,
+      "year_end": 2026,
+      "records": 1416,
+      "family": "standard",
+      "region": "Asia-Pacific",
+      "is_envelope": false,
+      "has_bond_strength": true,
+      "has_node_value": true,
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Japan_ENS_1850_2026_cleaned.csv",
+      "envelope": "Japan_ENV_1850_2026_cleaned.csv"
+    },
+    {
+      "filename": "Japan_ENV_1850_2026_cleaned.csv",
+      "society": "Japan",
+      "year_start": 1850,
+      "year_end": 2026,
+      "records": 1416,
+      "family": "standard",
+      "region": "Asia-Pacific",
+      "is_envelope": true,
+      "has_bond_strength": false,
+      "has_node_value": false,
+      "github_url": "https://github.com/KaliBond/wintermute/blob/main/cleaned_datasets/Japan_ENV_1850_2026_cleaned.csv"
     },
     {
       "filename": "Pakistan_cleaned.csv",
