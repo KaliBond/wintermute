@@ -58,6 +58,7 @@ Everything below (hypotheses, results, other models' scores) would contaminate a
 | `results/replication_prompt*.md`, `R6_prompt*_vs_all.md` | Claude test–retest |
 | `runs/kimi_blind/A_calc/`, `B_calc/`, `series/` | Kimi single-pass metrics |
 | `results/kimi/` | Kimi vs Claude 15 (A, B), vs Grok 4 (A), vs GPT 3 (A); Kimi hypothesis and series checks |
+| `results/DT2_adoption_and_Kimi_blind_2026-10-02.md` | Write-up: DT-2 rulings, open items before the rescore, Kimi results (H5 fails under Kimi despite scoring oral evidence) |
 
 ## 5. Headline results so far (details in RUNLOG.md)
 Holding across Claude (15), Grok (4) and GPT (3):

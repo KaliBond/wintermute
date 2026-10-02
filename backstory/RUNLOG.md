@@ -2,6 +2,12 @@
 
 Every run, decision and deviation is recorded here, newest first.
 
+## 2026-10-02 — Write-up: DT-2 adoption and Kimi blind pass
+
+- `results/DT2_adoption_and_Kimi_blind_2026-10-02.md`: the DT-2 rulings and hashes; four items to settle before the DT-2 rescore (R1's one-sentence NA rule conflicts with the CSV-only contract; worked examples name two scored cells and two models; the prompts-only zip is still DT-1; run numbering); Kimi results.
+- Kimi (single pass, DT-1) reproduces H2a, H2b (Aegean), H3 (Egypt) and H4's failure; H1b holds in direction; H1c Flow 3rd; H1a +2.03.
+- **H5 fails under Kimi** (Energy ratio 0.36, Cognition 0.69) even though Kimi scores oral Lore and Archive at 7–8 and NAs nothing in the non-state cases. NA choices therefore do not explain the H5 split on their own: Kimi rates the non-state societies' other functions lower and books more Stress. Single pass; needs a Kimi ensemble.
+
 ## 2026-10-02 — Run 10 prep: DT-2 adopted
 
 **Decision (Kari McKern):** DT-2 adopted. The three rulings R1–R3 from `prompts/DT-2-amendment.md` were appended verbatim, worked example included, to both scorer prompts under a new section `## DT-2 amendments (2026-10-02)`. The DT-1 text above that section is byte-for-byte unchanged. Source record kept as `prompts/DT-2-amendment-draft.md`, identical to `prompts/DT-2-amendment.md`. No rescoring yet; Kari will say when.
