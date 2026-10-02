@@ -1,0 +1,26 @@
+# Preliminary hypothesis check
+
+Input: `runs/replication_R6/A_calc/node_metrics.csv`. Single run; treat as a pilot reading, not a result.
+
+## H1 Setting shapes topology
+- (a) Stewards+Archive mean Node Value: river-valley 11.57 vs other non-collapse 10.90 -> supports
+- (b) Flow minus Helm Node Value, maritime: {'B07': 3.6, 'B11': 1.6}; other mean -1.07. A missing value means Helm was NA (the hidden-Helm pattern itself).
+- (c) Xiongnu node ranking by Node Value: ['Shield', 'Helm', 'Flow', 'Stewards', 'Craft', 'Lore', 'Hands', 'Archive']. Shield rank 1, Flow rank 3 of 8.
+
+## H2 Hysteresis (fall phase only)
+- B04 -> B05: mean dEnergy -7.12, mean dCognition -34.08; nodes where both fell: 8/8
+- B08 -> B09: mean dEnergy -5.33, mean dCognition -23.47; nodes where both fell: 8/8
+- Recovery leg not testable: no post-collapse recovery windows scored yet.
+
+## H3 Helm-Lore coherence falls before breakdown
+- Not testable in this run: needs at least two windows before each breakdown (e.g. Egypt late 5th and 6th dynasty; Mycenaean c.1350 and c.1250).
+
+## H4 Relief devices hold Hands' stress down
+- Hands Stress, Old Babylonian (misharum edicts): 6.2; other palace/state cases {'B02': 7.0, 'B04': 6.0, 'B08': 6.4} mean 6.47 -> supports
+- Caveat: H4 predicts 'lower for longer', which needs time series; a single window can only show level.
+
+## H5 No ladder
+- Non-collapse state cases: mean Energy 1.98, mean Cognition 37.71
+- Non-state cases: mean Energy 1.83, mean Cognition 35.18
+- Counts against H5 only if non-state cases cluster at the low end: not the case
+

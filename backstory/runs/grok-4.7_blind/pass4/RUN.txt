@@ -1,0 +1,19 @@
+Grok 4.7 isolated scoring pass of Backstory_Prompts_Only_2026-10-02.zip
+Date: 2026-10-02
+Saved to C:\Kari\GROK3. Files under C:\Kari\AAA and C:\Kari\GROK2 were not changed.
+Rubric: CAMS RAW SCORER COUNTRIES v1.2-OPT, deep-time adapter DT-1.
+Derived metrics were not computed. Scores were not edited.
+
+grok-4.7_pass1/raw_scores.csv
+  Prompt A, twelve societies, 96 rows.
+  SHA-256 87389bfc996082e0c10475673bc2db4e0670c9355473109f7b1909c24f127fd9
+  NA nodes: 5 of 96 (Longshan Archive; Harappan Shield; Minoan Shield; LH IIIC Archive; Xiongnu Archive).
+
+grok-4.7_windows2/raw_scores.csv
+  Prompt B, ten windows, 80 rows.
+  SHA-256 f0b4b000265658d65cf169f63946e1e86a7aa512bb68804371642458ecb3e273
+  NA nodes: 4 of 80 (LH IIIC Archive; Protogeometric Shield; Protogeometric Stewards; Protogeometric Archive).
+
+Each prompt was scored in its own conversation. Each scorer read only that prompt file. One tool call each.
+The first prompt B scorer stalled after reading the file and was replaced. The file above is the replacement pass.
+This is one pass of each prompt, not a five-scorer ensemble.

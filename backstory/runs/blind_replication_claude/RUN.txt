@@ -1,0 +1,11 @@
+Backstory blind passes, 2026-10-02
+Source: C:\Users\julie\wintermute\backstory\Backstory_Prompts_Only_2026-10-02.zip
+Scorer: Claude Opus 5.5 (claude-opus-5-5); each pass is its own fresh-context subagent.
+Blindness: each agent received only its prompt file. It had no access to project files, hypotheses or previous scores, and web use was barred.
+Passes: 5 per prompt (pass1..pass5). Each prompt was run in separate agents, never together.
+
+pass1..pass5/promptA_raw_scores.csv   PROMPT_A_twelve_societies.txt  96 rows each
+pass1..pass5/promptB_raw_scores.csv   PROMPT_B_extra_windows.txt     80 rows each
+ensemble_promptA/, ensemble_promptB/   from wintermute/backstory/scripts/aggregate_ensemble.py
+  block1_ensemble_mean.csv  mean C,K,S,A (NA when fewer than 3 passes scored the node) + Node Value, Bond Strength
+  block2_envelope.csv       per-dimension SD, V range, n_eff, NA_rate, bond_n

@@ -1,0 +1,16 @@
+Grok 4.7 single scoring pass of Backstory_Prompts_Only_2026-10-02.zip
+Date: 2026-10-02
+Rubric: CAMS RAW SCORER COUNTRIES v1.2-OPT, deep-time adapter DT-1, as pasted in the zip.
+Derived metrics were not computed.
+
+grok-4.7_pass1/raw_scores.csv
+  Prompt A, twelve societies, 96 rows.
+  NA nodes: 7 of 96 (Longshan Archive; Harappan Shield, Stewards, Archive; Minoan Shield; LH IIIC Archive; Xiongnu Archive).
+
+grok-4.7_windows2/raw_scores.csv
+  Prompt B, ten windows, 80 rows.
+  NA nodes: 2 of 80 (LH IIIC Archive; Protogeometric Archive).
+
+Both prompts were scored in the same session, so this is not five independent scorers and not a blind pass.
+B05_FirstIntermediate_Egypt -2150 and B09_LBA_Collapse_Aegean -1175 are identical across the two files (16 shared rows, 0 differences) because the evidence judgment did not change.
+The session had already opened the backstory README, TESTING.md, and HYPOTHESES.md before scoring.
