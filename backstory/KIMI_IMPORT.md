@@ -1,4 +1,4 @@
-# Backstory: import index for Kimi (state as of 2026-10-02)
+# Backstory: import index for Kimi (state as of 2026-10-02, after DT-2 adoption)
 
 Root: `C:\Users\julie\wintermute\backstory\`  (all paths below are relative to it)
 Bundle: `Backstory_Methods_Results_2026-10-02.zip` (everything listed here, one file)
@@ -20,8 +20,10 @@ Everything below (hypotheses, results, other models' scores) would contaminate a
 ## 2. Method
 | Path | What it is |
 |---|---|
-| `prompts/scorer_prompt_deeptime_v1.2-OPT.txt` | Prompt A: 12 societies (SHA-256 64009fc6…) |
-| `prompts/scorer_prompt_deeptime_v1.2-OPT_windows2.txt` | Prompt B: 10 extra windows incl. overlap B05, B09 (SHA-256 90b68399…) |
+| `prompts/scorer_prompt_deeptime_v1.2-OPT.txt` | Prompt A: 12 societies, now DT-2 (SHA-256 f4bfc5b8…) |
+| `prompts/scorer_prompt_deeptime_v1.2-OPT_windows2.txt` | Prompt B: 10 extra windows incl. overlap B05, B09, now DT-2 (SHA-256 0652e537…) |
+| `prompts/DT-2-amendment.md` | DT-2 rulings R1–R3, adopted 2026-10-02 (`DT-2-amendment-draft.md` = identical source record) |
+| `prompts/archive/…_DT1.txt` | DT-1 originals (A 64009fc6…, B 90b68399…); every run so far, including Kimi's, was scored under DT-1 |
 | `scripts/aggregate_ensemble.py` | N scorer CSVs → ensemble mean (block1) + envelope (block2); CAMNATIONSM5N spec, NA-aware |
 | `scripts/backstory_calc.py` | Cognition (A×C), Energy (K−S), Node Value, Bond Strength |
 | `scripts/hypothesis_check.py` | H1–H5 single-window tests |
@@ -40,6 +42,7 @@ Everything below (hypotheses, results, other models' scores) would contaminate a
 | `runs/grok-4.7/` | Grok 4.7 | 1 | NOT blind (had read hypotheses) |
 | `runs/grok-4.7_blind/` + `pass2/`, `pass3/`, `pass4/` | Grok 4.7 | 4 | Blind, one conversation per prompt |
 | `runs/gpt_3pass/pass1..3/` | GPT (ChatGPT Work/Codex, version unverified) | 3 | Isolated agent contexts; A and B in same context |
+| `runs/kimi_blind/pass1/` | Kimi (version not recorded) | 1 | RUN-KIMI-BLIND-1, sealed (`RUN-KIMI-BLIND-1-SEAL.txt`); A and B returned together, isolation not confirmed |
 
 ## 4. Ensembles and results
 | Path | What it is |
@@ -53,6 +56,8 @@ Everything below (hypotheses, results, other models' scores) would contaminate a
 | `results/three_vs_claude_A.md`, `…_B.md` | GPT vs Claude (files named before GPT was identified) |
 | `results/three_vs_grok_A.md`, `…_B.md` | GPT vs Grok |
 | `results/replication_prompt*.md`, `R6_prompt*_vs_all.md` | Claude test–retest |
+| `runs/kimi_blind/A_calc/`, `B_calc/`, `series/` | Kimi single-pass metrics |
+| `results/kimi/` | Kimi vs Claude 15 (A, B), vs Grok 4 (A), vs GPT 3 (A); Kimi hypothesis and series checks |
 
 ## 5. Headline results so far (details in RUNLOG.md)
 Holding across Claude (15), Grok (4) and GPT (3):
@@ -66,7 +71,8 @@ Model-dependent or not a finding: H1a (river Stewards+Archive), H1c (steppe Flow
 Scorer differences: Grok ≈ +0.3 above Claude; GPT ≈ +1 (Abstraction +1.7). Claude NAs Harappan Helm and Shield; Grok never does; GPT NAs Lore and Archive in all non-literate societies (treats oral tradition as no evidence).
 
 ## 6. Open items
-- DT-2 rubric: settle oral evidence for Lore and Archive; function-absent vs evidence-absent NA rule; Hands Abstraction for coerced skilled labour.
+- DT-2 adopted 2026-10-02 (R1 evidenced absence scored low, NA = unknown; R2 oral systems count for Lore and Archive; R3 coercion books to Stress, not Abstraction). See RUNLOG "Run 10 prep: DT-2 adopted".
+- **Next step: all-model rescore under DT-2** (Claude, Grok, GPT, Kimi; fresh blind passes), reporting DT-1 vs DT-2 differences cell by cell. Not started: waiting for Kari's go.
 - Grok passes 5–6 pending; five-pass blind GPT run; confirm R6 model.
 - H6 (post hoc, untested): recovery speed depends on whether the setting forces re-coordination.
 

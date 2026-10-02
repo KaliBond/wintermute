@@ -2,6 +2,21 @@
 
 Every run, decision and deviation is recorded here, newest first.
 
+## 2026-10-02 — Run 10 prep: DT-2 adopted
+
+**Decision (Kari McKern):** DT-2 adopted. The three rulings R1–R3 from `prompts/DT-2-amendment.md` were appended verbatim, worked example included, to both scorer prompts under a new section `## DT-2 amendments (2026-10-02)`. The DT-1 text above that section is byte-for-byte unchanged. Source record kept as `prompts/DT-2-amendment-draft.md`, identical to `prompts/DT-2-amendment.md`. No rescoring yet; Kari will say when.
+
+| Prompt | DT-1 SHA-256 (record) | DT-2 SHA-256 (current) |
+| --- | --- | --- |
+| A, `prompts/scorer_prompt_deeptime_v1.2-OPT.txt` | 64009fc6… (`64009fc68f5a86b01c697da9a824300e8ea40dca580dfb4a3714e029fe010ee2`) | `f4bfc5b812f3cb5f304a5c6840d2f3bafad64fa6ce5fa9d22ec43b9f0d7e2b62` |
+| B, `prompts/scorer_prompt_deeptime_v1.2-OPT_windows2.txt` | 90b68399… (`90b683991da9128efad03dbedb605cde59e814db3f684985ccdfb058eb3d2052`) | `0652e5376c877f5bb9e09c883ab619040c0154c51438918a7c29d61988833aac` |
+
+- DT-1 originals archived as `prompts/archive/scorer_prompt_deeptime_v1.2-OPT_DT1.txt` and `prompts/archive/scorer_prompt_deeptime_v1.2-OPT_windows2_DT1.txt`; their hashes match the DT-1 record above. Every run before this entry was scored under DT-1.
+- The rulings: **R1** NA means unknown; evidenced absence is scored low. **R2** Archive and Lore are functions, not media; oral systems are admissible evidence, and a pass that NAs a documented oral system is flagged at intake as a rubric-interpretation error. **R3** Abstraction scores the method that exists; coercion and unused method book to Stress.
+- Any DT-1 vs DT-2 differences found in the rescore are to be reported cell by cell as findings, not corrections.
+
+**Also imported (Kimi, fourth model lineage):** `runs/kimi_blind/` (RUN-KIMI-BLIND-1, one blind pass per prompt, sealed) and its reports in `results/kimi/`. Copied verbatim from the Kimi workspace (`blind-draw/`). On import, both raw-score hashes in `runs/kimi_blind/pass1/SHA256SUMS` and all 14 entries in `RUN-KIMI-BLIND-1-SEAL.txt` were checked against the source files and match. The seal file is unedited, so its report paths still read `../results-kimi/`; those reports now sit in `results/kimi/`. Per the Kimi `RUN.txt`, this is a single pass with prompts A and B returned together, so A/B isolation is not confirmed, and the model version is not recorded. Scored under DT-1.
+
 ## 2026-10-02 — Complete results write-up
 
 - Paper tab "Complete results" filled: run scope, all-20-window chart, window table, hypothesis verdicts by run, node-level Node Value table for Claude 15 / Grok 4 / GPT 3.
