@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading Societies Without Their Stories — CAMS Deep-Time Test</title>
+<meta name="description" content="A blind, pre-registered, multi-model test of CAMS on twenty ancient society-windows: 22 scoring passes from Claude, Grok and GPT. Four findings held across all three models; the disagreements show what each model counts as evidence.">
+<link rel="canonical" href="https://neuralnations.org/backstory-deep-time">
+<link rel="stylesheet" href="style.css">
+<style>
+:root{
+  --page:#ffffff; --card:#ffffff; --ink:#1c2333; --muted:#5d6577;
+  --accent:#2F6F7D; --accent-soft:#e8f1f3;
+  --green:#2e7d52; --green-soft:#e2f0e8;
+  --amber:#9a6a12; --amber-soft:#f6ecd4;
+  --red:#a8382c; --red-soft:#f7e4e1;
+  --gray:#5f6672; --gray-soft:#F0F0F0;
+  --line:#E0E0E0;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+}
+*{box-sizing:border-box}
+body{background:var(--page);color:var(--ink)}
+.report{max-width:920px;margin:0 auto;padding:0 24px 80px;
+  font-family:Georgia,'Times New Roman',serif;line-height:1.68;font-size:17px}
+header.masthead{border-bottom:3px double var(--line);padding:42px 0 24px;margin-bottom:30px}
+.brand{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--accent);font-weight:700}
+.brand span{color:var(--muted)}
+.report h1{font-size:40px;line-height:1.15;margin:14px 0 10px;font-weight:700}
+.subtitle{font-size:19px;color:var(--muted);font-style:italic;margin:0 0 16px}
+.meta{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;color:var(--muted)}
+.meta b{color:var(--ink)}
+.report h2{font-size:25px;margin:50px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+.report h3{font-size:19px;margin:28px 0 10px}
+.report p{margin:0 0 16px}
+.lede{font-size:19.5px;line-height:1.6}
+.summary{border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:6px;
+  padding:22px 26px;margin:26px 0;background:var(--card)}
+.summary h2{border:none;margin:0 0 10px;padding:0;font-size:20px;color:var(--accent)}
+.summary ol{margin:0 0 12px;padding-left:22px}
+.summary li{margin-bottom:8px}
+.verdicts{display:grid;gap:12px;margin:22px 0}
+.verdict{border:1px solid var(--line);border-radius:6px;padding:14px 18px;display:flex;gap:14px;align-items:flex-start}
+.tag{flex:0 0 118px;font-family:-apple-system,'Segoe UI',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;border-radius:4px;padding:5px 8px;text-align:center;margin-top:3px}
+.t-hold{background:var(--green-soft);color:var(--green)}
+.t-dir{background:var(--accent-soft);color:var(--accent)}
+.t-dep{background:var(--amber-soft);color:var(--amber)}
+.t-fail{background:var(--red-soft);color:var(--red)}
+.verdict .claim{font-weight:700;margin-bottom:2px}
+.verdict .ev{font-size:15px;color:var(--muted)}
+.tablewrap{overflow-x:auto;margin:16px 0 24px}
+.report table{width:100%;border-collapse:collapse;font-size:14px;font-family:-apple-system,'Segoe UI',sans-serif}
+.report th{background:#F0F0F0;text-align:left;padding:8px 10px;border-bottom:2px solid var(--line);
+  font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.report td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.report td.num,.report th.num{text-align:right;font-variant-numeric:tabular-nums}
+.callout{border-left:4px solid var(--accent);padding:4px 0 4px 18px;margin:22px 0;font-size:16px}
+figure.chart{margin:26px 0;border:1px solid var(--line);border-radius:6px;padding:16px 16px 12px}
+.chart-title{font-family:-apple-system,'Segoe UI',sans-serif;font-weight:700;font-size:15px;margin:0 0 2px}
+.chart-sub{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;color:var(--muted);margin:0 0 10px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;color:var(--ink);margin:0 0 6px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.panels{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.panel{position:relative}
+.panel svg{width:100%;height:auto;display:block;overflow:visible}
+.panel-name{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;font-weight:700;color:var(--ink);margin:0 0 2px}
+.tip{position:absolute;pointer-events:none;background:#fff;border:1px solid var(--line);border-radius:6px;
+  box-shadow:0 2px 8px rgba(0,0,0,.12);padding:8px 10px;font-family:-apple-system,'Segoe UI',sans-serif;
+  font-size:12.5px;line-height:1.45;color:var(--ink);min-width:170px;display:none;z-index:5}
+.tip b{display:block;margin-bottom:3px}
+.tip .row{display:flex;justify-content:space-between;gap:12px}
+.tip .k{display:inline-flex;align-items:center;gap:6px;color:var(--muted)}
+figcaption{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;color:var(--muted);margin-top:10px;line-height:1.5}
+details.tableview{margin-top:8px;font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px}
+details.tableview summary{cursor:pointer;color:var(--accent);font-weight:600}
+.report code{font-family:Consolas,'SF Mono',monospace;font-size:.88em;background:#F0F0F0;padding:1px 5px;border-radius:3px}
+.report ul.plain{padding-left:20px}
+.report ul.plain li{margin-bottom:8px}
+.endnote{border-top:3px double var(--line);margin-top:56px;padding-top:20px;
+  font-family:-apple-system,'Segoe UI',sans-serif;font-size:13.5px;color:var(--muted)}
+@media(max-width:700px){
+  .report{padding:0 16px 60px;font-size:16.5px}
+  .report h1{font-size:30px}
+  .panels{grid-template-columns:1fr}
+  .verdict{flex-direction:column;gap:6px}
+  .tag{flex:none;align-self:flex-start}
+}
+</style>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+
+<main class="report">
+<header class="masthead">
+  <div class="brand">Neural Nations <span>· CAMS research report</span></div>
+  <h1>Reading Societies Without Their Stories</h1>
+  <p class="subtitle">A blind, pre-registered, multi-model test of CAMS on ancient collapse and recovery</p>
+  <div class="meta"><b>Kari McKern</b> · ComplexityWorkz · 2 October 2026 · 20 society-windows · 22 blind scoring passes per prompt from three AI model families (Claude, Grok, GPT) · working paper</div>
+</header>
+
+<p class="lede">CAMS reads a society through eight functions, not through the story it tells about itself. Deep time is a hard place to test that claim. The record is thin, often written by victors or later traditions, and easy to fill with modern ideas about states and progress. So we gave three AI model families the same blind rubric, had each score the same twenty ancient society-windows in fresh contexts, and checked five hypotheses that were written down before any scoring began.</p>
+
+<section class="summary">
+  <h2>What all three models agreed on</h2>
+  <ol>
+    <li><b>Collapse drains everything at once.</b> In both the Egyptian and the Aegean breakdowns, every function lost surplus (Capacity − Stress) and shared thinking (Abstraction × Coherence) together.</li>
+    <li><b>The Aegean recovered far more slowly than it fell.</b> Egypt rebuilt to near Old Kingdom levels in under three centuries. Under Claude and Grok, the Aegean was still below its pre-collapse level 500 years later.</li>
+    <li><b>Egypt gave an early warning; the Aegean did not.</b> Coherence between rulers (Helm) and meaning-makers (Lore) fell for two centuries in Egypt while surplus was still positive. In the Aegean it stayed flat until the breakdown.</li>
+    <li><b>Debt-relief edicts did not coincide with lower labour stress</b> in Mesopotamia. This test has a design flaw (below), but it was pre-registered and it failed.</li>
+  </ol>
+  <p style="margin:0">The models also disagreed, and that disagreement is a result in itself. They differ in scale and, more importantly, in what they accept as evidence. The one hypothesis about non-state societies (“no ladder”) passed under Claude, sat exactly on the cut-off under Grok, and could not be tested under GPT.</p>
+</section>
+
+<h2>1. What was tested</h2>
+<p>CAMS scores eight functional nodes: Helm (command), Shield (force and order), Lore (religion and meaning), Stewards (owners of stores and land), Craft (skilled production), Hands (mass labour), Archive (records and memory, written or oral) and Flow (exchange). Each node gets four scores from 1 to 10: Coherence, Capacity, Stress and Abstraction. Two composites carry the argument:</p>
+<ul class="plain">
+  <li><b>Energy = Capacity − Stress:</b> whether a function has surplus to work with.</li>
+  <li><b>Cognition = Abstraction × Coherence:</b> how much shared symbolic thinking it does.</li>
+</ul>
+
+<h3>Cases</h3>
+<p><b>Prompt A</b> scored twelve societies at one anchor year each: Longshan China, Shang Anyang, the Mature Harappan cities, Old Kingdom Egypt, First Intermediate Egypt, Hammurabi’s Babylon, Neopalatial Crete, Mycenaean Greece (LH IIIB), the Aegean after the palace destructions, pre-contact Aboriginal Australia, Māori Aotearoa and the Xiongnu. <b>Prompt B</b> added eight windows to build two collapse-and-recovery series (Egypt and the Aegean) and one Mesopotamian series. It rescored the two collapses as overlap anchors.</p>
+
+<h3>Safeguards</h3>
+<ul class="plain">
+  <li><b>Evidence gate.</b> A node is scored only if the scorer can name an indicator of performance, an indicator of strain and a mechanism tying them to that node. Otherwise it is NA. Rubric: CAMS RAW SCORER v1.2-OPT with a deep-time adapter (DT-1).</li>
+  <li><b>Source posture.</b> Conquerors’ accounts, later traditions and colonial ethnography count as reports, not as evidence of function.</li>
+  <li><b>Blind passes.</b> Every pass ran in a fresh context that saw only the prompt: no project files, no hypotheses, no other scores, no knowledge that other passes existed.</li>
+  <li><b>Pre-registration.</b> Hypotheses H1–H5 were logged before scoring. The series tests were written into a script whose SHA-256 hash (<code>353aaeab…</code>) was logged before the extra windows were scored.</li>
+</ul>
+
+<div class="tablewrap"><table>
+  <thead><tr><th>Model</th><th class="num">Passes per prompt</th><th>Conditions</th></tr></thead>
+  <tbody>
+    <tr><td>Claude (Opus 5.5)</td><td class="num">15</td><td>Three independent runs of 5; fresh subagent per pass; prompts A and B always separate</td></tr>
+    <tr><td>Grok 4.7</td><td class="num">4</td><td>One fresh conversation per prompt, prompt file only</td></tr>
+    <tr><td>GPT (ChatGPT Work/Codex, version unverified)</td><td class="num">3</td><td>Fresh isolated agent per pass; prompts A and B in the same context</td></tr>
+  </tbody>
+</table></div>
+<p>An early non-blind Claude pass and a Grok pass that had read the hypotheses are kept in the run log but excluded from the analysis. One upload turned out to be a byte-identical copy of an earlier run and was not counted.</p>
+
+<h2>2. Is the instrument stable?</h2>
+<p>Within one model, yes. Between models, the order of societies mostly holds, but the scale does not.</p>
+<div class="tablewrap"><table>
+  <thead><tr><th>Comparison</th><th>Mean absolute difference per score (A / B)</th><th>Rank agreement of societies (A / B)</th><th>Mean offset</th></tr></thead>
+  <tbody>
+    <tr><td>Claude run vs Claude run (5-pass ensembles)</td><td>0.14–0.23 / 0.11–0.22</td><td>0.97–0.99 / 1.00</td><td>under ±0.15</td></tr>
+    <tr><td>Single Claude pass vs other Claude runs</td><td>0.26–0.29</td><td>—</td><td>—</td></tr>
+    <tr><td>Grok (4) vs Claude (15)</td><td>0.39–0.53 / 0.41–0.57</td><td>0.92 / 1.00</td><td>+0.2 to +0.47</td></tr>
+    <tr><td>GPT (3) vs Claude (15)</td><td>0.89–1.64 / 0.84–1.80</td><td>0.81 / 0.99</td><td>+0.6 to +1.2; Abstraction +1.6 to +1.8</td></tr>
+  </tbody>
+</table></div>
+<p>All three models were about equally self-consistent: the spread between passes of one model was 0.12–0.44 points per dimension. So the gaps between models are not noise from single passes; each model applies the rubric in its own consistent way. The ten time windows in prompt B were ranked almost identically by every model (0.98–1.00). The twelve societies in prompt A were ranked less consistently (0.81–0.92), and the shifts fall on societies without visible rulers or without writing.</p>
+<p>Scale offsets matter less than they look. Most tests compare windows within one model, so a model that scores everything a point higher still reaches the same verdict.</p>
+
+<h2>3. Collapse and recovery</h2>
+<p>The two collapses look alike on the way down and very different on the way back.</p>
+
+<figure class="chart" id="energy-chart">
+  <p class="chart-title">Mean Energy (Capacity − Stress) across the eight nodes, by window</p>
+  <p class="chart-sub">Ensemble means: Claude 15 passes, Grok 4, GPT 3. Years BCE. Below zero, functions are under more strain than they have capacity for. Both panels use the same scale.</p>
+  <div class="legend" id="energy-legend"></div>
+  <div class="panels" id="energy-panels"></div>
+  <figcaption>Egypt reaches about zero by 2250 BCE and bottoms out in the First Intermediate Period. All three models put the Middle Kingdom back near the Old Kingdom’s height. In the Aegean, the fall from LH IIIB is the steepest in the data. By 750 BCE, Claude and Grok still put the Aegean below its LH IIIB level, while GPT puts it slightly above.</figcaption>
+  <details class="tableview"><summary>Show the data as a table</summary><div class="tablewrap" id="energy-table"></div></details>
+</figure>
+
+<p>The early-warning signal (H3) is a separate measure: the mean Coherence of Helm and Lore. In Egypt it fell from about 8 to between 5 and 6.5 across the two pre-collapse windows under every model, while Energy was still positive. In the Aegean it stayed flat until the breakdown. Egypt’s collapse began as a loss of shared purpose at the top. The Aegean’s struck a system that still looked coherent at the top.</p>
+
+<div class="tablewrap"><table>
+  <thead><tr><th>Series</th><th class="num">Fall, Energy per century</th><th class="num">Recovery, Energy per century</th><th class="num">Helm–Lore Coherence before breakdown</th></tr></thead>
+  <tbody>
+    <tr><td>Egypt (Claude)</td><td class="num">−2.86</td><td class="num">+2.56</td><td class="num">8.1 → 5.1</td></tr>
+    <tr><td>Egypt (Grok)</td><td class="num">−2.02</td><td class="num">+2.01</td><td class="num">8.0 → 5.4</td></tr>
+    <tr><td>Egypt (GPT)</td><td class="num">−1.75</td><td class="num">+1.39</td><td class="num">8.0 → 6.5</td></tr>
+    <tr><td>Aegean (Claude)</td><td class="num">−7.27</td><td class="num">+1.95</td><td class="num">5.5 → 5.7</td></tr>
+    <tr><td>Aegean (Grok)</td><td class="num">−6.19</td><td class="num">+1.27</td><td class="num">6.2 → 6.5</td></tr>
+    <tr><td>Aegean (GPT)</td><td class="num">−4.17</td><td class="num">+1.59</td><td class="num">6.8 → 6.8</td></tr>
+  </tbody>
+</table></div>
+
+<p>Two patterns at node level are worth noting. First, in both collapses Lore holds up best: it has the highest Node Value in First Intermediate Egypt under all three models. The lowest nodes are Helm, Hands and Flow in Egypt, and Archive and Helm in the Aegean: meaning-making outlasts command and administration. Second, Hands (mass labour) is the lowest or second-lowest node in almost every state window under every model, while non-state societies (Aboriginal Australia, Māori Aotearoa) do not show that gap. The state’s stress lands on its labourers.</p>
+
+<h2>4. Hypothesis results</h2>
+<p>Four of the eight tested claims gave the same verdict under all three models: three held and one (H4) failed. Two held in direction only, and two depended on the scorer.</p>
+
+<div class="verdicts">
+  <div class="verdict"><div class="tag t-hold">Holds, all models</div><div><div class="claim">H2a: in collapse, Energy and Cognition fall together in every node</div><div class="ev">Claude 8/8 nodes in both collapses; Grok 8/8 and 7/8; GPT 8/8 and 7/8.</div></div></div>
+  <div class="verdict"><div class="tag t-hold">Holds, all models</div><div><div class="claim">H2b (Aegean): recovery is slower than the fall</div><div class="ev">The Aegean falls 4–7 Energy points per century and recovers at 1.3–2.0. Egypt mostly does not show this: it recovers about as fast as it fell under Claude and Grok, more slowly under GPT.</div></div></div>
+  <div class="verdict"><div class="tag t-hold">Holds, all models</div><div><div class="claim">H3 (Egypt): Helm–Lore coherence falls before breakdown</div><div class="ev">A fall of 1.5–3.0 points under every model while Energy is still positive. In the Aegean the same test fails under every model.</div></div></div>
+  <div class="verdict"><div class="tag t-dir">In direction</div><div><div class="claim">H1b: maritime societies have Flow above Helm</div><div class="ev">Minoan Crete +2.1 to +4.1, Māori +0.8 to +1.2, against −0.6 to −0.8 for the other societies. The direction holds; the size varies by model.</div></div></div>
+  <div class="verdict"><div class="tag t-dir">In direction</div><div><div class="claim">H1a: river-valley states have stronger Stewards and Archive</div><div class="ev">Claude pooled +0.82, Grok +0.40, GPT +0.71 Node Value points, but one of three Claude runs points the other way. Small, and moved by which Harappan nodes are NA.</div></div></div>
+  <div class="verdict"><div class="tag t-fail">Fails, all models</div><div><div class="claim">H4: debt-relief edicts keep labour stress lower for longer</div><div class="ev">Mesopotamian Hands Stress was below the comparator in 0 of 3 windows under every model. Design flaw: edicts were issued <i>because</i> labour was under debt strain, so the test cannot separate cause from response. It is still reported as a failure, because that is what the pre-registered test showed.</div></div></div>
+  <div class="verdict"><div class="tag t-dep">Depends on scorer</div><div><div class="claim">H1c: steppe pastoralists couple Shield and Flow</div><div class="ev">Shield ranks first under every model, but Flow ranks 3rd under Claude and GPT and 5th under Grok.</div></div></div>
+  <div class="verdict"><div class="tag t-dep">Depends on scorer</div><div><div class="claim">H5: no ladder (non-state societies do not sit at the low end)</div><div class="ev">Holds under Claude (Energy ratio 0.92 against a 0.80 cut-off). Exactly on the line under Grok (0.798). Not testable under GPT, which left half of Aboriginal Australia’s nodes NA.</div></div></div>
+</div>
+
+<h2>5. What each model counts as evidence</h2>
+<p>The NA cells, where a model declined to score a node, differ more between models than the scores do. They show what each model treats as evidence.</p>
+<div class="tablewrap"><table>
+  <thead><tr><th>Node left NA (passes out of total)</th><th class="num">Claude (15)</th><th class="num">Grok (4)</th><th class="num">GPT (3)</th></tr></thead>
+  <tbody>
+    <tr><td>Harappan Helm (no visible rulers)</td><td class="num">12</td><td class="num">0</td><td class="num">1</td></tr>
+    <tr><td>Harappan Shield</td><td class="num">14</td><td class="num">1</td><td class="num">3</td></tr>
+    <tr><td>Aboriginal Australia: Helm, Shield, Lore, Archive</td><td class="num">0</td><td class="num">0</td><td class="num">3 each</td></tr>
+    <tr><td>Māori Lore and Archive</td><td class="num">0</td><td class="num">0</td><td class="num">3 each</td></tr>
+    <tr><td>Longshan Archive (no writing)</td><td class="num">15</td><td class="num">4</td><td class="num">3</td></tr>
+  </tbody>
+</table></div>
+<ul class="plain">
+  <li><b>Claude hides Harappa’s rulers.</b> It accepts the uniform weights, bricks and seals as evidence of records and craft, but finds nothing tying them to a ruling centre. Grok assigns that coordination to Helm.</li>
+  <li><b>GPT does not accept oral tradition.</b> It leaves Lore and Archive unscored for every society without writing. Claude and Grok score Aboriginal Lore and Archive at 7–8, treating songlines and law as working institutions. The rubric says oral records count, but evidently not loudly enough for every model. This single choice is the largest disagreement in the data set.</li>
+  <li><b>“Absent” and “unknown” get confused.</b> When a function demonstrably disappeared, such as literacy in the Aegean after the palaces, some passes score it 1 and others NA. These mean different things, and the rubric does not yet separate them.</li>
+</ul>
+<p class="callout">CAMS was built to read societies without borrowing their own or their rivals’ stories. The models bring stories of their own, about writing, states and what counts as evidence. The NA pattern is where those stories show, and it is why H5 changed verdict between models.</p>
+
+<h2>6. Limitations</h2>
+<p>Agreement between AI models shows the instrument is applied consistently. It does not show the scores are historically true.</p>
+<ul class="plain">
+  <li><b>Shared corpus.</b> All three models learned from overlapping literatures; where those share a bias, the models will agree on it. No human specialist has scored any case yet.</li>
+  <li><b>Unequal samples.</b> Claude has 15 passes per prompt, Grok 4, GPT 3. The model behind the third Claude run is inferred from its scores, not confirmed.</li>
+  <li><b>Unequal isolation.</b> GPT scored both prompts in one context per pass, so its overlap windows are less independent.</li>
+  <li><b>Single anchors and thin series.</b> Each society is one representative year standing for 50–250 years. H2 and H3 rest on two collapse series, and H4 on three Mesopotamian windows.</li>
+  <li><b>Choices made within the project.</b> Test details such as the 0.80 cut-off in H5 were written after the hypotheses and after the first non-blind pass, though before any blind scoring.</li>
+  <li><b>No reasoning shown.</b> The blind prompt forbids explanation to keep scorers independent, so disagreements can be located but not yet explained from the scorers’ own reasons.</li>
+</ul>
+
+<h2>7. Next steps</h2>
+<ol>
+  <li><b>Rubric DT-2.</b> State outright that oral tradition is evidence for Lore and Archive; separate “function demonstrably absent” (score low) from “no evidence” (NA); add guidance on Abstraction for coerced but skilled labour.</li>
+  <li><b>Rescore under DT-2</b> with all three models, to see whether the NA differences and H5 converge.</li>
+  <li><b>A fourth model</b> (Kimi), scoring blind from the prompts alone.</li>
+  <li><b>More series:</b> Mesopotamia after Ur III, the Shang–Zhou transition, the Late Bronze Age Levant and the post-Harappan Indus. These test H3 beyond Egypt, and a hypothesis formed after seeing the data (H6): recovery is faster where the setting forces re-coordination, as in a single river valley.</li>
+  <li><b>Human scorers:</b> specialists in two or three regions scoring their cases on the same rubric, the first test against something other than a language model.</li>
+</ol>
+
+<h2>Data and code</h2>
+<p>All prompts, raw scores, ensembles, scripts and the full run log are in the <a href="https://github.com/KaliBond/wintermute/tree/main/backstory" target="_blank">backstory folder of the wintermute repository</a>. Every raw score file carries a SHA-256 hash.</p>
+<ul class="plain">
+  <li><a href="backstory/results/CAMS_Deep_Time_Report_2026-10-02.pdf" target="_blank">Working paper (PDF)</a>, with the complete window-level and node-level tables</li>
+  <li><a href="https://github.com/KaliBond/wintermute/blob/main/backstory/RUNLOG.md" target="_blank">Run log</a>: every run, decision and deviation, newest first</li>
+  <li><a href="https://github.com/KaliBond/wintermute/blob/main/backstory/HYPOTHESES.md" target="_blank">Pre-registered hypotheses</a></li>
+  <li><a href="backstory/results/node_means_three_models.csv">Node-level means for all three models</a> (CSV, 480 rows)</li>
+  <li><a href="backstory/Backstory_Prompts_Only_2026-10-02.zip">The two blind prompts</a>, to run against any model yourself (see <a href="https://github.com/KaliBond/wintermute/blob/main/backstory/TESTING.md" target="_blank">TESTING.md</a>)</li>
+</ul>
+
+<p class="endnote">Kari McKern, ComplexityWorkz. Scoring passes were produced by AI models from their training knowledge; the Claude and Grok passes made no tool or web calls. Open science: specialists are invited to rescore or contest any case, and disagreements will be logged. <a href="contact.html">Contact</a>.</p>
+</main>
+
+<footer class="footer"><nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;"><a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a><a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a><a href="results.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Results</a></nav><p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p></footer>
+
+<script>
+(function(){
+  var MODELS=[
+    {key:'Claude',label:'Claude (15 passes)',color:'#2a78d6',shape:'circle'},
+    {key:'Grok',label:'Grok 4.7 (4)',color:'#eb6834',shape:'square'},
+    {key:'GPT',label:'GPT (3)',color:'#1baf7a',shape:'triangle'}
+  ];
+  var SERIES=[
+    {name:'Egypt',windows:[
+      {y:-2500,n:'Old Kingdom'},{y:-2400,n:'Late 5th dynasty'},{y:-2250,n:'Late 6th dynasty'},
+      {y:-2150,n:'First Intermediate'},{y:-1900,n:'Middle Kingdom'}],
+     v:{Claude:[3.95,2.69,-0.11,-2.98,3.43],Grok:[3.51,2.38,0.09,-1.94,3.08],GPT:[2.79,2.25,0.82,-0.93,2.54]},
+     breakIdx:3},
+    {name:'Aegean',windows:[
+      {y:-1350,n:'Mycenaean LH IIIA'},{y:-1250,n:'Mycenaean LH IIIB'},{y:-1175,n:'After the palaces'},
+      {y:-1000,n:'Protogeometric'},{y:-750,n:'Late Geometric'}],
+     v:{Claude:[2.23,0.80,-4.65,-1.24,0.74],Grok:[1.58,1.50,-3.14,-0.92,0.75],GPT:[2.12,1.22,-1.90,0.88,1.45]},
+     breakIdx:2}
+  ];
+  var NS='http://www.w3.org/2000/svg';
+  var W=420,H=260,M={t:12,r:14,b:34,l:34},YMIN=-5,YMAX=4.5;
+  function el(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;}
+  function yr(y){return y<0?(-y)+' BCE':y+' CE';}
+  function fmt(x){return (x>0?'+':x<0?'−':'')+Math.abs(x).toFixed(2);}
+  function marker(shape,x,y,color,g){
+    var s=4.5;
+    if(shape==='circle')return el('circle',{cx:x,cy:y,r:s,fill:color,stroke:'#fff','stroke-width':2},g);
+    if(shape==='square')return el('rect',{x:x-s,y:y-s,width:2*s,height:2*s,rx:1,fill:color,stroke:'#fff','stroke-width':2},g);
+    return el('path',{d:'M'+x+','+(y-s-1)+' L'+(x+s+1)+','+(y+s)+' L'+(x-s-1)+','+(y+s)+'Z',fill:color,stroke:'#fff','stroke-width':2,'stroke-linejoin':'round'},g);
+  }
+  function legendIcon(m){
+    var s=el('svg',{width:22,height:12,viewBox:'0 0 22 12','aria-hidden':'true'});
+    el('line',{x1:0,y1:6,x2:22,y2:6,stroke:m.color,'stroke-width':2},s);
+    marker(m.shape,11,6,m.color,s);
+    return s;
+  }
+  var leg=document.getElementById('energy-legend');
+  MODELS.forEach(function(m){var sp=document.createElement('span');sp.appendChild(legendIcon(m));sp.appendChild(document.createTextNode(m.label));leg.appendChild(sp);});
+
+  var panels=document.getElementById('energy-panels');
+  SERIES.forEach(function(S){
+    var wrap=document.createElement('div');wrap.className='panel';
+    var title=document.createElement('p');title.className='panel-name';title.textContent=S.name+' series';wrap.appendChild(title);
+    var svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'Mean Energy by window for the '+S.name+' series, three models'});
+    wrap.appendChild(svg);
+    var tip=document.createElement('div');tip.className='tip';wrap.appendChild(tip);
+    panels.appendChild(wrap);
+    var x0=S.windows[0].y,x1=S.windows[S.windows.length-1].y;
+    function X(y){return M.l+(y-x0)/(x1-x0)*(W-M.l-M.r);}
+    function Y(v){return M.t+(YMAX-v)/(YMAX-YMIN)*(H-M.t-M.b);}
+    // breakdown band
+    var bx=X(S.windows[S.breakIdx].y);
+    el('rect',{x:bx-9,y:M.t,width:18,height:H-M.t-M.b,fill:'#F0F0F0'},svg);
+    // grid
+    [-4,-2,0,2,4].forEach(function(t){
+      el('line',{x1:M.l,x2:W-M.r,y1:Y(t),y2:Y(t),stroke:t===0?'#9aa0a8':'#ececec','stroke-width':t===0?1.2:1},svg);
+      var lb=el('text',{x:M.l-6,y:Y(t)+4,'text-anchor':'end','font-size':11,fill:'#6b7280','font-family':'-apple-system,Segoe UI,sans-serif'},svg);
+      lb.textContent=(t>0?'+':t<0?'−':'')+Math.abs(t);
+    });
+    S.windows.forEach(function(w,i){
+      var t=el('text',{x:X(w.y),y:H-M.b+16,'text-anchor':i===0?'start':i===S.windows.length-1?'end':'middle','font-size':10.5,fill:'#6b7280','font-family':'-apple-system,Segoe UI,sans-serif'},svg);
+      t.textContent=String(Math.abs(w.y));
+    });
+    var bl=el('text',{x:bx,y:M.t+11,'text-anchor':'middle','font-size':10,fill:'#6b7280','font-family':'-apple-system,Segoe UI,sans-serif'},svg);
+    bl.textContent='breakdown';
+    // lines then markers
+    MODELS.forEach(function(m){
+      var d=S.windows.map(function(w,i){return (i?'L':'M')+X(w.y).toFixed(1)+','+Y(S.v[m.key][i]).toFixed(1);}).join(' ');
+      el('path',{d:d,fill:'none',stroke:m.color,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'},svg);
+    });
+    MODELS.forEach(function(m){
+      var g=el('g',{},svg);
+      S.windows.forEach(function(w,i){marker(m.shape,X(w.y),Y(S.v[m.key][i]),m.color,g);});
+    });
+    // crosshair + hit areas
+    var cross=el('line',{y1:M.t,y2:H-M.b,stroke:'#9aa0a8','stroke-width':1,'stroke-dasharray':'3 3',visibility:'hidden'},svg);
+    S.windows.forEach(function(w,i){
+      var prev=i?X(S.windows[i-1].y):M.l, next=i<S.windows.length-1?X(S.windows[i+1].y):W-M.r, cx=X(w.y);
+      var left=i?(prev+cx)/2:M.l, right=i<S.windows.length-1?(cx+next)/2:W-M.r;
+      var hit=el('rect',{x:left,y:M.t,width:right-left,height:H-M.t-M.b,fill:'transparent',tabindex:0,'aria-label':w.n},svg);
+      function show(){
+        cross.setAttribute('x1',cx);cross.setAttribute('x2',cx);cross.setAttribute('visibility','visible');
+        var h='<b>'+w.n+' · '+yr(w.y)+'</b>';
+        MODELS.forEach(function(m){h+='<div class="row"><span class="k"><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:'+m.color+'"></span>'+m.key+'</span><span>'+fmt(S.v[m.key][i])+'</span></div>';});
+        tip.innerHTML=h;tip.style.display='block';
+        var r=svg.getBoundingClientRect(),scale=r.width/W,px=cx*scale;
+        var tw=tip.offsetWidth;var left=px+14;if(left+tw>r.width)left=px-tw-14;
+        tip.style.left=Math.max(0,left)+'px';tip.style.top=(title.offsetHeight+M.t*scale+6)+'px';
+      }
+      function hide(){cross.setAttribute('visibility','hidden');tip.style.display='none';}
+      hit.addEventListener('mouseenter',show);hit.addEventListener('mouseleave',hide);
+      hit.addEventListener('focus',show);hit.addEventListener('blur',hide);
+    });
+  });
+  // table view
+  var t='<table><thead><tr><th>Series</th><th>Window</th><th>Year</th><th class="num">Claude</th><th class="num">Grok</th><th class="num">GPT</th></tr></thead><tbody>';
+  SERIES.forEach(function(S){S.windows.forEach(function(w,i){
+    t+='<tr><td>'+S.name+'</td><td>'+w.n+'</td><td>'+yr(w.y)+'</td><td class="num">'+fmt(S.v.Claude[i])+'</td><td class="num">'+fmt(S.v.Grok[i])+'</td><td class="num">'+fmt(S.v.GPT[i])+'</td></tr>';
+  });});
+  document.getElementById('energy-table').innerHTML=t+'</tbody></table>';
+})();
+</script>
+<script src="site-chrome.js"></script><script src="nav.js"></script>
+</body>
+</html>
