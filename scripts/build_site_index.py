@@ -55,6 +55,7 @@ GROUPS = [
         'operator-portability-synthesis', 'peer-review', 'response-to-critics', 'functional_taxonomy', 'figures',
         'metabolism-meaning', 'scale-invariance', 'thermodynamic-jungle', 'war', 'social-cognition',
         'coupled-cattle', 'meta-animal-under-the-microscope', 'backstory-deep-time',
+        'geopolitics-as-group-adaptation',
     ]),
     ('Country & Case Studies', 'Study', 'monthly', '0.6', [
         ('nations', 'Guide'), 'the-empty-pulpit', ('the-empty-pulpit-map', 'Map'), 'usa-empty-pulpit-perspectives',
