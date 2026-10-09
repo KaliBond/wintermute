@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAMS Dashboard — USA, Iran, Saudi Arabia, Israel (2015–2026)</title>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #f0ede6;
+    color: #1a2530;
+    min-height: 100vh;
+  }
+  
+  /* ── Header ── */
+  .site-header {
+    background: linear-gradient(135deg, #1a2530 0%, #2d4a6b 100%);
+    color: white;
+    padding: 2rem 2rem 1.5rem;
+  }
+  .site-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .site-header .subtitle {
+    font-size: 0.85rem;
+    color: #a8c4d8;
+    margin-bottom: 1rem;
+  }
+  .explainer {
+    background: rgba(255,255,255,0.07);
+    border-left: 3px solid #5ba3c9;
+    padding: 0.85rem 1rem;
+    border-radius: 0 6px 6px 0;
+    max-width: 860px;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: #d8e8f0;
+  }
+  
+  /* ── Layout ── */
+  .container { max-width: 1280px; margin: 0 auto; padding: 1.5rem; }
+  
+  /* ── Section cards ── */
+  .card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 1rem 1.25rem 0.75rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .card-header h2 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1a2530;
+  }
+  .card-header .note {
+    font-size: 0.78rem;
+    color: #789;
+    font-style: italic;
+  }
+  .chart-area { padding: 0.5rem 0.5rem 0.25rem; }
+  
+  /* ── Controls row ── */
+  .controls-row {
+    padding: 0.75rem 1.25rem;
+    background: #f7f5f0;
+    border-bottom: 1px solid #e8e4dc;
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .ctrl-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  label { font-size: 0.82rem; font-weight: 600; color: #456; }
+  select {
+    font-size: 0.82rem;
+    padding: 0.3rem 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: white;
+    color: #1a2530;
+    cursor: pointer;
+  }
+  select:focus { outline: 2px solid #5ba3c9; outline-offset: 1px; }
+  
+  /* ── Society legend pills ── */
+  .legend-pills {
+    display: flex;
+    gap: 0.6rem;
+    padding: 0.6rem 1.25rem;
+    flex-wrap: wrap;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.7rem;
+    border-radius: 99px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: white;
+    opacity: 0.9;
+  }
+  .pill-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.7);
+  }
+  
+  /* ── Events grid ── */
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    padding: 1rem 1.25rem 1.25rem;
+  }
+  .event-card {
+    background: #fefcf7;
+    border: 1px solid #e8e0cc;
+    border-left: 4px solid #d98b2b;
+    border-radius: 6px;
+    padding: 0.75rem 0.9rem;
+  }
+  .event-card .eq { font-size: 0.72rem; font-weight: 700; color: #d98b2b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.2rem; }
+  .event-card .etitle { font-size: 0.88rem; font-weight: 700; color: #1a2530; margin-bottom: 0.3rem; }
+  .event-card .edesc { font-size: 0.79rem; color: #567; line-height: 1.45; }
+  
+  /* ── Node desc strip ── */
+  .node-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0.6rem 1.25rem 0.8rem;
+    border-top: 1px solid #eee;
+  }
+  .node-chip {
+    font-size: 0.72rem;
+    color: #456;
+    background: #f0ede6;
+    border-radius: 4px;
+    padding: 0.15rem 0.5rem;
+  }
+  .node-chip strong { color: #1a2530; }
+  
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #9ab;
+    padding: 1.5rem;
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>Structural Health of Nations — 2015 to 2026</h1>
+  <p class="subtitle">USA · Iran · Saudi Arabia · Israel &nbsp;|&nbsp; Quarterly CAMS Analysis</p>
+  <div class="explainer">
+    <strong>What is this?</strong> The CAMS framework measures how well a society's core systems — governance, security, knowledge, economy, and more — are working together. Each society is scored each quarter across eight domains. <strong>Higher scores mean a more integrated, resilient system; higher stress means the system is under strain.</strong> Use the charts below to compare how these four countries have held up, diverged, and responded to major shocks from 2015 through mid-2026.
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ── Society colour key ── -->
+  <div style="display:flex; gap:0.6rem; margin-bottom:1rem; flex-wrap:wrap;">
+    <span class="pill" style="background:#1a6bbf">🇺🇸 USA</span>
+    <span class="pill" style="background:#c0392b">🇮🇷 Iran</span>
+    <span class="pill" style="background:#27ae60">🇸🇦 Saudi Arabia</span>
+    <span class="pill" style="background:#e67e22">🇮🇱 Israel</span>
+  </div>
+
+  <!-- ── System Health chart ── -->
+  <div class="card">
+    <div class="card-header">
+      <h2>📈 System Health Over Time</h2>
+      <span class="note">Average Node Value across all 8 domains per quarter — higher is healthier</span>
+    </div>
+    <div class="chart-area" id="chart-health" style="height:400px;"></div>
+  </div>
+
+  <!-- ── Bond Strength chart ── -->
+  <div class="card">
+    <div class="card-header">
+      <h2>🔗 Social Cohesion (Bond Strength) Over Time</h2>
+      <span class="note">How integrated and mutually reinforcing a society's systems are — higher means stronger internal coordination</span>
+    </div>
+    <div class="chart-area" id="chart-bond" style="height:400px;"></div>
+  </div>
+
+  <!-- ── Node breakdown ── -->
+  <div class="card">
+    <div class="card-header">
+      <h2>🧩 Domain Breakdown</h2>
+      <span class="note">Node Value for each of the 8 domains — select a society and quarter to explore</span>
+    </div>
+    <div class="controls-row">
+      <div class="ctrl-group">
+        <label for="sel-soc-node">Society</label>
+        <select id="sel-soc-node">
+          <option value="USA">🇺🇸 USA</option>
+          <option value="Iran">🇮🇷 Iran</option>
+          <option value="Saudi Arabia">🇸🇦 Saudi Arabia</option>
+          <option value="Israel">🇮🇱 Israel</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <label for="sel-q-node">Quarter</label>
+        <select id="sel-q-node"></select>
+      </div>
+    </div>
+    <div class="chart-area" id="chart-nodes" style="height:380px;"></div>
+    <div class="node-legend" id="node-legend"></div>
+  </div>
+
+  <!-- ── Stress heatmap ── -->
+  <div class="card">
+    <div class="card-header">
+      <h2>🌡️ Stress by Domain Over Time</h2>
+      <span class="note">Stress scores (1–10) for each domain — darker red = higher strain. Select a society to view.</span>
+    </div>
+    <div class="controls-row">
+      <div class="ctrl-group">
+        <label for="sel-soc-heat">Society</label>
+        <select id="sel-soc-heat">
+          <option value="USA">🇺🇸 USA</option>
+          <option value="Iran">🇮🇷 Iran</option>
+          <option value="Saudi Arabia">🇸🇦 Saudi Arabia</option>
+          <option value="Israel">🇮🇱 Israel</option>
+        </select>
+      </div>
+    </div>
+    <div class="chart-area" id="chart-heat" style="height:380px;"></div>
+  </div>
+
+  <!-- ── Events callouts ── -->
+  <div class="card">
+    <div class="card-header">
+      <h2>📌 Key Events Visible in the Data</h2>
+      <span class="note">Major shocks and turning points — look for these moments in the charts above</span>
+    </div>
+    <div class="events-grid" id="events-grid"></div>
+  </div>
+
+</div>
+
+<footer>CAMS m5n quarterly scoring · USA, Iran, Saudi Arabia, Israel · 2015 Q1 – 2026 Q3 · Generated October 2026</footer>
+
+<script>
+// ── Embedded data ──────────────────────────────────────────────────────────
+const ALL_DATA = {"USA": {"quarters": ["2015Q1", "2015Q2", "2015Q3", "2015Q4", "2016Q1", "2016Q2", "2016Q3", "2016Q4", "2017Q1", "2017Q2", "2017Q3", "2017Q4", "2018Q1", "2018Q2", "2018Q3", "2018Q4", "2019Q1", "2019Q2", "2019Q3", "2019Q4", "2020Q1", "2020Q2", "2020Q3", "2020Q4", "2021Q1", "2021Q2", "2021Q3", "2021Q4", "2022Q1", "2022Q2", "2022Q3", "2022Q4", "2023Q1", "2023Q2", "2023Q3", "2023Q4", "2024Q1", "2024Q2", "2024Q3", "2024Q4", "2025Q1", "2025Q2", "2025Q3", "2025Q4", "2026Q1", "2026Q2", "2026Q3"], "health": [12.475, 12.612, 12.55, 12.475, 12.612, 12.412, 10.212, 10.475, 9.75, 10.95, 10.875, 10.975, 10.837, 8.975, 9.088, 9.062, 9.088, 9.038, 9.15, 9.4, 9.188, 3.138, 4.675, 7.125, 5.838, 11.312, 11.112, 8.725, 8.838, 9.038, 8.675, 8.575, 11.638, 11.9, 11.938, 11.812, 10.025, 10.125, 9.988, 9.438, 5.362, 5.5, 5.2, 5.1, 5.175, 5.575, 5.262], "bond": [26.697, 27.065, 26.409, 26.194, 27.108, 25.652, 20.471, 21.465, 19.012, 21.643, 21.885, 22.239, 21.481, 16.726, 16.642, 17.002, 17.246, 16.373, 16.635, 18.076, 17.448, 8.492, 9.745, 13.111, 11.04, 23.302, 22.68, 17.569, 17.405, 16.677, 15.902, 15.866, 24.462, 24.276, 24.49, 24.519, 19.791, 19.838, 20.072, 18.572, 11.557, 11.186, 11.014, 10.871, 9.986, 10.794, 10.359], "node_by_quarter": {"2015Q1": {"Archive": 13.5, "Craft": 13.2, "Flow": 14.4, "Hands": 8.9, "Helm": 13.5, "Lore": 10.3, "Shield": 10.9, "Stewards": 15.1}, "2015Q2": {"Archive": 14.6, "Craft": 13.3, "Flow": 14.2, "Hands": 9.3, "Helm": 12.9, "Lore": 10.9, "Shield": 10.8, "Stewards": 14.9}, "2015Q3": {"Archive": 14.2, "Craft": 13.0, "Flow": 15.4, "Hands": 8.7, "Helm": 12.6, "Lore": 10.2, "Shield": 10.7, "Stewards": 15.6}, "2015Q4": {"Archive": 13.9, "Craft": 12.6, "Flow": 14.8, "Hands": 9.9, "Helm": 12.8, "Lore": 10.7, "Shield": 10.8, "Stewards": 14.3}, "2016Q1": {"Archive": 14.0, "Craft": 14.4, "Flow": 14.8, "Hands": 8.3, "Helm": 13.7, "Lore": 11.5, "Shield": 10.0, "Stewards": 14.2}, "2016Q2": {"Archive": 14.4, "Craft": 12.8, "Flow": 14.3, "Hands": 9.0, "Helm": 12.7, "Lore": 10.8, "Shield": 10.3, "Stewards": 15.0}, "2016Q3": {"Archive": 12.1, "Craft": 12.2, "Flow": 13.2, "Hands": 6.7, "Helm": 6.6, "Lore": 7.6, "Shield": 8.5, "Stewards": 14.8}, "2016Q4": {"Archive": 12.3, "Craft": 12.4, "Flow": 12.3, "Hands": 7.8, "Helm": 7.1, "Lore": 6.6, "Shield": 10.3, "Stewards": 15.0}, "2017Q1": {"Archive": 9.8, "Craft": 12.7, "Flow": 12.7, "Hands": 6.7, "Helm": 5.4, "Lore": 6.0, "Shield": 9.0, "Stewards": 15.7}, "2017Q2": {"Archive": 9.7, "Craft": 14.5, "Flow": 12.5, "Hands": 10.5, "Helm": 6.9, "Lore": 6.6, "Shield": 9.6, "Stewards": 17.3}, "2017Q3": {"Archive": 9.3, "Craft": 16.5, "Flow": 12.3, "Hands": 10.2, "Helm": 6.4, "Lore": 6.8, "Shield": 9.0, "Stewards": 16.5}, "2017Q4": {"Archive": 9.6, "Craft": 15.2, "Flow": 12.1, "Hands": 9.9, "Helm": 7.2, "Lore": 6.5, "Shield": 9.7, "Stewards": 17.6}, "2018Q1": {"Archive": 9.7, "Craft": 15.0, "Flow": 12.2, "Hands": 10.2, "Helm": 8.0, "Lore": 5.3, "Shield": 9.3, "Stewards": 17.0}, "2018Q2": {"Archive": 8.1, "Craft": 10.4, "Flow": 10.0, "Hands": 7.6, "Helm": 5.8, "Lore": 5.0, "Shield": 8.9, "Stewards": 16.0}, "2018Q3": {"Archive": 9.5, "Craft": 10.2, "Flow": 9.3, "Hands": 8.4, "Helm": 6.2, "Lore": 4.3, "Shield": 8.8, "Stewards": 16.0}, "2018Q4": {"Archive": 8.6, "Craft": 10.2, "Flow": 9.3, "Hands": 8.0, "Helm": 6.6, "Lore": 4.2, "Shield": 9.3, "Stewards": 16.3}, "2019Q1": {"Archive": 9.2, "Craft": 10.9, "Flow": 8.6, "Hands": 7.3, "Helm": 6.1, "Lore": 5.2, "Shield": 8.7, "Stewards": 16.7}, "2019Q2": {"Archive": 8.7, "Craft": 10.3, "Flow": 9.7, "Hands": 7.8, "Helm": 6.7, "Lore": 4.6, "Shield": 9.4, "Stewards": 15.1}, "2019Q3": {"Archive": 9.4, "Craft": 11.1, "Flow": 9.8, "Hands": 7.7, "Helm": 6.0, "Lore": 4.7, "Shield": 8.5, "Stewards": 16.0}, "2019Q4": {"Archive": 7.9, "Craft": 12.8, "Flow": 11.9, "Hands": 9.2, "Helm": 4.3, "Lore": 4.4, "Shield": 9.1, "Stewards": 15.6}, "2020Q1": {"Archive": 7.0, "Craft": 12.5, "Flow": 11.9, "Hands": 9.4, "Helm": 3.2, "Lore": 3.7, "Shield": 9.7, "Stewards": 16.1}, "2020Q2": {"Archive": 4.7, "Craft": 4.0, "Flow": 0.9, "Hands": -1.0, "Helm": 1.4, "Lore": 1.5, "Shield": 5.6, "Stewards": 8.0}, "2020Q3": {"Archive": 4.7, "Craft": 6.6, "Flow": 5.8, "Hands": 1.8, "Helm": 1.2, "Lore": 1.7, "Shield": 4.1, "Stewards": 11.5}, "2020Q4": {"Archive": 7.6, "Craft": 10.8, "Flow": 10.6, "Hands": 6.6, "Helm": 1.1, "Lore": 1.8, "Shield": 4.8, "Stewards": 13.7}, "2021Q1": {"Archive": 3.2, "Craft": 9.9, "Flow": 11.3, "Hands": 5.5, "Helm": -0.1, "Lore": -1.0, "Shield": 4.5, "Stewards": 13.4}, "2021Q2": {"Archive": 10.0, "Craft": 12.4, "Flow": 14.3, "Hands": 11.0, "Helm": 9.2, "Lore": 6.7, "Shield": 9.6, "Stewards": 17.3}, "2021Q3": {"Archive": 9.9, "Craft": 12.7, "Flow": 13.1, "Hands": 11.9, "Helm": 9.3, "Lore": 6.9, "Shield": 8.5, "Stewards": 16.6}, "2021Q4": {"Archive": 8.4, "Craft": 11.8, "Flow": 8.8, "Hands": 5.4, "Helm": 7.6, "Lore": 6.9, "Shield": 9.0, "Stewards": 11.9}, "2022Q1": {"Archive": 9.0, "Craft": 11.8, "Flow": 7.7, "Hands": 5.5, "Helm": 7.9, "Lore": 7.2, "Shield": 9.0, "Stewards": 12.6}, "2022Q2": {"Archive": 10.2, "Craft": 10.8, "Flow": 9.0, "Hands": 5.5, "Helm": 7.9, "Lore": 7.5, "Shield": 10.3, "Stewards": 11.1}, "2022Q3": {"Archive": 9.5, "Craft": 10.4, "Flow": 8.4, "Hands": 6.0, "Helm": 6.8, "Lore": 7.3, "Shield": 10.3, "Stewards": 10.7}, "2022Q4": {"Archive": 9.2, "Craft": 11.0, "Flow": 8.6, "Hands": 5.3, "Helm": 7.3, "Lore": 7.7, "Shield": 9.1, "Stewards": 10.4}, "2023Q1": {"Archive": 12.7, "Craft": 15.3, "Flow": 14.4, "Hands": 10.5, "Helm": 8.3, "Lore": 6.8, "Shield": 10.0, "Stewards": 15.1}, "2023Q2": {"Archive": 12.3, "Craft": 15.2, "Flow": 15.3, "Hands": 10.2, "Helm": 8.8, "Lore": 6.8, "Shield": 10.6, "Stewards": 16.0}, "2023Q3": {"Archive": 11.9, "Craft": 15.6, "Flow": 15.4, "Hands": 11.1, "Helm": 8.5, "Lore": 7.1, "Shield": 10.2, "Stewards": 15.7}, "2023Q4": {"Archive": 12.2, "Craft": 15.4, "Flow": 15.4, "Hands": 10.4, "Helm": 8.9, "Lore": 7.5, "Shield": 9.3, "Stewards": 15.4}, "2024Q1": {"Archive": 9.9, "Craft": 15.3, "Flow": 13.4, "Hands": 10.4, "Helm": 3.5, "Lore": 3.7, "Shield": 8.8, "Stewards": 15.2}, "2024Q2": {"Archive": 9.6, "Craft": 15.2, "Flow": 13.2, "Hands": 10.6, "Helm": 4.3, "Lore": 4.1, "Shield": 8.9, "Stewards": 15.1}, "2024Q3": {"Archive": 9.5, "Craft": 16.4, "Flow": 12.9, "Hands": 10.1, "Helm": 4.0, "Lore": 3.2, "Shield": 8.8, "Stewards": 15.0}, "2024Q4": {"Archive": 7.1, "Craft": 15.3, "Flow": 12.8, "Hands": 7.8, "Helm": 5.2, "Lore": 3.5, "Shield": 8.3, "Stewards": 15.5}, "2025Q1": {"Archive": 2.0, "Craft": 8.9, "Flow": 5.2, "Hands": 2.9, "Helm": 2.4, "Lore": 1.3, "Shield": 7.6, "Stewards": 12.6}, "2025Q2": {"Archive": 2.2, "Craft": 8.6, "Flow": 4.9, "Hands": 2.9, "Helm": 3.4, "Lore": 1.6, "Shield": 7.6, "Stewards": 12.8}, "2025Q3": {"Archive": 1.5, "Craft": 8.8, "Flow": 4.7, "Hands": 2.4, "Helm": 2.7, "Lore": 1.2, "Shield": 8.1, "Stewards": 12.2}, "2025Q4": {"Archive": 1.6, "Craft": 8.3, "Flow": 4.6, "Hands": 2.1, "Helm": 3.6, "Lore": 0.9, "Shield": 7.2, "Stewards": 12.5}, "2026Q1": {"Archive": 2.8, "Craft": 8.3, "Flow": 4.3, "Hands": 2.4, "Helm": 3.4, "Lore": 2.0, "Shield": 7.8, "Stewards": 10.4}, "2026Q2": {"Archive": 3.0, "Craft": 8.5, "Flow": 5.2, "Hands": 3.0, "Helm": 3.9, "Lore": 2.2, "Shield": 7.7, "Stewards": 11.1}, "2026Q3": {"Archive": 2.8, "Craft": 8.1, "Flow": 4.7, "Hands": 2.2, "Helm": 3.1, "Lore": 2.9, "Shield": 7.7, "Stewards": 10.6}}, "stress_by_node": {"Helm": [4.0, 4.0, 4.4, 4.2, 3.4, 4.2, 6.2, 6.0, 7.0, 5.8, 6.4, 6.0, 5.6, 6.0, 6.0, 5.6, 5.8, 5.6, 6.0, 6.8, 7.6, 7.8, 8.4, 8.0, 8.6, 5.6, 5.0, 6.0, 6.0, 6.0, 6.0, 5.8, 5.2, 4.8, 4.8, 4.8, 7.0, 6.8, 7.2, 7.0, 8.0, 7.8, 7.8, 7.8, 6.6, 7.0, 7.6], "Shield": [4.0, 4.2, 4.0, 4.2, 4.0, 4.2, 5.4, 4.8, 5.0, 4.8, 5.2, 4.8, 4.8, 4.8, 5.0, 5.0, 5.0, 5.0, 5.0, 5.2, 5.2, 7.0, 7.0, 6.0, 7.0, 5.0, 5.0, 5.2, 4.8, 4.6, 5.0, 5.2, 4.2, 3.6, 4.0, 4.2, 5.2, 5.2, 5.0, 5.2, 6.2, 5.6, 5.8, 5.8, 6.0, 6.0, 6.0], "Lore": [4.4, 4.6, 4.0, 4.2, 3.8, 3.8, 5.6, 6.0, 6.2, 6.0, 5.8, 5.8, 6.4, 6.0, 6.4, 6.0, 5.8, 6.2, 6.0, 6.8, 6.8, 8.0, 8.0, 7.8, 9.4, 6.0, 6.0, 6.0, 5.8, 5.8, 6.0, 6.4, 5.2, 5.0, 5.2, 5.2, 7.2, 7.0, 7.2, 7.4, 8.0, 8.4, 8.0, 8.4, 7.0, 7.2, 6.8], "Stewards": [3.0, 2.6, 2.6, 3.6, 3.2, 2.8, 2.6, 2.8, 2.6, 1.8, 2.2, 2.0, 1.8, 3.0, 3.0, 3.0, 2.6, 3.2, 3.0, 3.4, 3.0, 6.4, 5.4, 4.0, 3.8, 2.8, 2.6, 4.0, 4.4, 5.0, 5.0, 5.2, 3.0, 2.6, 3.2, 3.4, 3.0, 2.8, 2.8, 3.0, 3.8, 3.8, 4.2, 3.8, 4.8, 4.6, 5.2], "Craft": [4.4, 3.8, 4.2, 4.2, 3.6, 4.0, 4.4, 4.4, 4.2, 3.0, 2.2, 3.0, 3.2, 5.2, 5.0, 5.2, 5.0, 4.8, 4.6, 4.4, 4.0, 8.0, 6.6, 4.6, 5.2, 4.2, 4.2, 4.8, 5.0, 4.8, 5.2, 4.8, 3.6, 3.4, 3.2, 3.2, 3.0, 3.4, 3.0, 3.2, 5.8, 6.0, 5.8, 5.8, 6.0, 6.2, 6.2], "Hands": [4.4, 3.8, 3.8, 4.0, 4.2, 3.8, 5.4, 4.8, 5.2, 3.8, 3.8, 4.2, 4.0, 5.2, 4.8, 5.2, 5.0, 5.2, 5.0, 4.2, 3.8, 8.8, 7.6, 5.8, 6.2, 3.8, 4.0, 6.2, 6.0, 5.8, 5.8, 6.2, 4.0, 4.2, 4.0, 3.6, 4.0, 3.8, 4.6, 5.0, 7.0, 6.8, 7.4, 7.2, 6.8, 7.0, 7.0], "Archive": [3.0, 2.8, 3.2, 3.0, 3.2, 3.6, 4.2, 3.6, 5.0, 4.4, 5.0, 5.2, 5.4, 5.2, 5.2, 5.0, 4.6, 4.6, 4.8, 6.2, 6.4, 7.0, 7.2, 6.2, 7.8, 4.6, 4.8, 5.6, 5.2, 4.4, 5.2, 5.0, 3.8, 3.8, 3.8, 4.0, 5.0, 5.0, 5.2, 6.2, 8.0, 7.8, 8.0, 8.0, 6.8, 7.0, 6.6], "Flow": [3.4, 3.2, 3.0, 3.0, 3.0, 3.4, 3.6, 4.2, 4.0, 4.0, 4.2, 4.2, 4.0, 5.0, 5.2, 5.2, 5.4, 5.0, 4.8, 4.0, 4.4, 8.6, 7.0, 5.0, 4.8, 3.8, 4.0, 5.8, 6.6, 6.0, 6.0, 6.0, 2.8, 3.0, 2.4, 3.0, 4.2, 3.8, 3.8, 4.0, 6.6, 7.0, 7.2, 7.2, 7.2, 6.8, 7.4]}}, "Iran": {"quarters": ["2015Q1", "2015Q2", "2015Q3", "2015Q4", "2016Q1", "2016Q2", "2016Q3", "2016Q4", "2017Q1", "2017Q2", "2017Q3", "2017Q4", "2018Q1", "2018Q2", "2018Q3", "2018Q4", "2019Q1", "2019Q2", "2019Q3", "2019Q4", "2020Q1", "2020Q2", "2020Q3", "2020Q4", "2021Q1", "2021Q2", "2021Q3", "2021Q4", "2022Q1", "2022Q2", "2022Q3", "2022Q4", "2023Q1", "2023Q2", "2023Q3", "2023Q4", "2024Q1", "2024Q2", "2024Q3", "2024Q4", "2025Q1", "2025Q2", "2025Q3", "2025Q4", "2026Q1", "2026Q2", "2026Q3"], "health": [7.662, 7.8, 7.738, 7.662, 7.8, 7.6, 7.525, 7.788, 7.875, 7.95, 7.875, 7.975, 7.838, 4.413, 4.525, 4.5, 4.525, 4.475, 4.588, 4.525, 2.375, 2.388, 4.05, 4.125, 4.025, 4.25, 4.8, 4.6, 4.712, 5.1, 2.863, 2.762, 4.7, 4.962, 5.0, 4.875, 4.9, 5.125, 4.988, 4.875, 3.3, 3.438, 3.138, 3.037, 2.988, 3.387, 3.075], "bond": [15.358, 15.448, 14.999, 14.986, 15.533, 14.508, 14.556, 15.429, 15.064, 15.364, 15.517, 15.854, 15.216, 9.743, 9.637, 9.986, 10.108, 9.547, 9.656, 10.073, 7.064, 7.302, 8.423, 8.385, 8.345, 8.588, 10.5, 10.35, 10.431, 10.918, 7.448, 7.408, 10.495, 10.552, 10.717, 10.553, 10.474, 9.655, 9.833, 9.751, 8.532, 8.251, 8.193, 8.044, 7.472, 8.155, 7.9], "node_by_quarter": {"2015Q1": {"Archive": 10.0, "Craft": 8.2, "Flow": 7.4, "Hands": 3.4, "Helm": 8.0, "Lore": 6.8, "Shield": 11.4, "Stewards": 6.1}, "2015Q2": {"Archive": 11.1, "Craft": 8.3, "Flow": 7.2, "Hands": 3.8, "Helm": 7.4, "Lore": 7.4, "Shield": 11.3, "Stewards": 5.9}, "2015Q3": {"Archive": 10.7, "Craft": 8.0, "Flow": 8.4, "Hands": 3.2, "Helm": 7.1, "Lore": 6.7, "Shield": 11.2, "Stewards": 6.6}, "2015Q4": {"Archive": 10.4, "Craft": 7.6, "Flow": 7.8, "Hands": 4.4, "Helm": 7.3, "Lore": 7.2, "Shield": 11.3, "Stewards": 5.3}, "2016Q1": {"Archive": 10.5, "Craft": 9.4, "Flow": 7.8, "Hands": 2.8, "Helm": 8.2, "Lore": 8.0, "Shield": 10.5, "Stewards": 5.2}, "2016Q2": {"Archive": 10.9, "Craft": 7.8, "Flow": 7.3, "Hands": 3.5, "Helm": 7.2, "Lore": 7.3, "Shield": 10.8, "Stewards": 6.0}, "2016Q3": {"Archive": 10.6, "Craft": 7.2, "Flow": 8.2, "Hands": 3.2, "Helm": 6.6, "Lore": 8.6, "Shield": 10.0, "Stewards": 5.8}, "2016Q4": {"Archive": 10.8, "Craft": 7.4, "Flow": 7.3, "Hands": 4.3, "Helm": 7.1, "Lore": 7.6, "Shield": 11.8, "Stewards": 6.0}, "2017Q1": {"Archive": 10.8, "Craft": 7.7, "Flow": 8.2, "Hands": 3.2, "Helm": 7.9, "Lore": 7.5, "Shield": 11.0, "Stewards": 6.7}, "2017Q2": {"Archive": 10.7, "Craft": 7.5, "Flow": 8.0, "Hands": 4.0, "Helm": 7.4, "Lore": 8.1, "Shield": 11.6, "Stewards": 6.3}, "2017Q3": {"Archive": 10.3, "Craft": 9.5, "Flow": 7.8, "Hands": 3.7, "Helm": 6.9, "Lore": 8.3, "Shield": 11.0, "Stewards": 5.5}, "2017Q4": {"Archive": 10.6, "Craft": 8.2, "Flow": 7.6, "Hands": 3.4, "Helm": 7.7, "Lore": 8.0, "Shield": 11.7, "Stewards": 6.6}, "2018Q1": {"Archive": 10.7, "Craft": 8.0, "Flow": 7.7, "Hands": 3.7, "Helm": 8.5, "Lore": 6.8, "Shield": 11.3, "Stewards": 6.0}, "2018Q2": {"Archive": 9.1, "Craft": 3.4, "Flow": 1.0, "Hands": -1.4, "Helm": 5.8, "Lore": 6.0, "Shield": 9.9, "Stewards": 1.5}, "2018Q3": {"Archive": 10.5, "Craft": 3.2, "Flow": 0.3, "Hands": -0.6, "Helm": 6.2, "Lore": 5.3, "Shield": 9.8, "Stewards": 1.5}, "2018Q4": {"Archive": 9.6, "Craft": 3.2, "Flow": 0.3, "Hands": -1.0, "Helm": 6.6, "Lore": 5.2, "Shield": 10.3, "Stewards": 1.8}, "2019Q1": {"Archive": 10.2, "Craft": 3.9, "Flow": -0.4, "Hands": -1.7, "Helm": 6.1, "Lore": 6.2, "Shield": 9.7, "Stewards": 2.2}, "2019Q2": {"Archive": 9.7, "Craft": 3.3, "Flow": 0.7, "Hands": -1.2, "Helm": 6.7, "Lore": 5.6, "Shield": 10.4, "Stewards": 0.6}, "2019Q3": {"Archive": 10.4, "Craft": 4.1, "Flow": 0.8, "Hands": -1.3, "Helm": 6.0, "Lore": 5.7, "Shield": 9.5, "Stewards": 1.5}, "2019Q4": {"Archive": 9.9, "Craft": 3.3, "Flow": -0.1, "Hands": -0.8, "Helm": 6.3, "Lore": 6.4, "Shield": 10.1, "Stewards": 1.1}, "2020Q1": {"Archive": 6.5, "Craft": 1.0, "Flow": -2.6, "Hands": -1.6, "Helm": 2.7, "Lore": 3.2, "Shield": 8.2, "Stewards": 1.6}, "2020Q2": {"Archive": 6.7, "Craft": 1.5, "Flow": -3.1, "Hands": -1.5, "Helm": 3.4, "Lore": 3.5, "Shield": 7.6, "Stewards": 1.0}, "2020Q3": {"Archive": 7.7, "Craft": 4.1, "Flow": 0.3, "Hands": -0.7, "Helm": 4.2, "Lore": 4.7, "Shield": 9.6, "Stewards": 2.5}, "2020Q4": {"Archive": 8.1, "Craft": 3.8, "Flow": 0.6, "Hands": -0.4, "Helm": 4.1, "Lore": 4.8, "Shield": 9.3, "Stewards": 2.7}, "2021Q1": {"Archive": 8.2, "Craft": 2.9, "Flow": 1.3, "Hands": -1.5, "Helm": 4.9, "Lore": 4.0, "Shield": 10.0, "Stewards": 2.4}, "2021Q2": {"Archive": 8.5, "Craft": 2.9, "Flow": 0.8, "Hands": -1.5, "Helm": 4.2, "Lore": 4.7, "Shield": 10.6, "Stewards": 3.8}, "2021Q3": {"Archive": 9.4, "Craft": 3.2, "Flow": -0.4, "Hands": -0.6, "Helm": 6.3, "Lore": 6.9, "Shield": 10.5, "Stewards": 3.1}, "2021Q4": {"Archive": 7.9, "Craft": 3.3, "Flow": 0.8, "Hands": -1.6, "Helm": 6.6, "Lore": 6.9, "Shield": 11.0, "Stewards": 1.9}, "2022Q1": {"Archive": 8.5, "Craft": 3.3, "Flow": -0.3, "Hands": -1.5, "Helm": 6.9, "Lore": 7.2, "Shield": 11.0, "Stewards": 2.6}, "2022Q2": {"Archive": 9.7, "Craft": 3.8, "Flow": 1.0, "Hands": -1.5, "Helm": 6.9, "Lore": 6.5, "Shield": 11.3, "Stewards": 3.1}, "2022Q3": {"Archive": 6.5, "Craft": 1.4, "Flow": 0.4, "Hands": -2.0, "Helm": 3.8, "Lore": 2.3, "Shield": 8.8, "Stewards": 1.7}, "2022Q4": {"Archive": 6.2, "Craft": 2.0, "Flow": 0.6, "Hands": -2.7, "Helm": 4.3, "Lore": 2.7, "Shield": 7.6, "Stewards": 1.4}, "2023Q1": {"Archive": 9.7, "Craft": 2.8, "Flow": 1.9, "Hands": -1.0, "Helm": 6.3, "Lore": 3.8, "Shield": 11.0, "Stewards": 3.1}, "2023Q2": {"Archive": 9.3, "Craft": 2.7, "Flow": 2.8, "Hands": -1.3, "Helm": 6.8, "Lore": 3.8, "Shield": 11.6, "Stewards": 4.0}, "2023Q3": {"Archive": 8.9, "Craft": 3.1, "Flow": 2.9, "Hands": -0.4, "Helm": 6.5, "Lore": 4.1, "Shield": 11.2, "Stewards": 3.7}, "2023Q4": {"Archive": 9.2, "Craft": 2.9, "Flow": 2.9, "Hands": -1.1, "Helm": 6.9, "Lore": 4.5, "Shield": 10.3, "Stewards": 3.4}, "2024Q1": {"Archive": 9.4, "Craft": 3.3, "Flow": 2.9, "Hands": -1.1, "Helm": 6.0, "Lore": 4.2, "Shield": 10.8, "Stewards": 3.7}, "2024Q2": {"Archive": 8.1, "Craft": 5.2, "Flow": 2.7, "Hands": 1.1, "Helm": 5.3, "Lore": 5.1, "Shield": 9.9, "Stewards": 3.6}, "2024Q3": {"Archive": 8.0, "Craft": 6.4, "Flow": 2.4, "Hands": 0.6, "Helm": 5.0, "Lore": 4.2, "Shield": 9.8, "Stewards": 3.5}, "2024Q4": {"Archive": 7.6, "Craft": 5.3, "Flow": 2.3, "Hands": 0.8, "Helm": 5.2, "Lore": 4.5, "Shield": 9.3, "Stewards": 4.0}, "2025Q1": {"Archive": 7.0, "Craft": 1.9, "Flow": -1.8, "Hands": -1.6, "Helm": 5.4, "Lore": 5.3, "Shield": 8.6, "Stewards": 1.6}, "2025Q2": {"Archive": 7.2, "Craft": 1.6, "Flow": -2.1, "Hands": -1.6, "Helm": 6.4, "Lore": 5.6, "Shield": 8.6, "Stewards": 1.8}, "2025Q3": {"Archive": 6.5, "Craft": 1.8, "Flow": -2.3, "Hands": -2.1, "Helm": 5.7, "Lore": 5.2, "Shield": 9.1, "Stewards": 1.2}, "2025Q4": {"Archive": 6.6, "Craft": 1.3, "Flow": -2.4, "Hands": -2.4, "Helm": 6.6, "Lore": 4.9, "Shield": 8.2, "Stewards": 1.5}, "2026Q1": {"Archive": 6.8, "Craft": 1.3, "Flow": -2.7, "Hands": -2.1, "Helm": 5.4, "Lore": 5.0, "Shield": 8.8, "Stewards": 1.4}, "2026Q2": {"Archive": 7.0, "Craft": 1.5, "Flow": -1.8, "Hands": -1.5, "Helm": 5.9, "Lore": 5.2, "Shield": 8.7, "Stewards": 2.1}, "2026Q3": {"Archive": 6.8, "Craft": 1.1, "Flow": -2.3, "Hands": -2.3, "Helm": 5.1, "Lore": 5.9, "Shield": 8.7, "Stewards": 1.6}}, "stress_by_node": {"Helm": [6.0, 6.0, 6.4, 6.2, 5.4, 6.2, 6.2, 6.0, 6.0, 5.8, 6.4, 6.0, 5.6, 7.0, 7.0, 6.6, 6.8, 6.6, 7.0, 6.8, 8.6, 7.8, 7.4, 7.0, 6.6, 7.6, 7.0, 7.0, 7.0, 7.0, 8.0, 7.8, 7.2, 6.8, 6.8, 6.8, 7.0, 6.8, 7.2, 7.0, 7.0, 6.8, 6.8, 6.8, 6.6, 7.0, 7.6], "Shield": [5.0, 5.2, 5.0, 5.2, 5.0, 5.2, 5.4, 4.8, 5.0, 4.8, 5.2, 4.8, 4.8, 5.8, 6.0, 6.0, 6.0, 6.0, 6.0, 6.2, 7.2, 7.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.2, 5.8, 5.6, 7.0, 7.2, 6.2, 5.6, 6.0, 6.2, 6.2, 6.2, 6.0, 6.2, 7.2, 6.6, 6.8, 6.8, 7.0, 7.0, 7.0], "Lore": [6.4, 6.6, 6.0, 6.2, 5.8, 5.8, 5.6, 6.0, 6.2, 6.0, 5.8, 5.8, 6.4, 7.0, 7.4, 7.0, 6.8, 7.2, 7.0, 6.8, 7.8, 8.0, 7.0, 6.8, 7.4, 7.0, 7.0, 7.0, 6.8, 6.8, 9.0, 9.4, 8.2, 8.0, 8.2, 8.2, 8.2, 7.0, 7.2, 7.4, 7.0, 7.4, 7.0, 7.4, 7.0, 7.2, 6.8], "Stewards": [6.0, 5.6, 5.6, 6.6, 6.2, 5.8, 5.6, 5.8, 5.6, 5.8, 6.2, 6.0, 5.8, 8.0, 8.0, 8.0, 7.6, 8.2, 8.0, 8.4, 8.0, 8.4, 7.4, 7.0, 6.8, 6.8, 6.6, 7.0, 7.4, 7.0, 8.0, 8.2, 7.0, 6.6, 7.2, 7.4, 7.0, 6.8, 6.8, 7.0, 7.8, 7.8, 8.2, 7.8, 7.8, 7.6, 8.2], "Craft": [5.4, 4.8, 5.2, 5.2, 4.6, 5.0, 5.4, 5.4, 5.2, 5.0, 4.2, 5.0, 5.2, 7.2, 7.0, 7.2, 7.0, 6.8, 6.6, 7.4, 8.0, 8.0, 6.6, 6.6, 7.2, 7.2, 7.2, 6.8, 7.0, 6.8, 8.2, 7.8, 7.6, 7.4, 7.2, 7.2, 7.0, 6.4, 6.0, 6.2, 7.8, 8.0, 7.8, 7.8, 8.0, 8.2, 8.2], "Hands": [6.4, 5.8, 5.8, 6.0, 6.2, 5.8, 6.4, 5.8, 6.2, 5.8, 5.8, 6.2, 6.0, 8.2, 7.8, 8.2, 8.0, 8.2, 8.0, 8.2, 8.8, 8.8, 7.6, 7.8, 8.2, 7.8, 8.0, 8.2, 8.0, 7.8, 8.8, 9.2, 8.0, 8.2, 8.0, 7.6, 8.0, 6.8, 7.6, 7.0, 9.0, 8.8, 9.4, 9.2, 8.8, 9.0, 9.0], "Archive": [5.0, 4.8, 5.2, 5.0, 5.2, 5.6, 5.2, 4.6, 5.0, 4.4, 5.0, 5.2, 5.4, 6.2, 6.2, 6.0, 5.6, 5.6, 5.8, 6.2, 7.4, 7.0, 6.2, 6.2, 5.8, 5.6, 5.8, 6.6, 6.2, 5.4, 7.2, 7.0, 5.8, 5.8, 5.8, 6.0, 6.0, 6.0, 6.2, 6.2, 7.0, 6.8, 7.0, 7.0, 6.8, 7.0, 6.6], "Flow": [5.4, 5.2, 5.0, 5.0, 5.0, 5.4, 4.6, 5.2, 5.0, 5.0, 5.2, 5.2, 5.0, 8.0, 8.2, 8.2, 8.4, 8.0, 7.8, 8.0, 9.4, 9.6, 8.0, 8.0, 7.8, 7.8, 8.0, 7.8, 8.6, 8.0, 8.0, 8.0, 6.8, 7.0, 6.4, 7.0, 7.2, 6.8, 6.8, 7.0, 8.6, 9.0, 9.2, 9.2, 9.2, 8.8, 9.4]}}, "Saudi Arabia": {"quarters": ["2015Q1", "2015Q2", "2015Q3", "2015Q4", "2016Q1", "2016Q2", "2016Q3", "2016Q4", "2017Q1", "2017Q2", "2017Q3", "2017Q4", "2018Q1", "2018Q2", "2018Q3", "2018Q4", "2019Q1", "2019Q2", "2019Q3", "2019Q4", "2020Q1", "2020Q2", "2020Q3", "2020Q4", "2021Q1", "2021Q2", "2021Q3", "2021Q4", "2022Q1", "2022Q2", "2022Q3", "2022Q4", "2023Q1", "2023Q2", "2023Q3", "2023Q4", "2024Q1", "2024Q2", "2024Q3", "2024Q4", "2025Q1", "2025Q2", "2025Q3", "2025Q4", "2026Q1", "2026Q2", "2026Q3"], "health": [10.788, 10.925, 10.862, 10.788, 10.925, 10.725, 10.65, 10.913, 11.0, 11.388, 11.312, 10.288, 10.15, 9.975, 10.088, 9.625, 9.65, 9.162, 9.275, 9.213, 7.812, 7.825, 12.238, 12.312, 12.212, 12.438, 12.238, 12.038, 12.15, 12.538, 12.175, 12.075, 12.012, 12.838, 12.875, 11.688, 11.712, 11.812, 11.675, 11.562, 13.238, 13.375, 13.075, 12.975, 12.925, 13.325, 13.012], "bond": [21.786, 21.972, 21.398, 21.321, 22.096, 20.756, 20.929, 21.956, 21.529, 23.252, 23.416, 21.149, 20.42, 20.146, 19.947, 18.871, 19.056, 18.243, 18.53, 19.017, 15.668, 16.079, 25.471, 25.508, 25.448, 25.951, 25.324, 25.19, 24.932, 26.07, 25.024, 24.943, 25.372, 28.154, 28.434, 24.503, 24.351, 24.46, 24.667, 24.527, 30.985, 30.312, 29.794, 29.576, 28.555, 29.985, 28.978], "node_by_quarter": {"2015Q1": {"Archive": 10.0, "Craft": 8.2, "Flow": 13.9, "Hands": 7.4, "Helm": 10.0, "Lore": 10.8, "Shield": 10.4, "Stewards": 15.6}, "2015Q2": {"Archive": 11.1, "Craft": 8.3, "Flow": 13.7, "Hands": 7.8, "Helm": 9.4, "Lore": 11.4, "Shield": 10.3, "Stewards": 15.4}, "2015Q3": {"Archive": 10.7, "Craft": 8.0, "Flow": 14.9, "Hands": 7.2, "Helm": 9.1, "Lore": 10.7, "Shield": 10.2, "Stewards": 16.1}, "2015Q4": {"Archive": 10.4, "Craft": 7.6, "Flow": 14.3, "Hands": 8.4, "Helm": 9.3, "Lore": 11.2, "Shield": 10.3, "Stewards": 14.8}, "2016Q1": {"Archive": 10.5, "Craft": 9.4, "Flow": 14.3, "Hands": 6.8, "Helm": 10.2, "Lore": 12.0, "Shield": 9.5, "Stewards": 14.7}, "2016Q2": {"Archive": 10.9, "Craft": 7.8, "Flow": 13.8, "Hands": 7.5, "Helm": 9.2, "Lore": 11.3, "Shield": 9.8, "Stewards": 15.5}, "2016Q3": {"Archive": 10.6, "Craft": 7.2, "Flow": 14.7, "Hands": 7.2, "Helm": 8.6, "Lore": 12.6, "Shield": 9.0, "Stewards": 15.3}, "2016Q4": {"Archive": 10.8, "Craft": 7.4, "Flow": 13.8, "Hands": 8.3, "Helm": 9.1, "Lore": 11.6, "Shield": 10.8, "Stewards": 15.5}, "2017Q1": {"Archive": 10.8, "Craft": 7.7, "Flow": 14.7, "Hands": 7.2, "Helm": 9.9, "Lore": 11.5, "Shield": 10.0, "Stewards": 16.2}, "2017Q2": {"Archive": 10.7, "Craft": 10.0, "Flow": 13.5, "Hands": 7.0, "Helm": 11.4, "Lore": 11.1, "Shield": 11.6, "Stewards": 15.8}, "2017Q3": {"Archive": 10.3, "Craft": 12.0, "Flow": 13.3, "Hands": 6.7, "Helm": 10.9, "Lore": 11.3, "Shield": 11.0, "Stewards": 15.0}, "2017Q4": {"Archive": 6.6, "Craft": 10.7, "Flow": 13.1, "Hands": 6.4, "Helm": 10.7, "Lore": 11.0, "Shield": 11.7, "Stewards": 12.1}, "2018Q1": {"Archive": 6.7, "Craft": 10.5, "Flow": 13.2, "Hands": 6.7, "Helm": 11.5, "Lore": 9.8, "Shield": 11.3, "Stewards": 11.5}, "2018Q2": {"Archive": 6.1, "Craft": 10.4, "Flow": 14.0, "Hands": 6.1, "Helm": 10.3, "Lore": 10.5, "Shield": 10.9, "Stewards": 11.5}, "2018Q3": {"Archive": 7.5, "Craft": 10.2, "Flow": 13.3, "Hands": 6.9, "Helm": 10.7, "Lore": 9.8, "Shield": 10.8, "Stewards": 11.5}, "2018Q4": {"Archive": 6.1, "Craft": 10.2, "Flow": 12.3, "Hands": 6.5, "Helm": 10.6, "Lore": 7.2, "Shield": 11.3, "Stewards": 12.8}, "2019Q1": {"Archive": 6.7, "Craft": 10.9, "Flow": 11.6, "Hands": 5.8, "Helm": 10.1, "Lore": 8.2, "Shield": 10.7, "Stewards": 13.2}, "2019Q2": {"Archive": 10.7, "Craft": 9.3, "Flow": 8.2, "Hands": 6.3, "Helm": 10.2, "Lore": 10.1, "Shield": 7.9, "Stewards": 10.6}, "2019Q3": {"Archive": 11.4, "Craft": 10.1, "Flow": 8.3, "Hands": 6.2, "Helm": 9.5, "Lore": 10.2, "Shield": 7.0, "Stewards": 11.5}, "2019Q4": {"Archive": 10.9, "Craft": 9.3, "Flow": 7.4, "Hands": 6.7, "Helm": 9.8, "Lore": 10.9, "Shield": 7.6, "Stewards": 11.1}, "2020Q1": {"Archive": 9.0, "Craft": 5.5, "Flow": 5.4, "Hands": 4.9, "Helm": 8.7, "Lore": 10.2, "Shield": 11.7, "Stewards": 7.1}, "2020Q2": {"Archive": 9.2, "Craft": 6.0, "Flow": 4.9, "Hands": 5.0, "Helm": 9.4, "Lore": 10.5, "Shield": 11.1, "Stewards": 6.5}, "2020Q3": {"Archive": 10.2, "Craft": 12.6, "Flow": 14.8, "Hands": 9.3, "Helm": 12.7, "Lore": 11.7, "Shield": 10.6, "Stewards": 16.0}, "2020Q4": {"Archive": 10.6, "Craft": 12.3, "Flow": 15.1, "Hands": 9.6, "Helm": 12.6, "Lore": 11.8, "Shield": 10.3, "Stewards": 16.2}, "2021Q1": {"Archive": 10.7, "Craft": 11.4, "Flow": 15.8, "Hands": 8.5, "Helm": 13.4, "Lore": 11.0, "Shield": 11.0, "Stewards": 15.9}, "2021Q2": {"Archive": 11.0, "Craft": 11.4, "Flow": 15.3, "Hands": 8.5, "Helm": 12.7, "Lore": 11.7, "Shield": 11.6, "Stewards": 17.3}, "2021Q3": {"Archive": 10.9, "Craft": 11.7, "Flow": 14.1, "Hands": 9.4, "Helm": 12.8, "Lore": 11.9, "Shield": 10.5, "Stewards": 16.6}, "2021Q4": {"Archive": 9.4, "Craft": 11.8, "Flow": 15.3, "Hands": 8.4, "Helm": 13.1, "Lore": 11.9, "Shield": 11.0, "Stewards": 15.4}, "2022Q1": {"Archive": 10.0, "Craft": 11.8, "Flow": 14.2, "Hands": 8.5, "Helm": 13.4, "Lore": 12.2, "Shield": 11.0, "Stewards": 16.1}, "2022Q2": {"Archive": 11.2, "Craft": 12.3, "Flow": 15.5, "Hands": 8.5, "Helm": 13.4, "Lore": 11.5, "Shield": 11.3, "Stewards": 16.6}, "2022Q3": {"Archive": 10.5, "Craft": 11.9, "Flow": 14.9, "Hands": 9.0, "Helm": 12.3, "Lore": 11.3, "Shield": 11.3, "Stewards": 16.2}, "2022Q4": {"Archive": 10.2, "Craft": 12.5, "Flow": 15.1, "Hands": 8.3, "Helm": 12.8, "Lore": 11.7, "Shield": 10.1, "Stewards": 15.9}, "2023Q1": {"Archive": 11.2, "Craft": 11.3, "Flow": 14.4, "Hands": 9.0, "Helm": 12.8, "Lore": 10.8, "Shield": 11.0, "Stewards": 15.6}, "2023Q2": {"Archive": 10.8, "Craft": 13.2, "Flow": 16.3, "Hands": 9.7, "Helm": 13.3, "Lore": 11.3, "Shield": 11.6, "Stewards": 16.5}, "2023Q3": {"Archive": 10.4, "Craft": 13.6, "Flow": 16.4, "Hands": 10.6, "Helm": 13.0, "Lore": 11.6, "Shield": 11.2, "Stewards": 16.2}, "2023Q4": {"Archive": 10.7, "Craft": 12.4, "Flow": 12.9, "Hands": 9.9, "Helm": 11.9, "Lore": 9.5, "Shield": 10.3, "Stewards": 15.9}, "2024Q1": {"Archive": 10.9, "Craft": 12.8, "Flow": 12.9, "Hands": 9.9, "Helm": 11.0, "Lore": 9.2, "Shield": 10.8, "Stewards": 16.2}, "2024Q2": {"Archive": 10.6, "Craft": 12.7, "Flow": 12.7, "Hands": 10.1, "Helm": 11.8, "Lore": 9.6, "Shield": 10.9, "Stewards": 16.1}, "2024Q3": {"Archive": 10.5, "Craft": 13.9, "Flow": 12.4, "Hands": 9.6, "Helm": 11.5, "Lore": 8.7, "Shield": 10.8, "Stewards": 16.0}, "2024Q4": {"Archive": 10.1, "Craft": 12.8, "Flow": 12.3, "Hands": 9.8, "Helm": 11.7, "Lore": 9.0, "Shield": 10.3, "Stewards": 16.5}, "2025Q1": {"Archive": 11.0, "Craft": 13.9, "Flow": 16.2, "Hands": 10.4, "Helm": 13.9, "Lore": 11.8, "Shield": 12.1, "Stewards": 16.6}, "2025Q2": {"Archive": 11.2, "Craft": 13.6, "Flow": 15.9, "Hands": 10.4, "Helm": 14.9, "Lore": 12.1, "Shield": 12.1, "Stewards": 16.8}, "2025Q3": {"Archive": 10.5, "Craft": 13.8, "Flow": 15.7, "Hands": 9.9, "Helm": 14.2, "Lore": 11.7, "Shield": 12.6, "Stewards": 16.2}, "2025Q4": {"Archive": 10.6, "Craft": 13.3, "Flow": 15.6, "Hands": 9.6, "Helm": 15.1, "Lore": 11.4, "Shield": 11.7, "Stewards": 16.5}, "2026Q1": {"Archive": 10.8, "Craft": 13.3, "Flow": 15.3, "Hands": 9.9, "Helm": 13.9, "Lore": 11.5, "Shield": 12.3, "Stewards": 16.4}, "2026Q2": {"Archive": 11.0, "Craft": 13.5, "Flow": 16.2, "Hands": 10.5, "Helm": 14.4, "Lore": 11.7, "Shield": 12.2, "Stewards": 17.1}, "2026Q3": {"Archive": 10.8, "Craft": 13.1, "Flow": 15.7, "Hands": 9.7, "Helm": 13.6, "Lore": 12.4, "Shield": 12.2, "Stewards": 16.6}}, "stress_by_node": {"Helm": [5.0, 5.0, 5.4, 5.2, 4.4, 5.2, 5.2, 5.0, 5.0, 4.8, 5.4, 6.0, 5.6, 6.0, 6.0, 5.6, 5.8, 5.6, 6.0, 5.8, 6.6, 5.8, 4.4, 4.0, 3.6, 4.6, 4.0, 4.0, 4.0, 4.0, 4.0, 3.8, 4.2, 3.8, 3.8, 4.8, 5.0, 4.8, 5.2, 5.0, 4.0, 3.8, 3.8, 3.8, 3.6, 4.0, 4.6], "Shield": [6.0, 6.2, 6.0, 6.2, 6.0, 6.2, 6.4, 5.8, 6.0, 4.8, 5.2, 4.8, 4.8, 4.8, 5.0, 5.0, 5.0, 7.0, 7.0, 7.2, 5.2, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.2, 4.8, 4.6, 5.0, 5.2, 5.2, 4.6, 5.0, 5.2, 5.2, 5.2, 5.0, 5.2, 4.2, 3.6, 3.8, 3.8, 4.0, 4.0, 4.0], "Lore": [4.4, 4.6, 4.0, 4.2, 3.8, 3.8, 3.6, 4.0, 4.2, 5.0, 4.8, 4.8, 5.4, 5.0, 5.4, 6.0, 5.8, 5.2, 5.0, 4.8, 4.8, 5.0, 4.0, 3.8, 4.4, 4.0, 4.0, 4.0, 3.8, 3.8, 4.0, 4.4, 4.2, 4.0, 4.2, 5.2, 5.2, 5.0, 5.2, 5.4, 4.0, 4.4, 4.0, 4.4, 4.0, 4.2, 3.8], "Stewards": [3.0, 2.6, 2.6, 3.6, 3.2, 2.8, 2.6, 2.8, 2.6, 2.8, 3.2, 5.0, 4.8, 5.0, 5.0, 4.0, 3.6, 5.2, 5.0, 5.4, 7.0, 7.4, 3.4, 3.0, 2.8, 2.8, 2.6, 3.0, 3.4, 3.0, 3.0, 3.2, 3.0, 2.6, 3.2, 3.4, 3.0, 2.8, 2.8, 3.0, 2.8, 2.8, 3.2, 2.8, 2.8, 2.6, 3.2], "Craft": [4.4, 3.8, 4.2, 4.2, 3.6, 4.0, 4.4, 4.4, 4.2, 4.0, 3.2, 4.0, 4.2, 4.2, 4.0, 4.2, 4.0, 4.8, 4.6, 5.4, 6.0, 6.0, 3.6, 3.6, 4.2, 4.2, 4.2, 3.8, 4.0, 3.8, 4.2, 3.8, 4.6, 3.4, 3.2, 4.2, 4.0, 4.4, 4.0, 4.2, 3.8, 4.0, 3.8, 3.8, 4.0, 4.2, 4.2], "Hands": [4.4, 3.8, 3.8, 4.0, 4.2, 3.8, 4.4, 3.8, 4.2, 4.8, 4.8, 5.2, 5.0, 5.2, 4.8, 5.2, 5.0, 5.2, 5.0, 5.2, 5.8, 5.8, 3.6, 3.8, 4.2, 3.8, 4.0, 4.2, 4.0, 3.8, 3.8, 4.2, 4.0, 4.2, 4.0, 3.6, 4.0, 3.8, 4.6, 4.0, 4.0, 3.8, 4.4, 4.2, 3.8, 4.0, 4.0], "Archive": [4.0, 3.8, 4.2, 4.0, 4.2, 4.6, 4.2, 3.6, 4.0, 3.4, 4.0, 6.2, 6.4, 6.2, 6.2, 6.0, 5.6, 3.6, 3.8, 4.2, 5.4, 5.0, 4.2, 4.2, 3.8, 3.6, 3.8, 4.6, 4.2, 3.4, 4.2, 4.0, 3.8, 3.8, 3.8, 4.0, 4.0, 4.0, 4.2, 4.2, 4.0, 3.8, 4.0, 4.0, 3.8, 4.0, 3.6], "Flow": [3.4, 3.2, 3.0, 3.0, 3.0, 3.4, 2.6, 3.2, 3.0, 3.0, 3.2, 3.2, 3.0, 3.0, 3.2, 4.2, 4.4, 6.0, 5.8, 6.0, 7.4, 7.6, 3.0, 3.0, 2.8, 2.8, 3.0, 2.8, 3.6, 3.0, 3.0, 3.0, 2.8, 3.0, 2.4, 4.0, 4.2, 3.8, 3.8, 4.0, 2.6, 3.0, 3.2, 3.2, 3.2, 2.8, 3.4]}}, "Israel": {"quarters": ["2015Q1", "2015Q2", "2015Q3", "2015Q4", "2016Q1", "2016Q2", "2016Q3", "2016Q4", "2017Q1", "2017Q2", "2017Q3", "2017Q4", "2018Q1", "2018Q2", "2018Q3", "2018Q4", "2019Q1", "2019Q2", "2019Q3", "2019Q4", "2020Q1", "2020Q2", "2020Q3", "2020Q4", "2021Q1", "2021Q2", "2021Q3", "2021Q4", "2022Q1", "2022Q2", "2022Q3", "2022Q4", "2023Q1", "2023Q2", "2023Q3", "2023Q4", "2024Q1", "2024Q2", "2024Q3", "2024Q4", "2025Q1", "2025Q2", "2025Q3", "2025Q4", "2026Q1", "2026Q2", "2026Q3"], "health": [12.912, 13.05, 12.987, 12.913, 13.05, 12.85, 12.775, 13.038, 13.125, 13.2, 13.125, 13.225, 13.087, 12.913, 13.025, 13.0, 13.025, 10.662, 10.775, 10.712, 10.5, 10.512, 10.675, 10.75, 10.65, 10.875, 12.675, 12.475, 12.588, 12.975, 12.612, 12.512, 9.95, 10.212, 8.562, 6.375, 6.275, 6.375, 6.238, 6.125, 5.3, 5.438, 5.138, 5.038, 4.988, 5.387, 5.075], "bond": [28.625, 29.075, 28.427, 28.12, 29.123, 27.608, 27.711, 28.937, 28.36, 28.898, 29.094, 29.537, 28.623, 28.278, 28.108, 28.606, 29.007, 20.513, 20.844, 21.314, 20.656, 21.077, 21.26, 21.155, 21.101, 21.687, 27.158, 27.065, 26.712, 28.046, 26.76, 26.773, 21.123, 21.01, 17.877, 12.73, 12.181, 12.21, 12.371, 12.27, 10.999, 10.669, 10.5, 10.37, 9.746, 10.538, 10.141], "node_by_quarter": {"2015Q1": {"Archive": 13.5, "Craft": 15.7, "Flow": 14.4, "Hands": 10.4, "Helm": 10.5, "Lore": 10.3, "Shield": 12.9, "Stewards": 15.6}, "2015Q2": {"Archive": 14.6, "Craft": 15.8, "Flow": 14.2, "Hands": 10.8, "Helm": 9.9, "Lore": 10.9, "Shield": 12.8, "Stewards": 15.4}, "2015Q3": {"Archive": 14.2, "Craft": 15.5, "Flow": 15.4, "Hands": 10.2, "Helm": 9.6, "Lore": 10.2, "Shield": 12.7, "Stewards": 16.1}, "2015Q4": {"Archive": 13.9, "Craft": 15.1, "Flow": 14.8, "Hands": 11.4, "Helm": 9.8, "Lore": 10.7, "Shield": 12.8, "Stewards": 14.8}, "2016Q1": {"Archive": 14.0, "Craft": 16.9, "Flow": 14.8, "Hands": 9.8, "Helm": 10.7, "Lore": 11.5, "Shield": 12.0, "Stewards": 14.7}, "2016Q2": {"Archive": 14.4, "Craft": 15.3, "Flow": 14.3, "Hands": 10.5, "Helm": 9.7, "Lore": 10.8, "Shield": 12.3, "Stewards": 15.5}, "2016Q3": {"Archive": 14.1, "Craft": 14.7, "Flow": 15.2, "Hands": 10.2, "Helm": 9.1, "Lore": 12.1, "Shield": 11.5, "Stewards": 15.3}, "2016Q4": {"Archive": 14.3, "Craft": 14.9, "Flow": 14.3, "Hands": 11.3, "Helm": 9.6, "Lore": 11.1, "Shield": 13.3, "Stewards": 15.5}, "2017Q1": {"Archive": 14.3, "Craft": 15.2, "Flow": 15.2, "Hands": 10.2, "Helm": 10.4, "Lore": 11.0, "Shield": 12.5, "Stewards": 16.2}, "2017Q2": {"Archive": 14.2, "Craft": 15.0, "Flow": 15.0, "Hands": 11.0, "Helm": 9.9, "Lore": 11.6, "Shield": 13.1, "Stewards": 15.8}, "2017Q3": {"Archive": 13.8, "Craft": 17.0, "Flow": 14.8, "Hands": 10.7, "Helm": 9.4, "Lore": 11.8, "Shield": 12.5, "Stewards": 15.0}, "2017Q4": {"Archive": 14.1, "Craft": 15.7, "Flow": 14.6, "Hands": 10.4, "Helm": 10.2, "Lore": 11.5, "Shield": 13.2, "Stewards": 16.1}, "2018Q1": {"Archive": 14.2, "Craft": 15.5, "Flow": 14.7, "Hands": 10.7, "Helm": 11.0, "Lore": 10.3, "Shield": 12.8, "Stewards": 15.5}, "2018Q2": {"Archive": 13.6, "Craft": 15.4, "Flow": 15.5, "Hands": 10.1, "Helm": 9.8, "Lore": 11.0, "Shield": 12.4, "Stewards": 15.5}, "2018Q3": {"Archive": 15.0, "Craft": 15.2, "Flow": 14.8, "Hands": 10.9, "Helm": 10.2, "Lore": 10.3, "Shield": 12.3, "Stewards": 15.5}, "2018Q4": {"Archive": 14.1, "Craft": 15.2, "Flow": 14.8, "Hands": 10.5, "Helm": 10.6, "Lore": 10.2, "Shield": 12.8, "Stewards": 15.8}, "2019Q1": {"Archive": 14.7, "Craft": 15.9, "Flow": 14.1, "Hands": 9.8, "Helm": 10.1, "Lore": 11.2, "Shield": 12.2, "Stewards": 16.2}, "2019Q2": {"Archive": 11.2, "Craft": 15.3, "Flow": 10.7, "Hands": 8.3, "Helm": 5.2, "Lore": 7.1, "Shield": 12.9, "Stewards": 14.6}, "2019Q3": {"Archive": 11.9, "Craft": 16.1, "Flow": 10.8, "Hands": 8.2, "Helm": 4.5, "Lore": 7.2, "Shield": 12.0, "Stewards": 15.5}, "2019Q4": {"Archive": 11.4, "Craft": 15.3, "Flow": 9.9, "Hands": 8.7, "Helm": 4.8, "Lore": 7.9, "Shield": 12.6, "Stewards": 15.1}, "2020Q1": {"Archive": 10.5, "Craft": 15.0, "Flow": 9.9, "Hands": 8.9, "Helm": 3.7, "Lore": 7.2, "Shield": 13.2, "Stewards": 15.6}, "2020Q2": {"Archive": 10.7, "Craft": 15.5, "Flow": 9.4, "Hands": 9.0, "Helm": 4.4, "Lore": 7.5, "Shield": 12.6, "Stewards": 15.0}, "2020Q3": {"Archive": 10.7, "Craft": 16.1, "Flow": 10.3, "Hands": 8.8, "Helm": 4.2, "Lore": 7.7, "Shield": 12.1, "Stewards": 15.5}, "2020Q4": {"Archive": 11.1, "Craft": 15.8, "Flow": 10.6, "Hands": 9.1, "Helm": 4.1, "Lore": 7.8, "Shield": 11.8, "Stewards": 15.7}, "2021Q1": {"Archive": 11.2, "Craft": 14.9, "Flow": 11.3, "Hands": 8.0, "Helm": 4.9, "Lore": 7.0, "Shield": 12.5, "Stewards": 15.4}, "2021Q2": {"Archive": 11.5, "Craft": 14.9, "Flow": 10.8, "Hands": 8.0, "Helm": 4.2, "Lore": 7.7, "Shield": 13.1, "Stewards": 16.8}, "2021Q3": {"Archive": 14.4, "Craft": 15.7, "Flow": 14.1, "Hands": 10.9, "Helm": 8.8, "Lore": 9.4, "Shield": 12.0, "Stewards": 16.1}, "2021Q4": {"Archive": 12.9, "Craft": 15.8, "Flow": 15.3, "Hands": 9.9, "Helm": 9.1, "Lore": 9.4, "Shield": 12.5, "Stewards": 14.9}, "2022Q1": {"Archive": 13.5, "Craft": 15.8, "Flow": 14.2, "Hands": 10.0, "Helm": 9.4, "Lore": 9.7, "Shield": 12.5, "Stewards": 15.6}, "2022Q2": {"Archive": 14.7, "Craft": 16.3, "Flow": 15.5, "Hands": 10.0, "Helm": 9.4, "Lore": 9.0, "Shield": 12.8, "Stewards": 16.1}, "2022Q3": {"Archive": 14.0, "Craft": 15.9, "Flow": 14.9, "Hands": 10.5, "Helm": 8.3, "Lore": 8.8, "Shield": 12.8, "Stewards": 15.7}, "2022Q4": {"Archive": 13.7, "Craft": 16.5, "Flow": 15.1, "Hands": 9.8, "Helm": 8.8, "Lore": 9.2, "Shield": 11.6, "Stewards": 15.4}, "2023Q1": {"Archive": 7.7, "Craft": 12.8, "Flow": 12.4, "Hands": 9.5, "Helm": 6.3, "Lore": 5.8, "Shield": 12.5, "Stewards": 12.6}, "2023Q2": {"Archive": 7.3, "Craft": 12.7, "Flow": 13.3, "Hands": 9.2, "Helm": 6.8, "Lore": 5.8, "Shield": 13.1, "Stewards": 13.5}, "2023Q3": {"Archive": 3.4, "Craft": 12.1, "Flow": 12.4, "Hands": 8.1, "Helm": 4.0, "Lore": 3.6, "Shield": 12.7, "Stewards": 12.2}, "2023Q4": {"Archive": 6.7, "Craft": 6.9, "Flow": 5.4, "Hands": 4.9, "Helm": 4.4, "Lore": 5.0, "Shield": 8.3, "Stewards": 9.4}, "2024Q1": {"Archive": 6.9, "Craft": 7.3, "Flow": 5.4, "Hands": 3.9, "Helm": 3.5, "Lore": 5.7, "Shield": 9.8, "Stewards": 7.7}, "2024Q2": {"Archive": 6.6, "Craft": 7.2, "Flow": 5.2, "Hands": 4.1, "Helm": 4.3, "Lore": 6.1, "Shield": 9.9, "Stewards": 7.6}, "2024Q3": {"Archive": 6.5, "Craft": 8.4, "Flow": 4.9, "Hands": 3.6, "Helm": 4.0, "Lore": 5.2, "Shield": 9.8, "Stewards": 7.5}, "2024Q4": {"Archive": 6.1, "Craft": 7.3, "Flow": 4.8, "Hands": 3.8, "Helm": 4.2, "Lore": 5.5, "Shield": 9.3, "Stewards": 8.0}, "2025Q1": {"Archive": 5.5, "Craft": 7.4, "Flow": 5.2, "Hands": 2.9, "Helm": 3.4, "Lore": 2.3, "Shield": 8.6, "Stewards": 7.1}, "2025Q2": {"Archive": 5.7, "Craft": 7.1, "Flow": 4.9, "Hands": 2.9, "Helm": 4.4, "Lore": 2.6, "Shield": 8.6, "Stewards": 7.3}, "2025Q3": {"Archive": 5.0, "Craft": 7.3, "Flow": 4.7, "Hands": 2.4, "Helm": 3.7, "Lore": 2.2, "Shield": 9.1, "Stewards": 6.7}, "2025Q4": {"Archive": 5.1, "Craft": 6.8, "Flow": 4.6, "Hands": 2.1, "Helm": 4.6, "Lore": 1.9, "Shield": 8.2, "Stewards": 7.0}, "2026Q1": {"Archive": 5.3, "Craft": 6.8, "Flow": 4.3, "Hands": 2.4, "Helm": 3.4, "Lore": 2.0, "Shield": 8.8, "Stewards": 6.9}, "2026Q2": {"Archive": 5.5, "Craft": 7.0, "Flow": 5.2, "Hands": 3.0, "Helm": 3.9, "Lore": 2.2, "Shield": 8.7, "Stewards": 7.6}, "2026Q3": {"Archive": 5.3, "Craft": 6.6, "Flow": 4.7, "Hands": 2.2, "Helm": 3.1, "Lore": 2.9, "Shield": 8.7, "Stewards": 7.1}}, "stress_by_node": {"Helm": [5.0, 5.0, 5.4, 5.2, 4.4, 5.2, 5.2, 5.0, 5.0, 4.8, 5.4, 5.0, 4.6, 5.0, 5.0, 4.6, 4.8, 6.6, 7.0, 6.8, 7.6, 6.8, 7.4, 7.0, 6.6, 7.6, 5.0, 5.0, 5.0, 5.0, 5.0, 4.8, 7.2, 6.8, 7.8, 7.8, 8.0, 7.8, 8.2, 8.0, 8.0, 7.8, 7.8, 7.8, 7.6, 8.0, 8.6], "Shield": [4.0, 4.2, 4.0, 4.2, 4.0, 4.2, 4.4, 3.8, 4.0, 3.8, 4.2, 3.8, 3.8, 3.8, 4.0, 4.0, 4.0, 4.0, 4.0, 4.2, 4.2, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.2, 3.8, 3.6, 4.0, 4.2, 4.2, 3.6, 4.0, 7.2, 7.2, 7.2, 7.0, 7.2, 7.2, 6.6, 6.8, 6.8, 7.0, 7.0, 7.0], "Lore": [4.4, 4.6, 4.0, 4.2, 3.8, 3.8, 3.6, 4.0, 4.2, 4.0, 3.8, 3.8, 4.4, 4.0, 4.4, 4.0, 3.8, 6.2, 6.0, 5.8, 5.8, 6.0, 6.0, 5.8, 6.4, 6.0, 5.0, 5.0, 4.8, 4.8, 5.0, 5.4, 7.2, 7.0, 8.2, 8.2, 7.2, 7.0, 7.2, 7.4, 8.0, 8.4, 8.0, 8.4, 8.0, 8.2, 7.8], "Stewards": [3.0, 2.6, 2.6, 3.6, 3.2, 2.8, 2.6, 2.8, 2.6, 2.8, 3.2, 3.0, 2.8, 3.0, 3.0, 3.0, 2.6, 3.2, 3.0, 3.4, 3.0, 3.4, 3.4, 3.0, 2.8, 2.8, 2.6, 3.0, 3.4, 3.0, 3.0, 3.2, 4.0, 3.6, 5.2, 6.4, 7.0, 6.8, 6.8, 7.0, 6.8, 6.8, 7.2, 6.8, 6.8, 6.6, 7.2], "Craft": [3.4, 2.8, 3.2, 3.2, 2.6, 3.0, 3.4, 3.4, 3.2, 3.0, 2.2, 3.0, 3.2, 3.2, 3.0, 3.2, 3.0, 2.8, 2.6, 3.4, 3.0, 3.0, 2.6, 2.6, 3.2, 3.2, 3.2, 2.8, 3.0, 2.8, 3.2, 2.8, 4.6, 4.4, 5.2, 7.2, 7.0, 7.4, 7.0, 7.2, 6.8, 7.0, 6.8, 6.8, 7.0, 7.2, 7.2], "Hands": [4.4, 3.8, 3.8, 4.0, 4.2, 3.8, 4.4, 3.8, 4.2, 3.8, 3.8, 4.2, 4.0, 4.2, 3.8, 4.2, 4.0, 5.2, 5.0, 5.2, 4.8, 4.8, 4.6, 4.8, 5.2, 4.8, 4.0, 4.2, 4.0, 3.8, 3.8, 4.2, 5.0, 5.2, 5.0, 6.6, 7.0, 6.8, 7.6, 7.0, 7.0, 6.8, 7.4, 7.2, 6.8, 7.0, 7.0], "Archive": [3.0, 2.8, 3.2, 3.0, 3.2, 3.6, 3.2, 2.6, 3.0, 2.4, 3.0, 3.2, 3.4, 3.2, 3.2, 3.0, 2.6, 4.6, 4.8, 5.2, 5.4, 5.0, 5.2, 5.2, 4.8, 4.6, 2.8, 3.6, 3.2, 2.4, 3.2, 3.0, 6.8, 6.8, 7.8, 7.0, 7.0, 7.0, 7.2, 7.2, 7.0, 6.8, 7.0, 7.0, 6.8, 7.0, 6.6], "Flow": [3.4, 3.2, 3.0, 3.0, 3.0, 3.4, 2.6, 3.2, 3.0, 3.0, 3.2, 3.2, 3.0, 3.0, 3.2, 3.2, 3.4, 5.0, 4.8, 5.0, 5.4, 5.6, 5.0, 5.0, 4.8, 4.8, 3.0, 2.8, 3.6, 3.0, 3.0, 3.0, 3.8, 4.0, 4.4, 7.0, 7.2, 6.8, 6.8, 7.0, 6.6, 7.0, 7.2, 7.2, 7.2, 6.8, 7.4]}}};
+const QUARTERS = ["2015Q1", "2015Q2", "2015Q3", "2015Q4", "2016Q1", "2016Q2", "2016Q3", "2016Q4", "2017Q1", "2017Q2", "2017Q3", "2017Q4", "2018Q1", "2018Q2", "2018Q3", "2018Q4", "2019Q1", "2019Q2", "2019Q3", "2019Q4", "2020Q1", "2020Q2", "2020Q3", "2020Q4", "2021Q1", "2021Q2", "2021Q3", "2021Q4", "2022Q1", "2022Q2", "2022Q3", "2022Q4", "2023Q1", "2023Q2", "2023Q3", "2023Q4", "2024Q1", "2024Q2", "2024Q3", "2024Q4", "2025Q1", "2025Q2", "2025Q3", "2025Q4", "2026Q1", "2026Q2", "2026Q3"];
+const SOCIETIES = ["USA", "Iran", "Saudi Arabia", "Israel"];
+const SOC_COLORS = {"USA": "#1a6bbf", "Iran": "#c0392b", "Saudi Arabia": "#27ae60", "Israel": "#e67e22"};
+const NODE_DESCS = {"Helm": "Executive governance & leadership", "Shield": "Military & security apparatus", "Lore": "Knowledge, education & science", "Stewards": "Resource & environmental management", "Craft": "Technology & industrial production", "Hands": "Labour & civil society", "Archive": "Law, institutions & memory", "Flow": "Trade & economic exchange"};
+const NODES_ORDER = ["Helm", "Shield", "Lore", "Stewards", "Craft", "Hands", "Archive", "Flow"];
+const EVENTS = [{"quarter": "2020Q1", "label": "COVID-19 begins", "desc": "Global pandemic disrupts all four societies. Look for stress spikes and capacity drops across 2020."}, {"quarter": "2020Q2", "label": "COVID peak stress", "desc": "Q2 2020 marks the deepest system shock as lockdowns and economic disruption hit simultaneously."}, {"quarter": "2018Q3", "label": "US-Iran sanctions escalate", "desc": "USA re-imposes maximum pressure sanctions on Iran after withdrawing from the nuclear deal (JCPOA). Iran's Flow and Craft nodes take sustained hits."}, {"quarter": "2023Q4", "label": "Israel: Oct 7 shock", "desc": "Hamas attacks (7 Oct 2023) and subsequent Gaza war. Israel's Shield surges while Hands and Flow decline sharply."}, {"quarter": "2022Q1", "label": "Post-COVID recovery divergence", "desc": "USA recovers relatively quickly; Iran remains suppressed by sanctions; Saudi Arabia benefits from oil price surge."}, {"quarter": "2021Q2", "label": "Saudi Vision 2030 momentum", "desc": "Saudi Arabia's Craft and Flow nodes reflect accelerating economic diversification under Vision 2030 reforms."}];
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+function tickLabels(quarters, step) {
+  // Show every N-th label to avoid crowding
+  return quarters.map((q, i) => (i % step === 0) ? q : '');
+}
+
+const TICK_STEP = 4; // every 4 quarters = annually
+
+// ── Chart 1: System Health ─────────────────────────────────────────────────
+function drawHealth() {
+  const traces = SOCIETIES.map(soc => ({
+    x: ALL_DATA[soc].quarters,
+    y: ALL_DATA[soc].health,
+    name: soc,
+    type: 'scatter',
+    mode: 'lines+markers',
+    line: { color: SOC_COLORS[soc], width: 2.5 },
+    marker: { size: 4 },
+    hovertemplate: '<b>%{fullData.name}</b><br>%{x}<br>Avg Node Value: %{y:.2f}<extra></extra>'
+  }));
+
+  const layout = {
+    xaxis: {
+      tickvals: QUARTERS.filter((q,i) => i % TICK_STEP === 0),
+      ticktext: QUARTERS.filter((q,i) => i % TICK_STEP === 0),
+      tickangle: -45, tickfont: {size: 11},
+      gridcolor: '#eee', showgrid: true
+    },
+    yaxis: {
+      title: 'Average Node Value', rangemode: 'tozero',
+      gridcolor: '#eee', tickfont: {size: 11}
+    },
+    legend: { orientation: 'h', y: 1.08, x: 0.5, xanchor: 'center' },
+    margin: {t: 40, l: 60, r: 20, b: 80},
+    paper_bgcolor: 'white', plot_bgcolor: 'white',
+    hovermode: 'x unified'
+  };
+  Plotly.newPlot('chart-health', traces, layout, {responsive: true, displayModeBar: false});
+}
+
+// ── Chart 2: Bond Strength ─────────────────────────────────────────────────
+function drawBond() {
+  const traces = SOCIETIES.map(soc => ({
+    x: ALL_DATA[soc].quarters,
+    y: ALL_DATA[soc].bond,
+    name: soc,
+    type: 'scatter',
+    mode: 'lines+markers',
+    line: { color: SOC_COLORS[soc], width: 2.5 },
+    marker: { size: 4 },
+    hovertemplate: '<b>%{fullData.name}</b><br>%{x}<br>Bond Strength: %{y:.2f}<extra></extra>'
+  }));
+
+  const layout = {
+    xaxis: {
+      tickvals: QUARTERS.filter((q,i) => i % TICK_STEP === 0),
+      ticktext: QUARTERS.filter((q,i) => i % TICK_STEP === 0),
+      tickangle: -45, tickfont: {size: 11},
+      gridcolor: '#eee', showgrid: true
+    },
+    yaxis: {
+      title: 'Bond Strength', rangemode: 'tozero',
+      gridcolor: '#eee', tickfont: {size: 11}
+    },
+    legend: { orientation: 'h', y: 1.08, x: 0.5, xanchor: 'center' },
+    margin: {t: 40, l: 60, r: 20, b: 80},
+    paper_bgcolor: 'white', plot_bgcolor: 'white',
+    hovermode: 'x unified'
+  };
+  Plotly.newPlot('chart-bond', traces, layout, {responsive: true, displayModeBar: false});
+}
+
+// ── Chart 3: Node Breakdown ────────────────────────────────────────────────
+function populateQuarterDropdown(selId, soc) {
+  const sel = document.getElementById(selId);
+  const qs = ALL_DATA[soc].quarters;
+  // keep current value if possible
+  const cur = sel.value;
+  sel.innerHTML = '';
+  qs.forEach(q => {
+    const opt = document.createElement('option');
+    opt.value = q; opt.textContent = q;
+    if (q === cur) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  if (!sel.value) sel.value = qs[qs.length - 1]; // default to latest
+}
+
+function drawNodes() {
+  const soc = document.getElementById('sel-soc-node').value;
+  const q = document.getElementById('sel-q-node').value;
+  const nbq = ALL_DATA[soc].node_by_quarter[q] || {};
+  const vals = NODES_ORDER.map(n => nbq[n] ?? null);
+  const color = SOC_COLORS[soc];
+
+  const trace = {
+    x: NODES_ORDER,
+    y: vals,
+    type: 'bar',
+    marker: {
+      color: vals.map(v => v === null ? '#ccc' : 
+             v >= 13 ? color : v >= 10 ? color + 'bb' : color + '77'),
+      line: { color: color, width: 1 }
+    },
+    hovertemplate: '<b>%{x}</b><br>Node Value: %{y:.2f}<extra></extra>',
+    text: vals.map(v => v !== null ? v.toFixed(1) : ''),
+    textposition: 'outside',
+    textfont: { size: 11 }
+  };
+
+  const layout = {
+    xaxis: { tickfont: {size: 12}, automargin: true },
+    yaxis: { title: 'Node Value', range: [0, 20], gridcolor: '#eee' },
+    title: { text: `${soc} — ${q}`, font: {size: 13, color: '#456' }, x: 0.5 },
+    margin: {t: 50, l: 60, r: 20, b: 60},
+    paper_bgcolor: 'white', plot_bgcolor: 'white'
+  };
+  Plotly.newPlot('chart-nodes', [trace], layout, {responsive: true, displayModeBar: false});
+}
+
+function renderNodeLegend() {
+  const el = document.getElementById('node-legend');
+  el.innerHTML = NODES_ORDER.map(n =>
+    `<span class="node-chip"><strong>${n}</strong> ${NODE_DESCS[n]}</span>`
+  ).join('');
+}
+
+// ── Chart 4: Stress Heatmap ────────────────────────────────────────────────
+function drawHeat() {
+  const soc = document.getElementById('sel-soc-heat').value;
+  const qs = ALL_DATA[soc].quarters;
+  const z = NODES_ORDER.map(n => ALL_DATA[soc].stress_by_node[n] || qs.map(() => null));
+  
+  const trace = {
+    z: z,
+    x: qs,
+    y: NODES_ORDER,
+    type: 'heatmap',
+    colorscale: [
+      [0, '#fff5f0'],
+      [0.3, '#fca082'],
+      [0.6, '#de2d26'],
+      [1.0, '#67000d']
+    ],
+    zmin: 1, zmax: 10,
+    colorbar: {
+      title: 'Stress', titleside: 'right',
+      thickness: 14, len: 0.7
+    },
+    hovertemplate: '<b>%{y}</b><br>%{x}<br>Stress: %{z:.2f}<extra></extra>'
+  };
+
+  const layout = {
+    xaxis: {
+      tickvals: qs.filter((q,i) => i % TICK_STEP === 0),
+      ticktext: qs.filter((q,i) => i % TICK_STEP === 0),
+      tickangle: -45, tickfont: {size: 10}, automargin: true
+    },
+    yaxis: { automargin: true, tickfont: {size: 12} },
+    title: { text: `Stress by Domain — ${soc}`, font: {size: 13, color:'#456'}, x: 0.5 },
+    margin: {t: 50, l: 80, r: 80, b: 90},
+    paper_bgcolor: 'white', plot_bgcolor: 'white'
+  };
+  Plotly.newPlot('chart-heat', [trace], layout, {responsive: true, displayModeBar: false});
+}
+
+// ── Events callouts ────────────────────────────────────────────────────────
+function renderEvents() {
+  const grid = document.getElementById('events-grid');
+  grid.innerHTML = EVENTS.map(e =>
+    `<div class="event-card">
+      <div class="eq">${e.quarter}</div>
+      <div class="etitle">📍 ${e.label}</div>
+      <div class="edesc">${e.desc}</div>
+    </div>`
+  ).join('');
+}
+
+// ── Event wiring ───────────────────────────────────────────────────────────
+document.getElementById('sel-soc-node').addEventListener('change', function() {
+  populateQuarterDropdown('sel-q-node', this.value);
+  drawNodes();
+});
+document.getElementById('sel-q-node').addEventListener('change', drawNodes);
+document.getElementById('sel-soc-heat').addEventListener('change', drawHeat);
+
+// ── Boot ───────────────────────────────────────────────────────────────────
+drawHealth();
+drawBond();
+populateQuarterDropdown('sel-q-node', 'USA');
+document.getElementById('sel-q-node').value = '2026Q3';
+renderNodeLegend();
+drawNodes();
+drawHeat();
+renderEvents();
+</script>
+</body>
+</html>
