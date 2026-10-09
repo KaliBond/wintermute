@@ -1,0 +1,27 @@
+# Hash audit of files in CAMS-Replication-Kit-v1.0.zip
+# raw = bytes as extracted from ZIP (CRLF line endings)
+# lf-normalised = CRLF converted to LF before hashing
+
+packet-Helm-BLIND-A.md
+  raw:           b44d0442f38852b2438f35f699d02d392a3a2ab0d42d8f7d31c4794287f87ebb
+  lf-normalised: 5e501e8247773ec7094218e23180f4eb5f7c15298dc8c6c86cd1cc1786a7b15b
+  listed hash:   5e501e8247773ec7094218e23180f4eb5f7c15298dc8c6c86cd1cc1786a7b15b
+  status: MATCH after line-ending normalisation
+
+packet-Helm-BLIND-A.redacted.md
+  raw:           85362273b576d719df32f4c3e0c2719d3e8371d56c7fa0b8d41bb178575282b0
+  lf-normalised: b9c91937ca0d84c6ac569ca1d03fe67dd2a1415aa23b7072fadfab39a9cca351
+  listed hash:   none supplied
+  status: NOT VERIFIABLE against PACKET-HASHES.txt
+
+packet-Helm-BLIND-B.md
+  raw:           d30cab020183e27b5c5b72e1075a856a68b6e4d7fd0b0440f8b338d48b9e53f7
+  lf-normalised: e4806f50a229c358305c48634e4dfb5e76746ce744d15568901506fc45c290ac
+  listed hash:   e4806f50a229c358305c48634e4dfb5e76746ce744d15568901506fc45c290ac
+  status: MATCH after line-ending normalisation
+
+packet-Helm-BLIND-B.redacted.md
+  raw:           17bf58aa826fdc9056167ad54603cc6695f6f9b77891a51983500575188d926e
+  lf-normalised: acb69de9500356a7dd902af30108c40dc4283d4084b58ec23e2e79f0e0ff39ac
+  listed hash:   none supplied
+  status: NOT VERIFIABLE against PACKET-HASHES.txt
