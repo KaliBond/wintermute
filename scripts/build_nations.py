@@ -127,6 +127,8 @@ def main():
     for d, href, title, summ in re.findall(
             r'<tr>\s*<td class="date">(.*?)</td>\s*<td><a href="(.*?)"[^>]*>(.*?)</a></td>\s*<td class="summary">(.*?)</td>',
             src, re.S):
+        if '://' not in href:
+            continue  # a page on this site — already counted under site reports
         title, summ = si.clean(title), si.clean(summ)
         found = matches(f'{title} {summ}')
         for n in found:

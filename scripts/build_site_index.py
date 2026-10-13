@@ -59,7 +59,7 @@ GROUPS = [
     ]),
     ('Country & Case Studies', 'Study', 'monthly', '0.6', [
         ('nations', 'Guide'), 'the-empty-pulpit', ('the-empty-pulpit-map', 'Map'), 'usa-empty-pulpit-perspectives',
-        'usa-empty-pulpit-detective-panel', 'usa-outlook-set', 'us-legitimacy-cams-study',
+        'usa-empty-pulpit-detective-panel', 'usa-outlook-set', 'us-legitimacy-cams-study', 'crisis-before-trump',
         'analysis/us_legitimacy_cams_study', 'analysis/us_interest_burden_cams_study',
         'uk-arc-story', ('uk-arc-map', 'Map'), 'uk-detective-panel', 'uk-outlook-set',
         'norway-arc-story', ('norway-arc-map', 'Map'), 'norway-detective-panel', 'norway-outlook-set',
