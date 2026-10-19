@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Organisational Pathologies as Recurring Functional Topologies — CAMS</title>
-<meta name="description" content="Working thesis: organisational pathologies are characteristic paths that stress takes through the eight CAMS functions. Six frozen signatures tested on 37 JUNO v3 societies against a circular-shift null, and the next test: rule transfer to corporations.">
+<title>Organisational Pathologies — CAMS Interim Results</title>
+<meta name="description" content="The failures we recognise in families and offices — the boss who stops taking calls, the family that forgets — turn up at national scale too. Interim results: six frozen CAMS signatures on 37 JUNO v3 societies cluster where history says something went wrong.">
 <link rel="canonical" href="https://neuralnations.org/organisational-pathologies">
 <link rel="stylesheet" href="style.css">
 <style>
@@ -13,12 +13,14 @@
   --accent:#2F6F7D; --accent-soft:#e8f1f3;
   --green:#2e7d52; --green-soft:#e2f0e8;
   --amber:#9a6a12; --amber-soft:#f6ecd4;
-  --line:#E0E0E0;
+  --gray-soft:#F0F0F0; --line:#E0E0E0;
+  --obs:#2F6F7D; --exp:#c3c8d0;
 }
 *{box-sizing:border-box}
 body{background:var(--page);color:var(--ink)}
 .report{max-width:920px;margin:0 auto;padding:0 24px 80px;
-  font-family:Georgia,'Times New Roman',serif;line-height:1.68;font-size:17px}
+  font-family:Georgia,'Times New Roman',serif;line-height:1.7;font-size:17.5px}
+.sans{font-family:-apple-system,'Segoe UI',sans-serif}
 header.masthead{border-bottom:3px double var(--line);padding:42px 0 24px;margin-bottom:30px}
 .brand{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;letter-spacing:.24em;
   text-transform:uppercase;color:var(--accent);font-weight:700}
@@ -27,50 +29,105 @@ header.masthead{border-bottom:3px double var(--line);padding:42px 0 24px;margin-
 .subtitle{font-size:19px;color:var(--muted);font-style:italic;margin:0 0 16px}
 .meta{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;color:var(--muted)}
 .meta b{color:var(--ink)}
-.report h2{font-size:25px;margin:50px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+.report h2{font-size:26px;margin:54px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
 .report h3{font-size:19px;margin:28px 0 10px}
 .report p{margin:0 0 16px}
-.lede{font-size:19.5px;line-height:1.6}
-.summary{border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:6px;padding:22px 26px;margin:26px 0}
-.summary h2{border:none;margin:0 0 10px;padding:0;font-size:20px;color:var(--accent)}
-.summary ol{margin:0;padding-left:22px}
-.summary li{margin-bottom:8px}
+.lede{font-size:20px;line-height:1.6}
+.pull{border-left:4px solid var(--accent);padding:4px 0 4px 20px;margin:26px 0;font-size:21px;font-style:italic;line-height:1.5}
+
+/* headline numbers */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:26px 0}
+.stat{border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:6px;padding:12px 14px;font-family:-apple-system,'Segoe UI',sans-serif}
+.stat strong{display:block;font-size:26px;color:var(--accent);line-height:1.15}
+.stat span{display:block;font-size:13px;color:var(--muted);margin-top:4px;line-height:1.4}
+
+/* nodes */
 .nodes{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0 24px;font-family:-apple-system,'Segoe UI',sans-serif}
-.nodes div{border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:6px;padding:10px 12px}
+.nodes div{border:1px solid var(--line);border-radius:6px;padding:10px 12px}
 .nodes b{display:block;font-size:15px}
 .nodes span{font-size:13px;color:var(--muted)}
-.tablewrap{overflow-x:auto;margin:16px 0 24px}
+.formula{font-family:Consolas,'SF Mono',monospace;font-size:15px;background:#F7F7F7;border:1px solid var(--line);
+  border-radius:6px;padding:12px 16px;margin:14px 0 20px;overflow-x:auto}
+
+/* signature cards */
+.sigs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
+.sigcard{border:1px solid var(--line);border-radius:8px;padding:16px 18px;display:flex;flex-direction:column}
+.sigcard h3{margin:0 0 4px;font-size:18px}
+.sigcard .face{font-style:italic;color:var(--accent);margin:0 0 10px;font-size:16.5px}
+.sigcard .rule{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13.5px;color:var(--muted);line-height:1.5;margin:0 0 12px}
+.sigcard .foot{margin-top:auto;display:flex;flex-wrap:wrap;gap:6px;font-family:-apple-system,'Segoe UI',sans-serif}
+.pill{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:4px;padding:3px 8px}
+.p-count{background:var(--gray-soft);color:var(--muted)}
+.p-held{background:var(--green-soft);color:var(--green)}
+.p-lean{background:var(--amber-soft);color:var(--amber)}
+.p-none{background:var(--gray-soft);color:var(--muted);font-weight:600}
+
+/* bar charts */
+figure.chart{margin:26px 0;border:1px solid var(--line);border-radius:6px;padding:16px 18px 14px}
+.chart-title{font-family:-apple-system,'Segoe UI',sans-serif;font-weight:700;font-size:15px;margin:0 0 2px !important}
+.chart-sub{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;color:var(--muted);margin:0 0 12px !important}
+.legend{display:flex;gap:18px;font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;margin:0 0 10px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{display:inline-block;width:12px;height:12px;border-radius:2px}
+.bars{display:grid;grid-template-columns:190px 1fr 74px;gap:6px 12px;align-items:center;font-family:-apple-system,'Segoe UI',sans-serif;font-size:13.5px}
+.bars .lab{font-weight:600}
+.bars .track{display:flex;flex-direction:column;gap:3px}
+.bars .b{height:12px;border-radius:2px;display:flex;align-items:center}
+.bars .b em{font-style:normal;font-size:11.5px;color:var(--muted);margin-left:calc(100% + 6px);white-space:nowrap}
+.bars .o{background:var(--obs)}
+.bars .e{background:var(--exp)}
+.bars .pv{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.bars .pv.sig{color:var(--green);font-weight:700}
+figcaption{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;color:var(--muted);margin-top:12px;line-height:1.5}
+
+/* casebook */
+.casebook{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:20px 0}
+.case{border:1px solid var(--line);border-left:5px solid var(--green);border-radius:6px;padding:12px 16px}
+.case b{display:block;font-family:-apple-system,'Segoe UI',sans-serif;font-size:14px;margin-bottom:4px}
+.case span{font-size:15.5px}
+.missed{font-family:-apple-system,'Segoe UI',sans-serif;font-size:14px;color:var(--muted);border:1px dashed var(--line);border-radius:6px;padding:10px 14px}
+
+/* chain */
+.chain{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:20px 0;font-family:-apple-system,'Segoe UI',sans-serif}
+.chain div{border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:6px;padding:10px 14px;flex:1 1 180px}
+.chain div b{display:block;font-size:15px}
+.chain div small{color:var(--muted);font-size:12.5px}
+.chain .arr{flex:0 0 auto;color:var(--accent);font-size:20px}
+
+.callout{border:1px solid var(--line);border-left:5px solid var(--amber);border-radius:6px;background:var(--amber-soft);
+  padding:14px 20px;margin:22px 0;font-size:16.5px}
+.callout.ok{border-left-color:var(--green);background:var(--green-soft)}
+
+/* appendix */
+.appendix{margin-top:60px;border-top:3px double var(--line);padding-top:10px}
+.appendix > h2{border:none;margin-top:20px}
+details.ap{border:1px solid var(--line);border-radius:6px;margin:10px 0;padding:0 18px}
+details.ap summary{cursor:pointer;font-family:-apple-system,'Segoe UI',sans-serif;font-weight:700;font-size:15px;padding:13px 0;color:var(--accent)}
+details.ap[open] summary{border-bottom:1px solid var(--line);margin-bottom:14px}
+details.ap > :last-child{margin-bottom:16px}
+.tablewrap{overflow-x:auto;margin:12px 0 18px}
 .report table{width:100%;border-collapse:collapse;font-size:14px;font-family:-apple-system,'Segoe UI',sans-serif}
-.report th{background:#F0F0F0;text-align:left;padding:8px 10px;border-bottom:2px solid var(--line);
+.report th{background:var(--gray-soft);text-align:left;padding:8px 10px;border-bottom:2px solid var(--line);
   font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 .report td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
 .report td.num,.report th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .report td.sig{font-weight:600;white-space:nowrap}
-tr.hit td.num.p{color:var(--green);font-weight:700}
-.formula{font-family:Consolas,'SF Mono',monospace;font-size:15px;background:#F7F7F7;border:1px solid var(--line);
-  border-radius:6px;padding:14px 18px;margin:16px 0 20px;line-height:1.9;overflow-x:auto}
-.callout{border:1px solid var(--line);border-left:5px solid var(--amber);border-radius:6px;background:var(--amber-soft);
-  padding:14px 20px;margin:22px 0;font-size:16px}
-.callout.ok{border-left-color:var(--green);background:var(--green-soft)}
-.levels{display:grid;gap:10px;margin:18px 0}
-.level{border:1px solid var(--line);border-radius:6px;padding:12px 16px;display:flex;gap:14px;align-items:flex-start}
-.level .tag{flex:0 0 96px;font-family:-apple-system,'Segoe UI',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;
-  text-transform:uppercase;border-radius:4px;padding:5px 8px;text-align:center;margin-top:3px}
-.t-now{background:var(--green-soft);color:var(--green)}
-.t-next{background:var(--accent-soft);color:var(--accent)}
-.t-later{background:#F0F0F0;color:var(--muted)}
-.report ol.steps li,.report ul.plain li{margin-bottom:8px}
 .report ul.plain{padding-left:20px}
-.report code{font-family:Consolas,'SF Mono',monospace;font-size:.88em;background:#F0F0F0;padding:1px 5px;border-radius:3px}
-.endnote{border-top:3px double var(--line);margin-top:56px;padding-top:20px;
+.report ul.plain li,.report ol li{margin-bottom:7px}
+.report code{font-family:Consolas,'SF Mono',monospace;font-size:.88em;background:var(--gray-soft);padding:1px 5px;border-radius:3px}
+.endnote{border-top:3px double var(--line);margin-top:50px;padding-top:20px;
   font-family:-apple-system,'Segoe UI',sans-serif;font-size:13.5px;color:var(--muted)}
 @media(max-width:700px){
   .report{padding:0 16px 60px;font-size:16.5px}
   .report h1{font-size:30px}
-  .nodes{grid-template-columns:repeat(2,1fr)}
-  .level{flex-direction:column;gap:6px}
-  .level .tag{flex:none}
+  .stats,.nodes{grid-template-columns:repeat(2,1fr)}
+  .sigs,.casebook{grid-template-columns:1fr}
+  .bars{grid-template-columns:1fr 54px}
+  .bars .lab{grid-column:1 / -1;margin-top:6px}
+  .chain{flex-direction:column;align-items:stretch}
+  .chain .arr{text-align:center;transform:rotate(90deg)}
 }
+@media print{#site-nav,footer.footer{display:none} details.ap{border:none} figure.chart,.sigcard{break-inside:avoid}}
 </style>
 </head>
 <body>
@@ -78,159 +135,222 @@ tr.hit td.num.p{color:var(--green);font-weight:700}
 
 <main class="report">
 <header class="masthead">
-  <div class="brand">Neural Nations <span>· CAMS working thesis</span></div>
-  <h1>Organisational Pathologies as Recurring Functional Topologies</h1>
-  <p class="subtitle">The same failures recur wherever humans organise. We think they are paths that stress takes through eight functions, and that those paths can be measured.</p>
-  <div class="meta"><b>Kari McKern</b> · ComplexityWorkz · redraft, 20 October 2026 · six frozen signatures · 37 JUNO v3 societies · prereg <code>1b9b9f1</code>, results <code>58fcaaf</code></div>
+  <div class="brand">Neural Nations <span>· CAMS interim results</span></div>
+  <h1>Organisational Pathologies</h1>
+  <p class="subtitle">The ways groups go wrong look the same at every scale. Can they be recovered, by number, from the history of nations?</p>
+  <div class="meta"><b>Kari McKern</b> · ComplexityWorkz · 20 October 2026 · six frozen signatures · 37 societies from JUNO v3 · progress report</div>
 </header>
 
-<p class="lede">This redraft restates an earlier working proposition, itself an external assessment revised by Lab Chief, in our own framing. Every figure is reconciled against the frozen signature run and <code>juno/v3/CAMS_Signature_Pack_v1.md</code>.</p>
+<p class="lede">You already know these people. The boss who has stopped taking calls. The family that has quietly forgotten why a relative is not spoken of. The committee that runs on the story it tells itself while the cupboard goes bare. The household where the bloke in charge is plainly out of his depth and everyone else is holding the place together around him.</p>
 
-<section class="summary">
-  <h2>In brief</h2>
-  <ol>
-    <li><b>Pathology is a relationship, not a low score.</b> Two societies with the same mean V can be arranged very differently. A signature names which functions move, in which direction, in what order, and whether it lasts.</li>
-    <li><b>Six signatures were frozen before outcomes were counted.</b> All four with named historical windows fire in those windows well beyond chance, and all stay under 0.05 after Holm correction.</li>
-    <li><b>One signature precedes big falls.</b> Late abstraction collapse comes before a big drop in mean V far more often than chance (62 against 38.56 expected, p = 0.0002). The others mark episodes rather than forecast them.</li>
-    <li><b>The claim today is structural.</b> The same functions and the same kinds of pathology appear at every scale. Whether the national rules transfer unchanged to firms is the next test (P4).</li>
-  </ol>
-</section>
+<p>Nobody needs a theory to spot them. We are humans, and humans are very good at noticing when the group has gone wrong. The same wrongness, it seems, turns up at every scale. The kitchen table, the office, the cabinet room and the nation all fail in a handful of recognisable ways. These failures are outliers with a shape, and the shape is the same whether the group is five people or fifty million.</p>
 
-<h2>1. The proposition</h2>
-<p>We treat societies and organisations as complex adaptive systems built from eight functions:</p>
+<p>This is a progress report on recovering them from the history of nations.</p>
+
+<div class="stats">
+  <div class="stat"><strong>696</strong><span>society-years where a frozen signature fired</span></div>
+  <div class="stat"><strong>4 of 4</strong><span>windowed signatures cluster beyond chance, after Holm correction</span></div>
+  <div class="stat"><strong>12 of 18</strong><span>named historical windows survive the frozen rules</span></div>
+  <div class="stat"><strong>p = 0.0002</strong><span>Late Abstraction Collapse comes before big falls</span></div>
+</div>
+
+<h2>The instrument</h2>
+<p>CAMS treats any society as a complex adaptive system performing eight functions:</p>
 <div class="nodes">
-  <div><b>Helm</b><span>direction</span></div>
-  <div><b>Shield</b><span>coercion and protection</span></div>
-  <div><b>Lore</b><span>meaning</span></div>
-  <div><b>Stewards</b><span>property and resources</span></div>
-  <div><b>Flow</b><span>exchange</span></div>
-  <div><b>Craft</b><span>skill</span></div>
-  <div><b>Hands</b><span>labour</span></div>
-  <div><b>Archive</b><span>memory</span></div>
+  <div><b>Helm</b><span>steers</span></div>
+  <div><b>Shield</b><span>keeps force and order</span></div>
+  <div><b>Lore</b><span>supplies meaning</span></div>
+  <div><b>Stewards</b><span>hold and allocate assets</span></div>
+  <div><b>Flow</b><span>moves things around</span></div>
+  <div><b>Craft</b><span>makes things that need skill</span></div>
+  <div><b>Hands</b><span>do the labour</span></div>
+  <div><b>Archive</b><span>remembers</span></div>
 </div>
-<p>Our proposition is that organisational pathologies are characteristic paths that stress takes through these functions. They are patterns of changing relationships, not just low scores. Because the functional topology is the same wherever humans organise, the same paths recur and can be identified quantitatively, even where institutional forms, eras and people differ.</p>
+<p>Each function is scored each year for Coherence (C), Capacity (K), Stress (S) and Abstraction (A), and its node value is:</p>
+<div class="formula">V = C + K + A/2 − S</div>
 
-<h2>2. Warrant: repeatability</h2>
-<p>Node readings are our primary observations. Independent AI scoring passes each rate Coherence (C), Capacity (K), Stress (S) and Abstraction (A) for each of the eight nodes in each year. They keep recovering the same structure in a society’s history, and we take that repeatability as the warrant, not conformity with external indexes.</p>
-<p>The method is closer to reconstructing climate history from monastic and archival records. We trust no single chronicler, but when independent records agree on the hard winters and the good harvests, we take the pattern as real.</p>
-<p>No scoring pass ever scores “Helm isolation” or “Archive amnesia”. Signatures are regularities in topology change, inferred afterwards across many society-years. They are not something imposed while scoring. The metrics are the signal.</p>
+<p>Two layers sit underneath. <b>Coordination problems</b> explain why the functions exist at all. Anything that wants to outlast its founders has to steer, defend, remember and feed itself. <b>The primate who runs it</b> explains why the same failures keep coming back. We are prone to cheating, lying and status-seeking, and we carry the same tricks into every institution we build.</p>
+<p class="pull">The topology is the stage. We supply the drama.</p>
 
-<h2>3. Pathology is a relationship</h2>
-<p>Two societies can have the same mean V. In one, declining Helm capacity is offset by a strong Archive, effective Stewards and adaptive Flow. In the other, Helm becomes isolated while Shield increasingly enforces its decisions and Lore legitimises them. The averages match, but the configurations do not.</p>
-<p>We make the temporal structure explicit:</p>
-<div class="formula">
-X<sub>i,t</sub> = (C<sub>i,t</sub>, K<sub>i,t</sub>, S<sub>i,t</sub>, A<sub>i,t</sub>),&nbsp;&nbsp; V<sub>i,t</sub> = C + K + A/2 − S<br>
-ΔX<sub>i,t</sub> = X<sub>i,t</sub> − X<sub>i,t−1</sub><br>
-D<sub>ij,t</sub> = ΔV<sub>i,t</sub> − ΔV<sub>j,t</sub>
+<p>The scores are AI assessments, and we accept them as given, in good faith on the evidence available to the rater. The warrant is repeatability, in the same way climate historians dig temperature records out of monastic archives that were never kept for that purpose. We ask the same question of the same evidence over and over, and the answer either holds or it does not. Here it largely holds.</p>
+<p>No scoring pass is ever asked about “Helm isolation” or “Archive amnesia”. The raters score functions, year by year. The signatures are patterns we look for afterwards, in how the scores change relative to one another.</p>
+
+<h2>The pathologies</h2>
+<p>Each signature is a rule written in the scores: a way of catching one of those familiar failures at national scale. A pathology is a <em>relationship</em> between functions, not just a low score. Two societies can have the same average and be arranged very differently.</p>
+
+<div class="sigs">
+  <div class="sigcard">
+    <h3>Helm Incompetence</h3>
+    <p class="face">“Idiots in charge.” The out-of-depth bloke at the head of the table, writ large.</p>
+    <p class="rule">Over three years, Helm’s capacity falls and its stress rises, while Craft and Flow stay as capable as their recent average.</p>
+    <div class="foot"><span class="pill p-count">25 firing years</span><span class="pill p-held">clusters · p = 0.022</span><span class="pill p-lean">before falls · leans</span></div>
+  </div>
+  <div class="sigcard">
+    <h3>Helm Isolation</h3>
+    <p class="face">The boss who has stopped taking calls.</p>
+    <p class="rule">Helm’s coherence sits far from the average of the other seven functions (top 5% of gaps).</p>
+    <div class="foot"><span class="pill p-count">225 firing years</span><span class="pill p-held">clusters · p = 0.004</span><span class="pill p-none">before falls · no</span></div>
+  </div>
+  <div class="sigcard">
+    <h3>Archive Amnesia</h3>
+    <p class="face">The family that forgets.</p>
+    <p class="rule">Archive’s value collapses over five years while Helm or Shield is rising.</p>
+    <div class="foot"><span class="pill p-count">22 firing years</span><span class="pill p-held">clusters · p = 0.0001</span><span class="pill p-none">before falls · no</span></div>
+  </div>
+  <div class="sigcard">
+    <h3>Shield Inversion</h3>
+    <p class="face">Force turning on the household it was meant to guard.</p>
+    <p class="rule">Shield is the strongest function in the society while Flow sits well below average.</p>
+    <div class="foot"><span class="pill p-count">268 firing years</span><span class="pill p-held">clusters · p = 0.006</span><span class="pill p-none">before falls · no</span></div>
+  </div>
+  <div class="sigcard">
+    <h3>Narrative–Material Gap</h3>
+    <p class="face">The committee living on its story while the cupboard goes bare.</p>
+    <p class="rule">Lore and Archive run at very high abstraction while material capacity (Flow, Craft, Hands) falls below its ten-year trend.</p>
+    <div class="foot"><span class="pill p-count">52 firing years</span><span class="pill p-lean">before falls · leans</span></div>
+  </div>
+  <div class="sigcard">
+    <h3>Late Abstraction Collapse</h3>
+    <p class="face">The elaborate structure that comes down late and fast.</p>
+    <p class="rule">A function running at very high abstraction loses coherence sharply within two years.</p>
+    <div class="foot"><span class="pill p-count">104 firing years</span><span class="pill p-held">before falls · p = 0.0002</span></div>
+  </div>
 </div>
-<p>D<sub>ij,t</sub> measures relative change between two functions. It is not a proven transmission edge.</p>
-<p>A signature specifies:</p>
-<ul class="plain">
-  <li>which nodes change;</li>
-  <li>the direction and timing of the changes;</li>
-  <li>which relationships weaken or strengthen;</li>
-  <li>whether the change persists.</li>
-</ul>
-<p>Edges are defined operationally from the scores (gap from the mean of the other nodes, rank inversion, lagged co-movement), and each rule is written down before it is run.</p>
+<p>Elite-structure and whole-system patterns fill out the wider set; the six above are the ones in this frozen run. Exact thresholds are in the <a href="#appendix">appendix</a>.</p>
 
-<h2>4. Why the patterns recur: two layers</h2>
-<h3>The coordination problem</h3>
-<p>Organised humans face the same dilemmas again and again: bounded information, contested resources, asymmetric power and changing environments. The eight functions are standing answers to that problem set, needed by a household as much as by an empire. Slow information, mismatched incentives, incompatible time horizons, shocks and once-successful adaptations that go stale can all produce similar configurations.</p>
-<h3>The primate who runs it</h3>
-<p>Every scale is run by cheating, lying, status-seeking primates. Coercion gets misused. Delusion is joined to authority. Groups keep holding beliefs that are no longer true. Memory is stripped after a shock. The same primates also cooperate, enforce reciprocity and build institutions to restrain the dominant. Both layers matter: the first explains why the functions exist, the second why the same failures recur at every scale.</p>
-<h3>Functional case by case</h3>
-<p>Some pathologies look maladaptive and are still functional in context. Helm Incompetence can be tolerable when the other nodes carry the load. A Shield rise can be the right response to a real external threat. Signatures are diagnoses of how an organisation is arranged, not verdicts on it, and each carries a stated benign reading.</p>
+<p>The test is simple. If these are real outliers and not just the noise of bad years, they should cluster where history says something went wrong, and they should appear in societies that have nothing else in common.</p>
 
-<h2>5. The signature pack (frozen rules)</h2>
+<h2>What held</h2>
+<p>JUNO v3 holds 42 societies and 41,914 rows of scores. For the frozen run I used 37 of them. Denmark, India, Turkey, Thailand and Canada were excluded in advance, and Israel was used only from 2015.</p>
+<p>Then the thresholds were frozen, so no rule could be nudged to catch the event I hoped to catch. Under those rules the signatures fired in 696 society-years. Each result below is compared against chance: every society’s firing years are slid round in time 10,000 times, keeping their number and spacing, to see how often they would land in the same places by accident.</p>
+
+<h3>They cluster where history says something went wrong</h3>
+<figure class="chart">
+  <p class="chart-title">Firings inside named historical windows</p>
+  <p class="chart-sub">Observed firing years against the number expected by chance</p>
+  <div class="legend"><span><i class="sw" style="background:var(--obs)"></i>Observed</span><span><i class="sw" style="background:var(--exp)"></i>Expected by chance</span></div>
+  <div class="bars" id="win-bars"></div>
+  <figcaption>All four survive Holm correction for multiple testing. Late Abstraction Collapse and the Narrative–Material Gap have no named windows, so they are tested only against later falls.</figcaption>
+</figure>
+<p>Archive Amnesia fired 15 times in its named windows against 0.75 expected by chance. That is twenty times the chance rate. Helm Isolation and Shield Inversion fire about twice as often as chance in theirs, and Helm Incompetence four times against 0.18.</p>
+
+<h3>The casebook</h3>
+<p>Of 18 named windows, 12 hold, and the list reads like a casebook of things people noticed at the time.</p>
+<div class="casebook">
+  <div class="case"><b>Archive Amnesia</b><span>Argentina 1976–78, Chile 1975–77, Cambodia 1975–78, Greece 1967–71, Hong Kong 2020–24</span></div>
+  <div class="case"><b>Helm Incompetence</b><span>United Kingdom 2016–19, which will surprise nobody who sat through those years</span></div>
+  <div class="case"><b>Helm Isolation</b><span>Venezuela 1999–2013, Australia 2010–18</span></div>
+  <div class="case"><b>Shield Inversion</b><span>Iran, Russia and Venezuela since 2015; Finland 2023–25</span></div>
+</div>
+<p class="missed"><b>The six that dropped out:</b> Laos 1975, Germany 1931 and Hong Kong 1997 (Archive Amnesia); Germany 1939 and Pakistan 1968–70 (Helm Incompetence); Iraq 2015–25 (Shield Inversion). Australia 1976–80 was a check window, not a claimed hit, and correctly does not fire.</p>
+
+<h3>They travel together</h3>
+<p>The pathologies also travel together, the way they do in families. Helm Isolation and Shield Inversion follow one another, in either order, in nine nations. Helm Incompetence leads to Helm Isolation in five. The United Kingdom goes from one to the other between 2016 and 2018; Venezuela between 2008 and 2009.</p>
+<div class="chain">
+  <div><b>Helm Incompetence</b><small>the idiots arrive</small></div>
+  <span class="arr" aria-hidden="true">→</span>
+  <div><b>Helm Isolation</b><small>they stop taking calls · 5 nations</small></div>
+  <span class="arr" aria-hidden="true">⇄</span>
+  <div><b>Shield Inversion</b><small>force turns inward · 9 nations each way</small></div>
+</div>
+<p>First the idiots arrive, then they stop taking calls. Anyone who has watched a workplace go sour will recognise the order. Other sequences show up too: the Narrative–Material Gap is followed by Late Abstraction Collapse in five nations, and Archive Amnesia by Shield Inversion in four.</p>
+<div class="callout">I still owe these chains a base-rate comparison before I lean on them. Signatures that share a function can also fire together simply because they are built from the same scores.</div>
+
+<h3>One signature looks ahead</h3>
+<p>One signature does more than recognise. Late Abstraction Collapse comes before big falls (an annual drop of 2 or more in mean V within three years) 62 times, against 38.6 expected. Helm Incompetence and the Narrative–Material Gap lean the same way, at p = 0.074 and p = 0.072: close, but not yet over the bar. The rest mark episodes rather than forecast them.</p>
+<figure class="chart">
+  <p class="chart-title">Firings in the years before a big fall</p>
+  <p class="chart-sub">Observed against expected by chance, all six signatures</p>
+  <div class="legend"><span><i class="sw" style="background:var(--obs)"></i>Observed</span><span><i class="sw" style="background:var(--exp)"></i>Expected by chance</span></div>
+  <div class="bars" id="fall-bars"></div>
+  <figcaption>Late Abstraction Collapse stays significant after Holm correction across all six (about p = 0.001). Part of its rule overlaps the fall itself, since a drop in Coherence lowers V directly.</figcaption>
+</figure>
+
+<h3>The plainest result</h3>
+<p>The plainest result may be the most important. A few simple rules on eight functions catch events that humans already recognise. The scores know nothing of Brexit or Chávez. The rules found the shapes anyway.</p>
+<div class="callout ok">The pathologies we sense in our own families and offices are real structures, and they can be recovered, by number, from the record of whole societies.</div>
+<p>Not every outlier is a disease. A Helm that isolates itself in a siege may be doing the only thing that works, and a Shield that rises against a real external threat is doing its job. The signatures are diagnoses, and a doctor can name a fever without deciding it should never have happened.</p>
+
+<h2>What remains uncertain</h2>
+<p>Some series fire nearly all the time. That says more about how those series move than about a run of crises, and it is reported, not hidden:</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Signature</th><th>Frequent firers (share of years)</th><th class="num">All societies</th></tr></thead>
+<tbody>
+<tr><td class="sig">Helm Isolation</td><td>Venezuela 0.48, Russia 0.22, Poland 0.20, Sweden 0.20, Saudi Arabia 0.19</td><td class="num">0.046</td></tr>
+<tr><td class="sig">Shield Inversion</td><td>Russia 0.44, Venezuela 0.25, Argentina 0.21, Japan 0.19</td><td class="num">0.054</td></tr>
+<tr><td class="sig">Late Abstraction Collapse</td><td>Sweden 0.27, South Africa 0.15</td><td class="num">0.021</td></tr>
+<tr><td class="sig">Narrative–Material Gap</td><td>Sweden 0.13, Finland 0.11, Brazil 0.07</td><td class="num">0.011</td></tr>
+</tbody></table></div>
+<p>The sequences between signatures still need their base-rate check, and the before-falls leans for Helm Incompetence and the Narrative–Material Gap are not yet results.</p>
+
+<h2>What comes next</h2>
+<p>A <b>prospective watchlist</b> will name societies showing early signatures now, so the future can mark my homework instead of me marking it.</p>
+<p>And the same frozen rules will be run <b>unchanged below the nation</b>, to recover quantitatively the structures we have already seen there. The first test (P4) scores Boeing, Theranos and WorldCom against matched firms with no known crisis, with the eight functions mapped onto the firm: Helm is the board and executive, Shield is compliance and legal, Archive is records and audit. Every firing is reported, including false alarms in the controls.</p>
+<p>A <b>recovery catalogue</b> follows: if damaging configurations recur, recovery should too. Archive recovery, Helm recoupling, Shield restraint and the reconnection of Lore with the material functions will be defined, frozen and searched for with the same discipline.</p>
+<p class="lede">If the numbers hold there too, we will have something better than another explanation of the last collapse after it happened. Anyone who has lived inside a failing family, firm or country has felt these patterns. CAMS shows they can be recovered from the numbers as well.</p>
+
+<section class="appendix" id="appendix">
+<h2>Appendix: the detail</h2>
+
+<details class="ap">
+<summary>The frozen rules</summary>
 <p>Thresholds are pooled percentiles over changing years, frozen before outcomes were counted.</p>
 <div class="tablewrap"><table>
 <thead><tr><th>Signature</th><th>Rule</th></tr></thead>
 <tbody>
-<tr><td class="sig">Archive amnesia</td><td>5-yr ΔV(Archive) ≤ −5.77 (P5), while Helm V or Shield V rises over the same 5 years</td></tr>
-<tr><td class="sig">Helm Incompetence</td><td>Over 3 yrs: Helm ΔK ≤ −1.0 (P10), Helm ΔS ≥ +2.0 (P90), Helm ΔA ≥ 0; mean K(Craft, Flow) at or above its trailing 10-yr mean. Informally, “idiots in charge”: a capable society with an incapable helm</td></tr>
-<tr><td class="sig">Helm isolation</td><td>|C(Helm) − mean C(other 7)| ≥ 1.86 (P95)</td></tr>
-<tr><td class="sig">Shield inversion</td><td>Shield is the highest-V node and V(Flow) − mean V ≤ −1.18 (P25)</td></tr>
-<tr><td class="sig">Late abstraction collapse</td><td>Some node has A ≥ 7.8 (P90) and that node’s 2-yr ΔC ≤ −1.2 (P5)</td></tr>
-<tr><td class="sig">Narrative–material gap</td><td>Mean A(Lore, Archive) ≥ 8.0 (P90) and K(Flow, Craft, Hands) minus its trailing 10-yr mean ≤ −0.9 (P10)</td></tr>
+<tr><td class="sig">Archive Amnesia</td><td>5-yr ΔV(Archive) ≤ −5.77 (P5), while Helm V or Shield V rises over the same 5 years</td></tr>
+<tr><td class="sig">Helm Incompetence</td><td>Over 3 yrs: Helm ΔK ≤ −1.0 (P10), Helm ΔS ≥ +2.0 (P90), Helm ΔA ≥ 0; mean K(Craft, Flow) at or above its trailing 10-yr mean</td></tr>
+<tr><td class="sig">Helm Isolation</td><td>|C(Helm) − mean C(other 7)| ≥ 1.86 (P95)</td></tr>
+<tr><td class="sig">Shield Inversion</td><td>Shield is the highest-V node and V(Flow) − mean V ≤ −1.18 (P25)</td></tr>
+<tr><td class="sig">Late Abstraction Collapse</td><td>Some node has A ≥ 7.8 (P90) and that node’s 2-yr ΔC ≤ −1.2 (P5)</td></tr>
+<tr><td class="sig">Narrative–Material Gap</td><td>Mean A(Lore, Archive) ≥ 8.0 (P90) and K(Flow, Craft, Hands) minus its trailing 10-yr mean ≤ −0.9 (P10)</td></tr>
 </tbody></table></div>
-<p>Lore–Helm divergence was defined in the draft but is not in the frozen run.</p>
+<p>Lore–Helm divergence was defined in the draft but is not in the frozen run. Change is written ΔX<sub>i,t</sub> = X<sub>i,t</sub> − X<sub>i,t−1</sub>, and relative change between two functions D<sub>ij,t</sub> = ΔV<sub>i,t</sub> − ΔV<sub>j,t</sub>. D measures relative change; it is not a proven transmission edge.</p>
+</details>
 
-<h2>6. Evidence from JUNO v3</h2>
-<h3>37 or 42 societies</h3>
-<p>The dataset (<code>juno/v3/JUNO_Unified_Dataset_v3_2026-10-19.csv</code>) holds 41,914 rows for 42 societies. The frozen run used 37 of them. Five whole series were excluded in advance because of measurement problems:</p>
+<details class="ap">
+<summary>Full results table</summary>
+<div class="tablewrap"><table>
+<thead><tr><th>Signature</th><th class="num">Firing years</th><th class="num">In windows<br>obs / chance</th><th class="num">p</th><th class="num">Before a fall<br>obs / chance</th><th class="num">p</th></tr></thead>
+<tbody>
+<tr><td class="sig">Archive Amnesia</td><td class="num">22</td><td class="num">15 / 0.75</td><td class="num">0.0001</td><td class="num">5 / 4.65</td><td class="num">0.49</td></tr>
+<tr><td class="sig">Helm Incompetence</td><td class="num">25</td><td class="num">4 / 0.18</td><td class="num">0.022</td><td class="num">14 / 9.25</td><td class="num">0.074</td></tr>
+<tr><td class="sig">Helm Isolation</td><td class="num">225</td><td class="num">17 / 8.41</td><td class="num">0.004</td><td class="num">57 / 55.94</td><td class="num">0.47</td></tr>
+<tr><td class="sig">Shield Inversion</td><td class="num">268</td><td class="num">24 / 10.37</td><td class="num">0.006</td><td class="num">67 / 63.52</td><td class="num">0.36</td></tr>
+<tr><td class="sig">Late Abstraction Collapse</td><td class="num">104</td><td class="num">—</td><td class="num">—</td><td class="num">62 / 38.56</td><td class="num">0.0002</td></tr>
+<tr><td class="sig">Narrative–Material Gap</td><td class="num">52</td><td class="num">—</td><td class="num">—</td><td class="num">28 / 20.43</td><td class="num">0.072</td></tr>
+</tbody></table></div>
+<p>Total 696 firing years. A big fall is an annual drop of 2.0 or more in mean V, in years t to t+3. Null: each society’s firing series circularly shifted, 10,000 reps, seed 20261020. p-values are unadjusted; the prereg specifies Holm correction within each null family.</p>
+</details>
+
+<details class="ap">
+<summary>Which societies, and why five were left out</summary>
+<p>The dataset (<code>juno/v3/JUNO_Unified_Dataset_v3_2026-10-19.csv</code>) holds 41,914 rows for 42 societies. Five whole series were excluded in advance because of measurement problems:</p>
 <ul class="plain">
   <li><b>Denmark:</b> Stress recorded as zero throughout.</li>
   <li><b>India and Turkey:</b> 26–31 sampled years each.</li>
   <li><b>Thailand:</b> 5-yearly scoring.</li>
   <li><b>Canada:</b> 33 years.</li>
 </ul>
-<p>Israel stays in the 37, but only from 2015, because the earlier series is flat. All the counts and p-values below are for those 37 societies.</p>
-<p>The draft-threshold counts in the Signature Pack (<code>sig.py</code>) had different coverage. They excluded only Denmark and pre-2015 Israel. Their annual-only rules skipped the non-annual series, while the Hands-floor and Shield-inversion rows still list Canada, India, Thailand and Turkey.</p>
+<p>Israel stays in, but only from 2015, because the earlier series is flat. The draft-threshold counts in the Signature Pack (<code>sig.py</code>) had different coverage: they excluded only Denmark and pre-2015 Israel, and their annual-only rules skipped the non-annual series.</p>
+</details>
 
-<h3>Method</h3>
-<p>We compared firing years against a shuffle null: each society’s firing series is circularly shifted, 10,000 reps, seed 20261020. The p-values are unadjusted, and the prereg specifies Holm correction within each null family.</p>
-
-<div class="tablewrap"><table>
-<thead><tr><th>Signature</th><th class="num">Firing years</th><th class="num">In named windows<br>obs / chance</th><th class="num">p</th><th class="num">Before a big fall<br>obs / chance</th><th class="num">p</th></tr></thead>
-<tbody>
-<tr class="hit"><td class="sig">Archive amnesia</td><td class="num">22</td><td class="num">15 / 0.75</td><td class="num p">0.0001</td><td class="num">5 / 4.65</td><td class="num">0.49</td></tr>
-<tr class="hit"><td class="sig">Helm Incompetence</td><td class="num">25</td><td class="num">4 / 0.18</td><td class="num p">0.022</td><td class="num">14 / 9.25</td><td class="num">0.074</td></tr>
-<tr class="hit"><td class="sig">Helm isolation</td><td class="num">225</td><td class="num">17 / 8.41</td><td class="num p">0.004</td><td class="num">57 / 55.94</td><td class="num">0.47</td></tr>
-<tr class="hit"><td class="sig">Shield inversion</td><td class="num">268</td><td class="num">24 / 10.37</td><td class="num p">0.006</td><td class="num">67 / 63.52</td><td class="num">0.36</td></tr>
-<tr class="hit"><td class="sig">Late abstraction collapse</td><td class="num">104</td><td class="num">no windows</td><td class="num">—</td><td class="num">62 / 38.56</td><td class="num p">0.0002</td></tr>
-<tr><td class="sig">Narrative–material gap</td><td class="num">52</td><td class="num">no windows</td><td class="num">—</td><td class="num">28 / 20.43</td><td class="num">0.072</td></tr>
-</tbody></table></div>
-<p>Total: 696 firing years. A big fall is an annual drop of 2.0 or more in mean V, in years t to t+3. Unadjusted p-values below 0.05 are shown in green.</p>
-
-<h3>Window concentration</h3>
-<p>All four signatures with named windows concentrate in them well beyond chance. After Holm correction across the four, all stay under 0.05.</p>
-<p>Twelve of the eighteen named windows survived the frozen thresholds:</p>
-<ul class="plain">
-  <li><b>Archive amnesia:</b> Argentina 1976–78, Chile 1975–77, Cambodia 1975–78, Greece 1967–71 and Hong Kong 2020–24.</li>
-  <li><b>Helm Incompetence:</b> the UK 2016–19.</li>
-  <li><b>Helm isolation:</b> Venezuela 1999–2013 and Australia 2010–18.</li>
-  <li><b>Shield inversion since 2015:</b> Iran, Russia and Venezuela, plus Finland 2023–25.</li>
-</ul>
-<p>Six dropped out: Laos 1975, Germany 1931 and Hong Kong 1997 (Archive amnesia); Germany 1939 and Pakistan 1968–70 (Helm Incompetence); Iraq 2015–25 (Shield inversion). Australia 1976–80, a check window rather than a claimed hit, does not fire.</p>
-
-<h3>Before big falls</h3>
-<p>Late abstraction collapse is the one signature that precedes big falls clearly beyond chance (62 against 38.56 expected, p = 0.0002; about 0.001 after Holm correction across six). Its rule partly contains the fall, because a drop in Coherence lowers V directly. Helm Incompetence (p = 0.074) and the narrative–material gap (p = 0.072) lean the same way. Archive amnesia, Helm isolation and Shield inversion show no excess before falls; they mark episodes rather than forecast them.</p>
-
-<h3>Observed co-occurrences</h3>
-<p>These are frozen hits in the same nation, with one signature beginning within five years of another:</p>
-<ul class="plain">
-  <li>Helm isolation and Shield inversion follow each other in both directions, each in 9 nations.</li>
-  <li>Helm Incompetence is followed by Helm isolation in 5 (including the UK 2016→2018 and Venezuela 2008→2009).</li>
-  <li>The narrative–material gap is followed by Late abstraction collapse in 5.</li>
-  <li>Late abstraction collapse is followed by Helm isolation in 5 and by Shield inversion in 5.</li>
-  <li>Archive amnesia is followed by Shield inversion in 4.</li>
-</ul>
-<p>These are observed co-occurrences, not established chains. They need comparison against base rates, and signatures that share nodes can co-fire by construction.</p>
-
-<h3>Constant firers</h3>
-<p>We report these with their event rates, as properties of how the series move:</p>
-<div class="tablewrap"><table>
-<thead><tr><th>Signature</th><th>Highest event rates</th><th class="num">Pooled rate</th></tr></thead>
-<tbody>
-<tr><td class="sig">Helm isolation</td><td>Venezuela 0.48, Russia 0.22, Poland 0.20, Sweden 0.20, Saudi Arabia 0.19</td><td class="num">0.046</td></tr>
-<tr><td class="sig">Shield inversion</td><td>Russia 0.44, Venezuela 0.25, Argentina 0.21, Japan 0.19</td><td class="num">0.054</td></tr>
-<tr><td class="sig">Late abstraction collapse</td><td>Sweden 0.27, South Africa 0.15</td><td class="num">0.021</td></tr>
-<tr><td class="sig">Narrative–material gap</td><td>Sweden 0.13, Finland 0.11, Brazil 0.07</td><td class="num">0.011</td></tr>
-</tbody></table></div>
-
-<h3>A directional regularity</h3>
+<details class="ap">
+<summary>An exploratory finding: stress comes before lost capacity</summary>
 <p><i>Exploratory, 19 October, not preregistered.</i> Across 38,704 node-years in 37 societies, a rise in Stress is followed the next year by a fall in Capacity (r = −0.072), but not the reverse (r = +0.004). The society-cluster bootstrap 95% CI of the difference is [−0.103, −0.052], and the asymmetry holds in 33 of 37 societies. V has no time order built in, so this is not an artefact of the formula.</p>
+</details>
 
-<h2>7. Three levels of cross-scale claim</h2>
-<div class="levels">
-  <div class="level"><span class="tag t-now">Claimed</span><div><b>A. Structural transfer.</b> The same eight functions and kinds of pathology appear at every scale.</div></div>
-  <div class="level"><span class="tag t-next">Next test</span><div><b>B. Rule transfer.</b> The frozen national rules, unchanged, pick out the same pathologies in firms and institutions.</div></div>
-  <div class="level"><span class="tag t-later">Later</span><div><b>C. Calibrated transfer.</b> Thresholds and outcome rates carry across scales quantitatively.</div></div>
-</div>
-<p>We currently claim scale-recurring topology (level A), with window concentration and one before-falls result inside national data. Level B is the next test.</p>
+<details class="ap">
+<summary>How far the cross-scale claim goes</summary>
+<ul class="plain">
+  <li><b>A. Structural transfer</b> (claimed now): the same eight functions and kinds of pathology appear at every scale.</li>
+  <li><b>B. Rule transfer</b> (next test): the frozen national rules, unchanged, pick out the same pathologies in firms and institutions.</li>
+  <li><b>C. Calibrated transfer</b> (later): thresholds and outcome rates carry across scales quantitatively.</li>
+</ul>
+</details>
 
-<h2>8. The next test: P4, rule transfer to corporations</h2>
-<p>We will score firms with this corporate node rubric, written before any firm is scored:</p>
+<details class="ap">
+<summary>P4: the corporate test protocol</summary>
 <div class="tablewrap"><table>
 <thead><tr><th>Node</th><th>Corporate function</th></tr></thead>
 <tbody>
@@ -243,35 +363,54 @@ D<sub>ij,t</sub> = ΔV<sub>i,t</sub> − ΔV<sub>j,t</sub>
 <tr><td class="sig">Hands</td><td>Workforce</td></tr>
 <tr><td class="sig">Archive</td><td>Records, audit, institutional memory</td></tr>
 </tbody></table></div>
-<p>The test runs in six steps:</p>
-<ol class="steps">
+<ol>
   <li>Freeze national rules, thresholds, timing conventions and exclusions as of <code>58fcaaf</code>.</li>
   <li>Score Boeing, Theranos and WorldCom, plus matched control firms without a known crisis, over pre-specified years, using repeated independent AI scoring passes.</li>
   <li>Run the national detector unchanged. Report every firing, including misses and false positives in the controls.</li>
   <li>Compare against the circular-shift null and simpler baselines: Stress change alone, and first differences of V.</li>
-  <li>Keep the discovery register (everything in section 6) separate from the prospective watchlist, which logs firings before outcomes are known.</li>
+  <li>Keep the discovery register separate from the prospective watchlist, which logs firings before outcomes are known.</li>
   <li>Do not expand the signature pack before this test.</li>
 </ol>
-<div class="callout ok">The question P4 answers is whether topology adds information beyond absolute levels and their first differences.</div>
-
-<h2>9. The recovery catalogue</h2>
-<p>If damaging configurations recur, recovery configurations should recur too. We will define them with node rules, freeze them, and search for them across the same corpus with the same discipline:</p>
-<ul class="plain">
-  <li>Archive recovery.</li>
-  <li>Helm recoupling.</li>
-  <li>Shield restraint.</li>
-  <li>Lore–material reconnection: renewed co-movement between Lore and Craft, Hands and Flow.</li>
-</ul>
-
-<h2>10. Purpose</h2>
-<p class="lede">Our purpose is to understand the architecture through which organisations maintain, lose and recover their capacity to cooperate.</p>
+<p>The question P4 answers is whether topology adds information beyond absolute levels and their first differences.</p>
+</details>
+</section>
 
 <div class="endnote">
-  <p><b>Source.</b> Working thesis, <a href="https://github.com/KaliBond/wintermute/blob/main/docs/theory/CAMS_Organisational_Pathologies_Thesis.md" target="_blank" rel="noopener"><code>docs/theory/CAMS_Organisational_Pathologies_Thesis.md</code></a>. Frozen signature run: prereg commit <code>1b9b9f1</code>, results commit <code>58fcaaf</code>. Data: <code>juno/v3/JUNO_Unified_Dataset_v3_2026-10-19.csv</code>; rules and draft counts: <code>juno/v3/CAMS_Signature_Pack_v1.md</code>.</p>
+  <p><b>Sources.</b> Working thesis <a href="https://github.com/KaliBond/wintermute/blob/main/docs/theory/CAMS_Organisational_Pathologies_Thesis.md" target="_blank" rel="noopener"><code>docs/theory/CAMS_Organisational_Pathologies_Thesis.md</code></a>. Frozen signature run: prereg commit <code>1b9b9f1</code>, results commit <code>58fcaaf</code>. Data: <code>juno/v3/JUNO_Unified_Dataset_v3_2026-10-19.csv</code>; rules and draft counts: <code>juno/v3/CAMS_Signature_Pack_v1.md</code>.</p>
 </div>
 </main>
 
 <footer class="footer"><nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;"><a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a><a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a><a href="results.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Results</a></nav><p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p></footer>
+<script>
+(function(){
+  function draw(id, rows){
+    var max = Math.max.apply(null, rows.map(function(r){return Math.max(r[1], r[2]);}));
+    var el = document.getElementById(id), h = '';
+    rows.forEach(function(r){
+      var sig = r[3] < 0.05;
+      h += '<div class="lab">'+r[0]+'</div><div class="track">'
+         + '<div class="b o" style="width:'+(r[1]/max*85)+'%"><em>'+r[1]+'</em></div>'
+         + '<div class="b e" style="width:'+Math.max(r[2]/max*85,0.4)+'%"><em>'+r[2]+'</em></div></div>'
+         + '<div class="pv'+(sig?' sig':'')+'">p = '+r[3]+'</div>';
+    });
+    el.innerHTML = h;
+  }
+  draw('win-bars', [
+    ['Archive Amnesia', 15, 0.75, 0.0001],
+    ['Helm Incompetence', 4, 0.18, 0.022],
+    ['Helm Isolation', 17, 8.41, 0.004],
+    ['Shield Inversion', 24, 10.37, 0.006]
+  ]);
+  draw('fall-bars', [
+    ['Late Abstraction Collapse', 62, 38.56, 0.0002],
+    ['Helm Incompetence', 14, 9.25, 0.074],
+    ['Narrative–Material Gap', 28, 20.43, 0.072],
+    ['Archive Amnesia', 5, 4.65, 0.49],
+    ['Helm Isolation', 57, 55.94, 0.47],
+    ['Shield Inversion', 67, 63.52, 0.36]
+  ]);
+})();
+</script>
 <script src="site-chrome.js"></script><script src="nav.js"></script>
 </body>
 </html>
