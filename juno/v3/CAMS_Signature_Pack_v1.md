@@ -1,5 +1,12 @@
 # CAMS Signature Pack v1 (20 Oct 2026)
 
+## Method statement
+CAMS scoring rests on repeatability. Independent AI scoring passes, each rating the same eight nodes on coherence, capacity, stress and abstraction, keep recovering the same structure in a society's history. That agreement is the warrant. Conformity with external indexes is not. The method is closer to reconstructing climate history from monastic and archival records: no single chronicler is trusted, but when independent records agree on the hard winters and the good harvests, the pattern is taken as real.
+
+The premise is that human organisation has scale-invariant properties. The pathologies people recognise at home, at work, in corporations and in nations are the same ones, because they are failure modes of organisation itself. Some, such as Helm Incompetence, look maladaptive and may still be functional case by case. A system can tolerate a poor helm when its other nodes carry the load. The signatures here are diagnoses of how a society is organised, not verdicts on it.
+
+This implies a test: the same signatures should appear at smaller scales, in firms, institutions and households, under the same node rules.
+
 **Data:** JUNO_Unified_Dataset_v3_2026-10-19.csv (41,914 rows, 42 societies). Node value V = C + K + A/2 − S on eight nodes: Helm, Shield, Lore, Stewards, Flow, Craft, Hands, Archive.
 
 ## Framing
