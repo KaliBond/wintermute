@@ -536,7 +536,7 @@ Read each nation's history against this.
 | Helm Incompetence → Late abstraction collapse | 2 | South Africa 1908→1913; Sweden 1967→1968 |
 | Late abstraction collapse → Helm Incompetence | 2 | South Africa 1907→1908; Sweden 1922→1924 |
 
-These are co-occurrences to read in the histories, not established sequences. A year can satisfy several rules at once because the rules share nodes (Helm in Helm isolation and Helm Incompetence; Lore/Archive A in Late collapse and Narrative gap).
+These are co-occurrences to read in the histories, not established sequences. A year can satisfy several rules at once because the rules share nodes (shared Helm node: Helm isolation and Helm Incompetence; shared Lore/Archive abstraction: Late abstraction collapse and the narrative–material gap).
 
 ## Data caveats
 - Denmark: Stress = 0 in all 870 rows. Excluded; queued for blind rescore.
