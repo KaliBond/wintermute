@@ -54,7 +54,7 @@ GROUPS = [
         'cams5-thesis-validation-report', 'ensemble-validation', 'paladin-validation',
         'operator-portability-synthesis', 'peer-review', 'response-to-critics', 'functional_taxonomy', 'figures',
         'metabolism-meaning', 'scale-invariance', 'thermodynamic-jungle', 'war', 'social-cognition',
-        'coupled-cattle', 'meta-animal-under-the-microscope', 'backstory-deep-time',
+        'coupled-cattle', 'meta-animal-under-the-microscope', 'backstory-deep-time', 'organisational-pathologies',
         'geopolitics-as-group-adaptation',
     ]),
     ('Country & Case Studies', 'Study', 'monthly', '0.6', [
