@@ -142,15 +142,20 @@ details.ap > :last-child{margin-bottom:16px}
 </header>
 
 <p class="lede">You already know these people. The boss who has stopped taking calls. The family that has quietly forgotten why a relative is not spoken of. The committee that runs on the story it tells itself while the cupboard goes bare. The household where the bloke in charge is plainly out of his depth and everyone else is holding the place together around him.</p>
-<p>Nobody needs a theory to spot them. We are humans, and humans are very good at noticing when the group has gone wrong. The same wrongness, it seems, turns up at every scale. The kitchen table, the office, the cabinet room and the nation all fail in a handful of recognisable ways. These failures are outliers with a shape, and the shape is the same whether the group is five people or fifty million. This is a progress report on recovering them from the history of nations.</p>
+
+<p>Nobody needs a theory to spot them. We are humans, and humans are very good at noticing when the group has gone wrong. The same wrongness, it seems, turns up at every scale. The kitchen table, the office, the cabinet room and the nation all fail in a handful of recognisable ways. These failures are outliers with a shape, and the shape is the same whether the group is five people or fifty million.</p>
+
+<p>This is a progress report on recovering them from the history of nations.</p>
+
 <div class="stats">
   <div class="stat"><strong>696</strong><span>society-years where a frozen signature fired</span></div>
   <div class="stat"><strong>4 of 4</strong><span>windowed signatures cluster beyond chance, after Holm correction</span></div>
   <div class="stat"><strong>12 of 18</strong><span>named historical windows survive the frozen rules</span></div>
   <div class="stat"><strong>p = 0.0002</strong><span>Late Abstraction Collapse comes before big falls</span></div>
 </div>
+
 <h2>The instrument</h2>
-<p>CAMS treats any society as a complex adaptive system performing eight functions. Helm steers. Shield keeps force and order. Lore supplies meaning. Stewards hold and allocate assets. Flow moves things around. Craft makes things that need skill. Hands do the labour. Archive remembers. Each function is scored for coherence, capacity, stress and abstraction, and its node value is V = C + K + A/2 − S.</p>
+<p>CAMS treats any society as a complex adaptive system performing eight functions:</p>
 <div class="nodes">
   <div><b>Helm</b><span>steers</span></div>
   <div><b>Shield</b><span>keeps force and order</span></div>
@@ -161,17 +166,18 @@ details.ap > :last-child{margin-bottom:16px}
   <div><b>Hands</b><span>do the labour</span></div>
   <div><b>Archive</b><span>remembers</span></div>
 </div>
+<p>Each function is scored each year for Coherence (C), Capacity (K), Stress (S) and Abstraction (A), and its node value is:</p>
 <div class="formula">V = C + K + A/2 − S</div>
-<p>Two layers sit underneath. Coordination problems explain why the functions exist at all. Anything that wants to outlast its founders has to steer, defend, remember and feed itself. The second layer explains why the same failures keep coming back. We are prone to cheating, lying and status-seeking, and we carry the same tricks into every institution we build. The topology is the stage. We supply the drama.</p>
+
+<p>Two layers sit underneath. <b>Coordination problems</b> explain why the functions exist at all. Anything that wants to outlast its founders has to steer, defend, remember and feed itself. <b>The primate who runs it</b> explains why the same failures keep coming back. We are prone to cheating, lying and status-seeking, and we carry the same tricks into every institution we build.</p>
+<p class="pull">The topology is the stage. We supply the drama.</p>
+
 <p>The scores are AI assessments, and we accept them as given, in good faith on the evidence available to the rater. The warrant is repeatability, in the same way climate historians dig temperature records out of monastic archives that were never kept for that purpose. We ask the same question of the same evidence over and over, and the answer either holds or it does not. Here it largely holds.</p>
+<p>No scoring pass is ever asked about “Helm isolation” or “Archive amnesia”. The raters score functions, year by year. The signatures are patterns we look for afterwards, in how the scores change relative to one another.</p>
+
 <h2>The pathologies</h2>
-<p>This first set of signatures is a rule written in the scores, a way of catching one of those familiar failures at national scale.</p>
-<p>Helm Incompetence, basically “idiots in charge”, fires when Helm's capacity falls and its stress rises for three years or more while the other functions stay capable. That is the out-of-depth bloke at the head of the table, writ large.</p>
-<p>Helm Isolation is the boss who has stopped taking calls.</p>
-<p>Archive Amnesia is the family that forgets.</p>
-<p>Shield Inversion is force turning on the household it was meant to guard.</p>
-<p>The Narrative-Material Gap is the committee living on its story.</p>
-<p>Late Abstraction Collapse is the elaborate structure that comes down late and fast. Elite-structure and whole-system patterns fill out the set.</p>
+<p>Each signature is a rule written in the scores: a way of catching one of those familiar failures at national scale. A pathology is a <em>relationship</em> between functions, not just a low score. Two societies can have the same average and be arranged very differently.</p>
+
 <div class="sigs">
   <div class="sigcard">
     <h3>Helm Incompetence</h3>
@@ -210,10 +216,15 @@ details.ap > :last-child{margin-bottom:16px}
     <div class="foot"><span class="pill p-count">104 firing years</span><span class="pill p-held">before falls · p = 0.0002</span></div>
   </div>
 </div>
+<p>Elite-structure and whole-system patterns fill out the wider set; the six above are the ones in this frozen run. Exact thresholds are in the <a href="#appendix">appendix</a>.</p>
+
 <p>The test is simple. If these are real outliers and not just the noise of bad years, they should cluster where history says something went wrong, and they should appear in societies that have nothing else in common.</p>
+
 <h2>What held</h2>
-<p>JUNO v3 holds 42 societies and 41,914 rows of scores. For the frozen run we used 37 of them. Denmark, India, Turkey, Thailand and Canada were excluded in advance, and Israel was used only from 2015. Then the thresholds were frozen, so no rule could be nudged to catch the event we hoped to catch. Under those rules the signatures fired in 696 society-years.</p>
-<p>They cluster. Archive Amnesia fired 15 times in its named windows against 0.75 expected by chance (p = 0.0001). Helm Isolation came in at p = 0.004, Shield Inversion at p = 0.006 and Helm Incompetence at p = 0.022. All four survive Holm correction for multiple testing.</p>
+<p>JUNO v3 holds 42 societies and 41,914 rows of scores. For the frozen run we used 37 of them. Denmark, India, Turkey, Thailand and Canada were excluded in advance, and Israel was used only from 2015.</p>
+<p>Then we froze the thresholds. Nobody gets to nudge a rule after the fact to catch the event they were hoping for. Under those fixed rules the signatures fired in 696 society-years, and every result below is set against what chance alone would give: the same firings, scattered through the same histories, landing wherever they happen to land.</p>
+
+<h3>They cluster where history says something went wrong</h3>
 <figure class="chart">
   <p class="chart-title">Firings inside named historical windows</p>
   <p class="chart-sub">Observed firing years against the number expected by chance</p>
@@ -221,11 +232,20 @@ details.ap > :last-child{margin-bottom:16px}
   <div class="bars" id="win-bars"></div>
   <figcaption>All four survive Holm correction for multiple testing. Late Abstraction Collapse and the Narrative–Material Gap have no named windows, so they are tested only against later falls.</figcaption>
 </figure>
-<p>Of 18 named windows, 12 hold, and the list reads like a casebook of things people noticed at the time. Archive Amnesia lights up in Argentina, Chile, Cambodia and Greece, and in Hong Kong 2020–23.</p>
-<p>Helm Incompetence fires in the United Kingdom 2016–19, which will surprise nobody who sat through those years.</p>
-<p>Helm Isolation runs in Venezuela from 1998.</p>
-<p>Shield Inversion appears in Iran, Russia, Venezuela and Finland 2023–25.</p>
-<p>The pathologies also travel together, the way they do in families. Helm Isolation and Shield Inversion follow one another in nine nations. Helm Incompetence leads to Helm Isolation in five. The United Kingdom goes from one to the other between 2016 and 2018; Venezuela between 2008 and 2009.</p>
+<p>Archive Amnesia is the starkest. Chance would put less than one firing inside its windows; it put fifteen there, twenty times the chance rate. Helm Incompetence is rarer but just as pointed: four firings where chance expects 0.18, about twenty-two times. Helm Isolation and Shield Inversion fire all through history, and still land in their windows about twice as often as chance would put them there.</p>
+
+<h3>The casebook</h3>
+<p>Of 18 named windows, 12 hold, and the list reads like a casebook of things people noticed at the time.</p>
+<div class="casebook">
+  <div class="case"><b>Archive Amnesia</b><span>Argentina 1976–78, Chile 1975–77, Cambodia 1975–78, Greece 1967–71, Hong Kong 2020–24</span></div>
+  <div class="case"><b>Helm Incompetence</b><span>United Kingdom 2016–19, which will surprise nobody who sat through those years</span></div>
+  <div class="case"><b>Helm Isolation</b><span>Venezuela 1999–2013, Australia 2010–18</span></div>
+  <div class="case"><b>Shield Inversion</b><span>Iran, Russia and Venezuela since 2015; Finland 2023–25</span></div>
+</div>
+<p class="missed"><b>The six that dropped out:</b> Laos 1975, Germany 1931 and Hong Kong 1997 (Archive Amnesia); Germany 1939 and Pakistan 1968–70 (Helm Incompetence); Iraq 2015–25 (Shield Inversion). Australia 1976–80 was a check window, not a claimed hit, and correctly does not fire.</p>
+
+<h3>They travel together</h3>
+<p>The pathologies also travel together, the way they do in families. Helm Isolation and Shield Inversion follow one another, in either order, in nine nations. Helm Incompetence leads to Helm Isolation in five. The United Kingdom goes from one to the other between 2016 and 2018; Venezuela between 2008 and 2009.</p>
 <div class="chain">
   <div><b>Helm Incompetence</b><small>the idiots arrive</small></div>
   <span class="arr" aria-hidden="true">→</span>
@@ -233,8 +253,11 @@ details.ap > :last-child{margin-bottom:16px}
   <span class="arr" aria-hidden="true">⇄</span>
   <div><b>Shield Inversion</b><small>force turns inward · 9 nations each way</small></div>
 </div>
-<p>First the idiots arrive, then they stop taking calls. We still owe these chains a base-rate comparison before we lean on them, but anyone who has watched a workplace go sour will recognise the order.</p>
-<p>One signature does more than recognise. Late Abstraction Collapse comes before big falls 62 times against 38.6 expected (p = 0.0002). Helm Incompetence and the Narrative-Material Gap lean the same way, at p = 0.074 and p = 0.072; close, but not yet over the bar.</p>
+<p>First the idiots arrive, then they stop taking calls. Anyone who has watched a workplace go sour will recognise the order. Other sequences show up too: the Narrative–Material Gap is followed by Late Abstraction Collapse in five nations, and Archive Amnesia by Shield Inversion in four.</p>
+<div class="callout">I still owe these chains a base-rate comparison before I lean on them. Signatures that share a function can also fire together simply because they are built from the same scores.</div>
+
+<h3>One signature looks ahead</h3>
+<p>One signature does more than recognise. When a society’s most elaborate function suddenly loses its coherence, a hard fall tends to follow within three years: 62 times in the record, where chance would give about 39. Helm Incompetence and the Narrative–Material Gap point the same way, at p = 0.074 and p = 0.072, near the line but not over it yet. The other signatures name the episode while it is happening; this one tends to arrive first.</p>
 <figure class="chart">
   <p class="chart-title">Firings in the years before a big fall</p>
   <p class="chart-sub">Observed against expected by chance, all six signatures</p>
@@ -242,10 +265,14 @@ details.ap > :last-child{margin-bottom:16px}
   <div class="bars" id="fall-bars"></div>
   <figcaption>Late Abstraction Collapse stays significant after Holm correction across all six (about p = 0.001). Part of its rule overlaps the fall itself, since a drop in Coherence lowers V directly.</figcaption>
 </figure>
-<p>The plainest result may be the most important. A few simple rules on eight functions catch events that humans already recognise. The scores know nothing of Brexit or Chávez. The rules found the shapes anyway. The pathologies we sense in our own families and offices are real structures, and they can be recovered, by number, from the record of whole societies.</p>
-<p>Not every outlier is a disease. A Helm that isolates itself in a siege may be doing the only thing that works. The signatures are diagnoses, and a doctor can name a fever without deciding it should never have happened.</p>
+
+<h3>The plainest result</h3>
+<p>The plainest result may be the most important. A few simple rules on eight functions catch events that humans already recognise. The scores know nothing of Brexit or Chávez. The rules found the shapes anyway.</p>
+<div class="callout ok">The pathologies we sense in our own families and offices are real structures, and they can be recovered, by number, from the record of whole societies.</div>
+<p>Not every outlier is a disease. A Helm that isolates itself in a siege may be doing the only thing that works, and a Shield that rises against a real external threat is doing its job. The signatures are diagnoses, and a doctor can name a fever without deciding it should never have happened.</p>
+
 <h2>What remains uncertain</h2>
-<p>Some series fire nearly all the time: Sweden, Poland, Russia, Saudi Arabia and Venezuela for Helm Isolation; Argentina and Japan for Shield Inversion.</p>
+<p>Some series fire nearly all the time. That says more about how those series move than about a run of crises, and it is reported, not hidden:</p>
 <div class="tablewrap"><table>
 <thead><tr><th>Signature</th><th>Frequent firers (share of years)</th><th class="num">All societies</th></tr></thead>
 <tbody>
@@ -254,8 +281,12 @@ details.ap > :last-child{margin-bottom:16px}
 <tr><td class="sig">Late Abstraction Collapse</td><td>Sweden 0.27, South Africa 0.15</td><td class="num">0.021</td></tr>
 <tr><td class="sig">Narrative–Material Gap</td><td>Sweden 0.13, Finland 0.11, Brazil 0.07</td><td class="num">0.011</td></tr>
 </tbody></table></div>
+<p>The sequences between signatures still need their base-rate check, and the before-falls leans for Helm Incompetence and the Narrative–Material Gap are not yet results.</p>
+
 <h2>What comes next</h2>
-<p>A prospective watchlist will name societies showing early signatures now, so the future can mark our homework instead of us marking it. And the same frozen rules will be run unchanged below the nation, to recover quantitatively the structures we have already seen there.</p>
+<p>A <b>prospective watchlist</b> will name societies showing early signatures now, so the future can mark my homework instead of me marking it.</p>
+<p>And the same frozen rules will be run <b>unchanged below the nation</b>, to recover quantitatively the structures we have already seen there. The first test (P4) scores Boeing, Theranos and WorldCom against matched firms with no known crisis, with the eight functions mapped onto the firm: Helm is the board and executive, Shield is compliance and legal, Archive is records and audit. Every firing is reported, including false alarms in the controls.</p>
+<p>A <b>recovery catalogue</b> follows: if damaging configurations recur, recovery should too. Archive recovery, Helm recoupling, Shield restraint and the reconnection of Lore with the material functions will be defined, frozen and searched for with the same discipline.</p>
 <p class="lede">If the numbers hold there too, we will have something better than another explanation of the last collapse after it happened. Anyone who has lived inside a failing family, firm or country has felt these patterns. CAMS shows they can be recovered from the numbers as well.</p>
 
 <h2>The lesson</h2>
