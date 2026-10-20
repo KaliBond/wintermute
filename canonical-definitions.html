@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Canonical Definitions — CAMS</title>
+<meta name="description" content="The authoritative definitions of the four CAMS dimensions (Coherence, Capacity, Stress, Abstraction), Node Value, and the derived quantities computed from them.">
+<link rel="canonical" href="https://neuralnations.org/canonical-definitions">
+<link rel="stylesheet" href="style.css">
+<style>
+:root{--ink:#1c2333;--muted:#5d6577;--accent:#2F6F7D;--accent-soft:#e8f1f3;--line:#E0E0E0}
+*{box-sizing:border-box}
+body{background:#fff;color:var(--ink)}
+.report{max-width:920px;margin:0 auto;padding:0 24px 80px;font-family:Georgia,'Times New Roman',serif;line-height:1.68;font-size:17px}
+header.masthead{border-bottom:3px double var(--line);padding:42px 0 24px;margin-bottom:30px}
+.brand{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.report h1{font-size:40px;line-height:1.15;margin:14px 0 10px}
+.subtitle{font-size:19px;color:var(--muted);font-style:italic;margin:0 0 16px}
+.meta{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;color:var(--muted)}
+.report h2{font-size:25px;margin:44px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+.dims{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:20px 0}
+.dim{border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:6px;padding:16px 18px}
+.dim b{display:block;font-size:19px;margin-bottom:6px}
+.dim .sym{font-family:-apple-system,'Segoe UI',sans-serif;color:var(--accent);font-weight:700}
+.dim p{margin:0;font-size:15.5px}
+.dim .not{margin-top:8px;color:var(--muted);font-size:14px}
+.formula{font-size:24px;text-align:center;background:var(--accent-soft);border-radius:6px;padding:18px;margin:20px 0}
+.report table{width:100%;border-collapse:collapse;font-size:15px;font-family:-apple-system,'Segoe UI',sans-serif}
+.report th{background:#F0F0F0;text-align:left;padding:8px 10px;border-bottom:2px solid var(--line);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.report td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.tablewrap{overflow-x:auto}
+.callout{border-left:4px solid var(--accent);padding:4px 0 4px 18px;margin:24px 0;font-size:16px}
+</style>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+<main class="report">
+<header class="masthead">
+  <div class="brand">CAMS reference</div>
+  <h1>Canonical Definitions</h1>
+  <p class="subtitle">The four dimensions every node is scored on, and the quantities computed from them</p>
+  <div class="meta">Kari McKern · Neural Nations · 20 October 2026 · aligned with the October 2026 thesis</div>
+</header>
+
+<p>Each of the eight nodes (Helm, Shield, Lore, Stewards, Craft, Hands, Archive, Flow) is scored each year on four dimensions. These are the authoritative definitions. Where an older page or tool describes a dimension differently, this page takes precedence.</p>
+
+<h2>The four dimensions</h2>
+<div class="dims">
+  <div class="dim"><b><span class="sym">C</span> Coherence</b><p>Internal alignment and coordination clarity within the node&rsquo;s function.</p></div>
+  <div class="dim"><b><span class="sym">K</span> Capacity</b><p>Demonstrated ability to perform the node&rsquo;s function.</p></div>
+  <div class="dim"><b><span class="sym">S</span> Stress</b><p>Rate of entropy production: the rate at which disorder is produced within the function.</p><p class="not">Not the severity of an external challenge.</p></div>
+  <div class="dim"><b><span class="sym">A</span> Abstraction</b><p>The degree to which the node&rsquo;s symbolic and conceptual activity is operationally integrated with its function (&ldquo;coherent cognition&rdquo;).</p><p class="not">High A means sophisticated and grounded. Symbolic activity that has drifted from operational reality scores low.</p></div>
+</div>
+
+<h2>Node Value</h2>
+<div class="formula">V = C + K + A/2 &minus; S</div>
+<p>Node Value is the only quantity defined directly from the four dimensions. System-level readings such as mean V are averages of it across nodes.</p>
+
+<h2>Derived quantities</h2>
+<p>These are computed from the four dimensions. They are not definitions of them.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Quantity</th><th>Form</th><th>Used in</th></tr></thead>
+<tbody>
+<tr><td>Node signal &sigma;</td><td>&sigma; = A&middot;C&middot;(K&minus;S)</td><td><a href="social-cognition.html">Social Cognition in Real Time</a></td></tr>
+<tr><td>Bond strength</td><td>B<sub>ij</sub>, between nodes i and j</td><td><a href="model.html">The CAMS Model</a>, JUNO tools</td></tr>
+<tr><td>Metabolic load</td><td>&Phi; = &Sigma;K&middot;S</td><td>thermodynamic readings</td></tr>
+<tr><td>Dyad fields</td><td>&#x1D4AB;(t) operational pressure, &#x1D4B4;(t) symbolic integration</td><td><a href="metabolism-meaning.html">Operational Pressure and Symbolic Integration</a></td></tr>
+</tbody></table></div>
+
+<p class="callout">All tools and papers using derived quantities such as &sigma; and &#x1D4AB;(t)/&#x1D4B4;(t) treat these as diagnostic composites computed from the canonical four dimensions above. They are not alternative definitions of those dimensions.</p>
+</main>
+<footer class="footer"><nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;"><a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a><a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a><a href="results.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Results</a></nav><p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p></footer>
+<script src="site-chrome.js"></script><script src="nav.js"></script>
+</body>
+</html>
