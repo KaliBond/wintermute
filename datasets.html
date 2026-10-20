@@ -176,7 +176,8 @@
     }
     .vstat .vsv { font-size: 1.45em; font-weight: 700; color: #1f77b4; line-height: 1; }
     .vstat .vsl { font-size: 0.76em; color: #666; margin-top: 5px; line-height: 1.4; }
-    </style>
+    .badge-new-ds{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:9px;background:#2F6F7D;color:#fff;font-size:0.68em;font-weight:700;vertical-align:middle;}
+</style>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
     <script>
@@ -973,6 +974,168 @@
         </div>
     </div>
 
+    <!-- JUNO v3 + QUARTERLY RUNS -->
+    <div class="card">
+        <p class="section-label" style="color:#2F6F7D;">JUNO v3 &mdash; Current Corpus (October 2026)</p>
+        <div class="method-box" style="border-color:#2F6F7D;background:#f0f7f7;">
+            <strong>Which dataset to use.</strong> JUNO v3 (19 October 2026) is the current corpus and the basis for every signature result in the October 2026 thesis. The 53-society <code>JUNO_all_countries.csv</code> further down is the prior corpus behind the JUNO_36 explorer; do not expect it to reproduce the signature results. Dimension definitions: <a href="canonical-definitions.html" style="color:#2F6F7D;font-weight:600;">Canonical Definitions</a>.
+        </div>
+        <div class="dataset-grid" style="margin-top:16px;">
+            <div class="dataset-card" style="border-color:#9cc3cb;">
+                <span class="society" style="color:#1d4650;">JUNO_Unified_Dataset_v3 &mdash; current corpus</span>
+                <span class="meta">42 societies &middot; 41,914 node-year rows &middot; C, K, S, A and V per node per year &middot; basis for the frozen signature evidence in the October 2026 thesis</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/v3/JUNO_Unified_Dataset_v3_2026-10-19.csv" target="_blank">View</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/v3/JUNO_Unified_Dataset_v3_2026-10-19.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Download CSV</a>
+                </div>
+            </div>
+            <div class="dataset-card" style="border-color:#9cc3cb;">
+                <span class="society" style="color:#1d4650;">JUNO v3 changelog &amp; rescore list</span>
+                <span class="meta">What was added, replaced, patched and removed from the prior corpus &middot; series flagged for blind rescore (Denmark, Israel pre-2015, India, Turkey)</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/v3/JUNO_v3_CHANGELOG.md" target="_blank">Changelog</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/v3/JUNO_blind_rescore_list.md" target="_blank">Rescore list</a>
+                </div>
+            </div>
+            <div class="dataset-card" style="border-color:#9cc3cb;">
+                <span class="society" style="color:#1d4650;">Signature Pack &amp; thesis</span>
+                <span class="meta">The six frozen signature rules and the October 2026 thesis that reports them against JUNO v3</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/v3/CAMS_Signature_Pack_v1.md" target="_blank">Signature Pack</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/v3/CAMS_Thesis_v2_2026-10-20.md" target="_blank">Thesis</a>
+                </div>
+            </div>
+        </div>
+
+        <p class="region-heading" style="margin-top:24px;">Quarterly runs, 2015&ndash;2026Q3</p>
+        <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Columns: <code>Society, Quarter, Node</code>, then C, K, S, A, Node Value and Bond Strength. Block 1 is the ensemble mean; block 2, the envelope, gives the per-dimension SD and the V range across scorers.</p>
+        <div class="dataset-grid">
+            <div class="dataset-card" style="border-color:#9cc3cb;">
+                <span class="society" style="color:#1d4650;">United States</span>
+                <span class="meta">2015Q1&ndash;2026Q3 &middot; 47 quarters &middot; 8 nodes &middot; five-scorer ensemble mean + envelope</span>
+                <div class="links">
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/USA_CAMS_m5n_quarterly_2015-2026Q3_block1.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Ensemble mean</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/USA_CAMS_m5n_quarterly_2015-2026Q3_block2.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Envelope</a>
+                </div>
+            </div>
+            <div class="dataset-card" style="border-color:#9cc3cb;">
+                <span class="society" style="color:#1d4650;">Iran, Israel, Saudi Arabia</span>
+                <span class="meta">2015Q1&ndash;2026Q3 &middot; 3 societies &middot; 47 quarters each &middot; 8 nodes &middot; five-scorer ensemble mean + envelope</span>
+                <div class="links">
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/Mideast3_CAMS_m5n_quarterly_2015-2026Q3_block1.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Ensemble mean</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/Mideast3_CAMS_m5n_quarterly_2015-2026Q3_block2.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Envelope</a>
+                </div>
+            </div>
+            <div class="dataset-card" style="border-color:#9cc3cb;">
+                <span class="society" style="color:#1d4650;">France <span class="badge-new-ds">new</span></span>
+                <span class="meta">2015Q1&ndash;2026Q3 &middot; 47 quarters &middot; 8 nodes &middot; five-scorer ensemble mean + envelope</span>
+                <div class="links">
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/France_CAMS_m5n_quarterly_2015-2026Q3_block1.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Ensemble mean</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/France_CAMS_m5n_quarterly_2015-2026Q3_block2.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Envelope</a>
+                </div>
+            </div>
+            <div class="dataset-card" style="border-color:#9cc3cb;">
+                <span class="society" style="color:#1d4650;">Germany <span class="badge-new-ds">new</span></span>
+                <span class="meta">2015Q1&ndash;2026Q3 &middot; 47 quarters &middot; 8 nodes &middot; five-scorer ensemble mean + envelope</span>
+                <div class="links">
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/Germany_CAMS_m5n_quarterly_2015-2026Q3_block1.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Ensemble mean</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/Germany_CAMS_m5n_quarterly_2015-2026Q3_block2.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Envelope</a>
+                </div>
+            </div>
+            <div class="dataset-card" style="border-color:#9cc3cb;">
+                <span class="society" style="color:#1d4650;">United Kingdom <span class="badge-new-ds">new</span></span>
+                <span class="meta">2015Q1&ndash;2026Q3 &middot; 47 quarters &middot; 8 nodes &middot; five-scorer ensemble mean + envelope</span>
+                <div class="links">
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/UK_CAMS_m5n_quarterly_2015-2026Q3_block1.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Ensemble mean</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/UK_CAMS_m5n_quarterly_2015-2026Q3_block2.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Envelope</a>
+                </div>
+            </div>
+            <div class="dataset-card" style="border-color:#9cc3cb;">
+                <span class="society" style="color:#1d4650;">Sri Lanka <span class="badge-new-ds">new</span></span>
+                <span class="meta">2015Q1&ndash;2026Q3 &middot; 47 quarters &middot; m5 run &middot; 8 nodes &middot; five-scorer ensemble mean + envelope</span>
+                <div class="links">
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/SriLanka_CAMS_m5_quarterly_2015-2026Q3_block1.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Ensemble mean</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/SriLanka_CAMS_m5_quarterly_2015-2026Q3_block2.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Envelope</a>
+                </div>
+            </div>
+        </div>
+
+        <p class="region-heading" style="margin-top:24px;">Targeted runs</p>
+        <div class="dataset-grid">
+            <div class="dataset-card" style="border-color:#9cc3cb;">
+                <span class="society" style="color:#1d4650;">Germany 1932&ndash;35, annual <span class="badge-new-ds">new</span></span>
+                <span class="meta">Weimar collapse to consolidation &middot; 4 years &middot; 8 nodes &middot; five scorers</span>
+                <div class="links">
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/Germany_3235_block1.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Ensemble mean</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/Germany_3235_block2.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Envelope</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/Germany_3235_scorer1.csv" target="_blank">Pass 1</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/Germany_3235_scorer2.csv" target="_blank">Pass 2</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/Germany_3235_scorer3.csv" target="_blank">Pass 3</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/Germany_3235_scorer4.csv" target="_blank">Pass 4</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/Germany_3235_scorer5.csv" target="_blank">Pass 5</a>
+                </div>
+            </div>
+            <div class="dataset-card" style="border-color:#9cc3cb;">
+                <span class="society" style="color:#1d4650;">Germany 1932&ndash;35, quarterly <span class="badge-new-ds">new</span></span>
+                <span class="meta">1932Q1&ndash;1935Q4 &middot; 16 quarters &middot; 8 nodes &middot; five scorers</span>
+                <div class="links">
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/Germany_qtr_block1.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Ensemble mean</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/Germany_qtr_block2.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Envelope</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/Germany_qtr_scorer1.csv" target="_blank">Pass 1</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/Germany_qtr_scorer2.csv" target="_blank">Pass 2</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/Germany_qtr_scorer3.csv" target="_blank">Pass 3</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/Germany_qtr_scorer4.csv" target="_blank">Pass 4</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/Germany_qtr_scorer5.csv" target="_blank">Pass 5</a>
+                </div>
+            </div>
+            <div class="dataset-card" style="border-color:#9cc3cb;">
+                <span class="society" style="color:#1d4650;">USA transition quarters <span class="badge-new-ds">new</span></span>
+                <span class="meta">9 quarters around changes of administration, 2016Q4&ndash;2025Q2 &middot; 8 nodes &middot; five scorers</span>
+                <div class="links">
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/USA_transitions_block1.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Ensemble mean</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/USA_transitions_block2.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Envelope</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/USA_trans_scorer1.csv" target="_blank">Pass 1</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/USA_trans_scorer2.csv" target="_blank">Pass 2</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/USA_trans_scorer3.csv" target="_blank">Pass 3</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/USA_trans_scorer4.csv" target="_blank">Pass 4</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/USA_trans_scorer5.csv" target="_blank">Pass 5</a>
+                </div>
+            </div>
+            <div class="dataset-card" style="border-color:#9cc3cb;">
+                <span class="society" style="color:#1d4650;">USA patch quarters <span class="badge-new-ds">new</span></span>
+                <span class="meta">Rescored quarters 2021Q2 and 2025Q1 &middot; 8 nodes &middot; five scorers</span>
+                <div class="links">
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/USA_patch_block1.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Ensemble mean</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/USA_patch_block2.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Envelope</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/USA_patch_scorer1.csv" target="_blank">Pass 1</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/USA_patch_scorer2.csv" target="_blank">Pass 2</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/USA_patch_scorer3.csv" target="_blank">Pass 3</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/USA_patch_scorer4.csv" target="_blank">Pass 4</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/USA_patch_scorer5.csv" target="_blank">Pass 5</a>
+                </div>
+            </div>
+            <div class="dataset-card" style="border-color:#9cc3cb;">
+                <span class="society" style="color:#1d4650;">Telecoms, corporate nodes <span class="badge-new-ds">new</span></span>
+                <span class="meta">Huawei, Ericsson, Nokia, ZTE &middot; 2010&ndash;2025 &middot; corporate node set (Board, Risk, &hellip;) &middot; CAMCORP5 ensemble &middot; 512 rows</span>
+                <div class="links">
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/telecom_camcorp5_block1.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Ensemble mean</a>
+                    <a href="https://raw.githubusercontent.com/KaliBond/wintermute/main/juno/telecom_camcorp5_block2.csv" target="_blank" class="dl" style="color:#2F6F7D;border-color:#9cc3cb;">Envelope</a>
+                </div>
+            </div>
+            <div class="dataset-card" style="border-color:#9cc3cb;">
+                <span class="society" style="color:#1d4650;">Sri Lanka raw passes <span class="badge-new-ds">new</span></span>
+                <span class="meta">The five individual scorer files behind the Sri Lanka quarterly ensemble</span>
+                <div class="links">
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/SriLanka_scorer1.csv" target="_blank">Pass 1</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/SriLanka_scorer2.csv" target="_blank">Pass 2</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/SriLanka_scorer3.csv" target="_blank">Pass 3</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/SriLanka_scorer4.csv" target="_blank">Pass 4</a>
+                    <a href="https://github.com/KaliBond/wintermute/blob/main/juno/SriLanka_scorer5.csv" target="_blank">Pass 5</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- JUNO-1.0 FORMALISM -->
     <div class="card">
         <p class="section-label" style="color:#2E7D52;">JUNO 1.0 &mdash; Bond Strength Formalism</p>
@@ -1187,8 +1350,8 @@
                 <tr><td><code>T_Offset</code></td><td>string</td><td>Time step relative to internal baseline (T+0, T+1, &hellip;, T+226)</td></tr>
                 <tr><td><code>Node</code></td><td>string</td><td>One of the 8 CAMS nodes (Archive, Craft, Flow, Hands, Helm, Lore, Shield, Stewards)</td></tr>
                 <tr><td><code>Coherence</code></td><td>float 1&ndash;10</td><td>Internal node alignment</td></tr>
-                <tr><td><code>Capacity</code></td><td>float 1&ndash;10</td><td>Resources and effectiveness</td></tr>
-                <tr><td><code>Stress</code></td><td>float 1&ndash;10</td><td>Accumulated pressure and dysfunction</td></tr>
+                <tr><td><code>Capacity</code></td><td>float 1&ndash;10</td><td>Demonstrated ability to perform the function</td></tr>
+                <tr><td><code>Stress</code></td><td>float 1&ndash;10</td><td>Rate of entropy production within the function</td></tr>
                 <tr><td><code>Abstraction</code></td><td>float 1&ndash;10</td><td>Symbolic and conceptual reach</td></tr>
                 <tr><td><code>Node_Value_Calc</code></td><td>float</td><td>JUNO-1.0 node value &sigma; = A&middot;C&middot;(K&minus;S)</td></tr>
                 <tr><td><code>Bond_Strength_Calc</code></td><td>float [0,1]</td><td>JUNO-1.0 normalised bond strength B<sub>ij</sub></td></tr>
@@ -1285,10 +1448,10 @@
                 <tr><td><code>Society</code></td><td>string</td><td>Society or organisation name</td></tr>
                 <tr><td><code>Year</code></td><td>integer</td><td>Year of observation</td></tr>
                 <tr><td><code>Node</code></td><td>string</td><td>One of the 8 institutional nodes (Lore, Archive, Helm, Stewards, Shield, Craft, Hands, Flow)</td></tr>
-                <tr><td><code>Coherence</code></td><td>float 1–10</td><td>Internal alignment of the node</td></tr>
-                <tr><td><code>Capacity</code></td><td>float 1–10</td><td>Resources and effectiveness</td></tr>
-                <tr><td><code>Stress</code></td><td>float 1–10</td><td>Accumulated pressure and dysfunction</td></tr>
-                <tr><td><code>Abstraction</code></td><td>float 1–10</td><td>Symbolic sophistication and long-range planning</td></tr>
+                <tr><td><code>Coherence</code></td><td>float 1–10</td><td>Internal alignment and coordination clarity within the function</td></tr>
+                <tr><td><code>Capacity</code></td><td>float 1–10</td><td>Demonstrated ability to perform the function</td></tr>
+                <tr><td><code>Stress</code></td><td>float 1–10</td><td>Rate of entropy production within the function</td></tr>
+                <tr><td><code>Abstraction</code></td><td>float 1–10</td><td>Symbolic activity operationally integrated with the function (see <a href="canonical-definitions.html">Canonical Definitions</a>)</td></tr>
                 <tr><td><code>Node Value</code></td><td>float</td><td>Derived: C + K + (A/2) − S</td></tr>
                 <tr><td><code>Bond Strength</code></td><td>float 0–1</td><td>Derived: coupling with adjacent node</td></tr>
             </tbody>
