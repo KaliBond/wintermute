@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Synchronised Slide — JUNO v3 Common-Factor Analysis</title>
+<meta name="description" content="Global civilisational stress after 2000 in the JUNO v3 record: a common-factor analysis. Kari McKern, ComplexityWorkz, 23 October 2026.">
+<meta name="author" content="Kari McKern">
+<link rel="canonical" href="https://neuralnations.org/synchronised-slide">
+<link rel="stylesheet" href="style.css">
+<style>
+:root{--ink:#1c2333;--muted:#5d6577;--accent:#2F6F7D;--accent-soft:#e8f1f3;--line:#E0E0E0}
+*{box-sizing:border-box}
+body{background:#fff;color:var(--ink)}
+.report{max-width:920px;margin:0 auto;padding:0 24px 80px;font-family:Georgia,'Times New Roman',serif;line-height:1.68;font-size:17px}
+header.masthead{border-bottom:3px double var(--line);padding:42px 0 24px;margin-bottom:30px}
+.brand{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.report h1{font-size:40px;line-height:1.15;margin:14px 0 10px}
+.subtitle{font-size:19px;color:var(--muted);font-style:italic;margin:0 0 16px}
+.meta{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;color:var(--muted)}
+.note{font-size:15px;color:var(--muted);font-style:italic;margin:14px 0 0}
+.report h2{font-size:25px;margin:44px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+.report li{margin-bottom:.7rem}
+.report code{font-size:14px;background:#f4f5f7;padding:1px 4px;border-radius:3px}
+figure.chart{margin:26px 0;border:1px solid var(--line);border-radius:6px;padding:16px 18px 14px;text-align:center}
+figure.chart img{max-width:100%;height:auto}
+figure.chart figcaption{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;color:var(--muted);margin-top:8px}
+.report table{width:100%;border-collapse:collapse;font-size:15px;font-family:-apple-system,'Segoe UI',sans-serif}
+.report th{background:#F0F0F0;text-align:left;padding:8px 10px;border-bottom:2px solid var(--line);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.report td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.report td:not(:first-child),.report th:not(:first-child){text-align:right}
+.tablewrap{overflow-x:auto}
+@media (max-width:600px){.report h1{font-size:30px}.report{padding:0 16px 60px}}
+@media print{#site-nav,footer.footer{display:none} figure.chart{break-inside:avoid}}
+</style>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+<main class="report">
+<header class="masthead">
+  <div class="brand">Analysis note</div>
+  <h1>The Synchronised Slide</h1>
+  <p class="subtitle">Global civilisational stress after 2000 in the JUNO v3 record: a common-factor analysis</p>
+  <div class="meta">Kari McKern · ComplexityWorkz · 23 October 2026</div>
+  <p class="note">Data: JUNO Unified Dataset v3 (2026-10-19), frozen-run population. Methods and reproduction notes at the end. External series: IMF WEO, World Bank WDI, NASA GISTEMP, FRED. Commentary separates data, inference and speculation throughout.</p>
+</header>
+<h2>Executive summary</h2>
+<ol>
+<li>The post-2000 decline in the JUNO panel is real, broad and statistically
+robust: 24 of 34 societies with comparable years fell in mean node value
+from 2000 to 2025, and Stress rose in 26 of 34. It spans the USA (−6.9),
+France (−4.6) and Australia (−2.6) as well as Venezuela (−10.5) and Syria
+(−6.4), so it is not a war effect, a sanctions effect or a Western effect.</li>
+<li>Stress synchrony — the share of cross-society variance carried by one
+common factor — jumped after 2000: 35% (1900–49), 29% (1950–99), 47%
+(2000–25); bootstrap 95% CI for the post-2000 jump [+8, +28] points,
+p ≈ 0.001.</li>
+<li>But the jump is a <em>return</em> to war-era synchrony levels, and the factor is
+<em>new</em>: the pre-2000 European-war factor explains only 9% of post-2000
+variance. The post-2000 factor is nearly uniform across 26 of 28 panel
+societies — a global stress regime, stepping up in 2008, 2015 and 2020.</li>
+<li>Of the candidate exogenous drivers, only the public-debt build-up survives
+scrutiny: it alone correlates in levels (r = 0.93), in first differences
+(r = 0.52, p ≈ 0.006) and detrended (r = 0.45, p ≈ 0.02). Temperature and
+trade volume correlate in levels but invert on differencing — trend-matching
+artefacts.</li>
+<li>The rate rival fails: real yields add ~1 point of explanatory power over
+the debt stock alone (R² 0.856 → 0.865). What the record shows is a stock
+story: two decades of suppressed real rates <em>enabled</em> the debt build-up,
+and the 2022–25 rate normalisation has not unwound the stress — the stock
+is now self-sustaining.</li>
+<li>The 1920s–30s offer the closest precedent, with one instructive inversion.
+Fitted on a 1920–39 window, the stress factor tracks the real long yield at
+r = 0.77 (1925–39): synchronised crisis came then with <em>rising</em> real rates
+(deflation), and now with <em>falling</em> ones (financial repression). The common
+structure across both eras is debt overhang plus rate distortion.</li>
+</ol>
+<h2>1. Data and method</h2>
+<p>The analysis uses the frozen-run population of JUNO v3: 37 societies as defined
+in the pathologies progress report of 20 October 2026 — Denmark, India,
+Turkey, Thailand and Canada excluded in advance, Israel from 2015. Node-level
+work uses the 36 societies on the canonical eight-node schema (Palestine is
+scored on the legacy schema). The balanced panel for factor analysis is the 28
+societies with at least 110 annual observations across 1900–2025; 14 missing
+society-years (Syria 1910–19, Italy 1901 and 2025, South Africa 1964, Sweden
+1944) are linearly interpolated.</p>
+<p>Node value throughout is the dataset's own V = C + K − S + A/2, verified to
+reproduce exactly on all rows. Principal components are computed on the
+society × year matrix of mean Stress, each society standardised within the
+analysis window, so a common level shift cannot by itself inflate a factor's
+share. Era differences are tested by bootstrap: 10,000 within-era resamples of
+years, seed 20261020 for the signature work and 20261023 here. External
+series and their caveats: IMF WEO general government gross debt (% of GDP,
+<code>GGXWDG_NGDP</code>) GDP-weighted by dollar GDP across the twenty largest economies
+— the data source exposes no world aggregate, and 2025–26 values are WEO
+estimates; World Bank WDI world trade openness (<code>NE.TRD.GNFS.ZS</code>), real trade
+volume (exports plus imports, constant 2015 US$), and central-government
+interest payments (% of revenue, <code>GC.XPN.INTP.RV.ZS</code>, 1998–2024); NASA GISTEMP
+land–ocean anomaly (annual, unsmoothed, through 2025); FRED <code>GS10</code>, <code>DFII10</code>,
+<code>LTGOVTBD</code> and <code>CPIAUCNS</code>, with the long real yield spliced as
+<code>LTGOVTBD</code> − CPI inflation (1925–52) and <code>GS10</code> − CPI inflation (1953+).</p>
+<h2>2. The reversal and its breadth</h2>
+<p>On the strict 28-society panel, mean node value runs 7.97 (1900) → 10.03
+(1950) → 10.79 (2000) → 8.96 (2025). The curve is an inverted U whose
+down-leg erases two-thirds of a century of scored improvement within 25
+years. Mean Stress, 5.64 in 2025, is the highest year-end value since the
+early twentieth century. The decline is synchronised across regime types:
+democracies, autocracies, wartime and peacetime states fell together. Within
+the node structure, Lore — the meaning- and knowledge-supplying function —
+leads the erosion (−1.13 in mean node value from 1950–99 to 2000–25, against
+Helm −0.63 and Shield −0.54), while Hands remains the chronic weak node in
+every era examined. A slide this broad invites a common-cause question.</p>
+<figure class="chart"><img src="analysis/synchronised-slide/fig1_panel_trend.png" alt="Panel trend, 1900–2025" loading="lazy"><figcaption>Panel trend, 1900–2025</figcaption></figure>
+<h2>3. One synchrony or two?</h2>
+<p>PC1 shares of Stress variance by era: <strong>0.354 (1900–49), 0.289 (1950–99),
+0.468 (2000–25)</strong>. The post-2000 jump of +17 points carries a bootstrap 95% CI
+of [+8, +28], p ≈ 0.001; mean pairwise correlation across societies moves the
+same way (0.20 / 0.14 / 0.26), so the result is not an artefact of the PCA
+machinery.</p>
+<p>Two qualifications matter. First, degree: the rolling 21-year share sat at
+0.55–0.63 through the 1918–45 war era, so post-2000 synchrony is a return to
+war-era levels, not a novelty in scale. What is novel is that synchrony is
+running at war levels <em>without a world war</em>. Second, kind: the pre-2000
+factor is regional — it loads on the European and Anglosphere societies
+(France 0.29, Italy 0.28, Germany, the UK, the Netherlands, Norway, Poland
+0.26–0.27) and negatively on Syria, Colombia and Saudi Arabia. Projected
+forward, that factor explains 40% of 1900–49 variance but only <strong>9% of
+post-2000 variance</strong>. The post-2000 factor is nearly uniform: 26 of 28
+societies load between +0.05 and +0.25, with only Saudi Arabia (−0.22) and
+Iraq (−0.20) negative. Its score steps up in 2008, again in 2015, and peaks in
+2020 at 7.85 — the series maximum — tracking panel mean Stress at r = 0.972.</p>
+<p><strong>Inference:</strong> a regionally-structured war synchrony gave way around 2000 to a
+global, undifferentiated stress regime. <strong>Speculation:</strong> the step years —
+2008, 2015, 2020 — mark financial, geopolitical and biological shocks; the
+regime looks less like a sequence of national stories than like one system
+responding to global-scale forcing.</p>
+<figure class="chart"><img src="analysis/synchronised-slide/fig7_common_factor.png" alt="Rolling PC1 share, factor score and panel mean stress" loading="lazy"><figcaption>Rolling PC1 share, factor score and panel mean stress</figcaption></figure>
+<h2>4. What the factor tracks</h2>
+<p>Four candidate drivers were tested against the factor over 2000–25 (n = 26),
+in levels, first differences and detrended residuals:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Series</th>
+<th>Levels</th>
+<th>First differences</th>
+<th>Detrended</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Public debt, %GDP (GDP-weighted, 20 economies)</td>
+<td><strong>0.925</strong></td>
+<td><strong>0.522</strong></td>
+<td><strong>0.447</strong></td>
+</tr>
+<tr>
+<td>Trade openness, %GDP</td>
+<td>0.357</td>
+<td>−0.224</td>
+<td>−0.486</td>
+</tr>
+<tr>
+<td>Real trade volume</td>
+<td>0.866</td>
+<td>−0.565</td>
+<td>−0.686</td>
+</tr>
+<tr>
+<td>Temperature anomaly</td>
+<td>0.801</td>
+<td>0.058</td>
+<td>−0.156</td>
+</tr>
+</tbody>
+</table></div>
+<p>Only the debt series shows dynamics: its year-to-year changes correlate at
+0.52 (p ≈ 0.006) and its detrended residual at 0.45 (p ≈ 0.02). Its two steps
+— 46% to 67% of GDP in 2008, on to 85% by 2012, then 90% to 106% in 2020 —
+land on the factor's two largest jumps. The high level correlations for trade
+volume and temperature are trend-matching artefacts: both invert on
+differencing, and the falsification window shows how cheap level correlations
+are — the pre-2000 European-war factor correlates 0.55 with the temperature
+trend over 1960–99, when synchrony was historically low. Trade, if anything,
+<em>anti</em>-tracks: world trade sags in 2019–20 and 2023–25 exactly when the factor
+steps up.</p>
+<p><strong>Inference:</strong> the post-2000 stress regime co-moves with the public-debt
+build-up and with nothing else tested. <strong>Speculation:</strong> because the driver is
+policy-made, it is in principle reversible — which makes the synchrony a
+choice-shaped condition rather than a fate.</p>
+<figure class="chart"><img src="analysis/synchronised-slide/fig9_exogenous.png" alt="Factor against candidate drivers" loading="lazy"><figcaption>Factor against candidate drivers</figcaption></figure>
+<h2>5. Stock or carry?</h2>
+<p>The obvious rival is the interest burden. It fails. The real 10-year yield
+correlates <em>negatively</em> with the factor (levels r = −0.59; detrended −0.24);
+the DFII10 TIPS real yield agrees (levels −0.55; detrended −0.46); world
+interest payments as a share of revenue are uncorrelated in every
+transformation (−0.05 / 0.10 / 0.05). In a joint model the debt stock alone
+gives R² = 0.856; adding the real yield buys one point (0.865); adding
+interest/revenue (2003–24) reaches 0.888 but with negative coefficients on
+both rate terms.</p>
+<p><strong>Inference:</strong> it is the stock, not the carry. Read mechanically: two decades
+of falling real yields (2.65% in 2000; −0.3% around 2012 and 2020; −5.1% in
+the 2022 inflation spike) enabled the accumulation, which is why the rate
+terms enter negatively. <strong>Speculation with a testable edge:</strong> rates
+normalised after 2022 (+1.7% by 2025) but the factor has not come down. If the
+carry mattered most, stress should have eased with normalisation; it hasn't.
+The stock now appears self-sustaining — debt service resists unwinding because
+the stock itself is the stressor. The watchable consequence is a fiscal
+trap: the point at which normalised rates convert a tolerable stock into an
+intolerable service burden, the 1930s channel re-opens, with the opposite
+sign.</p>
+<h2>6. The 1920s parallel</h2>
+<p>The synchrony machinery reaches back far enough to test the post-World-War
+analogy directly. Fitted on a 1920–39 window, the stress factor carries 29.8%
+of variance (PC2 20.6%) — Depression-era synchrony — and its score is calm
+through 1925–28 (−3 or lower), then spikes to +6.4 by 1932, the most
+synchronised years in the record before 2008. Against the long real yield
+(available from 1925), the correlation over 1925–39 is <strong>r = 0.77 (n = 15)</strong>.</p>
+<p>The parallel is structural, not cosmetic — with one inversion. Then, the
+crisis channel ran through <em>rising</em> real yields: 1.4% in 1925, 3.6% by 1929,
+8.5% in 1933 as deflation exploded the real burden of war debts. Stress
+tracked the rise. Now, the channel has run through <em>falling</em> real yields —
+financial repression — with stress tracking the stock those rates enabled.
+Two synchronised eras, two opposite signs on the rate term, one common
+structure: debt overhang interacting with a distorted price of money. The
+n=15 caveat is real; a single episode cannot carry a general law. But as a
+preregisterable hypothesis for v4 it is hard to beat: <em>when the stock of
+public debt across the major economies exceeds roughly one year's output,
+societal stress synchronises globally, and the sign of the rate term marks
+which trap — deflationary or repressionary — is doing the work.</em></p>
+<figure class="chart"><img src="analysis/synchronised-slide/fig10_rates.png" alt="Two eras and the real long yield" loading="lazy"><figcaption>Two eras and the real long yield</figcaption></figure>
+<h2>7. Implications for CAMS</h2>
+<p>All of this section is speculation, offered for the watchlist work.</p>
+<ul>
+<li><strong>Fiscal trajectory is a CAMS variable.</strong> The debt-to-output ratio of the
+major economies now behaves like a forcing function on the Stress metric
+across all eight nodes. A prospective watchlist should carry it alongside
+the frozen signatures.</li>
+<li><strong>Lore leads.</strong> The meaning/knowledge node deteriorates earliest and most in
+the post-2000 slide. A formal lead-lag test — does Lore(t) predict society
+mean Stress(t+5..10) more strongly than other nodes? — is the obvious next
+analysis.</li>
+<li><strong>Synchrony itself is a regime indicator.</strong> The rolling PC1 share is a
+one-number summary of how &quot;one system&quot; the world is; its war-era behaviour
+(share &gt; 0.5) versus inter-war calm (~0.3) suggests thresholds for regime
+labelling.</li>
+<li><strong>The corporate transfer (P4) sharpens.</strong> If the national story is &quot;debt
+stock + distorted rates&quot;, the firm-level analogue is leverage plus the cost
+of capital. Boeing, Theranos and WorldCom differ on exactly that axis; it
+strengthens the case that the frozen national rules will fire differently on
+debt-loaded controls.</li>
+</ul>
+<h2>8. Limitations</h2>
+<p>Twenty-six annual observations carry the post-2000 inference; the bootstrap
+intervals are the honest statement of precision. The debt series covers public
+debt of the twenty largest economies (~85%+ of world GDP), not all-sector
+global debt; 2025–26 WEO values are estimates. The rate series is American —
+the best long proxy available, still a proxy. The factor score correlates
+0.972 with mean Stress by construction, so &quot;the factor&quot; is partly &quot;the mean&quot;;
+the loading-structure change and the differenced correlations are the evidence
+that survives that objection. Four candidates were tested against the same
+26-point window; with more candidates, some would pass by chance, and the
+report treats the debt result as co-movement, not cause. Finally, the scores
+are AI assessments accepted in good faith; every conclusion here is a
+statement about the scored record, not about the world directly.</p>
+<h2>9. Reproduction</h2>
+<p>Analysis scripts and clean CSV outputs are available from the author.
+Scripts, in order: <code>profile_juno.py</code>, <code>quality_juno.py</code>, <code>analyse_juno.py</code>,
+<code>analyse_juno2.py</code>, <code>analyse_juno3.py</code>, <code>analyse_frozen.py</code>,
+<code>common_factor.py</code>, <code>post2000_factor.py</code>, <code>exogenous_test.py</code>,
+<code>rate_analysis.py</code>. Clean CSV outputs in <code>output/</code> (trends, era shares,
+loadings, scores, correlations, all external extracts). Bootstrap seed
+20261023. External sources: IMF WEO (accessed 23 Oct 2026; 2025–26
+estimates); World Bank WDI (accessed 23 Oct 2026); NASA GISTEMP v4 annual
+land–ocean index (accessed 23 Oct 2026); FRED series GS10, DFII10, LTGOVTBD,
+CPIAUCNS (accessed 23 Oct 2026, vintage 2026-10-22).</p>
+<hr />
+<p><em>References (APA):</em></p>
+<p>IMF. World Economic Outlook database. General government gross debt (% of GDP),
+series GGXWDG_NGDP; GDP, current prices (US$), series NGDPD. Accessed 23
+October 2026.</p>
+<p>NASA Goddard Institute for Space Studies. GISTEMP v4, Land–Ocean Temperature
+Index, annual global means. <a href="https://data.giss.nasa.gov/gistemp/">https://data.giss.nasa.gov/gistemp/</a>. Accessed 23
+October 2026.</p>
+<p>Board of Governors of the Federal Reserve System (US). FRED: GS10; DFII10;
+LTGOVTBD; CPIAUCNS. <a href="https://fred.stlouisfed.org">https://fred.stlouisfed.org</a>. Accessed 23 October 2026.</p>
+<p>World Bank. World Development Indicators: NE.TRD.GNFS.ZS; NE.EXP.GNFS.KD;
+NE.IMP.GNFS.KD; GC.XPN.INTP.RV.ZS. Accessed 23 October 2026.</p>
+<p>McKern, K. (2026). CAMS interim results: six frozen signatures. Neural Nations.
+<a href="organisational-pathologies.html">https://neuralnations.org/organisational-pathologies</a></p>
+<p>McKern, K. (2026). JUNO Unified Dataset v3, 2026-10-19. ComplexityWorkz. <a href="datasets.html">Datasets</a>.</p>
+</main>
+<footer class="footer"><nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;"><a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a><a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a><a href="results.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Results</a></nav><p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p></footer>
+<script src="site-chrome.js"></script><script src="nav.js"></script>
+</body>
+</html>
