@@ -122,6 +122,21 @@ These are observed co-occurrences, not established chains. They need comparison 
 
 **A directional regularity** (exploratory, 19 October, not preregistered). Across 38,704 node-years in 37 societies, a rise in Stress is followed the next year by a fall in Capacity (r = −0.072), but not the reverse (r = +0.004). The society-cluster bootstrap 95% CI of the difference is [−0.103, −0.052], and the asymmetry holds in 33 of 37 societies. V has no time order built in, so this is not an artefact of the formula.
 
+**Two mechanisms under one Shield-inversion rule** (exploratory, 23 October, not preregistered). The frozen rule fires when Shield has the highest V and Flow V − mean V ≤ −1.18. That can happen because Shield rises or because Flow falls. We split the 99 firing episodes (runs of consecutive firing years) by which part drove them. *Shield leading here typically means Shield declining least while the system falls, not Shield rising.* Classes: Shield-led if Shield's rise is at least two-thirds of the combined shift, Flow-led if it is one-third or less, mixed otherwise.
+- Raw V, against each society's non-firing median: 57 Flow-led, 22 mixed, 20 Shield-led.
+- Raw V, against the prior five-year mean: 59 Flow-led, 10 mixed, 16 Shield-led (12 episodes lacked enough prior years).
+- Relative to each society's own mean V, most episodes become mixed, because much "Flow-led" firing is a broad system-wide fall in which Flow falls furthest.
+- Flow-led on every raw baseline: Japan 29 of 29 firing years, Venezuela 14 of 14 (Venezuela's Shield sits below its own baseline). Argentina is mostly Flow-led.
+- Shield-led: Finland 2023–25 and Pakistan.
+- Baseline-sensitive: Russia and Iran change class with the baseline, so neither can be placed.
+
+Three related ideas found no support:
+- Flow falling before Shield rises: 40 Flow-first, 35 Shield-first, p = 0.64.
+- Neighbouring societies firing together (circular-shift null): p = 0.086, driven by Russia's pairs. Russia and Finland never fire in the same year.
+- Lore abstraction rising inside long episodes: p = 0.13, with a faint lean the other way.
+
+This is a hypothesis, not a finding. It is post-hoc, with many tests and no multiple-test correction, and the rule's thresholds were tuned on the same data. Russia dominates the episodes and the neighbour pairs. Our reproduction gives 274 firing years against the Signature Pack's 268, and the difference is unresolved. No sanctions or trade data were used, so a Flow-led firing cannot be attributed to sanctions. CAMS is not validated. If pursued, Shield-led and Flow-led variants should be defined and frozen before any new test, and kept out of the signature pack until P4 has run (section 8, step 6).
+
 ## 7. Three levels of cross-scale claim
 
 - **A. Structural transfer.** The same eight functions and kinds of pathology appear at every scale.
