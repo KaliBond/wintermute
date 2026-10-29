@@ -138,6 +138,39 @@
 
 <div class="container">
 
+    <!-- ── 29 OCT 2026: USA SERIES VS CONVENTIONAL HISTORY ── -->
+    <div class="card" style="margin-bottom: 20px; border-left: 4px solid #2F6F7D;">
+        <h2 style="font-size: 1.2em; margin-bottom: 4px;">29 October 2026 &mdash; The USA Series Against Conventional History</h2>
+        <p style="color: #888; font-size: 0.88em; margin-bottom: 20px;"><strong>Participants:</strong> Kari McKern + Grok, using the Claude, GPT and Grok blind-rater files &nbsp;&middot;&nbsp; 29 October 2026 &nbsp;&middot;&nbsp; <strong>Format:</strong> session roll-up; numbers from the run logs in <a href="https://github.com/KaliBond/wintermute/tree/main/analysis/usa-ens-vs-periods" target="_blank">analysis/usa-ens-vs-periods</a></p>
+
+        <p style="font-size: 0.92em; line-height: 1.8; color: #444; margin-bottom: 16px;">Two tests on the annual USA ensemble, both frozen before they were run. The first asked whether the series agrees with the blind raters on what the 15 twentieth-century periods looked like, and whether its drift starts before the conventional dates between them. The second replaced those dates with ones set outside the author&rsquo;s judgement. The interactive charts are in the <a href="usa-ens-vs-periods.html">panel</a>.</p>
+
+        <h3 style="font-size: 0.95em; font-weight: 700; color: #1a1a2e; margin: 20px 0 8px;">Study 1: ensemble against 25 periods</h3>
+        <ul style="margin: 8px 0 12px 20px; line-height: 1.9; color: #444; font-size: 0.92em;">
+            <li><strong>H1, period profiles agree: supported.</strong> Spearman &rho; = 0.821 across the 15 periods, median per-period profile r = 0.537. The hi-fi test file gave &rho; = 0.846 and r = 0.747.</li>
+            <li><strong>H3, named transitions share sign: supported.</strong> 1920s boom to Great Depression, New Deal to WWII and 1991&ndash;2001 to 2020&ndash;25 all move the way the raters&rsquo; consensus does, with 8 of 8 nodes matching each time (max p = 0.0002).</li>
+            <li><strong>H2, drift leads the conventional dates: not supported.</strong> On the canonical annual file 5 of 14 transitions had a drift upcrossing in the five years before them, against 6 of 14 from the date onward (p = 0.63 against shifted dates). The hi-fi test gave 4 of 14 and 6 of 14.</li>
+            <li>The five-yearly file could not be tested: drift needs five consecutive annual years, and each named transition involves a one-year period.</li>
+        </ul>
+        <p style="font-size: 0.92em; line-height: 1.8; color: #444; margin-bottom: 16px;"><strong>Reading.</strong> Conventional history dates are coordination-stress signals. Wars, crashes and realignments are dated because strain has become visible, so a drift measure should rise at or after them, and H2 as drafted could not separate that from a lead. The result is consistent with this reading and does not test it.</p>
+
+        <h3 style="font-size: 0.95em; font-weight: 700; color: #1a1a2e; margin: 20px 0 8px;">Study 2: external markers</h3>
+        <ul style="margin: 8px 0 12px 20px; line-height: 1.9; color: #444; font-size: 0.92em;">
+            <li>Primary set: NBER cycle peaks, 19 scored. Drift upcrossings led 3 and lagged 3 (p = 0.75). <strong>Not supported.</strong></li>
+            <li>Party-control switches (6 of 24 lead) and amendment ratifications (1 of 9) did not pass either. Census years, the negative control, gave 3 of 11 (p = 0.37), so the null is not a calendar artefact.</li>
+            <li>The state-based drift series has only <strong>4 upcrossings</strong> (1968, 1981, 2008, 2016). The pre-registered power floor was five, so the test is underpowered and could not have been decisive either way.</li>
+            <li>The series changes state in blocks: 54 distinct annual states in 126 years, and 72 of 125 year-to-year changes are zero. Lead timing inside a block cannot be resolved.</li>
+        </ul>
+
+        <h3 style="font-size: 0.95em; font-weight: 700; color: #1a1a2e; margin: 20px 0 8px;">Status</h3>
+        <ul style="margin: 8px 0 12px 20px; line-height: 1.9; color: #444; font-size: 0.92em;">
+            <li>The annual file was named canonical after the hi-fi and five-yearly results had been seen. Thresholds, year tables, nulls and seed were not changed, and the sequence is logged in the deviation notes.</li>
+            <li>The analysed copy of the annual file (md5 1c9626e9481662df6c00974f720e0ec0) was reconstructed from a text read of the upload, so there is no original checksum to compare. A rerun from a byte copy would settle it.</li>
+        </ul>
+
+        <p style="font-size: 0.92em; line-height: 1.8; color: #444;">Pre-registrations, frozen-file hashes, scripts, results and the panel data: <a href="https://github.com/KaliBond/wintermute/tree/main/analysis/usa-ens-vs-periods" target="_blank">analysis/usa-ens-vs-periods on GitHub</a>. Interactive version: <a href="usa-ens-vs-periods.html">The USA Series Against Conventional History</a>.</p>
+    </div>
+
     <!-- ── NOTE TO GROK FOR THE CAR, 9 OCT 2026 ── -->
     <div class="card" style="margin-bottom: 20px; border-left: 4px solid #D98B2B;">
         <h2 style="font-size: 1.2em; margin-bottom: 4px;">Note to Grok, for the Car &mdash; Rescue Without Repentance</h2>

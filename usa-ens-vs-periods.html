@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>USA Ensemble vs 25 Periods, and the External-Marker Test</title>
+<meta name="description" content="Two pre-registered tests on the annual USA series: ensemble vs blind-rater period profiles (H1 and H3 pass, H2 fails) and a drift-lead test against NBER and other external markers (not supported). Interactive panel. Kari McKern, 29 October 2026.">
+<meta name="author" content="Kari McKern">
+<link rel="canonical" href="https://neuralnations.org/usa-ens-vs-periods">
+<link rel="stylesheet" href="style.css">
+<style>
+:root{--ink:#1c2333;--muted:#5d6577;--accent:#2F6F7D;--accent-soft:#e8f1f3;--amber:#D98B2B;--red:#C84C3E;--green:#3a7d44;--line:#E0E0E0}
+*{box-sizing:border-box}
+body{background:#fff;color:var(--ink)}
+.report{max-width:960px;margin:0 auto;padding:0 24px 80px;font-family:Georgia,'Times New Roman',serif;line-height:1.68;font-size:17px}
+header.masthead{border-bottom:3px double var(--line);padding:42px 0 24px;margin-bottom:30px}
+.brand{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.report h1{font-size:38px;line-height:1.15;margin:14px 0 10px}
+.subtitle{font-size:19px;color:var(--muted);font-style:italic;margin:0 0 16px}
+.meta{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;color:var(--muted)}
+.note{font-size:15px;color:var(--muted);font-style:italic;margin:14px 0 0}
+.downloads{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 0;font-family:-apple-system,'Segoe UI',sans-serif;font-size:14px}
+.downloads a{display:inline-block;padding:7px 14px;border:1px solid #9cc3cb;border-radius:4px;color:var(--accent);text-decoration:none;font-weight:600;background:var(--accent-soft)}
+.downloads a:hover{background:#d6e8ec}
+.report h2{font-size:25px;margin:44px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+.report li{margin-bottom:.7rem}
+.report code{font-size:14px;background:#f4f5f7;padding:1px 4px;border-radius:3px}
+.report table{width:100%;border-collapse:collapse;font-size:15px;font-family:-apple-system,'Segoe UI',sans-serif}
+.report th{background:#F0F0F0;text-align:left;padding:8px 10px;border-bottom:2px solid var(--line);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.report td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.report td.pass{color:var(--green);font-weight:600}.report td.fail{color:var(--red);font-weight:600}.report td.na{color:var(--muted)}
+.tablewrap{overflow-x:auto}
+.panel{border:1px solid var(--line);border-radius:8px;padding:16px 18px 14px;margin:22px 0;background:#fcfcfd;font-family:-apple-system,'Segoe UI',sans-serif}
+.panel h3{font-size:17px;margin:0 0 4px}
+.panel .lede{font-size:13.5px;color:var(--muted);margin:0 0 12px;line-height:1.5}
+.controls{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;font-size:13.5px;margin-bottom:10px}
+.controls select,.controls button{font:inherit;padding:5px 8px;border:1px solid #b9c4cc;border-radius:4px;background:#fff;color:var(--ink)}
+.controls button{cursor:pointer}
+.controls label{display:inline-flex;gap:5px;align-items:center}
+.stat{font-size:13.5px;color:var(--ink);margin:8px 0 0;line-height:1.5}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--muted);margin:6px 0 0}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-1px;margin-right:5px}
+svg.chart{width:100%;height:auto;display:block}
+svg text{font-family:-apple-system,'Segoe UI',sans-serif}
+.grid2{display:grid;grid-template-columns:3fr 2fr;gap:18px}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}.report h1{font-size:29px}.report{padding:0 14px 60px}}
+@media print{#site-nav,footer.footer,.controls{display:none}.panel{break-inside:avoid}}
+</style>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+<main class="report">
+<header class="masthead">
+  <div class="brand">Analysis note and interactive panel</div>
+  <h1>The USA series against conventional history</h1>
+  <p class="subtitle">Two pre-registered tests on the annual USA ensemble: period profiles against blind raters, and drift against external markers</p>
+  <div class="meta">Kari McKern · ComplexityWorkz · 29 October 2026</div>
+  <p class="note">Both tests were frozen before they were run. Every number on this page comes from the run logs and CSV files in the repository folder linked below. The panel reads <code>panel_data.json</code> from that folder.</p>
+  <div class="downloads"><a href="https://github.com/KaliBond/wintermute/tree/main/analysis/usa-ens-vs-periods">Pre-registrations, scripts, results (GitHub)</a><a href="analysis/usa-ens-vs-periods/panel_data.json" download>Panel data (JSON)</a><a href="analysis/usa-ens-vs-periods/period_profiles_compare.csv" download>Period profiles (CSV)</a><a href="grok.html">Lab diary entry</a></div>
+</header>
+
+<h2>Summary</h2>
+<ol>
+<li><strong>Study 1: ensemble against 25 periods.</strong> Period node profiles from the annual USA ensemble agree with the blind-rater consensus (H1 supported) and the three named transitions move the same way in both sources, with all eight nodes matching on each (H3 supported). H2, that relational drift begins before the conventional transition years, is not supported: 5 of 14 transitions had a drift upcrossing in the five years before them, against 6 of 14 in the four years from the date onward.</li>
+<li><strong>The reading.</strong> Conventional history dates are themselves coordination-stress signals: wars, crashes and realignments get dated because strain has become visible. A drift measure should then rise at or after those dates, and H2 as drafted could not separate the two. A miss on H2 is not a miss for the series.</li>
+<li><strong>Study 2: external markers.</strong> Study 2 swapped the conventional dates for dates set outside the author's judgement (NBER cycle peaks as the primary set, with party-control switches and amendment ratifications as secondary sets, and census years as a negative control). Drift upcrossings did not lead NBER peaks: 3 of 19 against 3 lagging, chance p = 0.75. Not supported. Only 4 drift upcrossings exist in the state-based series, so the test could not have been decisive either way.</li>
+<li>The census control was clean (3 of 11, p = 0.37), so the null result is not a calendar artefact.</li>
+</ol>
+
+<h2>Results at a glance</h2>
+<p>The annual USA ensemble file was run against the frozen Study 1 rules unchanged. The hi-fi annual file (the earlier test dataset) and the five-yearly file are shown for comparison.</p>
+<div class="tablewrap"><table>
+<tr><th></th><th>Annual USA ensemble (canonical)</th><th>Hi-fi annual (test)</th><th>USA_ENS five-yearly</th></tr>
+<tr><td><strong>H1</strong> period profiles agree</td><td class="pass">Supported<br>ρ = 0.821 (p = 0.0007); median r = 0.537 (p = 0.0001)</td><td class="pass">Supported<br>ρ = 0.846 (p = 0.0003); median r = 0.747 (p = 0.0001)</td><td class="fail">Not supported (strict rule)<br>7 periods; ρ = 0.607 (p = 0.0854); median r = 0.493 (p = 0.0027)</td></tr>
+<tr><td><strong>H2</strong> drift leads the transitions</td><td class="fail">Not supported<br>lead 5/14, lag 6/14; p<sub>N1</sub> = 0.6293, p<sub>N2</sub> = 0.6125</td><td class="fail">Not supported<br>lead 4/14, lag 6/14; p<sub>N1</sub> = 0.8534, p<sub>N2</sub> = 0.9355</td><td class="na">Not evaluable<br>needs five consecutive annual years</td></tr>
+<tr><td><strong>H3</strong> named transitions share sign</td><td class="pass">Supported<br>3 of 3; max p = 0.0002</td><td class="pass">Supported<br>3 of 3; max p = 0.0002</td><td class="na">Not evaluable<br>each transition involves a one-year period</td></tr>
+</table></div>
+<p style="font-size:15px;color:var(--muted)">H1 thresholds are also met on the canonical file under every rater subset: without the Claude rater ρ = 0.800 and median r = 0.543; with one rater alone ρ runs 0.693 to 0.796 and median r 0.475 to 0.555. Each of the three raters has the expected sign on all three transitions.</p>
+
+<h2>Panel A: period profiles, ensemble against rater consensus</h2>
+<div class="panel" id="panelA">
+  <h3>Eight-node profile for one period</h3>
+  <p class="lede">Q = Abstraction × Coherence + Capacity − Stress, averaged over the period's years (ensemble) and over the available raters (consensus). Pick a period or click a point in the scatter.</p>
+  <div class="controls">
+    <button id="aPrev" aria-label="Previous period">&larr;</button>
+    <select id="aSel" aria-label="Period"></select>
+    <button id="aNext" aria-label="Next period">&rarr;</button>
+    <label><input type="checkbox" id="aRaters"> show each rater</label>
+  </div>
+  <div class="grid2">
+    <div><svg class="chart" id="aBars" viewBox="0 0 560 330" role="img" aria-label="Node profile bars"></svg></div>
+    <div><svg class="chart" id="aScatter" viewBox="0 0 330 330" role="img" aria-label="Period mean Q scatter"></svg></div>
+  </div>
+  <div class="legend"><span><i style="background:#2F6F7D"></i>Annual ensemble</span><span><i style="background:#D98B2B"></i>Rater consensus</span><span>● GPT &nbsp;◆ Claude &nbsp;▲ Grok (when shown)</span></div>
+  <p class="stat" id="aStat"></p>
+</div>
+
+<h2>Panel B: the three named transitions</h2>
+<div class="panel" id="panelB">
+  <h3>Change in period mean Q, later period minus earlier</h3>
+  <p class="lede">Teal: annual ensemble, with the 95% block-bootstrap interval. Amber: rater consensus. Dots: each rater. Positive is up; each transition was given its expected sign in advance.</p>
+  <svg class="chart" id="bBars" viewBox="0 0 860 300" role="img" aria-label="Transition change bars"></svg>
+  <div class="legend"><span><i style="background:#2F6F7D"></i>Annual ensemble (95% interval)</span><span><i style="background:#D98B2B"></i>Rater consensus</span><span>● GPT &nbsp;◆ Claude &nbsp;▲ Grok</span></div>
+  <p class="stat" id="bStat"></p>
+</div>
+
+<h2>Panel C: drift series with transition and marker dates</h2>
+<div class="panel" id="panelC">
+  <h3>Does drift rise before the dates?</h3>
+  <p class="lede">The line is the relational drift series (annual drift X for Study 1, state-based drift X<sup>S</sup> for Study 2). Dots mark upcrossings of the 90th-percentile threshold (dashed). Each tick is a date: green if an upcrossing fell in the five years before it, orange if one fell only in the date year or the four after, grey if neither. Each result is shown with the drift series it was frozen against.</p>
+  <div class="controls">
+    <label>Result <select id="cSel" aria-label="Result to view"></select></label>
+    <label><input type="checkbox" id="cWin" checked> shade lead windows (T−5 to T−1)</label>
+  </div>
+  <svg class="chart" id="cChart" viewBox="0 0 900 330" role="img" aria-label="Drift series with markers"></svg>
+  <div class="legend"><span><i style="background:#1c2333"></i>Drift</span><span><i style="background:#C84C3E"></i>Upcrossing</span><span><i style="background:#3a7d44"></i>Lead hit</span><span><i style="background:#D98B2B"></i>Lag hit only</span><span><i style="background:#9aa3ad"></i>No upcrossing in window</span></div>
+  <p class="stat" id="cStat"></p>
+</div>
+<p id="loadErr" style="color:#C84C3E;font-size:14px;display:none">The panel data did not load. The same numbers are in the tables on this page and in the repository folder.</p>
+
+<h2>Study 2 results</h2>
+<div class="tablewrap"><table>
+<tr><th>Marker set</th><th>Dates scored</th><th>Lead hits</th><th>Lag hits</th><th>p (shifted dates)</th><th>p (random dates)</th></tr>
+<tr><td><strong>E1 NBER peaks (primary)</strong></td><td>19</td><td>3</td><td>3</td><td>0.7477</td><td>0.7537</td></tr>
+<tr><td>E2 party-control switches</td><td>24</td><td>6</td><td>4</td><td>0.2162</td><td>0.2845</td></tr>
+<tr><td>E3 amendment ratifications</td><td>9</td><td>1</td><td>2</td><td>0.8739</td><td>0.8601</td></tr>
+<tr><td>C1 census years (negative control)</td><td>11</td><td>3</td><td>1</td><td>0.3694</td><td>0.3507</td></tr>
+</table></div>
+<p>The frozen rule asked for a lead share of at least 0.60 on the primary set, more lead than lag hits, and both p-values at or below 0.05. NBER peaks met none of these. Five of the pre-registered failure criteria triggered: F1 (lead share 0.158), F2 (lead hits not above lag hits), F3 (both p-values above 0.05), F7 (the anchoring check: one upcrossing, 1981, sits on a marker year) and F8 (fewer than five drift upcrossings, so the test is declared uninformative). Under the annual drift X (20 peaks fall in its range) the lead hits are 3 against 7 lag hits (p<sub>N1</sub> = 1.00). Neither secondary set passed the Holm correction.</p>
+<p>Exploratory runs carry no verdict. NBER troughs: 4 of 19 lead, 1 lag (p = 0.43). Presidency party switches alone: 4 of 12 lead (p = 0.12), the smallest p among the exploratory sets and still well above 0.05. Lower and higher thresholds (85th and 95th percentile) move the NBER lead count to 4 and 1.</p>
+
+<h2>What the two studies say together</h2>
+<p>The series carries the same node-level shape as the blind period profiles and the same direction of change across the three named transitions. That is the part Study 1 was built to test, and it passed on both annual files. What neither study shows is drift beginning ahead of dated events. With conventional dates the result is confounded in the way described above. With external dates the test had four events to work with.</p>
+<p>The next useful step is a longer or finer series, since the state-based drift needs changes in the scored state to fire and this file changes state in blocks: 54 distinct annual states in 126 years, and 72 of 125 year-to-year changes are exactly zero. Lead timing inside a block cannot be resolved.</p>
+
+<h2>Status and provenance</h2>
+<ul>
+<li><strong>Frozen before running.</strong> Study 1 PREREG sha256 <code>3603e474…aea2fe</code>; Study 2 PREREG sha256 <code>38dcbe91…04c5</code>. Full hashes, the marker files and the run scripts are in the repository folder.</li>
+<li><strong>Dataset sequence.</strong> Study 1 was first run on the hi-fi annual file as a test, then on a five-yearly file, then on the annual USA ensemble file, which was named canonical after the first two results had been seen. Thresholds, year tables, nulls and seed (20261029) were not changed. This is logged in the deviation notes.</li>
+<li><strong>Annual file.</strong> The analysed copy has md5 <code>1c9626e9481662df6c00974f720e0ec0</code>. It was reconstructed from a text read of the supplied file, so there is no original checksum to compare. Run from a byte copy if exact provenance matters.</li>
+<li><strong>Period dates.</strong> The 15 periods and their year boundaries are the author's working definition from the casebook cue text. There is no sealed case-to-period map.</li>
+<li><strong>Node names</strong> follow JUNO v1.2: Helm, Shield, Lore, Stewards, Craft, Hands, Archive, Flow.</li>
+</ul>
+</main>
+<footer class="footer"><nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;"><a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a><a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a><a href="results.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Results</a></nav><p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p></footer>
+
+<script>
+(function(){
+var NS='http://www.w3.org/2000/svg', TEAL='#2F6F7D', AMB='#D98B2B', RED='#C84C3E', GRN='#3a7d44', GREY='#9aa3ad', INK='#1c2333';
+var D=null;
+function el(tag,attrs,parent,text){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e}
+function clear(s){while(s.firstChild)s.removeChild(s.firstChild)}
+function f(x,d){return Number(x).toFixed(d==null?1:d)}
+var RMARK={FROZEN_GPT:'circle',CLAUDE:'diamond',GROK:'tri'}, RNAME={FROZEN_GPT:'GPT',CLAUDE:'Claude',GROK:'Grok'};
+function mark(p,x,y,kind,col,title){var g=el('g',{},p);
+  if(kind==='circle')el('circle',{cx:x,cy:y,r:3.6,fill:col,stroke:'#fff','stroke-width':1},g);
+  else if(kind==='diamond')el('path',{d:'M'+x+' '+(y-4.6)+'L'+(x+4.6)+' '+y+'L'+x+' '+(y+4.6)+'L'+(x-4.6)+' '+y+'Z',fill:col,stroke:'#fff','stroke-width':1},g);
+  else el('path',{d:'M'+x+' '+(y-4.6)+'L'+(x+4.4)+' '+(y+3.6)+'L'+(x-4.4)+' '+(y+3.6)+'Z',fill:col,stroke:'#fff','stroke-width':1},g);
+  if(title)el('title',{},g,title)}
+
+/* ---------- Panel A ---------- */
+var aIdx=0;
+function drawA(){
+  var P=D.study1.periods, p=P[aIdx], N=D.nodes, showR=document.getElementById('aRaters').checked;
+  document.getElementById('aSel').value=aIdx;
+  var s=document.getElementById('aBars'); clear(s);
+  var W=560,H=330,m={l:44,r:10,t:14,b:44}, iw=W-m.l-m.r, ih=H-m.t-m.b;
+  var vals=[]; P.forEach(function(q){q.ens.concat(q.cons).forEach(function(v){if(v!=null)vals.push(v)});Object.keys(q.raters).forEach(function(k){q.raters[k].forEach(function(v){if(v!=null)vals.push(v)})})});
+  var lo=Math.min(0,Math.floor(Math.min.apply(null,vals)/10)*10), hi=Math.ceil(Math.max.apply(null,vals)/10)*10;
+  function y(v){return m.t+ih*(1-(v-lo)/(hi-lo))}
+  for(var t=lo;t<=hi;t+=10){el('line',{x1:m.l,x2:W-m.r,y1:y(t),y2:y(t),stroke:t===0?'#888':'#e6e8eb'},s);el('text',{x:m.l-6,y:y(t)+4,'text-anchor':'end','font-size':11,fill:'#5d6577'},s,t)}
+  var gw=iw/N.length;
+  N.forEach(function(n,i){
+    var x0=m.l+i*gw, bw=gw*0.34, cx=x0+gw/2;
+    var e=p.ens[i], c=p.cons[i];
+    var b1=el('rect',{x:cx-bw-1,y:Math.min(y(e),y(0)),width:bw,height:Math.abs(y(e)-y(0)),fill:TEAL},s); el('title',{},b1,n+' ensemble Q '+f(e,2));
+    if(c!=null){var b2=el('rect',{x:cx+1,y:Math.min(y(c),y(0)),width:bw,height:Math.abs(y(c)-y(0)),fill:AMB},s); el('title',{},b2,n+' consensus Q '+f(c,2))}
+    else el('text',{x:cx+bw/2+1,y:y(0)-4,'text-anchor':'middle','font-size':10,fill:'#888'},s,'n/a');
+    if(showR)Object.keys(p.raters).forEach(function(k,j){var v=p.raters[k][i]; if(v!=null)mark(s,cx+1+bw/2+(j-1)*7,y(v),RMARK[k],'#1c2333',RNAME[k]+' '+n+': '+f(v,1))});
+    el('text',{x:cx,y:H-m.b+16,'text-anchor':'middle','font-size':11.5,fill:INK},s,n);
+  });
+  el('text',{x:12,y:m.t+ih/2,'font-size':11,fill:'#5d6577',transform:'rotate(-90 12 '+(m.t+ih/2)+')','text-anchor':'middle'},s,'Q');
+  el('text',{x:W/2,y:H-8,'text-anchor':'middle','font-size':12.5,fill:INK,'font-weight':700},s,p.label+' ('+p.y0+'\u2013'+p.y1+')');
+  // scatter
+  var t2=document.getElementById('aScatter'); clear(t2);
+  var S=330, sm={l:42,r:12,t:14,b:42}, sw=S-sm.l-sm.r;
+  var mv=[]; P.forEach(function(q){mv.push(q.mean_ens,q.mean_cons)});
+  var slo=Math.floor(Math.min.apply(null,mv)/5)*5, shi=Math.ceil(Math.max.apply(null,mv)/5)*5;
+  function sx(v){return sm.l+sw*(v-slo)/(shi-slo)} function sy(v){return sm.t+sw*(1-(v-slo)/(shi-slo))}
+  for(var g=slo;g<=shi;g+=5){el('line',{x1:sm.l,x2:S-sm.r,y1:sy(g),y2:sy(g),stroke:'#eef0f2'},t2);el('line',{x1:sx(g),x2:sx(g),y1:sm.t,y2:S-sm.b,stroke:'#eef0f2'},t2);el('text',{x:sm.l-5,y:sy(g)+4,'text-anchor':'end','font-size':10.5,fill:'#5d6577'},t2,g);el('text',{x:sx(g),y:S-sm.b+14,'text-anchor':'middle','font-size':10.5,fill:'#5d6577'},t2,g)}
+  el('line',{x1:sx(slo),y1:sy(slo),x2:sx(shi),y2:sy(shi),stroke:'#c9ced4','stroke-dasharray':'4 3'},t2);
+  P.forEach(function(q,i){var c=el('circle',{cx:sx(q.mean_ens),cy:sy(q.mean_cons),r:i===aIdx?7:5,fill:i===aIdx?RED:TEAL,'fill-opacity':i===aIdx?1:.75,stroke:'#fff','stroke-width':1.2,style:'cursor:pointer'},t2);
+    el('title',{},c,q.label+': ensemble '+f(q.mean_ens,1)+', consensus '+f(q.mean_cons,1));c.addEventListener('click',function(){aIdx=i;drawA()})});
+  el('text',{x:sm.l+sw/2,y:S-6,'text-anchor':'middle','font-size':11.5,fill:INK},t2,'Ensemble period mean Q');
+  el('text',{x:11,y:sm.t+sw/2,'font-size':11.5,fill:INK,transform:'rotate(-90 11 '+(sm.t+sw/2)+')','text-anchor':'middle'},t2,'Consensus period mean Q');
+  var h1=D.study1.h1;
+  document.getElementById('aStat').innerHTML='<strong>'+p.label+'</strong>: profile correlation r = '+f(p.r,3)+' across '+p.n_cons+' nodes with a consensus value; period mean Q '+f(p.mean_ens,1)+' (ensemble) and '+f(p.mean_cons,1)+' (consensus). Across the 15 periods: Spearman \u03c1 = '+f(h1.rho,3)+' (p = '+f(h1.p_a,4)+'), median per-period r = '+f(h1.median_r,3)+' (p = '+f(h1.p_b,4)+'). The dashed line in the scatter is equality; the consensus sits higher on average.';
+}
+function initA(){
+  var sel=document.getElementById('aSel'); D.study1.periods.forEach(function(p,i){var o=document.createElement('option');o.value=i;o.textContent=p.label+' ('+p.y0+'\u2013'+p.y1+')';sel.appendChild(o)});
+  sel.onchange=function(){aIdx=+sel.value;drawA()};
+  document.getElementById('aPrev').onclick=function(){aIdx=(aIdx+D.study1.periods.length-1)%D.study1.periods.length;drawA()};
+  document.getElementById('aNext').onclick=function(){aIdx=(aIdx+1)%D.study1.periods.length;drawA()};
+  document.getElementById('aRaters').onchange=drawA; drawA();
+}
+
+/* ---------- Panel B ---------- */
+function drawB(){
+  var T=D.study1.h3, s=document.getElementById('bBars'); clear(s);
+  var W=860,H=300,m={l:210,r:20,t:16,b:34}, iw=W-m.l-m.r;
+  var all=[]; T.forEach(function(t){all.push(t.delta_ens,t.delta_cons,t.ci_lo,t.ci_hi);for(var k in t.per_rater)all.push(t.per_rater[k])});
+  var lo=Math.floor(Math.min.apply(null,all)/10)*10-0, hi=Math.ceil(Math.max.apply(null,all)/10)*10;
+  lo=Math.min(lo,-10);hi=Math.max(hi,10);
+  function x(v){return m.l+iw*(v-lo)/(hi-lo)}
+  for(var t=lo;t<=hi;t+=10){el('line',{x1:x(t),x2:x(t),y1:m.t,y2:H-m.b,stroke:t===0?'#666':'#e6e8eb'},s);el('text',{x:x(t),y:H-m.b+16,'text-anchor':'middle','font-size':11,fill:'#5d6577'},s,t)}
+  el('text',{x:m.l+iw/2,y:H-4,'text-anchor':'middle','font-size':11.5,fill:INK},s,'Change in period mean Q');
+  var gh=(H-m.t-m.b)/T.length;
+  T.forEach(function(t,i){
+    var y0=m.t+i*gh, bh=gh*0.26, cy=y0+gh/2;
+    var lab=t.name.replace('->','\u2192').split(' \u2192 ');
+    el('text',{x:m.l-12,y:cy-4,'text-anchor':'end','font-size':12.5,fill:INK,'font-weight':700},s,lab[0]);
+    el('text',{x:m.l-12,y:cy+13,'text-anchor':'end','font-size':12.5,fill:INK},s,'\u2192 '+lab[1]);
+    var r1=el('rect',{x:Math.min(x(0),x(t.delta_ens)),y:cy-bh-2,width:Math.abs(x(t.delta_ens)-x(0)),height:bh,fill:TEAL},s);el('title',{},r1,'Ensemble '+f(t.delta_ens,2)+' (95% interval '+f(t.ci_lo,2)+' to '+f(t.ci_hi,2)+')');
+    el('line',{x1:x(t.ci_lo),x2:x(t.ci_hi),y1:cy-bh/2-2,y2:cy-bh/2-2,stroke:INK,'stroke-width':1.6},s);
+    el('line',{x1:x(t.ci_lo),x2:x(t.ci_lo),y1:cy-bh/2-7,y2:cy-bh/2+3,stroke:INK,'stroke-width':1.6},s);
+    el('line',{x1:x(t.ci_hi),x2:x(t.ci_hi),y1:cy-bh/2-7,y2:cy-bh/2+3,stroke:INK,'stroke-width':1.6},s);
+    var r2=el('rect',{x:Math.min(x(0),x(t.delta_cons)),y:cy+2,width:Math.abs(x(t.delta_cons)-x(0)),height:bh,fill:AMB},s);el('title',{},r2,'Consensus '+f(t.delta_cons,2));
+    Object.keys(t.per_rater).forEach(function(k){mark(s,x(t.per_rater[k]),cy+2+bh/2,RMARK[k],'#1c2333',RNAME[k]+' '+f(t.per_rater[k],2))});
+    el('text',{x:x(Math.max(t.delta_ens,t.delta_cons,0))+8,y:cy+4,'font-size':11.5,fill:'#5d6577'},s,'');
+  });
+  document.getElementById('bStat').innerHTML=T.map(function(t){return '<strong>'+t.name.replace('->','\u2192')+'</strong>: ensemble '+f(t.delta_ens,1)+' (95% interval '+f(t.ci_lo,1)+' to '+f(t.ci_hi,1)+', p = '+f(t.p,4)+'), consensus '+f(t.delta_cons,1)+'; '+t.nodes+' nodes match in sign; '+(t.passes?'passes':'does not pass')+'.'}).join('<br>');
+}
+
+/* ---------- Panel C ---------- */
+function drawC(){
+  var key=document.getElementById('cSel').value, win=document.getElementById('cWin').checked;
+  var S1=D.study1, S2=D.study2, ser, ev, title, stat;
+  if(key==='H2'){ser=S1.drift;ev=S1.transitions;
+    stat='<strong>Study 1, H2 (annual drift X, 14 conventional transition dates).</strong> Threshold '+f(S1.h2.thr,4)+'; '+ser.upcross.length+' upcrossings ('+ser.upcross.join(', ')+'). Lead hits '+S1.h2.S_lead+' of '+S1.h2.n+', lag hits '+S1.h2.S_lag+'; p (shifted dates) = '+f(S1.h2.p_N1,4)+', p (random dates) = '+f(S1.h2.p_N2,4)+'. Not supported.';}
+  else{ser=S2.drift;var M=S2.markers[key];ev=M.events;
+    stat='<strong>Study 2, '+M.name+' (state-based drift X<sup>S</sup>).</strong> Threshold '+f(ser.thr,4)+'; '+ser.upcross.length+' upcrossings ('+ser.upcross.join(', ')+'). '+M.n+' dates scored; lead hits '+M.S_lead+', lag hits '+M.S_lag+'; p (shifted dates) = '+f(M.p_N1,4)+', p (random dates) = '+f(M.p_N2,4)+'. '+(key==='E1'?'Not supported (primary).':key==='C1'?'Negative control: no lead signal.':'Secondary set: did not pass the Holm correction.');}
+  var s=document.getElementById('cChart'); clear(s);
+  var W=900,H=330,m={l:46,r:14,t:16,b:50}, iw=W-m.l-m.r, ih=H-m.t-m.b, y0=1905, y1=2025;
+  var vmax=0;[S1.drift.x,S2.drift.x].forEach(function(a){a.forEach(function(v){if(v!=null&&v>vmax)vmax=v})}); vmax=Math.ceil(vmax*10)/10;
+  function x(yr){return m.l+iw*(yr-y0)/(y1-y0)} function y(v){return m.t+ih*(1-v/vmax)}
+  for(var t=0;t<=vmax+1e-9;t+=0.2){el('line',{x1:m.l,x2:W-m.r,y1:y(t),y2:y(t),stroke:'#e6e8eb'},s);el('text',{x:m.l-6,y:y(t)+4,'text-anchor':'end','font-size':11,fill:'#5d6577'},s,f(t,1))}
+  for(var yr=1910;yr<=2020;yr+=10){el('text',{x:x(yr),y:H-m.b+30,'text-anchor':'middle','font-size':11,fill:'#5d6577'},s,yr);el('line',{x1:x(yr),x2:x(yr),y1:H-m.b,y2:H-m.b+4,stroke:'#888'},s)}
+  if(win)ev.forEach(function(e){var a=Math.max(y0,e.T-5),b=e.T;el('rect',{x:x(a-0.5),y:m.t,width:x(b-0.5)-x(a-0.5),height:ih,fill:e.lead?GRN:GREY,'fill-opacity':.10},s)});
+  var pts=[];ser.years.forEach(function(yr,i){if(ser.x[i]!=null)pts.push((pts.length?'L':'M')+x(yr).toFixed(1)+' '+y(ser.x[i]).toFixed(1))});
+  el('path',{d:pts.join(''),fill:'none',stroke:INK,'stroke-width':1.5},s);
+  el('line',{x1:m.l,x2:W-m.r,y1:y(ser.thr),y2:y(ser.thr),stroke:RED,'stroke-dasharray':'6 4','stroke-width':1.2},s);
+  el('text',{x:m.l+6,y:y(ser.thr)-5,'text-anchor':'start','font-size':11,fill:RED},s,'P90 threshold '+f(ser.thr,3));
+  ev.forEach(function(e){var col=e.lead?GRN:(e.lag?AMB:GREY);
+    var g=el('g',{},s);el('line',{x1:x(e.T),x2:x(e.T),y1:H-m.b-18,y2:H-m.b,stroke:col,'stroke-width':3},g);
+    el('title',{},g,e.T+(e.lead?': upcrossing in the five years before':(e.lag?': upcrossing in the date year or the four after only':': no upcrossing in the window')))});
+  ser.upcross.forEach(function(yr){var i=ser.years.indexOf(yr);var c=el('circle',{cx:x(yr),cy:y(ser.x[i]),r:5,fill:RED,stroke:'#fff','stroke-width':1.2},s);el('title',{},c,'Upcrossing '+yr)});
+  el('text',{x:12,y:m.t+ih/2,'font-size':11.5,fill:INK,transform:'rotate(-90 12 '+(m.t+ih/2)+')','text-anchor':'middle'},s,'Drift (1 \u2212 cosine)');
+  document.getElementById('cStat').innerHTML=stat;
+}
+function initC(){
+  var sel=document.getElementById('cSel');
+  [['H2','Study 1 H2: conventional transitions (annual drift X)'],['E1','Study 2 E1: NBER peaks, primary (X\u02e2)'],['E2','Study 2 E2: party-control switches (X\u02e2)'],['E3','Study 2 E3: amendment ratifications (X\u02e2)'],['C1','Study 2 C1: census years, negative control (X\u02e2)']].forEach(function(o){var op=document.createElement('option');op.value=o[0];op.textContent=o[1];sel.appendChild(op)});
+  sel.value='E1'; sel.onchange=drawC; document.getElementById('cWin').onchange=drawC; drawC();
+}
+
+fetch('analysis/usa-ens-vs-periods/panel_data.json').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){D=j;initA();drawB();initC()}).catch(function(){document.getElementById('loadErr').style.display='block'});
+})();
+</script>
+<script src="site-chrome.js"></script><script src="nav.js"></script>
+</body>
+</html>

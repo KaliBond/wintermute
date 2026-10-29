@@ -1,0 +1,4 @@
+transition,years_a,years_b,strict_testable,delta_ens,delta_rater,per_rater,same_sign,nodes_matching,CI
+N-a 1920s boom -> Great Depression,1,1,False,-16.65,-24.083,"{'FROZEN_GPT': -24.625, 'CLAUDE': -23.167, 'GROK': -26.375}",True,8/8,"degenerate (a period has 1 sampled year, no within-period resampling variation)"
+N-b New Deal -> WWII,2,1,False,16.828,22.417,"{'FROZEN_GPT': 22.75, 'CLAUDE': 24.958, 'GROK': 20.5}",True,8/8,"degenerate (a period has 1 sampled year, no within-period resampling variation)"
+N-c 1991-2001 -> 2020-25,2,1,False,-21.05,-22.229,"{'FROZEN_GPT': -19.0, 'CLAUDE': -26.0, 'GROK': -22.75}",True,8/8,"degenerate (a period has 1 sampled year, no within-period resampling variation)"

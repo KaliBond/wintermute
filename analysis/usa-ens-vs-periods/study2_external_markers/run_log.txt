@@ -1,0 +1,105 @@
+# External-marker lead test: run of FROZEN PREREG (hashes verified against FROZEN.txt)
+data md5 1c9626e9481662df6c00974f720e0ec0 (box reconstruction; original checksum unavailable); 1900-2025 x 8
+X^S: states 54; support 1910-2025 (116 years); thr(P90)=0.6016; upcrossings=4 in [1968, 1981, 2008, 2016]; L=1911; eligible T [1917,2021]
+
+## PRIMARY: E1 NBER peaks, X^S
+n scored=19 [1918, 1920, 1923, 1926, 1929, 1937, 1945, 1948, 1953, 1957, 1960, 1969, 1973, 1980, 1981, 1990, 2001, 2007, 2020]; S_lead=3 (0.158); S_lag=3; N1: 110 shifts, null mean 3.327 (rate 0.175), p_N1=0.7477; N2 spacing 1, null mean 3.621, p_N2=0.7537
+per-marker table:
+   T  lead_hit  lag_hit  lead_years
+1918     False    False         NaN
+1920     False    False         NaN
+1923     False    False         NaN
+1926     False    False         NaN
+1929     False    False         NaN
+1937     False    False         NaN
+1945     False    False         NaN
+1948     False    False         NaN
+1953     False    False         NaN
+1957     False    False         NaN
+1960     False    False         NaN
+1969      True    False         1.0
+1973      True    False         5.0
+1980     False     True         NaN
+1981     False     True         NaN
+1990     False    False         NaN
+2001     False    False         NaN
+2007     False     True         NaN
+2020      True    False         4.0
+c_j (markers with upcrossing j years before T): {0: 1, 1: 1, 2: 0, 3: 0, 4: 1, 5: 1}
+X^A check (F5): thr(P90)=0.5007; upcrossings=9 in [1930, 1968, 1981, 1984, 1989, 2001, 2008, 2012, 2020]; n=20; S_lead=3; S_lag=7; p_N1=1.0000; p_N2=0.9920; passes direction+p_N1=False
+
+F criteria (True = triggered):
+  F1 S_lead/n < 0.60: TRIGGERED
+  F2 S_lead <= S_lag: TRIGGERED
+  F3 p_N1 > 0.05 or p_N2 > 0.05: TRIGGERED
+  F4 census control S_lead/n >= 0.50 and p_N1 <= 0.05: pass
+  F5 passes F1-F3 under X^S but fails under X^A: pass
+  F6 N1 null-mean hit rate >= 0.45: pass
+  F7 anchoring: c0>=1 and c0>=max(c1..c5): TRIGGERED
+  F8 fewer than 5 X^S upcrossings: TRIGGERED
+PRIMARY VERDICT: NOT SUPPORTED
+
+## SECONDARY (Holm over E2, E3 using the larger of p_N1, p_N2; alpha 0.05)
+E2 party control (secondary): n=24; S_lead=6 (0.250); S_lag=4; N1 mean 4.100; N2 mean 4.582 (spacing 1); p_N1=0.2162; p_N2=0.2845; Holm p used=0.2845; Holm pass=False; supportive=False
+   T  lead_hit  lag_hit  lead_years
+1919     False    False         NaN
+1921     False    False         NaN
+1931     False    False         NaN
+1933     False    False         NaN
+1947     False    False         NaN
+1949     False    False         NaN
+1953     False    False         NaN
+1955     False    False         NaN
+1961     False    False         NaN
+1969      True    False         1.0
+1977     False     True         NaN
+1981     False     True         NaN
+1987     False    False         NaN
+1993     False    False         NaN
+1995     False    False         NaN
+2001     False    False         NaN
+2002     False    False         NaN
+2007     False     True         NaN
+2009      True    False         1.0
+2011      True    False         3.0
+2015     False     True         NaN
+2017      True    False         1.0
+2019      True    False         3.0
+2021      True    False         5.0
+E3 amendments (secondary): n=9; S_lead=1 (0.111); S_lag=2; N1 mean 1.582; N2 mean 1.698 (spacing 1); p_N1=0.8739; p_N2=0.8601; Holm p used=0.8739; Holm pass=False; supportive=False
+   T  lead_hit  lag_hit  lead_years
+1919     False    False         NaN
+1920     False    False         NaN
+1933     False    False         NaN
+1951     False    False         NaN
+1961     False    False         NaN
+1964     False     True         NaN
+1967     False     True         NaN
+1971      True    False         3.0
+1992     False    False         NaN
+
+## NEGATIVE CONTROL C1 census: n=11; S_lead=3 (0.273); S_lag=1; N1 mean 1.882; N2 mean 2.130 (spacing 4); p_N1=0.3694; p_N2=0.3507
+   T  lead_hit  lag_hit  lead_years
+1920     False    False         NaN
+1930     False    False         NaN
+1940     False    False         NaN
+1950     False    False         NaN
+1960     False    False         NaN
+1970      True    False         2.0
+1980     False     True         NaN
+1990     False    False         NaN
+2000     False    False         NaN
+2010      True    False         2.0
+2020      True    False         4.0
+
+## EXPLORATORY (no verdicts)
+(a) X^C: states with value 51; thr(P90 over states)=0.6435; events=4 in [1968, 1981, 2008, 2016]
+a: E1 under X^C: n=19; S_lead=3 (0.158); S_lag=3; N1 mean 3.327; N2 mean 3.632; p_N1=0.7477; p_N2=0.7562
+b: E1 X^S P85 (thr 0.6010, 5 upcrossings): n=19; S_lead=4 (0.211); S_lag=4; N1 mean 4.155; N2 mean 4.511; p_N1=0.6937; p_N2=0.7142
+b: E1 X^S P95 (thr 0.7720, 3 upcrossings): n=19; S_lead=1 (0.053); S_lag=3; N1 mean 2.518; N2 mean 2.722; p_N1=0.9910; p_N2=0.9605
+c: NBER troughs X^S: n=19; S_lead=4 (0.211); S_lag=1; N1 mean 3.309; N2 mean 3.635; p_N1=0.4324; p_N2=0.5357
+d: party house alone X^S: n=10; S_lead=2 (0.200); S_lag=1; N1 mean 1.718; N2 mean 1.906; p_N1=0.5676; p_N2=0.6292
+d: party senate alone X^S: n=14; S_lead=1 (0.071); S_lag=3; N1 mean 2.455; N2 mean 2.671; p_N1=0.9099; p_N2=0.9596
+d: party president alone X^S: n=12; S_lead=4 (0.333); S_lag=2; N1 mean 2.055; N2 mean 2.333; p_N1=0.1171; p_N2=0.1174
+f: hi-fi annual E1 under X^A (thr 0.4860, 9 upcrossings): n=20; S_lead=5 (0.250); S_lag=11; N1 mean 7.330; N2 mean 7.975; p_N1=0.9397; p_N2=0.9646
+(e) E1 lead-year table (years before T of the earliest lead upcrossing): {1918: nan, 1920: nan, 1923: nan, 1926: nan, 1929: nan, 1937: nan, 1945: nan, 1948: nan, 1953: nan, 1957: nan, 1960: nan, 1969: 1.0, 1973: 5.0, 1980: nan, 1981: nan, 1990: nan, 2001: nan, 2007: nan, 2020: 4.0}

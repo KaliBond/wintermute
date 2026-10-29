@@ -1,0 +1,73 @@
+# USA ENS ANNUAL canonical run (frozen PREREG, sha256 matched FROZEN.txt)
+file md5 1c9626e9481662df6c00974f720e0ec0 (box reconstruction of the uploaded file; see DEVIATIONS.md item 2); rows 1016; years 1900-2026 (127); rows/year [np.int64(8)]; NaN 0; duplicates 0; Society ['USA']
+frozen computations use 1900-2025 (126 x 8); 2026 row excluded (no frozen period, outside X/N1 grid)
+
+H1: rho=0.821 p_a=0.0007; median r=0.537 p_b=0.0001; thresholds met=True; dropped=[]; supported=True
+H1 per-period r: {'CASE-18': 0.324, 'CASE-01': 0.22, 'CASE-16': 0.364, 'CASE-14': 0.664, 'CASE-05': 0.079, 'CASE-09': 0.476, 'CASE-04': 0.208, 'CASE-21': 0.756, 'CASE-17': 0.669, 'CASE-06': 0.668, 'CASE-23': 0.217, 'CASE-10': 0.616, 'CASE-08': 0.669, 'CASE-03': 0.643, 'CASE-24': 0.537}
+H2: X defined 1905-2025 (n=121); X==0 in 7 years; distinct X values 115; thr(P90)=0.5007; upcrossings=9 in [1930, 1968, 1981, 1984, 1989, 2001, 2008, 2012, 2020]
+H2: S_lead=5/14; S_lag=6/14; p_N1=0.6293 (n shifts 115, null mean 4.87, max 8); p_N2=0.6125 (null mean 4.85); supported=False
+H2 per transition:
+   T  lead_hit  lag_hit  lead_years
+1917     False    False         NaN
+1921     False    False         NaN
+1930     False     True         NaN
+1933      True    False         3.0
+1941     False    False         NaN
+1946     False    False         NaN
+1961     False    False         NaN
+1973      True    False         5.0
+1981     False     True         NaN
+1991      True    False         2.0
+2001     False     True         NaN
+2009      True     True         1.0
+2016      True     True         4.0
+2020     False     True         NaN
+H3:
+                        transition  expected_sign  delta_ensemble  delta_rater  rater_disputed      ci_lo      ci_hi      p nodes_matching  passes
+N-a 1920s boom -> Great Depression             -1      -21.421111   -24.083333           False -25.993333 -19.404444 0.0002            8/8    True
+              N-b New Deal -> WWII              1       23.659500    22.416667           False  20.894375  27.723250 0.0002            8/8    True
+          N-c 1991-2001 -> 2020-25             -1      -24.582167   -22.229167           False -26.901758 -20.503500 0.0002            8/8    True
+H3 per-rater deltas: {'N-a 1920s boom -> Great Depression': {'FROZEN_GPT': -24.62, 'CLAUDE': -23.17, 'GROK': -26.38}, 'N-b New Deal -> WWII': {'FROZEN_GPT': 22.75, 'CLAUDE': 24.96, 'GROK': 20.5}, 'N-c 1991-2001 -> 2020-25': {'FROZEN_GPT': -19.0, 'CLAUDE': -26.0, 'GROK': -22.75}}
+H3: all pass=True; max p=0.0002; supported=True
+Holm p used: {'H1': 0.0006999300069993001, 'H2': 0.6293103448275862, 'H3': 0.00019998000199980003}
+Holm: {'H3': True, 'H1': True, 'H2': False}
+
+SUMMARY H1 supported=True  H2 supported=False  H3 supported=True
+
+# Secondary / exploratory (descriptive only)
+                                                    item    thr  upcrossings  S_lead  S_lag   p_N1
+                                                   X P85 0.3938           12       7      7 0.5172
+                                                   X P95 0.6305            4       2      3 0.7845
+                                             X P90 lead3 0.5007            9       3      6 0.6466
+                                             X P90 lead8 0.5007            9       6      6 0.8793
+          X causal trailing-20 P90 (evaluable 1916-2025)    NaN            9       5      4    NaN
+acute node-years |z|>=1.96: 55 years with >=1 acute node    NaN           55      13     12    NaN
+                         Theta drift D (P90) [1920-2025] 0.3333            3       0      2 1.0000
+                      coupling shift K (P90) [1919-2025] 6.4978            5       1      5 1.0000
+acute years: [1910, 1911, 1912, 1917, 1918, 1919, 1921, 1925, 1926, 1927, 1928, 1929, 1930, 1931, 1932, 1933, 1940, 1941, 1942, 1943, 1944, 1966, 1967, 1968, 1969, 1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1981, 1982, 1989, 1990, 1991, 1992, 1997, 1998, 2001, 2002, 2003, 2004, 2007, 2008, 2009, 2010, 2011, 2016, 2017, 2020, 2021, 2025]
+Theta D range 0.002 to 0.488; years D>=0.40: [2022, 2023, 2024, 2025]; years D<0.15: 63 of 106
+H1 sens without CLAUDE: rho=0.800; median r=0.543 (n periods 15)
+H1 sens FROZEN_GPT only: rho=0.693; median r=0.475 (n periods 15)
+H1 sens CLAUDE only: rho=0.796; median r=0.516 (n periods 15)
+H1 sens GROK only: rho=0.796; median r=0.555 (n periods 15)
+H1 descriptive: mean ensemble Q 36.18, mean rater consensus Q 43.03
+ICC(3,1)=0.608; ICC(2,1)=0.551 on 120 cells
+
+# Series structure (descriptive)
+years whose eight Q equal the previous year exactly: 72 of 125; distinct annual states: 54 of 126
+vs hi-fi annual (126x8 cells): Pearson r=0.739; mean Q annual-ENS 37.44, hi-fi 38.92; per-node r: Helm=0.76, Shield=0.67, Lore=0.66, Stewards=0.72, Craft=0.74, Hands=0.84, Archive=0.71, Flow=0.83
+drift X correlation with hi-fi X (1905-2025): Spearman 0.623
+
+# Side-by-side (frozen rules, same seed). Sources: ../results.md, ../canonical_usa_ens/results.md, this run
+| | hi-fi annual (test) | USA_ENS 5-yearly | USA ENS annual (this run) |
+|---|---|---|---|
+| years / periods retained for H1 | 126 / 15 | 26 sampled / 7 | 126 (1900-2025) / 15 |
+| H1 rho (p) | 0.846 (0.0003) | 0.607 (0.0854) | 0.821 (0.0007) |
+| H1 median r (p) | 0.747 (0.0001) | 0.493 (0.0027) | 0.537 (0.0001) |
+| H1 supported | yes | no (strict rho p fails Holm) | yes |
+| H2 threshold P90 of X | 0.4860 | not evaluable | 0.5007 |
+| H2 S_lead / S_lag | 4 / 6 | not evaluable | 5 / 6 |
+| H2 p_N1 / p_N2 | 0.8534 / 0.9355 | not evaluable | 0.6293 / 0.6125 |
+| H2 supported | no | no | no |
+| H3 all pass, max p | yes, 0.0002 | not evaluable | yes, 0.0002 |
+| Holm | H1, H3 pass; H2 fail | all fail by convention | H1, H3 pass; H2 fail |
