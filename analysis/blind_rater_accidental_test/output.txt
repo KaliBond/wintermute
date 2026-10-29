@@ -1,0 +1,152 @@
+FROZEN rows 200 Q nonnull 200
+UPLOAD_FILLED rows 200 Q nonnull 200
+CLAUDE_files27 rows 200 Q nonnull 175
+
+File order identical to template? {'FROZEN': True, 'UPLOAD_FILLED': True, 'CLAUDE_files27': True}
+
+Pearson on Q
+complete triples: 175
+FROZEN-UPLOAD_FILLED: pairwise-complete n=200 r=0.8895 | 175-triples r=0.8863 | Spearman(175)=0.8847
+FROZEN-CLAUDE_files27: pairwise-complete n=175 r=0.9308 | 175-triples r=0.9308 | Spearman(175)=0.9321
+UPLOAD_FILLED-CLAUDE_files27: pairwise-complete n=175 r=0.8962 | 175-triples r=0.8962 | Spearman(175)=0.8986
+
+ICC on Q, 175 complete triples
+  ICC(1,1): 0.8675
+  ICC(2,1)/ICC(A,1) abs-agree single: 0.8690
+  ICC(3,1)/ICC(C,1) consistency single: 0.8991
+  ICC(1,k): 0.9516
+  ICC(2,k)/ICC(A,k) abs-agree average: 0.9522
+  ICC(3,k)/ICC(C,k) consistency average: 0.9640
+rater means (175): {'FROZEN': 39.737, 'UPLOAD_FILLED': 40.52, 'CLAUDE_files27': 34.08} SD: {'FROZEN': 20.104, 'UPLOAD_FILLED': 18.651, 'CLAUDE_files27': 17.307}
+ICC FROZEN vs UPLOAD_FILLED on 200: {'ICC(1,1)': np.float64(0.8859), 'ICC(2,1)/ICC(A,1) abs-agree single': np.float64(0.886), 'ICC(3,1)/ICC(C,1) consistency single': np.float64(0.8868), 'ICC(1,k)': np.float64(0.9395), 'ICC(2,k)/ICC(A,k) abs-agree average': np.float64(0.9395), 'ICC(3,k)/ICC(C,k) consistency average': np.float64(0.94)}
+
+Pearson per construct (rows where all three present)
+Coherence 200 {'FROZEN-UPLOAD': np.float64(0.917), 'FROZEN-CLAUDE': np.float64(0.922), 'UPLOAD-CLAUDE': np.float64(0.879)} means {'FROZEN': 5.52, 'UPLOAD_FILLED': 5.76, 'CLAUDE_files27': 4.93}
+Capacity 199 {'FROZEN-UPLOAD': np.float64(0.783), 'FROZEN-CLAUDE': np.float64(0.91), 'UPLOAD-CLAUDE': np.float64(0.819)} means {'FROZEN': 6.82, 'UPLOAD_FILLED': 6.7, 'CLAUDE_files27': 6.13}
+Stress 200 {'FROZEN-UPLOAD': np.float64(0.822), 'FROZEN-CLAUDE': np.float64(0.925), 'UPLOAD-CLAUDE': np.float64(0.86)} means {'FROZEN': 6.13, 'UPLOAD_FILLED': 5.29, 'CLAUDE_files27': 5.97}
+Abstraction 175 {'FROZEN-UPLOAD': np.float64(0.731), 'FROZEN-CLAUDE': np.float64(0.895), 'UPLOAD-CLAUDE': np.float64(0.758)} means {'FROZEN': 6.63, 'UPLOAD_FILLED': 6.37, 'CLAUDE_files27': 6.51}
+bootstrap 95% CI ICC(A,1): [0.833 0.897]
+
+Mean Q per case (nodes with data; per-rater skipna)
+          FROZEN  UPLOAD_FILLED  CLAUDE_files27                            label
+CaseID                                                                         
+CASE-01   42.75          51.12           36.14                              WWI
+CASE-02   18.75          29.50           15.75                        Civil War
+CASE-03   44.25          40.88           39.71              Realignment 2016-20
+CASE-04   58.12          61.50           56.25                  Postwar 1945-65
+CASE-05   40.62          40.75           33.17                         New Deal
+CASE-06   54.25          45.38           46.00                     Reagan 1980s
+CASE-07   24.50          36.50           30.00                   Early Republic
+CASE-08   49.00          38.62           42.00                    GFC aftermath
+CASE-09   63.38          61.25           58.12                             WWII
+CASE-10   52.00          44.25           41.43                Post-9/11 2001-08
+CASE-11   43.50          45.12           35.75                       Gilded Age
+CASE-12   23.50          26.25           16.80               Antebellum 1845-61
+CASE-13   16.88          26.00           18.83         Revolution/Confederation
+CASE-14   18.25          14.12           14.17                 Great Depression
+CASE-15   28.12          34.62           27.43                 Colonial 1700-63
+CASE-16   42.88          40.50           37.33                       1920s boom
+CASE-17   35.50          30.50           32.14                            1970s
+CASE-18   45.12          42.00           36.38                  Progressive era
+CASE-19   25.00          26.12           16.67                   Reconstruction
+CASE-20   28.00          37.50           32.71  Mature colonial to imperial war
+CASE-21   41.12          38.25           33.75                            1960s
+CASE-22   28.50          39.88           32.86             Jacksonian expansion
+CASE-23   63.75          61.75           60.86                        1991-2001
+CASE-24   44.75          39.00           34.86                          2020-25
+CASE-25    9.75          17.12            7.75                 Early settlement
+
+Mean Q per case, 175 complete triples
+          FROZEN  UPLOAD_FILLED  CLAUDE_files27  n_nodes                            label
+CaseID                                                                                  
+CASE-01   42.57          49.71           36.14        7                              WWI
+CASE-02   18.75          29.50           15.75        8                        Civil War
+CASE-03   47.71          43.14           39.71        7              Realignment 2016-20
+CASE-04   58.12          61.50           56.25        8                  Postwar 1945-65
+CASE-05   42.00          41.83           33.17        6                         New Deal
+CASE-06   54.25          45.38           46.00        8                     Reagan 1980s
+CASE-07   28.83          39.83           30.00        6                   Early Republic
+CASE-08   52.71          41.43           42.00        7                    GFC aftermath
+CASE-09   63.38          61.25           58.12        8                             WWII
+CASE-10   55.00          47.00           41.43        7                Post-9/11 2001-08
+CASE-11   43.50          45.12           35.75        8                       Gilded Age
+CASE-12   24.60          28.00           16.80        5               Antebellum 1845-61
+CASE-13   19.83          28.17           18.83        6         Revolution/Confederation
+CASE-14   19.17          14.67           14.17        6                 Great Depression
+CASE-15   31.29          37.43           27.43        7                 Colonial 1700-63
+CASE-16   46.17          45.33           37.33        6                       1920s boom
+CASE-17   37.71          32.14           32.14        7                            1970s
+CASE-18   45.12          42.00           36.38        8                  Progressive era
+CASE-19   22.00          22.33           16.67        6                   Reconstruction
+CASE-20   31.00          40.57           32.71        7  Mature colonial to imperial war
+CASE-21   41.12          38.25           33.75        8                            1960s
+CASE-22   28.43          41.14           32.86        7             Jacksonian expansion
+CASE-23   67.29          65.14           60.86        7                        1991-2001
+CASE-24   47.86          41.86           34.86        7                          2020-25
+CASE-25    9.75          17.12            7.75        8                 Early settlement
+1920s->Depression (175 triples) {'FROZEN': np.float64(-27.0), 'UPLOAD_FILLED': np.float64(-30.67), 'CLAUDE_files27': np.float64(-23.17)} (all avail) {'FROZEN': np.float64(-24.62), 'UPLOAD_FILLED': np.float64(-26.38), 'CLAUDE_files27': np.float64(-23.17)}
+New Deal->WWII (175 triples) {'FROZEN': np.float64(21.38), 'UPLOAD_FILLED': np.float64(19.42), 'CLAUDE_files27': np.float64(24.96)} (all avail) {'FROZEN': np.float64(22.75), 'UPLOAD_FILLED': np.float64(20.5), 'CLAUDE_files27': np.float64(24.96)}
+1991-2001->2020-25 (175 triples) {'FROZEN': np.float64(-19.43), 'UPLOAD_FILLED': np.float64(-23.29), 'CLAUDE_files27': np.float64(-26.0)} (all avail) {'FROZEN': np.float64(-19.0), 'UPLOAD_FILLED': np.float64(-22.75), 'CLAUDE_files27': np.float64(-26.0)}
+Civil War->Reconstruction (175 triples) {'FROZEN': np.float64(3.25), 'UPLOAD_FILLED': np.float64(-7.17), 'CLAUDE_files27': np.float64(0.92)} (all avail) {'FROZEN': np.float64(6.25), 'UPLOAD_FILLED': np.float64(-3.38), 'CLAUDE_files27': np.float64(0.92)}
+Depression->New Deal (175 triples) {'FROZEN': np.float64(22.83), 'UPLOAD_FILLED': np.float64(27.17), 'CLAUDE_files27': np.float64(19.0)} (all avail) {'FROZEN': np.float64(22.38), 'UPLOAD_FILLED': np.float64(26.62), 'CLAUDE_files27': np.float64(19.0)}
+Antebellum->Civil War (175 triples) {'FROZEN': np.float64(-5.85), 'UPLOAD_FILLED': np.float64(1.5), 'CLAUDE_files27': np.float64(-1.05)}/workspace/wt-blindrater/analysis/blind_rater_accidental_test/verify.py:76: Pandas4Warning: Starting with pandas version 4.0 all arguments of mean will be keyword-only.
+  n24=Q.loc['CASE-24']; print(n24.assign(mean=n24.mean(1)).round(1).to_string())
+ (all avail) {'FROZEN': np.float64(-4.75), 'UPLOAD_FILLED': np.float64(3.25), 'CLAUDE_files27': np.float64(-1.05)}
+
+Case-mean correlation (25 cases, 175-trip means)
+                FROZEN  UPLOAD_FILLED  CLAUDE_files27
+FROZEN           1.000          0.898           0.961
+UPLOAD_FILLED    0.898          1.000           0.955
+CLAUDE_files27   0.961          0.955           1.000
+
+CASE-24 node Q and raw by rater
+FROZEN
+          Coherence  Capacity  Stress  Abstraction   Q
+Node                                                  
+Craft             8         9       5            9  76
+Stewards          6         9       6            9  57
+Helm              4         8       8            8  32
+Archive           5         9       7            9  47
+Shield            7         9       5            8  60
+Lore              2         7       9            8  14
+Flow              6         8       7            8  49
+Hands             4         7       8            6  23
+UPLOAD_FILLED
+          Coherence  Capacity  Stress  Abstraction   Q
+Node                                                  
+Craft             8         9       4            9  77
+Stewards          5         8       6            7  37
+Helm              4         7       7            6  24
+Archive           6         8       6            8  50
+Shield            7         8       4            7  53
+Lore              3         6       8            6  16
+Flow              5         7       6            7  36
+Hands             4         6       7            5  19
+CLAUDE_files27
+          Coherence  Capacity  Stress  Abstraction     Q
+Node                                                    
+Craft             7       8.0       5          9.0  66.0
+Stewards          4       7.0       7          8.0  32.0
+Helm              3       6.0       9          7.0  18.0
+Archive           4       7.0       7          8.0  32.0
+Shield            5       8.0       5          8.0  43.0
+Lore              2       6.0       8          7.0  12.0
+Flow              5       7.0       6          8.0  41.0
+Hands             3       5.0       8          NaN   NaN
+
+CASE-24 node Q rank (within case); mean over raters
+          FROZEN  UPLOAD_FILLED  CLAUDE_files27  mean
+Node                                                 
+Craft         76             77            66.0  73.0
+Stewards      57             37            32.0  42.0
+Helm          32             24            18.0  24.7
+Archive       47             50            32.0  43.0
+Shield        60             53            43.0  52.0
+Lore          14             16            12.0  14.0
+Flow          49             36            41.0  42.0
+Hands         23             19             NaN  21.0
+
+CASE-24 node Q vs same node across other 24 cases (percentile rank, per rater) and vs own case mean
+FROZEN Helm:32(pct 48) Shield:60(pct 72) Lore:14(pct 8) Stewards:57(pct 72) Craft:76(pct 80) Hands:23(pct 68) Archive:47(pct 36) Flow:49(pct 60)
+UPLOAD_FILLED Helm:24(pct 36) Shield:53(pct 64) Lore:16(pct 4) Stewards:37(pct 36) Craft:77(pct 76) Hands:19(pct 40) Archive:50(pct 44) Flow:36(pct 20)
+CLAUDE_files27 Helm:18(pct 24) Shield:43(pct 55) Lore:12(pct 8) Stewards:32(pct 52) Craft:66(pct 75) Hands:NA Archive:32(pct 24) Flow:41(pct 43)
