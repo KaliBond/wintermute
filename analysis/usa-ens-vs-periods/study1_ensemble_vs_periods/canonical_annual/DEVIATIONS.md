@@ -1,0 +1,11 @@
+# Deviation log: canonical_usa_ens_annual/
+2026-10-29 (Sydney). PREREG.md is NOT edited (sha256 3603e474...2fe still matches FROZEN.txt; run_ens_annual.py asserts it). Cross-reference copy: ../DEVIATIONS_canonical_usa_ens_annual.md.
+
+1. Dataset swap, third in sequence. Kari supplied an annual USA ENS score file (from Downloads) as canonical, AFTER the hi-fi test (H1 pass, H2 fail, H3 pass) and the 5-yearly USA_ENS run (H1 strict fail, H2 and H3 not evaluable) were seen. Not pre-specified, not blind. Thresholds, year table, nulls, seed (20261029), Holm rule and all other rules are unchanged.
+2. Provenance. The uploaded attachment was readable only with the Read tool, not from Shell, so it could not be copied byte for byte. The box copy /workspace/uploads/usa_ens_annual/USA_ENS_annual.csv (md5 1c9626e9481662df6c00974f720e0ec0) was rebuilt from the Read output: 127 years (1900-2026) x 8 nodes, 1016 rows. Checks passed: no duplicates, no NaN, 8 rows per year, Node Value equals round(C+K+A/2-S, 1) in every row. There is no original md5 to compare. Re-run from a true byte copy if provenance matters.
+3. 2026. The file has a 2026 row. The frozen window ends 2025, so 2026 is dropped before every frozen computation (X grid 1905-2025, N1 grid 1906-2025). It is in no period profile.
+4. Columns used: Coherence, Capacity, Stress, Abstraction only (Q = A*C + K - S). Node Value and Bond Strength are not used, as in the frozen rules. Society label is "USA", no # header lines (no model or n_passes metadata).
+5. Series structure (not a rule change, applied literally): the file is stepwise. 72 of 125 year-to-year changes are zero across all eight nodes, and there are 54 distinct annual states in 126 years. Consequences: X is exactly 0 in 7 years, within-period variation is small, and the H3 block bootstrap resamples mostly repeated values, so its CIs overstate how many independent observations there are. Reported as computed.
+6. Not run: nothing from the frozen set was skipped. The post hoc controls used in the 5-yearly run (relaxed H1, subsampling) are not needed here.
+7. ENV file (envelope/SD values): not used in any test. See ENV_note.md. It could not be copied to the box either; it was read in full with Read.
+8. Minor: run_ens_annual.py prints a "Holm p used" line with a leftover conditional (p_N1 is used, as frozen). No effect on results.
