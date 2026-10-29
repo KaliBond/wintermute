@@ -1,0 +1,88 @@
+{
+ "n_with_both_classes": 14,
+ "excluded_one_class": [
+  "Australia",
+  "Canada",
+  "Denmark",
+  "India",
+  "Israel",
+  "Italy",
+  "Japan",
+  "Latvia",
+  "Netherlands",
+  "Poland",
+  "Saudi Arabia",
+  "Singapore",
+  "South Africa",
+  "Sweden",
+  "UK",
+  "USA"
+ ],
+ "median_B3_auc": 0.6077,
+ "per_society_B3_auc": {
+  "Venezuela": 0.22,
+  "Thailand": 0.315,
+  "Pakistan": 0.352,
+  "Ukraine": 0.391,
+  "Lebanon": 0.461,
+  "UAE": 0.523,
+  "Turkey": 0.583,
+  "Indonesia": 0.632,
+  "Syria": 0.708,
+  "Argentina": 0.755,
+  "Brazil": 0.777,
+  "Iraq": 0.78,
+  "Philippines": 0.782,
+  "Colombia": 0.869
+ },
+ "weak": {
+  "societies": [
+   "Lebanon",
+   "Pakistan",
+   "Thailand",
+   "Turkey",
+   "UAE",
+   "Ukraine",
+   "Venezuela"
+  ],
+  "n_sy": 307,
+  "pos": 38,
+  "auc_B3": 0.4191,
+  "auc_CB3": 0.4162,
+  "dAUC": -0.0029,
+  "ci": [
+   -0.0544,
+   0.0569
+  ],
+  "dBrier": -0.00413
+ },
+ "strong": {
+  "societies": [
+   "Argentina",
+   "Brazil",
+   "Colombia",
+   "Indonesia",
+   "Iraq",
+   "Philippines",
+   "Syria"
+  ],
+  "n_sy": 505,
+  "pos": 103,
+  "auc_B3": 0.7841,
+  "auc_CB3": 0.7561,
+  "dAUC": -0.028,
+  "ci": [
+   -0.0669,
+   0.0138
+  ],
+  "dBrier": 0.006
+ },
+ "weak_minus_strong": {
+  "dAUC_diff": 0.025,
+  "ci": [
+   -0.046,
+   0.0939
+  ]
+ },
+ "reps": 2000
+}
