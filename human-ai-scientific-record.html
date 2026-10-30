@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CAMS Human–AI Scientific Record, 30 October 2026</title>
+<meta name="description" content="Verification and findings for the CAMS Human–AI Scientific Record package of 30 October 2026: integrity checks, recomputed blind-rater agreement, and the USA 1900–2026 Q series. Kari McKern, ComplexityWorkz.">
+<meta name="author" content="Kari McKern">
+<link rel="canonical" href="https://neuralnations.org/human-ai-scientific-record">
+<link rel="stylesheet" href="style.css">
+<style>
+:root{--ink:#1c2333;--muted:#5d6577;--accent:#2F6F7D;--accent-soft:#e8f1f3;--line:#E0E0E0;--ok:#2c7a4b;--ok-soft:#e3f2e8;--note:#8a5a12;--note-soft:#fbf3e2}
+*{box-sizing:border-box}
+body{background:#fff;color:var(--ink)}
+.report{max-width:920px;margin:0 auto;padding:0 24px 80px;font-family:Georgia,'Times New Roman',serif;line-height:1.68;font-size:17px}
+header.masthead{border-bottom:3px double var(--line);padding:42px 0 24px;margin-bottom:30px}
+.brand{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.report h1{font-size:40px;line-height:1.15;margin:14px 0 10px}
+.subtitle{font-size:19px;color:var(--muted);font-style:italic;margin:0 0 16px}
+.meta{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;color:var(--muted)}
+.downloads{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 0;font-family:-apple-system,'Segoe UI',sans-serif;font-size:14px}
+.downloads a{display:inline-block;padding:7px 14px;border:1px solid #9cc3cb;border-radius:4px;color:var(--accent);text-decoration:none;font-weight:600;background:var(--accent-soft)}
+.downloads a:hover{background:#d6e8ec}
+.report h2{font-size:25px;margin:44px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+.report h3{font-size:18px;margin:26px 0 8px}
+.report li{margin-bottom:.6rem}
+.report code{font-size:14px;background:#f4f5f7;padding:1px 4px;border-radius:3px}
+.hash{font-family:Consolas,'Courier New',monospace;font-size:12.5px;color:var(--muted);word-break:break-all}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:18px 0;font-family:-apple-system,'Segoe UI',sans-serif}
+.stat{border:1px solid var(--line);border-radius:6px;padding:12px 16px}
+.stat .v{font-family:Georgia,serif;font-size:28px;font-weight:700;font-variant-numeric:tabular-nums}
+.stat .l{font-size:13px;color:var(--muted);line-height:1.4}
+.report table{width:100%;border-collapse:collapse;font-size:15px;font-family:-apple-system,'Segoe UI',sans-serif}
+.report th{background:#F0F0F0;text-align:left;padding:8px 10px;border-bottom:2px solid var(--line);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.report td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.report td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tablewrap{overflow-x:auto;margin:14px 0}
+.pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 7px;border-radius:3px;color:var(--ok);background:var(--ok-soft);white-space:nowrap}
+.note{border-left:3px solid var(--note);background:var(--note-soft);padding:10px 16px;margin:16px 0;font-size:15.5px;border-radius:0 6px 6px 0}
+.note b{font-family:-apple-system,'Segoe UI',sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--note);display:block;margin-bottom:2px}
+figure.chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;padding:14px 16px 10px}
+figure.chart svg text{font-family:-apple-system,'Segoe UI',sans-serif;font-size:11px;fill:#5d6577}
+figure.chart figcaption{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;color:var(--muted);margin-top:6px}
+#tip{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;min-height:1.4em}
+@media (max-width:600px){.report h1{font-size:30px}.report{padding:0 16px 60px}}
+@media print{#site-nav,footer.footer{display:none}}
+</style>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+<main class="report">
+<header class="masthead">
+  <div class="brand">Scientific record</div>
+  <h1>CAMS Human–AI Scientific Record</h1>
+  <p class="subtitle">Verification and findings for the preservation package of 30 October 2026</p>
+  <div class="meta">Kari McKern · ComplexityWorkz · 30 October 2026 · checked with Claude Opus 5.5</div>
+  <div class="downloads">
+    <a href="records/cams-human-ai-scientific-record-2026-10-30/CAMS_HUMAN_AI_SCIENTIFIC_RECORD_2026-10-30.zip" download>Record ZIP (66 KB)</a>
+    <a href="records/cams-human-ai-scientific-record-2026-10-30/CAMS_HUMAN_AI_SCIENTIFIC_RECORD_2026-10-30_INTEGRITY_CERTIFICATE.pdf">Integrity certificate (PDF)</a>
+    <a href="records/cams-human-ai-scientific-record-2026-10-30/CAMS_HUMAN_AI_SCIENTIFIC_RECORD_2026-10-30.sha256">SHA-256 file</a>
+    <a href="https://github.com/KaliBond/wintermute/blob/main/analysis/blind_rater_accidental_test/CAMS_Accidental_Repeatability_Test_GPT_2026-10-29.md">Research note: the accidental repeatability test</a>
+  </div>
+</header>
+
+<p>This package preserves the thread in which the <em>Dynamics of Organisations</em> account of CAMS was written down, together with the six source files from the blind-rater test. Every file was read, every hash was checked, and the agreement statistics and the USA series were recomputed from the raw CSVs.</p>
+
+<div class="stats">
+  <div class="stat"><div class="v">13 / 13</div><div class="l">archive files match the manifest byte for byte</div></div>
+  <div class="stat"><div class="v">0.869</div><div class="l">three-way ICC(A,1) on Q, reproduced exactly (n = 175)</div></div>
+  <div class="stat"><div class="v">0.89–0.93</div><div class="l">pairwise Pearson r on Q, all three pairs reproduced</div></div>
+</div>
+
+<p>The package states its own scope accurately. It is a curated record of one thread with the source files intact. It is not the full 30-month transcript of the collaboration that began with GPT-4 in 2024, and it says so.</p>
+
+<h2>1. Integrity checks</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Check</th><th>Result</th></tr></thead>
+<tbody>
+<tr><td>ZIP SHA-256 against the <code>.sha256</code> file and the certificate's QR code<div class="hash">ac0018a9edf8a0afe547f0a29a5cc8580e4cbaa582125e7c121743527684f9dd</div></td><td><span class="pill">Match</span></td></tr>
+<tr><td>All 13 entries in <code>MANIFEST_SHA256.json</code>, size and hash</td><td><span class="pill">Match</span></td></tr>
+<tr><td>The standalone summary against <code>01_SCIENTIFIC_RECORD.md</code> inside the ZIP</td><td><span class="pill">Identical</span></td></tr>
+<tr><td><code>files (27).zip</code> and <code>files (28).zip</code>: the ZIP files differ, but their contents are identical, so they count as one rater</td><td><span class="pill">One rater</span></td></tr>
+<tr><td>The Claude CSV against the hash in its rater declaration, and the three CSVs against the copies in <code>analysis/blind_rater_accidental_test/data/</code><div class="hash">af6caee554144183cc9e84640ebe4aca9ea2167d5e327e0fc61766d9b60e2a31</div></td><td><span class="pill">Match</span></td></tr>
+</tbody></table></div>
+<div class="note"><b>Note</b>The README inside the ZIP lists older file names (<code>01_SUMMARY.md</code>, <code>04_METHODS.md</code>). The files themselves are named <code>01_SCIENTIFIC_RECORD.md</code>, <code>04_REPRODUCIBILITY_METHODS.md</code> and so on, and the manifest is correct. Fix the list in a v1.1 so readers aren't sent looking for files that don't exist.</div>
+
+<h2>2. Blind-rater test</h2>
+<p>The casebook has 25 anonymised historical cases × 8 nodes = 200 node assessments. The frozen response came from the GPT session that set up the test; the other two came from Claude and Grok. The exploratory composite is <code>Q = A×C + K − S</code>.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Pair</th><th style="text-align:right">n</th><th style="text-align:right">Pearson r</th><th style="text-align:right">Spearman ρ</th></tr></thead>
+<tbody>
+<tr><td>Frozen GPT / Claude</td><td class="n">175</td><td class="n">0.931</td><td class="n">0.932</td></tr>
+<tr><td>Frozen GPT / Grok</td><td class="n">200</td><td class="n">0.889</td><td class="n">0.888</td></tr>
+<tr><td>Claude / Grok</td><td class="n">175</td><td class="n">0.896</td><td class="n">0.899</td></tr>
+<tr><td><strong>ICC(A,1), all three raters</strong></td><td class="n">175</td><td class="n" colspan="2"><strong>0.869</strong></td></tr>
+</tbody></table></div>
+
+<h3>Agreement on each raw dimension</h3>
+<p>The package reports Q only. Splitting it into the four dimensions shows where the agreement comes from.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Dimension</th><th style="text-align:right">GPT–Claude r</th><th style="text-align:right">GPT–Grok r</th><th style="text-align:right">Claude–Grok r</th></tr></thead>
+<tbody>
+<tr><td>Coherence</td><td class="n">0.922</td><td class="n">0.917</td><td class="n">0.879</td></tr>
+<tr><td>Capacity</td><td class="n">0.910</td><td class="n">0.783</td><td class="n">0.819</td></tr>
+<tr><td>Stress</td><td class="n">0.925</td><td class="n">0.822</td><td class="n">0.860</td></tr>
+<tr><td>Abstraction</td><td class="n">0.895</td><td class="n">0.763</td><td class="n">0.758</td></tr>
+</tbody></table></div>
+<div class="note"><b>Note</b>Coherence agrees best in every pair and Abstraction least. Because Q multiplies A by C, it partly inherits the strong agreement on Coherence. Reporting the four dimensions beside Q in the zeitgeist work will show which construct carries the signal.</div>
+<div class="note"><b>Note</b>Claude scores lower on the whole scale: mean Q 34.1, against 39.7 for GPT and 40.5 for Grok. Absolute-agreement ICC counts that offset against the raters; the consistency ICC in the research note is 0.899. The 25 rows missing from the Claude file are its declared abstentions, 24 on Abstraction and 1 on Capacity, which is why most comparisons use n = 175.</div>
+
+<h2>3. USA ensemble, 1900–2026</h2>
+<figure class="chart">
+  <svg id="chart" viewBox="0 0 720 260" width="100%" role="img" aria-label="Mean Q by year for the USA, 1900 to 2026"></svg>
+  <div id="tip">Hover or tap the chart to read a year.</div>
+  <figcaption>Mean Q across the eight nodes, by year. Computed from <code>MARKER_USA_1900_2026_ENSEMBLE_MEAN</code> in the package (127 years, 8 nodes each, no blank cells). Q is the exploratory composite, not JUNO Node Value. Orange points mark the low of 1932 and the high of 1997–2000.</figcaption>
+</figure>
+<ul>
+<li><strong>Lowest years:</strong> 1932 (12.1), 1931 (14.7), 2026 (16.0), 1930 (18.5), 2025 (19.3). The present is in the same range as the Depression trough.</li>
+<li><strong>Highest years:</strong> 1997–2000 (52.6) and 1943 (52.3).</li>
+<li><strong>Helm has been the weakest node every year since 2016.</strong> At 11 years, that is the longest Helm run in the series; the only earlier one was 1967–1974. Full sequence of weakest nodes: <span id="handoff">…</span></li>
+</ul>
+<div class="note"><b>Note</b>In 72 of the 126 steps from one year to the next, all 32 values are unchanged, so the series moves in plateaus and jumps. For the planned derivative and early-warning analysis, treat each jump as an event. Year-on-year slopes are zero most of the time.</div>
+<div class="note"><b>Note</b>The envelope file has no rows for 1927–1928 and two sets of rows for 1907 (16 rows, not all the same). The mean file is complete. This matters only if the envelope SDs are used as weights.</div>
+
+<h2>4. What the record argues</h2>
+<ol>
+<li><strong>Thermodynamic access.</strong> Cooperation widens what a group can reach, as a pack takes prey a lone animal cannot.</li>
+<li><strong>Exteriorised memory.</strong> Tools and symbols carry skill and commitment outside the mind, so they can accumulate across generations.</li>
+<li><strong>Functional organisation.</strong> Group cooperation rests on interdependent capabilities that recur as coordination roles. Eight roles is a modelling choice.</li>
+<li><strong>Persistent state signalling.</strong> Organisations reveal their condition through what they do and record, which is why independent readings can repeat.</li>
+<li><strong>Pathologies recur at every scale.</strong> Families, firms and states share structural requirements, so they can fail in similar ways.</li>
+<li><strong>Non-moral evaluation.</strong> The subject is the structural health of cooperation, not a ranking of peoples.</li>
+</ol>
+<p>The project's method is to accept AI ratings in good faith because they are repeatable, inspectable and contestable. The blind test supports repeatability on a shared casebook. The record keeps that claim separate from claims about historical truth.</p>
+
+<h2>5. Provenance</h2>
+<p>The hashes show that the ZIP and its contents are unchanged since the checksum was made. They don't establish authorship, dates, ChatGPT origin or the 30-month span; the certificate states this itself. The package recommends these steps to make the record authoritative:</p>
+<ol>
+<li>Export the full ChatGPT history through the account's data export, and hash it unedited.</li>
+<li>Sign the ZIP hash with a researcher-held key (Ed25519 or similar) and publish the public key.</li>
+<li>Anchor the hash in time: an RFC 3161 timestamp, OpenTimestamps, or a Zenodo deposit.</li>
+<li>Keep v1.0 frozen. Issue changes as new versions with their own hashes.</li>
+<li>Review the personal passages before making the record public.</li>
+</ol>
+<p id="zenodo">Zenodo deposit: in preparation.</p>
+
+<h2>6. Next work</h2>
+<ul>
+<li>Return to the original experiment: the USA annual series against the 25 zeitgeist periods. Look at absolute and relative change, cross-node divergence, coupling quality and sustained stress.</li>
+<li>Recompute downstream claims with the JUNO graph formalism rather than scalar Q.</li>
+<li>The pre-1900 periods have no ensemble observations. Treat them as context for independent reconstruction.</li>
+</ul>
+</main>
+<footer class="footer"><nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;"><a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a><a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a><a href="results.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Results</a></nav><p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p></footer>
+<script>
+const S=[[1900,33.9,"Hands"],[1901,33.9,"Hands"],[1902,33.9,"Hands"],[1903,33.9,"Hands"],[1904,33.9,"Hands"],[1905,33.9,"Hands"],[1906,33.9,"Hands"],[1907,28.3,"Hands"],[1908,32.6,"Hands"],[1909,32.6,"Hands"],[1910,34.7,"Hands"],[1911,34.7,"Hands"],[1912,34.7,"Hands"],[1913,34.7,"Hands"],[1914,34.7,"Hands"],[1915,34.7,"Hands"],[1916,34.7,"Hands"],[1917,39.0,"Hands"],[1918,42.7,"Hands"],[1919,33.3,"Hands"],[1920,33.9,"Hands"],[1921,31.2,"Hands"],[1922,34.5,"Hands"],[1923,34.5,"Hands"],[1924,34.5,"Hands"],[1925,41.9,"Hands"],[1926,41.9,"Hands"],[1927,41.9,"Hands"],[1928,41.9,"Hands"],[1929,26.3,"Hands"],[1930,18.5,"Hands"],[1931,14.7,"Hands"],[1932,12.1,"Hands"],[1933,19.5,"Hands"],[1934,21.7,"Hands"],[1935,27.6,"Hands"],[1936,27.6,"Hands"],[1937,27.6,"Hands"],[1938,27.6,"Hands"],[1939,32.5,"Hands"],[1940,37.4,"Hands"],[1941,51.1,"Hands"],[1942,51.1,"Hands"],[1943,52.3,"Hands"],[1944,52.3,"Hands"],[1945,50.0,"Hands"],[1946,45.7,"Shield"],[1947,45.7,"Shield"],[1948,45.7,"Shield"],[1949,45.7,"Shield"],[1950,47.7,"Hands"],[1951,47.7,"Hands"],[1952,47.7,"Hands"],[1953,47.7,"Hands"],[1954,46.8,"Shield"],[1955,46.8,"Shield"],[1956,46.8,"Shield"],[1957,46.8,"Shield"],[1958,46.8,"Shield"],[1959,46.8,"Shield"],[1960,46.8,"Shield"],[1961,46.8,"Shield"],[1962,47.1,"Hands"],[1963,46.0,"Shield"],[1964,46.0,"Shield"],[1965,46.0,"Shield"],[1966,46.0,"Shield"],[1967,40.4,"Helm"],[1968,32.2,"Helm"],[1969,33.3,"Helm"],[1970,33.3,"Helm"],[1971,33.3,"Helm"],[1972,33.3,"Helm"],[1973,28.0,"Helm"],[1974,25.2,"Helm"],[1975,30.2,"Stewards"],[1976,30.2,"Stewards"],[1977,30.2,"Stewards"],[1978,30.2,"Stewards"],[1979,26.6,"Flow"],[1980,26.6,"Flow"],[1981,30.4,"Hands"],[1982,30.4,"Hands"],[1983,32.8,"Hands"],[1984,40.8,"Hands"],[1985,40.8,"Hands"],[1986,40.8,"Hands"],[1987,40.8,"Hands"],[1988,40.8,"Hands"],[1989,45.4,"Hands"],[1990,45.4,"Hands"],[1991,45.4,"Hands"],[1992,45.5,"Hands"],[1993,45.5,"Hands"],[1994,45.5,"Hands"],[1995,45.5,"Hands"],[1996,45.5,"Hands"],[1997,52.6,"Shield"],[1998,52.6,"Shield"],[1999,52.6,"Shield"],[2000,52.6,"Shield"],[2001,44.0,"Hands"],[2002,44.0,"Hands"],[2003,43.4,"Hands"],[2004,43.4,"Hands"],[2005,43.4,"Hands"],[2006,43.4,"Hands"],[2007,39.3,"Hands"],[2008,24.3,"Flow"],[2009,27.9,"Hands"],[2010,31.2,"Hands"],[2011,31.2,"Hands"],[2012,39.4,"Stewards"],[2013,39.4,"Stewards"],[2014,39.4,"Stewards"],[2015,39.4,"Stewards"],[2016,36.2,"Helm"],[2017,35.7,"Helm"],[2018,35.7,"Helm"],[2019,35.7,"Helm"],[2020,21.3,"Helm"],[2021,25.7,"Helm"],[2022,25.7,"Helm"],[2023,25.7,"Helm"],[2024,24.8,"Helm"],[2025,19.3,"Helm"],[2026,16.0,"Helm"]];
+(function(){
+  const svg=document.getElementById('chart'),W=720,H=260,L=40,R=12,T=12,B=28;
+  const x=y=>L+(y-1900)/126*(W-L-R), yv=v=>T+(1-v/60)*(H-T-B);
+  const ns='http://www.w3.org/2000/svg',el=(t,a)=>{const e=document.createElementNS(ns,t);for(const k in a)e.setAttribute(k,a[k]);svg.appendChild(e);return e};
+  for(const v of [0,20,40,60]){el('line',{x1:L,x2:W-R,y1:yv(v),y2:yv(v),stroke:'#e6eaee'});el('text',{x:L-6,y:yv(v)+4,'text-anchor':'end'}).textContent=v}
+  for(const y of [1900,1925,1950,1975,2000,2026])el('text',{x:x(y),y:H-8,'text-anchor':y===1900?'start':y===2026?'end':'middle'}).textContent=y;
+  let d='M'+x(S[0][0])+' '+yv(S[0][1]);for(let i=1;i<S.length;i++)d+='H'+x(S[i][0])+'V'+yv(S[i][1]);
+  el('path',{d:d+'V'+yv(0)+'H'+x(1900)+'Z',fill:'#e8f1f3'});
+  el('path',{d,fill:'none',stroke:'#2F6F7D','stroke-width':1.8});
+  const last=S[S.length-1];el('circle',{cx:x(last[0]),cy:yv(last[1]),r:3.5,fill:'#2F6F7D'});
+  for(const y of [1932,1999]){const p=S.find(s=>s[0]===y);el('circle',{cx:x(y),cy:yv(p[1]),r:3.5,fill:'#c07a1a'})}
+  const cur=el('line',{x1:0,x2:0,y1:T,y2:H-B,stroke:'#5d6577','stroke-dasharray':'3 3',visibility:'hidden'}),tip=document.getElementById('tip');
+  const show=e=>{const r=svg.getBoundingClientRect(),px=(e.clientX-r.left)/r.width*W;
+    const y=Math.max(1900,Math.min(2026,Math.round(1900+(px-L)/(W-L-R)*126))),p=S.find(s=>s[0]===y);
+    cur.setAttribute('x1',x(y));cur.setAttribute('x2',x(y));cur.setAttribute('visibility','visible');
+    tip.textContent=y+' · mean Q '+p[1]+' · weakest node '+p[2];};
+  svg.addEventListener('pointermove',show);svg.addEventListener('pointerdown',show);
+  const runs=[];for(const [y,,n] of S){const r=runs[runs.length-1];if(!r||r.n!==n)runs.push({n,a:y,b:y});else r.b=y}
+  document.getElementById('handoff').textContent=runs.map(r=>r.n+' '+r.a+(r.b>r.a?'–'+r.b:'')).join('; ')+'.';
+})();
+</script>
+<script src="site-chrome.js"></script><script src="nav.js"></script>
+</body>
+</html>
