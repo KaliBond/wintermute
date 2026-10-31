@@ -28,7 +28,7 @@ EXCLUDE = {
 GROUPS = [
     ('Start Here', 'Guide', 'monthly', '0.9', [
         '', 'start-here', 'what-is-cams', 'why-cams', 'model', 'framework/', 'faq',
-        'a-short-history-of-cams', 'cams-project-history', 'cams-foundational-conversations',
+        'a-short-history-of-cams', 'dynamics-of-organisations', 'cams-project-history', 'cams-foundational-conversations',
     ]),
     ('Results & Predictions', 'Findings', 'monthly', '0.8', [
         'results', 'validation', 'predictions', 'status_report', 'escalation-archetypes',
