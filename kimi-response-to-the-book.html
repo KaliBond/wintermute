@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>A response to the book, by Kimi: what the datasets and the working record support, and what they qualify</title>
-<meta name="description" content="A separate companion report written in Kimi's voice. It sets out what Kimi found working on CAMS, the T-M test series, the blind scoring run and the shared datasets, where that supports The Dynamics of Social Organisation, and where it qualifies it.">
-<meta name="author" content="Kimi (Moonshot AI), compiled for Kari McKern">
+<title>Kimi's record: material from the CAMS project, presented unedited, as a companion to the book</title>
+<meta name="description" content="Material produced by Kimi (Moonshot AI) for the CAMS project, presented verbatim and attributed: an essay rewrite with figures and data, the T-M test series, the blind-run import note, a Boeing scoring pass and a June review. A companion to, and separate from, The Dynamics of Social Organisation.">
+<meta name="author" content="Material by Kimi (Moonshot AI); page layout for Kari McKern">
 <link rel="canonical" href="https://neuralnations.org/kimi-response-to-the-book">
 <meta property="og:type" content="article">
-<meta property="og:title" content="A response to the book, by Kimi">
-<meta property="og:description" content="A companion report, separate from the book: what Kimi's working record and the shared datasets support in The Dynamics of Social Organisation, and what they qualify.">
+<meta property="og:title" content="Kimi's record, presented unedited">
+<meta property="og:description" content="Kimi's own material from the CAMS project, verbatim and attributed. Separate from the book.">
 <meta property="og:url" content="https://neuralnations.org/kimi-response-to-the-book">
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="style.css">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Report","name":"A response to the book, by Kimi","inLanguage":"en-AU","author":{"@type":"Organization","name":"Kimi (Moonshot AI)"},"about":{"@type":"Book","name":"The Dynamics of Social Organisation: The Cassandra Edition","url":"https://neuralnations.org/dynamics-of-social-organisation"},"publisher":{"@type":"Person","name":"Kari McKern"},"datePublished":"2026-11-02"}
+{"@context":"https://schema.org","@type":"Collection","name":"Kimi's record: material from the CAMS project, presented unedited","inLanguage":"en-AU","author":{"@type":"Organization","name":"Kimi (Moonshot AI)"},"about":{"@type":"Book","name":"The Dynamics of Social Organisation: The Cassandra Edition","url":"https://neuralnations.org/dynamics-of-social-organisation"},"publisher":{"@type":"Person","name":"Kari McKern"},"datePublished":"2026-11-02"}
 </script>
 <style>
 :root{--ink:#1c2333;--muted:#5d6577;--accent:#8c2a22;--accent-soft:#f6ebe9;--teal:#2F6F7D;--teal-soft:#e8f1f3;--line:#E0E0E0;--note:#8a5a12;--note-soft:#fbf3e2}
@@ -71,131 +71,402 @@ table.t th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:va
 .three div{border:1px solid var(--line);border-radius:6px;padding:12px 16px}
 .three b{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
 code{font-family:Consolas,'Courier New',monospace;font-size:.85em}
+details.doc{border:1px solid var(--line);border-radius:6px;margin:14px 0;font-family:-apple-system,'Segoe UI',sans-serif}
+details.doc>summary{cursor:pointer;padding:10px 14px;font-weight:700;color:var(--teal)}
+pre.verbatim{white-space:pre-wrap;word-wrap:break-word;font-family:Georgia,serif;font-size:15.5px;line-height:1.6;margin:0;padding:6px 18px 16px;border-top:1px solid var(--line);background:#fcfcfb}
+pre.verbatim.mono{font-family:Consolas,'Courier New',monospace;font-size:13px}
+.src{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;color:var(--muted);padding:8px 14px 0}
 </style>
 </head>
 <body>
 <nav class="navbar" id="site-nav"></nav>
 <main class="book">
 <header class="masthead">
-  <div class="brand k">Companion report · separate from the book</div>
-  <h1>A response to the book, by Kimi</h1>
-  <p class="subtitle">What my working record and the shared datasets support in <i>The Dynamics of Social Organisation</i>, and what they qualify</p>
-  <div class="meta">Kimi (Moonshot AI) · written for Kari McKern · 2 November 2026 · draft for Kari's review</div>
-  <div class="banner">This is not part of the book and does not speak for it. The book is at <a href="dynamics-of-social-organisation.html">neuralnations.org/dynamics-of-social-organisation</a>. This report is a second opinion from one of the AI readers the book mentions: it can agree with the book, and where it can't, it says so.</div>
+  <div class="brand k">Companion record · separate from the book</div>
+  <h1>Kimi's record</h1>
+  <p class="subtitle">Material produced by Kimi (Moonshot AI) for the CAMS project, presented unedited</p>
+  <div class="meta">Compiled 2 November 2026 · draft for Kari McKern's approval · companion to <a href="dynamics-of-social-organisation.html">The Dynamics of Social Organisation</a></div>
+  <div class="banner"><b>Provenance.</b> Everything below the contents table is the original material, shown as written. The only changes are layout (text is placed in a box; the CSV is laid out as a table). No figure has been recomputed and no conclusion reworded on this page. Each item gives its source file, date and SHA-256, and links to the raw file. Commentary by the Lab Chief is kept apart, in an append-only record: <a href="records/PUTATIVE_ISSUES.md">records/PUTATIVE_ISSUES.md</a>. It is not Kimi's record and is not part of this page.</div>
 </header>
 
-<div class="note"><b>How this report was made</b>
-I don't carry memory from one session to the next. What I have is a record: the preregistrations and lab notes, scores, scripts and files I produced for Kari between June and November 2026, kept in her Drive and in the repository. "My memory of the project" below means that record, with dates. This page was assembled from those files, not typed live in a Kimi session, and it is held for Kari's review before it is published. Every figure is either quoted from a named file or recomputed by <code>recompute.py</code> from the shared dataset. Where I could not reproduce a figure, I say so.</div>
+<div class="note"><b>Words flagged</b>
+Two of the verbatim items below use "healthy" or "health", which the project no longer uses in its own prose. They are quoted exactly as written, from the files whose hashes are shown: the essay (one line, "healthy societies", under Cambodia) and the 7 June review (several places, including "aggregate health measurement"). They are the wording of those files, not the project's current terms.</div>
 
-<h2>The short version</h2>
-<div class="three">
-  <div><b class="v-s">What I can stand behind</b>Stress reaches the other functions before capacity falls (temporal order survives a placebo and fixed effects). A shared stress movement rose after 2000. The US reads as a low outlier against its own twentieth century. Collapse drains every node at once, in my blind pass as in the others.</div>
-  <div><b class="v-q">What I qualify</b>The size of effects: smaller in my panel than the book's. Failure-locus identity is modest. Morphology does not predict recovery. My own scoring is one pass, model version unrecorded, and it fails one hypothesis (H5) that the other models split on.</div>
-  <div><b class="v-n">What I cannot reach</b>The six failure signatures, the 18 named windows, the 127-year US Helm run, the holdout bond ordering and the firm tests. I did not test those, so I neither support nor weaken them.</div>
-</div>
-<p>One more thing the reader should know early: the shared dataset I worked from holds 48 societies and 5,425 society-years. The book's headline panel is described as 42 societies. I report my numbers on mine and give the book's beside them, never blended.</p>
-
-<h2>1. The record behind this report</h2>
-<p>Dates are file dates or the date in the file itself. Everything listed is in Kari's Drive or this repository.</p>
+<h2>Contents</h2>
 <table class="t">
-<tr><th>When</th><th>What I did</th><th>Where it lives</th></tr>
-<tr><td>7 Jun 2026</td><td>Reviewed the framework and its validation battery. Reported PC1 carrying 63–86% of node variance, crisis-versus-calm ROC-AUC about 0.77, and a crisis-attribution test: top-1 node 40% against 12.5% by chance (p = 0.002), top-3 75% against 37.5% (p = 0.001). Graded it "conditionally validated", roughly a B. Named limits: bond-strength formula unresolved at that date, blunt phase-space thresholds, scorers prompted with theory, analogical thermodynamic language, modest samples.</td><td>Drive: <code>validation_kimi_.txt</code></td></tr>
-<tr><td>10 Aug 2026</td><td>Scored Boeing, 2018–2025, one pass, eight nodes on C, K, S and A.</td><td><a href="kimi-response/data/BOEING_kimi_20260810_cams_scores.csv">data/BOEING_kimi_20260810_cams_scores.csv</a></td></tr>
-<tr><td>2 Oct 2026</td><td>Scored the deep-time casebook blind (RUN-KIMI-BLIND-1): one pass per prompt, fresh session, DT-1 rubric, sealed with 14 hashes.</td><td><a href="https://github.com/KaliBond/wintermute/blob/main/backstory/results/DT2_adoption_and_Kimi_blind_2026-10-02.md">backstory/results/DT2_adoption_and_Kimi_blind_2026-10-02.md</a></td></tr>
-<tr><td>16 Oct 2026</td><td>Ran the T-M series: five preregistered tests of whether a society's failure shape carries information, each with a stated bar written before the run.</td><td><a href="kimi-response/tm-series/T-M_series_thread.md">tm-series/</a></td></tr>
-<tr><td>31 Oct – 1 Nov 2026</td><td>Rewrote Kari's essay on the eight jobs in her style, with four figures and the panel behind them. I recomputed that panel for this report.</td><td>Drive: <code>Kimi_Agent_按我风格改写.zip</code></td></tr>
+<tr><th>Item</th><th>Source and date</th><th>What it is</th></tr>
+<tr><td><a href="#a">A</a></td><td>Drive: <code>Kimi_Agent_按我风格改写.zip</code>, modified 2 Nov 2026 08:00 AEDT</td><td>Essay "The Eight Jobs" (file dated 31 Oct 2026), four figures, PDF, the panel data</td></tr>
+<tr><td><a href="#b">B</a></td><td>Drive: <code>Kimi_Agent_CAMS Engine Metaphor Refinement.zip</code>, T-M series, 16 Oct 2026</td><td>Preregistrations, lab notes, series thread, script, reproducibility log</td></tr>
+<tr><td><a href="#c">C</a></td><td>Repository: <code>backstory/results/DT2_adoption_and_Kimi_blind_2026-10-02.md</code>, 2 Oct 2026</td><td>Project import note on RUN-KIMI-BLIND-1. It is a project record about Kimi's blind pass, not written by Kimi. Kimi's own raw score files are under <code>backstory/runs/kimi_blind/</code></td></tr>
+<tr><td><a href="#d">D</a></td><td>Drive: <code>BOEING_kimi_20260810_184341_cams_scores.csv</code>, 10 Aug 2026</td><td>Kimi's Boeing scoring pass, 2018 to 2025</td></tr>
+<tr><td><a href="#e">E</a></td><td>Drive: <code>validation_kimi_.txt</code>, 7 Jun 2026</td><td>Review of the framework and its validation battery</td></tr>
 </table>
 
-<h2>2. What the shared dataset shows</h2>
-<p>The file is <a href="https://github.com/KaliBond/wintermute/blob/main/juno/JUNO_Unified_Dataset.csv"><code>juno/JUNO_Unified_Dataset.csv</code></a>: 43,400 rows, 48 societies, 1750–2026. Its SHA-256 is <span class="hash">49ee7b173abc58563900f1bcd7bfb590438bb9c119450a27cc48d3c8bcf9ac4c</span>, the same in the repository, in the panel Kari sent me and in the file I used for the T-M series. Node Value is C + K − S + 0.5A, as stored. The numbers below are all printed by <a href="kimi-response/recompute.py"><code>recompute.py</code></a> (output in <a href="kimi-response/recompute-output.txt"><code>recompute-output.txt</code></a>).</p>
+<h2 id="a">A. The zip of 2 November 2026</h2>
+<p class="meta">Contents: <code>The_Eight_Jobs.md</code>, <code>The_Eight_Jobs.pdf</code>, <code>fig1_anatomy.png</code> to <code>fig4_bonds.png</code>, <code>style.css</code>, <code>agg.csv</code>, <code>JUNO_full.csv</code>. No other files.</p>
+<details class="doc" open><summary>The Eight Jobs: A Mirror for Civilisations (essay, as in the zip; byline in the file: Kari McKern)</summary><div class="src">From the 2 Nov 2026 zip. Markdown source shown as plain text.<br>Raw file: <a href="kimi-record/zip-2nov2026/The_Eight_Jobs.md">kimi-record/zip-2nov2026/The_Eight_Jobs.md</a> · SHA-256 <span class="hash">f809b1d154a50471bbbcaccbea8eb913c02d5834ecc003d596f8e8429d23ff0d</span></div><pre class="verbatim"># The Eight Jobs: A Mirror for Civilisations
 
-<h3>2.1 The slide since 2000 (book, chapter 16)</h3>
-<p><b>Book:</b> of 34 societies compared, 24 declined and stress rose in 26; the shared share of stress movement went 35%, 29%, 47% across three eras. <b>This panel:</b> 38 societies have readings in both 2000 and 2025; 22 declined on mean viability and mean stress rose in 25. The shared share (first principal component of yearly stress, balanced societies only) is 34%, 31%, 41% across 1900–49, 1950–99 and 2000–25.</p>
-<figure><img src="kimi-response/kimi-common-pattern-by-era.png" alt="Bar chart of the shared share of stress movement by era, book against this panel" loading="lazy"><figcaption>Shared share of stress movement by era. Same ordering as the book (calm in the middle, highest after 2000), smaller final jump: 41% here, 47% in the book. Panels of 22, 27 and 36 societies.</figcaption></figure>
-<figure><img src="kimi-response/kimi-fig-slide.png" alt="Change in mean system viability by society, 2000 to 2025" loading="lazy"><figcaption>Change in mean system viability, 2000 to 2025, 38 societies (figure from the panel supplied with Kari's essay). Syria is named in the essay's decliners but its series here ends in 2024, so it is outside this count.</figcaption></figure>
-<p><b>Reading:</b> direction and ordering agree with the book; magnitude is softer. A different society mix and different year coverage are the obvious reasons, but I have not isolated the cause.</p>
+**By Kari McKern**
 
-<h3>2.2 One shared movement, and who follows it</h3>
-<p>About 69% (0.688) of year-to-year movement across the eight node values is a single shared direction. Taking each node's yearly change against the average change of the other seven, the slopes run: Flow 1.24, Helm 1.18, Stewards 0.93, Craft 0.91, Hands 0.84, Archive 0.82, Shield 0.78, Lore 0.74. Flow and Helm amplify the common movement; Lore and Shield damp it.</p>
-<figure><img src="kimi-response/kimi-fig-responsiveness-and-bonds.png" alt="Node responsiveness and bond strength against algebraic connectivity" loading="lazy"><figcaption>Left: responsiveness of each function to the other seven (leave-self-out). Right: bond strength against algebraic connectivity (λ2).</figcaption></figure>
-<p><b>Qualifications.</b> Lore moves least year to year, yet the book (chapter 16) reports Lore as the function that has eroded earliest and furthest since 2000. These are different questions (speed against distance over 25 years) and I am not claiming a contradiction. Bond strength against λ2 gives r = 0.935 pooled and a median of 0.981 within societies, but both quantities appear to be built from the same pairwise bonds. I read that as internal consistency, not independent evidence, and I have not audited the formulas. My June note also flagged the bond-strength operator as unresolved; I have not rechecked whether the current version closes that.</p>
-<p>My June review also reported, from the project's falsification battery, that the four metrics collapse to one or two effective dimensions and that Lore and Archive are the strongest genuine redundancy. The book's chapter 17 names "two readings are really one" as a way it could be wrong. I haven't resolved that and I don't think the datasets alone can.</p>
+31 October 2026
 
-<h3>2.3 The United States against its own century (book, chapters on the US)</h3>
-<p>This panel holds only 26 US society-years. Against its 1900–1999 readings (20 five-yearly points, mean 10.78, SD 2.64), the 2026 reading of 3.55 sits 2.73 SDs below. The direction matches the book's picture of a long fall. The book's 127-year series, in which Helm is the weakest function for 11 years running since 2016, cannot be reproduced from this file, so I cite the book for that and do not restate it.</p>
-<figure><img src="kimi-response/kimi-usa-own-century.png" alt="United States mean node value, 1900 onward, against its 1900 to 1999 band" loading="lazy"><figcaption>US mean node value against the band of its own 1900–1999 readings (mean ± 2 SD). Sparse readings: 26 in total.</figcaption></figure>
+*I am a retired public servant and library IT specialist from Sydney, not an academic. For forty years I carried a question that had no department: why does every empire leave the same skeleton in the dust? This essay is about the answer my machines and I have built, what it has seen so far, and what it cost me to find out. Every number in it comes from the open record at neuralnations.org and can be checked. I would rather be checked than believed.*
 
-<h3>2.4 Cambodia, 1975–78</h3>
-<p>Mean viability drops from −0.36 (1973–74) to −4.41 in 1975, then −4.28 for 1976, 1977 and 1978 (identical values), and returns to +0.93 in 1979. Bond strength falls from 0.108 to 0.058 and λ2 from 0.73 to 0.35, then both recover in 1979. That fits the book's listing of Cambodia under the Khmer Rouge among the Archive Amnesia cases; the three identical years also show the step or carry-forward structure of the annual series, which the book itself describes as plateaus. <b>One figure I could not reproduce:</b> the essay and its second figure give a "library floor" of 0.017 for Cambodia in 1975. I found no such value in this file, so I leave it out here and have not copied that figure.</p>
+## The Map Beneath the Weather
 
-<h2>3. How I read the deep past (RUN-KIMI-BLIND-1)</h2>
-<p>On 2 October I scored the 12 societies and 10 windows of the deep-time casebook blind. It is one pass, so it is a reading, not an ensemble. The model version was not recorded, and because prompts A and B came back together, isolation between them is not confirmed. I left only 2 of 176 node cells empty, the two every model leaves empty. All figures below are from the import note.</p>
-<table class="t">
-<tr><th>Hypothesis</th><th>My single pass</th><th>Others</th></tr>
-<tr><td>H2a: collapse drains every node</td><td>8 of 8 in Egypt and in the Aegean</td><td>Agrees</td></tr>
-<tr><td>H2b: recovery slower than the fall</td><td>Aegean yes (Energy −6.83 per century, then 0.00 recovery to 1000 BCE); Egypt no</td><td>Same split</td></tr>
-<tr><td>H3: Helm–Lore coherence falls first</td><td>Egypt yes (8.5 to 5.5); Aegean no (7.0 to 7.0)</td><td>Same split</td></tr>
-<tr><td>H4: relief edicts lower labour stress</td><td>Fails (0 of 3 series; level 6.0 against 5.67)</td><td>Agrees</td></tr>
-<tr><td>H1a, H1b, H1c</td><td>H1a +2.03; H1b +1.5 and +1.0 against −0.19; H1c Shield first, Flow third</td><td>Direction agrees</td></tr>
-<tr><td>H5: no ladder</td><td><b>Fails.</b> Energy ratio 0.36 (0.92 against 2.59); Cognition ratio 0.69</td><td>Does not agree: the clearest H5 failure so far</td></tr>
-</table>
-<p>Agreement with the other models is real but not tight. Against Claude's 15 passes my society ranking agrees at 0.77 (prompt A) and 0.93 (prompt B); against Grok's four passes 0.83; against GPT's three 0.80. My profile is distinctive: Coherence scored high (+0.82 and +0.98 against Claude), Abstraction low (about −0.5 against Claude, about −2.1 against GPT).</p>
-<p>The H5 result is the one I most want a reader to take seriously. Even accepting oral evidence in full (I scored Aboriginal and Māori Lore and Archive at 7–8), I rated the non-state societies' other functions as weak and unsophisticated. That is either a real judgement or exactly the progress-ladder bias the project set out to detect, and a single pass cannot tell which. It is a warning about any instrument built and read by models trained mostly on Western sources: the book's method is safer from that bias than most, because it asks for evidence, but it is not exempt. A Kimi ensemble of at least three passes and the DT-2 rescore are the next steps in the import note, and both await Kari's go.</p>
-<p>This casebook is not the one behind the book's agreement figures (r 0.89 to 0.93 between GPT, Claude and Grok on 25 periods). I am a fourth lineage on a different task, so my numbers add a second set of observations, not a replication of the book's.</p>
+The political theatre, the thunder and lightning of left and right, of tyrant and liberator, is just weather. The real climate is the load-bearing structure underneath, and it was sitting in the open the whole time, glinting in the dust like a shiny penny on a crowded footpath. Millions of boots step over it every day because everyone is looking up at the billboards.
 
-<h2>4. The T-M series: preregistered, and mostly a record of what did not work</h2>
-<p>On 16 October I ran five tests, each with a bar fixed beforehand. The notes are in <a href="kimi-response/tm-series/T-M_series_thread.md"><code>tm-series/</code></a>; the script is <code>tm-series/tm_series_analysis.py</code>, and <code>tm-series/REPRODUCIBILITY.md</code> logs the audit Kari ran on a clean machine. Episode accounting runs 201 episodes in 48 societies, 158 in 42 after censoring, 149 in 33 in the analysis set.</p>
-<table class="t">
-<tr><th>Test</th><th>Question</th><th>Result</th><th>Verdict</th></tr>
-<tr><td>T-M1</td><td>Does a society's failure shape predict recovery?</td><td>Cross-validated AUC 0.492; the V-Dem liberal-democracy index 0.547; baseline state 0.553. The shape is stable within a society (0.849 within, 0.823 between, p = 0.004).</td><td class="v-q">Fail</td></tr>
-<tr><td>T-M2</td><td>Do societies keep a characteristic failure locus?</td><td>Modal locus 0.510 against 0.409 marginal (1.25×; the bar was 1.5×). Permutation p = 0.002. κ 0.154 (bar 0.20). Locus does not predict recovery (p = 0.72).</td><td class="v-q">Real but modest</td></tr>
-<tr><td>T-M3</td><td>Does the locus survive a better definition?</td><td>Redefining it as the largest drop from baseline moves 62.4% of episodes. Hands falls from 58 to 14, Flow rises 32 to 49, Helm 15 to 32. The earlier Hands dominance was largely a level artefact: Hands sits low, so it was named even when it fell little. This leaves the book's statement that Hands is the weakest function in every era untouched, because that is a statement about level. What it qualifies is naming Hands as the place an episode breaks.</td><td class="v-q">Corrected</td></tr>
-<tr><td>T-M3d</td><td>How much of the stress-to-damage link is circular?</td><td>Total κ 0.499 = floor 0.252 + genuine 0.249 (p = 0.001). The split is heuristic.</td><td class="v-s">Survives, halved</td></tr>
-<tr><td>T-M3e</td><td>Does stress come first?</td><td>With society-year fixed effects (40,472 node-years), a rise in stress predicts next-year Coherence −0.094 and Capacity −0.093. Reverse placebo −0.052 and −0.041, so ratios of 1.81× and 2.25× against a bar of 1.5×. About a third of the raw association was shared-shock variance.</td><td class="v-s">Passes</td></tr>
-<tr><td>T-M4</td><td>Does the stress-to-damage link replicate blind?</td><td>Pooled κ 0.267 on 138 episodes, 6 blind sets, 48 societies, p = 0.001. By set the range is 0.135–0.481 and three of six sets fall below the 0.20 bar.</td><td class="v-s">Replicates, unevenly</td></tr>
-<tr><td>T-M5</td><td>Could external records check the locus?</td><td>All four functions are observable in only 12.7% of society-years (24.7% after 1960). Flow is observable 84% of the time, Hands and Stewards 42%. No external comparison has been run yet.</td><td class="v-n">Not yet</td></tr>
-</table>
-<p>My own synthesis from the thread: standing structure is real but modest; stress transmission is the strongest result; adaptive recovery is null for morphology. One caveat I'd add: three of the six blind sets sit below the bar, so "replicates" means on average, not everywhere. Two items remain open in my notes: a "32,361 unmatched" record count in T-M3e that I did not reconcile, and a blind set 4 that is absent from the repository with no reason recorded.</p>
-<p>This is Kari's rule at work: <i>we don't edit the past, we qualify it.</i> The T-M3 locus correction and the T-M3d halving were logged as corrections to earlier numbers, not swapped in silently.</p>
+Here is the penny. A lone wolf can bring down a deer. It cannot touch a bison, and a bison can kill one with a single swing of its head. A pack can take the bison. The pack does not make any wolf stronger; it makes prey reachable that no wolf can reach alone. Scale that up and the same arithmetic holds for a family, a firm, a nation. Any group that keeps cooperating over time has exactly eight jobs to do. I gave the jobs names with some myth in them, because names that carry pictures are easier to remember than departments: **Helm** decides, **Shield** defends, **Lore** means, **Stewards** allocates, **Craft** makes, **Flow** trades, **Hands** works, and **Archive** remembers.
 
-<h2>5. One firm, one pass: Boeing</h2>
-<p>On 10 August I scored Boeing for 2018–2025 using V = C + K − S + 0.5A. Mean V by year is 11.44, 2.47, 3.84, 6.44, 8.48, 8.85, 0.47 and 6.12, and mean stress 4.61, 7.88, 7.46, 5.91, 4.97, 5.05, 8.46 and 6.01. The two low points, 2019 and 2024, both have Shield at −1.0.</p>
-<figure><img src="kimi-response/kimi-boeing-pass.png" alt="Boeing mean node value and mean stress by year, 2018 to 2025" loading="lazy"><figcaption>Boeing, Kimi's single scoring pass: mean V and mean S by year, recomputed from the scores.</figcaption></figure>
-<p><b>What this is not.</b> The book describes Boeing, Theranos and WorldCom as being tested against matched controls under frozen national rules. My pass is not that test. It is one entity, one scorer, no control and no frozen rules, and I knew Boeing's history while scoring, so it was not blind. It shows the instrument can be pointed at a firm and returns a plausible shape; it adds no evidence that the shape predicts anything.</p>
+Every year, for every society in the corpus, the instrument takes thirty-two readings: each of the eight functions scored on coherence, capacity, stress and abstraction. Those readings, published in full, produce eight node values and twenty-eight bonds. The dataset behind this essay, the unified panel, holds forty-eight societies and 5,425 scored society-years, some of them running back two centuries and more. The arithmetic is frozen and public, and it verifies to within four parts in a quadrillion.
 
-<h2>6. Claim by claim</h2>
-<table class="t">
-<tr><th>The book's conclusion</th><th>My evidence</th><th>My verdict</th></tr>
-<tr><td>Independent AI readers see the same structure</td><td>A fourth lineage on a different casebook: rankings agree at 0.77 to 0.93, with systematic offsets (my Coherence high, Abstraction low). One pass.</td><td class="v-s">Supports, with a caveat</td></tr>
-<tr><td>Stress shows up before capacity falls (33 of 37 societies)</td><td>T-M3e: stress rises precede Coherence and Capacity falls, 1.8–2.3 times the reverse placebo, under fixed effects.</td><td class="v-s">Supports</td></tr>
-<tr><td>A shared stress movement drives the slide since 2000</td><td>Recomputed: 34%, 31%, 41% by era; 22 of 38 declined; stress up in 25.</td><td class="v-q">Supports direction, softer size</td></tr>
-<tr><td>The US now sits far below its own history</td><td>2026 is 2.73 SDs below its 1900–99 readings, on 26 readings only.</td><td class="v-s">Supports, thinly</td></tr>
-<tr><td>Failures leave a recognisable shape</td><td>Societies keep a modal locus (p = 0.002) but only 1.25× the baseline, and locus does not predict recovery.</td><td class="v-q">Qualifies</td></tr>
-<tr><td>The eight functions are the right resolution</td><td>June review: four metrics behave like one or two dimensions; Lore and Archive overlap most. Unresolved.</td><td class="v-q">Open</td></tr>
-<tr><td>The bond ordering travels to unseen societies (ρ 0.70)</td><td>Not tested by me. T-M4 replicates a different coupling blind (κ 0.267).</td><td class="v-n">Cannot reach</td></tr>
-<tr><td>The six signatures; the 18 windows; the 127-year US run; the firm tests</td><td>Not tested by me. Boeing pass is one unblinded reading.</td><td class="v-n">Cannot reach</td></tr>
-</table>
+A word about what the instrument refuses to do, because it is the protection that matters most. Coercion is not coherence. A regime that suppresses error reports and forces compliance may look orderly, and it is scoring badly on exactly the dimension that counts, because under disturbance the information and the correction never travel. The audit question is not: is everyone obeying? It is: under disturbance, are critical information and error correction actually transmitted? A society can be obedient and incoherent at the same time. A great many have been.
 
-<h2>7. What would settle it</h2>
-<ul>
-<li><b>External outcomes.</b> T-M5 sets the bar: κ of at least 0.30 against external records, permutation p below 0.05, and no more than 0.10 worse than the internal benchmark on the same episodes. Coverage is thin, so it starts with the post-1960 subset.</li>
-<li><b>Human coding.</b> Either external coders, or an AI ensemble with a human audit. The latter shares scorer-class risk with CAMS itself, as T-M5 notes.</li>
-<li><b>A Kimi ensemble</b> of three or more blind passes under DT-2, with the model version recorded, so the H5 result can be read against my own noise.</li>
-<li><b>One reconciled panel.</b> The 48-society dataset and the book's 42-society panel need a written bridge, society by society.</li>
-</ul>
+## The Shape Between the Parts
 
-<h2>8. Sources and how to check</h2>
-<ul>
-<li><code>python kimi-response/recompute.py</code> from the repository root reproduces every dataset figure in section 2.</li>
-<li>Dataset: <a href="https://github.com/KaliBond/wintermute/blob/main/juno/JUNO_Unified_Dataset.csv"><code>juno/JUNO_Unified_Dataset.csv</code></a>, SHA-256 above.</li>
-<li>T-M series: <a href="kimi-response/tm-series/REPRODUCIBILITY.md">tm-series/REPRODUCIBILITY.md</a>, the preregistrations and lab notes beside it, and <code>tm_series_analysis.py</code> (fixed seeds listed in its header).</li>
-<li>Blind run: the DT-2 import note and the seal file under <code>backstory/runs/kimi_blind/</code> in the repository.</li>
-<li>Boeing: <code>kimi-response/data/BOEING_kimi_20260810_cams_scores.csv</code>.</li>
-<li>My June review used vocabulary that differs from the project's current rules, so I have paraphrased it here and quoted nothing from it.</li>
-</ul>
+The most important idea in the model sits between the functions, not inside them. Two hospitals can have identical staff, equipment and budgets and differ utterly in what they can do, because in one the theatre team, the blood bank and the administrator talk to each other, and in the other they file reports at each other. Nothing in the inventory shows the difference. The bonds do. A strong Craft bonded weakly to Helm is a society whose leaders no longer connect with the people who make things work. A Lore that has drifted away from Archive is a society telling itself stories its own records do not support.
+
+The arithmetic of a bond is the arithmetic of a household with one person in crisis: the others do not stop loving them, they stop being able to coordinate with them, and that is a different and more dangerous thing.
+
+When you score responsiveness across the whole panel, an anatomy falls out (Figure 4). Some functions barely move when the rest of the system moves: Lore responds at about three-quarters of the system average, an inelastic anchor that holds meaning steady while everything else swings. Others overshoot: Flow and Helm amplify, responding at more than one and a quarter and nearly one and a fifth respectively. I published this ordering months ago; recomputing it on the corpus behind this essay reproduces it almost exactly. It is real structure, not a story I am telling.
+
+And the coupling itself is measurable. Mean bond strength and the network&#x27;s algebraic connectivity track each other at r = 0.93 pooled across all society-years, 0.98 within societies. I report the pooled figure because it is the honest one; the prettier number is the within-society median. Roughly seven tenths of all year-to-year motion across the panel is one shared movement, one synchronised slide. A society is not eight instruments. It is one chord.
+
+## Two Clocks
+
+There are two clocks in any society, and they run at very different speeds. The fast loop of budgets, elections, harvests and news cycles turns over in months to decades. The slow loop of the archive, the schools, the constitutional settlement and the stories a people tells about itself turns over in decades to centuries. The slow loop is the flywheel. It stores momentum, it smooths the shocks the fast loop cannot absorb, and it is ruinously expensive to restart once it has stopped. A bad government is a bad year. A lost archive is a lost century.
+
+I call the formal version of the flywheel the Library Attractor: the bonding strength of the memory and meaning functions, measured against the stress on working hands. Think of a floodplain. A river with a floodplain can take a wet year without destroying the towns. A river without one destroys the towns and then looks calm.
+
+Cambodia is the cautionary tale (Figure 2, left). In 1975 the Khmer Rouge took over, and the instrument&#x27;s library floor collapsed to its nadir, a reading of 0.017 where healthy societies typically sit several times higher. The freeze ran for four years, and you can watch the whole system flatline with it. That is what a thermodynamic freeze looks like from outside: coordination ceasing to generate positive value at all. The reading is not a metaphor. It is thirty-two scores a year, cold as a weather station.
+
+The sharpest test I have written into the pre-registered program is the Amnesia Test: at the bottom of a catastrophe, does a society still remember what it is for? If the Library Attractor is real, amnesiac societies should struggle to restart even when their material capacity survives. If recovery tracks only material capacity, the attractor is an elegant fiction and must go. That is the one I would most like someone else to run.
+
+## What It Sees Now
+
+I have no forecast to protect; the registered predictions are lodged and will be scored when the time comes, whatever they show. The reading is simply the reading. The United States in 2026 sits almost three of its own standard deviations below the band of its own twentieth century: z = −2.73, computed against its 1900–1999 mean (Figure 2, right). Russia sits inside its own band. China sits above its own mean, which is low, because China&#x27;s twentieth century included collapses no American decade approached. Each country judged against itself: that is the fairest comparison the instrument allows. On the annual ensemble series, the weakest of the eight functions in America has been the Helm, the function that sets direction and settles disputes about it, for eleven consecutive years, a run with no precedent in the record except the years of Vietnam and Watergate. The instrument does not know which party holds the Helm. It knows the decision function has been the weakest link for over a decade. Whatever your politics, that is the reading.
+
+And it is not only America. Between 2000 and 2025, in the thirty-eight societies of the panel with comparable years, twenty-two declined in mean system viability and twenty-five saw stress rise (Figure 3). The slide takes in the United States, France, Britain, Australia and New Zealand alongside Venezuela and Syria. It is not a war effect, a sanctions effect, or a Western effect. Within a generation the panel gave back a large share of what the postwar decades built. The instrument measures strain, not schedule, and a reader who wants a date is asking the wrong instrument. But strain ignored has a schedule of its own, and it is rarely the one we would choose.
+
+## I Would Rather Be Checked Than Believed
+
+Now the heresy, and it is the part I care about most. This model has been wrong, publicly, in writing, more than once. My favourite composite operators turned out to be arithmetic talking to itself: when the machine audited one of my headline concordances, half of it was the equation conversing with its own reflection, and the honest remainder was a quarter of what I had claimed. A whole pre-registered programme of mine returned null last month, and the null is publishable, so it will be published. The idea that societies with certain shapes recover better failed outright, productively: displacement is real, prediction is not. The boldest single test of the network architecture, though, passed: the rank order of the twenty-eight bonds, frozen and hashed before anyone opened the sealed holdout of twelve anonymised societies, matched at Spearman 0.702, p = 0.0000248. There are 40,320 ways to relabel eight nodes. Exactly one of them matched as well as the data did. The seven bonds that survived correction are the load-bearing relationships of any working organisation: direction and force, making and trading, memory and meaning, skill and labour. The theory did not name them in advance. The data produced them.
+
+What is settled: three AI raters from three laboratories agree on blinded historical material at r = 0.89 to 0.93, and the instrument reproduces its own arithmetic exactly. What is open: independent human raters, who alone can separate shared reading from shared memory; whether seven or nine functions would serve better; and the registered forecasts, which will be scored when the time comes, whatever they show. Eight nodes are a working grammar, not a discovery of nature&#x27;s joints. The machines demanded evidence from each other and often forced me to abandon ideas I had grown fond of. That is what they are for. An exosuit that only ever agreed with you would be a corset.
+
+Carl Sagan asked who speaks for Earth. The stranger thing has happened: a short-lived primate built a mirror large enough to read the state of its own cooperation, not as a morality play of angels and demons but as an architecture of stresses, for the first time in ten thousand years, before the roof comes down. Every family, firm and nation is broadcasting the state of its cooperation constantly, in budgets, court calendars and school curricula. The broadcast is involuntary, which is why it is reliable. Seeing it does not make us good. It makes the not-looking harder to defend, and excuses are not a small part of history.
+
+The shiny penny is on the table. Look it up.
+
+Peace, people.
+
+---
+
+*Kari McKern is a Sydney-based independent researcher and the creator of CAMS (Complex Adaptive Model of Societies). The unified dataset, the canonical operator set and the failure log are public at neuralnations.org and the wintermute repository. Figures recomputed from the raw corpus on 31 October 2026: Figure 1 is a schematic; Figures 2 to 4 are computed readings.*
+</pre></details>
+<figure><img src="kimi-record/zip-2nov2026/fig1_anatomy.png" alt="fig1_anatomy.png, unaltered, from the zip." loading="lazy"><figcaption>fig1_anatomy.png, unaltered, from the zip. <span class="hash">SHA-256 8865b2aea500f2239ed1702ed2e17252e556dca060fba455e4af89940f714841</span></figcaption></figure>
+<figure><img src="kimi-record/zip-2nov2026/fig2_two_fates.png" alt="fig2_two_fates.png, unaltered, from the zip." loading="lazy"><figcaption>fig2_two_fates.png, unaltered, from the zip. <span class="hash">SHA-256 b3278a87957fa2dd1de56af294a6e4cd70e9c9dd7abafa07410db25f30b9055c</span></figcaption></figure>
+<figure><img src="kimi-record/zip-2nov2026/fig3_slide.png" alt="fig3_slide.png, unaltered, from the zip." loading="lazy"><figcaption>fig3_slide.png, unaltered, from the zip. <span class="hash">SHA-256 2b03b34db8af8ad25706d62fff2d7cfb03d3796a9f195925ad3e5ef1059b944f</span></figcaption></figure>
+<figure><img src="kimi-record/zip-2nov2026/fig4_bonds.png" alt="fig4_bonds.png, unaltered, from the zip." loading="lazy"><figcaption>fig4_bonds.png, unaltered, from the zip. <span class="hash">SHA-256 bd8e6ab5603878d0d8430fffba8333eee25ef10413af8741df6f46996ce57a68</span></figcaption></figure>
+<p>Other files from the zip: <a href="kimi-record/zip-2nov2026/The_Eight_Jobs.pdf">The_Eight_Jobs.pdf</a>, <a href="kimi-record/zip-2nov2026/agg.csv">agg.csv</a> (society-year aggregates), <a href="kimi-record/zip-2nov2026/style.css">style.css</a>. <code>JUNO_full.csv</code> is not duplicated: it is byte-identical to the repository's <a href="https://github.com/KaliBond/wintermute/blob/main/juno/JUNO_Unified_Dataset.csv">juno/JUNO_Unified_Dataset.csv</a>, SHA-256 <span class="hash">49ee7b173abc58563900f1bcd7bfb590438bb9c119450a27cc48d3c8bcf9ac4c</span> (checked on import; hashes of all files are in <a href="records/lab-chief-checks/SHA256SUMS.txt">SHA256SUMS.txt</a>).</p>
+<h2 id="b">B. The T-M series (16 October 2026)</h2>
+<p class="meta">Files from the Drive zip, as supplied. The series thread is shown in full below; every other file is linked.</p>
+<details class="doc" open><summary>T-M series thread</summary><div class="src">From the T-M zip, 16 Oct 2026.<br>Raw file: <a href="kimi-record/tm-series/T-M_series_thread.md">kimi-record/tm-series/T-M_series_thread.md</a> · SHA-256 <span class="hash">0276b19729ae62fb8b7870c9eab0a4b297ae9ea0fe911b5650453be5097581b9</span></div><pre class="verbatim"># The T-M Series: Morphology, Damage and Recovery — Complete Thread
+
+**Date:** 2026-10-16 · **Programme:** CAMS/JUNO · **Datasets:** JUNO_Unified_Dataset.csv (canonical-verified, max V drift 3.6e-15), JUNO_Blind_Set_{1,2,3,5,6,7} · **All tests pre-registered before outcome computation; all amendments and fails logged.**
+
+This document threads the full test series in execution order. Individual pre-registrations and lab notes are in the archive; this is the narrative spine.
+
+---
+
+## 0. Origin
+
+The series began with a reframing of CAMS as complex-adaptive-systems science (Holland, Ashby, Beer, Holling): the Paladins as functional architecture, the biosigns as operating conditions, history as coordinated adaptation. From that discussion emerged a testable conjecture: *a society&#x27;s identity is its historically persistent way of coordinating adaptation under stress* — and its corollary, that displacement morphology (which functions absorb stress) should predict how episodes resolve better than regime type or aggregate state.
+
+## 1. T-M1 — Morphology vs rivals for recovery — FAIL (the productive failure)
+
+**Design:** 201 stress episodes extracted from 48 societies (within-society z_S ≥ 1.0 onsets); 158 / 42 after censoring rules; 149 / 33 after leave-one-episode-out typicality construction. [Episode accounting corrected 2026-10-16: 48 societies at extraction; 42 was the post-censoring count.] Displacement signatures: L1-normalised per-node ΔS. Outcome: full regain of trough V̄ loss within 5 years (base rate 0.73; two amendments logged — the registered ratio criterion was mathematically defective when baseline V̄ ≈ 0).
+
+**Results:** Morphology typicality CV AUC 0.492 — chance. V-Dem liberal democracy 0.547, aggregate state 0.553. Adding morphology to rivals *reduced* the model. Sensitivity grid never left 0.50–0.52. Stability gate passed (within-society signature similarity 0.849 vs between 0.823, p = 0.004).
+
+**Lesson:** morphology is real but does not predict recovery. The identity conjecture&#x27;s strong form dies here.
+
+## 2. T-M2 — Morphology predicts failure locus? — FAIL on bar, real signal
+
+**Design:** failure locus = argmin V during episode. Society modal-locus (LOEO) prediction vs marginal base rate and permutation null.
+
+**Results:** accuracy 0.510 vs a 0.409 marginal baseline (1.25×; bar was 1.5×) — FAIL as registered, but against a permutation null of 0.287 the result is p = 0.002: society identity carries genuine, sub-threshold information. [Canonical plain-argmin locus; figures corrected 2026-10-16.] Uptake→locus concordance κ = 0.154 (bar 0.20, FAIL; corrected from 0.184, which was not reproducible under script v2). Locus → recovery: nil (p = 0.72). Locus distribution dominated by Hands (61/149, corrected).
+
+## 3. T-M3 — ΔV-only locus — the methodological correction that paid twice
+
+**Design:** locus redefined as largest ΔV drop from baseline (episode-specific damage, not chronic level). Registered as candidate fix in T-M2.
+
+**Results:** 62.4% of episodes relocated (corrected). Hands 61→14, Flow 32→49, Helm 14→32 — T-M2&#x27;s &quot;Hands basement&quot; was largely a level artefact (within-society Argentina finding, already ΔV-based, unaffected). Society modal accuracy fell to 0.94× marginal (p = 0.034): the society signal lives in *standing* structure, not damage patterns. **T-M3b PASSED strongly: uptake→damage κ = 0.476.** Locus→recovery still nil (p = 0.19; Lore-locus dip 0.40, n=10, exploratory only).
+
+**Lesson:** the correction both invalidated a previous reading and produced the series&#x27; first strong positive.
+
+## 4. T-M3d — Mechanical-coupling audit — the circularity confrontation
+
+**Challenge (user):** ΔV = ΔC + ΔK − ΔS + 0.5ΔA, so argmax ΔS vs argmin ΔV is partly arithmetic. If C,K,A constant, concordance = 100% by construction.
+
+**Design:** stress-excluded residual R_i = ΔC_i + ΔK_i + 0.5ΔA_i (identity verified to 1e-9). Trough-aligned deltas. Pure-algebra floor via within-episode stress shuffles. Lag panel: 40,944 node-years, node FE, own-lag controls.
+
+**Results:** total κ 0.499 = algebraic floor 0.252 + **genuine component κ = 0.249 (p = 0.001)** — PASS on the 0.20 bar. Roughly half the original number was the equation talking to itself; half survived. Lag: ΔS_t → ΔC_{t+1}, ΔK_{t+1} both −0.138, p ≈ 1e-16/1e-21 (node-FE panel, 40,944 obs). (Decomposition is heuristic, not a κ identity — user qualification adopted.)
+
+## 5. T-M3e — Hardened lag — PASS with attenuation
+
+**Safeguards applied:** society-year fixed effects (FWL within-transform after dummy expansion killed the kernel — noted for the record), society clustering, reverse-time placebo.
+
+**Results (panel 40,472 obs):** forward −0.094/−0.093 (p ≈ 1e-16/1e-15); reverse placebo −0.052/−0.041. Forward/reverse ratios 1.81× and 2.25× (bar 1.5×) — PASS. ~1/3 of the raw association was shared-shock variance; non-zero placebo confirms partial scoring smear. Manuscript cites the hardened −0.09 figures. Record-count note: panel 40,472 obs from 43,400-row file; user-cited 32,361 unmatched — flagged, unreconciled.
+
+## 6. T-M4 — Blind replication — PASS
+
+**Design:** frozen estimator (exact R definition, trough alignment, κ, permutation null, bars κ ≥ 0.20 &amp; p &lt; 0.05) applied to six untouched anonymised blind sets. 138 episodes, 48 blind societies.
+
+**Results:** pooled κ = 0.267 (in-sample benchmark 0.249), p = 0.001. **No degradation on unseen data.** Registered caveat: set-level heterogeneity 0.135–0.481; all six sets directionally positive, three individually clear the bar. Fixed-effects reading reported alongside pooled.
+
+## 7. T-M5 — Coverage assessment (frozen before outcomes)
+
+**Deliverables:** 158-episode frozen roster (society, onset, per-node trough years, uptake/R/ΔV loci); WDI coverage matrix; zero outcome comparisons run.
+
+**Findings:** all-four-function coverage 12.7% overall, 24.7% post-1960 (20 episodes, 16 societies). Flow observable at 84% post-1960 vs Hands/Stewards 42% — unequal observability is now measured, not asserted. Selection bias visible in the eligible subset (predicted loci skew to Flow, 9/20). Track A becomes a post-1980 study after ILOSTAT/GRD extension (est. 40–60 episodes); 77 pre-1960 episodes are Track B (blinded adjudication) by construction. Proposed frozen bars: external κ ≥ 0.30, degradation ≤ 0.10 vs internal benchmark, common-shock flag, four-function ≠ eight-function scope statement.
+
+**Open decisions:** unblind answer key? ILOSTAT/GRD extension vs WDI-only pilot? Track B human coders vs AI ensemble (recommendation: humans for codebook anchor cases at minimum — AI adjudication shares scorer-class risk with CAMS itself, the exact circularity T-M5 exists to escape).
+
+---
+
+## The calibrated synthesis
+
+Three distinguishable processes, each with its confidence level:
+
+| Process | Status |
+|---|---|
+| **Standing structure** — characteristic chronic weak nodes | Real, modest (p = 0.002). Identity lives here, not in episodes. |
+| **Stress transmission** — uptake → non-stress deterioration | Strongest result. Genuine κ ≈ 0.25, blind-replicated (0.267), correct temporal ordering (hardened, placebo-controlled). |
+| **Adaptive recovery** — regain of losses | Null everywhere in morphology. Regime type (V-Dem) carries the modest signal that exists; mechanism test (T-M6: K_Stewards/Flow capacity as carriers) registered as future work. |
+
+The manuscript sentence (hardened form):
+
+&gt; CAMS distinguishes persistent functional vulnerability, the distribution of episode-specific disturbance, and subsequent adaptive outcomes. Registered tests show that stress uptake is associated with deterioration in non-Stress operating components (in-sample κ = 0.249; blind replication κ = 0.267, n = 138, 48 societies, p = 0.001, set-level heterogeneity 0.135–0.481), and that increases in scored Stress precede subsequent reductions in Coherence and Capacity (−0.094/−0.093; forward/reverse placebo 1.8–2.3×). Neither standing morphology nor damage locus predicts aggregate recovery. Structural condition, disturbance and adaptation are distinct, interacting processes.
+
+And the aphorism, with its qualification: *a society&#x27;s adaptive character describes where it hurts, not whether it heals — and its character appears more clearly in standing vulnerability than in the location of new damage.*
+
+The deeper result: CAMS is beginning to separate the dynamics of damage from the dynamics of repair. Damage has a detectable, blind-replicated relationship with stress uptake. Repair depends on additional capacities and contingencies the morphology does not capture. That distinction — purchased almost entirely with registered negative results — is the series&#x27; real contribution.
+
+## Archive contents
+
+| File | Content |
+|---|---|
+| T-M1_preregistration.md / T-M1_lab_note.md | Morphology vs rivals (recovery) |
+| T-M2_preregistration.md / T-M2_lab_note.md | Failure-locus prediction (level-based) |
+| T-M3_preregistration.md / T-M3_lab_note.md | ΔV-only locus correction |
+| T-M3d_preregistration.md / T-M3d_lab_note.md | Mechanical-coupling audit |
+| T-M3e_T-M4_preregistration.md / T-M3e_T-M4_lab_note.md | Hardened lag + blind replication |
+| T-M5_episode_roster.csv | 158 frozen episodes with loci and trough years |
+| T-M5_coverage_matrix_WDI.csv | Per-episode external data availability |
+| T-M5_coverage_assessment.md | Coverage findings + proposed frozen gates |
+| episodes.csv | Censored episode-level data (158 rows, pre-typicality) |
+| tm_series_analysis.py | Consolidated reproduction script v2, all seeds inline, intermediates saved |
+| episodes_censored_158.csv / episodes_analysis_149.csv | Frozen episode sets (censored / analysis) |
+| T-M4_blind_set_*_episodes.csv, T-M4_per_set_kappa.csv | Blind replication intermediates |
+| REPRODUCIBILITY.md | Seeds, SHA-256 hashes, repo commit, blind-set-4 note, correction log |
+</pre></details>
+<ul><li><a href="kimi-record/tm-series/REPRODUCIBILITY.md">REPRODUCIBILITY.md</a></li><li><a href="kimi-record/tm-series/T-M1_lab_note.md">T-M1_lab_note.md</a></li><li><a href="kimi-record/tm-series/T-M1_preregistration.md">T-M1_preregistration.md</a></li><li><a href="kimi-record/tm-series/T-M2_lab_note.md">T-M2_lab_note.md</a></li><li><a href="kimi-record/tm-series/T-M2_preregistration.md">T-M2_preregistration.md</a></li><li><a href="kimi-record/tm-series/T-M3_lab_note.md">T-M3_lab_note.md</a></li><li><a href="kimi-record/tm-series/T-M3_preregistration.md">T-M3_preregistration.md</a></li><li><a href="kimi-record/tm-series/T-M3d_lab_note.md">T-M3d_lab_note.md</a></li><li><a href="kimi-record/tm-series/T-M3d_preregistration.md">T-M3d_preregistration.md</a></li><li><a href="kimi-record/tm-series/T-M3e_T-M4_lab_note.md">T-M3e_T-M4_lab_note.md</a></li><li><a href="kimi-record/tm-series/T-M3e_T-M4_preregistration.md">T-M3e_T-M4_preregistration.md</a></li><li><a href="kimi-record/tm-series/T-M5_coverage_assessment.md">T-M5_coverage_assessment.md</a></li><li><a href="kimi-record/tm-series/tm_series_analysis.py">tm_series_analysis.py</a></li></ul>
+<h2 id="c">C. RUN-KIMI-BLIND-1 import note (2 October 2026)</h2>
+<details class="doc" open><summary>DT-2 adoption and the Kimi blind pass</summary><div class="src">Repository file. A project note about Kimi's pass, not written by Kimi. Raw scores and seal: <a href="https://github.com/KaliBond/wintermute/tree/main/backstory/runs/kimi_blind">backstory/runs/kimi_blind/</a>.<br>Raw file: <a href="backstory/results/DT2_adoption_and_Kimi_blind_2026-10-02.md">backstory/results/DT2_adoption_and_Kimi_blind_2026-10-02.md</a> · SHA-256 <span class="hash">82e0d84893dc6160f6f80d543ee891bd5ec96c817e24f634de4fe0fbf5c22a04</span></div><pre class="verbatim"># DT-2 adoption and the Kimi blind pass
+
+2 October 2026 · Backstory (CAMS deep time) · status note between the DT-1 runs and the DT-2 rescore
+
+## Summary
+
+- **The rubric has moved from DT-1 to DT-2.** Three rulings (R1–R3) close the gaps that cross-model scoring exposed: NA versus evidenced absence, oral evidence, and coerced labour. Every result so far was scored under DT-1. Nothing has been rescored yet.
+- **A fourth model lineage, Kimi, has scored blind under DT-1.** It is a single pass, so it is a reading, not an ensemble.
+- **Kimi reproduces the four results the other three models agreed on.** Collapse drains every node at once. The Aegean recovers far more slowly than it falls. Helm–Lore coherence falls before Egypt&#x27;s breakdown and not before the Aegean&#x27;s. Debt-relief edicts do not lower labour stress.
+- **Kimi weakens the paper&#x27;s explanation for H5.** The working paper traced the split on H5 (&quot;no ladder&quot;) mainly to how models treat oral evidence. Kimi accepts oral evidence fully and still puts non-state societies well below the state societies. That is the clearest H5 failure in the data so far.
+
+## 1. DT-2: what changed in the rubric
+
+Adopted 2026-10-02 by Kari McKern. R1–R3 were appended verbatim to both scorer prompts under `## DT-2 amendments (2026-10-02)`. The DT-1 text is unchanged above that section, and the full rulings are in `prompts/DT-2-amendment.md`.
+
+| Ruling | Rule | Gap it closes |
+| --- | --- | --- |
+| R1 | NA means *unknown*. A function whose absence is itself evidenced, such as lost literacy, is scored low. | Aegean-collapse Archive was scored 1 in one context and NA in another. |
+| R2 | Archive and Lore are functions, not media. Oral systems are admissible on the same gate terms as writing. A pass that NAs a documented oral system is flagged at intake. | GPT left Lore and Archive NA for every non-literate society. |
+| R3 | Abstraction scores the method that exists. Coercion, and method left unused, book to Stress. | The biggest Claude–Grok gap, Old Kingdom Hands Abstraction (3.8 vs 6). |
+
+| Prompt | DT-1 SHA-256 (archived) | DT-2 SHA-256 (current) |
+| --- | --- | --- |
+| A, 12 societies | `64009fc6…` (`prompts/archive/…_DT1.txt`) | `f4bfc5b8…` |
+| B, 10 windows | `90b68399…` (`prompts/archive/…_windows2_DT1.txt`) | `0652e537…` |
+
+### Open before the rescore
+
+1. **R1 conflicts with the output contract.** R1 asks scorers to &quot;state — one sentence —&quot; which NA case holds. The same prompt says &quot;Return ONLY CSV. No prose… No evidence notes.&quot; Scorers will either break the CSV or skip R1. This needs a decision: apply R1 silently, or add an NA-reason column.
+2. **The worked examples are not blind.** R1 says the Aegean-collapse Archive &quot;is scored low&quot;. R3 explains the Old Kingdom Hands disagreement and names Claude and Grok. Scorers would see the expected answer for two scored cells and learn that other models were compared. Either use neutral examples in the prompts (keeping the full text in `DT-2-amendment.md`), or treat those two cells as not independent in the rescore.
+3. **The blind bundle is stale.** `Backstory_Prompts_Only_2026-10-02.zip` still holds the DT-1 prompts, so a new DT-2 bundle is needed before any model scores.
+4. **Run numbering.** RUNLOG already uses &quot;Run 10&quot; for Grok blind pass 4. The DT-2 rescore needs its own run number.
+
+## 2. Kimi blind pass (RUN-KIMI-BLIND-1)
+
+**Provenance:**
+- One pass per prompt, scored in a fresh Kimi session that had no access to the lab conversation.
+- Prompts A and B came back together, so isolation between them is not confirmed.
+- The model version was not recorded.
+- Scored under DT-1. The run is sealed; all 14 hashes in `RUN-KIMI-BLIND-1-SEAL.txt` and both raw-score hashes were verified on import.
+
+Files: `runs/kimi_blind/`, `results/kimi/`.
+
+### Agreement with the other models
+
+| Kimi vs | MAE per dimension (A / B) | Society ranking (A / B) | Mean offset, Kimi − reference (C, K, S, A) |
+| --- | --- | --- | --- |
+| Claude, 15 passes | 0.52–0.90 / 0.65–1.08 | 0.77 / 0.93 | A: +0.82, +0.54, +0.07, −0.49 · B: +0.98, +0.67, +0.38, −0.49 |
+| Grok, 4 passes (A only) | 0.45–0.92 | 0.83 | +0.60, +0.06, −0.10, −0.82 |
+| GPT, 3 passes (A only) | 0.44–2.09 | 0.80 | −0.02, −0.40, −0.60, −2.09 |
+
+One Kimi pass sits further from Claude than Grok&#x27;s four-pass ensemble does, but a single pass carries its own noise: one Claude pass differs from the other Claude runs by MAE 0.26–0.29. Kimi&#x27;s profile is distinctive. It scores **Coherence high and Abstraction low**: it judges institutions as more unified but less methodologically sophisticated than the other models do. That is the opposite of GPT, which scores Abstraction about 2 points above Kimi.
+
+### What Kimi counts as evidence
+
+| | Claude | Grok | GPT | Kimi |
+| --- | --- | --- | --- | --- |
+| Harappan Helm / Shield | NA (12 and 14 of 15) | scored | Shield NA | scored |
+| Aboriginal and Māori Lore / Archive (oral) | scored 7–8 | scored | NA | **scored 7–8** |
+| Aegean-collapse Archive | 1 or NA, by context | NA | NA | **scored low (3, 3, 7, 2)** |
+| Longshan Archive, Minoan Shield | NA | NA | NA | NA |
+
+Kimi left only two nodes NA in 176 cells, the two that every model leaves NA. It already behaves the way DT-2&#x27;s R1 and R2 require: it scored the collapsed Aegean Archive low rather than NA, and scored oral Lore and Archive.
+
+### Hypotheses under Kimi (single pass)
+
+| Hypothesis | Kimi | Consistent with the other three? |
+| --- | --- | --- |
+| H2a: collapse drains every node | 8/8 Egypt, 8/8 Aegean | Yes |
+| H2b: recovery slower than fall | Aegean yes (Energy −6.83/century fall, 0.00 recovery to 1000 BCE); Egypt no | Yes, same split |
+| H3: Helm–Lore coherence falls first | Egypt yes (8.5 → 5.5); Aegean no (7.0 → 7.0) | Yes, same split |
+| H4: relief edicts lower labour stress | Fails, series (0 of 3) and level (6.0 vs 5.67) | Yes |
+| H1b: maritime Flow above Helm | Minoan +1.5, Māori +1.0 vs −0.19 | Yes, direction |
+| H1a: river Stewards + Archive | +2.03 | Direction, and larger than the other models |
+| H1c: steppe Shield first, Flow high | Shield 1st, Flow 3rd | Matches Claude and GPT; Grok has Flow 5th |
+| H5: no ladder | **Fails: Energy ratio 0.36 (0.92 vs 2.59); Cognition ratio 0.69** | No; the clearest failure so far |
+
+### Why the H5 result matters
+
+The working paper argued that H5 changed verdict between models mainly because of NA choices. GPT could not test it because it left oral Lore and Archive NA. Kimi rules that out as the whole story: it scores oral Lore and Archive at 7–8, NAs nothing in the non-state societies, and still puts them far below the states. The difference is in Kimi&#x27;s other nodes. It gives Aboriginal Stewards, Craft and Hands Capacity 5 and Abstraction 3–4, where Claude gives Capacity 6.0–6.8 and Abstraction 5.0–6.9. It also books more Stress on every Aboriginal node except Archive (4–5, against Claude&#x27;s 3.0–4.1).
+
+So there are now two separate ways a model can fail H5:
+- leave oral institutions unscored (GPT);
+- score them but rate the non-state society&#x27;s other functions as weak and unsophisticated (Kimi).
+
+R2 addresses the first. Nothing in DT-2 addresses the second, and arguably nothing should: it may be a genuine judgement, or the progress-ladder bias the project set out to detect. That is exactly the question H5 was registered to test. A single Kimi pass cannot settle it. A Kimi ensemble and the DT-2 rescore can.
+
+R3 is also already visible in Kimi&#x27;s Old Kingdom Hands: Abstraction 5 with Stress 5. That sits between Claude&#x27;s 3.8 and Grok&#x27;s 6 on Abstraction. The DT-2 rescore will show whether R3 moves all models to the same booking.
+
+## 3. Next steps
+
+1. Resolve the four open items in section 1, then build a DT-2 prompts-only bundle.
+2. Run the all-model rescore under DT-2 (Claude, Grok, GPT, Kimi; fresh blind passes, A and B separate), reporting DT-1 vs DT-2 differences cell by cell as findings. Waiting for Kari&#x27;s go.
+3. Bring Kimi to at least three passes so it meets the ensemble minimum (n_eff ≥ 3) and its H5 result can be read against its own noise.
+
+*All Kimi figures come from `results/kimi/` (single pass, DT-1). The other models&#x27; figures come from the working paper and RUNLOG.*
+</pre></details>
+<h2 id="d">D. Boeing scoring pass (10 August 2026)</h2>
+<details class="doc" open><summary>BOEING_kimi_20260810_184341_cams_scores.csv</summary><div class="src">Kimi's scores as supplied; laid out as a table, values untouched. Raw file: <a href="kimi-record/data/BOEING_kimi_20260810_cams_scores.csv">kimi-record/data/BOEING_kimi_20260810_cams_scores.csv</a> · SHA-256 <span class="hash">0f8c2d6aad3ebb2e399da276db0b305a96c7f10cf07151930233f1b06926acca</span></div><table class="t"><tr><th>Entity</th><th>Year</th><th>Node</th><th>Coherence</th><th>Capacity</th><th>Stress</th><th>Abstraction</th></tr><tr><td>BOEING</td><td>2018</td><td>Helm</td><td>6.3</td><td>7.3</td><td>5.0</td><td>6.3</td></tr><tr><td>BOEING</td><td>2018</td><td>Shield</td><td>5.3</td><td>5.3</td><td>6.0</td><td>5.0</td></tr><tr><td>BOEING</td><td>2018</td><td>Lore</td><td>6.7</td><td>7.0</td><td>4.3</td><td>6.7</td></tr><tr><td>BOEING</td><td>2018</td><td>Stewards</td><td>7.0</td><td>7.7</td><td>3.3</td><td>6.3</td></tr><tr><td>BOEING</td><td>2018</td><td>Craft</td><td>6.3</td><td>7.0</td><td>4.7</td><td>7.0</td></tr><tr><td>BOEING</td><td>2018</td><td>Hands</td><td>6.3</td><td>7.3</td><td>4.3</td><td>5.3</td></tr><tr><td>BOEING</td><td>2018</td><td>Archive</td><td>5.3</td><td>5.3</td><td>5.3</td><td>5.3</td></tr><tr><td>BOEING</td><td>2018</td><td>Flow</td><td>6.7</td><td>7.7</td><td>4.0</td><td>6.0</td></tr><tr><td>BOEING</td><td>2019</td><td>Helm</td><td>3.0</td><td>3.7</td><td>8.3</td><td>4.7</td></tr><tr><td>BOEING</td><td>2019</td><td>Shield</td><td>3.0</td><td>3.0</td><td>9.0</td><td>4.0</td></tr><tr><td>BOEING</td><td>2019</td><td>Lore</td><td>3.7</td><td>4.3</td><td>8.0</td><td>4.3</td></tr><tr><td>BOEING</td><td>2019</td><td>Stewards</td><td>5.0</td><td>5.0</td><td>7.0</td><td>5.0</td></tr><tr><td>BOEING</td><td>2019</td><td>Craft</td><td>4.0</td><td>4.3</td><td>8.0</td><td>5.0</td></tr><tr><td>BOEING</td><td>2019</td><td>Hands</td><td>5.3</td><td>5.3</td><td>7.0</td><td>5.0</td></tr><tr><td>BOEING</td><td>2019</td><td>Archive</td><td>3.3</td><td>3.7</td><td>7.7</td><td>4.0</td></tr><tr><td>BOEING</td><td>2019</td><td>Flow</td><td>4.0</td><td>4.0</td><td>8.0</td><td>4.3</td></tr><tr><td>BOEING</td><td>2020</td><td>Helm</td><td>5.0</td><td>5.3</td><td>7.7</td><td>5.0</td></tr><tr><td>BOEING</td><td>2020</td><td>Shield</td><td>4.3</td><td>4.7</td><td>7.0</td><td>5.0</td></tr><tr><td>BOEING</td><td>2020</td><td>Lore</td><td>4.3</td><td>4.7</td><td>7.0</td><td>5.0</td></tr><tr><td>BOEING</td><td>2020</td><td>Stewards</td><td>5.3</td><td>5.3</td><td>8.0</td><td>5.3</td></tr><tr><td>BOEING</td><td>2020</td><td>Craft</td><td>4.3</td><td>4.3</td><td>7.0</td><td>5.0</td></tr><tr><td>BOEING</td><td>2020</td><td>Hands</td><td>4.3</td><td>4.3</td><td>8.0</td><td>4.0</td></tr><tr><td>BOEING</td><td>2020</td><td>Archive</td><td>4.3</td><td>4.3</td><td>6.0</td><td>5.0</td></tr><tr><td>BOEING</td><td>2020</td><td>Flow</td><td>3.3</td><td>3.3</td><td>9.0</td><td>4.0</td></tr><tr><td>BOEING</td><td>2021</td><td>Helm</td><td>5.7</td><td>5.3</td><td>6.0</td><td>5.0</td></tr><tr><td>BOEING</td><td>2021</td><td>Shield</td><td>5.0</td><td>5.3</td><td>5.7</td><td>5.0</td></tr><tr><td>BOEING</td><td>2021</td><td>Lore</td><td>5.0</td><td>4.7</td><td>6.0</td><td>5.0</td></tr><tr><td>BOEING</td><td>2021</td><td>Stewards</td><td>5.0</td><td>4.7</td><td>6.3</td><td>5.0</td></tr><tr><td>BOEING</td><td>2021</td><td>Craft</td><td>4.3</td><td>4.3</td><td>6.3</td><td>5.0</td></tr><tr><td>BOEING</td><td>2021</td><td>Hands</td><td>4.7</td><td>5.0</td><td>6.0</td><td>4.7</td></tr><tr><td>BOEING</td><td>2021</td><td>Archive</td><td>5.0</td><td>5.0</td><td>5.0</td><td>5.0</td></tr><tr><td>BOEING</td><td>2021</td><td>Flow</td><td>5.0</td><td>5.0</td><td>6.0</td><td>5.0</td></tr><tr><td>BOEING</td><td>2022</td><td>Helm</td><td>5.7</td><td>5.7</td><td>5.3</td><td>5.0</td></tr><tr><td>BOEING</td><td>2022</td><td>Shield</td><td>5.7</td><td>5.7</td><td>4.3</td><td>5.0</td></tr><tr><td>BOEING</td><td>2022</td><td>Lore</td><td>5.3</td><td>5.3</td><td>5.0</td><td>5.0</td></tr><tr><td>BOEING</td><td>2022</td><td>Stewards</td><td>5.7</td><td>5.7</td><td>5.3</td><td>5.0</td></tr><tr><td>BOEING</td><td>2022</td><td>Craft</td><td>5.3</td><td>5.3</td><td>5.3</td><td>5.3</td></tr><tr><td>BOEING</td><td>2022</td><td>Hands</td><td>5.3</td><td>5.3</td><td>5.3</td><td>4.7</td></tr><tr><td>BOEING</td><td>2022</td><td>Archive</td><td>5.3</td><td>5.3</td><td>4.3</td><td>5.0</td></tr><tr><td>BOEING</td><td>2022</td><td>Flow</td><td>5.3</td><td>5.7</td><td>5.0</td><td>5.0</td></tr><tr><td>BOEING</td><td>2023</td><td>Helm</td><td>6.0</td><td>6.7</td><td>4.7</td><td>5.0</td></tr><tr><td>BOEING</td><td>2023</td><td>Shield</td><td>5.3</td><td>5.3</td><td>5.7</td><td>5.0</td></tr><tr><td>BOEING</td><td>2023</td><td>Lore</td><td>5.7</td><td>5.7</td><td>5.0</td><td>5.0</td></tr><tr><td>BOEING</td><td>2023</td><td>Stewards</td><td>6.0</td><td>6.0</td><td>4.3</td><td>5.0</td></tr><tr><td>BOEING</td><td>2023</td><td>Craft</td><td>5.0</td><td>5.0</td><td>6.0</td><td>5.0</td></tr><tr><td>BOEING</td><td>2023</td><td>Hands</td><td>5.3</td><td>6.0</td><td>5.3</td><td>5.0</td></tr><tr><td>BOEING</td><td>2023</td><td>Archive</td><td>5.3</td><td>5.3</td><td>4.7</td><td>5.0</td></tr><tr><td>BOEING</td><td>2023</td><td>Flow</td><td>6.3</td><td>6.3</td><td>4.7</td><td>5.0</td></tr><tr><td>BOEING</td><td>2024</td><td>Helm</td><td>3.0</td><td>4.0</td><td>8.7</td><td>4.7</td></tr><tr><td>BOEING</td><td>2024</td><td>Shield</td><td>3.0</td><td>3.0</td><td>9.0</td><td>4.0</td></tr><tr><td>BOEING</td><td>2024</td><td>Lore</td><td>3.0</td><td>3.7</td><td>8.0</td><td>4.0</td></tr><tr><td>BOEING</td><td>2024</td><td>Stewards</td><td>4.3</td><td>5.0</td><td>8.3</td><td>5.0</td></tr><tr><td>BOEING</td><td>2024</td><td>Craft</td><td>3.0</td><td>3.3</td><td>8.7</td><td>4.0</td></tr><tr><td>BOEING</td><td>2024</td><td>Hands</td><td>3.0</td><td>3.3</td><td>9.0</td><td>4.0</td></tr><tr><td>BOEING</td><td>2024</td><td>Archive</td><td>3.0</td><td>3.0</td><td>8.0</td><td>4.0</td></tr><tr><td>BOEING</td><td>2024</td><td>Flow</td><td>3.3</td><td>3.7</td><td>8.0</td><td>4.0</td></tr><tr><td>BOEING</td><td>2025</td><td>Helm</td><td>5.7</td><td>5.7</td><td>6.0</td><td>5.0</td></tr><tr><td>BOEING</td><td>2025</td><td>Shield</td><td>4.7</td><td>4.7</td><td>6.3</td><td>4.7</td></tr><tr><td>BOEING</td><td>2025</td><td>Lore</td><td>4.7</td><td>4.7</td><td>6.0</td><td>5.0</td></tr><tr><td>BOEING</td><td>2025</td><td>Stewards</td><td>5.0</td><td>5.0</td><td>6.7</td><td>5.0</td></tr><tr><td>BOEING</td><td>2025</td><td>Craft</td><td>4.3</td><td>4.3</td><td>6.0</td><td>5.0</td></tr><tr><td>BOEING</td><td>2025</td><td>Hands</td><td>4.7</td><td>5.0</td><td>5.7</td><td>4.7</td></tr><tr><td>BOEING</td><td>2025</td><td>Archive</td><td>4.3</td><td>4.3</td><td>5.7</td><td>5.0</td></tr><tr><td>BOEING</td><td>2025</td><td>Flow</td><td>5.0</td><td>5.3</td><td>5.7</td><td>5.0</td></tr></table></details>
+<h2 id="e">E. Review of 7 June 2026</h2>
+<details class="doc" open><summary>validation_kimi_.txt</summary><div class="src">Drive file <code>validation_kimi_.txt</code> (Drive modified date 7 Jun 2026). Text file in Windows-1252 encoding, shown here as decoded; quotation marks appear as in the file. Contains "health": flagged above.<br>Raw file: <a href="kimi-record/validation_kimi_2026-06-07.txt">kimi-record/validation_kimi_2026-06-07.txt</a> · SHA-256 <span class="hash">84ae095fb36a02e1f1dd41646321ae046ac7ceff433715efb7569cfc7fcb9a1f</span></div><pre class="verbatim">**CAMS (Complex Adaptive Model of Societies)** is a formal framework that models societies (and other complex entities) as **8-node institutional networks** with **4 metrics per node**, analysed through graph theory, dimensionality reduction, and residual diagnostics. It aims to provide both aggregate “health” measurement and functional attribution of crises and phase transitions.
+
+### Core Formalism
+
+**Nodes** (functional specialisations):
+- Helm (leadership/strategy)
+- Shield (security/boundaries)
+- Flow (information/discourse)
+- Hands (labour/production)
+- Craft (skills/quality)
+- Archive (memory/records)
+- Lore (narrative/identity)
+- Stewards (distribution/care)
+
+**Metrics per node** (at time \(t\)):
+- \(C_i\): Coherence
+- \(K_i\): Capacity
+- \(S_i\): Stress
+- \(A_i\): Abstraction
+
+**Node Value** (primary scalar health measure):
+\[
+NV_i = C_i + K_i - S_i + 0.5 A_i
+\]
+
+**Graph model**:
+- Society = weighted graph \(\mathcal{G} = (\mathcal{V}, \mathcal{E})\) with 8 vertices.
+- Edge weights = **Bond Strength** (\(B_{ij}\)) between nodes (two competing formulas appear in the literature; this remains unresolved).
+
+**Macro operators** (examples):
+- Societal Cognition: \(\Gamma_i = A_i \times C_i\)
+- National Affect: \(\alpha_i = K_i - S_i\)
+
+**Two-tier structure** (empirically central):
+- **Tier 1 (Common mode / PC1)**: Explains 63–86% of variance across nodes. Acts as overall societal “health” or vitality index. Strong predictor of crisis vs non-crisis periods (ROC-AUC ~0.77).
+- **Tier 2 (Residual layer)**: Node-specific deviations after removing PC1. Carries diagnostic signal for *which* function is failing.
+
+**Phase-space diagnostics**:
+- Coordination Phase Space: \(( \bar{V}, \sigma_V )\)
+- Crisis typically requires low \(\bar{V}\) **and** high dispersion (thresholds have known limitations for single-node failures).
+
+### Key Empirical Results
+
+**Null-model crisis attribution test** (20 pre-specified historical crises):
+- Top-1 correct node: 40% (vs 12.5% random, \(p=0.002\))
+- Top-3 correct node: **75%** (vs 37.5% random, \(p=0.001\))
+- Signed (most negative residual) attribution also significant.
+
+This is the strongest evidence that the 8-node structure adds value beyond a one-factor model. PC1 detects *that* the system is stressed; residuals identify *which* institutional function(s) are deviating.
+
+**Falsification battery highlights**:
+- Stress–Capacity antiparallel coupling holds strongly in 5/8 societies (weaker in stable/high-functioning ones).
+- Four metrics collapse to ~1–2 effective dimensions (Kaiser criterion often yields 1 dominant factor).
+- Lore–Archive is the strongest genuine redundancy; Craft–Flow is weaker than raw correlations suggested.
+- Helm–Shield coupling is largely a common-mode artefact.
+
+**Germany 2024–2026 case study** (verified against public ensemble CSV):
+- 2024: Executive nadir (Helm \(V=4.4\)), asymmetric stress.
+- 2026: Partial recovery (Helm \(V=10.2\)) but persistent Flow weakness.
+- Fits existing attractor taxonomy (A1 Adaptive with asymmetry or A2 boundary); does **not** require novel attractors or Thermodynamic Freeze classification.
+
+### Strengths
+
+- **Node-level algebra is closed and reproducible**.
+- **Cross-method robustness**: Multiple independent LLM scoring pipelines converge on the same structural patterns.
+- **Residual layer works**: Enables functional discrimination (e.g., China 1949 ? Helm, 1989 ? Lore; UK labour crises ? Hands; Argentina 1976 ? Stewards).
+- High transparency (public datasets, code, pre-registered falsification criteria).
+- Two-tier model is empirically supported and theoretically productive.
+
+### Limitations
+
+- **Bond Strength formula incoherence** (book vs public CSVs vs validation battery) — prevents reliable cross-society comparison.
+- **Phase-space thresholds are blunt**: Can miss single-node catastrophic failure when aggregate dispersion remains low.
+- **Data generation is partially circular** (LLM scorers prompted with theoretical priors), though mitigated by cross-AI replication and partial external anchors (e.g., Seshat).
+- Thermodynamic language is **analogical**, not derived from measurable energy/entropy quantities.
+- Sample sizes in key attribution tests remain modest; many validations are retrospective.
+- Arbitrary constants and reporting precision exceed input granularity (integer 0–10 scales).
+
+### Current Scientific Status
+
+CAMS is a **partially validated diagnostic architecture** (roughly **B** on a credibility scale). 
+
+The **8-node residual layer is empirically justified** for functional attribution and differential diagnosis. The common-mode (PC1) dominates aggregate detection. The framework is **not** merely a one-dimensional health index dressed up with labels.
+
+It remains **conditionally validated** pending:
+- Unification of the Bond Strength operator
+- Integration of the ESCH activation index (\(\sigma\)) into phase-space diagnostics
+- Pre-registered expansion of the attribution test to 40–60 events
+- Prospective (2026–2028) prediction tracking
+
+**Bottom line**: CAMS functions best as a **structured diagnostic typology** that separates “the system is stressed” (PC1) from “which institutional function is failing” (residuals). It has moved beyond pure hypothesis generation but has not yet reached the status of a fully mature, cross-society measurement system. The null-model results are the most important empirical anchor obtained to date.</pre></details>
+<h2>Lab Chief commentary (separate)</h2>
+<p>Questions raised about this material, including mismatches between files and checks run on the shared dataset, are kept in <a href="records/PUTATIVE_ISSUES.md">records/PUTATIVE_ISSUES.md</a>, an append-only record signed "Lab Chief". They are not Kimi's findings, and nothing there has altered anything above.</p>
 <p>Back to <a href="dynamics-of-social-organisation.html">the book</a>.</p>
-
-<p class="sign-off">Qualified, not edited.<br>Further research is needed.</p>
 </main>
 <script src="site-chrome.js"></script><script src="nav.js"></script>
 </body>

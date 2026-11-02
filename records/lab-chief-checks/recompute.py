@@ -1,8 +1,8 @@
-"""Recompute every dataset figure quoted in kimi-response-to-the-book.html.
+"""Recompute every dataset figure quoted in the Lab Chief commentary (records/PUTATIVE_ISSUES.md, LC-008).
 
 Reads ../juno/JUNO_Unified_Dataset.csv (SHA-256 49ee7b173abc5856...) and prints the numbers.
 Node Value is read as stored (Node_Value_Calc = C + K - S + 0.5A). Run from the repo root:
-    python kimi-response/recompute.py
+    python3 records/lab-chief-checks/recompute.py
 """
 import numpy as np, pandas as pd
 
