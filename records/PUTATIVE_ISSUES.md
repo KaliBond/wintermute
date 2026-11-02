@@ -94,3 +94,6 @@ Observations only; none changes any result.
 ---
 
 *Append new entries below this line. Do not edit entries above it.*
+
+### LC-012 (2 Nov 2026): legacy USA 1861 CI test
+The CI step "Run USA 1861 Validation" asserted fixed CAMS v2.1 values (Psi 0.724) and got 0.711, failing every run including main. Possibly explained by data or model changes since v2.1. Resolution: Kari retired the test on 2 Nov 2026 (separate CI PR).
