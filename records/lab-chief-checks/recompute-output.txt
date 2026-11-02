@@ -1,0 +1,21 @@
+rows 43400 | societies 48 | years 1750 - 2026
+society-years 5425
+bond vs lambda2: pooled r = 0.935; median within-society r = 0.981
+2000->2025: 38 comparable societies; V declined in 22; mean Stress rose in 25
+responsiveness (leave-self-out): {'Lore': np.float64(0.74), 'Shield': np.float64(0.78), 'Archive': np.float64(0.82), 'Hands': np.float64(0.84), 'Craft': np.float64(0.91), 'Stewards': np.float64(0.93), 'Helm': np.float64(1.18), 'Flow': np.float64(1.24)}
+one shared movement: PC1 share of node-change variance = 0.688 (5377 node-transition rows)
+stress PC1 share 1900-1949: 0.341 (22 balanced societies)
+stress PC1 share 1950-1999: 0.307 (27 balanced societies)
+stress PC1 share 2000-2025: 0.414 (36 balanced societies)
+USA: 26 society-years; 1900-1999 n=20 mean 10.78 SD 2.64; 2026 V = 3.55; z = -2.73
+      V_mean  B_eff   lam2
+Year                      
+1973  -0.363  0.108  0.732
+1974  -0.363  0.108  0.732
+1975  -4.412  0.058  0.352
+1976  -4.275  0.059  0.345
+1977  -4.275  0.059  0.345
+1978  -4.275  0.059  0.345
+1979   0.925  0.120  0.871
+1980   1.988  0.137  0.994
+1981   1.988  0.137  0.994
