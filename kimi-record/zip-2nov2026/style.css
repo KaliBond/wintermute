@@ -1,0 +1,34 @@
+@page { size: A4; margin: 22mm 20mm; }
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; }
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, "DejaVu Sans", sans-serif;
+  color: #232323; background: #fdfcf9;
+  font-size: 10.6pt; line-height: 1.72; margin: 0;
+  max-width: 170mm;
+}
+h1 {
+  font-size: 21pt; font-weight: 700; line-height: 1.25;
+  margin: 0 0 4mm 0; letter-spacing: 0.1px;
+}
+p.byline { font-size: 10.5pt; margin: 0 0 1mm 0; color: #333; }
+p.date { font-size: 9.5pt; color: #666; margin: 0 0 7mm 0; }
+p.lead { font-style: italic; color: #3a3a3a; margin: 0 0 7mm 0;
+  padding-bottom: 6mm; border-bottom: 0.6pt solid #cfc9bd; }
+h2 {
+  font-size: 13.5pt; font-weight: 700; margin: 9mm 0 3mm 0;
+  page-break-after: avoid;
+}
+p { margin: 0 0 4.6mm 0; text-align: left; }
+img { width: 100%; margin: 3mm 0 1.5mm 0; page-break-inside: avoid; }
+img.narrow { width: 82%; margin-left: 9%; }
+p.caption, figcaption {
+  font-size: 8.6pt; color: #5a5a5a; line-height: 1.5;
+  margin: 0 0 7mm 0; font-style: italic;
+}
+hr { border: none; border-top: 0.6pt solid #cfc9bd; margin: 7mm 0; }
+blockquote {
+  margin: 0 0 4.6mm 0; padding: 0 0 0 5mm; border-left: 2.4pt solid #b9b2a4;
+  color: #444; font-style: italic;
+}
+strong { font-weight: 700; }

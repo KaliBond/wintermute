@@ -1,0 +1,91 @@
+**CAMS (Complex Adaptive Model of Societies)** is a formal framework that models societies (and other complex entities) as **8-node institutional networks** with **4 metrics per node**, analysed through graph theory, dimensionality reduction, and residual diagnostics. It aims to provide both aggregate “health” measurement and functional attribution of crises and phase transitions.
+
+### Core Formalism
+
+**Nodes** (functional specialisations):
+- Helm (leadership/strategy)
+- Shield (security/boundaries)
+- Flow (information/discourse)
+- Hands (labour/production)
+- Craft (skills/quality)
+- Archive (memory/records)
+- Lore (narrative/identity)
+- Stewards (distribution/care)
+
+**Metrics per node** (at time \(t\)):
+- \(C_i\): Coherence
+- \(K_i\): Capacity
+- \(S_i\): Stress
+- \(A_i\): Abstraction
+
+**Node Value** (primary scalar health measure):
+\[
+NV_i = C_i + K_i - S_i + 0.5 A_i
+\]
+
+**Graph model**:
+- Society = weighted graph \(\mathcal{G} = (\mathcal{V}, \mathcal{E})\) with 8 vertices.
+- Edge weights = **Bond Strength** (\(B_{ij}\)) between nodes (two competing formulas appear in the literature; this remains unresolved).
+
+**Macro operators** (examples):
+- Societal Cognition: \(\Gamma_i = A_i \times C_i\)
+- National Affect: \(\alpha_i = K_i - S_i\)
+
+**Two-tier structure** (empirically central):
+- **Tier 1 (Common mode / PC1)**: Explains 63–86% of variance across nodes. Acts as overall societal “health” or vitality index. Strong predictor of crisis vs non-crisis periods (ROC-AUC ~0.77).
+- **Tier 2 (Residual layer)**: Node-specific deviations after removing PC1. Carries diagnostic signal for *which* function is failing.
+
+**Phase-space diagnostics**:
+- Coordination Phase Space: \(( \bar{V}, \sigma_V )\)
+- Crisis typically requires low \(\bar{V}\) **and** high dispersion (thresholds have known limitations for single-node failures).
+
+### Key Empirical Results
+
+**Null-model crisis attribution test** (20 pre-specified historical crises):
+- Top-1 correct node: 40% (vs 12.5% random, \(p=0.002\))
+- Top-3 correct node: **75%** (vs 37.5% random, \(p=0.001\))
+- Signed (most negative residual) attribution also significant.
+
+This is the strongest evidence that the 8-node structure adds value beyond a one-factor model. PC1 detects *that* the system is stressed; residuals identify *which* institutional function(s) are deviating.
+
+**Falsification battery highlights**:
+- Stress–Capacity antiparallel coupling holds strongly in 5/8 societies (weaker in stable/high-functioning ones).
+- Four metrics collapse to ~1–2 effective dimensions (Kaiser criterion often yields 1 dominant factor).
+- Lore–Archive is the strongest genuine redundancy; Craft–Flow is weaker than raw correlations suggested.
+- Helm–Shield coupling is largely a common-mode artefact.
+
+**Germany 2024–2026 case study** (verified against public ensemble CSV):
+- 2024: Executive nadir (Helm \(V=4.4\)), asymmetric stress.
+- 2026: Partial recovery (Helm \(V=10.2\)) but persistent Flow weakness.
+- Fits existing attractor taxonomy (A1 Adaptive with asymmetry or A2 boundary); does **not** require novel attractors or Thermodynamic Freeze classification.
+
+### Strengths
+
+- **Node-level algebra is closed and reproducible**.
+- **Cross-method robustness**: Multiple independent LLM scoring pipelines converge on the same structural patterns.
+- **Residual layer works**: Enables functional discrimination (e.g., China 1949 ? Helm, 1989 ? Lore; UK labour crises ? Hands; Argentina 1976 ? Stewards).
+- High transparency (public datasets, code, pre-registered falsification criteria).
+- Two-tier model is empirically supported and theoretically productive.
+
+### Limitations
+
+- **Bond Strength formula incoherence** (book vs public CSVs vs validation battery) — prevents reliable cross-society comparison.
+- **Phase-space thresholds are blunt**: Can miss single-node catastrophic failure when aggregate dispersion remains low.
+- **Data generation is partially circular** (LLM scorers prompted with theoretical priors), though mitigated by cross-AI replication and partial external anchors (e.g., Seshat).
+- Thermodynamic language is **analogical**, not derived from measurable energy/entropy quantities.
+- Sample sizes in key attribution tests remain modest; many validations are retrospective.
+- Arbitrary constants and reporting precision exceed input granularity (integer 0–10 scales).
+
+### Current Scientific Status
+
+CAMS is a **partially validated diagnostic architecture** (roughly **B** on a credibility scale). 
+
+The **8-node residual layer is empirically justified** for functional attribution and differential diagnosis. The common-mode (PC1) dominates aggregate detection. The framework is **not** merely a one-dimensional health index dressed up with labels.
+
+It remains **conditionally validated** pending:
+- Unification of the Bond Strength operator
+- Integration of the ESCH activation index (\(\sigma\)) into phase-space diagnostics
+- Pre-registered expansion of the attribution test to 40–60 events
+- Prospective (2026–2028) prediction tracking
+
+**Bottom line**: CAMS functions best as a **structured diagnostic typology** that separates “the system is stressed” (PC1) from “which institutional function is failing” (residuals). It has moved beyond pure hypothesis generation but has not yet reached the status of a fully mature, cross-society measurement system. The null-model results are the most important empirical anchor obtained to date.
