@@ -189,3 +189,9 @@ F_G  = (V̄, V_std, V_min, B̄, λ₂, σ_min)
 - **Out-of-range** series (negative Stress legacy scale, C>10, etc.) are recomputed for archival completeness but **must not** be used for cross-society F_G threshold recalibration — B_ij can exceed 1 when S < 0.
 - Primary corpus for cross-society work = `canonical_ens` + `cleaned_ens` with `range_tier=in_range`.
 - Next critical-path step: F_G threshold recalibration on the primary corpus.
+
+---
+
+### Note added 25 Oct 2026 (does not alter the report above)
+
+Per Kari McKern, the canonical annual US series is now `data/nations/USA_v12opt_hifi_block1.csv` (commit `31cc441`, claude-sonnet-4-6, cams-raw-scorer-v1.2-opt, 5 passes, 1900–2025). The USA series listed in this report remain as retained alternatives and must not be mixed with it. See `juno/CANONICAL_STATUS.md` and `docs/errata/ERRATUM_2026-10-25_USA_Outlook_bond_scale.md`.
