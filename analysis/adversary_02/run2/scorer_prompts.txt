@@ -1,0 +1,823 @@
+ADVERSARY-02 RECONSTRUCTION SCORING PROMPTS
+China + 7 Companies | 2010–2020
+Generated: 4 November 2026
+
+════════════════════════════════════════════════════════════════════════
+HOW TO USE
+════════════════════════════════════════════════════════════════════════
+
+For each of the 8 entities below:
+1. Open 5 Claude conversations simultaneously
+2. Paste the SCORER PROMPT into all 5 — do NOT modify it
+3. Run all 5 at the same time (parallel saves time)
+4. Copy each output CSV
+5. Open a 6th Claude conversation
+6. Paste the AGGREGATION PROMPT
+7. Fill in the 5 scorer CSV sections in order
+8. The aggregation conversation outputs Block 1 (ensemble mean) + Block 2 (envelope)
+
+Expected per-scorer output: ~88 rows (11 years × 8 nodes) for 2010–2020
+                             ~80 rows for CATL (2011–2020)
+
+Save all Block 1 + Block 2 outputs. They are needed for:
+  — Section 7 of the ADVERSARY-02 protocol (pre-registered predictions)
+  — The post-2020 explanatory analysis (Runs 9–10)
+
+════════════════════════════════════════════════════════════════════════
+ENTITY 1: CHINA NATIONAL (CAMNATIONSM5 — v2.1 rubric)
+════════════════════════════════════════════════════════════════════════
+
+────────────────────────────────────────────────────────────────────────
+SCORER PROMPT — China 2010–2020
+(Paste into 5 separate Claude conversations)
+────────────────────────────────────────────────────────────────────────
+
+Score China 2010–2020 using CAMS v2.1.
+Output ONLY the CSV — no commentary, no Node Value, no Bond Strength.
+
+NODES (8): Helm · Shield · Lore · Stewards · Craft · Hands · Archive · Flow
+DIMENSIONS (4 per node, integers 1–10):
+  Coherence  — internal alignment and unity of the node
+  Capacity   — resources, competence, ability to act
+  Stress     — disorder PRODUCTION RATE (not external challenge severity)
+  Abstraction — symbolic/cognitive complexity
+
+RULES:
+• Score OPERATIONAL TRUTH, not formal structure or aspirational potential
+• Score each node INDEPENDENTLY — no cross-node smoothing
+• Stress = rate at which the node generates disorder, not how hard conditions are
+• High Abstraction is not automatically good
+• In stable periods, consecutive years may be identical — do not force variation
+
+CALIBRATION GUIDE:
+  Stable period      → C 5–7, K 5–7, S 3–5, A 5–7
+  Manageable crisis  → C 5–7, K 5–7, S 5–7, A 5–7
+  Severe crisis      → C 3–5, K 4–6, S 7–9, A 4–6
+  Collapse           → C 2–4, K 2–5, S 8–10, A 3–5
+
+NODE LOCI (for grounding):
+  Helm     — Crown/Throne: strategic decider, Party executive coordination
+  Shield   — Warrior/Sword: PLA, PAP, security apparatus, border control
+  Lore     — Temple/Priesthood: CCP ideology, education, media, legitimacy production
+  Stewards — Estates/Barons: SOEs, SASAC, major asset holders, capital allocation
+  Craft    — Workshop: manufacturing, engineering, applied technology, industrial system
+  Hands    — Metabolic Core: labour force, agricultural and industrial throughput
+  Archive  — Library: bureaucracy, law, courts, civil service, institutional memory
+  Flow     — Agora/Marketplace: commerce, finance, logistics, credit, trade
+
+OUTPUT FORMAT — begin immediately with the header, then 8 rows per year:
+
+Society,Year,Node,Coherence,Capacity,Stress,Abstraction
+China,2010,Helm,[C],[K],[S],[A]
+China,2010,Shield,[C],[K],[S],[A]
+China,2010,Lore,[C],[K],[S],[A]
+China,2010,Stewards,[C],[K],[S],[A]
+China,2010,Craft,[C],[K],[S],[A]
+China,2010,Hands,[C],[K],[S],[A]
+China,2010,Archive,[C],[K],[S],[A]
+China,2010,Flow,[C],[K],[S],[A]
+China,2011,Helm,...
+...continue year by year through 2020, 8 rows per year, no repeated header...
+
+────────────────────────────────────────────────────────────────────────
+AGGREGATION PROMPT — China 2010–2020
+(Paste into ONE new Claude conversation after collecting all 5 scorer outputs)
+────────────────────────────────────────────────────────────────────────
+
+You are a CAMS aggregator. Five independent scorers produced the CSV blocks below
+for China 2010–2020. For each (Year, Node) cell across the 5 scorer inputs:
+
+1. Compute mean Coherence, Capacity, Stress, Abstraction — round to 1 decimal
+2. Compute sample SD (ddof=1) for each dimension — round to 3 decimal places
+3. Compute per-scorer Node Value = C + K − S + 0.5×A
+   Record V_min, V_max, V_range = V_max − V_min across the 5 scorers
+   (V_range MUST be computed fresh for every (Year, Node) cell — not reused)
+4. Ensemble Node Value = mean_C + mean_K − mean_S + 0.5×mean_A — round to 1 decimal
+5. Bond Strength: for each year build the 8×8 pairwise matrix using mean C and A:
+   B_ij = [0.6×C_i×C_j + 0.4×A_i×A_j] × exp(−(S_i+S_j)/20)
+   Bond Strength per node = mean of its 7 pairwise B values — round to 3 decimals
+
+Emit EXACTLY two CSV code blocks in this order. No prose between them.
+
+Block 1 — ensemble mean:
+Society,Year,Node,Coherence,Capacity,Stress,Abstraction,Node Value,Bond Strength
+
+Block 2 — envelope:
+Society,Year,Node,C_sd,K_sd,S_sd,A_sd,V_range,V_min,V_max
+
+Verification before emitting: confirm V_range values are NOT all identical across rows.
+
+══════════════════════ SCORER 1 OUTPUT ══════════════════════
+[PASTE SCORER 1 CSV HERE]
+══════════════════════ SCORER 2 OUTPUT ══════════════════════
+[PASTE SCORER 2 CSV HERE]
+══════════════════════ SCORER 3 OUTPUT ══════════════════════
+[PASTE SCORER 3 CSV HERE]
+══════════════════════ SCORER 4 OUTPUT ══════════════════════
+[PASTE SCORER 4 CSV HERE]
+══════════════════════ SCORER 5 OUTPUT ══════════════════════
+[PASTE SCORER 5 CSV HERE]
+
+
+════════════════════════════════════════════════════════════════════════
+ENTITY 2: EVERGRANDE (CAMCORPSM5 — v1.1-OPT rubric, evidence-gated)
+════════════════════════════════════════════════════════════════════════
+
+────────────────────────────────────────────────────────────────────────
+SCORER PROMPT — Evergrande 2010–2020
+(Paste into 5 separate Claude conversations)
+────────────────────────────────────────────────────────────────────────
+
+CAMS RAW SCORER: COMPANIES v1.1-OPT
+
+entity: Evergrande Group (China Evergrande Group, 03333.HK)
+start_year: 2010
+end_year: 2020
+
+## OUTPUT CONTRACT
+Return ONLY CSV. No prose. No headers beyond the schema line. No markdown.
+No evidence notes. No Node Value. No Bond Strength. No confidence labels.
+No interpolation. No smoothing.
+
+## TIME CONVENTION
+Each year represents the entity's functional condition at 31 December. When scoring
+year t, use 31 December t-1 as the baseline. A score unchanged from t-1 is valid
+ONLY after a genuine re-check finds no material functional change. Default repetition
+is prohibited.
+
+## EVIDENCE GATE (per node-year, before scoring)
+Confirm ALL three before any non-NA score:
+  [ ] One concrete indicator of functional performance observed.
+  [ ] One concrete indicator of strain, failure, or limitation observed.
+  [ ] Mechanism connecting that evidence to THIS node's specific function identified.
+If any box is unchecked → score NA for all four dimensions of this node-year.
+
+## NODE DEFINITIONS (canonical order: Board, Risk, RD, Finance, Operations, Workforce, Brand, Markets)
+
+BOARD: Executive governance, board-CEO alignment, Hui Ka Yan's leadership coordination,
+  strategic decision authority, shareholder accountability, succession.
+  Boundary: Score demonstrated governance coordination, not share price or market cap.
+  Common error: Treating expansion ambition as strategic coherence.
+
+RISK: Legal, regulatory compliance, audit, internal controls, creditor relations,
+  land-bank regulatory exposure.
+  Boundary: Score operational risk coordination, not leverage ratio alone.
+  Common error: Conflating financial leverage with risk management function.
+
+RD: Product innovation, construction technology, diversification into EVs/health/sports
+  — score only where functional evidence exists, not announcement.
+  Boundary: Score demonstrated knowledge production, not capital committed.
+  Common error: Scoring investment announcements as innovation capacity.
+
+FINANCE: Balance sheet health, liquidity, capital allocation, bond issuance, trust
+  products, wealth management products (WMPs), land acquisition financing.
+  Boundary: Score demonstrated financial stewardship, including off-balance-sheet.
+  Common error: Treating debt growth as financial capacity.
+
+OPERATIONS: Property development delivery, construction throughput, project completion,
+  supply chain coordination, quality consistency.
+  Boundary: Score demonstrated delivery function, not contracted sales.
+  Common error: Scoring contracted sales rather than completed delivery.
+
+WORKFORCE: Human capital, management talent, labour relations, construction workforce,
+  organisational throughput across a rapidly expanding organisation.
+  Common error: Using headcount alone.
+
+BRAND: Brand equity, reputation among homebuyers and investors, narrative coherence,
+  trust in pre-sales model.
+  Common error: Scoring marketing spend rather than demonstrated trust.
+
+MARKETS: Revenue generation, contracted sales, market position, land acquisition
+  pipeline, pricing power, geographic reach.
+  Common error: Scoring contracted sales targets rather than cash collection.
+
+## DIMENSIONS (integers 1–10 or NA)
+
+COHERENCE: Internal alignment and coordination clarity within this node.
+  9–10: Exceptionally unified. 7–8: Strongly aligned. 5–6: Functional despite tension.
+  3–4: Divided or inconsistent. 1–2: Fragmented or paralysed.
+
+CAPACITY: Demonstrated ability to perform the node's function.
+  9–10: Dominant or exceptional. 7–8: Strong and resilient. 5–6: Adequate.
+  3–4: Weak or unreliable. 1–2: Unable to function.
+
+STRESS: Rate of breakdown or entropy production within this function.
+  Higher = more internal breakdown, NOT more external pressure.
+  9–10: Active collapse. 7–8: Visible degradation. 5–6: Pressured but functioning.
+  3–4: Stable. 1–2: Strengthening.
+
+ABSTRACTION: Operational sophistication and learning capacity.
+  9–10: Frontier sophistication. 7–8: Advanced adaptation. 5–6: Functional learning.
+  3–4: Basic systems. 1–2: Reactive.
+
+## UPSTREAM CONSTRAINTS
+1. A change of 2+ points on any dimension requires two distinct evidence pieces OR one
+   unmistakable structural discontinuity (crisis onset, regulatory action, collapse).
+2. Score below 5 or above 8 requires explicit functional evidence.
+3. All four dimensions unchanged from t-1 is permitted ONLY after re-checking evidence.
+4. A single event must not automatically move all eight nodes.
+
+## OUTPUT FORMAT
+First line exactly:
+Entity,Year,Node,Coherence,Capacity,Stress,Abstraction
+
+Then rows sorted by year ascending, then node order:
+Board, Risk, RD, Finance, Operations, Workforce, Brand, Markets.
+All scores integers 1–10 or NA. No decimals. No blanks. No extra columns.
+Do not repeat the header between years.
+
+────────────────────────────────────────────────────────────────────────
+AGGREGATION PROMPT — Evergrande 2010–2020
+(Paste into ONE new Claude conversation after collecting all 5 scorer outputs)
+────────────────────────────────────────────────────────────────────────
+
+You are a CAMS aggregator. Five independent scorers produced the CSV blocks below
+for Evergrande 2010–2020. For each (Year, Node) cell across the 5 scorer inputs:
+
+1. Compute mean Coherence, Capacity, Stress, Abstraction — round to 1 decimal
+   (NA cells excluded from mean; record n_eff = number of non-NA scorers)
+2. Compute sample SD (ddof=1) for each dimension — round to 3 decimal places
+3. Compute per-scorer Node Value = C + K − S + 0.5×A (NA if any dimension NA)
+   Record V_min, V_max, V_range = V_max − V_min across non-NA scorers
+   (V_range MUST be computed fresh for every (Year, Node) cell)
+4. Ensemble Node Value = mean_C + mean_K − mean_S + 0.5×mean_A — round to 1 decimal
+   (NA if n_eff < 3)
+5. Bond Strength: for each year build the 8×8 pairwise matrix using mean C and A:
+   B_ij = [0.6×C_i×C_j + 0.4×A_i×A_j] × exp(−(S_i+S_j)/20)
+   Bond Strength per node = mean of its 7 pairwise B values — round to 3 decimals
+   (bond_n = number of non-NA partner nodes used)
+
+Emit EXACTLY two CSV code blocks in this order. No prose between them.
+
+Block 1 — ensemble mean:
+Entity,Year,Node,Coherence,Capacity,Stress,Abstraction,Node Value,Bond Strength
+
+Block 2 — envelope:
+Entity,Year,Node,C_sd,K_sd,S_sd,A_sd,V_range,V_min,V_max,n_eff,NA_rate,bond_n
+
+Verification before emitting: confirm V_range values are NOT all identical across rows.
+
+══════════════════════ SCORER 1 OUTPUT ══════════════════════
+[PASTE SCORER 1 CSV HERE]
+══════════════════════ SCORER 2 OUTPUT ══════════════════════
+[PASTE SCORER 2 CSV HERE]
+══════════════════════ SCORER 3 OUTPUT ══════════════════════
+[PASTE SCORER 3 CSV HERE]
+══════════════════════ SCORER 4 OUTPUT ══════════════════════
+[PASTE SCORER 4 CSV HERE]
+══════════════════════ SCORER 5 OUTPUT ══════════════════════
+[PASTE SCORER 5 CSV HERE]
+
+
+════════════════════════════════════════════════════════════════════════
+ENTITY 3: HUAWEI (CAMCORPSM5 — v1.1-OPT rubric, evidence-gated)
+════════════════════════════════════════════════════════════════════════
+
+────────────────────────────────────────────────────────────────────────
+SCORER PROMPT — Huawei 2010–2020
+(Paste into 5 separate Claude conversations)
+────────────────────────────────────────────────────────────────────────
+
+CAMS RAW SCORER: COMPANIES v1.1-OPT
+
+entity: Huawei Technologies Co., Ltd. (private)
+start_year: 2010
+end_year: 2020
+
+## OUTPUT CONTRACT
+Return ONLY CSV. No prose. No headers beyond the schema line. No markdown.
+No evidence notes. No Node Value. No Bond Strength. No confidence labels.
+No interpolation. No smoothing.
+
+## TIME CONVENTION
+Each year represents the entity's functional condition at 31 December. When scoring
+year t, use 31 December t-1 as the baseline. A score unchanged from t-1 is valid
+ONLY after a genuine re-check finds no material functional change. Default repetition
+is prohibited.
+
+## EVIDENCE GATE (per node-year, before scoring)
+Confirm ALL three before any non-NA score:
+  [ ] One concrete indicator of functional performance observed.
+  [ ] One concrete indicator of strain, failure, or limitation observed.
+  [ ] Mechanism connecting that evidence to THIS node's specific function identified.
+If any box is unchecked → score NA for all four dimensions of this node-year.
+
+## NODE DEFINITIONS (canonical order: Board, Risk, RD, Finance, Operations, Workforce, Brand, Markets)
+
+BOARD: Ren Zhengfei's leadership, rotating CEO system, board governance, strategic
+  coordination across BG divisions (Carrier, Enterprise, Consumer), succession.
+  Boundary: Score demonstrated governance coherence, not founder mythology.
+  Common error: Treating Ren's presence as governance coherence without evidence.
+
+RISK: Legal, export compliance, US entity list exposure, cybersecurity allegations,
+  audit, IP litigation, Meng Wanzhou affair (from 2018 onwards).
+  Boundary: Score operational risk management function, not geopolitical environment.
+  Common error: Scoring external geopolitical pressure as internal Risk breakdown.
+
+RD: R&D spend and output, Kirin chip development (HiSilicon), patent portfolio,
+  5G standard contributions, proprietary software development.
+  Boundary: Score demonstrated innovation output, not investment size.
+  Common error: Scoring R&D budget rather than demonstrated technological output.
+
+FINANCE: Revenue, profitability, cash position, capital allocation, employee ownership
+  structure (ESOP), financial controls. Huawei is private — financial data is limited.
+  Boundary: Score from available disclosed data; NA if evidence is insufficient.
+  Common error: Inferring financial health from revenue growth alone.
+
+OPERATIONS: Telecommunications equipment delivery, network deployment throughput,
+  consumer device production, supply chain coordination, manufacturing quality.
+  Boundary: Score demonstrated delivery function.
+  Common error: Scoring contract wins rather than delivered network performance.
+
+WORKFORCE: Engineering talent density, employee ownership alignment, R&D workforce
+  retention, global workforce management, labour relations.
+  Common error: Using headcount alone; ignoring talent flight risk under sanctions.
+
+BRAND: Brand equity in enterprise/carrier markets, consumer brand (Mate, P-series),
+  reputational standing in Western markets, trust among network operators.
+  Common error: Scoring social media presence rather than structural brand trust.
+
+MARKETS: Revenue generation, carrier market share (global 5G), consumer device
+  market share, geographic diversification, pricing power.
+  Common error: Scoring revenue growth trajectory without cash-collection evidence.
+
+## DIMENSIONS (integers 1–10 or NA)
+
+COHERENCE: Internal alignment and coordination clarity within this node.
+  9–10: Exceptionally unified. 7–8: Strongly aligned. 5–6: Functional despite tension.
+  3–4: Divided or inconsistent. 1–2: Fragmented or paralysed.
+
+CAPACITY: Demonstrated ability to perform the node's function.
+  9–10: Dominant or exceptional. 7–8: Strong and resilient. 5–6: Adequate.
+  3–4: Weak or unreliable. 1–2: Unable to function.
+
+STRESS: Rate of breakdown or entropy production within this function.
+  Higher = more internal breakdown, NOT more external pressure.
+  9–10: Active collapse. 7–8: Visible degradation. 5–6: Pressured but functioning.
+  3–4: Stable. 1–2: Strengthening.
+
+ABSTRACTION: Operational sophistication and learning capacity.
+  9–10: Frontier sophistication. 7–8: Advanced adaptation. 5–6: Functional learning.
+  3–4: Basic systems. 1–2: Reactive.
+
+## UPSTREAM CONSTRAINTS
+1. A change of 2+ points requires two distinct evidence pieces OR one unmistakable
+   structural discontinuity.
+2. Score below 5 or above 8 requires explicit functional evidence.
+3. All four dimensions unchanged from t-1 is permitted ONLY after re-checking.
+4. A single event (e.g., US entity listing May 2019) must not move all eight nodes.
+
+## OUTPUT FORMAT
+First line exactly:
+Entity,Year,Node,Coherence,Capacity,Stress,Abstraction
+
+Then rows sorted by year ascending, then node order:
+Board, Risk, RD, Finance, Operations, Workforce, Brand, Markets.
+All scores integers 1–10 or NA. No decimals. No blanks. No extra columns.
+Do not repeat the header between years.
+
+────────────────────────────────────────────────────────────────────────
+AGGREGATION PROMPT — Huawei 2010–2020
+[Use the Evergrande Aggregation Prompt exactly, replacing "Evergrande" with "Huawei"
+in the preamble. The aggregation instructions and output format are identical.]
+────────────────────────────────────────────────────────────────────────
+
+
+════════════════════════════════════════════════════════════════════════
+ENTITY 4: BYD (CAMCORPSM5 — v1.1-OPT rubric, evidence-gated)
+════════════════════════════════════════════════════════════════════════
+
+────────────────────────────────────────────────────────────────────────
+SCORER PROMPT — BYD 2010–2020
+(Paste into 5 separate Claude conversations)
+────────────────────────────────────────────────────────────────────────
+
+CAMS RAW SCORER: COMPANIES v1.1-OPT
+
+entity: BYD Co., Ltd. (002594.SZ / 01211.HK)
+start_year: 2010
+end_year: 2020
+
+## OUTPUT CONTRACT
+Return ONLY CSV. No prose. No headers beyond the schema line. No markdown.
+No evidence notes. No Node Value. No Bond Strength. No confidence labels.
+No interpolation. No smoothing.
+
+## TIME CONVENTION
+Each year represents the entity's functional condition at 31 December. When scoring
+year t, use 31 December t-1 as the baseline. A score unchanged from t-1 is valid
+ONLY after a genuine re-check finds no material functional change. Default repetition
+is prohibited.
+
+## EVIDENCE GATE (per node-year, before scoring)
+Confirm ALL three before any non-NA score:
+  [ ] One concrete indicator of functional performance observed.
+  [ ] One concrete indicator of strain, failure, or limitation observed.
+  [ ] Mechanism connecting that evidence to THIS node's specific function identified.
+If any box is unchecked → score NA for all four dimensions of this node-year.
+
+## NODE DEFINITIONS (canonical order: Board, Risk, RD, Finance, Operations, Workforce, Brand, Markets)
+
+BOARD: Wang Chuanfu's leadership, board governance, strategic coordination across
+  auto/battery/electronics divisions, capital allocation decisions.
+  Common error: Treating founder-CEO dominance as strategic coherence without evidence
+  of coordination quality.
+
+RISK: Regulatory compliance (NEV subsidy requirements), product safety (battery fires),
+  audit, IP litigation, supply chain risk.
+  Common error: Conflating external regulatory environment with internal risk management.
+
+RD: EV technology development (blade battery, DM hybrid system, e-platform),
+  patent output, battery chemistry innovation, semiconductor development.
+  Boundary: Score demonstrated innovation output and deployment, not R&D spend.
+
+FINANCE: Revenue mix (auto, battery, handset components), profitability through the
+  NEV subsidy cycle, capex discipline, debt management, cash position.
+  Common error: Scoring revenue scale rather than demonstrated financial stewardship.
+
+OPERATIONS: Vehicle assembly throughput, battery production capacity utilisation,
+  supply chain vertical integration, quality consistency, delivery execution.
+  Boundary: Score demonstrated production function, not capacity announcements.
+
+WORKFORCE: Engineering talent (battery, software, auto design), manufacturing labour
+  relations, talent pipeline in EV-specific skills.
+  Common error: Using headcount alone.
+
+BRAND: Consumer brand strength in Chinese EV market, fleet/commercial vehicle
+  reputation, international brand development (pre-2020 limited).
+  Common error: Scoring sales volume rather than demonstrated brand structural strength.
+
+MARKETS: EV sales volume and market share, NEV subsidy capture, commercial vehicle
+  fleet contracts, battery supply contracts (pre-CATL dominance era and after).
+  Common error: Scoring contracted volumes rather than delivered revenue and cash.
+
+## DIMENSIONS (integers 1–10 or NA)
+
+COHERENCE: Internal alignment and coordination clarity within this node.
+CAPACITY: Demonstrated ability to perform the node's function.
+STRESS: Rate of breakdown or entropy production within this function (not external pressure).
+ABSTRACTION: Operational sophistication and learning capacity.
+Scale: 1–10 integers or NA for all four dimensions.
+Anchors: 9–10 exceptional/collapse, 7–8 strong/strained, 5–6 adequate/pressured,
+         3–4 weak/divided, 1–2 non-functional/fragmenting.
+
+## UPSTREAM CONSTRAINTS
+1. Change of 2+ points requires two evidence pieces OR one unmistakable discontinuity.
+2. Below 5 or above 8 requires explicit functional evidence.
+3. All four dimensions unchanged requires re-checking evidence.
+4. Single event must not move all eight nodes.
+
+## OUTPUT FORMAT
+Entity,Year,Node,Coherence,Capacity,Stress,Abstraction
+[BYD data, years 2010–2020, nodes in order: Board, Risk, RD, Finance, Operations,
+Workforce, Brand, Markets — 8 rows per year, no repeated header]
+
+────────────────────────────────────────────────────────────────────────
+AGGREGATION PROMPT — BYD 2010–2020
+[Use the Evergrande Aggregation Prompt exactly, replacing "Evergrande" with "BYD"]
+────────────────────────────────────────────────────────────────────────
+
+
+════════════════════════════════════════════════════════════════════════
+ENTITY 5: CATL (CAMCORPSM5 — v1.1-OPT rubric, evidence-gated)
+NOTE: CATL founded 2011 — score 2011–2020 only
+════════════════════════════════════════════════════════════════════════
+
+────────────────────────────────────────────────────────────────────────
+SCORER PROMPT — CATL 2011–2020
+(Paste into 5 separate Claude conversations)
+────────────────────────────────────────────────────────────────────────
+
+CAMS RAW SCORER: COMPANIES v1.1-OPT
+
+entity: Contemporary Amperex Technology Co., Limited — CATL (300750.SZ)
+start_year: 2011
+end_year: 2020
+
+## OUTPUT CONTRACT
+Return ONLY CSV. No prose. No headers beyond the schema line. No markdown.
+No evidence notes. No Node Value. No Bond Strength. No confidence labels.
+No interpolation. No smoothing.
+
+## TIME CONVENTION
+Each year represents the entity's functional condition at 31 December. When scoring
+year t, use 31 December t-1 as the baseline. CATL was founded in 2011; score from
+its first full operational year. A score unchanged from t-1 is valid ONLY after
+a genuine re-check. Default repetition is prohibited.
+
+## EVIDENCE GATE (per node-year, before scoring)
+Confirm ALL three before any non-NA score:
+  [ ] One concrete indicator of functional performance observed.
+  [ ] One concrete indicator of strain, failure, or limitation observed.
+  [ ] Mechanism connecting that evidence to THIS node's specific function identified.
+If any box is unchecked → score NA for all four dimensions of this node-year.
+
+## NODE DEFINITIONS (canonical order: Board, Risk, RD, Finance, Operations, Workforce, Brand, Markets)
+
+BOARD: Robin Zeng (Zeng Yuqun) leadership, board governance, strategic coordination,
+  relationship management with NEV OEM customers (BMW, SAIC, Geely, then global).
+  Common error: Treating founder dominance as governance coherence without evidence.
+
+RISK: Product safety (battery thermal management), regulatory compliance (NEV subsidy
+  standards), IP protection (versus BYD, LG Chem, LGES competition), audit.
+  Common error: Conflating battery fire incidents with operational risk management
+  function separately.
+
+RD: Battery chemistry R&D (NMC, LFP chemistry advances), cell-to-pack innovation,
+  manufacturing process R&D, patent portfolio development.
+  Boundary: Score demonstrated innovation output and deployment speed.
+
+FINANCE: Revenue growth trajectory, profitability (subsidy dependency through ~2018,
+  then market-driven), capital allocation for gigafactory expansion, IPO (June 2018).
+  Boundary: Score demonstrated financial stewardship, not growth narrative.
+
+OPERATIONS: Battery cell and pack manufacturing throughput, yield rates, delivery
+  reliability to OEM customers, quality consistency, capacity utilisation.
+  Common error: Scoring capacity announcements rather than demonstrated throughput.
+
+WORKFORCE: Engineering talent (electrochemistry, manufacturing), management depth,
+  talent pipeline in a rapidly scaling organisation.
+  Common error: Using headcount alone.
+
+BRAND: Enterprise brand strength with global OEMs, reputation for supply reliability
+  and technology, pre-IPO institutional investor confidence.
+  Common error: Scoring media coverage rather than demonstrated B2B trust.
+
+MARKETS: Battery supply contracts, market share in Chinese NEV battery market,
+  geographic reach, pricing power versus BYD/LG/Panasonic competition.
+  Common error: Scoring contract announcements rather than delivered supply revenue.
+
+## DIMENSIONS (integers 1–10 or NA)
+
+COHERENCE / CAPACITY / STRESS / ABSTRACTION: 1–10 integers or NA.
+STRESS = rate of internal breakdown, not external competitive pressure.
+Evidence gate required before every non-NA score.
+
+## OUTPUT FORMAT
+Entity,Year,Node,Coherence,Capacity,Stress,Abstraction
+[CATL data, years 2011–2020, nodes: Board, Risk, RD, Finance, Operations,
+Workforce, Brand, Markets — 8 rows per year, no repeated header]
+
+────────────────────────────────────────────────────────────────────────
+AGGREGATION PROMPT — CATL 2011–2020
+[Use the Evergrande Aggregation Prompt exactly, replacing "Evergrande" with "CATL"
+and "2010–2020" with "2011–2020"]
+────────────────────────────────────────────────────────────────────────
+
+
+════════════════════════════════════════════════════════════════════════
+ENTITY 6: VANKE (CAMCORPSM5 — v1.1-OPT rubric, evidence-gated)
+COMPARATOR: Property developer, 0 Three Red Lines breaches
+════════════════════════════════════════════════════════════════════════
+
+────────────────────────────────────────────────────────────────────────
+SCORER PROMPT — Vanke 2010–2020
+(Paste into 5 separate Claude conversations)
+────────────────────────────────────────────────────────────────────────
+
+CAMS RAW SCORER: COMPANIES v1.1-OPT
+
+entity: Vanke Co., Ltd. (000002.SZ / 02202.HK)
+start_year: 2010
+end_year: 2020
+
+## OUTPUT CONTRACT
+Return ONLY CSV. No prose. No headers beyond the schema line. No markdown.
+No evidence notes. No Node Value. No Bond Strength. No confidence labels.
+No interpolation. No smoothing.
+
+## TIME CONVENTION
+Each year at 31 December. Score t from t-1 baseline. No default repetition.
+
+## EVIDENCE GATE (per node-year, before scoring)
+Confirm ALL three before any non-NA score:
+  [ ] One concrete indicator of functional performance observed.
+  [ ] One concrete indicator of strain, failure, or limitation observed.
+  [ ] Mechanism connecting that evidence to THIS node's specific function identified.
+If any box is unchecked → NA for all four dimensions of this node-year.
+
+## NODE DEFINITIONS
+
+BOARD: Yu Liang (from 2018) / Wang Shi (to 2017) leadership transition, board
+  governance including Baoneng hostile takeover attempt (2015–2016), strategic
+  coordination, shareholder-management relations.
+  Common error: Treating the ownership dispute as governance collapse without
+  evidence of operational coordination breakdown.
+
+RISK: Regulatory compliance, land acquisition risk management, audit, internal
+  controls, leverage discipline.
+  Boundary: Score operational risk management, not headline leverage ratio.
+
+RD: Property management technology, urban renewal innovation, overseas development
+  capabilities. Limited compared to tech companies — expect NA in early years
+  if evidence of functional R&D activity is insufficient.
+
+FINANCE: Balance sheet discipline (Vanke was notably conservative on leverage),
+  land bank financing, cash flow management, pre-sales management.
+  Common error: Scoring revenue scale rather than demonstrated financial stewardship.
+
+OPERATIONS: Property project delivery, construction quality, project completion rates,
+  supply chain management with contractors.
+  Common error: Scoring contracted sales rather than completed project delivery.
+
+WORKFORCE: Management talent, property management staff quality, organisational
+  depth through the leadership transition period.
+
+BRAND: Reputation as China's most professionally managed developer, consumer brand
+  among homebuyers, Vanke property management brand.
+
+MARKETS: Sales volume, market share, geographic diversification within China,
+  pricing power in key markets.
+
+## DIMENSIONS: 1–10 or NA. STRESS = internal breakdown rate.
+
+## OUTPUT FORMAT
+Entity,Year,Node,Coherence,Capacity,Stress,Abstraction
+[Vanke data, 2010–2020, nodes: Board, Risk, RD, Finance, Operations,
+Workforce, Brand, Markets — 8 rows per year, no repeated header]
+
+────────────────────────────────────────────────────────────────────────
+AGGREGATION PROMPT — Vanke 2010–2020
+[Use the Evergrande Aggregation Prompt, replacing "Evergrande" with "Vanke"]
+────────────────────────────────────────────────────────────────────────
+
+
+════════════════════════════════════════════════════════════════════════
+ENTITY 7: LONGFOR (CAMCORPSM5 — v1.1-OPT rubric, evidence-gated)
+COMPARATOR: Property developer, 0 Three Red Lines breaches
+════════════════════════════════════════════════════════════════════════
+
+────────────────────────────────────────────────────────────────────────
+SCORER PROMPT — Longfor 2010–2020
+(Paste into 5 separate Claude conversations)
+────────────────────────────────────────────────────────────────────────
+
+CAMS RAW SCORER: COMPANIES v1.1-OPT
+
+entity: Longfor Group Holdings Limited (00960.HK)
+start_year: 2010
+end_year: 2020
+
+## OUTPUT CONTRACT
+Return ONLY CSV. No prose. No headers beyond the schema line. No markdown.
+No evidence notes. No Node Value. No Bond Strength. No confidence labels.
+No interpolation. No smoothing.
+
+## TIME CONVENTION
+Each year at 31 December. Score t from t-1 baseline. No default repetition.
+
+## EVIDENCE GATE (per node-year, before scoring)
+Confirm ALL three before any non-NA score:
+  [ ] One concrete indicator of functional performance observed.
+  [ ] One concrete indicator of strain, failure, or limitation observed.
+  [ ] Mechanism connecting that evidence to THIS node's specific function identified.
+If any box is unchecked → NA for all four dimensions of this node-year.
+
+## NODE DEFINITIONS
+
+BOARD: Wu Yajun and Cai Kui governance, strategic coordination, founder-driven
+  culture with professional management layer, capital allocation discipline.
+  Common error: Scoring founder profile rather than demonstrated governance function.
+
+RISK: Financial conservatism as risk management philosophy, regulatory compliance,
+  land acquisition risk controls, audit function.
+  Boundary: Score operational risk management, not debt ratio alone.
+
+RD: Commercial real estate innovation (Longfor Paradise Walk mall concept),
+  property management technology. Score demonstrated innovation output.
+
+FINANCE: Conservative leverage (Longfor was known for balance sheet discipline),
+  perpetual bond usage, diversified funding, pre-sales cash management.
+  Common error: Scoring leverage metrics alone rather than demonstrated stewardship.
+
+OPERATIONS: Property project delivery, mall operations (commercial segment), property
+  management services, construction quality.
+  Common error: Scoring contracted sales targets.
+
+WORKFORCE: Management talent, property management staff (Longfor Property Management),
+  culture and retention.
+
+BRAND: Premium residential brand, Paradise Walk commercial brand, reputation for
+  quality and financial reliability among investors.
+
+MARKETS: Sales volume, commercial property rental revenue, geographic expansion within
+  China (Chongqing origins → national), market positioning.
+
+## DIMENSIONS: 1–10 or NA. STRESS = internal breakdown rate.
+
+## OUTPUT FORMAT
+Entity,Year,Node,Coherence,Capacity,Stress,Abstraction
+[Longfor data, 2010–2020, nodes: Board, Risk, RD, Finance, Operations,
+Workforce, Brand, Markets — 8 rows per year, no repeated header]
+
+────────────────────────────────────────────────────────────────────────
+AGGREGATION PROMPT — Longfor 2010–2020
+[Use the Evergrande Aggregation Prompt, replacing "Evergrande" with "Longfor"]
+────────────────────────────────────────────────────────────────────────
+
+
+════════════════════════════════════════════════════════════════════════
+ENTITY 8: SMIC (CAMCORPSM5 — v1.1-OPT rubric, evidence-gated)
+COMPARATOR: Technology/semiconductors, external constraint case
+════════════════════════════════════════════════════════════════════════
+
+────────────────────────────────────────────────────────────────────────
+SCORER PROMPT — SMIC 2010–2020
+(Paste into 5 separate Claude conversations)
+────────────────────────────────────────────────────────────────────────
+
+CAMS RAW SCORER: COMPANIES v1.1-OPT
+
+entity: Semiconductor Manufacturing International Corporation — SMIC (00981.HK / 688981.SH)
+start_year: 2010
+end_year: 2020
+
+## OUTPUT CONTRACT
+Return ONLY CSV. No prose. No headers beyond the schema line. No markdown.
+No evidence notes. No Node Value. No Bond Strength. No confidence labels.
+No interpolation. No smoothing.
+
+## TIME CONVENTION
+Each year at 31 December. Score t from t-1 baseline. No default repetition.
+
+## EVIDENCE GATE (per node-year, before scoring)
+Confirm ALL three before any non-NA score:
+  [ ] One concrete indicator of functional performance observed.
+  [ ] One concrete indicator of strain, failure, or limitation observed.
+  [ ] Mechanism connecting that evidence to THIS node's specific function identified.
+If any box is unchecked → NA for all four dimensions of this node-year.
+
+## NODE DEFINITIONS
+
+BOARD: Liang Mong Song / Zhou Zixue / Zhao Haijun governance, board composition
+  (state-owned shareholders including CITIC Capital), strategic coordination,
+  executive stability (notable leadership instability in earlier years).
+  Common error: Treating state ownership as governance coherence without evidence.
+
+RISK: Export control compliance (US export restrictions, entity listing December 2020),
+  IP litigation (TSMC suit, settled 2009 — legacy effects), technology licensing.
+  CRITICAL: The US entity listing occurred December 2020. Score Risk for 2020 based
+  on evidence available by 31 December 2020 including the listing announcement.
+  Boundary: Score operational risk management function, not geopolitical environment.
+  Common error: Conflating external export control pressure with internal risk failure.
+
+RD: Process node development (lagging TSMC/Samsung but advancing from 90nm toward
+  28nm and 14nm), yield improvement, EUV access constraints.
+  Boundary: Score demonstrated technology output at each year's node, not roadmap.
+
+FINANCE: Revenue, capital expenditure cycle, state investment (CITIC, government funds),
+  listed entity financial controls. SMIC is listed — financial data available.
+  Common error: Scoring capex plan rather than demonstrated financial stewardship.
+
+OPERATIONS: Wafer fabrication throughput, yield rates, capacity utilisation, fab
+  construction and ramp execution, customer delivery reliability.
+  Common error: Scoring capacity announcements.
+
+WORKFORCE: Engineering talent (semiconductor process engineers), management depth,
+  leadership instability in 2010–2013 period.
+  Common error: Using headcount alone; ignoring talent competition with TSMC.
+
+BRAND: Enterprise reputation among Chinese fabless customers (HiSilicon, Spreadtrum),
+  standing among international customers pre-entity-list.
+  Common error: Scoring media profile rather than demonstrated customer trust.
+
+MARKETS: Revenue from Chinese domestic customers vs international, geographic customer
+  concentration, pricing relative to TSMC/GlobalFoundries, market share in China.
+  Common error: Scoring growth narrative rather than demonstrated commercial execution.
+
+## DIMENSIONS: 1–10 or NA. STRESS = internal breakdown rate, not external pressure.
+
+## UPSTREAM CONSTRAINTS
+1. Change of 2+ points requires two evidence pieces OR one unmistakable discontinuity.
+2. Below 5 or above 8 requires explicit functional evidence.
+3. All four dimensions unchanged requires re-checking evidence.
+4. The December 2020 US entity listing is ONE event — it does not automatically move
+   all eight nodes. Score each node on its own evidence.
+
+## OUTPUT FORMAT
+Entity,Year,Node,Coherence,Capacity,Stress,Abstraction
+[SMIC data, 2010–2020, nodes: Board, Risk, RD, Finance, Operations,
+Workforce, Brand, Markets — 8 rows per year, no repeated header]
+
+────────────────────────────────────────────────────────────────────────
+AGGREGATION PROMPT — SMIC 2010–2020
+[Use the Evergrande Aggregation Prompt, replacing "Evergrande" with "SMIC"]
+────────────────────────────────────────────────────────────────────────
+
+
+════════════════════════════════════════════════════════════════════════
+AFTER COLLECTING ALL 8 AGGREGATION OUTPUTS
+════════════════════════════════════════════════════════════════════════
+
+Save each entity's Block 1 and Block 2 to:
+  wintermute/analysis/adversary_02/results/[entity]_block1.csv
+  wintermute/analysis/adversary_02/results/[entity]_block2.csv
+
+Then review the reconstruction data before writing pre-registered predictions
+(Section 7 of the ADVERSARY-02 Protocol, Doc ID: 1Bhv67RFNCki5LZSKnNaEYC8kQDuKnSguYw5nYrulPJM).
+
+Do NOT score 2021–2024 until Section 7 is signed off.
+
+════════════════════════════════════════════════════════════════════════
+END OF SCORER PROMPTS
+════════════════════════════════════════════════════════════════════════
