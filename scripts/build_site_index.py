@@ -56,6 +56,7 @@ GROUPS = [
         'metabolism-meaning', 'scale-invariance', 'thermodynamic-jungle', 'war', 'social-cognition',
         'coupled-cattle', 'meta-animal-under-the-microscope', 'backstory-deep-time', 'organisational-pathologies', 'canonical-definitions',
         'geopolitics-as-group-adaptation', 'synchronised-slide', 'human-ai-scientific-record',
+        'adversary-02-results',
     ]),
     ('Country & Case Studies', 'Study', 'monthly', '0.6', [
         ('nations', 'Guide'), 'the-empty-pulpit', ('the-empty-pulpit-map', 'Map'), 'usa-empty-pulpit-perspectives',
