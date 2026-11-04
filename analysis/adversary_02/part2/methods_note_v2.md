@@ -1,0 +1,8 @@
+# Part 2 analysis v2 (Manus added): methods note
+Created 2026-11-04 after the Manus intake (ledger 23:32:04 AEDT, zip sha256 559438a0...). The original analysis_2026-11-04 folder (MANIFEST 71193b3c0c9717e9d510cd6d319cdcb7fea1dacaaa54e718edcccf8c089b5352) is unchanged.
+- Same scripts as v1 with five edits: output folder; Manus (5 passes, manus/pass1-5.csv) added to RUNS; PRIMARY now has seven runs (Claude agent, Codex, Kimi, Gemini, Claude chat, Perplexity unconfirmed, Manus); new pool (d) = primary without Manus; s1 sensitivity also applies n_eff>=1 to Manus.
+- Pools: (a) primary 7 runs; (b) primary + Grok on sealed secondary thresholds; (c) primary 7 without Perplexity (6 runs, Manus kept); (d) primary without Manus (6 runs).
+- Check: pool (d) entity-year M and Bond are identical to v1 pool (a) (max abs diff 0.0 on every entity-year), so v1 is reproduced from v2 code.
+- n_eff rule unchanged: >=3 passes where a run has 3 or more passes (Manus has 5), >=1 otherwise. Thresholds are the signed Section 7 values (manifest 766a1cbd...). Nothing imputed; V and Bond from primitives.
+- Manus input facts (from manus/run_note.md, not verified beyond the files): Mode A, 5 isolated sub-agents, all searched, 30 June Y+1 cutoff, model undisclosed. Pass 1 mis-read itself as Mode B (data unaffected). Post-cutoff items discarded per pass 24/17/47/60/47. NA cells 48/48/48/40/48 (verified against files). Two CAMS philosophy notes were in the orchestrator context only.
+- Personality files (53_personality.py, 54_pass_level.py) are recomputed with Manus in the leave-one-out comparison pool, so every run's offset differs from v1 personality_metrics.csv.
