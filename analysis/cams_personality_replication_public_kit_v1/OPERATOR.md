@@ -14,29 +14,26 @@ python3 analysis/cams_personality_independent_ai_replication_2026-11-07/verify_e
 
 **A new blinded replication.** You must issue inputs the participant has not studied, and you must seal the key before they start. The original core eras are a poor fresh hold-out: the report, the scored rows, and the returned pockets are public. Say so if you reuse them. A fresh hold-out needs new era windows, or a partition the participant is not shown, with the key remaining only on your side.
 
-## What you still have to supply
+## What is now public, and what you still hold
 
-These files are named in [the distribution note](../cams_personality_independent_ai_replication_2026-11-07/evidence/DISTRIBUTION.md) and are not in the repository. This kit does not invent them.
+The issued Arm A zip (`da94f1c3…`), Arm B zip (`dceee12e…`), and Arm C zip (`23fce155…`) are in [inputs/issued_archives/](inputs/issued_archives/). The loose files beside them match those archives. Do not rebuild the closed-round keys from `sealed_q3_grade` or `true_era_id` in the public scored rows.
 
-| Missing piece | Why it matters |
+| Still absent | Why it still matters |
 |---|---|
-| Standard tester zip (`da94f1c3…`), including node definitions, pocket rules, and `era_means.csv`, `era_means_extension.csv`, `era_means_denmark.csv` | Arm A cannot be repeated on the original numbers without them |
-| Arm B zip (`dceee12e…`): unlabelled pockets, `era_shortlist.csv`, Arm B output schema | Arm B cannot be repeated on the original blind stimuli |
-| `packets/answer_key_HOLD/arm_b_key.csv` (digest recorded as `00722f08…3c88`, 126 rows) | Original Arm B scoring |
-| `packets/answer_key_HOLD/arm_c_key.csv` (digest recorded as `2e378db4…31d2`, 126 rows) | Original Arm C scoring |
-| Original analyst pockets used for the Arm A leadership comparison | The 60% Arm A bar cannot be scored from this kit |
+| Closed-round Arm B key and Arm C key | Not in this kit. Digests were recorded in the score ledgers. Contents stay private |
+| A new Arm B pocket set and a new key | Required before anyone can call an identification run a fresh blind |
+| A new Arm C key, fixed before the participant starts | Required before a new mood return can be scored as central agreement. The participant’s own grade is descriptive only |
+| Original analyst pockets for the 60% Arm A leadership bar | That bar was not scored in the closed deposit, and those pockets are not this kit |
 
-Recorded digests are identifiers of absent files. Do not rebuild a key by collecting `sealed_q3_grade` or `true_era_id` out of the public scored rows and calling it the hold-out key. Those values are already the published answers.
-
-The Arm C packet **is** here, as a byte copy: [packet/arm_c_mood/](packet/arm_c_mood/). Its manifest matches the sealed packet. It contains no grades. It still refers to era-means tables you must provide separately.
+`COUNTS.txt` still names a stale Arm B zip hash, `58ff7c41…`. Leave that file as issued.
 
 ## Before the participant starts
 
-1. Write the pocket rule and the node card you are actually issuing. Hash them. The original node-definition file is missing, so you cannot claim they are that file unless you hold it and the hash matches a digest you can show.
-2. Seal the answer key in a file the participant's session cannot see. Hash the key and record the digest. Do not send the key.
-3. For Arm B, shuffle or otherwise detach pockets from their era titles before the participant session. Hash the blinded file.
-4. Give Arm A the numeric table only. No titles.
-5. Require one fresh session per arm. Arm B must not be shown the numeric table.
+1. Give them [inputs/arm_a_standard/](inputs/arm_a_standard/) for Arm A. The node card and rules are the issued files. Hash what you hand over if you need a receipt.
+2. If you want a fresh Arm B, mint new pockets after their Arm A hash and keep the new key offline. Do not call `pockets_blind.jsonl` a fresh secret.
+3. If you want a scored Arm C, write the mood key first and do not send it. Otherwise accept their grades as descriptive only.
+4. Give Arm A the issued CSV. It already has country and years, and no narrative titles. Do not pretend it was geography-blind.
+5. Require one fresh session per arm. Arm B must not be shown the era-means table.
 6. Tell the participant to hash with [scripts/sha256_file.py](scripts/sha256_file.py) or another real SHA-256 of the file bytes. If they cannot run code, the arm stops. A digest typed from memory is not a seal. That failure mode is already on the record for the closed round.
 7. Take their timestamp from a clock you can see, or require the script's `--ledger` line, which prints this computer's clock. Reject a completion time that is later than the receipt and unexplained.
 
@@ -60,7 +57,7 @@ The numeric bar and the protocol bar are different. A majority can be met on row
 
 The sealed score pack defines chance as the mean, over scored rows, of `1 / (number of eras on that entity's shortlist)`. The pre-registered bar is a hit rate at least twice that mean. Core was the decision set. Denmark was allowed to miss without cancelling a core pass. Extension was reported beside them, including weak hit rates. Do the same.
 
-You need the shortlist to compute the chance. It is not in this kit.
+The historical shortlist is [inputs/arm_b_blind_historical/era_shortlist.csv](inputs/arm_b_blind_historical/era_shortlist.csv). Use it for the historical exercise. A fresh test needs the shortlist of the new set you issued.
 
 ## Arm A
 

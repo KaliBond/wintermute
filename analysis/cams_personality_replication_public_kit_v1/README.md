@@ -1,64 +1,52 @@
 # Public kit v1: repeat the CAMS personality experiment
 
-7 November 2026. This folder is a new public kit. It is not part of the sealed evidence from the closed round, and it does not change those files.
+7 November 2026. This folder is the public kit. It does not change the sealed evidence from the closed round.
 
-Two routes:
+**Start at [START_HERE.md](START_HERE.md).** Do not open the results report, `evidence/seals/`, or any `scored_*` file before you have hashed an Arm A return and decided whether Arm B is a historical exercise or a new hold-out.
 
-| Who you are | Start here | What you may open |
+| Who you are | Read | What you may open |
 |---|---|---|
-| Participant, about to do Arms A and B blind | [PARTICIPANT.md](PARTICIPANT.md) | This kit only. Not the results report, not `evidence/seals/`, not the scored tables. |
-| Operator, holding the key, or auditor checking the published scores | [OPERATOR.md](OPERATOR.md) | The published report and seals, after the participant's blind files are already hashed. |
+| Participant | [START_HERE.md](START_HERE.md), then [PARTICIPANT.md](PARTICIPANT.md) | The issued inputs in [inputs/](inputs/) and the [participant zip](CAMS_personality_participant_inputs_v1.zip). Not the results report and not the scored rows. |
+| Operator or auditor | [OPERATOR.md](OPERATOR.md) | The published report and seals, on a separate path from the participant pack. The old answer keys are still not in this kit. |
 
-The results write-up stays a separate paper: [CAMS personality: independent AI replication](../cams_personality_independent_ai_replication_2026-11-07/CAMS_Personality_Independent_AI_Replication_Report_2026-11-07.md). Read it after the blind arms, not before.
+This is not a self-contained new blind validation of Arms A, B, and C. No model was run to build the kit.
 
-## What this kit can and cannot do
+## What is now in the kit
 
-This is not a validated pack, and it is not ready to run all three arms on the original eras. The checks below were run on the files in this folder. No new model arm was run to produce this kit.
+Genuine issued files, checked against their manifests:
 
-You can, with Python 3 and no install:
+- Arm A: node definitions, algebra and pocket rules, core, extension, and Denmark era-means CSVs, output schema, and the original standard zip `da94f1c3…`.
+- Arm B historical packet: pockets, shortlist, schema, and the original zip `dceee12e…`. This is a spoiled challenge. See [inputs/arm_b_blind_historical/SPOILER_READ_FIRST.md](inputs/arm_b_blind_historical/SPOILER_READ_FIRST.md).
+- Arm C instructions, byte-identical to the sealed packet and to [packet/arm_c_mood/](packet/arm_c_mood/), plus the original zip `23fce155…`.
 
-1. Read the participant rules and the Arm C packet that was actually issued.
-2. Hash a file you wrote, with SHA-256 over the bytes (`scripts/sha256_file.py`).
-3. Check that a return has the expected fields (`scripts/check_return_shape.py`). That check does not score it.
-4. If you are the operator, recompute the published score counts from the sealed scored rows. That is a check of the old files. It is not a new blind test.
+The CSVs name the country and the years. They do not name the episode. That is the protocol that was issued. Arm A and Arm B are no-web. Arm C allows the web only after Arm A is hashed, and it does not allow editing Arm A.
 
-You cannot, from this folder alone:
+`inputs/arm_b_blind_historical/COUNTS.txt` still records Arm B zip sha256 `58ff7c41…`. That note is stale. The file was not edited. The issued zip in `inputs/issued_archives/` is `dceee12e…`.
 
-- Rebuild the original Arm A portraits. The era-means tables and the node-definition file are not in the repository.
-- Run the original Arm B. The unlabelled pockets and the closed shortlist are not in the repository.
-- Score a new return against the original hold-out keys. Those keys were not published, and this kit does not reconstruct them.
-- Treat the original 56 core eras as a fresh secret. The report and the scored rows are already public, and they carry the sealed grades and the true era ids.
+## What is still required, and still absent
 
-The full omission list is [COVERAGE.md](COVERAGE.md).
+- The closed-round Arm B and Arm C answer keys. They are not published and not reconstructed. See [inputs/HOLD_KEYS_WITHHELD.md](inputs/HOLD_KEYS_WITHHELD.md).
+- A new Arm B blind set, and a new key, if the operator wants a fresh identification test. The historical pockets are not that test.
+- A new mood key, written before Arm C and held by the operator, if the operator wants a scored mood validation. A participant’s own grade against sources is descriptive. It is not the old central agreement.
+- Company means and the film brief. Not part of A–C.
 
-## Algebra used in this experiment
+Recomputing the closed round’s published counts is an operator check of files that already contain the answers. It is not in the participant zip. From the report folder, after the blind work is done: `python3 analysis/cams_personality_independent_ai_replication_2026-11-07/verify_evidence.py`.
 
-Letters follow the public canonical definitions: [canonical-definitions.html](../../canonical-definitions.html). **C is Coherence. K is Capacity.** C is not complexity.
+## Algebra, as issued
 
-For each node, cognitive focus and affect are:
+The packet’s own rule file is [inputs/arm_a_standard/algebra_and_rules.md](inputs/arm_a_standard/algebra_and_rules.md). **C is Coherence. K is Capacity.**
 
-- Cog = A × C
-- Aff = K − S
-- σ = Cog × Aff = (A × C)(K − S)
+- Cognition: Cog = A × C
+- Affect: Aff = K − S
+- Activation: σ = Cog × Aff
 
-A is Abstraction. S is Stress. The same product is written on the canonical page as σ = A·C·(K−S). This experiment's pockets use that product. They do not use Node Value and they do not use bond strength. The eight names used on the sealed returns are Helm, Shield, Lore, Stewards, Craft, Hands, Archive, and Flow. The original packet's node-definition file is not in the deposit. Do not write a private node manual and call it the missing file.
+Cog is the cognitive quantity. The packet does not define Cog as focus. Its reading rules speak separately of high focus with negative activation, and they treat that as strain, not health. Do not compute V or bond.
 
-## Files
-
-| Path | Role |
-|---|---|
-| [PARTICIPANT.md](PARTICIPANT.md) | What a blind participant does, and what they must not open |
-| [OPERATOR.md](OPERATOR.md) | Hold-out scoring, and the difference between rechecking old files and running a new test |
-| [COVERAGE.md](COVERAGE.md) | Present files and missing files |
-| [packet/arm_c_mood/](packet/arm_c_mood/) | Byte copy of the issued Arm C packet (four files, no grades) |
-| [scripts/sha256_file.py](scripts/sha256_file.py) | Real SHA-256 |
-| [scripts/check_return_shape.py](scripts/check_return_shape.py) | Shape check, not a score |
-| [scripts/verify_public_kit.py](scripts/verify_public_kit.py) | Checks this kit against the sealed Arm C packet |
-
-Check the kit:
+## Check and rebuild
 
 ```bash
 python3 scripts/verify_public_kit.py
+python3 scripts/build_participant_zip.py
 ```
 
-A clean check prints `problems=0`.
+`verify_public_kit.py` checks the issued hashes, the Arm C bytes against the sealed packet, the absence of key CSVs, and that the participant zip matches a deterministic rebuild. A clean check prints `problems=0`.
