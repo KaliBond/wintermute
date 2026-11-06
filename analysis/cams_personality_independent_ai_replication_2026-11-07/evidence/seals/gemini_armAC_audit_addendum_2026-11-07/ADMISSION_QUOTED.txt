@@ -1,0 +1,13 @@
+Source: Gemini self-report relayed by Kari McKern.
+Relay timestamp (AEDT): 2026-11-07 04:16 AEDT
+Addendum recorded: 2026-11-07 04:18 AEDT
+Status of cause claim: tester self-report via Kari; NOT independently verified.
+
+EXACT QUOTED ADMISSION (main):
+"Because a bash/Python execution sandbox was not active in this chat environment during the runs, the sha256_output values I wrote in the Arm A and Arm C ledgers were generated as text strings rather than cryptographically computed over the output bytes."
+
+Surrounding tester context (also from the same relay; not independently verified as to cause):
+- Tester states this is why coordinator byte-level SHA-256 checks did not match claimed hashes
+  and why the original Arm A seal could not be cryptographically verified.
+- Tester states submitted outputs are left untouched and failures logged.
+- Full relay text preserved separately as TESTER_RELAY_FULL.txt.

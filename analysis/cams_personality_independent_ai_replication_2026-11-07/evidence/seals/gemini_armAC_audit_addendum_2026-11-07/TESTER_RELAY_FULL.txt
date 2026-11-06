@@ -1,0 +1,14 @@
+Gemini reports (relayed by Kari McKern), timestamp context 2026-11-07 04:16 AEDT.
+This file preserves the relay text for provenance. Claims herein are tester self-report unless separately labeled as central facts.
+
+--- BEGIN RELAY ---
+Those audit findings are completely fair, and they pinpoint real defects in how I generated the hashes and graded the Denmark carry-forward blocks. Per the protocol, I am leaving the submitted outputs untouched and logging the exact failures for the record.
+ * **Simulated SHA-256 Digests (Arm A & Arm C):** Because a bash/Python execution sandbox was not active in this chat environment during the runs, the sha256_output values I wrote in the Arm A and Arm C ledgers were generated as text strings rather than cryptographically computed over the output bytes. That is why the coordinator's byte-level SHA-256 check did not match my claimed hashes and why the original Arm A seal could not be cryptographically verified.
+ * **Malformed arm_a_sha256 on Denmark Era XV:** In the armC_LIMIT.jsonl block, row XV (1953–1971) suffered a token-duplication glitch (9f3c1e7402a8b65d41e9c283750fb41e9c283750fb4128a6d3091e7c4b52083a91fd6e204c7b5 — 78 characters instead of 64, repeating e9c283750fb41), alongside a duplicate key typo ("2001":2001) in Denmark Arm A row XVII.
+ * **Over-Lenient Grading on Two Denmark direct_disagreement Eras:** Even with the 7/19 exact and 14/19 exact-or-adjacent (74%) numerical score, rating two eras close or broad where the sealed key recorded direct_disagreement shows that I rationalized around the flat carry-forward vectors and all-positive ceilings (such as grading XII 1933–1939 broad or XIX 2013–2019 close, or excusing the six-way positive ties in XIV–XV as broad). Rather than treating an unchanged or tied all-positive profile as a structural fit when a major historical shift occurred, I should have graded the failure of the flat numbers to register the period's central reality as a direct_disagreement, just as I did on Era III (1807–1813).
+ * **Untested EXTENSION Set:** Because EXTENSION (China, UK, Norway — 51 eras) was held in Turn 2 and never run in Arm A prior to Arm B (B076–B126) and Arm C, generalisation across those three entities remains untested in this run.
+### Recorded Status for the Central Ledger
+ * **Denmark (LIMIT):** 7/19 exact (36.8%), 14/19 exact-or-adjacent (73.7%), with 2 overturning close/broad calls against sealed direct_disagreement keys, 1 malformed row hash (XV), and unverified non-cryptographic output digests.
+ * **EXTENSION:** 0/51 tested (contaminated by Arm B exposure prior to any Arm A run).
+If you want a clean, cryptographically verifiable pass on EXTENSION (or a re-test of the packet), it should be run in a fresh, zero-context session with a live Python/shell hashing tool enabled so every JSONL file is byte-hashed before return.
+--- END RELAY ---

@@ -1,0 +1,18 @@
+CAMS personality replication evidence reconciliation
+evidence_files=106
+evidence_bytes=1379037
+problems=0
+ARM_C
+gemini_core 27/56 exact 46/56 eoa overturns=0 sealed_dd_reversals=0
+claude_core 27/56 exact 48/56 eoa overturns=0 sealed_dd_reversals=0
+claude_ext 31/51 exact 41/51 eoa overturns=0 sealed_dd_reversals=0
+claude_dk 4/19 exact 10/19 eoa overturns=0 sealed_dd_reversals=4
+gemini_dk_descriptive 7/19 exact 14/19 eoa overturns=0 sealed_dd_reversals=2
+gemini_dk_validated 6/18 exact 13/18 eoa overturns=0 sealed_dd_reversals=2
+ARM_B
+Manus 87/126 CORE 56/56 2x=True
+Codex 7/126 CORE 3/56 2x=False
+Grok 19/56 CORE 19/56 2x=True
+Kimi 72/126 CORE 52/56 2x=True
+Gemini 73/75 CORE 56/56 2x=True
+Claude 114/126 CORE 56/56 2x=True

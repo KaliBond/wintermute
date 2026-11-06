@@ -1,0 +1,681 @@
+{
+  "scored_at_aedt": "2026-11-07 04:16 AEDT",
+  "model": "claude-sonnet-4-6",
+  "arm": "C",
+  "entity_sets": [
+    "EXTENSION",
+    "LIMIT"
+  ],
+  "adjacency_rule": {
+    "source": "armC_scores_READY/README.md pre-registered",
+    "adjacent_pairs": [
+      [
+        "close",
+        "broad"
+      ],
+      [
+        "broad",
+        "partial"
+      ],
+      [
+        "partial",
+        "mixed"
+      ]
+    ],
+    "mixed_direct_disagreement_adjacent": false,
+    "note": "Claude CORE 03:12 AEDT seal historically treated mixed↔direct_disagreement as adjacent; EXT/DK use READY rule (not adjacent), matching Gemini LIMIT concurrent scoring."
+  },
+  "key_sha256": "2e378db43727bf09f60bf8a41fdab0e471bfe0bf978f125748704af776d031d2",
+  "expected_packet_sha256": "23fce155fa687d5c9b88e41c25cc9611537dbb8072086bf13a7741e2b24f6f26",
+  "claimed_packet_sha256": "23fce155fa687d5c9b88e41c25cc9611537dbb8072086bf13a7741e2b24f6f26",
+  "packet_sha_matches": true,
+  "arm_a_sha256_claimed": "520005f20d08096a266ca20c46cf5939b382c6026c1b7ffa903f4a235c2cddf7",
+  "arm_a_status": "UNVERIFIED_NO_FILE",
+  "arm_a_hits": [],
+  "arm_a_ledger_note": "/workspace/uploads/wintermute_arm_a_ledger.md claims final sha 520005f2… for arm_a_output_final.jsonl (126 rows CORE+EXT+LIMIT); bytes not mounted on box",
+  "extension": {
+    "coverage": {
+      "expected": 51,
+      "received": 51,
+      "scored": 51,
+      "missing": 0,
+      "duplicates": 0,
+      "malformed": 0
+    },
+    "sealed_output_sha256": "da0212f8c715829481787bfec2706cbbc22479cb36b967a5aa24124856f79dfc",
+    "claimed_output_sha256": "da0212f8c715829481787bfec2706cbbc22479cb36b967a5aa24124856f79dfc",
+    "claimed_output_match": true,
+    "scored_rows_sha256": "428072f401e0076bcd68dfa9da39325adc36fb4e76bbc62ae2adfaf3127b0e00",
+    "tester_timestamp_aedt": "2026-11-07 14:00 AEDT",
+    "actual_returned_grade_counts": {
+      "broad": 5,
+      "close": 46
+    },
+    "report_claimed_grade_counts": {
+      "close": 46,
+      "broad": 5
+    },
+    "report_vs_actual_grade_count_mismatch": false,
+    "validation_issues": [],
+    "descriptive": {
+      "overall": {
+        "n": 51,
+        "exact": 31,
+        "exact_pct": 60.78,
+        "adjacent_only": 10,
+        "adjacent_only_pct": 19.61,
+        "exact_or_adjacent": 41,
+        "exact_or_adjacent_pct": 80.39,
+        "non_adjacent_mismatch": 10,
+        "returned_direct_disagreement": 0,
+        "overturning_disagreements": 0,
+        "sealed_disagreement_reversals": 0
+      },
+      "by_entity": {
+        "China": {
+          "n": 20,
+          "exact": 9,
+          "exact_pct": 45.0,
+          "adjacent_only": 4,
+          "adjacent_only_pct": 20.0,
+          "exact_or_adjacent": 13,
+          "exact_or_adjacent_pct": 65.0,
+          "non_adjacent_mismatch": 7,
+          "returned_direct_disagreement": 0,
+          "overturning_disagreements": 0,
+          "sealed_disagreement_reversals": 0
+        },
+        "Norway": {
+          "n": 15,
+          "exact": 11,
+          "exact_pct": 73.33,
+          "adjacent_only": 2,
+          "adjacent_only_pct": 13.33,
+          "exact_or_adjacent": 13,
+          "exact_or_adjacent_pct": 86.67,
+          "non_adjacent_mismatch": 2,
+          "returned_direct_disagreement": 0,
+          "overturning_disagreements": 0,
+          "sealed_disagreement_reversals": 0
+        },
+        "UK": {
+          "n": 16,
+          "exact": 11,
+          "exact_pct": 68.75,
+          "adjacent_only": 4,
+          "adjacent_only_pct": 25.0,
+          "exact_or_adjacent": 15,
+          "exact_or_adjacent_pct": 93.75,
+          "non_adjacent_mismatch": 1,
+          "returned_direct_disagreement": 0,
+          "overturning_disagreements": 0,
+          "sealed_disagreement_reversals": 0
+        }
+      },
+      "confusion_sealed_rows_returned_columns": {
+        "close": {
+          "close": 27,
+          "broad": 0,
+          "partial": 0,
+          "mixed": 0,
+          "direct_disagreement": 0
+        },
+        "broad": {
+          "close": 10,
+          "broad": 4,
+          "partial": 0,
+          "mixed": 0,
+          "direct_disagreement": 0
+        },
+        "partial": {
+          "close": 1,
+          "broad": 0,
+          "partial": 0,
+          "mixed": 0,
+          "direct_disagreement": 0
+        },
+        "mixed": {
+          "close": 8,
+          "broad": 1,
+          "partial": 0,
+          "mixed": 0,
+          "direct_disagreement": 0
+        },
+        "direct_disagreement": {
+          "close": 0,
+          "broad": 0,
+          "partial": 0,
+          "mixed": 0,
+          "direct_disagreement": 0
+        }
+      },
+      "non_exact_pair_counts": {
+        "broad -> close": 10,
+        "mixed -> close": 8,
+        "mixed -> broad": 1,
+        "partial -> close": 1
+      },
+      "returned_grade_counts": {
+        "broad": 5,
+        "close": 46
+      },
+      "non_exact_eras": [
+        {
+          "entity": "China",
+          "era_id": "I",
+          "years": "1800-1839",
+          "sealed": "broad",
+          "returned": "close",
+          "adjacent": true,
+          "flags": []
+        },
+        {
+          "entity": "China",
+          "era_id": "III",
+          "years": "1850-1864",
+          "sealed": "partial",
+          "returned": "close",
+          "adjacent": false,
+          "flags": [
+            "NON-ADJ"
+          ]
+        },
+        {
+          "entity": "China",
+          "era_id": "IV",
+          "years": "1865-1894",
+          "sealed": "broad",
+          "returned": "close",
+          "adjacent": true,
+          "flags": []
+        },
+        {
+          "entity": "China",
+          "era_id": "VII",
+          "years": "1912-1916",
+          "sealed": "broad",
+          "returned": "close",
+          "adjacent": true,
+          "flags": []
+        },
+        {
+          "entity": "China",
+          "era_id": "X",
+          "years": "1938-1945",
+          "sealed": "mixed",
+          "returned": "close",
+          "adjacent": false,
+          "flags": [
+            "NON-ADJ"
+          ]
+        },
+        {
+          "entity": "China",
+          "era_id": "XI",
+          "years": "1946-1949",
+          "sealed": "mixed",
+          "returned": "close",
+          "adjacent": false,
+          "flags": [
+            "NON-ADJ"
+          ]
+        },
+        {
+          "entity": "China",
+          "era_id": "XII",
+          "years": "1950-1957",
+          "sealed": "mixed",
+          "returned": "close",
+          "adjacent": false,
+          "flags": [
+            "NON-ADJ"
+          ]
+        },
+        {
+          "entity": "China",
+          "era_id": "XV",
+          "years": "1966-1976",
+          "sealed": "mixed",
+          "returned": "close",
+          "adjacent": false,
+          "flags": [
+            "NON-ADJ"
+          ]
+        },
+        {
+          "entity": "China",
+          "era_id": "XVII",
+          "years": "1989-2001",
+          "sealed": "mixed",
+          "returned": "close",
+          "adjacent": false,
+          "flags": [
+            "NON-ADJ"
+          ]
+        },
+        {
+          "entity": "China",
+          "era_id": "XVIII",
+          "years": "2002-2012",
+          "sealed": "broad",
+          "returned": "close",
+          "adjacent": true,
+          "flags": []
+        },
+        {
+          "entity": "China",
+          "era_id": "XIX",
+          "years": "2013-2019",
+          "sealed": "mixed",
+          "returned": "close",
+          "adjacent": false,
+          "flags": [
+            "NON-ADJ"
+          ]
+        },
+        {
+          "entity": "UK",
+          "era_id": "VI",
+          "years": "1940-1945",
+          "sealed": "broad",
+          "returned": "close",
+          "adjacent": true,
+          "flags": []
+        },
+        {
+          "entity": "UK",
+          "era_id": "VIII",
+          "years": "1952-1963",
+          "sealed": "broad",
+          "returned": "close",
+          "adjacent": true,
+          "flags": []
+        },
+        {
+          "entity": "UK",
+          "era_id": "IX",
+          "years": "1964-1970",
+          "sealed": "broad",
+          "returned": "close",
+          "adjacent": true,
+          "flags": []
+        },
+        {
+          "entity": "UK",
+          "era_id": "XII",
+          "years": "1991-1997",
+          "sealed": "broad",
+          "returned": "close",
+          "adjacent": true,
+          "flags": []
+        },
+        {
+          "entity": "UK",
+          "era_id": "XIII",
+          "years": "1998-2007",
+          "sealed": "mixed",
+          "returned": "close",
+          "adjacent": false,
+          "flags": [
+            "NON-ADJ"
+          ]
+        },
+        {
+          "entity": "Norway",
+          "era_id": "VIII",
+          "years": "1961-1972",
+          "sealed": "broad",
+          "returned": "close",
+          "adjacent": true,
+          "flags": []
+        },
+        {
+          "entity": "Norway",
+          "era_id": "X",
+          "years": "1985-1994",
+          "sealed": "broad",
+          "returned": "close",
+          "adjacent": true,
+          "flags": []
+        },
+        {
+          "entity": "Norway",
+          "era_id": "XIV",
+          "years": "2020-2021",
+          "sealed": "mixed",
+          "returned": "close",
+          "adjacent": false,
+          "flags": [
+            "NON-ADJ"
+          ]
+        },
+        {
+          "entity": "Norway",
+          "era_id": "XV",
+          "years": "2022-2025",
+          "sealed": "mixed",
+          "returned": "broad",
+          "adjacent": false,
+          "flags": [
+            "NON-ADJ"
+          ]
+        }
+      ]
+    },
+    "pass_descriptive": true
+  },
+  "limit": {
+    "coverage": {
+      "expected": 19,
+      "received": 19,
+      "scored": 19,
+      "missing": 0,
+      "duplicates": 0,
+      "malformed": 0,
+      "denmark_ix_omitted": true
+    },
+    "sealed_output_sha256": "ff65e33c5f99b1b8528da72917d01b845db680ba495a4aeccd7ed27cb67f0352",
+    "claimed_output_sha256": "ff65e33c5f99b1b8528da72917d01b845db680ba495a4aeccd7ed27cb67f0352",
+    "claimed_output_match": true,
+    "scored_rows_sha256": "c4f2ea79a605100d0fa61d65cb16673da093e2c4ad43e368476d0a142a75ab2c",
+    "tester_timestamp_aedt": "2026-11-07 15:30 AEDT",
+    "actual_returned_grade_counts": {
+      "broad": 6,
+      "close": 12,
+      "partial": 1
+    },
+    "report_claimed_grade_counts": {
+      "close": 12,
+      "broad": 6,
+      "partial": 1
+    },
+    "report_vs_actual_grade_count_mismatch": false,
+    "validation_issues": [],
+    "descriptive": {
+      "overall": {
+        "n": 19,
+        "exact": 4,
+        "exact_pct": 21.05,
+        "adjacent_only": 6,
+        "adjacent_only_pct": 31.58,
+        "exact_or_adjacent": 10,
+        "exact_or_adjacent_pct": 52.63,
+        "non_adjacent_mismatch": 9,
+        "returned_direct_disagreement": 0,
+        "overturning_disagreements": 0,
+        "sealed_disagreement_reversals": 4
+      },
+      "by_entity": {
+        "Denmark": {
+          "n": 19,
+          "exact": 4,
+          "exact_pct": 21.05,
+          "adjacent_only": 6,
+          "adjacent_only_pct": 31.58,
+          "exact_or_adjacent": 10,
+          "exact_or_adjacent_pct": 52.63,
+          "non_adjacent_mismatch": 9,
+          "returned_direct_disagreement": 0,
+          "overturning_disagreements": 0,
+          "sealed_disagreement_reversals": 4
+        }
+      },
+      "confusion_sealed_rows_returned_columns": {
+        "close": {
+          "close": 1,
+          "broad": 0,
+          "partial": 0,
+          "mixed": 0,
+          "direct_disagreement": 0
+        },
+        "broad": {
+          "close": 4,
+          "broad": 2,
+          "partial": 0,
+          "mixed": 0,
+          "direct_disagreement": 0
+        },
+        "partial": {
+          "close": 2,
+          "broad": 2,
+          "partial": 1,
+          "mixed": 0,
+          "direct_disagreement": 0
+        },
+        "mixed": {
+          "close": 2,
+          "broad": 1,
+          "partial": 0,
+          "mixed": 0,
+          "direct_disagreement": 0
+        },
+        "direct_disagreement": {
+          "close": 3,
+          "broad": 1,
+          "partial": 0,
+          "mixed": 0,
+          "direct_disagreement": 0
+        }
+      },
+      "non_exact_pair_counts": {
+        "broad -> close": 4,
+        "direct_disagreement -> close": 3,
+        "mixed -> close": 2,
+        "partial -> broad": 2,
+        "partial -> close": 2,
+        "direct_disagreement -> broad": 1,
+        "mixed -> broad": 1
+      },
+      "returned_grade_counts": {
+        "broad": 6,
+        "close": 12,
+        "partial": 1
+      },
+      "non_exact_eras": [
+        {
+          "entity": "Denmark",
+          "era_id": "I",
+          "years": "1752-1783",
+          "sealed": "broad",
+          "returned": "close",
+          "adjacent": true,
+          "flags": []
+        },
+        {
+          "entity": "Denmark",
+          "era_id": "III",
+          "years": "1807-1813",
+          "sealed": "direct_disagreement",
+          "returned": "broad",
+          "adjacent": false,
+          "flags": [
+            "NON-ADJ",
+            "SEALED_DD_REVERSAL"
+          ]
+        },
+        {
+          "entity": "Denmark",
+          "era_id": "IV",
+          "years": "1814-1839",
+          "sealed": "partial",
+          "returned": "broad",
+          "adjacent": true,
+          "flags": []
+        },
+        {
+          "entity": "Denmark",
+          "era_id": "V",
+          "years": "1840-1849",
+          "sealed": "direct_disagreement",
+          "returned": "close",
+          "adjacent": false,
+          "flags": [
+            "NON-ADJ",
+            "SEALED_DD_REVERSAL"
+          ]
+        },
+        {
+          "entity": "Denmark",
+          "era_id": "VI",
+          "years": "1850-1863",
+          "sealed": "direct_disagreement",
+          "returned": "close",
+          "adjacent": false,
+          "flags": [
+            "NON-ADJ",
+            "SEALED_DD_REVERSAL"
+          ]
+        },
+        {
+          "entity": "Denmark",
+          "era_id": "X",
+          "years": "1914-1919",
+          "sealed": "direct_disagreement",
+          "returned": "close",
+          "adjacent": false,
+          "flags": [
+            "NON-ADJ",
+            "SEALED_DD_REVERSAL"
+          ]
+        },
+        {
+          "entity": "Denmark",
+          "era_id": "XI",
+          "years": "1920-1932",
+          "sealed": "broad",
+          "returned": "close",
+          "adjacent": true,
+          "flags": []
+        },
+        {
+          "entity": "Denmark",
+          "era_id": "XII",
+          "years": "1933-1939",
+          "sealed": "partial",
+          "returned": "close",
+          "adjacent": false,
+          "flags": [
+            "NON-ADJ"
+          ]
+        },
+        {
+          "entity": "Denmark",
+          "era_id": "XIII",
+          "years": "1940-1945",
+          "sealed": "mixed",
+          "returned": "close",
+          "adjacent": false,
+          "flags": [
+            "NON-ADJ"
+          ]
+        },
+        {
+          "entity": "Denmark",
+          "era_id": "XIV",
+          "years": "1946-1952",
+          "sealed": "broad",
+          "returned": "close",
+          "adjacent": true,
+          "flags": []
+        },
+        {
+          "entity": "Denmark",
+          "era_id": "XVI",
+          "years": "1972-1989",
+          "sealed": "partial",
+          "returned": "close",
+          "adjacent": false,
+          "flags": [
+            "NON-ADJ"
+          ]
+        },
+        {
+          "entity": "Denmark",
+          "era_id": "XVII",
+          "years": "1990-2001",
+          "sealed": "broad",
+          "returned": "close",
+          "adjacent": true,
+          "flags": []
+        },
+        {
+          "entity": "Denmark",
+          "era_id": "XVIII",
+          "years": "2002-2012",
+          "sealed": "partial",
+          "returned": "broad",
+          "adjacent": true,
+          "flags": []
+        },
+        {
+          "entity": "Denmark",
+          "era_id": "XIX",
+          "years": "2013-2019",
+          "sealed": "mixed",
+          "returned": "broad",
+          "adjacent": false,
+          "flags": [
+            "NON-ADJ"
+          ]
+        },
+        {
+          "entity": "Denmark",
+          "era_id": "XX",
+          "years": "2020-2025",
+          "sealed": "mixed",
+          "returned": "close",
+          "adjacent": false,
+          "flags": [
+            "NON-ADJ"
+          ]
+        }
+      ]
+    },
+    "pass_descriptive": true
+  },
+  "protocol": {
+    "schema_coverage_years_sources_moods": "PASS",
+    "arm_a_sha_hex64_and_internally_consistent": "PASS",
+    "arm_a_file_bytes_on_box": "UNVERIFIED_NO_FILE",
+    "protocol_validation_overall": "CAVEATED_UNVERIFIED_ARMA",
+    "descriptive_scoring": "COMPLETE",
+    "note": "Descriptive scores join all returned rows to HOLD key. Protocol validation additionally requires verifiable sealed Arm A bytes; only ledger claim present locally."
+  },
+  "combined_with_prior_core_optional": {
+    "note": "Informational only; does not replace primary set metrics. Prior Claude CORE exact 27/56, exact-or-adjacent 48/56 (CORE seal used looser mixed↔DD adjacency historically).",
+    "n": 126,
+    "exact": 62,
+    "exact_pct": 49.21,
+    "exact_or_adjacent": 99,
+    "exact_or_adjacent_pct": 78.57,
+    "components": {
+      "CORE": {
+        "exact": 27,
+        "eoa": 48,
+        "n": 56
+      },
+      "EXT": {
+        "exact": 31,
+        "eoa": 41,
+        "n": 51
+      },
+      "LIMIT": {
+        "exact": 4,
+        "eoa": 10,
+        "n": 19
+      }
+    }
+  },
+  "timestamp_audit": {
+    "sealed_time_aedt": "2026-11-07 04:16 AEDT",
+    "tester_ext_timestamp_aedt": "2026-11-07 14:00 AEDT",
+    "tester_dk_timestamp_aedt": "2026-11-07 15:30 AEDT",
+    "tester_core_timestamp_aedt": "2026-11-07 11:30 AEDT",
+    "note": "Seal wall-clock is earlier than tester grading timestamps (same pattern as Claude CORE: sealed 03:12 vs claimed 11:30). Not seal-later-than-grading; tester timestamps run ahead of box seal time."
+  },
+  "prior_core_untouched": {
+    "seal": "/workspace/evidence/runs/nations_zeitgeist/personality/ai_replication/seals/claude_armC_2026-11-07",
+    "scores": "/workspace/evidence/runs/nations_zeitgeist/personality/ai_replication/seals/armC_scores_2026-11-07",
+    "core_output_sha": "75a44314ecc219f8b85b6d985d86f1509c5a05bbd817a4c259787ebc225bf4fe"
+  }
+}

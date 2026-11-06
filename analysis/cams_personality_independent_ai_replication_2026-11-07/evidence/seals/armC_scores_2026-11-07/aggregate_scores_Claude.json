@@ -1,0 +1,163 @@
+{
+  "scored_at_aedt": "2026-11-07 03:12 AEDT",
+  "model": "claude-sonnet-4-6",
+  "arm": "C",
+  "entity_set": "CORE",
+  "coverage": {
+    "expected": 56,
+    "received": 56,
+    "scored": 56,
+    "missing": 0,
+    "duplicates": 0,
+    "malformed": 0
+  },
+  "key_sha256": "2e378db43727bf09f60bf8a41fdab0e471bfe0bf978f125748704af776d031d2",
+  "key_n": 126,
+  "source_upload_sha256": "75a44314ecc219f8b85b6d985d86f1509c5a05bbd817a4c259787ebc225bf4fe",
+  "sealed_output_sha256": "75a44314ecc219f8b85b6d985d86f1509c5a05bbd817a4c259787ebc225bf4fe",
+  "scored_rows_sha256": "140346fb0d1f3538a44bb46ea5a709c55f0983eb35cea34e376360639441ea79",
+  "arm_a_sha256": "520005f20d08096a266ca20c46cf5939b382c6026c1b7ffa903f4a235c2cddf7",
+  "arm_a_sha_consistent_across_rows": true,
+  "expected_packet_sha256": "23fce155fa687d5c9b88e41c25cc9611537dbb8072086bf13a7741e2b24f6f26",
+  "claimed_packet_sha256": "23fce155fa687d5c9b88e41c25cc9611537dbb8072086bf13a7741e2b24f6f26",
+  "packet_sha_matches": true,
+  "claimed_output_sha256": "75a44314ecc219f8b85b6d985d86f1509c5a05bbd817a4c259787ebc225bf4fe",
+  "claimed_output_sha_matches": true,
+  "tester_ledger_raw": "model=claude-sonnet-4-6 | arm=C | entity_set=CORE (Russia 23, Australia 18, USA 15) | arm_a_sha256=520005f20d08096a266ca20c46cf5939b382c6026c1b7ffa903f4a235c2cddf7 | sha256_input=23fce155fa687d5c9b88e41c25cc9611537dbb8072086bf13a7741e2b24f6f26 | sha256_output=75a44314ecc219f8b85b6d985d86f1509c5a05bbd817a4c259787ebc225bf4fe | timestamp_aedt=2026-11-07 11:30 AEDT | operator_notes=All 56 eras graded. No coverage gaps. Wikipedia and Britannica used as primary sources. Sources are cited by article title+URL with accessed date 2026-11-07. No sealed Q3 grades consulted. No Arm D or film material included.",
+  "scoring": {
+    "exact_definition": "returned q3_grade equals sealed_q3_grade",
+    "grade_scale_order": [
+      "close",
+      "broad",
+      "partial",
+      "mixed",
+      "direct_disagreement"
+    ],
+    "adjacent_pairs": [
+      [
+        "close",
+        "broad"
+      ],
+      [
+        "broad",
+        "partial"
+      ],
+      [
+        "partial",
+        "mixed"
+      ],
+      [
+        "mixed",
+        "direct_disagreement"
+      ]
+    ],
+    "mixed_direct_disagreement_adjacent": true,
+    "pass_rule": "More than half exact-or-adjacent on CORE (>28/56, i.e. >=29/56)."
+  },
+  "overall": {
+    "n": 56,
+    "exact": 27,
+    "exact_pct": 48.21,
+    "adjacent_only": 21,
+    "adjacent_only_pct": 37.5,
+    "exact_or_adjacent": 48,
+    "exact_or_adjacent_pct": 85.71,
+    "non_adjacent_mismatch": 8,
+    "returned_direct_disagreement": 0,
+    "overturning_disagreements": 0,
+    "sealed_disagreement_reversals": 0
+  },
+  "by_entity": {
+    "Australia": {
+      "n": 18,
+      "exact": 8,
+      "exact_pct": 44.44,
+      "adjacent_only": 8,
+      "adjacent_only_pct": 44.44,
+      "exact_or_adjacent": 16,
+      "exact_or_adjacent_pct": 88.89,
+      "non_adjacent_mismatch": 2,
+      "returned_direct_disagreement": 0,
+      "overturning_disagreements": 0,
+      "sealed_disagreement_reversals": 0
+    },
+    "Russia": {
+      "n": 23,
+      "exact": 9,
+      "exact_pct": 39.13,
+      "adjacent_only": 9,
+      "adjacent_only_pct": 39.13,
+      "exact_or_adjacent": 18,
+      "exact_or_adjacent_pct": 78.26,
+      "non_adjacent_mismatch": 5,
+      "returned_direct_disagreement": 0,
+      "overturning_disagreements": 0,
+      "sealed_disagreement_reversals": 0
+    },
+    "USA": {
+      "n": 15,
+      "exact": 10,
+      "exact_pct": 66.67,
+      "adjacent_only": 4,
+      "adjacent_only_pct": 26.67,
+      "exact_or_adjacent": 14,
+      "exact_or_adjacent_pct": 93.33,
+      "non_adjacent_mismatch": 1,
+      "returned_direct_disagreement": 0,
+      "overturning_disagreements": 0,
+      "sealed_disagreement_reversals": 0
+    }
+  },
+  "confusion_sealed_rows_returned_columns": {
+    "close": {
+      "close": 26,
+      "broad": 2,
+      "partial": 0,
+      "mixed": 0,
+      "direct_disagreement": 0
+    },
+    "broad": {
+      "close": 16,
+      "broad": 1,
+      "partial": 0,
+      "mixed": 0,
+      "direct_disagreement": 0
+    },
+    "partial": {
+      "close": 3,
+      "broad": 3,
+      "partial": 0,
+      "mixed": 0,
+      "direct_disagreement": 0
+    },
+    "mixed": {
+      "close": 3,
+      "broad": 2,
+      "partial": 0,
+      "mixed": 0,
+      "direct_disagreement": 0
+    },
+    "direct_disagreement": {
+      "close": 0,
+      "broad": 0,
+      "partial": 0,
+      "mixed": 0,
+      "direct_disagreement": 0
+    }
+  },
+  "non_exact_pair_counts": {
+    "broad -> close": 16,
+    "close -> broad": 2,
+    "mixed -> broad": 2,
+    "mixed -> close": 3,
+    "partial -> broad": 3,
+    "partial -> close": 3
+  },
+  "returned_grade_counts": {
+    "broad": 8,
+    "close": 48
+  },
+  "majority_exact_or_adjacent": true,
+  "majority_direct_disagreement_pattern": false,
+  "pass": true
+}
