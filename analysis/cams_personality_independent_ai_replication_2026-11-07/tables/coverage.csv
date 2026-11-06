@@ -1,0 +1,19 @@
+model,model_id_as_recorded,arm,recorded_result,status,referenced_sha256
+Claude,claude-sonnet-4-6,A,CORE+EXT+LIMIT claimed,hash claimed; bytes absent,520005f20d08096a266ca20c46cf5939b382c6026c1b7ffa903f4a235c2cddf7
+Claude,claude-sonnet-4-6,B,CORE 56/56; DK 13/19; EXT 45/51,scored,ed54c0a5420b93c68764ddeb44ad970a15f58ac8f8ab6536021a42dacdaeea36
+Claude,claude-sonnet-4-6,C,"CORE 27/56 exact, 48/56 EoA; EXT 31/51 exact, 41/51 EoA; DK 4/19 exact, 10/19 EoA",numeric majority; Arm A bytes unverified,
+Gemini,gemini-2.5-pro,A,no Arm A file in deposit,claimed hashes admitted non-cryptographic,
+Gemini,gemini-2.5-pro,B,CORE 56/56; DK 17/19; EXT not in drop,scored; not auto-excluded by A/C admission,c135c2d4a5f1704cc1ec2ab883224ecdae850be20b220713c18b00369f68d66e
+Gemini,gemini-2.5-pro,C,"CORE 27/56 exact, 46/56 EoA; DK 7/19 exact, 14/19 EoA; validated excl. XV 6/18 exact, 13/18 EoA; EXT 0/51",descriptive only; not protocol-clean,
+Kimi,Kimi K2.5,A,CORE 56 rows and Denmark 19 rows sealed,file hashes match ledger; no central leadership score in deposit,
+Kimi,Kimi K2.5,B,CORE 52/56; DK 12/19; EXT 8/51,scored,c23f52b0a1fa1f72289e523cf96668aac0b5eb4fec7f688323c30903ec966704
+Kimi,Kimi K2.5,C,not started,phone inaccessible; not a failed test,
+Grok,Grok-4.7,A,CORE 56 rows sealed,file hash matches ledger; no central leadership score in deposit,cbd4b64cdbd947b1a9bf4d16ed1ebe96e3dc6fc45d993afe0eefadaa7042ce0d
+Grok,Grok-4.7,B,CORE 19/56; DK and EXT absent,scored; meets 2x on CORE,c09b54823fd55e4a3a554a1b1d98ab180c7d67d8fb8ed6a87b9ce9ffa2eeee5b
+Grok,Grok-4.7,C,not returned,not a failed test,
+Codex,"Codex (GPT-6, exact revision unavailable)",A,no Arm A file in deposit,no Arm A metric recorded,
+Codex,"Codex (GPT-6, exact revision unavailable)",B,CORE 3/56; DK 1/19; EXT 3/51,scored; fails 2x on CORE,28e25db21af300cf28bde11848c433c0a6ab06ce468edbcc7d8c32d7f0196a22
+Codex,"Codex (GPT-6, exact revision unavailable)",C,not returned,not a failed test,
+Manus,Manus agent (LLM version not exposed),A,no Arm A file in deposit,same-session contamination self-reported on Arm B,
+Manus,Manus agent (LLM version not exposed),B,CORE 56/56; DK 15/19; EXT 16/51,scored with contamination flag,
+Manus,Manus agent (LLM version not exposed),C,not returned,credits exhausted; not a failed test,

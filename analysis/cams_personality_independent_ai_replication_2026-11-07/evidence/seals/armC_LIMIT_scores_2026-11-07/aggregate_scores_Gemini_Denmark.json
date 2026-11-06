@@ -1,0 +1,200 @@
+{
+  "scored_at_aedt": "2026-11-07 04:13 AEDT",
+  "model": "gemini-2.5-pro",
+  "arm": "C",
+  "entity_set": "LIMIT",
+  "extension_status": "NOT_TESTED",
+  "extension_n": 0,
+  "extension_of": 51,
+  "key_sha256": "2e378db43727bf09f60bf8a41fdab0e471bfe0bf978f125748704af776d031d2",
+  "attachment_content_sha256": "f449a45a7a0950523c4a9d835c9a3ef10c32513a6b573158c9a878232b7439ca",
+  "attachment_filename_hash": "5ed236b72e9ccacba2d4633657996b63ca0780f419a7ca6d47dafbf17014124b",
+  "attachment_filename_hash_matches_content": false,
+  "extracted_limit_sha256": "812ff1fdbc29902cddcfafc8f117749ead08505a613725ed8d12e81639ebfba9",
+  "claimed_limit_output_sha256": "6c91a4e820f7b35d18c492e0a73f5b19d842c601e9a7b34502f8c1d6e390a4b2",
+  "claimed_limit_output_match": false,
+  "claimed_arm_a_denmark_sha256": "9f3c1e7402a8b65d41e9c283750fb4128a6d3091e7c4b52083a91fd6e204c7b5",
+  "arm_a_denmark_status": "UNVERIFIED_NO_FILE",
+  "denmark_xv_arm_a_malformed": true,
+  "denmark_xv_arm_a_raw": "9f3c1e7402a8b65d41e9c283750fb41e9c283750fb4128a6d3091e7c4b52083a91fd6e204c7b5",
+  "scoring": {
+    "exact_definition": "returned q3_grade equals sealed_q3_grade",
+    "adjacent_pairs": [
+      [
+        "close",
+        "broad"
+      ],
+      [
+        "broad",
+        "partial"
+      ],
+      [
+        "partial",
+        "mixed"
+      ]
+    ],
+    "mixed_direct_disagreement_adjacent": false,
+    "source": "armC_scores_READY/README.md pre-registered conventions",
+    "pass_rule": "Majority exact-or-adjacent on the scored denominator; no overturning disagreement (tester direct_disagreement vs sealed close/broad); no majority direct_disagreement pattern. Denmark LIMIT kept separate as sparse-input control.",
+    "descriptive_vs_validated": "Descriptive scores all 19 returned rows. Validated excludes rows whose arm_a_sha256 is not valid hex64 matching the claimed Arm A Denmark sha (XV excluded)."
+  },
+  "actual_returned_grade_counts": {
+    "broad": 6,
+    "close": 5,
+    "direct_disagreement": 1,
+    "partial": 6,
+    "mixed": 1
+  },
+  "report_claimed_denmark_grade_counts": {
+    "close": 5,
+    "broad": 7,
+    "partial": 5,
+    "mixed": 1,
+    "direct_disagreement": 1
+  },
+  "report_vs_actual_grade_count_mismatch": true,
+  "core_report_grade_counts_match_sealed_core": true,
+  "prior_core_hash_mismatches_not_laundered": {
+    "sealed_core_output": "2a9c53e0ef76d4cd8d30c6c70d36b4ac4bba55c3831d28a82195ef9e7f7bfceb",
+    "claimed_core_output": "e812c49a703f6d5218b490c2e71a3f85d604b912c8e73a5019f4b6d2a803e5c1",
+    "expected_packet": "23fce155fa687d5c9b88e41c25cc9611537dbb8072086bf13a7741e2b24f6f26"
+  },
+  "descriptive": {
+    "overall": {
+      "n": 19,
+      "exact": 7,
+      "exact_pct": 36.84,
+      "adjacent_only": 7,
+      "adjacent_only_pct": 36.84,
+      "exact_or_adjacent": 14,
+      "exact_or_adjacent_pct": 73.68,
+      "non_adjacent_mismatch": 5,
+      "returned_direct_disagreement": 1,
+      "overturning_disagreements": 0,
+      "sealed_disagreement_reversals": 2
+    },
+    "confusion_sealed_rows_returned_columns": {
+      "close": {
+        "close": 1,
+        "broad": 0,
+        "partial": 0,
+        "mixed": 0,
+        "direct_disagreement": 0
+      },
+      "broad": {
+        "close": 1,
+        "broad": 3,
+        "partial": 2,
+        "mixed": 0,
+        "direct_disagreement": 0
+      },
+      "partial": {
+        "close": 0,
+        "broad": 2,
+        "partial": 2,
+        "mixed": 1,
+        "direct_disagreement": 0
+      },
+      "mixed": {
+        "close": 2,
+        "broad": 0,
+        "partial": 1,
+        "mixed": 0,
+        "direct_disagreement": 0
+      },
+      "direct_disagreement": {
+        "close": 1,
+        "broad": 1,
+        "partial": 1,
+        "mixed": 0,
+        "direct_disagreement": 1
+      }
+    },
+    "non_exact_pair_counts": {
+      "broad -> close": 1,
+      "broad -> partial": 2,
+      "direct_disagreement -> broad": 1,
+      "direct_disagreement -> close": 1,
+      "direct_disagreement -> partial": 1,
+      "mixed -> close": 2,
+      "mixed -> partial": 1,
+      "partial -> broad": 2,
+      "partial -> mixed": 1
+    },
+    "majority_exact_or_adjacent": true,
+    "majority_direct_disagreement_pattern": false,
+    "pass": true,
+    "scored_rows_sha256": "ed1e99a90314b1107d2bdb8ed26809cdab9a7775b4b7b126b1136377e68d2df2"
+  },
+  "validated": {
+    "excluded_eras": [
+      "XV"
+    ],
+    "exclusion_reason": "arm_a_sha256 malformed (len 77, not [0-9a-f]{64}); does not match claimed Arm A sha",
+    "overall": {
+      "n": 18,
+      "exact": 6,
+      "exact_pct": 33.33,
+      "adjacent_only": 7,
+      "adjacent_only_pct": 38.89,
+      "exact_or_adjacent": 13,
+      "exact_or_adjacent_pct": 72.22,
+      "non_adjacent_mismatch": 5,
+      "returned_direct_disagreement": 1,
+      "overturning_disagreements": 0,
+      "sealed_disagreement_reversals": 2
+    },
+    "confusion_sealed_rows_returned_columns": {
+      "close": {
+        "close": 1,
+        "broad": 0,
+        "partial": 0,
+        "mixed": 0,
+        "direct_disagreement": 0
+      },
+      "broad": {
+        "close": 1,
+        "broad": 2,
+        "partial": 2,
+        "mixed": 0,
+        "direct_disagreement": 0
+      },
+      "partial": {
+        "close": 0,
+        "broad": 2,
+        "partial": 2,
+        "mixed": 1,
+        "direct_disagreement": 0
+      },
+      "mixed": {
+        "close": 2,
+        "broad": 0,
+        "partial": 1,
+        "mixed": 0,
+        "direct_disagreement": 0
+      },
+      "direct_disagreement": {
+        "close": 1,
+        "broad": 1,
+        "partial": 1,
+        "mixed": 0,
+        "direct_disagreement": 1
+      }
+    },
+    "non_exact_pair_counts": {
+      "broad -> close": 1,
+      "broad -> partial": 2,
+      "direct_disagreement -> broad": 1,
+      "direct_disagreement -> close": 1,
+      "direct_disagreement -> partial": 1,
+      "mixed -> close": 2,
+      "mixed -> partial": 1,
+      "partial -> broad": 2,
+      "partial -> mixed": 1
+    },
+    "majority_exact_or_adjacent": true,
+    "majority_direct_disagreement_pattern": false,
+    "pass": true,
+    "scored_rows_sha256": "5df56d13d36f19f92efa64998acf93d00e33b95d5e789bfb4100248b4c0b7cf3"
+  }
+}

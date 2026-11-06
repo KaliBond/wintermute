@@ -1,0 +1,127 @@
+{
+  "evidence_files": 106,
+  "evidence_bytes": 1379037,
+  "evidence_manifest_sha256": "d70dcedbc02d1d623930d3a64002a0702a0ec15e310ad99a2f07744d9bffe4da",
+  "arm_b_manifest_self_hash_matches": false,
+  "arm_b_manifest_self_hash_recorded": "e390b23a60542e74a8c022c26050a902fcee8ba28252b7995602dcbc9b681374",
+  "arm_b_manifest_self_hash_actual": "e81107966246070772fca7f84b295dd4e145e9ab8c371dbb180db73266f357bb",
+  "arm_c": {
+    "gemini_core": {
+      "model": "gemini-2.5-pro",
+      "set": "CORE",
+      "n": 56,
+      "exact": 27,
+      "adjacent_only": 19,
+      "exact_or_adjacent": 46,
+      "non_adjacent": 10,
+      "overturning_disagreements": 0,
+      "sealed_dd_reversals": 0,
+      "returned_grades": {
+        "close": 52,
+        "broad": 4
+      },
+      "flag_mismatches": 0,
+      "old_scale_eoa_differs": 0,
+      "scored_sha256": "da064e142b29ffbd89f3edc0ff1c39af6819d7c0606afc3d4f5c6c87bc1226ad"
+    },
+    "claude_core": {
+      "model": "claude-sonnet-4-6",
+      "set": "CORE",
+      "n": 56,
+      "exact": 27,
+      "adjacent_only": 21,
+      "exact_or_adjacent": 48,
+      "non_adjacent": 8,
+      "overturning_disagreements": 0,
+      "sealed_dd_reversals": 0,
+      "returned_grades": {
+        "close": 48,
+        "broad": 8
+      },
+      "flag_mismatches": 0,
+      "old_scale_eoa_differs": 0,
+      "scored_sha256": "140346fb0d1f3538a44bb46ea5a709c55f0983eb35cea34e376360639441ea79"
+    },
+    "claude_ext": {
+      "model": "claude-sonnet-4-6",
+      "set": "EXTENSION",
+      "n": 51,
+      "exact": 31,
+      "adjacent_only": 10,
+      "exact_or_adjacent": 41,
+      "non_adjacent": 10,
+      "overturning_disagreements": 0,
+      "sealed_dd_reversals": 0,
+      "returned_grades": {
+        "close": 46,
+        "broad": 5
+      },
+      "flag_mismatches": 0,
+      "old_scale_eoa_differs": 0,
+      "scored_sha256": "428072f401e0076bcd68dfa9da39325adc36fb4e76bbc62ae2adfaf3127b0e00"
+    },
+    "claude_dk": {
+      "model": "claude-sonnet-4-6",
+      "set": "LIMIT",
+      "n": 19,
+      "exact": 4,
+      "adjacent_only": 6,
+      "exact_or_adjacent": 10,
+      "non_adjacent": 9,
+      "overturning_disagreements": 0,
+      "sealed_dd_reversals": 4,
+      "returned_grades": {
+        "close": 12,
+        "broad": 6,
+        "partial": 1
+      },
+      "flag_mismatches": 0,
+      "old_scale_eoa_differs": 0,
+      "scored_sha256": "c4f2ea79a605100d0fa61d65cb16673da093e2c4ad43e368476d0a142a75ab2c"
+    },
+    "gemini_dk_descriptive": {
+      "model": "gemini-2.5-pro",
+      "set": "LIMIT_descriptive",
+      "n": 19,
+      "exact": 7,
+      "adjacent_only": 7,
+      "exact_or_adjacent": 14,
+      "non_adjacent": 5,
+      "overturning_disagreements": 0,
+      "sealed_dd_reversals": 2,
+      "returned_grades": {
+        "broad": 6,
+        "close": 5,
+        "direct_disagreement": 1,
+        "partial": 6,
+        "mixed": 1
+      },
+      "flag_mismatches": 0,
+      "old_scale_eoa_differs": 0,
+      "scored_sha256": "ed1e99a90314b1107d2bdb8ed26809cdab9a7775b4b7b126b1136377e68d2df2"
+    },
+    "gemini_dk_validated": {
+      "model": "gemini-2.5-pro",
+      "set": "LIMIT_validated_excl_XV",
+      "n": 18,
+      "exact": 6,
+      "adjacent_only": 7,
+      "exact_or_adjacent": 13,
+      "non_adjacent": 5,
+      "overturning_disagreements": 0,
+      "sealed_dd_reversals": 2,
+      "returned_grades": {
+        "broad": 5,
+        "close": 5,
+        "direct_disagreement": 1,
+        "partial": 6,
+        "mixed": 1
+      },
+      "flag_mismatches": 0,
+      "old_scale_eoa_differs": 0,
+      "scored_sha256": "5df56d13d36f19f92efa64998acf93d00e33b95d5e789bfb4100248b4c0b7cf3"
+    }
+  },
+  "problems": [],
+  "hold_key_files_present": false
+}

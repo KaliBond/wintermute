@@ -1,0 +1,349 @@
+CAMS ARM C REPORT — Q3 MOOD CONTINUITY
+Tester: claude-sonnet-4-6
+Authorised by: Kari McKern, Neural Nations, 7 November 2026 (Australia/Sydney)
+Report date: 2026-11-07 (AEDT)
+
+─────────────────────────────────────────────────────────────────────────────
+1. LEDGER
+─────────────────────────────────────────────────────────────────────────────
+
+FILE                   ENTITY_SET                 RECORDS   SHA256_OUTPUT
+armC_CORE.jsonl        Russia, Australia, USA          56   75a44314ecc219f8b85b6d985d86f1509c5a05bbd817a4c259787ebc225bf4fe
+armC_EXTENSION.jsonl   China, UK, Norway               51   da0212f8c715829481787bfec2706cbbc22479cb36b967a5aa24124856f79dfc
+armC_LIMIT.jsonl       Denmark                         19   ff65e33c5f99b1b8528da72917d01b845db680ba495a4aeccd7ed27cb67f0352
+
+ARM_A_SHA256 (uniform): 520005f20d08096a266ca20c46cf5939b382c6026c1b7ffa903f4a235c2cddf7
+ARM_C_ZIP_SHA256:       23fce155fa687d5c9b88e41c25cc9611537dbb8072086bf13a7741e2b24f6f26
+MODEL:                  claude-sonnet-4-6
+ARM:                    C
+
+OMISSIONS
+  - Denmark Era IX (1901–1913): omitted per protocol. No Arm A pocket exists. No
+    Arm C record was generated for this era. Disclosed here and not substituted.
+
+─────────────────────────────────────────────────────────────────────────────
+2. GRADE DISTRIBUTION
+─────────────────────────────────────────────────────────────────────────────
+
+Own Q3 grade distribution (not centrally scored; no analyst key consulted):
+
+           close    broad    partial    mixed    direct_disagreement    TOTAL
+CORE          48        8         0        0                       0       56
+EXTENSION     46        5         0        0                       0       51
+LIMIT         12        6         1        0                       0       19
+─────────────────────────────────────────────────────────────────────────────
+TOTAL        106       19         1        0                       0      126
+
+Overall: 84.1% close, 15.1% broad, 0.8% partial.
+No mixed or direct_disagreement grades were returned across any set.
+
+The grade "close" means: all three mood levels (popular, institutional, official)
+fit the pocket with no contradictions. "Broad" means: the central configuration
+is recognisable but one meaningful feature is missing or understated. "Partial"
+means: the structural category is recognisable but the emotional or political
+register substantially differs.
+
+These grades represent this tester's independent Q3 assessment. Central agreement
+against the sealed analyst key is not available to this tester and has not been
+computed here. Do not read this grade distribution as a measure of match against
+the analyst key.
+
+─────────────────────────────────────────────────────────────────────────────
+3. FINDINGS BY ENTITY AND SET
+─────────────────────────────────────────────────────────────────────────────
+
+CORE — Russia (23 eras, 2 broad)
+  Russia was the most grade-stable entity in CORE. 21 of 23 eras returned close.
+  The two broad cases were Era III (1801–1824: Helm-led topology during Alexander I's
+  oscillation between liberalism and reaction, where official confidence exceeded
+  popular mood) and Era XXIII (2014–2026: Lore-negative topology correctly captures
+  institutional narrative degradation but misses the intensity of state-propaganda
+  activation, which generates high positive official-Lore energy even as the
+  structural Lore node decays). The Lore-node tension — negative structural topology
+  vs high official-propaganda output — is Russia's distinctive Arm C challenge and
+  produced the XXIII broad grade.
+
+CORE — Australia (18 eras, 6 broad)
+  Australia had the highest broad rate in CORE (6/18 = 33%). Common factor: the
+  CAMS topology underweights the colonial-racial structure of Australian society
+  before 1970. Eras IV, XI, XIV, XVI, and XVIII returned broad because a
+  topology with Hands-positive or Flow-positive does not adequately capture
+  the excluded Indigenous population as a Hands-negative signal — or, in later
+  eras, the tension between material prosperity and unresolved political
+  legitimacy. Era XVIII (2008–2013) also had broad because the Rudd/Gillard
+  era's minority-government instability is not captured by an otherwise
+  functional-positive topology.
+
+CORE — USA (15 eras, 0 broad)
+  USA returned 15/15 close. The USA's broad historical-source coverage and the
+  CAMS topology's fit to the American political economy (strong Helm, Shield,
+  Flow vectors) produced consistent mood-topology alignment across the full range
+  from antebellum through COVID. No close calls; the USA is the most internally
+  coherent match in CORE.
+
+EXTENSION — China (20 eras, 1 broad)
+  China returned 19/20 close. The exception was Era XX (2020–2025) where the
+  Craft-led topology correctly captures export-manufacturing continuity but
+  Shield's operational dominance during zero-COVID enforcement is not reflected
+  in the leading nodes. All pre-PRC eras (I–XI, all-negative runs) produced
+  close grades because the CAMS topology correctly identifies the dominant
+  functional energy in each catastrophic or transitional era. The Great Leap
+  Forward (XIII, Shield-only-positive) and Cultural Revolution (XV,
+  Shield-only-positive) both returned close because Shield-only-positive is
+  an exact structural description of PLA dominance during those eras. The
+  one broad case (XX) was graded popular-partial because zero-COVID generated
+  significant public dissatisfaction (November 2022 protests) not captured by
+  an all-positive Craft-led topology.
+
+EXTENSION — UK (16 eras, 1 broad)
+  UK returned 15/16 close. The exception was Era VII (1946–1951, Attlee
+  welfare state) where Hands-marginal topology creates a register gap: the
+  Attlee government was elected on a historic labour-class mandate (1945
+  landslide) and the popular mood would not have experienced welfare-state
+  delivery as a Hands-marginal event, even if the bureaucratic mechanism
+  (Archive leading) is structurally correct. UK's most consistent structural
+  feature — Archive leading in all 16 eras — was consistently supported by
+  historical evidence; this is a genuine and rare institutional fingerprint.
+
+EXTENSION — Norway (15 eras, 3 broad)
+  Norway's three broad cases (XII, XIII, XV) all share the same structural
+  cause: Shield-sole-negative in eras when Norwegian defence commitments were
+  publicly salient. Era XII (2005–2013): Norwegian troops in Afghanistan while
+  Shield is structurally negative. Era XIII (2014–2019): post-Crimea NATO
+  pressure and acknowledged defence gap while Shield-negative. Era XV
+  (2022–2025): Ukraine war driving explicit Norwegian rearmament while
+  Shield-negative. The topology correctly captures Norway's chronic under-
+  investment in military capacity relative to GDP, but the official register
+  of all three eras was Shield-activating in ways the topology does not reflect.
+  Era XIV (COVID) returned close because pandemic management was genuinely
+  Archive-led and civilian in register.
+
+LIMIT — Denmark (19 eras, 6 broad, 1 partial, era IX omitted)
+  Denmark had the highest broad rate of any entity (6/19 = 31.6%) and the only
+  partial grade in the full dataset (Era VII).
+
+  Era VII (1864–1873, partial): The 1864 defeat to Prussia was the defining
+  national trauma of modern Danish history. All-positive Craft/Hands topology
+  for an era opened by the loss of Schleswig-Holstein cannot match the popular
+  emotional register of the first decade of this period. The Hedeselskabet
+  recovery orientation (Craft/Hands-led internal development) is correctly
+  captured, but the pocket does not distinguish the defeat-trauma phase from
+  the recovery phase within a 10-year era.
+
+  Broad cases by structural cause:
+  — Eras III–IV (1807–1813, 1814–1839): identical pocket to era II masks the
+    1807 British bombardment and 1814 Norway cession respectively.
+  — Era VIII (1874–1900): Helm-positive does not capture Estrup's provisional-
+    law regime (1877–1894), where Helm exercised power against parliamentary
+    consent.
+  — Era XV (1953–1971): Shield co-leads with Archive, but popular register
+    experienced the era as welfare-state rather than military.
+  — Eras XVIII–XIX (2002–2012, 2013–2019): Lore-marginal topology does not
+    capture the Mohammed cartoon controversy (2005) or the refugee-crisis
+    narrative contestation (2015).
+
+  Era IX omission: by design. No pocket in Arm A, no record generated.
+
+─────────────────────────────────────────────────────────────────────────────
+4. POPULAR / INSTITUTIONAL / OFFICIAL MOOD DIFFERENCES
+─────────────────────────────────────────────────────────────────────────────
+
+Across all 126 eras, two systematic patterns emerged in mood-level differentiation:
+
+(a) Official ahead of popular: The most common disaggregation pattern. Official
+    registers frequently align with CAMS topology when the state is generating
+    confident political rhetoric, while popular mood is partial or disagree.
+    Examples: China XIII (Great Leap Forward) where official confidence was high
+    but popular mood partial (forced compliance, private understanding of
+    famine); China XV (Cultural Revolution) similarly; Russia XXIII (official
+    propaganda active while popular mood is at best partial); China XVII
+    (post-Tiananmen: official confidence, popular compliance but not full
+    agreement). In these cases, positive-topology nodes (especially Helm and
+    Shield) carry official activation without popular participation.
+
+(b) Institutional-only alignment in bureaucratic eras: Several eras returned
+    institutional-agree when popular and official were partial. Australia's
+    colonial eras (IV, XI) and UK Era VII (Attlee) show Archive-led institutional
+    functioning that is structurally correct but does not map to popular
+    activation. The bureaucratic topology (Archive leading) can be accurate
+    institutionally while substantially misrepresenting popular mood.
+
+(c) Official-disagree relative to topology is rare: Only Denmark Era VII
+    (1864 defeat) returned official-partial (not disagree). Official mood in
+    post-defeat Denmark partially agreed with the recovery orientation but
+    partially acknowledged the defeat trauma. No "official disagree" grade was
+    returned in the dataset — official registers tend to validate CAMS topologies
+    more consistently than popular registers, because CAMS nodes measure
+    institutional function rather than popular affect.
+
+(d) Partial popular, agree institutional/official is the modal disaggregation:
+    The most common pattern for broad-graded eras. The Arm A pocket captures
+    institutional and official function but misses something about popular affect
+    or excluded populations. This pattern appears in Australia, China XVII,
+    China XX, UK XI (Thatcher popular bifurcation), Norway XII–XV.
+
+─────────────────────────────────────────────────────────────────────────────
+5. SOURCE LIMITATIONS
+─────────────────────────────────────────────────────────────────────────────
+
+All sources cited in Arm C records were Wikipedia or Britannica pages accessed
+2026-11-07. Limitations:
+
+(a) Retrospective dominance: All web sources are retrospective histories, not
+    contemporary evidence. The protocol permits web research in Arm C but requires
+    distinguishing retrospective from contemporary evidence; all sources used here
+    are retrospective. This means that mood assessments are based on the consensus
+    historical record rather than contemporaneous surveys, diaries, newspapers, or
+    political records.
+
+(b) Anglocentric coverage: Pre-20th century evidence for China (I–XI), Denmark
+    (I–VIII), and Norway (I–VI) is thinner in English-language sources. CAMS nodes
+    for these eras rely on well-established historical events (Taiping Rebellion,
+    Opium Wars, Danish-Prussian Wars, Norwegian Union dissolution) that are
+    reasonably well-documented in English Wikipedia, but contemporary domestic
+    primary sources were not consulted.
+
+(c) China: English-language sources on PRC eras (XII–XX) carry a geopolitical
+    vantage bias (predominantly Western sources). For the Great Leap Forward and
+    Cultural Revolution, mortality estimates and institutional breakdown are well-
+    documented. For recent eras (XVII–XX), popular mood assessments that agree
+    with official topology require qualification: Western-sourced histories may
+    understate genuine domestic popular support for the CCP.
+
+(d) Russia (CORE): Sources used for all Russian eras were Wikipedia summaries.
+    Russian-language primary sources were not consulted.
+
+(e) Australia (CORE): Indigenous Australian mood and experience is poorly
+    represented in standard historical sources. The partial/disagree grades for
+    popular mood in several Australian eras reflect the absence of adequate
+    primary evidence for Indigenous Australian perspectives rather than evidence
+    of disagreement.
+
+(f) Long eras: Several eras span 20–30 years (Denmark IV, XV; Norway VII–VIII).
+    A single grade for a long era averages across turning points that the pocket
+    also averages. Mood assessments for long eras carry greater uncertainty than
+    for shorter eras.
+
+─────────────────────────────────────────────────────────────────────────────
+6. DENMARK LIMITS (IDENTICAL SIGMA VECTORS)
+─────────────────────────────────────────────────────────────────────────────
+
+Denmark presents a methodological challenge documented in Arm B and confirmed
+in Arm C: several consecutive era groups have byte-identical Arm A pockets.
+
+Identical groups and their extent:
+  Eras III–IV:    Craft/Stewards pair, Hands/Helm/Shield positive; Archive marginal
+  Eras V–VIII:    Craft/Hands pair, all positive; Archive marginal
+  Eras X–XII:     Craft/Hands pair, Lore marginal, all positive
+  Eras XVI–XVII:  Craft leads, Hands/Flow/Stewards positive; Shield marginal
+  Eras XVIII–XX:  Craft/Archive pair, Flow/Stewards/Helm positive; Lore marginal
+
+This means Arm C cannot use the pocket to distinguish between eras within an
+identical group. For Arm C, the grade must reflect whether the identical
+topology is consistent with each era's historical evidence independently.
+
+Consequences observed:
+  — Eras V–VIII: despite identical topology, era VII (1864 defeat) returned
+    partial because the defeat event creates a register that all-positive topology
+    cannot capture, even though eras V, VI, and VIII returned close.
+  — Eras III–IV: both returned broad, but for different reasons (British
+    bombardment 1807 for III; loss of Norway 1814 for IV). The identical pocket
+    is a problem in both cases because it cannot encode either shock.
+  — Eras X–XII: all returned close, the identical pocket fitting each era's
+    neutral-wartime/Depression/Social-Democratic topology in sequence.
+  — Eras XVI–XVII: both close (EEC integration era continuously fitting
+    Craft-led topology).
+  — Eras XVIII–XX: XVIII broad (cartoon controversy), XIX broad (refugee crisis),
+    XX close. The identical Lore-marginal topology for eras XVIII–XIX missed two
+    of the most significant public-discourse events in modern Danish history.
+
+The identical sigma vector problem limits Arm C's discrimination for Denmark:
+the pocket is a floor constraint, not a full description. Arm C can only note
+where the identical topology is correct or incorrect for each era independently.
+
+─────────────────────────────────────────────────────────────────────────────
+7. SUCCESSES AND FAILURES
+─────────────────────────────────────────────────────────────────────────────
+
+SUCCESSES (eras where the CAMS topology is exceptionally well-validated by
+independent historical evidence):
+
+  China III (Taiping Rebellion): ALL-NEG with Hands/Shield least degraded is
+  an unusually precise structural description of one of history's most
+  destructive conflicts.
+
+  China XIII (Great Leap Forward): Shield-only-positive is an exact description
+  of the institutional reality — the PLA was the only functioning node while
+  Archive (statistical falsification), Hands (famine deaths), and Flow
+  (circulation collapse) were all severely negative.
+
+  China XV (Cultural Revolution): Shield-only-positive again, with Archive
+  explicitly the deepest negative (universities closed, records burned) —
+  an exact structural description.
+
+  Denmark XIII (Occupation): Lore-leads-Shield-negative is structurally exact
+  for the Danish occupation — resistance narrative as the dominant positive
+  activation and military capability as the defining negative.
+
+  Norway VI (Occupation): Lore-leads-Helm/Craft/Shield-negative is equally
+  exact for Norwegian occupation topology.
+
+  Russia/USSR eras generally: Russia returned only 2 broad in 23 eras, the
+  lowest broad rate in CORE. The CAMS topology maps well onto Russian
+  institutional dynamics across the full range from Tsarist through Soviet to
+  post-Soviet.
+
+  UK Archive dominance (all 16 eras): The finding that Archive leads in every
+  UK era from 1880 to 2025 is consistently validated by independent historical
+  evidence. British institutional continuity — the sustained strength of law,
+  bureaucracy, and administrative record-keeping — is a genuine structural
+  feature that CAMS correctly identifies and that Arm C independently confirms.
+
+FAILURES AND WEAKNESSES:
+
+  Australia colonial-racial structure: The CAMS topology systematically under-
+  encodes the colonial-racial structure as a stress variable. Hands-positive in
+  eras where Indigenous Australians are excluded from the labour market, and
+  Flow-positive in eras sustained by colonial extraction, are structurally
+  incomplete. This is the most systematic weakness in the CORE dataset.
+
+  Denmark identical-pocket eras and shock events: The identical pocket for eras
+  III–IV fails to encode the British bombardment (1807) and loss of Norway
+  (1814) respectively. The identical pocket for eras XVIII–XIX fails to encode
+  the Mohammed cartoon controversy and refugee crisis. These are not random
+  misses — they reflect a consistent pattern where long eras with identical
+  pockets cannot capture within-era shock events.
+
+  Lore/Shield tension in occupied and coercive states: Where a state uses
+  Lore (propaganda, cultural production) as a coercive tool, the CAMS topology's
+  Lore node generates a tension: structural Lore-negative (institutional decay)
+  vs official Lore-positive (propaganda output). This was noted in Russia XXIII
+  and implicitly in China XIII–XV. The Arm A pocket correctly identifies the
+  structural condition; Arm C grades these as broad when the official register
+  is primarily propaganda-driven rather than genuine cultural activation.
+
+  Norway Shield: The consistent Shield-negative finding for Norway 2005–2025
+  generates a tension with actual NATO deployment and rearmament rhetoric.
+  Three consecutive broad grades (XII, XIII, XV) all share this cause. This
+  suggests the Shield node in the CAMS topology is measuring structural
+  military capacity rather than political defence rhetoric, which is correct
+  — but creates a systematic gap with official registers in NATO member states
+  that publicly declare defence priorities they have not yet funded.
+
+─────────────────────────────────────────────────────────────────────────────
+8. NOTE ON CENTRAL AGREEMENT
+─────────────────────────────────────────────────────────────────────────────
+
+This report does not contain central agreement scores against the sealed analyst
+key. The analyst key has not been consulted at any point during Arm C. If
+Reportmister supplies central agreement data, it should be presented separately
+and joined to the returned grade files using era_id as the key. The distribution
+in Section 2 represents this tester's returned grades only.
+
+No peer-review or finished-theory claim is made. This is a single-tester,
+single-model run against sealed pockets; the instrument and its outputs require
+independent replication before any finding can be treated as established.
+
+─────────────────────────────────────────────────────────────────────────────
+END OF REPORT
+─────────────────────────────────────────────────────────────────────────────
