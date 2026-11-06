@@ -71,6 +71,51 @@ def main() -> int:
         problems.append("check_return_shape.py self-test failed")
         problems.append(shape.stdout.strip())
         problems.append(shape.stderr.strip())
+
+    inputs = ROOT / "inputs"
+    fresh = inputs / "arm_c_mood"
+    for name in PACKET_FILES:
+        if (COPY / name).read_bytes() != (fresh / name).read_bytes():
+            problems.append(f"inputs Arm C copy differs from packet copy: {name}")
+    issued = {
+        "CAMS_personality_AI_tester_packet_v1.zip": "da94f1c3f405b4c8f4229178509bf400f5661c694cfb38b909bdc1a70b5d5d1e",
+        "CAMS_ArmB_blind_v1.zip": "dceee12e89c1b07b9f63e4ce26836f51fb231089b621afc4f9d8f819ab73aae9",
+        "CAMS_ArmC_mood_v1.zip": "23fce155fa687d5c9b88e41c25cc9611537dbb8072086bf13a7741e2b24f6f26",
+        "CAMS_Gemini_ArmA_CSVs_v1.zip": "a9d36f5f5273c50359e3f9a45b04490dd9ffda48953836f10734972177781849",
+    }
+    for name, expected in issued.items():
+        path = inputs / "issued_archives" / name
+        if not path.is_file() or sha256(path) != expected:
+            problems.append(f"issued archive hash mismatch: {name}")
+    for manifest_path in (
+        inputs / "MANIFEST.sha256",
+        inputs / "arm_a_standard" / "MANIFEST.sha256",
+        inputs / "arm_b_blind_historical" / "MANIFEST.sha256",
+    ):
+        base = manifest_path.parent
+        for line in manifest_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            recorded, name = line.split(None, 1)
+            name = name.removeprefix("./")
+            target = base / name
+            if not target.is_file() or sha256(target) != recorded:
+                problems.append(f"manifest mismatch {manifest_path.name}: {name}")
+    counts = (inputs / "arm_b_blind_historical" / "COUNTS.txt").read_text(encoding="utf-8")
+    if "58ff7c4166d0293b2f5ad6cfee33db5d3d46a3b5b9932c3a84594e507c8b6ea6" not in counts:
+        problems.append("COUNTS.txt no longer records the stale Arm B zip hash")
+    if sha256(inputs / "issued_archives" / "CAMS_ArmB_blind_v1.zip").startswith("58ff7c41"):
+        problems.append("issued Arm B zip unexpectedly matches the stale COUNTS hash")
+    for path in ROOT.rglob("*"):
+        if path.is_file() and path.name in {"arm_b_key.csv", "arm_c_key.csv"}:
+            problems.append(f"withheld key file present: {path}")
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import build_participant_zip
+
+    built = build_participant_zip.build_bytes()
+    committed = (ROOT / "CAMS_personality_participant_inputs_v1.zip").read_bytes()
+    if built != committed:
+        problems.append("participant zip does not match the deterministic build")
     print(f"problems={len(problems)}")
     for item in problems:
         if item:
