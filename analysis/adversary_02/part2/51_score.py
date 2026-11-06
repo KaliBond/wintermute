@@ -1,8 +1,12 @@
 # ADVERSARY-02 Part 2 central uniform recompute + Section 7 scoring. Derived values from PRIMITIVES ONLY (V=C+K-S; Bond per sealed formula).
+# v3: identical scoring logic to v2, extended with secondary Kimi Work pools e/f.
+# Reproduce from this directory with `python3 51_score.py`; all_passes_long.csv is supplied.
+# P12 additionally needs the external sealed Part 1 coupling baseline specified by S7 below.
 # Thresholds are copied verbatim from the SIGNED Section 7 (manifest 766a1cbd...). Nothing imputed. Run: python3 51_score.py
 import pandas as pd, numpy as np, math, itertools, json
-O='/workspace/evidence/runs/part2/analysis_v2_manus_2026-11-04/'
-S7='/workspace/evidence/ADVERSARY-02/analysis/section7/'
+from pathlib import Path
+O=str(Path(__file__).resolve().parent)+'/'
+S7='/workspace/evidence/ADVERSARY-02/analysis/section7/'  # external sealed Part 1 coupling baselines; see README
 P=pd.read_csv(O+'all_passes_long.csv'); D=['C','K','S','A']
 NAT=['Helm','Shield','Lore','Stewards','Craft','Hands','Archive','Flow']
 YRS=[2021,2022,2023,2024]; COMP=['Evergrande','Vanke','Longfor','Huawei','SMIC','BYD','CATL']
@@ -185,15 +189,15 @@ def score_pool(p,t):
     V['FC5']=fc5(V); X['FC5']=dict(fails_among_P1_P3_P4_P5=[k for k in ['P1','P3','P4','P5'] if V[k]=='FAIL'])
     return V,X
 if __name__=='__main__':
-    cells={r:run_cells(r) for r in PRIMARY+['Grok']}
-    POOLS={'a_primary(7 runs)':(PRIMARY,'P'),'d_primary_noManus':([r for r in PRIMARY if r!='Manus'],'P'),'b_secondary(+Grok)':(PRIMARY+['Grok'],'S'),'c_primary_noPerplexity':([r for r in PRIMARY if r!='Perplexity_unconf'],'P')}
+    cells={r:run_cells(r) for r in PRIMARY+['Grok','KimiWork']}
+    POOLS={'a_primary(7 runs)':(PRIMARY,'P'),'d_primary_noManus':([r for r in PRIMARY if r!='Manus'],'P'),'b_secondary(+Grok)':(PRIMARY+['Grok'],'S'),'c_primary_noPerplexity':([r for r in PRIMARY if r!='Perplexity_unconf'],'P'),'e_primary_plusKimiWork':(PRIMARY+['KimiWork'],'P'),'f_primary_KimiWork_replacesKimiweb':([r for r in PRIMARY if r!='Kimi']+['KimiWork'],'P')}
     pools={};allV={};allX={}
     for name,(rs,t) in POOLS.items():
         p=Pool(name,{r:cells[r] for r in rs}); pools[name]=p; allV[name],allX[name]=score_pool(p,t)
         p.cells.to_csv(O+f'derived_pooled_cells_{name.split("(")[0]}.csv',index=False); p.ey.to_csv(O+f'derived_entity_year_{name.split("(")[0]}.csv',index=False)
     # per-scorer (primary thresholds, own cells only)
     per={};perX={};peref=[]
-    for r in PRIMARY+['Grok']:
+    for r in PRIMARY+['Grok','KimiWork']:
         p=Pool(r,{r:cells[r]}); per[r],perX[r]=score_pool(p,'P'); peref.append(p.ey.assign(Run=r))
     pd.concat(peref).to_csv(O+'derived_entity_year_per_scorer.csv',index=False)
     cellsall=pd.concat([c.assign(Run=k) for k,c in cells.items()]); cellsall['V']=cellsall.C+cellsall.K-cellsall.S; cellsall.to_csv(O+'derived_run_cells.csv',index=False)
@@ -216,12 +220,12 @@ if __name__=='__main__':
     # scoring table
     ids=[k for k,_ in ITEMS]+['FC5']; rows=[]
     for k in ids:
-        row=dict(Item=k,**{ 'a_primary':allV['a_primary(7 runs)'][k],'b_secondary_withGrok':allV['b_secondary(+Grok)'][k],'c_primary_noPerplexity':allV['c_primary_noPerplexity'][k],'d_primary_noManus':allV['d_primary_noManus'][k]})
-        for r in PRIMARY+['Grok']: row['scorer_'+r]=per[r][k]
+        row=dict(Item=k,**{ 'a_primary':allV['a_primary(7 runs)'][k],'b_secondary_withGrok':allV['b_secondary(+Grok)'][k],'c_primary_noPerplexity':allV['c_primary_noPerplexity'][k],'d_primary_noManus':allV['d_primary_noManus'][k],'e_plusKimiWork':allV['e_primary_plusKimiWork'][k],'f_KimiWork_replacesKimiweb':allV['f_primary_KimiWork_replacesKimiweb'][k]})
+        for r in PRIMARY+['Grok','KimiWork']: row['scorer_'+r]=per[r][k]
         pv=[per[r][k] for r in PRIMARY]; row['agree_primary7']=f"{pv.count('PASS')}P/{pv.count('FAIL')}F/{pv.count('INDETERMINATE')}I"+('' if k!='FC5' else ' (PASS=NOT TRIGGERED needs read: see verdict words)')
         row['agree_primary7']=f"{sum(v in('PASS','NOT TRIGGERED') for v in pv)} pass / {sum(v in('FAIL','TRIGGERED') for v in pv)} fail / {pv.count('INDETERMINATE')} indet (of 7)"
         row['pools_disagree']=len({row['a_primary'],row['b_secondary_withGrok'],row['c_primary_noPerplexity'],row['d_primary_noManus']})>1
-        row['metrics_a']=json.dumps(allX['a_primary(7 runs)'][k],default=str); row['metrics_b']=json.dumps(allX['b_secondary(+Grok)'][k],default=str); row['metrics_c']=json.dumps(allX['c_primary_noPerplexity'][k],default=str); row['metrics_d']=json.dumps(allX['d_primary_noManus'][k],default=str)
+        row['metrics_a']=json.dumps(allX['a_primary(7 runs)'][k],default=str); row['metrics_b']=json.dumps(allX['b_secondary(+Grok)'][k],default=str); row['metrics_c']=json.dumps(allX['c_primary_noPerplexity'][k],default=str); row['metrics_d']=json.dumps(allX['d_primary_noManus'][k],default=str); row['metrics_e']=json.dumps(allX['e_primary_plusKimiWork'][k],default=str); row['metrics_f']=json.dumps(allX['f_primary_KimiWork_replacesKimiweb'][k],default=str)
         for s,(v,x) in sens.items():
             if k in v: row['sens_'+s]=v[k] if not isinstance(v[k],tuple) else v[k][0]
         rows.append(row)
@@ -230,8 +234,9 @@ if __name__=='__main__':
     pm=[dict(Run=r,Item=k,Verdict=per[r][k],Metrics=json.dumps(perX[r][k],default=str)) for r in PRIMARY+['Grok'] for k in ids]
     pd.DataFrame(pm).to_csv(O+'scoring_per_scorer_metrics.csv',index=False)
     pd.set_option('display.width',250); pd.set_option('display.max_colwidth',200)
-    print(T[['Item','a_primary','b_secondary_withGrok','c_primary_noPerplexity','pools_disagree','agree_primary7']+[c for c in T.columns if c.startswith('sens_')]].to_string())
+    print(T[['Item','a_primary','d_primary_noManus','e_plusKimiWork','f_KimiWork_replacesKimiweb','b_secondary_withGrok','c_primary_noPerplexity','pools_disagree','agree_primary7']+[c for c in T.columns if c.startswith('sens_')]].to_string())
     print(T[['Item']+[c for c in T.columns if c.startswith('scorer_')]].to_string())
+    for k in ['P6','P2','P3','P7','P8','P9','P11','P12','C1','C3']: print(k,'| e:',allX['e_primary_plusKimiWork'][k],'\n   f:',allX['f_primary_KimiWork_replacesKimiweb'][k])
     for k in ids: print(k,'| a:',allX['a_primary(7 runs)'][k],'\n   b:',allX['b_secondary(+Grok)'][k],'\n   c:',allX['c_primary_noPerplexity'][k],'\n   d:',allX['d_primary_noManus'][k])
     # reproduction check of Section 7 stated 2020 values from Part 1 pooled cells (sanity only)
     for kind in ['noGrok','withGrok']:
