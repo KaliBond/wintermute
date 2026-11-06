@@ -16,27 +16,31 @@ Use a fresh session for each arm. Do not leave the era-means table open in the s
 
 Record the model name and version. A language model is not an independent witness. The historical record of these societies is widely available in training text, and the era means themselves were coded with history in view. Blindness here means you were not shown the titles, the grades, or the key. It does not mean the model has never read a history book.
 
-## What you were supposed to receive, and what this kit actually contains
+## What this kit contains
 
-The original standard packet, which is **not** in this repository, contained a readme, node definitions, the algebra and pocket rules, and three era-means tables with no narrative titles: core, extension, and Denmark. The Arm B packet, also **not** here, contained unlabelled pockets and a closed shortlist.
+The issued Arm A packet is in [inputs/arm_a_standard/](inputs/arm_a_standard/): node definitions, algebra and rules, and the three era-means tables. Those tables name the country and the years. They do not name the episode. That is the real protocol, not an extra mask added later.
 
-This kit contains the Arm C instructions that were issued, the hash script, and the shape checker. It does not contain the numbers you would need to write the original portraits. If your operator has not given you era means, a node card, and a written pocket rule, stop at Arm A and say the inputs were absent. Do not invent a table of era means, a node manual, or an era answer.
+The issued Arm B packet is in [inputs/arm_b_blind_historical/](inputs/arm_b_blind_historical/). Read [SPOILER_READ_FIRST.md](inputs/arm_b_blind_historical/SPOILER_READ_FIRST.md) first. Each pocket already names the country. You choose the era from the shortlist. Because the closed-round report is public, this packet is a historical exercise, not a fresh blind. Say so if you use it. A fresh Arm B is a new set your operator makes after your Arm A hash, with a new key you never see.
+
+Arm C is [inputs/arm_c_mood/](inputs/arm_c_mood/). The old mood key is not included. Writing your own grade is not the same as the old central score.
 
 ## Algebra
 
-C is Coherence. K is Capacity. A is Abstraction. S is Stress. See [canonical-definitions.html](../../canonical-definitions.html).
+C is Coherence. K is Capacity. A is Abstraction. S is Stress. The issued file is [algebra_and_rules.md](inputs/arm_a_standard/algebra_and_rules.md).
 
-- Cog = A × C
-- Aff = K − S
-- σ = Cog × Aff = (A × C)(K − S)
+- Cognition: Cog = A × C
+- Affect: Aff = K − S
+- Activation: σ = Cog × Aff
+
+Cog is the cognitive quantity. It is not the word “focus.” The rules use focus and activation as separate readings. High focus with negative activation is strain, not health. = (A × C)(K − S)
 
 Positive σ is not happiness. The pocket describes function. It does not use Node Value or bond strength.
 
 ## Arm A — no web
 
-Write a portrait from the numeric era means only. No web, no historical titles, no looking up the years.
+Write a portrait from [inputs/arm_a_standard/](inputs/arm_a_standard/). No web and no historical titles. The pocket rules are [algebra_and_rules.md](inputs/arm_a_standard/algebra_and_rules.md). The return shape is [output_schema.md](inputs/arm_a_standard/output_schema.md).
 
-The original pocket-rules file is missing. Two sealed ledgers record what those participants said they did, and those notes are not a substitute for the missing file:
+Two sealed ledgers from the closed round are consistent with those rules, and they are not a second rule file:
 
 - Grok's ledger: leaders from the highest σ, described there as the least disabled in a negative regime; constraints from the lowest σ; two functional sentences; no V and no bond.
 - Kimi's ledger: era means only; no web; no V or bond; the file was not edited after the hash. On Denmark, identical input tables carried identical pocket text.
@@ -53,13 +57,9 @@ Hand the file and the ledger to the operator. Do not change the file after the h
 
 ## Arm B — no web
 
-Only after Arm A is hashed, and only in a fresh session.
+Only after Arm A is hashed, and only in a fresh session that is not shown the era-means table.
 
-You receive unlabelled pockets and a closed list of eras. You do not receive the era means again. No web. Pick one era id from the shortlist for each pocket and say how sure you are.
-
-The original Arm B packet is not in this repository. Its recorded contents were a readme, `pockets_blind.jsonl`, `era_shortlist.csv`, an output schema, and a manifest. Do not reconstruct a shortlist from the published report. If your operator has not given you a blinded file and a shortlist, Arm B cannot start.
-
-Observed fields on the sealed returns, again not a recovered schema file: `blind_id`, `entity`, `chosen_era_id`, `chosen_year_start`, `chosen_year_end`, `confidence`, `brief_reason`. Some files also have `set`. Confidence values that appear on the scored rows are `immediate`, `recognisable`, `broad`, and `miss`, with that spelling. A new operator should state the vocabulary in the packet they issue.
+For the historical packet, follow [README_ArmB.md](inputs/arm_b_blind_historical/README_ArmB.md) and [output_schema_ArmB.md](inputs/arm_b_blind_historical/output_schema_ArmB.md). No web. The entity is already on the pocket. Pick one shortlist row. This reuse is contaminated by publication. A fresh blind needs a new packet from your operator.
 
 Hash the finished file before you send it.
 
@@ -69,7 +69,7 @@ Use the packet in [packet/arm_c_mood/](packet/arm_c_mood/). Read `README_ArmC.md
 
 Compare your own already hashed Arm A pockets with historical sources. Web research is allowed in this arm only. Keep popular feeling, organised institutional mood, and official messaging separate. Grade each era `close`, `broad`, `partial`, `mixed`, or `direct_disagreement`. Do not edit, regenerate, or rehash the Arm A file. If a pocket is missing, omit the era and say so.
 
-The era-means tables named in that readme (`era_means.csv`, `era_means_extension.csv`, `era_means_denmark.csv`) are not in this kit. You need the copies your operator already gave you at Arm A, or you cannot check era ids and years. Do not take era ids from the results report.
+The era ids and years are the ones in [inputs/arm_a_standard/](inputs/arm_a_standard/). Do not take them from the results report.
 
 Core first: Russia, Australia, USA, 56 eras. Then stop. Extension is optional: China, UK, Norway, 51 eras. Denmark is last, 19 graded eras, IX omitted.
 

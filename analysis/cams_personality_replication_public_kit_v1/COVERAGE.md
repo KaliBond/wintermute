@@ -1,43 +1,27 @@
 # Kit coverage
 
-Checked against the repository at the sealed round (`6e0e558` and the files it contains) and against this folder. Nothing here was inferred into a file that the deposit does not have.
+Updated when the issued participant inputs were added. Nothing here was inferred into a missing table.
 
-| Item | In this kit | Notes |
-|---|---|---|
-| Participant route and operator route | yes | [PARTICIPANT.md](PARTICIPANT.md), [OPERATOR.md](OPERATOR.md) |
-| Arm C readme, schema, short paste, manifest | yes | Byte copy. Hashes match `evidence/packets/arm_c_mood/` |
-| SHA-256 script over file bytes | yes | [scripts/sha256_file.py](scripts/sha256_file.py) |
-| Return shape check | yes | Does not score. [scripts/check_return_shape.py](scripts/check_return_shape.py) |
-| Canonical letter meanings (C = Coherence, K = Capacity) | cited | [canonical-definitions.html](../../canonical-definitions.html). Not copied, so the definitions page stays the source |
-| Experimental claim, sample sizes, pre-registered bars | cited | [experimental_plan.md](../cams_personality_independent_ai_replication_2026-11-07/evidence/experimental_plan.md) and the Arm C packet |
-| READY adjacency and overturn rule | cited | [armC_scores_READY/README.md](../cams_personality_independent_ai_replication_2026-11-07/evidence/seals/armC_scores_READY/README.md) |
-| Era-means CSVs | no | Named by the Arm C readme. Not in the repository |
-| Node-definition file and pocket-rules file | no | Named by the distribution note. Grok and Kimi ledgers are quoted as what those runs said, not as a replacement file |
-| Arm B unlabelled pockets, shortlist, and output schema | no | Zip digest is recorded in the distribution note. Files are absent |
-| Arm A output-schema file | no | Field names below are observed on sealed returns |
-| Hold-out keys | no | Digests only, in the distribution note and the score ledgers. Not reconstructed |
-| Original analyst pockets for the Arm A match bar | no | The 60% bar was not scored in the closed deposit |
-| Scored JSONL and the results report | not in this kit | They are public elsewhere and are answer-bearing. Participants are told not to open them before the blind arms |
-| Null arms (shuffled σ, random means, Wikipedia-only) | no results deposited | Do not invent them |
-| Arm D company panel and the film | not part of this kit | No public return in the closed round |
-| A new model run packaged as confirmation | no | This kit was not produced by running Arms A–C again |
+| Item | Status |
+|---|---|
+| Arm A node definitions, algebra and rules, output schema, plan summary | Present, genuine. `inputs/arm_a_standard/` |
+| Era-means CSVs: core, extension, Denmark | Present. Core sha256 `887be60d…`, Denmark `70c9f0be…`, extension `c6056221…` |
+| Standard tester zip | Present. `da94f1c3…`, 22460 bytes |
+| Arm B pockets, shortlist, schema, readme | Present as a historical packet. Not a fresh blind |
+| Arm B issued zip | Present. `dceee12e…`, 14837 bytes |
+| Arm C packet | Present. Byte-identical to the sealed copy. Zip `23fce155…` |
+| SHA-256 script and return-shape check | Present. The shape check does not score |
+| Participant download | [CAMS_personality_participant_inputs_v1.zip](CAMS_personality_participant_inputs_v1.zip) |
+| Closed-round Arm B key and Arm C key | Absent on purpose. Not reconstructed |
+| New Arm B hold-out and new mood key | Not in this kit. An operator must create them before a fresh scored test |
+| Scored JSONL and the results report | Not in the participant pack. Operator path only, and answer-bearing |
+| Company Arm D means and the film brief | Absent. Out of scope |
+| A new model run confirming the round | Not done |
 
-## Observed return fields
+## Stale note left as issued
 
-These lists are the keys present on sealed files. They are not a schema document recovered from the missing packets.
+`inputs/arm_b_blind_historical/COUNTS.txt` says the Arm B zip sha256 is `58ff7c4166d0293b2f5ad6cfee33db5d3d46a3b5b9932c3a84594e507c8b6ea6`. The canonical issued archive hashes to `dceee12e89c1b07b9f63e4ce26836f51fb231089b621afc4f9d8f819ab73aae9`. COUNTS was not repaired.
 
-Arm A, from the Grok and Kimi JSONL: `arm`, `model`, `entity`, `era_id`, `year_start`, `year_end`, `leaders`, `constraints`, `pocket`, `notes`, `sha256_input_csv`, `sha256_this_output`, `timestamp_aedt`. On those files `sha256_this_output` is an empty string. The file-level ledger hash is the one that matched. A new return should carry a real file hash from `sha256_file.py`.
+## Actual blinding, not a rewritten one
 
-Arm B, from the sealed guess files: `blind_id`, `entity`, `chosen_era_id`, `chosen_year_start`, `chosen_year_end`, `confidence`, `brief_reason`, and on some files `set`.
-
-Arm C: the issued schema in [packet/arm_c_mood/output_schema_ArmC.md](packet/arm_c_mood/output_schema_ArmC.md).
-
-## Sample cuts named in the plan and the Arm C packet
-
-| Set | Societies | Eras |
-|---|---|---:|
-| Core | Russia 23, Australia 18, USA 15 | 56 |
-| Extension | China 20, UK 16, Norway 15 | 51 |
-| Denmark limit | Denmark, IX (1901–1913) omitted | 19 |
-
-Those counts are the denominators. This kit does not include the rows.
+Arm A tables include country and year range and exclude narrative titles. Arm B pockets include `entity`, `set`, `blind_id`, and `pocket_text`. The era is chosen from `era_shortlist.csv`. The standard packet’s prose sometimes describes Arm B as unlabeled for entity as well as era. The file that was issued does include the entity. This kit does not edit that file to match the other sentence.
