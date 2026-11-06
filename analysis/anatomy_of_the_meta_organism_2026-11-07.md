@@ -41,7 +41,7 @@ A second arm asked whether the same pocket agreed with a sealed mood grade. That
 
 ## Four portraits from the sealed returns
 
-Where a public pocket is specific, the shape can be stated without pretending the missing mean-tables are in this repository. The sentences below follow the sealed Arm A returns, not a reconstructed spreadsheet.
+Where a public pocket is specific, the sentences below follow the sealed Arm A returns. The issued era-mean tables are in the public replication kit, not copied into this essay.
 
 Russia, 1954–1964. In both the Kimi and Grok core returns, Craft and Shield lead. Kimi’s pocket places Lore close behind, with Stewards, Flow, and Hands trailing. That is a portrait of making and protection in front and provisioning behind. It is not, by itself, a proof of the Thaw.
 
@@ -75,7 +75,7 @@ We are closer to a shared plan of parts, the way a wing, a flipper, and a hand c
 
 The checked figures and the limits are in the merged report: [CAMS personality: independent AI replication](https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_independent_ai_replication_2026-11-07/CAMS_Personality_Independent_AI_Replication_Report_2026-11-07.md).
 
-The four portraits follow sealed Arm A returns, not the unpublished era-mean tables:
+The four portraits follow sealed Arm A returns. The issued era-mean tables are in the public replication kit on [pull request 46](https://github.com/KaliBond/wintermute/tree/cursor/explore-personality-replication-559e/analysis/cams_personality_replication_public_kit_v1/inputs/arm_a_standard):
 
 - Russia 1954–1964 and 1918–1921, and the United States 1929–1932: [Kimi core pockets](cams_personality_independent_ai_replication_2026-11-07/evidence/seals/kimi_armA_2026-11-06/armA_core.jsonl) and [Grok core pockets](cams_personality_independent_ai_replication_2026-11-07/evidence/seals/grok_armA_2026-11-06/grok_armA.jsonl).
 - Denmark 1784–1806, 1807–1813, and 1940–1945: [Kimi Denmark pockets](cams_personality_independent_ai_replication_2026-11-07/evidence/seals/kimi_armA_2026-11-06/armA_denmark.jsonl).
