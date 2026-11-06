@@ -109,6 +109,51 @@
     .badge-new        { background: #1f77b4; }
     .badge-beta       { background: #2F6F7D; }
     .badge-experimental { background: #888; }
+    .replication-report-card { position: relative; }
+    .replication-report-title {
+    display: inline;
+    font-weight: 600;
+    }
+    .replication-report-desc {
+    display: block;
+    font-size: 0.82em;
+    color: #3a4654;
+    margin-top: 3px;
+    line-height: 1.45;
+    }
+    .replication-report-actions {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.82em;
+    line-height: 1.4;
+    }
+    .replication-report-actions a {
+    display: inline-block;
+    min-height: 24px;
+    padding: 2px 0;
+    color: #1a3a5c;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    }
+    .replication-report-actions a:hover { color: #1f77b4; }
+    .replication-report-card a:focus-visible {
+    outline: 2px solid #1a3a5c;
+    outline-offset: 3px;
+    border-radius: 2px;
+    }
+    .replication-report-card .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+    }
+    #published-tools, #blind-testing, #core-papers { scroll-margin-top: 84px; }
     </style>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
@@ -198,6 +243,7 @@
         <h1>Explore</h1>
         <p class="hero-subtitle">Published Research Artefacts — CAMS Analysis &amp; Visualisations</p>
         <p style="margin:10px auto 0;font-size:0.95em;">Looking for a specific page? <a href="site-index.html" style="color:#1f77b4;font-weight:600;">Browse all pages &rarr;</a> &middot; <a href="nations.html" style="color:#1f77b4;font-weight:600;">Reports by nation &rarr;</a></p>
+        <p style="margin:8px auto 0;font-size:0.95em;">On this page: <a href="#published-tools" style="color:#1f77b4;font-weight:600;">Published tools</a> &middot; <a href="#blind-testing" style="color:#1f77b4;font-weight:600;">Blind testing</a> &middot; <a href="#core-papers" style="color:#1f77b4;font-weight:600;">Core papers</a></p>
         <p style="max-width:720px;margin:14px auto 0;font-size:0.95em;line-height:1.55;color:#2F4652;">
             CAMS is a <strong>thermometer</strong> for institutional health — a state monitor, diagnostic grammar, and uncertainty sensor — not a crystal ball.
             Eight parts: Helm, Shield, Lore, Stewards, Craft, Hands, Archive, Flow.
@@ -222,7 +268,7 @@
     <!-- ── VALIDATED TOOLS ─────────────────────────────────────────── -->
     <div class="card" style="margin-bottom: 16px;">
         <div class="explore-section" style="margin-bottom: 0;">
-            <h2>Published Tools</h2>
+            <h2 id="published-tools">Published Tools</h2>
             <p style="font-size:0.88em;color:#666;margin:0 0 12px;line-height:1.45;">Measurement interfaces and protocols — published, not certificates of external validation. Trajectories and bond networks remain illustrative where the formalism says so.</p>
             <div class="artifact-grid">
                 <a href="juno-36-explorer.html" class="artifact-link" style="border-color:#2F6F7D; background:#f0f7f7;"><span class="badge badge-tool">Tool</span><span class="badge badge-new">new</span> JUNO_36 Dataset Explorer <span style="display:block; font-size:0.82em; color:#2F6F7D; margin-top:3px;">Prior corpus: 36-society base, extended to 53 with additional scoring. The signature results in the October 2026 thesis come from JUNO v3, not this tool.</span><span style="display:block; font-size:0.82em; color:#888; margin-top:3px;">53 societies · 47,960 scored node-years · 1750–2026 · trajectory charts, thermodynamic phase portraits, eight-node health diagnostics · CAMS-CAN bond-strength formalism</span></a>
@@ -312,8 +358,10 @@
     <!-- ── BLIND TEST ───────────────────────────────────────────────── -->
     <div class="card" style="margin-bottom: 16px;">
         <div class="explore-section" style="margin-bottom: 0;">
-            <h2>Blind Test</h2>
+            <h2 id="blind-testing">Blind testing</h2>
+            <p style="font-size:0.88em;color:#3a4654;margin:0 0 12px;line-height:1.45;">Open challenges, and a public kit for repeating the personality experiment. Finished numeric results stay under Core Papers. Read the kit before that report if you intend to run the blind arms.</p>
             <div class="artifact-grid">
+                <div class="artifact-link replication-report-card" style="border-color:#245c38; background:#f0f7f2;"><span class="badge" style="background:#245c38;">Kit</span><span class="badge badge-new">new</span> <span class="replication-report-title">Repeat the CAMS personality experiment</span> <span class="replication-report-desc">7 November 2026 &middot; Public kit v1 for Arms A, B and C: participant instructions, the issued Arm C packet, and a SHA-256 script that hashes the file. Not a validated pack. The original era-means tables, node card, blinded pockets and hold-out keys are not included.</span><span class="replication-report-actions"><a href="https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_replication_public_kit_v1/README.md" target="_blank" rel="noopener noreferrer">Read the repeat guide<span class="visually-hidden"> for the CAMS personality experiment</span></a> <span aria-hidden="true">&middot;</span> <a href="https://github.com/KaliBond/wintermute/tree/main/analysis/cams_personality_replication_public_kit_v1" target="_blank" rel="noopener noreferrer">Kit files<span class="visually-hidden"> for the CAMS personality experiment</span></a></span></div>
                 <a href="blind-test.html" class="artifact-link" style="border-color:#4a7c59; background:#f0f7f2;"><span class="badge" style="background:#4a7c59;">Challenge</span><span class="badge badge-new">new</span> JUNO / CAMS Blind Analysis Challenge <span style="display:block; font-size:0.82em; color:#888; margin-top:3px;">8 anonymised societies · 1750–2026 · load a dataset + protocol into any capable LLM · five-stage analysis · unblinding keys sealed until submission · open science</span></a>
             </div>
             <div style="margin-top:16px;padding-top:14px;border-top:1px solid #e2dac3;">
@@ -382,8 +430,9 @@
     <!-- ── CORE PAPERS ─────────────────────────────────────────────── -->
     <div class="card" style="margin-bottom: 16px;">
         <div class="explore-section" style="margin-bottom: 0;">
-            <h2>Core Papers</h2>
+            <h2 id="core-papers">Core Papers</h2>
             <div class="artifact-grid">
+                <div class="artifact-link replication-report-card" style="border-color:#1a3a5c; background:#f4f7fb;"><span class="badge" style="background:#1a3a5c;">Report</span><span class="badge badge-new">new</span> <span class="replication-report-title">CAMS personality: independent AI replication</span> <span class="replication-report-desc">Kari McKern &middot; 7 November 2026 &middot; Full report of blind era recognition and a historical mood comparison, with the sealed evidence and audit caveats. An exploratory, promising demonstration: not a causal validation and not peer review.</span><span class="replication-report-actions"><a href="https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_independent_ai_replication_2026-11-07/CAMS_Personality_Independent_AI_Replication_Report_2026-11-07.md" target="_blank" rel="noopener noreferrer">Read the full report<span class="visually-hidden"> of CAMS personality: independent AI replication</span></a> <span aria-hidden="true">&middot;</span> <a href="https://github.com/KaliBond/wintermute/tree/main/analysis/cams_personality_independent_ai_replication_2026-11-07/evidence" target="_blank" rel="noopener noreferrer">Sealed evidence<span class="visually-hidden"> for CAMS personality: independent AI replication</span></a></span></div>
                 <a href="https://github.com/KaliBond/wintermute/blob/main/crisis_typology_rule_v1.md" target="_blank" class="artifact-link" style="border-color:#1a3a5c; background:#f4f7fb;"><span class="badge" style="background:#1a3a5c;">Rule</span><span class="badge badge-new">new</span> Crisis Typology — Cluster-Gap Rule v1.0 &amp; ESCH Cognitive Personality <span style="display:block; font-size:0.82em; color:#888; margin-top:3px;">Kari Freyr McKern &middot; 5 November 2026 &middot; sealed cluster-gap rule: gap = eco cluster V &minus; EPI cluster V; &ge;+1.0 epistemological, &le;&minus;1.0 economic &middot; 13/15 (87%) on canonical ensemble data &middot; <a href="https://github.com/KaliBond/wintermute/blob/main/analysis/esch_cognitive_personality_usa.md" target="_blank" style="color:#2F6F7D;">ESCH cognitive personality USA 1900&ndash;2026</a>: Focus = A&times;C, Energy = K&minus;S &middot; five personality types &middot; 2026 EPI Focus lowest in 126-year arc; Shield the only coherent sub-brain &middot; Markdown</span></a>
                 <a href="dynamics-of-social-organisation.html" class="artifact-link" style="border-color:#8c2a22; background:#FFFFFF;"><span class="badge" style="background:#8c2a22;">Book</span><span class="badge badge-new">new</span> The Dynamics of Social Organisation &mdash; the Book and Film <span style="display:block; font-size:0.82em; color:#888; margin-top:3px;">Kari McKern &middot; 31 October 2026 &middot; version 1.0, free under CC BY 4.0 &middot; my personal explanation for this site and its method &middot; every organisation is an adaptive-human metasystem, signalling the stress of adapting into a common planetary archive &middot; 30-second film, free PDF and EPUB</span></a>
                 <a href="human-ai-scientific-record.html" class="artifact-link" style="border-color:#2F6F7D; background:#FFFFFF;"><span class="badge" style="background:#2F6F7D;">Record</span><span class="badge badge-new">new</span> CAMS Human&ndash;AI Scientific Record <span style="display:block; font-size:0.82em; color:#888; margin-top:3px;">Kari McKern &middot; 30 October 2026 &middot; the preserved record of the GPT conversation behind <em>The Dynamics of Social Organisation</em>, verified: all 13 files match their hashes &middot; blind-rater agreement (r 0.89&ndash;0.93, ICC 0.869) reproduced from the raw CSVs &middot; per-dimension agreement and the USA 1900&ndash;2026 Q series &middot; Zenodo DOI 10.5281/zenodo.23793977</span></a>
