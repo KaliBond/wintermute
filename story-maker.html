@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Story Maker — Neural Nations</title>
+<meta name="description" content="Turn a CAMS era-means dataset into a name-masked story packet: data, a ready-to-use AI prompt, reading rules, and a README.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://neuralnations.org/story-maker">
+<meta property="og:title" content="Story Maker — Neural Nations">
+<meta property="og:description" content="Turn a CAMS era-means dataset into a name-masked story packet for a fresh AI session.">
+<meta property="og:url" content="https://neuralnations.org/story-maker">
+<meta property="og:site_name" content="Neural Nations">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"
+  integrity="sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHveXg=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<style>
+/* ── Layout ── */
+.sm-wrap{max-width:820px;margin:0 auto;padding:40px 24px 80px}
+.sm-title{font-size:2rem;font-weight:700;color:#1B2A33;margin:0 0 8px}
+.sm-sub{color:#4A6070;font-size:1.05rem;line-height:1.6;margin:0 0 32px}
+.sm-card{background:#FBF8EF;border:1px solid #DAD2B8;border-radius:8px;padding:28px 32px;margin-bottom:24px}
+.sm-card h2{font-size:1.1rem;font-weight:700;color:#1B2A33;margin:0 0 18px;padding-bottom:10px;border-bottom:1px solid #DAD2B8}
+
+/* ── Form controls ── */
+.sm-row{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end}
+.sm-field{display:flex;flex-direction:column;gap:6px;flex:1;min-width:200px}
+.sm-field label{font-size:.82rem;font-weight:600;color:#4A6070;letter-spacing:.04em;text-transform:uppercase}
+.sm-field select,.sm-field input[type=radio]{font-family:inherit}
+.sm-field select{padding:9px 12px;border:1px solid #C8BFAA;border-radius:6px;background:#fff;font-size:.95rem;color:#1B2A33;cursor:pointer;width:100%}
+.sm-field select:focus{outline:2px solid #2F6F7D;outline-offset:2px}
+.sm-radios{display:flex;gap:16px;flex-wrap:wrap}
+.sm-radios label{display:flex;align-items:center;gap:8px;font-size:.95rem;color:#1B2A33;cursor:pointer;padding:8px 14px;border:1px solid #C8BFAA;border-radius:6px;background:#fff}
+.sm-radios label:has(input:checked){background:#E8F4F6;border-color:#2F6F7D;color:#2F6F7D;font-weight:600}
+.sm-radios input{cursor:pointer}
+
+/* ── Buttons ── */
+.sm-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:6px;font-size:.95rem;font-weight:600;cursor:pointer;border:none;transition:background .15s,opacity .15s}
+.sm-btn-primary{background:#2F6F7D;color:#fff}
+.sm-btn-primary:hover{background:#255d69}
+.sm-btn-primary:disabled{opacity:.4;cursor:not-allowed}
+.sm-btn-secondary{background:#DAD2B8;color:#1B2A33}
+.sm-btn-secondary:hover:not(:disabled){background:#C8BFAA}
+.sm-btn-secondary:disabled{opacity:.4;cursor:not-allowed}
+.sm-btn-copy{background:#F5F1E4;color:#2F6F7D;border:1.5px solid #2F6F7D}
+.sm-btn-copy:hover{background:#E8F4F6}
+.sm-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+
+/* ── Status / errors ── */
+.sm-status{margin-top:16px;min-height:24px}
+.sm-ok{color:#2A7A4A;font-size:.9rem;font-weight:600}
+.sm-err{color:#C84C3E;font-size:.88rem;line-height:1.5}
+.sm-err ul{margin:4px 0 0 20px;padding:0}
+.sm-err li{margin-bottom:3px}
+.sm-warn{color:#9B6E1A;font-size:.88rem;background:#FFF8E6;border:1px solid #E8C97A;border-radius:5px;padding:10px 14px}
+
+/* ── Notice ── */
+.sm-notice{background:#F5F1E4;border-left:4px solid #D98B2B;border-radius:4px;padding:14px 18px;font-size:.88rem;line-height:1.6;color:#4A3010;margin-bottom:28px}
+.sm-notice strong{color:#1B2A33}
+
+/* ── Preview table ── */
+.sm-preview{margin-top:20px;overflow-x:auto}
+.sm-preview table{border-collapse:collapse;font-size:.82rem;width:100%;min-width:500px}
+.sm-preview th{background:#DAD2B8;color:#1B2A33;padding:6px 10px;text-align:left;white-space:nowrap}
+.sm-preview td{padding:5px 10px;border-bottom:1px solid #EAE4D4;color:#2B3D47;font-variant-numeric:tabular-nums}
+.sm-preview tr:last-child td{border-bottom:none}
+
+/* ── Summary chips ── */
+.sm-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.sm-chip{background:#E8F4F6;color:#1B5565;border-radius:999px;font-size:.78rem;font-weight:600;padding:4px 12px;letter-spacing:.03em}
+.sm-chip.red{background:#FAE8E6;color:#8B2A20}
+
+/* ── Copy feedback ── */
+.copied-flash{font-size:.82rem;color:#2A7A4A;margin-left:6px;opacity:0;transition:opacity .3s}
+.copied-flash.show{opacity:1}
+
+/* ── Responsive ── */
+@media(max-width:600px){
+  .sm-wrap{padding:24px 16px 60px}
+  .sm-title{font-size:1.5rem}
+  .sm-card{padding:20px 18px}
+}
+</style>
+</head>
+<body>
+<nav class="site-nav" role="navigation" aria-label="Site navigation">
+  <a href="index.html" class="nav-logo">Neural Nations</a>
+  <div class="nav-links">
+    <a href="cams.html">CAMS</a>
+    <a href="datasets.html">Datasets</a>
+    <a href="explore.html">Explore</a>
+    <a href="research-diary.html">Diary</a>
+  </div>
+</nav>
+
+<main class="sm-wrap" id="main">
+
+  <h1 class="sm-title">Story Maker</h1>
+  <p class="sm-sub">Pick a dataset, choose a masking profile, and download a name-masked packet — data, a ready-to-use AI prompt, reading rules, and a README — that a fresh AI session can use to recover the story of an organisation's journey through time from eight functional nodes.</p>
+
+  <div class="sm-notice" role="note">
+    <strong>Name-masking is not anonymity.</strong> The society names are removed from the packet, but the data is public and its patterns — including the historical knowledge built into the scoring — can suggest or confirm identity to a reader with contextual knowledge. The person choosing the dataset (you) knows the identity; the packet protects only the downstream reader, such as a fresh AI session or a colleague starting blind.
+  </div>
+
+  <!-- Step 1: Choose dataset and profile -->
+  <section class="sm-card" aria-labelledby="step1-h2">
+    <h2 id="step1-h2">1. Choose dataset and masking profile</h2>
+    <div class="sm-row">
+      <div class="sm-field">
+        <label for="dataset-select">Dataset</label>
+        <select id="dataset-select" aria-describedby="dataset-desc">
+          <option value="">— select a dataset —</option>
+          <option value="era_means">Core set — Russia · Australia · USA (56 eras)</option>
+          <option value="era_means_extension">Extension set — China · UK · Norway (51 eras)</option>
+          <option value="era_means_denmark">Denmark set — 19 eras (Era IX missing)</option>
+        </select>
+        <span id="dataset-desc" style="font-size:.8rem;color:#6B7480;margin-top:2px">Source: <code>analysis/cams_personality_replication_public_kit_v1/inputs/arm_a_standard/</code></span>
+      </div>
+
+      <div class="sm-field">
+        <label>Masking profile</label>
+        <div class="sm-radios" role="radiogroup" aria-labelledby="profile-label">
+          <label><input type="radio" name="profile" value="name" checked> Name-masked <small style="color:#888">(years kept)</small></label>
+          <label><input type="radio" name="profile" value="date"> Date-masked <small style="color:#888">(years replaced by era index)</small></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="sm-actions">
+      <button class="sm-btn sm-btn-primary" id="prepare-btn" disabled aria-describedby="prepare-hint">
+        <span aria-hidden="true">▶</span> Prepare packet
+      </button>
+    </div>
+    <p id="prepare-hint" style="font-size:.8rem;color:#888;margin-top:8px">Select a dataset to enable.</p>
+    <div class="sm-status" id="prepare-status" aria-live="polite"></div>
+  </section>
+
+  <!-- Step 2: Download / copy (hidden until packet ready) -->
+  <section class="sm-card" id="download-section" aria-labelledby="step2-h2" hidden>
+    <h2 id="step2-h2">2. Download or copy</h2>
+
+    <div id="packet-summary" class="sm-chips"></div>
+
+    <div class="sm-actions">
+      <button class="sm-btn sm-btn-primary" id="download-btn">
+        <span aria-hidden="true">↓</span> Download ZIP
+      </button>
+      <button class="sm-btn sm-btn-copy" id="copy-btn">
+        <span aria-hidden="true">⎘</span> Copy prompt + data
+      </button>
+      <span class="copied-flash" id="copy-flash" aria-live="polite">Copied!</span>
+    </div>
+
+    <div class="sm-preview" id="preview-table" aria-label="Preview of masked data"></div>
+  </section>
+
+</main>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════════
+   Story Maker — all processing in browser; no network requests after initial
+   CSV fetch; no JUNO content; schema v1; transform v1
+   ══════════════════════════════════════════════════════════════════════════ */
+
+const SCHEMA_VERSION   = '1';
+const TRANSFORM_VERSION = '1';
+const BASE_PATH = 'analysis/cams_personality_replication_public_kit_v1/inputs/arm_a_standard/';
+const EXPECTED_NODES   = ['Helm','Shield','Lore','Stewards','Craft','Hands','Archive','Flow'];
+const REQUIRED_COLS    = ['entity','era_id','years','node','Cog','Aff','sigma','rank'];
+
+/* ── Entity aliases (canonical first; masking only in identity fields) ── */
+const ENTITY_ALIASES = {
+  'Russia':    ['Russia','Russian','USSR','Soviet Union','Soviet'],
+  'Australia': ['Australia','Australian'],
+  'USA':       ['USA','United States','US','America','United States of America'],
+  'China':     ['China','Chinese','PRC','Peoples Republic of China',"People's Republic of China"],
+  'UK':        ['UK','United Kingdom','British','Britain','England','Great Britain'],
+  'Norway':    ['Norway','Norwegian'],
+  'Denmark':   ['Denmark','Danish'],
+};
+
+/* ════════════════════════ CSV parser ════════════════════════ */
+function parseCsv(text) {
+  const lines = text.split(/\r?\n/).filter(l => l.trim() && !l.startsWith('#'));
+  if (!lines.length) return { headers: [], rows: [] };
+  const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g,''));
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
+    const vals = splitCsvLine(lines[i]);
+    if (vals.length !== headers.length) continue;
+    const row = {};
+    headers.forEach((h,j) => row[h] = vals[j].trim().replace(/^"|"$/g,''));
+    rows.push(row);
+  }
+  // Published kit CSVs carry year_start/year_end rather than a single "years" column.
+  if (!headers.includes('years') && headers.includes('year_start') && headers.includes('year_end')) {
+    rows.forEach(r => { r.years = r.year_start === r.year_end ? r.year_start : `${r.year_start}-${r.year_end}`; });
+    headers.splice(headers.indexOf('year_start'), 0, 'years');
+  }
+  return { headers, rows };
+}
+
+function splitCsvLine(line) {
+  const result = []; let cur = ''; let inQ = false;
+  for (const ch of line) {
+    if (ch === '"') { inQ = !inQ; }
+    else if (ch === ',' && !inQ) { result.push(cur); cur = ''; }
+    else { cur += ch; }
+  }
+  result.push(cur);
+  return result;
+}
+
+/* ════════════════════════ Validation ════════════════════════ */
+function validate(rows, headers) {
+  const errors = [];
+
+  // 1. Required columns present
+  for (const col of REQUIRED_COLS) {
+    if (!headers.includes(col)) errors.push(`Missing required column: "${col}"`);
+  }
+  if (errors.length) return errors; // can't proceed
+
+  // 2. No unknown nodes
+  const badNodes = new Set();
+  rows.forEach((r,i) => {
+    if (!EXPECTED_NODES.includes(r.node)) badNodes.add(`row ${i+2}: unknown node "${r.node}"`);
+  });
+  badNodes.forEach(e => errors.push(e));
+
+  // 3. Each era has exactly 8 rows, one per node, no duplicates
+  const eraMap = {};
+  rows.forEach((r,i) => {
+    const key = `${r.entity}|${r.era_id}`;
+    if (!eraMap[key]) eraMap[key] = [];
+    eraMap[key].push({ node: r.node, rowIdx: i+2 });
+  });
+  for (const [key, nodeRows] of Object.entries(eraMap)) {
+    if (nodeRows.length !== 8) {
+      errors.push(`Era "${key}": expected 8 rows, found ${nodeRows.length}`);
+    }
+    const seen = {};
+    for (const { node, rowIdx } of nodeRows) {
+      if (seen[node]) errors.push(`Era "${key}" row ${rowIdx}: duplicate node "${node}"`);
+      seen[node] = true;
+    }
+  }
+
+  // 4. Numeric fields parse.
+  // No σ = Cog×Aff check: the published era means give sigma as the mean of each
+  // year's sigma, which differs from the product of the era-mean Cog and Aff.
+  // The kit treats these values as fixed inputs.
+  rows.forEach((r,i) => {
+    if (r.Cog === 'NA' || r.Aff === 'NA' || r.sigma === 'NA') return;
+    const cog = parseFloat(r.Cog), aff = parseFloat(r.Aff), sig = parseFloat(r.sigma);
+    if (isNaN(cog) || isNaN(aff) || isNaN(sig)) {
+      errors.push(`Row ${i+2} (${r.entity} ${r.era_id} ${r.node}): non-numeric value`);
+    }
+  });
+
+  return errors;
+}
+
+/* ════════════════════════ Masking ════════════════════════ */
+function buildEntityIdMap(rows) {
+  /* Assign stable IDs to each distinct entity, sorted by first appearance */
+  const seen = []; // order of first appearance
+  for (const r of rows) {
+    if (!seen.includes(r.entity)) seen.push(r.entity);
+  }
+  const map = {};
+  seen.forEach((e,i) => { map[e] = `entity_${String(i+1).padStart(3,'0')}`; });
+  return map;
+}
+
+function buildEraIndexMap(rows) {
+  /* For date masking: entity -> [era_id in order] -> E01, E02, ... */
+  const byEntity = {};
+  for (const r of rows) {
+    if (!byEntity[r.entity]) byEntity[r.entity] = [];
+    if (!byEntity[r.entity].includes(r.era_id)) byEntity[r.entity].push(r.era_id);
+  }
+  const map = {};
+  for (const [ent, eras] of Object.entries(byEntity)) {
+    eras.forEach((id,i) => { map[`${ent}|${id}`] = `E${String(i+1).padStart(2,'0')}`; });
+  }
+  return map;
+}
+
+function maskIdentityInText(text, entityIdMap) {
+  /* Replace canonical names and aliases with their IDs — only in text strings,
+     not via global regex across all content.  Called only on identity-bearing
+     metadata fields (entity, filenames, comments). */
+  let out = text;
+  for (const [canonical, aliases] of Object.entries(ENTITY_ALIASES)) {
+    if (!entityIdMap[canonical]) continue;
+    const id = entityIdMap[canonical];
+    for (const alias of aliases) {
+      // word-boundary replacement, case-insensitive
+      const re = new RegExp('\\b' + alias.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + '\\b','gi');
+      out = out.replace(re, id);
+    }
+  }
+  return out;
+}
+
+function applyMasking(rows, profile, entityIdMap, eraIndexMap) {
+  /* Build export rows from allowlist only; apply masking per profile */
+  return rows.map(r => {
+    const maskedEntity = entityIdMap[r.entity] || r.entity;
+    const maskedYears  = profile === 'date'
+      ? (eraIndexMap[`${r.entity}|${r.era_id}`] || r.era_id)
+      : r.years;
+    return {
+      entity: maskedEntity,
+      era_id: r.era_id,
+      years:  maskedYears,
+      node:   r.node,          // node names are NEVER masked
+      Cog:    r.Cog,
+      Aff:    r.Aff,
+      sigma:  r.sigma,
+      rank:   r.rank,
+    };
+  });
+}
+
+/* ════════════════════════ File content generators ════════════════════════ */
+
+function csvFromRows(rows) {
+  const cols = ['entity','era_id','years','node','Cog','Aff','sigma','rank'];
+  const lines = [cols.join(',')];
+  for (const r of rows) lines.push(cols.map(c => r[c]).join(','));
+  return lines.join('\n');
+}
+
+function storyPrompt(entityIdMap, maskedRows, profile) {
+  const ids = Object.values(entityIdMap);
+  const idList = ids.join(', ');
+  const eraNote = profile === 'date'
+    ? 'The "years" column contains era indices (E01, E02 …) rather than calendar dates.'
+    : 'The "years" column contains calendar date ranges.';
+
+  return `# Story Maker — AI Prompt
+# Schema v${SCHEMA_VERSION} · Transform v${TRANSFORM_VERSION} · Profile: ${profile}-masked
+# Generated: ${new Date().toISOString().slice(0,10)}
+#
+# This packet contains no results, grades, keys, or sealed material.
+# It is limited to the eight-node method. Do not use JUNO formulations.
+
+---
+
+## Your task
+
+You have been given a CSV of era-level node data for ${ids.length === 1 ? 'one organisation' : ids.length + ' organisations'} (${idList}).
+${eraNote}
+Each era has eight rows — one for each of the eight coordination functions.
+
+Work through all five steps below **in order**. Complete and lock each step before moving to the next.
+
+---
+
+## Step 1 — Read each era on its own
+
+For every era in the data, write a two-sentence portrait.
+- Sentence 1: name the nodes with the highest and lowest sigma values and what that combination suggests about how the organisation is functioning.
+- Sentence 2: note the sign pattern (how many nodes are positive, near-zero, or negative) and what that implies about the overall energy state.
+
+Cite the numeric values your portrait rests on. Do not name the society or guess the time period yet.
+
+> **Reading rules**
+> - **Cognition** (Cog) = Abstraction × Coherence: how clearly and coherently the function is modelling its own environment.
+> - **Affect** (Aff) = Capacity − Stress: whether the function has more capacity than it is burning off.
+> - **Sigma** (σ = Cog × Aff): the net energy of that node. Positive = functioning actively. Negative = structured distress. Near-zero = either marginal or cognitively active but affectively cancelled.
+> - High Cognition with negative Affect means coherent distress, not effective leadership.
+> - Any node can dominate by default when all others are weak — check the whole rank order, not just the top.
+> - A node ranked 1 with negative sigma is leading in the sense of "least disabled," not "most positive."
+
+---
+
+## Step 2 — Read the ensemble carefully
+
+Re-read all eras together.
+- Distinguish nodes that are consistently strong, consistently strained, or that vary across eras.
+- Identify any eras where most or all nodes are negative (all-negative topology), and describe what that configuration implies.
+- Note any eras where only one or two nodes are positive — name which ones, and what a single-positive or two-positive topology typically implies about institutional concentration.
+- Do not force a life-cycle template (rise/peak/fall) onto the trajectory.
+
+---
+
+## Step 3 — Trace the journey
+
+Write a continuous narrative of how the organisation moves through its eras.
+- Track which nodes gain and lose ground. Note structural turning points (a node switching from positive to negative, or vice versa).
+- Distinguish turning points that appear sudden from those that appear as gradual drift.
+- Note any eras that look nearly identical to their neighbours — flat stretches may matter as much as change.
+
+---
+
+## Step 4 — Report the gaps and limits
+
+Before completing your story, list:
+1. Any era or node where the data is missing or marked NA.
+2. Any pair of eras with near-identical sigma profiles — name them and note that they are hard to distinguish structurally.
+3. Any contradictions you noticed within an era (e.g. very high Cog alongside very negative Aff on the same node).
+4. Any limit of the method that affects your confidence in the story.
+
+---
+
+## Step 5 — Lock, then optionally unmask
+
+Your story is now locked. Do not revise it.
+
+You may now optionally:
+- Guess the identity of the organisation and the historical period, stating your confidence and what structural features drove the guess.
+- Compare your structural story to what the historical record says.
+- Mark every inference or historical comparison clearly and separately from the structural input.
+
+Do not browse the web or bring in external knowledge until this step. Everything before step 5 must rest on the data alone.
+
+---
+
+## Data
+
+The masked era-level data follows. Column meanings:
+- **entity**: masked organisation identifier
+- **era_id**: era label (Roman numeral)
+- **years**: ${profile === 'date' ? 'era index (E01 = earliest era)' : 'calendar year range of the era'}
+- **node**: one of eight coordination functions — Helm, Shield, Lore, Stewards, Craft, Hands, Archive, Flow
+- **Cog**: Cognition = Abstraction × Coherence (derived from era-mean raw scores)
+- **Aff**: Affect = Capacity − Stress (derived from era-mean raw scores)
+- **sigma**: net node energy = Cog × Aff
+- **rank**: sigma rank within the era (1 = highest; ties share a rank)
+
+\`\`\`
+${csvFromRows(maskedRows)}
+\`\`\`
+`;
+}
+
+function nodeGuide() {
+  return `# Node Guide — The Eight Coordination Functions
+# For use with Story Maker packets (schema v${SCHEMA_VERSION})
+
+The eight nodes are the minimum set of lean functions a complex coordinating
+system maintains. Each is distinct; none subsumes another.
+
+---
+
+## The nodes
+
+**Helm** — Executive coordination, state strategy, governing command.
+The node that sets direction and coordinates other functions.
+Positive sigma: directive capacity functioning.
+Negative sigma: command fragmented, paralysed, or contested.
+
+**Shield** — Military, police, intelligence, coercive and protective capacity.
+Positive sigma: coercive-protective capacity operational.
+Note: positive Shield is not happiness or safety — it is active coercive energy.
+Negative sigma: protective capacity degraded or withdrawn.
+
+**Lore** — Education, knowledge institutions, media, shared narrative, legitimacy
+production. The function that produces and validates meaning.
+Positive sigma: knowledge-and-meaning systems functioning.
+Negative sigma: narrative fragmented, educational capacity degraded, or
+legitimacy actively contested or suppressed.
+
+**Stewards** — Landholders, capital owners, fiscal elites, resource allocation,
+ownership power. The function that holds and manages stored resources and assets.
+Positive sigma: resource-holding class coordinated and functional.
+Negative sigma: capital and asset management disrupted.
+
+**Craft** — Skilled trades, professions, manufacturing, technical transformation.
+The function that produces through specialised skill and technique.
+Positive sigma: productive technique functioning.
+Negative sigma: technical capacity degraded or underemployed.
+
+**Hands** — Mass labour, agricultural, industrial and service labour, demographic
+work capacity. The function that provides mobilised human energy at scale.
+Positive sigma: labour broadly engaged and contributing.
+Negative sigma: labour excluded, suppressed, or suffering high stress.
+
+**Archive** — Bureaucracy, law, courts, records, institutional memory and
+continuity across time. The function that preserves and transmits accumulated
+institutional knowledge.
+Positive sigma: administrative and legal continuity functioning.
+Negative sigma: institutional memory degraded, records disrupted, continuity broken.
+
+**Flow** — Commerce, finance, markets, logistics, trade, circulation of goods and
+value. The function that moves resources and value through the system.
+Positive sigma: exchange and circulation operating.
+Negative sigma: circulation disrupted, trade blocked, finance under stress.
+
+---
+
+## Reading sigma
+
+σ = Cognition × Affect = (Abstraction × Coherence) × (Capacity − Stress)
+
+A positive sigma means the node is both modelling its environment (Cognition > 0)
+and has more capacity than it is burning off (Affect > 0).
+
+A negative sigma can arise two ways:
+- Low or negative Affect (high stress overwhelming capacity) with positive Cognition:
+  the function understands its situation but is in distress.
+- Low Cognition with positive Affect: capacity is there but directionless.
+
+Near-zero sigma means either marginal functioning or cancellation (e.g. high
+Cognition and near-zero Affect). Always check Cog and Aff separately.
+
+---
+
+## Rank interpretation
+
+Rank 1 = highest sigma in that era. In all-negative eras, rank 1 means
+"least disabled," not "most positive." Always note the sign when citing rank.
+
+Ties are reported as ties and share a rank number. No default winner.
+
+---
+
+## What this method does not cover
+
+- It does not assign blame, intent, or moral quality.
+- It does not predict the future.
+- It does not use JUNO formulations, bond strength, or any derived structural index.
+- Raw Coherence, Capacity, Stress, and Abstraction scores are not in this packet;
+  they cannot be reconstructed from Cog and Aff alone.
+`;
+}
+
+function readmeFile(datasetLabel, entityIdMap, profile, generatedDate) {
+  const ids = Object.entries(entityIdMap).map(([real, id]) => `  ${id} → [identity known to the selector]`).join('\n');
+  return `# Story Maker Packet — README
+# Schema v${SCHEMA_VERSION} · Transform v${TRANSFORM_VERSION}
+# Dataset: ${datasetLabel}
+# Profile: ${profile}-masked
+# Generated: ${generatedDate}
+
+---
+
+## What is in this packet
+
+| File                | Contents                                             |
+| ------------------- | ---------------------------------------------------- |
+| entity_*_eras.csv   | Masked, allowlisted era-level node data              |
+| story_prompt.md     | Ready-to-use AI instructions (paste into a fresh AI) |
+| node_guide.md       | The eight coordination functions and reading rules   |
+| README.md           | This file                                            |
+| manifest.json       | File list, schema/transform versions, profile        |
+
+---
+
+## How to use
+
+1. Open story_prompt.md and paste its full contents into a fresh AI conversation.
+2. The prompt includes the masked data inline. The AI will work through five steps
+   to build a structural story from the eight-node data alone.
+3. After the AI locks its story (Step 4), you may optionally unmask the entity
+   identity in your own conversation — no server or additional tool needed.
+4. See node_guide.md for definitions of the eight nodes and how to read sigma values.
+
+---
+
+## Identity masking
+
+Profile: **${profile}-masked**
+
+${profile === 'name'
+  ? 'Society names have been replaced with neutral IDs. Calendar year ranges are kept, so the data arc is readable. Dates can still suggest identity to a reader with historical knowledge.'
+  : 'Society names and calendar year ranges have both been replaced with neutral identifiers. Era indices (E01, E02 …) preserve order but not calendar position. This profile is structurally stronger, but the sigma pattern may still be recognisable.'}
+
+Entity IDs in this packet:
+${ids}
+
+**Anonymity is not guaranteed.** The underlying data is public. Its patterns and
+the historical knowledge encoded in the CAMS scoring can reveal identity to a
+reader with relevant expertise, regardless of masking profile.
+
+The person who selected this dataset knows the real identity. Masking protects
+only the downstream reader — a fresh AI session, a colleague starting blind, etc.
+
+---
+
+## Source and limits
+
+- Data source: era-means derived from CAMS v1.2-OPT five-pass ensemble (block 1)
+- Schema version: ${SCHEMA_VERSION}
+- Transform version: ${TRANSFORM_VERSION}
+- Values are era means taken from the published kit. Sigma is the mean of each
+  year's sigma, so it need not equal Cog × Aff of the era means. Treat all values
+  as fixed inputs.
+- Raw C/K/S/A values are not included and cannot be reconstructed from this packet.
+- Missing eras (e.g. Denmark Era IX) remain absent; they are not imputed or labelled.
+- Sigma is verified against Cog × Aff within a rounding tolerance; ties are preserved.
+- This packet contains no results, grades, keys, or sealed testing material.
+
+---
+
+## Questions
+
+neuralnations.org · kari@neuralnations.org
+`;
+}
+
+function manifestJson(files, datasetLabel, profile, generatedDate, entityCount, eraCount) {
+  return JSON.stringify({
+    schema_version: SCHEMA_VERSION,
+    transform_version: TRANSFORM_VERSION,
+    profile: `${profile}-masked`,
+    dataset: datasetLabel,
+    generated: generatedDate,
+    entity_count: entityCount,
+    era_count: eraCount,
+    files: files,
+    provenance: {
+      note: 'No source hash or lookup key included. Provenance is schema version, transform version, profile and generation date only.',
+      source: 'neuralnations.org',
+    }
+  }, null, 2);
+}
+
+/* ════════════════════════ UI state ════════════════════════ */
+let packetReady = false;
+let packetData = null; // { maskedRows, entityIdMap, datasetLabel, profile }
+
+const datasetSel  = document.getElementById('dataset-select');
+const prepareBtn  = document.getElementById('prepare-btn');
+const prepareHint = document.getElementById('prepare-hint');
+const prepareStatus = document.getElementById('prepare-status');
+const downloadSection = document.getElementById('download-section');
+const downloadBtn = document.getElementById('download-btn');
+const copyBtn     = document.getElementById('copy-btn');
+const copyFlash   = document.getElementById('copy-flash');
+const previewTable = document.getElementById('preview-table');
+const packetSummary = document.getElementById('packet-summary');
+
+datasetSel.addEventListener('change', () => {
+  prepareBtn.disabled = !datasetSel.value;
+  prepareHint.textContent = datasetSel.value ? '' : 'Select a dataset to enable.';
+  downloadSection.hidden = true;
+  packetReady = false;
+  prepareStatus.innerHTML = '';
+});
+
+prepareBtn.addEventListener('click', async () => {
+  prepareBtn.disabled = true;
+  prepareStatus.innerHTML = '<span style="color:#888">Loading…</span>';
+  downloadSection.hidden = true;
+  packetReady = false;
+
+  const dataset = datasetSel.value;
+  const profile = document.querySelector('input[name="profile"]:checked').value;
+  const url = BASE_PATH + dataset + '.csv';
+  const datasetLabel = datasetSel.options[datasetSel.selectedIndex].text;
+
+  let text;
+  try {
+    const resp = await fetch(url, { cache: 'no-cache' });
+    if (!resp.ok) throw new Error(`HTTP ${resp.status} — ${url}`);
+    text = await resp.text();
+  } catch (e) {
+    prepareStatus.innerHTML = `<div class="sm-err">Could not load dataset: ${e.message}</div>`;
+    prepareBtn.disabled = false;
+    return;
+  }
+
+  const { headers, rows } = parseCsv(text);
+  if (!rows.length) {
+    prepareStatus.innerHTML = '<div class="sm-err">File is empty or could not be parsed.</div>';
+    prepareBtn.disabled = false;
+    return;
+  }
+
+  const errors = validate(rows, headers);
+  if (errors.length) {
+    prepareStatus.innerHTML = `<div class="sm-err"><strong>Validation failed — download blocked</strong><ul>${errors.map(e=>`<li>${e}</li>`).join('')}</ul></div>`;
+    prepareBtn.disabled = false;
+    return;
+  }
+
+  // Build maps
+  const entityIdMap  = buildEntityIdMap(rows);
+  const eraIndexMap  = buildEraIndexMap(rows);
+  const maskedRows   = applyMasking(rows, profile, entityIdMap, eraIndexMap);
+
+  // Count eras per entity (after masking, by era_id)
+  const eraSet = new Set(rows.map(r => `${r.entity}|${r.era_id}`));
+  const eraCount = eraSet.size;
+  const entityCount = Object.keys(entityIdMap).length;
+
+  packetData = { maskedRows, entityIdMap, eraIndexMap, datasetLabel, profile, eraCount, entityCount, rows };
+  packetReady = true;
+
+  // Summary chips
+  packetSummary.innerHTML = [
+    `<span class="sm-chip">${entityCount} ${entityCount===1?'entity':'entities'}</span>`,
+    `<span class="sm-chip">${eraCount} eras · ${maskedRows.length} rows</span>`,
+    `<span class="sm-chip">${profile}-masked</span>`,
+  ].join('');
+
+  // Preview table (first entity, first 3 eras)
+  const previewEntities = [...new Set(maskedRows.map(r=>r.entity))].slice(0,1);
+  const previewEras = [...new Set(maskedRows.filter(r=>previewEntities.includes(r.entity)).map(r=>r.era_id))].slice(0,3);
+  const previewRowsFiltered = maskedRows.filter(r => previewEntities.includes(r.entity) && previewEras.includes(r.era_id));
+  const cols = ['entity','era_id','years','node','Cog','Aff','sigma','rank'];
+  previewTable.innerHTML = `
+    <p style="font-size:.82rem;color:#888;margin:0 0 8px">Preview: ${previewEntities[0]}, first 3 eras (${previewEras.map(e=>`Era ${e}`).join(', ')})</p>
+    <table>
+      <thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
+      <tbody>${previewRowsFiltered.map(r=>`<tr>${cols.map(c=>`<td>${r[c]}</td>`).join('')}</tr>`).join('')}</tbody>
+    </table>`;
+
+  prepareStatus.innerHTML = `<span class="sm-ok">✓ Validation passed — packet ready</span>`;
+  downloadSection.hidden = false;
+  prepareBtn.disabled = false;
+  downloadBtn.focus();
+});
+
+/* ════════════════════════ Build ZIP ════════════════════════ */
+async function buildZip() {
+  const { maskedRows, entityIdMap, datasetLabel, profile, eraCount, entityCount } = packetData;
+  const generatedDate = new Date().toISOString().slice(0,10);
+
+  const zip = new JSZip();
+
+  // Per-entity CSV files (each entity separate)
+  const entitiesSeen = [...new Set(maskedRows.map(r=>r.entity))];
+  const csvFiles = [];
+  for (const entId of entitiesSeen) {
+    const entityRows = maskedRows.filter(r => r.entity === entId);
+    const filename = `${entId}_eras.csv`;
+    zip.file(filename, csvFromRows(entityRows));
+    csvFiles.push(filename);
+  }
+
+  // story_prompt.md (all entities combined inline)
+  const promptText = storyPrompt(entityIdMap, maskedRows, profile);
+  zip.file('story_prompt.md', promptText);
+
+  // node_guide.md
+  zip.file('node_guide.md', nodeGuide());
+
+  // README.md
+  zip.file('README.md', readmeFile(datasetLabel, entityIdMap, profile, generatedDate));
+
+  // manifest.json
+  const allFiles = [...csvFiles, 'story_prompt.md', 'node_guide.md', 'README.md', 'manifest.json'];
+  zip.file('manifest.json', manifestJson(allFiles, datasetLabel, profile, generatedDate, entityCount, eraCount));
+
+  return zip.generateAsync({ type: 'blob', compression: 'DEFLATE', compressionOptions: { level: 6 } });
+}
+
+downloadBtn.addEventListener('click', async () => {
+  if (!packetReady) return;
+  downloadBtn.disabled = true;
+  downloadBtn.textContent = 'Building…';
+  try {
+    const blob = await buildZip();
+    const { profile } = packetData;
+    const fname = `story_maker_${profile}_${new Date().toISOString().slice(0,10)}.zip`;
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = fname;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  } catch (e) {
+    prepareStatus.innerHTML = `<div class="sm-err">ZIP error: ${e.message}</div>`;
+  } finally {
+    downloadBtn.disabled = false;
+    downloadBtn.innerHTML = '<span aria-hidden="true">↓</span> Download ZIP';
+  }
+});
+
+/* ════════════════════════ Copy combined prompt ════════════════════════ */
+copyBtn.addEventListener('click', async () => {
+  if (!packetReady) return;
+  const { maskedRows, entityIdMap, profile } = packetData;
+  const combined = storyPrompt(entityIdMap, maskedRows, profile)
+    + '\n\n---\n\n'
+    + nodeGuide();
+  try {
+    await navigator.clipboard.writeText(combined);
+    copyFlash.classList.add('show');
+    setTimeout(() => copyFlash.classList.remove('show'), 2000);
+  } catch {
+    // Fallback: select a hidden textarea
+    const ta = document.createElement('textarea');
+    ta.value = combined;
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    copyFlash.classList.add('show');
+    setTimeout(() => copyFlash.classList.remove('show'), 2000);
+  }
+});
+</script>
+</body>
+</html>
