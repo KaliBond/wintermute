@@ -42,7 +42,7 @@ GROUPS = [
         'cams-interpreter', 'cams-interpreter/', 'cams-compare/', 'cams-zeitgeist', 'cams-advanced-analysis',
         'cams-integrated-dashboard', 'juno/CAMS_4society_dashboard', 'cams-network-explorer', 'attractors', 'cams-3d-attractor',
         'cams-coordination', 'seshat-explorer', 'granger-validator', 'cams-telescope/',
-        ('cams-telescope/guide', 'Guide'), 'cams-instrument', 'cams-morphospace-atlas', 'mind-reader',
+        ('cams-telescope/guide', 'Guide'), 'cams-instrument', 'cams-morphospace-atlas', 'mind-reader', 'story-maker',
         ('cams-diy-kit', 'Guide'),
     ]),
     ('Papers & Validation', 'Paper', 'monthly', '0.7', [
