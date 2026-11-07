@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Test the Extended Social Cognition Hypothesis — Neural Nations</title>
+    <meta name="description" content="CAMS as an accumulating explanatory case: JUNO v3 signatures and a separate personality-recognition strand, with a participant route before the closed round's headline counts.">
+    <meta name="keywords" content="CAMS, Extended Social Cognition Hypothesis, personality experiment, blind testing, Neural Nations, Kari McKern">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/cams-personality-experiment">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neuralnations.org/cams-personality-experiment">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="Test the Extended Social Cognition Hypothesis">
+    <meta property="og:description" content="Eight institutional functions by four dimensions, a participant route, and the 7 November 2026 headline results behind a closed disclosure.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Test the Extended Social Cognition Hypothesis">
+    <meta name="twitter:description" content="A falsifiability challenge for the eight-by-four instrument. Headline results stay closed until you open them.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+    .cpe { max-width: 760px; margin: 0 auto; }
+    .cpe-eyebrow { font: 700 0.72rem ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: 0.14em; text-transform: uppercase; color: #2F6F7D; margin: 0 0 12px; }
+    .cpe h1 { text-align: left; font-size: 2.15rem; line-height: 1.15; letter-spacing: -0.025em; color: #1B2A33; margin: 0 0 14px; }
+    .cpe h2 { font-size: 1.35rem; color: #1B2A33; margin: 0 0 12px; }
+    .cpe h3 { font-size: 1.05rem; color: #1B2A33; margin: 22px 0 8px; }
+    .cpe p, .cpe li { color: #3a4750; line-height: 1.65; }
+    .cpe p { margin: 0 0 12px; }
+    .cpe ul, .cpe ol { margin: 0 0 14px; padding-left: 1.2rem; }
+    .cpe li { margin-bottom: 8px; }
+    .cpe a { color: #1a5270; text-underline-offset: 2px; }
+    .cpe a:hover { color: #1f77b4; }
+    .cpe a:focus-visible, .cpe summary:focus-visible { outline: 2px solid #1a3a5c; outline-offset: 3px; border-radius: 2px; }
+    .cpe-kicker { font-size: 0.95rem; color: #3a4750; margin: 0; }
+    .cpe-note, .cpe-warn { border-radius: 0 10px 10px 0; padding: 14px 16px; margin: 16px 0; line-height: 1.6; }
+    .cpe-note { background: #E3EEF0; border: 1px solid #c8dde1; border-left: 3px solid #2F6F7D; color: #24343a; }
+    .cpe-warn { background: #F4EEDD; border: 1px solid #E3DAC0; border-left: 3px solid #8c4a1f; color: #3a3428; }
+    .cpe-note strong, .cpe-warn strong { color: #1B2A33; }
+    .cpe-fn { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 14px 0 16px; padding: 0; list-style: none; }
+    .cpe-fn li { margin: 0; background: #fff; border: 1px solid #DAD2B8; border-radius: 10px; padding: 12px 14px; }
+    .cpe-fn b { display: block; color: #1B2A33; margin-bottom: 2px; }
+    .cpe-eq { background: #F4EEDD; border: 1px solid #E3DAC0; border-left: 3px solid #2F6F7D; border-radius: 0 10px 10px 0; padding: 12px 16px; margin: 0 0 14px; color: #1B2A33; }
+    .cpe-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .cpe-btn { display: inline-block; font-weight: 700; text-decoration: none; padding: 12px 16px; border-radius: 10px; min-height: 44px; }
+    .cpe-btn-primary { background: #2F6F7D; color: #F5F1E4; }
+    .cpe-btn-primary:hover { background: #387f8e; color: #fff; }
+    .cpe-btn-secondary { background: #fff; color: #1B2A33; border: 1px solid #DAD2B8; }
+    .cpe-btn-secondary:hover { border-color: #2F6F7D; color: #1a5270; }
+    pre.cpe-cmd { overflow-x: auto; background: #1B2A33; color: #F5F1E4; padding: 14px 16px; border-radius: 10px; font-size: 0.82rem; line-height: 1.55; margin: 0 0 14px; }
+    .cpe-table-wrap { overflow-x: auto; margin: 12px 0 16px; border: 1px solid #DAD2B8; border-radius: 10px; }
+    table.cpe-table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 0.9rem; background: #fff; }
+    table.cpe-table caption { text-align: left; font-size: 0.82rem; color: #3a4750; padding: 10px 12px 0; caption-side: top; }
+    table.cpe-table th, table.cpe-table td { padding: 8px 12px; border-bottom: 1px solid #EDE7D4; text-align: left; vertical-align: top; }
+    table.cpe-table th { background: #F5F1E4; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: #3a4750; }
+    table.cpe-table th[scope="row"] { text-transform: none; letter-spacing: 0; font-size: 0.9rem; font-weight: 700; color: #1B2A33; background: #fff; }
+    table.cpe-table tr:last-child td, table.cpe-table tr:last-child th { border-bottom: 0; }
+    details.cpe-spoiler { background: #fff; border: 1px solid #c9a24a; border-radius: 12px; }
+    details.cpe-spoiler summary { cursor: pointer; padding: 16px 18px; font-weight: 700; color: #1B2A33; min-height: 44px; list-style: none; }
+    details.cpe-spoiler summary::-webkit-details-marker { display: none; }
+    details.cpe-spoiler summary::before { content: "Closed. "; font-weight: 700; color: #8c4a1f; }
+    details.cpe-spoiler[open] summary::before { content: "Open. "; }
+    details.cpe-spoiler summary:hover { background: #FBF8EF; }
+    .cpe-spoiler-body { padding: 0 18px 18px; }
+    .cpe-fileline { font-size: 0.95rem; line-height: 1.7; }
+    @media (max-width: 640px) {
+        .cpe h1 { font-size: 1.7rem; }
+        .container > .card { padding: 22px 16px; }
+        .cpe-btn { width: 100%; text-align: center; }
+    }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+
+<div class="container" style="max-width:920px;">
+    <div class="card">
+        <div class="cpe">
+            <p class="cpe-eyebrow">Neural Nations · 7 November 2026</p>
+            <h1>An accumulating case, and a way to test it</h1>
+            <p class="cpe-kicker">Distributed institutional coordination — memory, interpretation, direction, and action spread across an organisation — yields patterns of collective mood and meaning. Political narratives and events may partly express those deeper configurations. They are not assumed to be the whole of politics, and this page does not treat the mechanism as demonstrated.</p>
+            <div class="cpe-warn" role="note">
+                <strong>The recognition counts start closed.</strong>
+                The JUNO section that follows is already public, and it is a different series. The disclosure further down contains the November personality round’s headline grades. If you want to take part without those grades, use the <a href="#participant">participant route</a> and do not open the disclosure, the replication report, or the historical Arm&nbsp;B pockets. This page is not the separate <a href="blind-test.html">JUNO/CAMS Blind Analysis Challenge</a>.
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="cpe">
+            <h2>The case, in one place</h2>
+            <p>Taken together, differentiated functional roles, patterned temporal relationships and recognisable historical moods give CAMS an accumulating explanatory case. They motivate the proposal that political expression partly emerges from deeper organisational configurations.</p>
+            <p>That proposal is not a proof. The scores are historically informed, including shared AI coding, so agreement among models is not an outside observation of institutions. A lag is not a cause. Recognising a historical mood is not an independent measure of cognition. The portrait does not treat a nation as a mind or a person.</p>
+            <p>Two instruments sit under that case, and they are not pooled. JUNO v3 dynamics use node value, V = C + K + A/2 − S. The personality experiment uses cognition A × C, affect K − S, and activation σ = cognition × affect. A result on one does not become a result on the other.</p>
+            <h3>The journey through time</h3>
+            <p>The substantive target is the narrative of an entity’s journey: how capacities, pressures and responses develop together, not a stack of separate scores and not a correct era name. Purely quantitative tests overlook that narrative. The diagnostics complement a historical reading. They do not replace it. A fluent story is not confirmation either. The November era-identification round does not already establish the journey. Matching one window is not a reconstruction of the sequence, the transitions, or the recovery and failure that join those windows.</p>
+            <h3>JUNO v3: roles and timing</h3>
+            <p>The rebuilt corpus is <a href="https://github.com/KaliBond/wintermute/blob/main/juno/v3/JUNO_Unified_Dataset_v3_2026-10-19.csv">juno/v3/JUNO_Unified_Dataset_v3_2026-10-19.csv</a>: 42 societies and 41,914 rows. It is not the older JUNO_36 explorer file, and it is not the personality era-means tables. The frozen signature run used 37 of the 42. Denmark, India, Turkey, Thailand and Canada were left out, and Israel was used only from 2015. Under thresholds frozen before the count, the rules fired in 696 society-years. Twelve of eighteen named windows still fired. Those windows were named from draft firings, so the enrichment shows that the pattern survives a stricter pre-set threshold. It is not a prospective discovery, and it is not a claim that the scores were blind to history.</p>
+            <p>The public write-up is <a href="organisational-pathologies.html">Organisational Pathologies</a>. The same counts are in <a href="https://github.com/KaliBond/wintermute/blob/main/juno/v3/CAMS_Thesis_v2_2026-10-20.md">juno/v3/CAMS_Thesis_v2_2026-10-20.md</a>. One signature, Late Abstraction Collapse, is followed by a large fall in mean V more often than a circular-shift null: 62 against 38.56 expected. That is a timing result inside this corpus, not a cause. The companion thesis notes that part of the rule already contains the fall, because a drop in Coherence lowers V directly (<a href="https://github.com/KaliBond/wintermute/blob/main/docs/theory/CAMS_Organisational_Pathologies_Thesis.md">docs/theory/CAMS_Organisational_Pathologies_Thesis.md</a>).</p>
+            <h3>Personality: recognisable moods</h3>
+            <p>A separate closed round asked whether a short portrait, written from era means with the cognition and affect formulas above, could be matched to a historical era and its mood. That is the recognition strand, not the journey. Its counts are in the disclosure below, with the hash and grading limits. They hint that a period’s mood can be read from a coordination pattern. They do not reconstruct how that entity moved from one period to the next, and they do not establish a mechanism.</p>
+            <p>A 7 November evidence ledger also describes role shuffles, layer comparisons, a principal-component cut, and lagged coupling. The files it names — <code>explore_grades.md</code>, <code>juno/coupling/CAMS_Coupling_Report.md</code>, and <code>juno/pca2.out</code> — are not in this repository. This page does not repeat those figures. In particular, it does not replace the thesis null for Archive Amnesia (15 window hits against 0.75 under a circular shift) with a different expectation from a file that is not here.</p>
+            <h3>The eight functions</h3>
+            <p>These are the meanings in the issued node card. A portrait does not need every function to lead. A function can stand first because it is strong, or because the others are weaker.</p>
+            <ul class="cpe-fn">
+                <li><b>Helm</b> Executive direction and the capacity to decide.</li>
+                <li><b>Lore</b> Shared explanation, legitimacy, and public speech.</li>
+                <li><b>Craft</b> Making, technique, and organised skill.</li>
+                <li><b>Hands</b> Everyday work at scale.</li>
+                <li><b>Flow</b> Circulation and exchange.</li>
+                <li><b>Stewards</b> Provisioning, maintenance, and care.</li>
+                <li><b>Shield</b> Protection and coercive capacity. Read it against its neighbours: strong neighbours make it look like protection; weak or split neighbours make it look like coercion or protective custody.</li>
+                <li><b>Archive</b> Record, procedure, and institutional memory.</li>
+            </ul>
+            <h3>The four dimensions, as issued</h3>
+            <p>The participant packet scores each function on <strong>A</strong> Abstraction, <strong>C</strong> Coherence, <strong>K</strong> Capacity, and <strong>S</strong> Stress. The issued algebra then uses only three quantities:</p>
+            <p class="cpe-eq">Cognition = A × C<br>Affect = K − S<br>Activation (σ) = Cognition × Affect</p>
+            <p>Cognition is not the word “focus”. The reading rules treat focus and activation as separate readings. High focus with negative activation is strain, not health. Positive σ is not happiness, and σ is not a physical energy. The kit does not use node value or bond strength. Rank is a secondary check, not another mechanism.</p>
+            <p>The closed-round report’s plain-language gloss once calls C “capacity” and K “knowledge”, and it calls these products cognitive focus and available energy. That gloss is not the issued algebra. The formulas in the report’s own claim under test, Cog = A × C, Aff = K − S, and σ = Cog × Aff, match the packet. C is Coherence. K is Capacity.</p>
+            <p>The era-means tables were historically informed coding, including AI scoring. Withholding the episode title later does not remove that historical judgement. AI models also already contain historical text. Masking a title is not the same thing as a historically blank mind.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="cpe">
+            <h2>The three arms</h2>
+            <p>Do them in order. Use a fresh session for each arm. Record the model name and version, and record the clock time you actually finished, with its time zone.</p>
+            <h3>Arm A — write the portraits, no web</h3>
+            <p>Read the era-means tables, the node definitions, and the pocket rules. For each era, name the leading and constraining functions and write a short functional portrait. The tables name the country and the years. They do not name the historical episode. That is the protocol that was issued, so Arm A is not geography-blind. Do not add titles, and do not compute node value or bond strength.</p>
+            <h3>Arm B — identify the era, no web</h3>
+            <p>In a fresh session that is not shown the era-means table, read a portrait and choose its era from a shortlist. Each portrait already names its country. The historical Arm B packet in this kit has already been used, and its results are public. It is a spoiled historical exercise, not a fresh blind test. A new blind Arm B needs new portraits and a new key, made by an operator after your Arm A file is hashed. The operator keeps that key. You do not.</p>
+            <h3>Arm C — compare with the mood of the period, web allowed</h3>
+            <p>Compare your own already hashed Arm A portraits with historical sources. Grade each era <code>close</code>, <code>broad</code>, <code>partial</code>, <code>mixed</code>, or <code>direct_disagreement</code>. Keep popular feeling, organised institutional mood, and official messaging separate. Do not edit, regenerate, or rehash the Arm A file. The original mood key is not public. Your own grades are descriptive. They do not count as the closed round’s central score. A scored mood test needs an operator to write a new key before you start, and to keep it off your machine.</p>
+        </div>
+    </div>
+
+    <div class="card" id="participant">
+        <div class="cpe">
+            <h2>Participant route, before any results</h2>
+            <p>This is the clean way in. The zip contains the issued inputs only: no scored outputs and no results report. It does contain the historical Arm B packet. Leave that packet closed if you want an unspoiled Arm A.</p>
+            <div class="cpe-actions">
+                <a class="cpe-btn cpe-btn-primary" href="https://github.com/KaliBond/wintermute/raw/main/analysis/cams_personality_replication_public_kit_v1/CAMS_personality_participant_inputs_v1.zip">Download the participant zip</a>
+                <a class="cpe-btn cpe-btn-secondary" href="https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_replication_public_kit_v1/START_HERE.md" target="_blank" rel="noopener noreferrer">START_HERE.md</a>
+            </div>
+            <ol>
+                <li>Download the zip. Then read <code>START_HERE.md</code>, which is inside it, and <a href="https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_replication_public_kit_v1/PARTICIPANT.md" target="_blank" rel="noopener noreferrer">PARTICIPANT.md</a>, which is in the kit folder rather than the zip.</li>
+                <li>Do Arm A from the era-means, the node card, and the rules. Do not open the disclosure on this page, the replication report, or the Arm B pockets.</li>
+                <li>Hash the finished file from the kit folder. The hash scripts are in that folder, not in the zip. If you cannot run a real hash, stop and record that. Never type out a digest yourself.</li>
+                <li>Report every era you ran, every era you skipped, and every arm you did not run. An arm you did not run is neither a pass nor a fail.</li>
+            </ol>
+            <pre class="cpe-cmd"><code>python3 scripts/sha256_file.py your_return.jsonl --ledger --model "name-and-version" --arm A --entity-set CORE
+python3 scripts/check_return_shape.py --arm A your_return.jsonl</code></pre>
+            <p>Use <code>--arm B</code> or <code>--arm C</code> for the other arms. The shape check confirms only that the fields and the vocabulary are present. It does not know whether the portrait is right.</p>
+            <p>Order: core first (Russia, Australia, and the USA, 56 eras), then the optional extension (China, the UK, and Norway, 51 eras), then Denmark (19 eras). Denmark IX (1901–1913) has no observations, so leave it out. Denmark is a sparse-data control. Identical input rows can force identical portraits. That makes the control hard. It is not an instruction that Denmark must fail.</p>
+            <p>Someone other than the participant has to act as operator for a genuinely new blind test. <a href="https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_replication_public_kit_v1/OPERATOR.md" target="_blank" rel="noopener noreferrer">OPERATOR.md</a> covers how to issue packets, write keys in advance, and score returns. The closed round’s answer keys are withheld. Do not rebuild them from public files.</p>
+            <p>The kit files and the zip are the working materials. This page is the explanation. Neither one is a self-contained new validation, and the closed round does not validate CAMS.</p>
+        </div>
+    </div>
+
+    <div class="card" id="challenge">
+        <div class="cpe">
+            <h2>How the case can fail</h2>
+            <p>The question is whether this explanatory account survives independent comparisons, timing tests, and rival explanations. It is not only a question of whether eight is the right count of nodes. The tests below are proposals. They were not completed as a new preregistration, and this page adds no threshold.</p>
+            <ul>
+                <li>A window list fixed before any firing, on a corpus that is not this one, does not concentrate the signatures beyond the baseline named in advance. The present 12 of 18 cannot be reused as that test: those windows were taken from draft firings.</li>
+                <li>A timing comparison fixed in advance shows no lead, or the lead vanishes once the rule is not allowed to share components with the outcome. Late Abstraction Collapse’s overlap with the fall is already a reason for caution, not a settled cause.</li>
+                <li>A rival account — a simpler index, a narrative baseline, or an economic series — matches the same windows and the same moods.</li>
+                <li>The journey, judged on its own, fails an independent historical reading. The proposed test fixes the rubric and the negative controls first, then compares sequences, transitions, and recovery or failure with rival narratives that had the same information. A fluent CAMS story would not count as a pass, and a quantitative hit would not replace that reading.</li>
+                <li>Held-out era recognition does no better than the baselines fixed before the run. That would weaken the mood strand. It would not, by itself, erase the JUNO signature record, and a JUNO failure would not erase a clean recognition result. Neither result is the journey. The series stay separate.</li>
+                <li>Readers who are not shown the function labels cannot reproduce the reading, or a mapping fixed in advance fails for firms or bureaucracies. Company means were not part of personality arms A–C.</li>
+            </ul>
+            <p>Even a clean recognition result would not establish cognition. That still needs separate measures of organisational memory, learning, and action. A new blind identification needs new portraits and a new key held by an operator after the Arm A hash. A scored mood test needs a new key written before the participant starts. The closed plan named three nulls — shuffled σ, random means, and a Wikipedia-only condition — and no result file for them is in the deposit. This page does not supply one.</p>
+        </div>
+    </div>
+
+    <div class="card" id="results">
+        <div class="cpe">
+            <h2>Recognition strand: headline results</h2>
+            <p>Open this only after your Arm A file is hashed, or if you are not taking part. These are the personality round’s published counts, on Cog, Aff and σ, not on JUNO’s V. They are one strand of the case above. The disclosure does not reprint answer keys or era-level grades.</p>
+            <details class="cpe-spoiler">
+                <summary>Headline results of the 7 November 2026 round. Contains spoilers, including identification counts and mood grades.</summary>
+                <div class="cpe-spoiler-body">
+                    <div class="cpe-warn">
+                        <strong>These figures are descriptive counts from a closed round.</strong>
+                        They are not a validation of CAMS, not peer review, and not a causal test. They do not show that a nation is a mind. The journey through time is a separate target, stated above. Era identification does not establish it. Exact-or-adjacent mood agreement is grader agreement with a sealed grade under a generous neighbour rule. It is not accuracy, and it is not independent historical truth.
+                    </div>
+                    <p>Source, which governs if this page compresses a caveat: <a href="https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_independent_ai_replication_2026-11-07/CAMS_Personality_Independent_AI_Replication_Report_2026-11-07.md" target="_blank" rel="noopener noreferrer">CAMS personality independent AI replication report, 7 November 2026</a>. The counts below were checked against that report and against <code>tables/arm_b_scores.csv</code> and <code>tables/arm_c_scores.csv</code> in the same deposit. This page does not rescore the round.</p>
+
+                    <h3>Core era identification</h3>
+                    <p>Core is 56 eras: Russia 23, Australia 18, United States 15. A hit is a scored row marked correct. The closed round’s own bar, written on 6 November 2026, was at least twice the mean per-row chance on the shortlist. The sealed summary prints that core chance as 5.36% (mean row chance 0.053572), so twice chance is 10.71%. That comparison is not a significance test. No significance test was added.</p>
+                    <div class="cpe-table-wrap">
+                        <table class="cpe-table">
+                            <caption>Core era identification, 56 eras. Manus is a count, not a clean blind.</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Model</th>
+                                    <th scope="col">Name on the ledger</th>
+                                    <th scope="col">Core correct</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Claude</th>
+                                    <td>claude-sonnet-4-6</td>
+                                    <td>56/56</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Gemini</th>
+                                    <td>gemini-2.5-pro</td>
+                                    <td>56/56</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Kimi</th>
+                                    <td>Kimi K2.5 (Kimi Work desktop runtime, Moonshot AI)</td>
+                                    <td>52/56</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Grok</th>
+                                    <td>Grok-4.7</td>
+                                    <td>19/56</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Codex</th>
+                                    <td>Codex (GPT-6, exact revision unavailable)</td>
+                                    <td>3/56</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Manus</th>
+                                    <td>Manus agent (underlying LLM version not exposed to the agent at runtime)</td>
+                                    <td>56/56, same-session contamination</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>Manus had already read the Arm A tables in the same session. The 56/56 count is real, and it is not a clean-blind count. Grok’s 19/56 meets the closed round’s twice-chance bar on core only. Codex’s 3/56 sits on the chance rate and does not meet it. Gemini’s identification count was not automatically excluded by the later hash admission, which named the Arm A and Arm C ledgers. That does not make Gemini’s Arm B a clean cryptographic chain.</p>
+                    <p>Core is not the whole identification record. On the 51 extension eras, Claude was 45/51, Manus 16/51, Kimi 8/51, and Codex 3/51. Gemini’s extension was not in the drop. Grok returned no extension file. On Denmark identification, 19 eras, Claude was 13/19, Gemini 17/19, Manus 15/19, Kimi 12/19, and Codex 1/19. Grok returned no Denmark file. A reader who quotes only the perfect core scores has not reported the round.</p>
+
+                    <h3>Core mood agreement</h3>
+                    <p>Only Claude and Gemini returned core Arm C. “Exact” means the returned grade equals the sealed grade. “Exact or adjacent” adds only these neighbour pairs: close with broad, broad with partial, and partial with mixed. Mixed with direct disagreement is not adjacent. Close with partial is not adjacent. Both models’ core returns used only close and broad. The sealed core margin, the same in both score packs, was 28 close, 17 broad, 6 partial, 5 mixed, and 0 direct disagreement. Two neighbouring grades, which are also the two most common sealed grades, will often count as exact-or-adjacent. The closed round’s numeric screen was a majority of the 56 rows, applied as at least 29/56. Meeting that screen is not independent historical truth.</p>
+                    <div class="cpe-table-wrap">
+                        <table class="cpe-table">
+                            <caption>Core mood, 56 eras. Agreement with a sealed grade, not a claim of historical truth.</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Model</th>
+                                    <th scope="col">Exact</th>
+                                    <th scope="col">Exact or adjacent</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Claude</th>
+                                    <td>27/56</td>
+                                    <td>48/56</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Gemini</th>
+                                    <td>27/56</td>
+                                    <td>46/56</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>Protocol overturns — a returned <code>direct_disagreement</code> where the sealed grade was close or broad — were zero on the scored Arm C sets. A sealed direct disagreement that comes back as close or broad is a different event. Gemini’s core and Denmark numbers are descriptive only. They are not a protocol-clean replication.</p>
+
+                    <h3>Denmark mood</h3>
+                    <p>Denmark is the sparse-input control, 19 graded eras, IX omitted. Claude’s exact-or-adjacent count is 10/19, which meets a bare majority, and exact agreement is 4/19. Four of Claude’s rows returned close or broad where the sealed grade was direct disagreement. Gemini’s all-rows figure is 14/19 exact-or-adjacent and 7/19 exact, with two such reversals. Both Gemini figures are descriptive.</p>
+                    <p>One Gemini Denmark row has a claimed digest 77 characters long, not 64 hexadecimal characters. It was not repaired. Dropping that row leaves 13/18 exact-or-adjacent and 6/18 exact. The other rows’ claimed Arm A digest has no file in the deposit, so those digests stay unverified. Do not read 13/18 as a set of confirmed hashes.</p>
+
+                    <h3>Provenance</h3>
+                    <p>Gemini admitted that the SHA-256 values written in the Arm A and Arm C ledgers were generated as text, not computed over the output bytes, because a code sandbox was not active. That cause is Gemini’s account as relayed. It was not independently verified. The fact that those claimed digests are not the hashes of the received bytes was already visible, and it remains visible. The coordinator’s SHA-256 values over the received bytes are genuine. The numerical scores can be recomputed from those bytes. They describe agreement with the sealed grades. The admission does not declare the scientific content of the rows false, and it does not automatically exclude Arm B.</p>
+                    <p>Claude’s Arm C output hashes match the received files. The original Arm A bytes those rows point at were not in the deposit, so they were not re-hashed. The times Claude wrote on the rows are later than the seal clock. The report leaves that as a caveat, not a finding of fraud.</p>
+                    <p>Arm A’s pre-registered leadership-match figure, at least 60% on Russia, Australia, and the United States across at least three models, was never scored. The planned nulls have no result file. Kimi’s Arm C was not started. Grok, Codex, and Manus returned no Arm C. Gemini returned no extension. Those gaps are not failures, and they are not passes. The round was closed. No further run is part of the record.</p>
+                    <p class="cpe-fileline">
+                        <a href="https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_independent_ai_replication_2026-11-07/CAMS_Personality_Independent_AI_Replication_Report_2026-11-07.md" target="_blank" rel="noopener noreferrer">Full replication report</a>
+                        · <a href="https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_independent_ai_replication_2026-11-07/evidence/seals/gemini_armAC_audit_addendum_2026-11-07/AUDIT_DISCLOSURE.md" target="_blank" rel="noopener noreferrer">Gemini audit addendum</a>
+                        · <a href="https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_independent_ai_replication_2026-11-07/RECEIPT.md" target="_blank" rel="noopener noreferrer">Receipt</a>
+                        · <a href="https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_independent_ai_replication_2026-11-07/VALIDATION.md" target="_blank" rel="noopener noreferrer">Validation notes</a>
+                    </p>
+                    <p>Repository path: <code>analysis/cams_personality_independent_ai_replication_2026-11-07/CAMS_Personality_Independent_AI_Replication_Report_2026-11-07.md</code></p>
+                </div>
+            </details>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="cpe">
+            <h2>Files</h2>
+            <p class="cpe-fileline">The report link is inside the disclosure above. These are the working files, and they are secondary to the participant route.</p>
+            <p class="cpe-fileline">
+                <a href="https://github.com/KaliBond/wintermute/raw/main/analysis/cams_personality_replication_public_kit_v1/CAMS_personality_participant_inputs_v1.zip">Participant zip</a>
+                · <a href="https://github.com/KaliBond/wintermute/tree/main/analysis/cams_personality_replication_public_kit_v1" target="_blank" rel="noopener noreferrer">Kit files</a>
+                · <a href="https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_replication_public_kit_v1/README.md" target="_blank" rel="noopener noreferrer">Kit README</a>
+                · <a href="https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_replication_public_kit_v1/PARTICIPANT.md" target="_blank" rel="noopener noreferrer">Participant instructions</a>
+                · <a href="https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_replication_public_kit_v1/OPERATOR.md" target="_blank" rel="noopener noreferrer">Operator notes</a>
+            </p>
+            <p><a href="explore.html#blind-testing">Back to Explore, Blind testing</a></p>
+        </div>
+    </div>
+</div>
+
+<footer class="footer" id="site-footer"></footer>
+<script src="site-chrome.js"></script>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -50,7 +50,7 @@ GROUPS = [
         'pr-gap2-rupture-study', 'analysis/pr_gap2_report', 'analysis/pr_gap2_synthesis',
         'analysis/pr_gap2_formalism_audit', 'analysis/pr_gap2_nct_loso_report', 'analysis/pr_gap2_robson_plane',
         'analysis/pr_gap2_general_audience', 'analysis/inelasticity_results', 'juno-v1-2', 'bond-strength-spec',
-        'blind-protocol-v111', 'blind-test', 'cams-blind-test-assessment', 'cams-testing-report-june2026',
+        'blind-protocol-v111', 'blind-test', ('cams-personality-experiment', 'Guide'), 'cams-blind-test-assessment', 'cams-testing-report-june2026',
         'cams5-thesis-validation-report', 'ensemble-validation', 'paladin-validation',
         'operator-portability-synthesis', 'peer-review', 'response-to-critics', 'functional_taxonomy', 'figures',
         'metabolism-meaning', 'scale-invariance', 'thermodynamic-jungle', 'war', 'social-cognition',
