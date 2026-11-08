@@ -55,7 +55,6 @@
     </script>
 
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="explain-simply.css">
     <style>
         /* ── Home-page-specific styles ──────────────────────────── */
 
@@ -344,10 +343,6 @@
         <div class="home-hero">
             <h1>Neural Nations</h1>
             <p class="pull-quote">One representation for every society, including our own.</p>
-            <button type="button" class="es-trigger" data-explain-simply>
-                <svg class="es-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.7 4.9L18.5 9.5l-4.8 1.6L12 16l-1.7-4.9L5.5 9.5l4.8-1.6z"/></svg>
-                What is this? Explain in plain English
-            </button>
         </div>
 
         <div class="home-lede" style="margin-top:4px;">
@@ -523,14 +518,5 @@
 
 <script src="site-chrome.js"></script>
 <script src="nav.js"></script>
-<script>
-window.EXPLAIN_SIMPLY_CONFIG = {
-  endpoint: 'https://explain-simply-proxy.YOUR-SUBDOMAIN.workers.dev',
-  model: 'kimi-k2-0905-preview'
-  // No apiKey — the Worker at `endpoint` holds it server-side.
-  // See workers/explain-simply-proxy/README.md to deploy and fill in the URL above.
-};
-</script>
-<script src="explain-simply.js"></script>
 </body>
 </html>
