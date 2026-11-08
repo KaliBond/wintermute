@@ -6,7 +6,7 @@
 
     <!-- Primary SEO -->
     <title>Neural Nations — Civilisational Complexity Research</title>
-    <meta name="description" content="CAMS measures how societies accumulate institutional stress and move toward or away from crisis. Open data, open code. 38 societies, 45 historical series, 39,351 records.">
+    <meta name="description" content="CAMS reads societies, firms and civilisations through eight functions of human coordination, and tests what that reading can and cannot recover. Open data, open code, pre-registered tests, published failures.">
     <meta name="keywords" content="complex adaptive systems, civilisational collapse, CAMS, institutional analysis, thermodynamic social theory, complexity science, societal dynamics, Kari McKern, cliodynamics">
     <meta name="author" content="Kari McKern">
     <meta name="robots" content="index, follow">
@@ -18,13 +18,13 @@
     <meta property="og:site_name" content="Neural Nations">
     <meta property="og:locale" content="en_AU">
     <meta property="og:title" content="Neural Nations — Civilisational Complexity Research">
-    <meta property="og:description" content="CAMS measures how societies accumulate institutional stress and move toward or away from crisis. Open data, open code. 38 societies, 45 historical series, 39,351 records.">
+    <meta property="og:description" content="CAMS reads societies, firms and civilisations through eight functions of human coordination, and tests what that reading can and cannot recover. Open data, open code, pre-registered tests, published failures.">
     <meta property="og:image" content="https://neuralnations.org/og-image.png">
 
     <!-- Twitter / X Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Neural Nations — Civilisational Complexity Research">
-    <meta name="twitter:description" content="CAMS measures how societies accumulate institutional stress and move toward or away from crisis. Open data, open code. 38 societies, 45 historical series, 39,351 records.">
+    <meta name="twitter:description" content="CAMS reads societies, firms and civilisations through eight functions of human coordination, and tests what that reading can and cannot recover. Open data, open code, pre-registered tests, published failures.">
     <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
 
     <script type="application/ld+json">
@@ -44,7 +44,7 @@
           "name": "Kari McKern",
           "url": "https://neuralnations.org/cams-project-history",
           "jobTitle": "Independent Researcher",
-          "description": "Creator of CAMS — the Complex Adaptive Model of Societies. Researcher, former public servant, IT specialist, Sydney Australia.",
+          "description": "Creator of CAMS — the Complex Adaptive Model State. Researcher, former public servant, IT specialist, Sydney Australia.",
           "sameAs": [
             "https://www.linkedin.com/newsletters/complex-adaptive-humans-7361605676957138944/",
             "https://github.com/KaliBond"
@@ -55,7 +55,6 @@
     </script>
 
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="explain-simply.css">
     <style>
         /* ── Home-page-specific styles ──────────────────────────── */
 
@@ -240,6 +239,85 @@
             border-top: 1px solid #DAD2B8;
         }
 
+        /* ── Two-column layout with Latest sidebar ───────────────── */
+        .home-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 300px;
+            gap: 36px;
+            align-items: start;
+        }
+        .home-main { min-width: 0; }
+        .latest {
+            position: sticky;
+            top: 76px;
+            max-height: calc(100vh - 100px);
+            max-height: calc(100dvh - 100px);
+            overflow-y: auto;
+            background: #FFFDF6;
+            border: 1px solid #DAD2B8;
+            border-radius: 10px;
+            padding: 18px 18px 14px;
+        }
+        .latest h2 {
+            font-size: 0.74em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #2F6F7D;
+            margin: 0 0 12px;
+        }
+        .latest ol { list-style: none; margin: 0; padding: 0; }
+        .latest li { border-top: 1px solid #E8E1CB; }
+        .latest li:first-child { border-top: 0; }
+        .latest a.lt {
+            display: block;
+            padding: 10px 0;
+            text-decoration: none;
+            color: inherit;
+        }
+        .latest .lt-date {
+            display: block;
+            font-size: 0.72em;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: #8A7A55;
+        }
+        .latest .lt-title {
+            display: block;
+            font-size: 0.92em;
+            font-weight: 600;
+            color: #1B2A33;
+            line-height: 1.35;
+            margin: 2px 0 2px;
+        }
+        .latest a.lt:hover .lt-title { color: #2F6F7D; text-decoration: underline; }
+        .latest .lt-desc {
+            display: block;
+            font-size: 0.8em;
+            color: #5A6570;
+            line-height: 1.45;
+        }
+        .latest .lt-more {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            padding-top: 12px;
+            border-top: 1px solid #DAD2B8;
+            font-size: 0.82em;
+            font-weight: 600;
+        }
+        .latest .lt-more a { color: #2F6F7D; text-decoration: none; }
+        .latest .lt-more a:hover { text-decoration: underline; }
+        .standing { margin: 0; padding-left: 20px; font-size: 0.9em; line-height: 1.7; color: #4A5560; }
+        .standing li { margin-bottom: 8px; }
+        .standing a { color: #2F6F7D; }
+
+        @media (max-width: 980px) {
+            .home-layout { grid-template-columns: 1fr; gap: 24px; }
+            .latest { position: static; max-height: none; overflow: visible; }
+        }
+
         @media (max-width: 600px) {
             .resource-grid { grid-template-columns: 1fr; }
             .cta-row { flex-direction: column; }
@@ -256,79 +334,7 @@
     </script>
 </head>
 <body>
-<nav class="navbar">
-    <div class="nav-container">
-        <a href="index.html" class="nav-logo">
-            <span class="nav-logo-badge">NN</span>
-            <span class="nav-logo-text">Neural Nations</span>
-        </a>
-        <div class="nav-menu">
-            <a href="index.html" class="nav-link active">Home</a>
-            <a href="start-here.html" class="nav-link">Start Here</a>
-            <a href="model.html" class="nav-link">Model</a>
-            <a href="datasets.html" class="nav-link">Datasets</a>
-            <a href="explore.html" class="nav-link">Explore</a>
-            <div class="nav-dropdown">
-                <button class="nav-link nav-dropdown-toggle">Insights &#9662;</button>
-                <div class="nav-dropdown-menu">
-                    <a href="results.html">Results at a Glance</a>
-                    <a href="validation.html">Validation &amp; Limits</a>
-                    <a href="cams-advanced-analysis.html">Advanced Analysis</a>
-                    <a href="escalation-archetypes.html">Escalation Archetypes</a>
-                    <a href="cams-failure-modes.html">Failure Modes Map</a>
-                    <a href="failure-modes-story.html">Failure Modes Story</a>
-                    <a href="attractors.html">Attractors</a>
-                    <hr class="menu-divider">
-                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
-                </div>
-            </div>
-            <a href="/research/" class="nav-link">Research</a>
-            <a href="research-diary.html" class="nav-link">Research Diary</a>
-            <a href="mindscapes.html" class="nav-link">Mindscapes</a>
-            <a href="faq.html" class="nav-link">FAQ</a>
-            <a href="site-index.html" class="nav-link">All Pages</a>
-            <a href="contact.html" class="nav-link">Contact</a>
-            <a href="framework/index.html" class="nav-link">Framework ↗</a>
-        </div>
-        <div class="nav-actions">
-            <a href="https://github.com/KaliBond/wintermute" class="nav-btn-github" target="_blank">
-                <svg fill="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.05c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg> GitHub
-            </a>
-            <a href="newsletter.html" class="nav-btn-newsletter">
-                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span class="newsletter-text">Newsletter</span>
-            </a>
-            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </div>
-    <div class="nav-mobile" id="nav-mobile">
-        <a href="index.html">Home</a>
-        <a href="start-here.html">Start Here</a>
-        <a href="model.html">Model</a>
-        <a href="datasets.html">Datasets</a>
-        <a href="explore.html">Explore</a>
-        <a href="/research/">Research</a>
-        <a href="research-diary.html">Research Diary</a>
-        <a href="mindscapes.html">Mindscapes</a>
-        <a href="faq.html">FAQ</a>
-        <a href="site-index.html">All Pages</a>
-        <a href="contact.html">Contact</a>
-        <a href="framework/index.html">Framework ↗</a>
-        <a href="newsletter.html">Newsletter</a>
-        <hr class="mobile-divider">
-        <div class="mobile-section-title">Insights</div>
-        <a href="results.html">Results at a Glance</a>
-        <a href="validation.html">Validation &amp; Limits</a>
-        <a href="cams-advanced-analysis.html">Advanced Analysis</a>
-        <a href="escalation-archetypes.html">Escalation Archetypes</a>
-        <a href="cams-failure-modes.html">Failure Modes Map</a>
-        <a href="failure-modes-story.html">Failure Modes Story</a>
-        <a href="attractors.html">Attractors</a>
-                    <hr class="menu-divider">
-                    <a href="aha-maps.html">Aha! Maps &middot; Bellinger</a>
-    </div>
-</nav>
+<nav class="navbar" id="site-nav"></nav>
 
 <div class="container" style="padding-top:0;">
     <div class="card" style="border-radius:0 0 15px 15px;margin-top:0;">
@@ -337,16 +343,15 @@
         <div class="home-hero">
             <h1>Neural Nations</h1>
             <p class="pull-quote">One representation for every society, including our own.</p>
-            <button type="button" class="es-trigger" data-explain-simply>
-                <svg class="es-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.7 4.9L18.5 9.5l-4.8 1.6L12 16l-1.7-4.9L5.5 9.5l4.8-1.6z"/></svg>
-                What is this? Explain in plain English
-            </button>
         </div>
 
         <div class="home-lede" style="margin-top:4px;">
             <p>The starting claim is that a human society belongs to the broad family of bonded, surplus-dependent adaptive systems. A nation is not literally an enlarged chimpanzee troop, yet beneath the institutional differences lies an older problem. Any social unit must coordinate action, manage conflict, distribute resources, preserve knowledge and respond to threat. The comparison does not reduce civilisation to zoology; it identifies the functional domain from which civilisation emerged. Its meta-animal is functional, not racial; diagnostic, not normative. A score is a state, not a grade. A trajectory is a history, not a destiny.</p>
-            <p style="font-size:0.88em;color:#5A6570;margin-top:18px;">Independent research, not formally peer-reviewed. Every dataset, formula, and scoring protocol is published openly — scrutiny is not a challenge to this project, it is the point.</p>
+            <p style="font-size:0.88em;color:#5A6570;margin-top:18px;">Independent research, not formally peer-reviewed. Every dataset, formula and scoring protocol is published openly. Scrutiny is not a challenge to this project; it is the point.</p>
         </div>
+
+        <div class="home-layout">
+        <div class="home-main">
 
         <!-- ── Why Neural Nations ─────────────────────────────────── -->
         <hr class="section-divider">
@@ -361,19 +366,23 @@
         <div style="padding:16px 20px;background:transparent;border-left:4px solid #2F6F7D;border-radius:0 8px 8px 0;margin-bottom:28px;">
             <h2 style="font-size:1.1em;margin:0 0 12px;color:#2F6F7D;">A Note on Method</h2>
             <p style="margin:0;font-size:0.9em;line-height:1.7;color:#4A5560;">
-                CAMS compares societies through eight functions of human coordination. It tests whether representing those functions consistently reveals patterns obscured by separate national narratives. Whether its eight functions, scoring procedures and <a href="model.html" style="color:#2F6F7D;">derived measures</a> recover useful structure must be established through reproducibility, independent evidence, comparison with alternative models and <a href="https://github.com/KaliBond/wintermute/blob/main/juno/OOS_PREDICTIONS_2026-2028.md" target="_blank" style="color:#2F6F7D;">prospective tests</a>. No society receives an exemption from comparison; no part of the instrument receives an exemption from revision.
+                CAMS compares societies through eight functions of human coordination. It tests whether representing those functions consistently reveals patterns obscured by separate national narratives. Whether its eight functions, scoring procedures and <a href="model.html" style="color:#2F6F7D;">derived measures</a> recover useful structure must be established through reproducibility, independent evidence, comparison with alternative models and prospective tests (the <a href="https://github.com/KaliBond/wintermute/blob/main/juno/OOS_PREDICTIONS_2026-2028.md" target="_blank" style="color:#2F6F7D;">August 2026 register</a> and the <a href="predictions-2027-2028.html" style="color:#2F6F7D;">2027&ndash;2028 register</a>). No society receives an exemption from comparison; no part of the instrument receives an exemption from revision.
             </p>
         </div>
 
-        <!-- ── Interim findings ─────────────────────────────────── -->
+        <!-- ── Where things stand ──────────────────────────────────── -->
         <div style="padding:16px 20px;background:transparent;border-left:4px solid #2F6F7D;border-radius:0 8px 8px 0;margin-bottom:28px;">
-            <h2 style="font-size:1.1em;margin:0 0 12px;color:#2F6F7D;">Interim Findings (October 2026)</h2>
+            <h2 style="font-size:1.1em;margin:0 0 12px;color:#2F6F7D;">Where Things Stand (November 2026)</h2>
             <p style="margin:0 0 10px;font-size:0.9em;line-height:1.7;color:#4A5560;">
-                Our thesis: organisational pathologies are recurring topologies of stress through the eight functions, and they recur across scales, in homes, firms and nations alike. On the rebuilt <a href="https://github.com/KaliBond/wintermute/blob/main/juno/v3/JUNO_Unified_Dataset_v3_2026-10-19.csv" target="_blank" style="color:#2F6F7D;">JUNO v3 dataset</a> (42 societies, 41,914 scored rows), with thresholds frozen before counting, four signatures concentrate in their named windows far beyond chance: Archive Amnesia (p&nbsp;=&nbsp;0.0001), Helm Isolation (p&nbsp;=&nbsp;0.004), Shield Inversion (p&nbsp;=&nbsp;0.006) and Helm Incompetence (p&nbsp;=&nbsp;0.022). Twelve of eighteen named windows hold, among them Archive Amnesia in Argentina, Chile, Cambodia, Greece and Hong Kong, Helm Incompetence in the UK 2016&ndash;19, and Helm Isolation in Venezuela from 1998. Late Abstraction Collapse precedes big falls 62 times against 38.6 expected by chance.
+                The current statement of the framework is <a href="natural-history-of-civilisations.html" style="color:#2F6F7D;">The Natural History of Civilisations</a>. It brings together the essay, the evidence behind it and links to every result below. In brief:
             </p>
-            <p style="margin:0;font-size:0.9em;line-height:1.7;color:#4A5560;">
-                Next we test whether the same rules travel: Boeing, Theranos and WorldCom, with matched control firms, scored on the eight functions and run through the frozen national rules unchanged. Read the <a href="https://github.com/KaliBond/wintermute/blob/main/docs/theory/CAMS_Organisational_Pathologies_Thesis.md" target="_blank" style="color:#2F6F7D;">thesis</a> and the <a href="https://github.com/KaliBond/wintermute/blob/main/juno/v3/CAMS_Signature_Pack_v1.md" target="_blank" style="color:#2F6F7D;">signature pack</a>.
-            </p>
+            <ul class="standing">
+                <li><strong>Era recognition.</strong> In the November 2026 replication round, AI systems were given only an eight-number portrait of each era. On the 56-era core panel (Russia, Australia and the USA), Claude and Gemini each matched every portrait to its era from a closed list, and Kimi matched 52. Recognition weakened on the extension panel and on the sparse Denmark control. The pre-registered null models were never returned. This is a promising demonstration, not an external validation. <a href="https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_independent_ai_replication_2026-11-07/CAMS_Personality_Independent_AI_Replication_Report_2026-11-07.md" target="_blank" rel="noopener">Report</a> &middot; <a href="cams-personality-experiment.html">repeat it yourself</a>.</li>
+                <li><strong>Sealed predictions, scored.</strong> In ADVERSARY-02, 15 predictions for China and seven firms over 2021&ndash;2024 were sealed before any data was looked at. Six passed and nine failed, and the built-in kill switch was not triggered. <a href="adversary-02-results.html">Results</a>.</li>
+                <li><strong>Prospective test lodged.</strong> 32 probability-weighted claims about the USA, China and Australia in 2027&ndash;2028 are lodged at Zenodo, to be scored when those years close. <a href="predictions-2027-2028.html">Register</a>.</li>
+                <li><strong>Pathologies across scales.</strong> On JUNO v3 (42 societies), with thresholds frozen before counting, four named signatures concentrate in their windows beyond chance. Twelve of eighteen named windows hold. <a href="organisational-pathologies.html">Interim results</a>.</li>
+            </ul>
+            <p style="margin:12px 0 0;font-size:0.85em;line-height:1.6;color:#5A6570;">Failures are part of the record: see <a href="validation.html" style="color:#2F6F7D;">Validation &amp; Limits</a> and the <a href="https://github.com/KaliBond/wintermute/blob/main/docs/CAMS_LAB_DIARY.md" target="_blank" rel="noopener" style="color:#2F6F7D;">lab diary</a>.</p>
         </div>
 
         <!-- ── Where to Start ─────────────────────────────────────── -->
@@ -393,7 +402,7 @@
             <a href="datasets.html" class="resource-tile">
                 <div class="rt-label">Open Data</div>
                 <div class="rt-title">Browse the Datasets</div>
-                <div class="rt-desc">Scoring methods, validation studies, and 45 open time-series downloadable from GitHub.</div>
+                <div class="rt-desc">Scoring methods, validation studies and the open time series, all downloadable from GitHub.</div>
             </a>
             <a href="explore.html" class="resource-tile">
                 <div class="rt-label">Tools</div>
@@ -413,57 +422,59 @@
             <a href="https://github.com/KaliBond/wintermute" target="_blank" style="color:#2F6F7D;font-weight:600;text-decoration:none;padding:5px 12px;border:1px solid #E0E0E0;border-radius:5px;background:#F0F0F0;">GitHub ↗</a>
         </div>
 
-        <!-- ── What's New ─────────────────────────────────────────── -->
+        <!-- ── Earlier highlights ──────────────────────────────────── -->
         <hr class="section-divider">
-        <p class="section-label">What's New — September 2026</p>
+        <p class="section-label">Also worth reading</p>
         <div class="news-list">
             <a href="nations.html" class="news-item">
                 <div style="flex-shrink:0;font-size:1.3em;line-height:1;margin-top:1px;">🗺️</div>
                 <div>
-                    <div class="ni-title">New: Reports by Nation &amp; All Pages</div>
-                    <div class="ni-desc">Two new ways to find your way around. <strong>Reports by Nation</strong> gathers everything on one country in one place — 53 nations, with 66 studies and mood reports, 60 external analyses and 140 datasets. <strong>All Pages</strong> lists all 172 pages on the site, grouped by topic and searchable as you type. All Pages is in the top menu; Reports by Nation is linked from All Pages, Explore and Start Here.</div>
-                </div>
-            </a>
-            <a href="juno-v1-2.html" class="news-item">
-                <div style="flex-shrink:0;font-size:1.3em;line-height:1;margin-top:1px;">✅</div>
-                <div>
-                    <div class="ni-title">JUNO-1.0 Formalism Verified</div>
-                    <div class="ni-desc">The JUNO-1.0 bond formalism has been validated across the 36-society, 32,361-node-year corpus, with the CAMS-CAN six-regime classifier applied and strong concordance confirmed against the legacy CAMS-v3.2 formula. Full results, data, and code are on GitHub.</div>
+                    <div class="ni-title">Reports by Nation &amp; All Pages</div>
+                    <div class="ni-desc"><strong>Reports by Nation</strong> gathers everything on one country in one place. <strong>All Pages</strong> lists every page on the site, grouped by topic and searchable as you type.</div>
                 </div>
             </a>
             <a href="meta-animal-under-the-microscope.html" class="news-item">
                 <div style="flex-shrink:0;font-size:1.3em;line-height:1;margin-top:1px;">🐆</div>
                 <div>
                     <div class="ni-title">The Meta-Animal Under the Microscope</div>
-                    <div class="ni-desc">Essay: every great power narrates itself as exceptional. CAMS applies the same functional lens to friends and adversaries alike — the sybond, eight recurrent functions, four lenses of analysis, and an honest accounting of where the instrument has already failed its own tests. "No society is entitled to explain itself before it has been compared with history. That includes our own; it includes CAMS."</div>
+                    <div class="ni-desc">Every great power narrates itself as exceptional. CAMS applies the same functional lens to friends and adversaries alike, and keeps an honest account of where the instrument has failed its own tests.</div>
                 </div>
             </a>
             <a href="response-to-critics.html" class="news-item">
                 <div style="flex-shrink:0;font-size:1.3em;line-height:1;margin-top:1px;">🛡️</div>
                 <div>
                     <div class="ni-title">A Core Response to Outright Dismissal</div>
-                    <div class="ni-desc">Outright dismissal is not a scientific refutation. What CAMS claims, what it doesn't, what the preregistered Relational Inelasticity Hypothesis blind test currently supports, and the decisive tests that would settle it either way.</div>
+                    <div class="ni-desc">What CAMS claims, what it doesn't, what the pre-registered Relational Inelasticity blind test currently supports, and the decisive tests that would settle it either way.</div>
                 </div>
             </a>
             <a href="epiphenomenon/" class="news-item">
                 <div style="flex-shrink:0;font-size:1.3em;line-height:1;margin-top:1px;">🔬</div>
                 <div>
-                    <div class="ni-title">Epiphenomenon@Trove — Australian Threat Discourse</div>
-                    <div class="ni-desc">125-year study of manufactured threat discourse in Australian newspapers and parliament. Combines Trove + Hansard data with CAMS analysis. Shows how institutional conditions, not external events, drive threat narratives. Three new papers + interactive explorer.</div>
+                    <div class="ni-title">Epiphenomenon@Trove: Australian Threat Discourse</div>
+                    <div class="ni-desc">A 125-year study of threat discourse in Australian newspapers and parliament, combining Trove and Hansard with CAMS analysis.</div>
                 </div>
             </a>
-            <div class="news-item" style="background:#F2EDD7;border-color:#DAD2B8;">
-                <div style="flex-shrink:0;font-size:1.3em;line-height:1;margin-top:1px;">⚙️</div>
-                <div>
-                    <div class="ni-title">New Tools Live</div>
-                    <div class="ni-desc" style="display:flex;flex-direction:column;gap:4px;margin-top:4px;">
-                        <a href="granger-validator.html" style="color:#1f77b4;font-weight:600;text-decoration:none;">Granger Causality Validator →</a>
-                        <a href="cams-failure-modes.html" style="color:#1f77b4;font-weight:600;text-decoration:none;">Interactive Failure Modes (Causal Loop Diagrams) →</a>
-                        <a href="mindscapes.html" style="color:#1f77b4;font-weight:600;text-decoration:none;">Mindscapes — National Mood Reports (France &amp; Norway live) →</a>
-                    </div>
-                </div>
-            </div>
         </div>
+
+        </div><!-- /.home-main -->
+
+        <aside class="latest" aria-labelledby="latest-h">
+            <h2 id="latest-h">Latest</h2>
+            <ol>
+                <li><a class="lt" href="natural-history-of-civilisations.html"><span class="lt-date">8 Nov 2026</span><span class="lt-title">The Natural History of Civilisations</span><span class="lt-desc">The master essay: the current statement of the framework, with its supporting document and the latest findings.</span></a></li>
+                <li><a class="lt" href="predictions-2027-2028.html"><span class="lt-date">8 Nov 2026</span><span class="lt-title">Prospective Predictions 2027–2028</span><span class="lt-desc">32 claims on the USA, China and Australia, lodged at Zenodo before the outcomes are scored.</span></a></li>
+                <li><a class="lt" href="human-ai-scientific-record.html#gpt-statement"><span class="lt-date">8 Nov 2026</span><span class="lt-title">The GPT statement, summarised</span><span class="lt-desc">A new summary added to the Human–AI Scientific Record.</span></a></li>
+                <li><a class="lt" href="story-maker.html"><span class="lt-date">7 Nov 2026</span><span class="lt-title">Story Maker</span><span class="lt-desc">Build masked era packets from the personality kit for any AI system to read.</span></a></li>
+                <li><a class="lt" href="cams-personality-experiment.html"><span class="lt-date">7 Nov 2026</span><span class="lt-title">Repeat the personality experiment</span><span class="lt-desc">The public kit for the blind era-recognition test, with the results behind a closed disclosure.</span></a></li>
+                <li><a class="lt" href="https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_independent_ai_replication_2026-11-07/CAMS_Personality_Independent_AI_Replication_Report_2026-11-07.md" target="_blank" rel="noopener"><span class="lt-date">7 Nov 2026</span><span class="lt-title">Independent AI replication: the report ↗</span><span class="lt-desc">126 eras and six models, with sealed evidence and the audit caveats.</span></a></li>
+                <li><a class="lt" href="adversary-02-results.html"><span class="lt-date">6 Nov 2026</span><span class="lt-title">ADVERSARY-02 results</span><span class="lt-desc">15 sealed predictions on China and seven firms: 6 passed, 9 failed.</span></a></li>
+                <li><a class="lt" href="https://github.com/KaliBond/wintermute/blob/main/docs/CAMS_LAB_DIARY.md" target="_blank" rel="noopener"><span class="lt-date">5 Nov 2026</span><span class="lt-title">The CAMS lab diary ↗</span><span class="lt-desc">How CAMS got here, from the git history, including what was retired, failed or reversed.</span></a></li>
+                <li><a class="lt" href="dynamics-of-social-organisation.html"><span class="lt-date">31 Oct 2026</span><span class="lt-title">The Dynamics of Social Organisation</span><span class="lt-desc">The book and film, free under CC BY 4.0.</span></a></li>
+                <li><a class="lt" href="synchronised-slide.html"><span class="lt-date">23 Oct 2026</span><span class="lt-title">The Synchronised Slide</span><span class="lt-desc">Global stress synchrony jumps after 2000.</span></a></li>
+            </ol>
+            <div class="lt-more"><a href="explore.html">Everything on Explore →</a><a href="site-index.html">All pages →</a></div>
+        </aside>
+        </div><!-- /.home-layout -->
 
         <!-- ── Closing + CTAs ─────────────────────────────────────── -->
         <hr class="section-divider" style="margin-top:32px;">
@@ -479,7 +490,7 @@
             <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:18px;">
                 <a href="https://github.com/KaliBond/wintermute" target="_blank"><img src="https://img.shields.io/github/stars/KaliBond/wintermute?style=flat-square&logo=github&label=Stars" alt="GitHub Stars"></a>
                 <a href="https://github.com/KaliBond/wintermute/commits" target="_blank"><img src="https://img.shields.io/github/last-commit/KaliBond/wintermute?style=flat-square&label=Last+commit" alt="Last Commit"></a>
-                <a href="datasets.html"><img src="https://img.shields.io/badge/Corpus-45_series-2ca02c?style=flat-square" alt="Corpus"></a>
+                <a href="datasets.html"><img src="https://img.shields.io/badge/Data-open-2ca02c?style=flat-square" alt="Open data"></a>
                 <a href="https://cams-advanced-analysis.streamlit.app" target="_blank"><img src="https://img.shields.io/badge/Dashboard-Live_on_Streamlit-ff4b4b?style=flat-square&logo=streamlit" alt="Streamlit"></a>
                 <img src="https://img.shields.io/badge/AI_scraping-permitted-a78bfa?style=flat-square" alt="AI scraping permitted">
             </div>
@@ -505,15 +516,7 @@
     <p>&copy; 2026 Kari McKern &mdash; Neural Nations CAMS Research. Built as open science &mdash; contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
 </footer>
 
+<script src="site-chrome.js"></script>
 <script src="nav.js"></script>
-<script>
-window.EXPLAIN_SIMPLY_CONFIG = {
-  endpoint: 'https://explain-simply-proxy.YOUR-SUBDOMAIN.workers.dev',
-  model: 'kimi-k2-0905-preview'
-  // No apiKey — the Worker at `endpoint` holds it server-side.
-  // See workers/explain-simply-proxy/README.md to deploy and fill in the URL above.
-};
-</script>
-<script src="explain-simply.js"></script>
 </body>
 </html>
