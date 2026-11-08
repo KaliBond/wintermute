@@ -209,7 +209,14 @@ body {
     .nav-btn-github { font-size: 0; gap: 0; }
     .nav-btn-newsletter .newsletter-text { display: none; }
 }
+/* Narrower windows: let the menu wrap onto a second row rather than hide it. */
 @media (max-width: 1080px) {
+    .nav-container { height: auto; min-height: 60px; flex-wrap: wrap; padding: 6px 14px; row-gap: 4px; }
+    .nav-menu { flex: 1 1 100%; order: 3; flex-wrap: wrap; justify-content: center; }
+}
+/* Phones and very narrow windows: the burger menu. */
+@media (max-width: 760px) {
+    .nav-container { height: 60px; flex-wrap: nowrap; padding: 0 14px; }
     .nav-menu { display: none; }
     .nav-hamburger { display: flex; }
 }
