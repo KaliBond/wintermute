@@ -104,6 +104,64 @@ TITLE_OVERRIDE = {
 }
 
 
+# Key datasets listed first in the "Dataset files" group: (repo path, title, description).
+KEY_DATASETS = [
+    ('juno/v3/JUNO_Unified_Dataset_v3_2026-10-19.csv', 'JUNO v3 Unified Dataset (19 Oct 2026)',
+     'The rebuilt JUNO v3 corpus used for the organisational-pathology signatures.'),
+    ('juno/JUNO_Unified_Dataset.csv', 'JUNO Unified Dataset (v1.2)',
+     'The unified JUNO dataset; the primary dataset named by the prospective registers.'),
+    ('analysis/cams_personality_replication_public_kit_v1/inputs/arm_a_standard/era_means.csv', 'Personality kit: core era means',
+     'Era-mean Cog, Aff, sigma and rank for the 56-era core panel (Russia, Australia, USA).'),
+    ('analysis/cams_personality_replication_public_kit_v1/inputs/arm_a_standard/era_means_extension.csv', 'Personality kit: extension era means',
+     'Era means for the 51-era extension panel (China, UK, Norway).'),
+    ('analysis/cams_personality_replication_public_kit_v1/inputs/arm_a_standard/era_means_denmark.csv', 'Personality kit: Denmark era means',
+     'Era means for the 19-era sparse-input Denmark control.'),
+    ('records/cams-juno-prospective-predictions-2027-2028-v1-0-0-2026-11-08/CAMS_JUNO_2027-2028_Zenodo_package_v1.0.0.zip',
+     'Prospective register 2027–2028: lodged package',
+     'Input data, code and results for the 32 claims lodged at Zenodo (10.5281/zenodo.24046639).'),
+]
+GH = 'https://github.com/KaliBond/wintermute/blob/main/'
+
+
+def dataset_rows():
+    """Every published dataset file, for the searchable index (not the sitemap)."""
+    import json
+
+    def last_date(path):
+        out = subprocess.run(['git', 'log', '-1', '--format=%ad', '--date=short', '--', path],
+                             capture_output=True, text=True, encoding='utf-8').stdout.strip()
+        return out or '2026-09-25'
+
+    out, seen = [], set()
+    for path, title, desc in KEY_DATASETS:
+        if not os.path.exists(path):
+            sys.exit(f'ERROR: key dataset {path!r} does not exist')
+        out.append(dict(href=GH + path, title=title, desc=desc, date=last_date(path)))
+        seen.add(GH + path)
+    for ds in json.load(open('datasets.json', encoding='utf-8'))['datasets']:
+        url = ds['github_url']
+        if url in seen:
+            continue
+        seen.add(url)
+        yrs = f"{ds['year_start']}–{ds['year_end']}" if ds.get('year_start') else ''
+        bits = [ds.get('society', ''), yrs, f"{ds['records']:,} records" if ds.get('records') else '',
+                'scorer envelope' if ds.get('is_envelope') else '', ds.get('region', '')]
+        path = url.split('/blob/main/', 1)[-1]
+        out.append(dict(href=url, title=ds['filename'], desc=' · '.join(b for b in bits if b),
+                        date=last_date(path)))
+    src = open('datasets.html', encoding='utf-8').read()
+    for soc, meta, href in re.findall(
+            r'<div class="dataset-card">\s*<span class="society">(.*?)</span>\s*<span class="meta">(.*?)</span>.*?href="(.*?)"',
+            src, re.S):
+        if href in seen:
+            continue
+        seen.add(href)
+        path = href.split('/blob/main/', 1)[-1] if '/blob/main/' in href else ''
+        out.append(dict(href=href, title=clean(soc) + ' (JUNO nation series)', desc=clean(meta),
+                        date=last_date(path) if path else '2026-09-25'))
+    return out
+
+
 def slug_of(path):
     s = path[:-5]
     if s == 'index':
@@ -232,6 +290,19 @@ def main():
                 f'<time datetime="{r["date"]}">updated {r["date"]}</time>'
                 + (f'<p>{esc(r["desc"])}</p>' if r['desc'] else '') + '</li>')
         parts.append('</ul></details>')
+    drows = dataset_rows()
+    parts.append(f'<details class="si-group" id="dataset-files"><summary><h2>Dataset files</h2>'
+                 f'<span class="si-count">{len(drows)}</span></summary>'
+                 '<p class="si-group-note">Every published dataset file, hosted on GitHub. '
+                 'See <a href="datasets.html">Datasets</a> for scoring methods and documentation.</p><ul>')
+    for d in drows:
+        parts.append(
+            f'<li class="si-item" data-type="Dataset">'
+            f'<a href="{esc(d["href"])}" target="_blank" rel="noopener">{esc(d["title"])}</a>'
+            f'<span class="si-badge si-dataset">Dataset</span>'
+            f'<time datetime="{d["date"]}">updated {d["date"]}</time>'
+            + (f'<p>{esc(d["desc"])}</p>' if d['desc'] else '') + '</li>')
+    parts.append('</ul></details>')
     block = '\n'.join(parts)
 
     page = open('site-index.html', encoding='utf-8').read()
@@ -244,10 +315,10 @@ def main():
                     for t in types)
     page = re.sub(r'(<!-- CHIPS:START -->).*?(<!-- CHIPS:END -->)',
                   lambda m: m.group(1) + chips + m.group(2), page, flags=re.S)
-    page = re.sub(r'<span id="si-total">\d*</span>', f'<span id="si-total">{len(rows)}</span>', page)
+    page = re.sub(r'<span id="si-total">\d*</span>', f'<span id="si-total">{len(rows) + len(drows)}</span>', page)
     open('site-index.html', 'w', encoding='utf-8', newline='\n').write(page)
 
-    print(f'{len(rows)} pages in {len(GROUPS)} groups -> sitemap.xml + site-index.html')
+    print(f'{len(rows)} pages in {len(GROUPS)} groups + {len(drows)} dataset files -> sitemap.xml + site-index.html')
 
 
 if __name__ == '__main__':
