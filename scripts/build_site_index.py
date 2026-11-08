@@ -31,7 +31,7 @@ GROUPS = [
         'a-short-history-of-cams', 'dynamics-of-social-organisation', 'cams-project-history', 'cams-foundational-conversations',
     ]),
     ('Results & Predictions', 'Findings', 'monthly', '0.8', [
-        'results', 'validation', 'predictions', 'status_report', 'escalation-archetypes',
+        'results', 'validation', 'predictions', 'predictions-2027-2028', 'status_report', 'escalation-archetypes',
         'cams-failure-modes', 'failure-modes-story', 'great-power-attractors', 'applications', 'reports',
     ]),
     ('Datasets', 'Dataset', 'weekly', '0.8', [
