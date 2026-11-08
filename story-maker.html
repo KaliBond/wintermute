@@ -371,10 +371,10 @@ Cite the numeric values your portrait rests on. Do not name the society or guess
 > **Reading rules**
 > - **Cognition** (Cog) = Abstraction × Coherence: how clearly and coherently the function is modelling its own environment.
 > - **Affect** (Aff) = Capacity − Stress: whether the function has more capacity than it is burning off.
-> - **Sigma** (σ = Cog × Aff): the net energy of that node. Positive = functioning actively. Negative = structured distress. Near-zero = either marginal or cognitively active but affectively cancelled.
+> - **Sigma** (σ): the net energy of that node. Each year's σ = Cog × Aff; the value given is the era average of those yearly values, so it need not equal Cog × Aff of the era averages. Treat it as given. Positive = functioning actively. Negative = structured distress. Near-zero = either marginal or cognitively active but affectively cancelled.
 > - High Cognition with negative Affect means coherent distress, not effective leadership.
 > - Any node can dominate by default when all others are weak — check the whole rank order, not just the top.
-> - A node ranked 1 with negative sigma is leading in the sense of "least disabled," not "most positive."
+> - Rank is the era average of each year's sigma rank (1 = highest), so it can be fractional. A node with the best rank but negative sigma is leading in the sense of "least disabled," not "most positive."
 
 ---
 
@@ -427,10 +427,10 @@ The masked era-level data follows. Column meanings:
 - **era_id**: era label (Roman numeral)
 - **years**: ${profile === 'date' ? 'era index (E01 = earliest era)' : 'calendar year range of the era'}
 - **node**: one of eight coordination functions — Helm, Shield, Lore, Stewards, Craft, Hands, Archive, Flow
-- **Cog**: Cognition = Abstraction × Coherence (derived from era-mean raw scores)
-- **Aff**: Affect = Capacity − Stress (derived from era-mean raw scores)
-- **sigma**: net node energy = Cog × Aff
-- **rank**: sigma rank within the era (1 = highest; ties share a rank)
+- **Cog**: Cognition = Abstraction × Coherence (era mean)
+- **Aff**: Affect = Capacity − Stress (era mean)
+- **sigma**: net node energy; era average of each year's Cog × Aff (not Cog × Aff of the era means)
+- **rank**: era average of each year's sigma rank within the society (1 = highest; may be fractional)
 
 \`\`\`
 ${csvFromRows(maskedRows)}
@@ -495,7 +495,9 @@ Negative sigma: circulation disrupted, trade blocked, finance under stress.
 
 ## Reading sigma
 
-σ = Cognition × Affect = (Abstraction × Coherence) × (Capacity − Stress)
+σ = Cognition × Affect = (Abstraction × Coherence) × (Capacity − Stress), computed year by year.
+The sigma in this packet is the era average of those yearly values, so it will not
+always equal the era's Cog × Aff. Use it as given.
 
 A positive sigma means the node is both modelling its environment (Cognition > 0)
 and has more capacity than it is burning off (Affect > 0).
@@ -592,7 +594,7 @@ only the downstream reader — a fresh AI session, a colleague starting blind, e
   as fixed inputs.
 - Raw C/K/S/A values are not included and cannot be reconstructed from this packet.
 - Missing eras (e.g. Denmark Era IX) remain absent; they are not imputed or labelled.
-- Sigma is verified against Cog × Aff within a rounding tolerance; ties are preserved.
+- Sigma and rank are era averages of yearly values and are not recomputed from Cog and Aff.
 - This packet contains no results, grades, keys, or sealed testing material.
 
 ---
