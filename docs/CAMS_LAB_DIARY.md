@@ -4,6 +4,8 @@
 
 > **How this was made.** This diary was drafted by Claude (Sonnet 5.5) from the repository's git history, in my voice, for me to read, correct and own. I read every one of the 834 commit subjects on `main` (up to `709342c`), and the full text of the commits and files named below. I did not open every file in every commit. Where a date comes from a document and not from git, I say so. Where the record does not tell me why I did something, I say that too, and I mark it **[unclear]**. Where I could not check something, I mark it **[not checked]**. No statistics here are new: every number is quoted from a commit message or a file in the repo, with the short SHA beside it.
 >
+> **Addendum, 8 November 2026.** Section 12a was added by Claude (Opus 5.5) from the 22 non-merge commits on `main` after `709342c`, up to the merge `aebb28a`. Every commit message was read in full; files were opened only where a number is quoted. Where an earlier entry has been overtaken, I have added a dated qualification beside it and left the original wording standing.
+>
 > The house rule applies, and it is the reason this diary exists: **we don't edit the past, we qualify it.** Nothing in the repo has been changed to make this story tidier. Where two documents disagree, I leave both standing and say which I currently trust.
 
 ---
@@ -23,6 +25,7 @@
 10. Phase 9: Thermometer, not crystal ball (Sep 2026)
 11. Phase 10: Deep time, v3 and the erratum (Oct 2026)
 12. Phase 11: The first week of November
+12a. Addendum: 5 to 8 November (written 8 November)
 13. Taxonomy ledger (nodes, metrics, formulas, names, categories) up to JUNO v1.2
 14. Retired, failed, reversed and withdrawn: a list
 15. What I still do not know
@@ -363,6 +366,61 @@ The Human-AI Scientific Record page (`4406bd7`) with a Zenodo DOI (`112a43d`) an
 - **2 November `c6fe436`: retire the legacy USA 1861 v2.1 fixed-value validation** from CI. The commit message says only "(Kari, 2 Nov 2026)". The USA 1861 benchmark itself comes from the v2.1 commit (`46460eb`, 17 August 2025: Ψ = 0.724). **[not checked]** when it entered CI. **[unclear]** why I retired it: the commit does not say, and I would rather record that than guess.
 - **4 and 5 November `859ebe4`, `99696c2`, `d6000aa`, `e0576fd`**: ADVERSARY-02, a five-pass reconstruction of 2010 to 2020 for China and seven firms, with a results report and Part 2 data; the last commit corrects a manifest hash in section 7. **[not checked]** the results. I am not summarising a report I have not read.
 - **5 November, unmerged** (`c0d8798`, `d51e14e` on `crisis-typology-esch-cognition-5nov2026`): a crisis typology rule v1.0 (cluster gap in V between {Helm, Lore} and {Hands, Stewards, Flow}) reported as 13 of 15 correct on canonical ensemble-mean files, and an ESCH cognitive-personality extension defining **Focus = A x C** and **Energy = K − S** at node level, with five "personality types" for the USA 1900 to 2026. Neither is on `main`. The draft PR note itself says the rule is a lagging indicator and that the leading-indicator variant is "proposed but not yet sealed". I am treating all of it as exploratory.
+  - *Qualified 8 November:* rebuilt on top of `main` and merged the same day as PR #43 (`ce1d558`, `3dbdb46`, merge `205424a`). Merging it does not change its status: it is still exploratory, and the rule is still lagging.
+
+---
+
+## 12a. Addendum: 5 to 8 November (written 8 November)
+
+Four days, 22 commits, and most of them are about one experiment. In order of the work:
+
+### 5 November `950baf6`, `60bfef2`: this diary
+
+The diary and its companion paper, `docs/CAMS_IN_HPS_AND_COMPLEX_SYSTEMS.md`, were committed as drafts for my review, with an Explore card ("How CAMS Got Here, and Where It Sits"). They were merged as PRs #41 and #42.
+
+### 5 November `ce1d558`, `3dbdb46`: the crisis typology goes to `main`
+
+The work described as unmerged in section 12 was rebuilt on current `main` and merged (PR #43). The commit records the cluster-gap rule as sealed at threshold 1.0, with V = C + K − S. It reports 13 of 15 correct on canonical ensemble data and USA 2008 reading economic (−4.93). Its ESCH reading names **Focus = A × C** and **Energy = K − S**. The commit itself carries the caveat: "cluster-gap V rule is lagging indicator; Focus differential is leading". The leading variant is still not sealed. Note the formula: this V omits the A/2 term of the canonical Node Value (V = C + K + A/2 − S). **[unclear]** whether that was deliberate.
+
+### 6 November `6ed1b8f`, `75dc644`: ADVERSARY-02, the scorecard holds
+
+This is the answer to item 8 in section 15. Fifteen predictions were sealed before any 2021–2024 data was looked at. China and seven firms were then scored. On the primary pool (7 runs, 20 passes) the result is **6 PASS, 9 FAIL**: P1, P4, P5, P10, P12 and C2 pass, the rest fail, and the built-in kill-switch FC5 is **not triggered**. A best-two-scorer check (Claude agent and Gemini) gives the same 6/9 on every item. A knife-edge is recorded rather than rounded up: P8 is FAIL because the Vanke ratio is 4.998818728522337 against a sealed ≥ 5.0. If Kimi web took Gemini's seat, P6 would flip to PASS (giving 7 PASS, 8 FAIL), but the canonical pair and the headline do not change. Kimi Work was added as a secondary scorer only (`analysis/adversary_02/part2/best2_scorers_sensitivity.md`).
+
+### 6 to 7 November `4d512eb` and after: the personality replication round
+
+The largest deposit of the week. The closed CAMS personality AI replication round (Arms A to C) was deposited byte for byte. It came with the full report, score tables, an evidence manifest and a checker, `verify_evidence.py` (`analysis/cams_personality_independent_ai_replication_2026-11-07/`). The question: can eight node functions, read only through Cog = A × C, Aff = K − S and σ = Cog × Aff, give era portraits that AI systems recognise against sealed eras? There were 126 eras: a 56-era core of Russia, Australia and the USA, a 51-era extension, and 19 sparse Denmark eras. From the report's own table:
+
+| Model | Core | Denmark | Extension | Note |
+|---|---|---|---|---|
+| Claude | 56/56 | 13/19 | 45/51 | Arm A file absent; lineage unverified |
+| Gemini | 56/56 | 17/19 | not in the drop | claimed digests admitted non-cryptographic: descriptive only |
+| Manus | 56/56 | 15/19 | 16/51 | flagged: Arm A read the tables in the same session |
+| Kimi | 52/56 | 12/19 | 8/51 | |
+| Grok | 19/56 | no file | no file | still clears the pre-registered bar |
+| Codex | 3/56 | 1/19 | 3/51 | at chance; fails the bar |
+
+The report states the limits itself: "There is no clean validation yet." The pre-registered nulls were never returned, and several cells were never run.
+
+What followed was mostly about publishing it honestly:
+
+- **`9fab4ce`, `b4bb2de`: a public repeat kit.** It contains the Arm A, B and C packets, with a deterministic participant zip. The closed-round answer keys are kept out, and a stale Arm B count note was deliberately left unedited.
+- **`ecd647f`, `60fb074`, `f081eac`: an on-site page for the case** (`cams-personality-experiment.html`). JUNO v3 and the personality experiment are kept as separate series, and recognition counts sit behind a disclosure that starts closed. The last commit states meaning and metabolism as a *proposed* unification, with the eight-pole attractor kept distinct from the measured results.
+- **`bb35b0e`: a short essay on "the Gemini hypothesis".** The commit says it does "not treat unrun controls as passed falsification tests".
+- **`2347cf9`, `cb77c5c`, `9447491`: *The Anatomy of the Meta-Organism*, a general essay.** The second commit "stop[s] equating Cog with focus" and lists three unrun falsifiers. Note the tension with the crisis-typology commit two days earlier, which defines Focus = A × C. **[unclear]** which wording I now hold. **[not checked]** either essay beyond its opening and the commit messages.
+
+### 4 to 7 November `0edacce`: the book, again
+
+Faith Lightfoot was added beside Tod Tommo in the acknowledgements. The PDF and EPUB were patched directly, since the book's source is not in this repo, and the checksums were updated (PR #38). That is the fifth rebuild of the acknowledgements page.
+
+### 7 November `b044055`; 8 November `aebb28a`: Story Maker, and a σ correction
+
+The Story Maker (`story-maker.html`, PR #52) builds name- or date-masked packets from the kit's era means for any AI system to read. Building it exposed a definitional point worth writing down. **In the kit, σ is the era mean of yearly Cog × Aff, not the product of the era means of Cog and Aff. Rank is the era mean of yearly σ ranks, so it can be fractional.** The first version checked σ = Cog × Aff on the era rows and failed on real data, so the check was dropped. The packet wording still implied the product, and one AI review then concluded that σ was redundant and rank was derived from it. Both conclusions were wrong, and the wording was corrected on 8 November (PR #54).
+
+### 8 November `b10e6c1` to `fa17d10`: *The Natural History of Civilisations*
+
+*The Human Metasystem: A Natural History of Civilisation* and its supporting document were published as the master statement of the framework (`natural-history-of-civilisations.html`, PR #53), with links to the latest findings. The name changed twice within the hour. The page first carried both expansions. It was then set to "of Societies" (`8947c63`) and finally to "Model State" (`fa17d10`). I said then that "Complex Adaptive Civilisational Model" is the likely future name. Nothing in the repo has changed to it yet.
+
+Two loose ends from the supporting document. It cites failures (the Stress Entrainment Hypothesis, the Abstraction Rent Hypothesis, the Persistent Shear audit, the T-M archive audit) and a blind morphology result of 13 of 24. **None of these has a file in this repo** that I could find on 8 November. They are claims about the record that the record here cannot yet show. I have not added them to section 14 for that reason.
 
 ---
 
@@ -442,6 +500,8 @@ One more small thing on the **order** of the eight. It is not stable across the 
 | 13 Aug 2026 | Complex Adaptive Meta-System | `analysis/pr_gap2_manuscript_draft.md` |
 | 20 Aug 2026 | **Complex Adaptive Model State** declared canonical | git `d5b1b38` |
 | 15 Sep 2026 | The Short History still reads "Complex Adaptive Model of Societies" | git `3367cc4` |
+| 8 Nov 2026 | Synthesis page set to "of Societies", then back to **Complex Adaptive Model State** within the hour | git `8947c63`, `fa17d10` |
+| 8 Nov 2026 | "Complex Adaptive Civilisational Model" named as a likely future rename; not adopted | author |
 
 ### 13.5 Categories of societies and of crisis
 
@@ -501,6 +561,9 @@ Each of these is in the record; nothing was deleted to make this list shorter.
 | USA 1861 v2.1 fixed-value CI check | Retired 2 Nov 2026 | `c6fe436` |
 | Merchant-civilisation stress signature | Falsified four ways, per the Short History | `3367cc4` |
 | UAE in JUNO v3 | Removed pending rescore: ceiling scores | `ffd108d` |
+| ADVERSARY-02 sealed predictions | 9 of 15 failed (P2, P3, P6, P7, P8, P9, P11, C1, C3); P8 by 0.0012; left as failed | `6ed1b8f` |
+| Story Maker σ = Cog × Aff check | Dropped: kit σ is the mean of yearly products | `b044055` |
+| Packet wording "σ = Cog × Aff" of era means | Corrected to era averages of yearly values | PR #54, `aebb28a` |
 
 ---
 
@@ -515,6 +578,15 @@ Each of these is in the record; nothing was deleted to make this list shorter.
 7. **Which 22 artifacts** were retired on 20 October, and why USA 1861 was retired on 2 November.
 8. **ADVERSARY-02's results** (I have not read them for this diary) and the contents of several papers named above.
 9. **Whether the unmerged crisis typology and ESCH personality work survives its own next test.** The note on the branch says the rule is lagging, and the leading-indicator variant is not sealed.
+*Qualified 8 November:* item 8 is now answered (section 12a). Item 9 is half answered: the work is merged, but its next test has not been run.
+
 10. **Vocabulary.** The 2024 and 2025 files, the v2.1 code and some commit messages describe societies in a loosely evaluative register. The 2026 definitions do not. I leave the old uses where they are and I do not carry that register forward; this diary avoids it, including in the tables above, where I describe the formula and not the old label.
 
 *Closing note for the next diary entry.* The pattern across fourteen months is not that the idea changed shape. It is that each time a number or a name got more confident than its provenance, a later commit shrank it back to what the record could carry. The nine-node model became eight. The neural network became thermodynamics. "Predicts" became "does not predict". "Guarantees" became "forecast". "Validated bounds" became "reference ranges". I would like the next phase to do less shrinking, which means making fewer claims in the first place.
+
+*Addendum, 8 November.* The first days of the next phase went partly that way. The replication round was published with its own failures in the first paragraph. ADVERSARY-02 left a 4.9988 as a FAIL. The Story Maker had its wording shrunk within a day of shipping. The new open questions:
+
+11. **What V the crisis typology uses.** It writes V = C + K − S, not the canonical C + K + A/2 − S. Is that deliberate?
+12. **Focus or not Focus.** Is A × C "Focus" (crisis typology, 5 November) or not to be equated with focus (`cb77c5c`, 6 November)?
+13. **Where the failure record cited in the supporting document lives.** The cited items are SEH, ARH, Persistent Shear, the T-M audit and the 13 of 24 morphology result.
+14. **The null models for the personality round.** They are the next step named by the report itself.
