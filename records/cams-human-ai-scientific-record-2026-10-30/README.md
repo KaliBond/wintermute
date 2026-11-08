@@ -27,7 +27,10 @@ Computed SHA-256 of the ZIP equals the `.sha256` file, the certificate text and 
 | `CAMS_THREAD_SCIENTIFIC_SUMMARY_2026-10-30.md` | `89cfb4327bd9c3483d9857c4f34cbd0a8e59aaf311d8c9521c29b03d6ee4fc5a` | already on main |
 | `EXTRACT_THIS_IS_WHY_IT_WORKS_GPT_REFLECTION.md` | `c5247a63deca6222868373aabbab0f4e18395d16fdfc8ccfdf2f59155d7d65a7` | new |
 | `VALIDATION.md` | `9f40c4bc4789b2d28a150d5376b65a418cb253634e92bf4dcb4a126be0eb60e4` | new |
+| `GPT_statement_summary_2026-11-08.pdf` | `29eb0290b26d72dbd1268dfb89796400caa2b1459243c33104787e158191fdb4` | added 8 Nov 2026 |
 | `README.md` | not listed (a file cannot contain its own hash) | new |
+
+**Added 8 November 2026:** `GPT_statement_summary_2026-11-08.pdf` (3 pages), a summary of the GPT statement. The statement was last saved in the Google Doc "GPT on CAMS I think I finally understand" (31 Oct 2026); its text is the extract above. The summary also covers the 30 October record, and its last page reprints the integrity certificate unchanged. It says it adds no finding. Kari supplied it from `Downloads\EXPERIMENT\GPTstatement` (as `GPT_statement_summary.pdf`). The standalone certificate supplied with it is byte-identical to the one in this folder. The ZIP, the `.sha256` file and the certificate are unchanged.
 
 ## Notes
 
