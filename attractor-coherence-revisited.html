@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Attractor Coherence, Revisited — Neural Nations</title>
+<meta name="description" content="An old experiment revisited: the Functional Attractor Coherence study (Cambodia, Thailand, Laos, Blind Sets 1–6 and a named-country check) re-run on the combined JUNO dataset of 53 societies, 9 November 2026.">
+<link rel="canonical" href="https://neuralnations.org/attractor-coherence-revisited">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#ffffff; --ink:#1a242b; --muted:#5a6870; --line:#dfe5e8; --accent:#2a6875; --accent2:#b8701f; --soft:#eef4f5; --warm:#fbf6ee; --pass:#2f7a4b; --passbg:#e3f2e8; --fail:#b3392e; --failbg:#f8e1de; --weak:#8b5a00; --weakbg:#f6e7c8; --na:#5a6870; --nabg:#eceff1;}
+body{background:var(--bg)}
+.essay-wrap{padding:0 16px}
+.essay{max-width:720px;margin:0 auto;padding-block:52px 80px;font-family:'Newsreader',Georgia,'Times New Roman',serif;font-size:19px;line-height:1.7;color:var(--ink)}
+.sans,.essay table,.chart-box,.contents,.tiles{font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif}
+.essay .kicker{font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0}
+.essay h1{font-family:'Newsreader',Georgia,serif;font-size:clamp(34px,6vw,52px);line-height:1.08;font-weight:700;margin:12px 0 14px;text-wrap:balance;color:var(--ink);text-align:left}
+.essay .standfirst{font-size:21px;line-height:1.5;margin:0 0 16px}
+.essay .byline{font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:14px;color:var(--muted);margin:0 0 6px}
+.essay .status{display:inline-block;font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:12px;font-weight:600;color:var(--accent2);border:1px solid currentColor;border-radius:999px;padding:2px 10px;margin:4px 0 26px}
+.contents{background:var(--soft);border-radius:10px;padding:18px 20px;margin:0 0 20px}
+.contents ol{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.contents a{color:var(--ink);text-decoration:none;display:block}
+.contents a:hover .ct{text-decoration:underline}
+.contents .pt{font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.contents .ct{display:block;font-size:16px;font-weight:600;line-height:1.3}
+.contents .cd{display:block;font-size:13.5px;color:var(--muted);line-height:1.45}
+.part{margin-top:72px;padding-top:28px;border-top:3px solid var(--ink)}
+.part .partlabel{font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0}
+.part h2{font-family:'Newsreader',Georgia,serif;font-size:clamp(28px,4.6vw,38px);line-height:1.12;font-weight:700;margin:8px 0 6px;text-wrap:balance}
+.part .subtitle{font-style:italic;font-size:21px;color:var(--muted);margin:0 0 10px;line-height:1.4}
+.essay h3{font-family:'Newsreader',Georgia,serif;font-size:25px;line-height:1.25;font-weight:600;margin:48px 0 14px;text-wrap:balance}
+.essay h4{font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);margin:30px 0 8px}
+.essay p{margin:0 0 18px}
+.essay ul,.essay ol.plain{margin:0 0 18px;padding-left:24px}
+.essay li{margin:0 0 6px}
+.essay a{color:var(--accent)}
+.essay code{font-family:ui-monospace,Consolas,monospace;font-size:.78em;background:var(--soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.essay .formula{text-align:center;font-size:20px;font-style:italic;margin:20px 0;padding:12px;background:var(--soft);border-radius:8px;overflow-x:auto}
+.essay .pull{font-size:22px;line-height:1.4;font-weight:600;color:var(--accent);margin:28px 0;padding-left:18px;border-left:3px solid var(--accent2)}
+.essay blockquote{margin:22px 0;padding:14px 18px;background:var(--warm);border-left:3px solid var(--accent2);border-radius:0 8px 8px 0;font-style:italic}
+.box{font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:15px;line-height:1.55;background:var(--warm);border-left:3px solid var(--accent2);padding:14px 18px;border-radius:0 8px 8px 0;margin:22px 0}
+.box.teal{background:var(--soft);border-left-color:var(--accent)}
+.box .bt{display:block;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);margin-bottom:4px}
+.box.teal .bt{color:var(--accent)}
+.box p{margin:0 0 10px}.box p:last-child{margin:0}
+.box ol{margin:6px 0 0;padding-left:20px}.box li{margin:0 0 8px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:22px 0}
+.tile{background:var(--soft);border-radius:10px;padding:16px 14px;text-align:center}
+.tile b{display:block;font-size:30px;line-height:1.05;color:var(--accent);margin-bottom:6px}
+.tile span{font-size:12.5px;color:var(--muted);line-height:1.35;display:block}
+.nodes{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0 22px;font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif}
+.nodes div{border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--muted);line-height:1.35}
+.nodes b{display:block;color:var(--accent2);font-size:15px}
+.chart-box{border:1px solid var(--line);border-radius:12px;padding:20px 18px 14px;margin:26px 0}
+.chart-box .ctitle{font-size:12.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.chart-box .legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;color:var(--muted);margin-bottom:8px}
+.chart-box .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.chart-box .cap{font-size:12.5px;line-height:1.45;color:var(--muted);margin-top:10px}
+.chart-in{position:relative;width:100%}
+.tbl-wrap{overflow-x:auto;margin:20px 0 26px}
+.essay table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.45}
+.essay th{text-align:left;padding:9px 10px;background:var(--soft);border-bottom:2px solid var(--line);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.essay td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.essay td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.pill.pass{background:var(--passbg);color:var(--pass)}.pill.fail{background:var(--failbg);color:var(--fail)}.pill.weak{background:var(--weakbg);color:var(--weak)}.pill.na{background:var(--nabg);color:var(--na)}
+.essay .note{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:13.5px;line-height:1.55;color:var(--muted)}
+@media (max-width:560px){.essay{font-size:17.5px;padding-block:32px 60px}.essay h3{font-size:22px}.essay .standfirst{font-size:19px}}
+</style>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+<div class="essay-wrap"><main class="essay">
+<p class="kicker">Neural Nations · an old experiment revisited</p>
+<h1>Attractor Coherence, Revisited</h1>
+<p class="standfirst">Do societies break in the same places every time? An earlier study said only partly, and its first blind prospective test failed. Here it is run again on the combined JUNO dataset of 53 societies.</p>
+<p class="byline">Kari McKern · Neural Nations, Sydney · 9 November 2026 · analyses by AI collaborators, presented as written</p>
+<span class="status">Consistency check on named data, not a blind test</span>
+
+<nav class="contents" aria-label="Contents">
+<ol>
+<li><a href="#revisit"><span class="pt">Part I · The revisit, 9 November 2026</span><span class="ct">Do societies have signatures?</span><span class="cd">The original question re-run on the combined JUNO dataset: 53 societies, 47,960 node-years, 14 societies with three or more clean crises.</span></a></li>
+<li><a href="#original"><span class="pt">Part II · The original experiment</span><span class="ct">Functional Attractor Coherence and Societal Path Dependence in CAMS</span><span class="cd">The sequential study: Cambodia, Thailand and Laos, Blind Sets 1–3, the frozen hypothesis, the failed Set 5 test, Set 6, and a ten-country named check.</span></a></li>
+<li><a href="#checks"><span class="pt">Part III · Checks</span><span class="ct">What was corrected, and what doesn't match</span><span class="cd">Errors fixed in the revisit write-up, and the points where the two analyses disagree.</span></a></li>
+</ol>
+</nav>
+
+<!-- ═══════════════════════ PART I ═══════════════════════ -->
+<section class="part" id="revisit" aria-labelledby="revisit-h">
+<p class="partlabel">Part I · The revisit, 9 November 2026</p>
+<h2 id="revisit-h">Do Societies Have Signatures?</h2>
+<p class="subtitle">New evidence that how a society falls apart may be one of its most stable properties.</p>
+
+<div class="tiles">
+<div class="tile"><b>53</b><span>societies, 1750–2026</span></div>
+<div class="tile"><b>47,960</b><span>node-years</span></div>
+<div class="tile"><b>14</b><span>societies in the analysis corpus</span></div>
+<div class="tile"><b>5,000</b><span>permutations per significance test</span></div>
+</div>
+
+<h3>The question</h3>
+<p>When a society is under severe stress (a war, an economic collapse, a legitimacy crisis), something in its institutional structure breaks down. The question is whether that breakdown has a shape, and whether that shape is consistent across different shocks within the same society.</p>
+<p>Think of it this way: when France descends into crisis, does it always break in the same places? When Brazil is under pressure, does it reliably fail through the same functional gaps as the last time? Or is each crisis a unique catastrophe, structurally unrelated to what came before?</p>
+<p class="pull">If societies have characteristic stress signatures, early shock patterns should predict later ones, and that prediction should work better within a society than across societies.</p>
+<p>That is the claim tested.</p>
+
+<h3>How institutional structure is measured</h3>
+<p>CAMS, the Complex Adaptive Model State, treats a society as eight interlocking functional nodes, each a distinct domain of institutional life:</p>
+<div class="nodes">
+<div><b>Helm</b>Executive coordination and governing command</div>
+<div><b>Shield</b>Military, police and internal order</div>
+<div><b>Lore</b>Education, media and knowledge systems</div>
+<div><b>Stewards</b>Capital, resource allocation and fiscal elites</div>
+<div><b>Craft</b>Industry, professions and technical capacity</div>
+<div><b>Hands</b>Mass labour and demographic work capacity</div>
+<div><b>Archive</b>Bureaucracy, law and institutional memory</div>
+<div><b>Flow</b>Commerce, markets and economic circulation</div>
+</div>
+<p>Each node is scored annually on four dimensions: how internally coordinated it is (Coherence), how much functional capacity it has (Capacity), how much stress or breakdown it is producing (Stress), and how sophisticated its learning and adaptation is (Abstraction). From these four numbers a summary node health score is derived.</p>
+<p>When a society enters deep stress, defined as a period where its average node health falls more than 1.5 standard deviations below its own historical mean, the analysis records the <em>shape</em> of that collapse: which nodes take the heaviest hit, in what proportions, relative to each other. That shape is the displacement morphology.</p>
+
+<h3>The dataset</h3>
+<div class="tiles">
+<div class="tile"><b>53</b><span>societies in the combined JUNO dataset</span></div>
+<div class="tile"><b>36</b><span>pass the data-quality threshold (≤30% carry-forward)</span></div>
+<div class="tile"><b>14</b><span>have ≥3 clean independent crisis episodes</span></div>
+<div class="tile"><b>93</b><span>within-society episode pairs tested</span></div>
+</div>
+<p>The 14-society corpus spans every continent and several centuries. It includes Sweden (3 episodes, 1880–2025), Russia (5 episodes, 1800–2026), China (4 episodes, 1800–2025), Chile (5 episodes, 1875–2026), Colombia (5 episodes), South Africa (5 episodes) and eight others. The ten societies of the original named-country check (Part II, Phase IV) are all in this corpus, with four new entrants: Greece, Laos, the Philippines and Portugal.</p>
+<div class="box"><span class="bt">Note on Japan</span>A fresh high-resolution Japan dataset (176 years, 0% carry-forward) was generated for this analysis. Despite adequate data quality, Japan produces only <em>one</em> clean deep-stress episode in its modern history: the WWII collapse of 1942–1949, so severe (average node health of −3.67, against a threshold of 8.23) that it alone defines the standard deviation. No other Japanese period, not the Bakumatsu crisis, not the lost decades, not COVID, comes close to the threshold. Japan is a one-catastrophe society by this instrument's honest accounting.</div>
+
+<h3>The main result: societies are distinct</h3>
+<p>The central test: when you compare how a society collapsed in two different historical episodes, does that comparison look more similar than a collapse from one society against a collapse from another?</p>
+<p>The answer is a clear yes, across all three dimensions of the displacement measurement, at a significance level that is unusual in social science.</p>
+<div class="chart-box">
+<div class="ctitle">Within-society vs between-society crisis similarity</div>
+<div class="legend"><span><i style="background:#2a6875"></i>Within-society (same country, different crises)</span><span><i style="background:#d98b2b"></i>Between-society (different countries)</span></div>
+<div class="chart-in" style="height:260px"><canvas id="c-rec" role="img" aria-label="Within-society similarity 0.335, 0.319 and 0.304 against between-society 0.179, 0.158 and 0.147 for viability, affect and cognition"></canvas></div>
+<div class="cap">Mean Spearman rank correlation of displacement morphology (how nodes deform relative to each other in crisis). Higher means more similar in shape. All three dimensions: p &lt; 0.0001 on a 5,000-permutation test.</div>
+</div>
+<p>The pattern holds whether you measure node health displacement (Viability), the interplay of capacity and stress across nodes (Affect), or the interplay of abstraction and coherence (Cognition). In every dimension, two crises from the same country look more alike than two crises from different countries. If you randomly shuffled which crises belonged to which society, you would essentially never get a within-society similarity this high by chance.</p>
+
+<h3>How consistent is each society?</h3>
+<p>The degree of within-society recurrence varies enormously. It is called <em>attractor coherence</em>: how tightly a society's crisis morphologies cluster around a characteristic shape.</p>
+<div class="chart-box">
+<div class="ctitle">Attractor coherence C<sup>V</sup> by society</div>
+<div class="chart-in" style="height:480px"><canvas id="c-coh" role="img" aria-label="Attractor coherence by society, from Sweden at 0.81 down to Chile at minus 0.12"></canvas></div>
+<div class="cap">Median pairwise similarity of crisis displacement morphologies within each society (Viability dimension). Positive means a recurring pattern; negative means each crisis reorganised differently.</div>
+</div>
+<p><strong>Sweden</strong> sits at the top: across three deep-stress episodes spanning a century, its stress morphology is nearly identical (coherence 0.81). The same nodes absorb the pressure, in the same relative proportions. <strong>Colombia</strong> (0.66) and <strong>Portugal</strong> (0.62) are also high-coherence societies.</p>
+<p><strong>Russia</strong> (0.00), <strong>Germany</strong> (−0.02) and <strong>Chile</strong> (−0.12) fall at the other end. Russia's five crisis episodes (1812, the Crimean War aftermath, the 1905 Revolution, 1917 and the 1991 collapse) are so structurally different from each other that there is no detectable recurring morphology. Germany and Chile sit at negative coherence: each crisis seems to reorganise the institutional structure rather than replay a characteristic pattern.</p>
+
+<h3>Does coherence predict recovery?</h3>
+<p>When a society exits a deep-stress episode, does it return toward where it was, or emerge structurally different? The <em>recovery ratio</em> measures this: below 1, the society returned toward its pre-crisis structure (homeostatic); above 1, it moved further away (transformative).</p>
+<div class="chart-box">
+<div class="ctitle">Attractor coherence versus recovery type</div>
+<div class="legend"><span><i style="background:#2a6875"></i>Homeostatic (R &lt; 1)</span><span><i style="background:#b3392e"></i>Transformative (R &gt; 1)</span></div>
+<div class="chart-in" style="height:340px"><canvas id="c-sc" role="img" aria-label="Scatter of coherence against recovery ratio. Thirteen societies below 1; Germany at 1.12"></canvas></div>
+<div class="cap">Each point is one society. Recovery ratio = post-crisis distance from pre-crisis structure ÷ trough distance from pre-crisis structure. Spearman ρ = −0.39: higher coherence goes with stronger homeostatic pull, though not significant at n = 14.</div>
+</div>
+<p>Thirteen of the fourteen societies are homeostatic. The only exception is <strong>Germany</strong>, with a recovery ratio of 1.12, and it is also one of the two societies with negative coherence on both measures. Germany's history of regime discontinuity (Wilhelmine → Weimar → Nazi → occupied and divided → reunified Federal Republic) may mean the whole-series coherence calculation spans several genuinely distinct attractor regimes, each of which might be internally consistent if examined separately. Chile, the other negative-coherence society, does return toward its prior structure (0.55), so low coherence does not by itself imply transformation.</p>
+<div class="box teal"><span class="bt">The Laos finding</span>Laos shows an <em>affect-dominant</em> coherence profile: its affect coherence (0.57) clearly exceeds its viability coherence (0.41). Its characteristic crisis pattern is clearer through the capacity–stress dimension than through overall node health. This dissociation between dimensions was proposed from the original Laos case analysis (Part II, §5.3) and now appears in the larger corpus. Because Laos generated that idea, this is a consistency with the earlier case study rather than an independent confirmation.</div>
+
+<h3>Can early crises predict later ones?</h3>
+<p>The hardest version of the question: take the morphology of a society's <em>first</em> deep-stress episode as a template. Does it predict the shape of later crises better than other societies' templates do?</p>
+<div class="chart-box">
+<div class="ctitle">Own-template advantage</div>
+<div class="legend"><span><i style="background:#b3392e;opacity:.6"></i>Blind Set 5 (first prospective test, 2026)</span><span><i style="background:#2a6875"></i>Combined JUNO (this analysis)</span></div>
+<div class="chart-in" style="height:270px"><canvas id="c-tpl" role="img" aria-label="Own-template advantage: Set 5 minus 0.132 and minus 0.372; combined JUNO plus 0.161, plus 0.238 and plus 0.190"></canvas></div>
+<div class="cap">Own-template advantage = median similarity to the society's own first episode minus median similarity to other societies' first episodes. Positive means the society's own early crisis is the better predictor. Set 5 reported no cognition value. Cognition, combined JUNO: 74% of held-out episodes are better predicted by the society's own template than by the median of other-society templates.</div>
+</div>
+<p>Blind Set 5 failed this test: the society's own template did worse than foreign templates. That result does not repeat in the larger combined dataset. All three dimensions now show a positive own-template advantage, clearest in the cognitive dimension, where 74% of held-out crises are better predicted by the society's own early template.</p>
+
+<h3>The scorecard</h3>
+<p>Five criteria were specified in advance, when the hypothesis was frozen before Set 5. Here is how Set 5 and this combined dataset compare:</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th style="width:46%">Criterion</th><th>Blind Set 5</th><th>Combined JUNO</th></tr></thead>
+<tbody>
+<tr><td><strong>A. Within-society recurrence</strong> (Viability): crises within one country look more alike than crises from different countries</td><td><span class="pill fail">Fail</span></td><td><span class="pill pass">Pass</span> p &lt; 0.0001</td></tr>
+<tr><td><strong>B. Same pattern in Affect</strong></td><td><span class="pill fail">Fail</span></td><td><span class="pill pass">Pass</span> p &lt; 0.0001</td></tr>
+<tr><td><strong>C. Prospective prediction:</strong> a society's own early crisis predicts later crises better than other societies' templates</td><td><span class="pill fail">Fail</span></td><td><span class="pill pass">Pass</span> 60–74% positive</td></tr>
+<tr><td><strong>D. Survives high-resolution data</strong></td><td><span class="pill fail">Fail</span></td><td><span class="pill na">N/A</span> no carry-forward issue in the eligible corpus</td></tr>
+<tr><td><strong>E. Coherence predicts restoration</strong></td><td><span class="pill fail">Fail</span></td><td><span class="pill weak">Weak pass</span> correct sign, ρ = −0.39, not significant</td></tr>
+</tbody></table></div>
+
+<h3>What this means</h3>
+<p>The original study concluded that the hypothesis had failed prospective testing and should be downgraded: the safer claim was that coherence and homeostatic recovery are "partially independent properties", real phenomena but not the unified mechanism the stronger theory proposed.</p>
+<p>The combined dataset changes that assessment. The core claims (that societies show characteristic crisis signatures, that these are detectably distinct across societies, and that early crisis patterns carry information about later ones) now have substantially stronger empirical support.</p>
+<p class="pull">The retreat to the narrower "partially independent properties" formulation was premature. The stronger claim has survived the larger test.</p>
+<p>Important caveats remain. The combined dataset is not a blind or prospective test. Society identities were known, and the corpus overlaps with material used in developing the scoring framework. It is better described as a large-scale structured consistency check than an independent confirmation. The next step is a genuinely prospective test: at least three societies with at least three clean episodes each, criteria frozen before the data are opened, and shock type recorded so that "own-template advantage" can be tested against "same-shock-type advantage".</p>
+<p>Germany remains the structural puzzle. Its negative coherence and transformative recovery set it apart. The most likely explanation, that its twentieth-century history spans several distinct attractor regimes which a whole-series estimate conflates, deserves direct testing.</p>
+<div class="box"><span class="bt">What "attractor" means here</span>An attractor in this context is not a destination but a tendency. A society with high attractor coherence is one that, when destabilised, tends to deform in a characteristic direction: specific nodes take the strain, in a configuration that recurs. It is not that the society is "attracted" to crisis; its institutional structure has a characteristic mode of failure, the way a physical structure under stress tends to crack at the same points. It describes a modelled system state, not a fixed national character.</div>
+
+<h3>Full coherence and recovery data</h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Society</th><th>Episodes</th><th>C<sup>V</sup></th><th>C<sup>e</sup></th><th>Recovery ratio</th><th>Type</th></tr></thead>
+<tbody>
+<tr><td>Sweden</td><td class="n">3</td><td class="n">+0.81</td><td class="n">+0.85</td><td class="n">0.21</td><td><span class="pill pass">Homeostatic</span></td></tr>
+<tr><td>Colombia</td><td class="n">5</td><td class="n">+0.66</td><td class="n">+0.49</td><td class="n">0.55</td><td><span class="pill pass">Homeostatic</span></td></tr>
+<tr><td>Portugal</td><td class="n">3</td><td class="n">+0.62</td><td class="n">+0.60</td><td class="n">0.54</td><td><span class="pill pass">Homeostatic</span></td></tr>
+<tr><td>South Africa</td><td class="n">5</td><td class="n">+0.56</td><td class="n">+0.51</td><td class="n">0.60</td><td><span class="pill pass">Homeostatic</span></td></tr>
+<tr><td>Argentina</td><td class="n">5</td><td class="n">+0.54</td><td class="n">+0.49</td><td class="n">0.40</td><td><span class="pill pass">Homeostatic</span></td></tr>
+<tr><td>Laos</td><td class="n">5</td><td class="n">+0.41</td><td class="n">+0.57</td><td class="n">0.50</td><td><span class="pill pass">Homeostatic</span></td></tr>
+<tr><td>Philippines</td><td class="n">3</td><td class="n">+0.41</td><td class="n">+0.54</td><td class="n">0.62</td><td><span class="pill pass">Homeostatic</span></td></tr>
+<tr><td>UK</td><td class="n">4</td><td class="n">+0.36</td><td class="n">+0.46</td><td class="n">0.44</td><td><span class="pill pass">Homeostatic</span></td></tr>
+<tr><td>Brazil</td><td class="n">4</td><td class="n">+0.27</td><td class="n">−0.00</td><td class="n">0.36</td><td><span class="pill pass">Homeostatic</span></td></tr>
+<tr><td>Greece</td><td class="n">3</td><td class="n">+0.24</td><td class="n">+0.01</td><td class="n">0.35</td><td><span class="pill pass">Homeostatic</span></td></tr>
+<tr><td>China</td><td class="n">4</td><td class="n">+0.20</td><td class="n">−0.05</td><td class="n">0.66</td><td><span class="pill pass">Homeostatic</span></td></tr>
+<tr><td>Russia</td><td class="n">5</td><td class="n">+0.00</td><td class="n">+0.05</td><td class="n">0.55</td><td><span class="pill pass">Homeostatic</span></td></tr>
+<tr><td><strong>Germany</strong></td><td class="n">3</td><td class="n">−0.02</td><td class="n">−0.02</td><td class="n"><strong>1.12</strong></td><td><span class="pill fail">Transformative</span></td></tr>
+<tr><td>Chile</td><td class="n">5</td><td class="n">−0.12</td><td class="n">−0.17</td><td class="n">0.55</td><td><span class="pill pass">Homeostatic</span></td></tr>
+</tbody></table></div>
+<p class="byline">Analysis 9 November 2026 · source <a href="https://github.com/KaliBond/wintermute/blob/main/data/juno/JUNO_all_countries.csv" target="_blank" rel="noopener"><code>data/juno/JUNO_all_countries.csv</code></a> (53 societies, 47,960 rows) · Japan: <code>data/nations/Japan_ENS.csv</code> · C<sup>e</sup> is affect coherence.</p>
+</section>
+
+<!-- ═══════════════════════ PART II ═══════════════════════ -->
+<section class="part" id="original" aria-labelledby="orig-h">
+<p class="partlabel">Part II · The original experiment</p>
+<h2 id="orig-h">Functional Attractor Coherence and Societal Path Dependence in CAMS</h2>
+<p class="subtitle">A sequential hypothesis-testing study across case, blind, prospective and identifiable datasets</p>
+
+<h3>Abstract</h3>
+<p>This study developed and tested a hypothesis of societal path dependence using the JUNO/CAMS functional-node framework. It began with longitudinal analyses of Cambodia, Thailand and Laos, where cognition was operationalised as <em>g<sub>i</sub> = A<sub>i</sub>C<sub>i</sub>/100</em>, affect/energy as <em>e<sub>i</sub> = K<sub>i</sub> − S<sub>i</sub></em>, and system viability as <em>V<sub>i</sub> = C<sub>i</sub> + K<sub>i</sub> − S<sub>i</sub> + 0.5A<sub>i</sub></em>. Initial case analyses suggested that societies might show recurrent, historically conditioned patterns in how adaptive stress is distributed among functional nodes and in how internal morphology is rebuilt after shocks.</p>
+<p>The theory evolved in stages. Cambodia suggested transformative path dependence: severe shocks appeared to alter the functional configuration from which recovery proceeded. Thailand suggested stronger homeostasis: recurrent disturbances returned through a restricted repertoire of prior states. Laos suggested a layered architecture in which cognitive organisation stayed relatively stable while affective allocation changed substantially, which first motivated a fixed "layered attractor depth" hypothesis.</p>
+<p>Blind Set 1 strongly supported within-society recurrence of stress morphology. Blind Set 2 failed to replicate it and exposed a normalisation pathology and weak evidence for a universal three-layer structure. Blind Set 3 gave partial support but showed the aggregate was driven by one high-coherence society. These development sets motivated a frozen Functional Attractor Coherence Hypothesis: societies vary continuously in how reproducibly they deform across shocks and in how far recovery is constrained toward prior morphology.</p>
+<p>The first prospective test, Blind Set 5, failed all primary criteria. Blind Set 6 had too few repeated clean shocks to decide. A later identifiable-corpus analysis, restricted by data quality rather than country reputation, recovered significant same-society recurrence in viability, affect and cognition, with substantial between-society heterogeneity. But early shocks remained weak predictors of later ones relative to other-society templates, and coherence did not reliably predict homeostatic recovery.</p>
+<p>The surviving result is narrower than the original national-attractor thesis: some societal systems show recurrent functional deformation, and its strength varies between societies and dimensions. Recurrence is not universal, is not well represented by a fixed layer hierarchy, does not necessarily imply homeostatic return, and has not yet shown stable prospective predictive power. The most defensible formulation treats deformation coherence and restorative pull as partially independent properties of societal adaptive architecture.</p>
+
+<h3>1 · Background and theoretical problem</h3>
+<p>Complex adaptive systems can show path dependence when their response to a new disturbance depends not only on current conditions but on structures produced by earlier history. For societies this raises a stronger possibility than conventional resilience analysis: two societies hit by disturbances of similar size may route adaptive stress through different functional channels because their existing architectures constrain which responses are available.</p>
+<p>JUNO/CAMS represents societies through eight functional nodes (Archive, Craft, Flow, Hands, Helm, Lore, Shield, Stewards) and four variables: Coherence C, Capacity K, Stress S and Abstraction A. The cognitive-affective extension defines:</p>
+<div class="formula">g<sub>i</sub> = A<sub>i</sub>C<sub>i</sub> / 100 &nbsp;(representational elaboration) &nbsp;·&nbsp; e<sub>i</sub> = K<sub>i</sub> − S<sub>i</sub> &nbsp;(affect / mobilisation valence) &nbsp;·&nbsp; s<sub>i</sub> = g<sub>i</sub>e<sub>i</sub> &nbsp;(alignment or inversion)</div>
+<p>Canonical node viability is <em>V<sub>i</sub> = C<sub>i</sub> + K<sub>i</sub> − S<sub>i</sub> + 0.5A<sub>i</sub></em>. The protocol permits post-identification analysis of regime attractors, basin structure, hysteresis, own-history recovery and cognitive-affective recomposition after shocks.</p>
+<p>"Societal attractor" is used in this narrow systems sense. It does not mean an immutable national psychology, culture or moral character; the CAMS protocol specifies that personality profiles are system-state diagnostics, not claims about peoples.</p>
+
+<h3>2 · Aims</h3>
+<ol class="plain">
+<li><strong>Identify candidate path-dependent morphology:</strong> where cognition concentrates, which nodes absorb affective stress, which functions stay protected, which recover first, and whether recovery restores or changes the earlier configuration.</li>
+<li><strong>Distinguish homeostatic from transformative dynamics:</strong> shock → return toward prior morphology, or shock → persistent reconfiguration.</li>
+<li><strong>Test whether stress-allocation morphology recurs within societies:</strong> are independent disturbances within one society more alike than disturbances across societies?</li>
+<li><strong>Test society specificity prospectively:</strong> does a society's earlier shock morphology predict its later disturbances better than templates from other societies? This is the strongest test, because generic functional vulnerability could otherwise produce within-society recurrence without genuine path dependence.</li>
+<li><strong>Determine whether attractor strength is multidimensional:</strong> does coherence vary among societies, differ between viability, affect and cognition, and separate from restorative return?</li>
+</ol>
+
+<h3>3 · Study design</h3>
+<p>The work was sequential rather than a single preregistered experiment, in four phases:</p>
+<ul>
+<li><strong>Phase I, theory generation:</strong> named series for Cambodia, Thailand and Laos. These generated the hypotheses and cannot test them.</li>
+<li><strong>Phase II, development-set blind testing:</strong> Blind Sets 1, 2 and 3. Theory and metrics changed in response, so these are a development corpus, not a confirmatory sample.</li>
+<li><strong>Phase III, prospective testing after a hypothesis freeze:</strong> Blind Sets 5 and 6. (No Set 4 was analysed.)</li>
+<li><strong>Phase IV, identifiable-corpus check:</strong> the named all-country corpus, filtered by data-quality rules. Not blind and not independent of CAMS measurement construction; a structured consistency and heterogeneity check.</li>
+</ul>
+
+<h3>4 · General methodology</h3>
+<h4>4.1 Data audit</h4>
+<p>Every dataset was checked for the eight-node inventory, missing values, duplicate society-year/node rows, contiguous coverage, panel length and exact year-to-year carry-forward. Under the CAMS protocol, when more than 30% of complete node vectors are exact carry-forwards, fine-grained temporal tests are out of scope. That threshold was kept throughout.</p>
+<h4>4.2 Deep-stress episodes</h4>
+<p>System mean viability is <em>V̄<sub>t</sub> = (1/8) Σ<sub>i</sub> V<sub>it</sub></em>. Deep-stress observations satisfy the own-history rule <em>V̄<sub>t</sub> &lt; μ − 1.5σ</em>. Contiguous observations were grouped into episodes, allowing runs separated by a single non-trough year to merge where appropriate.</p>
+<h4>4.3 Clean baseline</h4>
+<p>The pre-shock state is the mean of the five preceding valid observations. An episode is excluded if fewer than five exist, if another deep-stress observation contaminates that window, or if node data are incomplete. This mattered especially in Sets 2 and 6.</p>
+<h4>4.4 Functional displacement</h4>
+<div class="formula">D<sup>V</sup> = V<sub>pre</sub> − V<sub>trough</sub> &nbsp;·&nbsp; D<sup>e</sup> = e<sub>pre</sub> − e<sub>trough</sub> &nbsp;·&nbsp; D<sup>g</sup> = g<sub>pre</sub> − g<sub>trough</sub></div>
+<p>Positive displacement is deterioration. Cross-society comparison uses ranks or within-society standardisation, not pooled raw magnitudes, as the protocol requires.</p>
+<h4>4.5 Displacement morphology</h4>
+<p>Each episode is represented by the ordering of its eight nodes from most protected to most displaced. Spearman rank correlation is the primary similarity measure, so scorer magnitude differences are not mistaken for differences between societies.</p>
+<h4>4.6 Attractor coherence</h4>
+<div class="formula">C<sub>s</sub><sup>d</sup> = median<sub>j≠k</sub> ρ(D<sub>sj</sub><sup>d</sup>, D<sub>sk</sub><sup>d</sup>)</div>
+<p>Estimated separately for viability, affect and cognition. High positive values mean independent disturbances repeatedly load the same nodes; near zero, weak recurrence; negative, substantial reordering of vulnerability between disturbances.</p>
+<h4>4.7 Within- versus between-society recurrence</h4>
+<p>The central retrospective test: path dependence predicts within-society similarity greater than between-society similarity. Permutation of society labels assesses whether the separation exceeds chance.</p>
+<h4>4.8 Prospective template test</h4>
+<p>Early qualifying shocks give a society-specific template <em>T<sub>s</sub></em>. For a later held-out episode, the advantage is</p>
+<div class="formula">Δ<sub>sj</sub> = ρ(T<sub>s</sub>, D<sub>sj</sub>) − median<sub>q≠s</sub> ρ(T<sub>q</sub>, D<sub>sj</sub>)</div>
+<p>The strong hypothesis predicts Δ &gt; 0: a society's own past predicts its future deformation better than other societies' histories.</p>
+<h4>4.9 Recovery and restorative pull</h4>
+<div class="formula">R = d(X<sub>post</sub>, X<sub>pre</sub>) / d(X<sub>trough</sub>, X<sub>pre</sub>) &nbsp;·&nbsp; H<sub>s</sub> = −median log(R + ε)</div>
+<p>R &lt; 1 means the system moves back toward its pre-shock morphology; R &gt; 1 means the post-shock state stays as far or further away, consistent with transformation or hysteresis.</p>
+
+<h3>5 · Phase I: case-derived theory generation</h3>
+<h4>5.1 Cambodia</h4>
+<p>Cambodia suggested transformative path dependence: strong Lore-centred cognitive organisation over long periods, recurrent affective burden in Helm, persistent Hands weakness, a cognitive-affective split before the 1970s collapse, and reconstruction of cognitive structure before broad affective recovery. The hypothesis it generated: severe stress first redistributes affect while cognitive organisation stays largely intact, and sufficiently extreme or prolonged stress eventually transforms the cognitive architecture itself. Recovery appeared asymmetric (cognitive organisation, then affective recovery), suggesting hysteresis rather than simple rebound.</p>
+<h4>5.2 Thailand</h4>
+<p>Thailand was a counterexample. The data were coarse (about 85% exact carry-forward, only nine distinct whole-system profiles), so only coarse transitions were interpretable. Unlike Cambodia, Thailand repeatedly returned to previously occupied configurations: persistent implementation weakness, comparatively protected Executive and Army functions, affective deterioration with little initial cognitive change, and recovery through previously observed states. This produced the first explicit distinction between restorative and transformative path dependence.</p>
+<h4>5.3 Laos</h4>
+<p>The Laos panel (1875–2026) was much cleaner, with about 14.6% carry-forward. Its most striking feature was a persistent Helm-centred cognitive hierarchy despite large changes in affective conditions: cognitive-node ranking stayed relatively stable, affective ranking changed far more, recent stress left mean cognition comparatively strong while affect fell sharply, and post-1982 recovery restored organisational cognition before broad affective surplus. This suggested that cognitive and affective attractors differ, and motivated a layered hypothesis with three strata: Cognitive (Archive, Lore, Stewards), Executive (Helm, Shield) and Material (Flow, Hands, Craft).</p>
+<p>On checking, several proposed Laos metrics could not be reproduced exactly, notably the Layer Displacement Threshold and Cross-Layer Coupling Rigidity. That led to a conceptual correction: displacement resistance, recovery speed and morphological persistence are different things. A layer can be hard to displace yet slow to recover, or easy to displace yet strongly pulled back.</p>
+
+<h3>6 · Phase II: development-set blind tests</h3>
+<h4>6.1 Blind Set 1</h4>
+<p>8 societies × 126 years × 8 nodes = 8,064 rows; 24 grouped deep-stress episodes. The three-layer displacement analysis gave strong same-society recurrence. Viability: within-society distance 0.132 against between 0.189 (p ≈ 0.0026). Affect: 0.120 against 0.179 (p ≈ 0.0016). Shocks in the same blind society were about 30–33% more similar than shocks across societies: the first blind support for society-specific stress allocation.</p>
+<p>Recovery ratios differed widely between societies (A 0.51, B 0.44, C 0.78, D 0.66, E 1.95, F 0.61, G 1.10, H 2.00), suggesting distinct restorative and transformative tendencies. But layer-level rank recurrence (ρ ≈ 0.200) was barely above node-level (ρ ≈ 0.177), so Set 1 did not show that the three-layer anatomy was the natural representation.</p>
+<h4>6.2 Blind Set 2</h4>
+<p>A critical negative replication. 19 grouped episodes; 16 had nominal five-year baselines, three of them contaminated, leaving 13 clean. Viability: within 0.247 against between 0.264 (p = 0.393). Affect: 0.254 against 0.256 (p = 0.540). The Set 1 recurrence did not replicate.</p>
+<p>A methodological fault also emerged. The Set 1 normalisation divided standardised layer displacements by their algebraic sum; in one Set 2 episode that sum was nearly zero, turning small values such as (0.101, −0.068, −0.040) into extreme, meaningless "proportions". The normalisation was abandoned permanently. Fixed layers also did worse than nodes (ρ<sub>layer</sub> ≈ 0.143 against ρ<sub>node</sub> ≈ 0.191), shifting the theory toward society-specific functional modules rather than a universal cognitive/executive/material hierarchy.</p>
+<h4>6.3 Blind Set 3</h4>
+<p>7,912 rows; 27 grouped episodes, 25 with clean baselines. Using each society's first clean shock as a template: first-to-later similarity was 0.302 for viability (p ≈ 0.001) and 0.199 for affect (p ≈ 0.024), so early shocks carried information about later ones. But against other-society templates the advantage was weak: viability 0.302 own against 0.213 other (p ≈ 0.24); affect 0.199 against 0.180 (p ≈ 0.50).</p>
+<p>All-pairs recurrence was stronger: viability within 0.392 against between 0.188 (p ≈ 0.019); affect 0.377 against 0.144 (p ≈ 0.043). But the result leaned heavily on Society D (C<sup>V</sup> ≈ 0.781, C<sup>e</sup> ≈ 0.833, mean return ratio R ≈ 0.44); removing D substantially weakened it. Set 3 produced the next refinement: attractor coherence is a continuous variable that differs between societies, not something a society has or lacks.</p>
+
+<h3>7 · The frozen Functional Attractor Coherence Hypothesis</h3>
+<blockquote>Societal systems vary continuously in the degree to which previous functional organization constrains responses to later disturbances. In high-coherence systems, independent shocks repeatedly distribute viability loss and affective burden across similar functional nodes or modules, and recovery is biased toward recurrent morphology. In low-coherence systems, cross-episode functional recurrence is weaker, recovery is less constrained, and episode characteristics account for more response variation.</blockquote>
+<p>Five primary criteria were fixed: (A) within-society viability recurrence exceeds between-society; (B) affect shows the same direction; (C) own historical templates outperform other societies' templates prospectively; (D) effects survive restriction to well-resolved panels; (E) greater coherence predicts stronger restorative pull. Sets 1–3 were classed as development data and could no longer confirm this formulation.</p>
+
+<h3>8 · Phase III: prospective tests</h3>
+<h4>8.1 Blind Set 5</h4>
+<p>The first genuine prospective test: 5,528 rows, eight societies, 21 grouped episodes, 18 after clean-baseline exclusions.</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Criterion</th><th>Result</th><th>Numbers</th></tr></thead>
+<tbody>
+<tr><td>A · Viability recurrence</td><td><span class="pill fail">Fail</span></td><td>within 0.019 vs between 0.141; difference −0.122; sign-flip p ≈ 0.875</td></tr>
+<tr><td>B · Affective recurrence</td><td><span class="pill fail">Fail</span></td><td>within 0.095 vs between 0.135; p ≈ 0.625</td></tr>
+<tr><td>C · Own-history prediction</td><td><span class="pill fail">Fail</span></td><td>median own-template advantage −0.132 (viability), −0.372 (affect); D strongly positive, E and F not</td></tr>
+<tr><td>D · High-resolution robustness</td><td><span class="pill fail">Fail</span></td><td>viability 0.089 vs 0.172; affect 0.095 vs 0.183 — not a carry-forward artefact</td></tr>
+<tr><td>E · Coherence predicts restoration</td><td><span class="pill fail">Fail</span></td><td>observed direction negative; sample very small</td></tr>
+</tbody></table></div>
+<p>All five frozen criteria failed: Blind Set 5 did not confirm the hypothesis. That cannot be repaired after the fact by pointing to Society D, which behaved like a strong attractor system; D's presence suggests instead that high coherence may be a case-specific property rather than a general one.</p>
+<h4>8.2 Blind Set 6</h4>
+<p>5,120 observations with very uneven resolution; 12 episodes, of which only five survived clean-baseline exclusion, each in a different society. No society had repeated clean shocks, so neither coherence nor an own-template test could be estimated. Set 6 is <strong>non-evaluable</strong>, neither positive nor negative. It exposed an identifiability condition: long panels are not enough unless they contain several separable disturbances in the same system. A dataset-level rule was proposed: at least three societies each with at least three clean independent episodes.</p>
+
+<h3>9 · Phase IV: identifiable-corpus analysis</h3>
+<p>The named JUNO all-country corpus was then examined, selected only on eligibility: carry-forward ≤ 30% and at least three clean deep-stress episodes. Ten societies qualified: Argentina, Brazil, Chile, China, Colombia, Germany, Russia, South Africa, Sweden and the United Kingdom. Identities were known, so this is not blind confirmation.</p>
+<h4>9.1 Same-country recurrence</h4>
+<p>Median same-country advantage over between-country similarity: viability +0.213 (p ≈ 0.0011), affect +0.125 (p ≈ 0.0158), cognition +0.141 (p ≈ 0.0074). Functional deformation was more recurrent within named societies than across them.</p>
+<h4>9.2 Between-society heterogeneity</h4>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Society</th><th>C<sup>V</sup></th><th>C<sup>e</sup></th><th>Median R<sub>V</sub></th><th>Median R<sub>e</sub></th></tr></thead>
+<tbody>
+<tr><td>Sweden</td><td class="n">0.764</td><td class="n">0.878</td><td class="n">0.351</td><td class="n">0.368</td></tr>
+<tr><td>Colombia</td><td class="n">0.651</td><td class="n">0.569</td><td class="n">1.221</td><td class="n">1.150</td></tr>
+<tr><td>Brazil</td><td class="n">0.522</td><td class="n">0.633</td><td class="n">1.416</td><td class="n">1.296</td></tr>
+<tr><td>UK</td><td class="n">0.541</td><td class="n">0.532</td><td class="n">0.662</td><td class="n">0.670</td></tr>
+<tr><td>Argentina</td><td class="n">0.429</td><td class="n">0.485</td><td class="n">1.080</td><td class="n">1.053</td></tr>
+<tr><td>South Africa</td><td class="n">0.319</td><td class="n">0.222</td><td class="n">1.105</td><td class="n">1.352</td></tr>
+<tr><td>China</td><td class="n">0.250</td><td class="n">0.048</td><td class="n">0.809</td><td class="n">0.877</td></tr>
+<tr><td>Russia</td><td class="n">0.042</td><td class="n">0.048</td><td class="n">0.589</td><td class="n">0.546</td></tr>
+<tr><td>Chile</td><td class="n">−0.048</td><td class="n">−0.191</td><td class="n">0.748</td><td class="n">0.897</td></tr>
+<tr><td>Germany</td><td class="n">−0.286</td><td class="n">−0.347</td><td class="n">1.509</td><td class="n">1.212</td></tr>
+</tbody></table></div>
+<p>Heterogeneity was strongest in affective coherence (p ≈ 0.0057), borderline for viability (p ≈ 0.054) and weaker for cognition (p ≈ 0.123).</p>
+<h4>9.3 Distinct attractor architectures</h4>
+<p>The named cases show why coherence and recovery should not be merged into one "attractor depth". <strong>High coherence with strong restoration:</strong> Sweden (C<sup>V</sup> 0.764, R<sub>V</sub> 0.351) and the UK (0.541, 0.662), approximating homeostatic recurrent systems. <strong>High coherence with transformation:</strong> Colombia (0.651, R<sub>V</sub> 1.221) and Brazil (0.522, 1.416), where highly recurrent deformation does not mean return to the earlier morphology. <strong>Low coherence:</strong> Germany (−0.286) and Chile (−0.048), with much more reordering of protected and stress-absorbing nodes across disturbances.</p>
+<h4>9.4 Prospective prediction remains weak</h4>
+<p>Median own-template advantage: viability +0.071 (5 of 10 countries positive), affect +0.015 (6 of 10), cognition +0.075 (6 of 10). The named corpus supports historical recurrence more strongly than stable prospective predictability.</p>
+<h4>9.5 Coherence does not imply homeostasis</h4>
+<p>ρ(C<sup>V</sup>, H<sup>V</sup>) ≈ 0.22 (p ≈ 0.53); ρ(C<sup>e</sup>, H<sup>e</sup>) ≈ 0.13 (p ≈ 0.73). No evidence that deformation coherence and restorative pull are strongly coupled, which rejects one component of the frozen hypothesis.</p>
+
+<h3>10 · Sequential summary</h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Stage</th><th>Hypothesis</th><th>Result</th><th>Consequence</th></tr></thead>
+<tbody>
+<tr><td>Cambodia</td><td>Severe shocks create hysteretic recomposition</td><td>Exploratory support</td><td>Transformative path dependence proposed</td></tr>
+<tr><td>Thailand</td><td>Some systems return through recurrent states</td><td>Exploratory support</td><td>Homeostatic attractor proposed</td></tr>
+<tr><td>Laos</td><td>Attractors may differ by functional layer</td><td>Partial support</td><td>Layered architecture proposed</td></tr>
+<tr><td>Laos metric recheck</td><td>Fixed layers have reproducible depth thresholds</td><td>Not adequately supported</td><td>Resistance, recovery and persistence separated</td></tr>
+<tr><td>Blind Set 1</td><td>Within-society layer morphology recurs</td><td>Strong positive</td><td>Stress-allocation hypothesis strengthened</td></tr>
+<tr><td>Blind Set 2</td><td>Set 1 recurrence replicates</td><td>Negative</td><td>Sum normalisation rejected; fixed layers weakened</td></tr>
+<tr><td>Blind Set 3</td><td>Functional morphology recurs by society</td><td>Partial positive</td><td>Coherence becomes continuous and heterogeneous</td></tr>
+<tr><td>Prospective Set 5</td><td>Frozen coherence thesis predicts new data</td><td>Failed</td><td>Strong universal/predictive version rejected</td></tr>
+<tr><td>Set 6</td><td>Same frozen test</td><td>Non-evaluable</td><td>Repeated-shock eligibility rule exposed</td></tr>
+<tr><td>Identifiable corpus</td><td>Quality-filtered named societies show recurrence</td><td>Positive, retrospectively</td><td>Heterogeneous coherence supported</td></tr>
+<tr><td>Identifiable prospective test</td><td>Early own-history template beats alternatives</td><td>Weak / null</td><td>Stable national template not established</td></tr>
+<tr><td>Coherence → restoration</td><td>High coherence implies homeostasis</td><td>Null</td><td>Coherence and restoration separated</td></tr>
+</tbody></table></div>
+
+<h3>11 · What was falsified</h3>
+<ul>
+<li><strong>A universal national attractor.</strong> Some systems show strong recurrence; others little or negative.</li>
+<li><strong>A universal three-layer hierarchy</strong> (cognitive → executive → material). In Set 2 the eight-node representation did at least as well; Set 3 showed no clear layer advantage. Functional modules should be estimated, not assumed.</li>
+<li><strong>Coherence equals homeostasis.</strong> High recurrence coexists with strong restoration (Sweden) and with persistent transformation (Colombia, Brazil).</li>
+<li><strong>Early shocks define a stationary lifelong template.</strong> The strongest own-history test failed in Set 5 and stayed weak in the named corpus; a society's stress architecture may itself change.</li>
+</ul>
+
+<h3>12 · What survived</h3>
+<ul>
+<li><strong>Recurrence exists in some systems:</strong> Society D in Blind Set 3 anonymously; Sweden and the UK by name.</li>
+<li><strong>Coherence varies continuously</strong> (C<sub>s</sub> in [−1, 1]) rather than present or absent, most clearly in affective stress allocation.</li>
+<li><strong>Coherence can differ by dimension:</strong> C<sup>V</sup> &gt; C<sup>e</sup> or the reverse, consistent with the Laos observation.</li>
+<li><strong>Recovery is a separate property.</strong> The minimal attractor architecture is <em>A<sub>s</sub> = (C<sub>s</sub>, H<sub>s</sub>)</em>, or in full (C<sup>V</sup>, C<sup>e</sup>, C<sup>g</sup>, H<sup>V</sup>, H<sup>e</sup>, H<sup>g</sup>).</li>
+</ul>
+
+<h3>13 · The revised surviving hypothesis</h3>
+<blockquote>Societal Functional Attractor Architecture Hypothesis: Societal systems differ in the degree to which independent disturbances reproduce similar distributions of functional stress and in the degree to which subsequent recovery returns the system toward previous morphology. Functional deformation coherence and restorative pull are partially independent, dimension-specific properties rather than manifestations of a universal fixed national attractor. High-coherence systems repeatedly channel adaptive stress through similar functional nodes or modules; low-coherence systems exhibit greater reordering across episodes. High coherence may accompany either homeostatic restoration or path-dependent transformation. The composition and stability of these functional modules may themselves change historically.</blockquote>
+<p>This is a new post-Set 5 hypothesis, not something prospectively confirmed by the analyses that generated it.</p>
+
+<h3>14 · Competing explanations</h3>
+<ul>
+<li><strong>Generic functional vulnerability:</strong> some nodes are simply more vulnerable everywhere; predicts within ≈ between.</li>
+<li><strong>Shock-type determination:</strong> war, economic crisis, revolution or occupation produce characteristic deformation regardless of society; predicts same-shock-type similarity exceeding same-society similarity.</li>
+<li><strong>Historical-regime change:</strong> different eras within one national series may have different attractors, which would explain strong whole-history recurrence alongside weak early-shock prediction.</li>
+<li><strong>Scoring-template artefact:</strong> recurrence could reflect discretisation or carry-forward; results must survive high-resolution restriction.</li>
+</ul>
+
+<h3>15 · Limitations</h3>
+<p>The study was iterative: Cambodia, Thailand, Laos and Blind Sets 1–3 shaped the theory and cannot confirm it. Set 5, the cleanest test of the frozen formulation, failed, and that must keep substantial weight. Set 6 gave no evidence either way. Many datasets lack enough qualifying episodes. Several blind panels exceeded the 30% carry-forward threshold. Pairwise episode similarities are not independent, so society-level permutation or hierarchical inference is preferable. The analyses test internal properties of CAMS measurements, not whether g, e and V correspond to psychological cognition, affect or real institutional functioning. The named corpus is not blind and may overlap with JUNO calibration material. And the results apply to modelled functional system states, never to fixed characteristics of populations.</p>
+
+<h3>16 · Requirements for the next genuine test</h3>
+<p>Freeze the formulation before opening the data. Require at least three societies each with at least three clean independent deep-stress episodes. Preregister six outcomes:</p>
+<ol class="plain">
+<li>Deformation recurrence: C<sup>V</sup> and C<sup>e</sup>.</li>
+<li>Same-society specificity: within-society similarity above between-society.</li>
+<li>Shock-type control: same-society must keep predictive value after controlling for shock type, magnitude and duration.</li>
+<li>Temporal stability: estimate coherence in an early and a later window and compare.</li>
+<li>Independent restorative pull: estimate H<sub>s</sub> without assuming it correlates with C<sub>s</sub>.</li>
+<li>Module discovery: compare fixed three-layer models, eight-node morphology and empirically inferred modules, learned on training episodes and evaluated on held-out ones.</li>
+</ol>
+
+<h3>17 · Conclusion</h3>
+<p>The research began with an intuitive proposition: that societies might have stable "national attractors" governing their responses to adaptive stress. The data do not support a universal fixed national attractor, nor a universal cognitive/executive/material hierarchy, nor the idea that high recurrence implies homeostatic recovery. The strongest prospective claim, that early national shock morphology predicts later disturbances better than other societies' histories, failed in the first fully prospective blind test.</p>
+<p>Nor does the evidence reduce societal response to random shock contingency. Some systems reproduce remarkably similar stress-allocation morphologies across independent disturbances; others do not. The principal surviving contribution is the separation of two properties, <strong>deformation coherence</strong> and <strong>restorative pull</strong>, which together define a functional attractor architecture without requiring a fixed equilibrium. A high-coherence society may repeatedly deform through the same channels and then either return to its earlier configuration or transform into a new one.</p>
+<p>Societal path dependence, if it survives further prospective testing, is better understood not as a permanent national state but as a historically conditioned constraint on which parts of a functional system repeatedly absorb stress, which stay protected, and how strongly the post-shock system is drawn toward or away from its prior shape.</p>
+</section>
+
+<!-- ═══════════════════════ PART III ═══════════════════════ -->
+<section class="part" id="checks" aria-labelledby="checks-h">
+<p class="partlabel">Part III · Checks</p>
+<h2 id="checks-h">What was corrected, and what doesn't match</h2>
+<p>Both analyses are presented as their authors wrote them. They were checked against each other and against the repository. Where something was plainly wrong it has been corrected; where the two disagree, both versions stand.</p>
+<div class="box"><span class="bt">Corrected in the revisit write-up</span>
+<ol>
+<li>The draft expanded CAMS as "Coordinated Adaptive Meta-System". It is the Complex Adaptive Model State.</li>
+<li>The draft said Russia (0.00) and Germany (−0.02) were the least coherent societies and that Germany was "the only society with clearly negative coherence". Its own table gives Chile −0.12 on viability and −0.17 on affect, the lowest of the fourteen. The text, chart order and table now say so.</li>
+<li>The draft called the Laos result "the first confirmation" in "an independent corpus". Laos is the case that generated the idea (Part II, §5.3), so it is now described as a consistency, not an independent confirmation.</li>
+<li>The draft labelled its comparison column "Original analysis / original published paper". The numbers in that column are from Blind Set 5, so it is labelled that way.</li>
+</ol></div>
+<div class="box teal"><span class="bt">Where the two analyses don't match</span>
+<ol>
+<li><strong>Like is not compared with like in the scorecard.</strong> The revisit's "before" column is Blind Set 5, a blind prospective test. Its "after" column is a named, non-blind dataset. The like-for-like comparison is the original Phase IV named-country check, which had already passed criteria A and B (p ≈ 0.001 and 0.016). What is genuinely new in the revisit is criterion C: own-template advantage of +0.16 to +0.24, against +0.015 to +0.075 in Phase IV. The Set 5 failure is not overturned, because the revisit is not a blind test.</li>
+<li><strong>Recovery ratios disagree for the same countries.</strong> Phase IV found five of its ten countries transformative (Colombia 1.22, Brazil 1.42, Argentina 1.08, South Africa 1.11, Germany 1.51). The revisit finds all of these except Germany homeostatic (0.36–0.60). The two runs' recovery ratios for the ten shared countries rank-correlate at only about 0.3. The revisit's "13 of 14 homeostatic" therefore depends on choices in how R was computed, probably the post-crisis window, which the write-up does not state.</li>
+<li><strong>Coherence broadly agrees.</strong> For the ten shared countries, viability coherence rank-correlates at about 0.9 between the runs and affect coherence at about 0.7. Sweden is highest in both. The biggest move is Germany, from −0.29 to −0.02.</li>
+<li><strong>Coherence and recovery.</strong> The revisit's ρ = −0.39 (coherence against R) and Phase IV's ρ ≈ 0.22 (coherence against restorative pull H) point the same way and neither is significant. The revisit scores this a weak pass; the original scored it null.</li>
+<li><strong>The revisit can't yet be re-run.</strong> The dataset is in the repository and matches the description (53 societies, 47,960 rows). The analysis script (<code>juno_attractor.py</code>) was run in a temporary workspace and has not been archived.</li>
+</ol></div>
+<p>Under the lab's rule, we don't edit the past, we qualify it: the original study's conclusion stands as written, and this revisit is a qualification of it, not a replacement.</p>
+
+<p class="note">Related: <a href="blind-protocol-v111.html">Blind-Analysis Protocol v1.1.1 (cognitive-affective extension)</a> · <a href="blind-test.html">JUNO / CAMS Blind Analysis Challenge</a> · <a href="attractors.html">Attractors</a> · <a href="natural-history-of-civilisations.html">The Natural History of Civilisations</a> · <a href="https://github.com/KaliBond/wintermute/blob/main/docs/CAMS_LAB_DIARY.md" target="_blank" rel="noopener">The CAMS lab diary ↗</a></p>
+</main></div>
+
+<footer class="footer"><nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;"><a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a><a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a><a href="results.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Results</a></nav><p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p></footer><script src="site-chrome.js"></script><script src="nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+(function(){
+if (typeof Chart === 'undefined') return;
+var TEAL='#2a6875', AMBER='#d98b2b', RED='#b3392e', MUTED='#5a6870', GRID='rgba(26,36,43,0.08)';
+Chart.defaults.font.family="'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif";
+Chart.defaults.color=MUTED;
+var f2=function(v){return v.toFixed(2)};
+
+new Chart(document.getElementById('c-rec'),{type:'bar',
+ data:{labels:['Viability','Affect','Cognition'],datasets:[
+  {label:'Within-society',data:[0.335,0.319,0.304],backgroundColor:TEAL,borderRadius:4},
+  {label:'Between-society',data:[0.179,0.158,0.147],backgroundColor:AMBER,borderRadius:4}]},
+ options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+c.raw.toFixed(3)}}}},
+  scales:{x:{grid:{color:GRID}},y:{min:0,max:0.45,grid:{color:GRID},ticks:{callback:f2},title:{display:true,text:'Mean Spearman similarity'}}}}});
+
+var soc=['Sweden','Colombia','Portugal','South Africa','Argentina','Laos','Philippines','UK','Brazil','Greece','China','Russia','Germany','Chile'];
+var cv=[0.810,0.655,0.619,0.557,0.536,0.405,0.405,0.363,0.268,0.238,0.202,0.000,-0.024,-0.119];
+new Chart(document.getElementById('c-coh'),{type:'bar',
+ data:{labels:soc,datasets:[{label:'C^V',data:cv,backgroundColor:cv.map(function(v){return v>=0?TEAL:RED}),borderRadius:3,borderSkipped:false}]},
+ options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return 'Coherence: '+c.raw.toFixed(3)}}}},
+  scales:{x:{min:-0.25,max:0.95,grid:{color:GRID},ticks:{callback:f2}},y:{grid:{display:false}}}}});
+
+var pts=[['Sweden',0.810,0.206],['Portugal',0.619,0.541],['Colombia',0.655,0.548],['South Africa',0.557,0.596],['Argentina',0.536,0.395],['Laos',0.405,0.496],['Philippines',0.405,0.624],['UK',0.363,0.435],['Brazil',0.268,0.362],['Greece',0.238,0.351],['China',0.202,0.661],['Russia',0.000,0.554],['Chile',-0.119,0.549]].map(function(p){return {x:p[1],y:p[2],label:p[0]}});
+new Chart(document.getElementById('c-sc'),{type:'scatter',
+ data:{datasets:[{label:'Homeostatic',data:pts,backgroundColor:TEAL+'CC',pointRadius:7,pointHoverRadius:9},
+  {label:'Transformative',data:[{x:-0.024,y:1.124,label:'Germany'}],backgroundColor:RED+'CC',pointRadius:9,pointStyle:'triangle'}]},
+ options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){var d=c.raw;return d.label+': coherence '+d.x.toFixed(3)+', R '+d.y.toFixed(3)}}}},
+  scales:{x:{min:-0.25,max:0.95,grid:{color:GRID},ticks:{callback:f2},title:{display:true,text:'Attractor coherence C^V'}},
+   y:{min:0,max:1.35,grid:{color:GRID},ticks:{callback:f2},title:{display:true,text:'Recovery ratio R (< 1 = homeostatic)'}}}}});
+
+new Chart(document.getElementById('c-tpl'),{type:'bar',
+ data:{labels:['Viability','Affect','Cognition'],datasets:[
+  {label:'Blind Set 5',data:[-0.132,-0.372,null],backgroundColor:RED+'99',borderRadius:4},
+  {label:'Combined JUNO',data:[0.161,0.238,0.190],backgroundColor:TEAL,borderRadius:4}]},
+ options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.raw==null?'Not reported':c.dataset.label+': '+(c.raw>0?'+':'')+c.raw.toFixed(3)}}}},
+  scales:{x:{grid:{color:GRID}},y:{min:-0.5,max:0.35,grid:{color:GRID},ticks:{callback:function(v){return (v>0?'+':'')+v.toFixed(2)}},title:{display:true,text:'Own-template advantage'}}}}});
+})();
+</script>
+</body>
+</html>
