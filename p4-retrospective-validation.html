@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>P4 Retrospective Validation — Neural Nations</title>
+<meta name="description" content="Phase 4 retrospective validation: the sealed crisis-typology cluster-gap rule run unchanged on three corporate pathology cases (Boeing, Theranos, WorldCom) and six matched controls. Interim report, 10 November 2026.">
+<link rel="canonical" href="https://neuralnations.org/p4-retrospective-validation">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#ffffff; --ink:#1a242b; --muted:#5a6870; --line:#dfe5e8; --accent:#2a6875; --accent2:#b8701f; --soft:#eef4f5; --warm:#fbf6ee; --pass:#2f7a4b; --passbg:#e3f2e8; --fail:#b3392e; --failbg:#f8e1de; --weak:#8b5a00; --weakbg:#f6e7c8; --na:#5a6870; --nabg:#eceff1;}
+body{background:var(--bg)}
+.essay-wrap{padding:0 16px}
+.essay{max-width:720px;margin:0 auto;padding-block:52px 80px;font-family:'Newsreader',Georgia,'Times New Roman',serif;font-size:19px;line-height:1.7;color:var(--ink)}
+.sans,.essay table,.chart-box,.contents,.tiles{font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif}
+.essay .kicker{font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0}
+.essay h1{font-family:'Newsreader',Georgia,serif;font-size:clamp(34px,6vw,52px);line-height:1.08;font-weight:700;margin:12px 0 14px;text-wrap:balance;color:var(--ink);text-align:left}
+.essay .standfirst{font-size:21px;line-height:1.5;margin:0 0 16px}
+.essay .byline{font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:14px;color:var(--muted);margin:0 0 6px}
+.essay .status{display:inline-block;font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:12px;font-weight:600;color:var(--accent2);border:1px solid currentColor;border-radius:999px;padding:2px 10px;margin:4px 0 26px}
+.contents{background:var(--soft);border-radius:10px;padding:18px 20px;margin:0 0 20px}
+.contents ol{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.contents a{color:var(--ink);text-decoration:none;display:block}
+.contents a:hover .ct{text-decoration:underline}
+.contents .pt{font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.contents .ct{display:block;font-size:16px;font-weight:600;line-height:1.3}
+.contents .cd{display:block;font-size:13.5px;color:var(--muted);line-height:1.45}
+.part{margin-top:72px;padding-top:28px;border-top:3px solid var(--ink)}
+.part .partlabel{font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0}
+.part h2{font-family:'Newsreader',Georgia,serif;font-size:clamp(28px,4.6vw,38px);line-height:1.12;font-weight:700;margin:8px 0 6px;text-wrap:balance}
+.part .subtitle{font-style:italic;font-size:21px;color:var(--muted);margin:0 0 10px;line-height:1.4}
+.essay h3{font-family:'Newsreader',Georgia,serif;font-size:25px;line-height:1.25;font-weight:600;margin:48px 0 14px;text-wrap:balance}
+.essay h4{font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);margin:30px 0 8px}
+.essay p{margin:0 0 18px}
+.essay ul,.essay ol.plain{margin:0 0 18px;padding-left:24px}
+.essay li{margin:0 0 6px}
+.essay a{color:var(--accent)}
+.essay code{font-family:ui-monospace,Consolas,monospace;font-size:.78em;background:var(--soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.essay .formula{text-align:center;font-size:20px;font-style:italic;margin:20px 0;padding:12px;background:var(--soft);border-radius:8px;overflow-x:auto}
+.essay .pull{font-size:22px;line-height:1.4;font-weight:600;color:var(--accent);margin:28px 0;padding-left:18px;border-left:3px solid var(--accent2)}
+.essay blockquote{margin:22px 0;padding:14px 18px;background:var(--warm);border-left:3px solid var(--accent2);border-radius:0 8px 8px 0;font-style:italic}
+.box{font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:15px;line-height:1.55;background:var(--warm);border-left:3px solid var(--accent2);padding:14px 18px;border-radius:0 8px 8px 0;margin:22px 0}
+.box.teal{background:var(--soft);border-left-color:var(--accent)}
+.box .bt{display:block;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);margin-bottom:4px}
+.box.teal .bt{color:var(--accent)}
+.box p{margin:0 0 10px}.box p:last-child{margin:0}
+.box ol{margin:6px 0 0;padding-left:20px}.box li{margin:0 0 8px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:22px 0}
+.tile{background:var(--soft);border-radius:10px;padding:16px 14px;text-align:center}
+.tile b{display:block;font-size:30px;line-height:1.05;color:var(--accent);margin-bottom:6px}
+.tile span{font-size:12.5px;color:var(--muted);line-height:1.35;display:block}
+.nodes{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0 22px;font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif}
+.nodes div{border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--muted);line-height:1.35}
+.nodes b{display:block;color:var(--accent2);font-size:15px}
+.chart-box{border:1px solid var(--line);border-radius:12px;padding:20px 18px 14px;margin:26px 0}
+.chart-box .ctitle{font-size:12.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.chart-box .legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;color:var(--muted);margin-bottom:8px}
+.chart-box .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.chart-box .cap{font-size:12.5px;line-height:1.45;color:var(--muted);margin-top:10px}
+.chart-in{position:relative;width:100%}
+.tbl-wrap{overflow-x:auto;margin:20px 0 26px}
+.essay table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.45}
+.essay th{text-align:left;padding:9px 10px;background:var(--soft);border-bottom:2px solid var(--line);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.essay td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.essay td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.pill.pass{background:var(--passbg);color:var(--pass)}.pill.fail{background:var(--failbg);color:var(--fail)}.pill.weak{background:var(--weakbg);color:var(--weak)}.pill.na{background:var(--nabg);color:var(--na)}
+.essay .note{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:13.5px;line-height:1.55;color:var(--muted)}
+@media (max-width:560px){.essay{font-size:17.5px;padding-block:32px 60px}.essay h3{font-size:22px}.essay .standfirst{font-size:19px}}
+</style>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+<div class="essay-wrap"><main class="essay">
+<p class="kicker">Neural Nations · retrospective validation · Phase 4</p>
+<h1>Does the Crisis Detector Work on Firms?</h1>
+<p class="standfirst">A rule sealed on fifteen national crises was run, unchanged, on three famous corporate collapses and six matched firms that did not collapse. The controls set it off almost as often as the cases.</p>
+<p class="byline">Kari McKern · Neural Nations, Sydney · 10 November 2026 · analyses by AI collaborators, presented as written</p>
+<span class="status">Interim report · threshold rule run · four comparisons pending</span>
+
+<nav class="contents" aria-label="Contents">
+<ol>
+<li><a href="#design"><span class="pt">Part I · Design</span><span class="ct">The test and the frozen protocol</span><span class="cd">Three cases, three primary controls, three secondary controls, a corporate node mapping, and the sealed cluster-gap rule.</span></a></li>
+<li><a href="#results"><span class="pt">Part II · Results</span><span class="ct">The rule fires on everyone</span><span class="cd">Firing rates, the year-by-year gap for each case and its controls, and what might separate them instead.</span></a></li>
+<li><a href="#portraits"><span class="pt">Part III · Interpretation</span><span class="ct">Structural personalities</span><span class="cd">A post-hoc reading of each firm&rsquo;s node hierarchy. Interpretation, not a test.</span></a></li>
+<li><a href="#pending"><span class="pt">Part IV · Still to run</span><span class="ct">The baselines the protocol requires</span><span class="cd">Circular-shift null, stress-change baseline, first differences, and a duration-plus-magnitude score.</span></a></li>
+<li><a href="#checks"><span class="pt">Part V · Checks</span><span class="ct">What was verified, and what doesn&rsquo;t hold up</span><span class="cd">Reproduction, the freeze record, and points where the write-up claims more than the numbers show.</span></a></li>
+</ol>
+</nav>
+
+<!-- ═══════════════════════ PART I ═══════════════════════ -->
+<section class="part" id="design" aria-labelledby="design-h">
+<p class="partlabel">Part I · Design</p>
+<h2 id="design-h">The Test and the Frozen Protocol</h2>
+<p class="subtitle">Can a detector built for nations tell a failing firm from a healthy one?</p>
+
+<div class="tiles">
+<div class="tile"><b>3</b><span>pathology cases</span></div>
+<div class="tile"><b>6</b><span>matched controls (3 primary, 3 secondary)</span></div>
+<div class="tile"><b>86</b><span>firm-years classified</span></div>
+<div class="tile"><b>0</b><span>changes to the sealed rule</span></div>
+</div>
+
+<h3>The rule</h3>
+<p>The crisis-typology rule was sealed on 5 November 2026 after scoring 13 of 15 known national crises correctly (<a href="crisis_typology_rule_v1.md">crisis_typology_rule_v1.md</a>). It compares two clusters of nodes. If the economic nodes are clearly stronger than the governing and meaning-making nodes, the year reads as an epistemological crisis; the reverse reads as an economic one.</p>
+<div class="formula">V = C + K &minus; S &nbsp;&nbsp;(Abstraction excluded)</div>
+<div class="nodes">
+<div><b>EPI cluster</b>mean V of Helm and Lore</div>
+<div><b>ECO cluster</b>mean V of Hands, Stewards and Flow</div>
+<div><b>Gap</b>ECO mean &minus; EPI mean</div>
+<div><b>Classification</b>gap &ge; +1.0 epistemological; gap &le; &minus;1.0 economic; otherwise unclassified</div>
+</div>
+
+<h3>The firms</h3>
+<p>The control list was frozen before any scoring began and its SHA-256 hash recorded (<a href="analysis/P4_protocol_frozen.md">P4_protocol_frozen.md</a>, <a href="analysis/P4_protocol_hash.txt">hash record</a>). Controls had to share industry, scale and era with the case, and have no documented pathology of the same family in the window.</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Case</th><th>Pathology</th><th>Scored years</th><th>Primary control</th><th>Secondary control</th></tr></thead>
+<tbody>
+<tr><td><b>Boeing</b></td><td>737 MAX safety and governance crisis</td><td class=n>2013&ndash;2022</td><td>Airbus</td><td>Lockheed Martin</td></tr>
+<tr><td><b>Theranos</b></td><td>Rise and collapse, diagnostic fraud</td><td class=n>2008&ndash;2018</td><td>Quest Diagnostics</td><td>Illumina</td></tr>
+<tr><td><b>WorldCom</b></td><td>Accounting fraud and bankruptcy</td><td class=n>1996&ndash;2004</td><td>AT&amp;T</td><td>Verizon (2000&ndash;2004 only)</td></tr>
+</tbody></table></div>
+
+<h3>Corporate node mapping</h3>
+<div class="nodes">
+<div><b>Helm</b>Board and executive</div>
+<div><b>Shield</b>Compliance, legal, discipline</div>
+<div><b>Lore</b>Culture and narratives</div>
+<div><b>Stewards</b>Ownership and capital</div>
+<div><b>Craft</b>Engineering and expertise</div>
+<div><b>Hands</b>Workforce</div>
+<div><b>Archive</b>Records, audit, institutional memory</div>
+<div><b>Flow</b>Supply chain and market</div>
+</div>
+
+<div class="box teal"><span class="bt">Protocol constraints (§0A)</span>
+<ol>
+<li><code>verify_canonical</code> runs before any quantity is computed.</li>
+<li>No retrospective adjustment of nodes, scoring criteria, thresholds or rules after seeing results.</li>
+<li>Every firing is reported, including false positives in controls. FAIL is FAIL.</li>
+<li>Where the protocol is silent, stop and ask.</li>
+</ol></div>
+<p>The cases and primary controls were scored with repeated independent AI passes and averaged (ensemble-mean ENS files, with scorer spread in ENV files). The secondary controls are single-scorer runs, added as a sensitivity test once the primary results were in.</p>
+</section>
+
+<!-- ═══════════════════════ PART II ═══════════════════════ -->
+<section class="part" id="results" aria-labelledby="results-h">
+<p class="partlabel">Part II · Results</p>
+<h2 id="results-h">The Rule Fires on Everyone</h2>
+<p class="subtitle">Firing rate does not separate the collapses from the survivors.</p>
+
+<p>The national rule fires rarely: a third of society-years come out unclassified. On firms it fires in 44&ndash;100% of years, and the controls fire about as often as the cases. Averaged over each group, the three cases fire in 60% of their years and the three primary controls in 54%. In the WorldCom pair the control fires more often than the case.</p>
+
+<div class="tbl-wrap"><table>
+<thead><tr><th>Firm</th><th>Role</th><th>Pair</th><th>Years</th><th>Fires</th><th>Fire %</th><th>Epi</th><th>Eco</th><th>Longest run</th><th>Peak gap</th></tr></thead>
+<tbody>
+<tr><td><b>Boeing</b></td><td><span class="pill fail">case</span></td><td>Boeing</td><td class=n>10</td><td class=n>8</td><td class=n>80%</td><td class=n>7</td><td class=n>1</td><td class=n>7</td><td class=n>+3.83 (2017)</td></tr>
+<tr><td><b>Airbus</b></td><td><span class="pill pass">primary control</span></td><td>Boeing</td><td class=n>10</td><td class=n>6</td><td class=n>60%</td><td class=n>5</td><td class=n>1</td><td class=n>5</td><td class=n>&minus;3.47 (2020)</td></tr>
+<tr><td><b>Theranos</b></td><td><span class="pill fail">case</span></td><td>Theranos</td><td class=n>11</td><td class=n>6</td><td class=n>54%</td><td class=n>4</td><td class=n>2</td><td class=n>4</td><td class=n>+3.43 (2014)</td></tr>
+<tr><td><b>Quest Diagnostics</b></td><td><span class="pill pass">primary control</span></td><td>Theranos</td><td class=n>11</td><td class=n>5</td><td class=n>46%</td><td class=n>4</td><td class=n>1</td><td class=n>3</td><td class=n>&minus;1.87 (2014)</td></tr>
+<tr><td><b>WorldCom</b></td><td><span class="pill fail">case</span></td><td>WorldCom</td><td class=n>9</td><td class=n>4</td><td class=n>44%</td><td class=n>4</td><td class=n>0</td><td class=n>4</td><td class=n>+2.13 (1998)</td></tr>
+<tr><td><b>AT&amp;T</b></td><td><span class="pill pass">primary control</span></td><td>WorldCom</td><td class=n>9</td><td class=n>5</td><td class=n>56%</td><td class=n>5</td><td class=n>0</td><td class=n>2</td><td class=n>+2.90 (1997)</td></tr>
+<tr><td><b>Lockheed Martin</b></td><td><span class="pill na">secondary control</span></td><td>Boeing</td><td class=n>10</td><td class=n>6</td><td class=n>60%</td><td class=n>0</td><td class=n>6</td><td class=n>3</td><td class=n>&minus;1.50 (2020)</td></tr>
+<tr><td><b>Illumina</b></td><td><span class="pill na">secondary control</span></td><td>Theranos</td><td class=n>11</td><td class=n>6</td><td class=n>54%</td><td class=n>4</td><td class=n>2</td><td class=n>4</td><td class=n>+1.17 (2013)</td></tr>
+<tr><td><b>Verizon</b></td><td><span class="pill na">secondary control</span></td><td>WorldCom</td><td class=n>5</td><td class=n>5</td><td class=n>100%</td><td class=n>0</td><td class=n>5</td><td class=n>5</td><td class=n>&minus;2.00 (2000)</td></tr>
+</tbody></table></div>
+<p class="sans" style="font-size:13.5px;color:var(--muted)">Longest run = most consecutive years firing with the same classification. Source: <a href="analysis/P4/P4_detector_summary_9firm.csv">P4_detector_summary_9firm.csv</a>, <a href="analysis/P4/P4_detector_results_9firm.csv">P4_detector_results_9firm.csv</a>.</p>
+
+<h3>Year by year</h3>
+<p>Each chart shows the gap for a case and its two controls. Above the upper dashed line the year reads epistemological; below the lower line, economic.</p>
+
+<div class="chart-box"><div class="ctitle">Boeing, Airbus, Lockheed Martin · 2013&ndash;2022</div>
+<div class="legend"><span><i style="background:#b3392e"></i>Boeing (case)</span><span><i style="background:#2a6875"></i>Airbus (primary)</span><span><i style="background:#9aa5ab"></i>Lockheed Martin (secondary)</span></div>
+<div class="chart-in" style="height:280px"><canvas id="c-boeing" role="img" aria-label="Gap by year for Boeing, Airbus and Lockheed Martin"></canvas></div>
+<p class="cap">Boeing fires epistemological every year from 2013 to 2019 and peaks at +3.83 in 2017. Airbus fires epistemological from 2015 to 2019. Both flip to economic in 2020.</p></div>
+
+<div class="chart-box"><div class="ctitle">Theranos, Quest Diagnostics, Illumina · 2008&ndash;2018</div>
+<div class="legend"><span><i style="background:#b3392e"></i>Theranos (case)</span><span><i style="background:#2a6875"></i>Quest (primary)</span><span><i style="background:#9aa5ab"></i>Illumina (secondary)</span></div>
+<div class="chart-in" style="height:280px"><canvas id="c-theranos" role="img" aria-label="Gap by year for Theranos, Quest Diagnostics and Illumina"></canvas></div>
+<p class="cap">Theranos climbs from economic (2008&ndash;09) to an epistemological peak of +3.43 in 2014, the year before the exposé. Quest fires mildly epistemological in 2008&ndash;12.</p></div>
+
+<div class="chart-box"><div class="ctitle">WorldCom, AT&amp;T, Verizon · 1996&ndash;2004</div>
+<div class="legend"><span><i style="background:#b3392e"></i>WorldCom (case)</span><span><i style="background:#2a6875"></i>AT&amp;T (primary)</span><span><i style="background:#9aa5ab"></i>Verizon (secondary)</span></div>
+<div class="chart-in" style="height:280px"><canvas id="c-worldcom" role="img" aria-label="Gap by year for WorldCom, AT&amp;T and Verizon"></canvas></div>
+<p class="cap">WorldCom fires epistemological 1998&ndash;2001. AT&amp;T fires in five of nine years and reaches a higher peak (+2.90 in 1997). Verizon reads economic in every year it was scored.</p></div>
+
+<h3>What might separate them</h3>
+<blockquote>Threshold-only rule fires on controls as readily as cases. Separating features are persistence (Boeing: 7-year unbroken run) and magnitude trajectory — not raw firing rate.</blockquote>
+<p>That is the working finding from the analysis. It has not been tested: it is a hypothesis drawn after seeing the data, and Part V shows that it holds for two of the three pairs. A formal duration-and-magnitude score is listed under Part IV.</p>
+</section>
+
+<!-- ═══════════════════════ PART III ═══════════════════════ -->
+<section class="part" id="portraits" aria-labelledby="portraits-h">
+<p class="partlabel">Part III · Interpretation</p>
+<h2 id="portraits-h">Structural Personalities</h2>
+<p class="subtitle">Reading each firm&rsquo;s node hierarchy as a character.</p>
+<div class="box"><span class="bt">Post hoc</span><p>These portraits were written after the results, by an analyst who knew which firms collapsed. They are an interpretation of the scores, not evidence for the detector. The full text is in <a href="analysis/P4/P4_personality_portraits.md">P4_personality_portraits.md</a>.</p></div>
+
+<div class="tbl-wrap"><table>
+<thead><tr><th>Firm</th><th>Portrait</th><th>Top &rarr; bottom node</th><th>Most stressed</th><th>Most volatile</th></tr></thead>
+<tbody>
+<tr><td><b>Boeing</b></td><td><i>The Engineer Who Stopped Listening to Himself</i></td><td>Stewards &rarr; Lore</td><td>Lore</td><td>Stewards</td></tr>
+<tr><td><b>Theranos</b></td><td><i>The Narrator Without a Story</i></td><td>Stewards &rarr; Archive</td><td>Craft</td><td>Stewards</td></tr>
+<tr><td><b>WorldCom</b></td><td><i>The Deal-Maker Who Outgrew His Own Books</i></td><td>Craft &rarr; Shield</td><td>Helm</td><td>Stewards</td></tr>
+<tr><td><b>Airbus</b></td><td><i>The Master Craftsman with One Loose Plank</i></td><td>Craft &rarr; Shield</td><td>Shield</td><td>Flow</td></tr>
+<tr><td><b>Quest</b></td><td><i>The Proceduralist</i></td><td>Craft &rarr; Hands</td><td>Hands</td><td>Lore</td></tr>
+<tr><td><b>AT&amp;T</b></td><td><i>The Institution That Forgot How to Lead</i></td><td>Archive &rarr; Helm</td><td>Helm</td><td>Stewards</td></tr>
+<tr><td><b>Lockheed Martin</b></td><td><i>The Archive Made Flesh</i></td><td>Archive &rarr; Flow</td><td>Flow</td><td>Flow</td></tr>
+<tr><td><b>Illumina</b></td><td><i>The Organism That Grew Into Its Own Potential</i></td><td>Craft &rarr; Shield</td><td>Helm</td><td>Flow</td></tr>
+<tr><td><b>Verizon</b></td><td><i>The Utility at the Merger&rsquo;s Edge</i></td><td>Shield &rarr; Hands</td><td>Stewards</td><td>Hands</td></tr>
+</tbody></table></div>
+
+<h3>Three patterns the portraits point to</h3>
+<p><b>Where the disorder is, not how often the rule fires.</b> In all three cases the nodes that should hold meaning and governance (Lore, Archive, Shield) are both low-ranked and highly stressed. When a control has a weak node, the weakness is not paired with high stress.</p>
+<p><b>Craft coupling.</b> In every healthy firm, Craft is the top-ranked or the most tightly coupled node. Boeing keeps nominal Craft coupling, but the analysis reads its Craft as cut off from Lore and Archive.</p>
+<p><b>Capital volatility.</b> Stewards is the most volatile node in all three cases (Boeing 4.63, Theranos 6.57, WorldCom 5.64) and calmer in the controls quoted (Airbus 2.99, Quest 0.91, Lockheed 0.52).</p>
+<p>Each of these could become a detector feature, but it would have to be frozen and tested on new firms first.</p>
+</section>
+
+<!-- ═══════════════════════ PART IV ═══════════════════════ -->
+<section class="part" id="pending" aria-labelledby="pending-h">
+<p class="partlabel">Part IV · Still to run</p>
+<h2 id="pending-h">The Baselines the Protocol Requires</h2>
+<p class="subtitle">Three comparisons were written into the frozen protocol; a fourth was proposed after the results.</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>#</th><th>Comparison</th><th>Question</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td class=n>1</td><td>Circular-shift null</td><td>Shift each firm&rsquo;s year sequence at random and re-run the detector. Is the observed persistence longer than chance?</td><td><span class="pill na">pending</span><br><span class="sans" style="font-size:12px;color:var(--muted)">in protocol</span></td></tr>
+<tr><td class=n>2</td><td>Stress-change-alone baseline</td><td>Does the change in Stress on its own predict firing?</td><td><span class="pill na">pending</span><br><span class="sans" style="font-size:12px;color:var(--muted)">in protocol</span></td></tr>
+<tr><td class=n>3</td><td>First differences of V</td><td>Does &Delta;V predict firing better than the level of V?</td><td><span class="pill na">pending</span><br><span class="sans" style="font-size:12px;color:var(--muted)">in protocol</span></td></tr>
+<tr><td class=n>4</td><td>Duration + magnitude score</td><td>A composite of run length and peak gap, tested on the nine firms.</td><td><span class="pill weak">exploratory</span><br><span class="sans" style="font-size:12px;color:var(--muted)">proposed after results</span></td></tr>
+</tbody></table></div>
+<p>Item 4 was designed after seeing which firms collapsed, so on these nine firms it can only be exploratory. To count as validation it would need to be frozen and run on a new set of cases and controls.</p>
+</section>
+
+<!-- ═══════════════════════ PART V ═══════════════════════ -->
+<section class="part" id="checks" aria-labelledby="checks-h">
+<p class="partlabel">Part V · Checks</p>
+<h2 id="checks-h">What Was Verified, and What Doesn&rsquo;t Hold Up</h2>
+
+<h3>Verified</h3>
+<ul>
+<li><b>Reproduction.</b> All 86 firm-years were recomputed from the ENS files with V = C + K &minus; S. Every gap and classification matches the results file.</li>
+<li><b>Stored Node Value.</b> The ENS files&rsquo; Node Value column is C + K &minus; S + 0.5A on every row, as the report says, so the detector correctly recomputed V instead of using it.</li>
+<li><b>Freeze record.</b> The SHA-256 of <code>P4_protocol_frozen.md</code> matches the hash record (<code>e5ca844c…74f8bcf</code>), so the protocol has not changed. The file timestamps put the freeze (17:37, 10 Nov) before the first scored file (17:44).</li>
+<li><b>Sealed rule.</b> <code>crisis_typology_rule_v1.md</code> is unchanged since it was committed.</li>
+</ul>
+
+<h3>Does not hold up, or needs a decision</h3>
+<ol class="plain">
+<li><b>Persistence does not cleanly separate cases from controls.</b> Boeing&rsquo;s 7-year run is the longest, but Airbus has a 5-year epistemological run in the same years. WorldCom&rsquo;s longest run (4) equals Illumina&rsquo;s and is shorter than Verizon&rsquo;s (5).</li>
+<li><b>Magnitude fails in the WorldCom pair.</b> Boeing&rsquo;s peak is above Airbus&rsquo;s and Theranos&rsquo;s above Quest&rsquo;s, but AT&amp;T&rsquo;s epistemological peak (+2.90) is higher than WorldCom&rsquo;s (+2.13). The working finding in Part II holds for two pairs out of three.</li>
+<li><b>The protocol has no registered pass criterion.</b> It requires every firing to be reported but never says what result would count as a pass or a fail. Under §0A (&ldquo;where the protocol is silent, stop and ask&rdquo;) this page does not declare P4 passed or failed. The plain observation stands: the threshold rule does not separate cases from controls on firing rate.</li>
+<li><b>Secondary controls are weaker evidence.</b> They are single-scorer runs (every ENV spread is zero), and Verizon covers only 2000&ndash;2004, so its 100% firing rate rests on five years.</li>
+<li><b>Scored windows are wider than the protocol&rsquo;s.</b> The protocol gives approximate windows (Boeing ~2018&ndash;2020, Theranos ~2003&ndash;2018, WorldCom ~1999&ndash;2002). The scored years are 2013&ndash;2022, 2008&ndash;2018 and 1996&ndash;2004. Nothing on record shows the scored years were fixed before scoring.</li>
+<li><b>The baseline commit is missing.</b> The protocol and hash record cite baseline commit <code>58fcaaf</code>, which does not exist in this repository.</li>
+<li><b>The sealed rule&rsquo;s own note no longer fits.</b> It says the rule &ldquo;fires rarely and cleanly&rdquo;. On firms it fires in 44&ndash;100% of years. The rule itself is unchanged; the note describes national data only.</li>
+</ol>
+
+<h3>Files</h3>
+<ul class="sans" style="font-size:15px">
+<li><a href="analysis/P4_protocol_frozen.md">P4_protocol_frozen.md</a> (locked) · <a href="analysis/P4_protocol_hash.txt">P4_protocol_hash.txt</a></li>
+<li><a href="crisis_typology_rule_v1.md">crisis_typology_rule_v1.md</a> (sealed 5 Nov 2026)</li>
+<li><a href="analysis/P4/P4_detector_report_9firm.md">P4_detector_report_9firm.md</a> · <a href="analysis/P4/P4_detector_results_9firm.csv">results</a> · <a href="analysis/P4/P4_detector_summary_9firm.csv">summary</a></li>
+<li><a href="analysis/P4/P4_detector_report.md">P4_detector_report.md</a> (first run, six firms)</li>
+<li><a href="analysis/P4/P4_personality_portraits.md">P4_personality_portraits.md</a></li>
+<li>Scores: ENS (ensemble mean) and ENV (scorer spread) for each firm in <a href="https://github.com/KaliBond/wintermute/tree/main/analysis/P4">analysis/P4/</a></li>
+</ul>
+
+<p class="note">Run 10 November 2026 under the frozen P4 protocol and crisis_typology_rule_v1 (sealed 5 November 2026). Analyses by AI collaborators, presented as written; checks by Claude Code. CAMS: Complex Adaptive Model State.</p>
+</section>
+</main></div>
+<footer class="footer"><nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;"><a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a><a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a><a href="results.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Results</a></nav><p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p></footer><script src="site-chrome.js"></script><script src="nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+(function(){
+if (typeof Chart === 'undefined') return;
+var S={"Boeing": [[2013, 1.633], [2014, 1.767], [2015, 2.467], [2016, 2.967], [2017, 3.833], [2018, 3.2], [2019, 2.6], [2020, -2.233], [2021, -0.667], [2022, 0.0]], "Airbus": [[2013, 0.033], [2014, 0.967], [2015, 1.767], [2016, 2.133], [2017, 1.867], [2018, 1.833], [2019, 2.733], [2020, -3.467], [2021, -0.267], [2022, -0.1]], "Theranos": [[2008, -1.733], [2009, -1.6], [2010, -0.5], [2011, 0.367], [2012, 1.2], [2013, 2.8], [2014, 3.433], [2015, 2.367], [2016, 0.533], [2017, -0.5], [2018, 0.0]], "Quest Diagnostics": [[2008, 1.033], [2009, 0.467], [2010, 1.233], [2011, 1.2], [2012, 1.633], [2013, -0.2], [2014, -1.867], [2015, -0.367], [2016, 0.433], [2017, -0.267], [2018, -0.667]], "WorldCom": [[1996, 0.7], [1997, 0.767], [1998, 2.133], [1999, 1.9], [2000, 1.467], [2001, 1.267], [2002, 0.967], [2003, -0.167], [2004, 0.3]], "AT&T": [[1996, 2.633], [1997, 2.9], [1998, 0.3], [1999, 1.533], [2000, 0.233], [2001, 2.133], [2002, 2.2], [2003, 0.133], [2004, -0.267]], "Lockheed Martin": [[2013, -1.167], [2014, -1.167], [2015, -1.167], [2016, -0.167], [2017, -0.167], [2018, -0.167], [2019, -0.167], [2020, -1.5], [2021, -1.5], [2022, -1.5]], "Illumina": [[2008, -1.0], [2009, -1.0], [2010, -0.167], [2011, -0.167], [2012, -0.167], [2013, 1.167], [2014, 1.167], [2015, 1.167], [2016, 1.167], [2017, 0.667], [2018, 0.667]], "Verizon": [[2000, -2.0], [2001, -2.0], [2002, -1.833], [2003, -1.833], [2004, -1.833]]};
+var RED='#b3392e', TEAL='#2a6875', GREY='#9aa5ab', MUTED='#5a6870', GRID='rgba(26,36,43,0.08)';
+Chart.defaults.font.family="'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif";
+Chart.defaults.color=MUTED;
+function ds(name,col,w){return {label:name,data:S[name].map(function(p){return {x:p[0],y:p[1]}}),borderColor:col,backgroundColor:col,borderWidth:w,pointRadius:w>2?3.5:2.5,tension:0}}
+function thr(y,x0,x1){return {label:'thr',data:[{x:x0,y:y},{x:x1,y:y}],borderColor:'rgba(26,36,43,0.35)',borderDash:[5,4],borderWidth:1,pointRadius:0}}
+function draw(id,a,b,c,x0,x1){
+ new Chart(document.getElementById(id),{type:'line',data:{datasets:[thr(1,x0,x1),thr(-1,x0,x1),ds(c,GREY,1.5),ds(b,TEAL,2),ds(a,RED,3)]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
+   tooltip:{filter:function(i){return i.dataset.label!=='thr'},callbacks:{title:function(i){return String(i[0].raw.x)},label:function(c){var v=c.raw.y;return c.dataset.label+': '+(v>0?'+':'')+v.toFixed(2)}}}},
+   scales:{x:{type:'linear',min:x0,max:x1,grid:{color:GRID},ticks:{stepSize:1,callback:function(v){return String(v)}}},
+    y:{min:-4,max:4,grid:{color:GRID},ticks:{callback:function(v){return (v>0?'+':'')+v}},title:{display:true,text:'Gap (ECO − EPI)'}}}}});
+}
+draw('c-boeing','Boeing','Airbus','Lockheed Martin',2013,2022);
+draw('c-theranos','Theranos','Quest Diagnostics','Illumina',2008,2018);
+draw('c-worldcom','WorldCom','AT&T','Verizon',1996,2004);
+})();
+</script>
+</body>
+</html>
