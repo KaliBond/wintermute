@@ -143,7 +143,7 @@ body{background:var(--bg)}
 <li>Every firing is reported, including false positives in controls. FAIL is FAIL.</li>
 <li>Where the protocol is silent, stop and ask.</li>
 </ol></div>
-<p>The cases and primary controls were scored with repeated independent AI passes and averaged (ensemble-mean ENS files, with scorer spread in ENV files). The secondary controls are single-scorer runs, added as a sensitivity test once the primary results were in.</p>
+<p>The cases and primary controls were scored with repeated independent AI passes and averaged (ensemble-mean ENS files, with scorer spread in ENV files). The secondary controls come from a single-scorer run by Kimi (Moonshot AI), added as a sensitivity test once the primary results were in. Kimi scored in blocks of years rather than year by year; see Part V.</p>
 </section>
 
 <!-- ═══════════════════════ PART II ═══════════════════════ -->
@@ -255,6 +255,7 @@ body{background:var(--bg)}
 <li><b>Magnitude fails in the WorldCom pair.</b> Boeing&rsquo;s peak is above Airbus&rsquo;s and Theranos&rsquo;s above Quest&rsquo;s, but AT&amp;T&rsquo;s epistemological peak (+2.90) is higher than WorldCom&rsquo;s (+2.13). The working finding in Part II holds for two pairs out of three.</li>
 <li><b>The protocol has no registered pass criterion.</b> It requires every firing to be reported but never says what result would count as a pass or a fail. Under §0A (&ldquo;where the protocol is silent, stop and ask&rdquo;) this page does not declare P4 passed or failed. The plain observation stands: the threshold rule does not separate cases from controls on firing rate.</li>
 <li><b>Secondary controls are weaker evidence.</b> They are single-scorer runs (every ENV spread is zero), and Verizon covers only 2000&ndash;2004, so its 100% firing rate rests on five years.</li>
+<li><b>Most secondary-control scores were carried forward, not scored each year.</b> The secondary controls are Kimi&rsquo;s run of 10 November 2026 (<a href="analysis/P4/kimi_scoring_2026-11-10/cams_protocol_note_2026-11-10.md">protocol note</a>); the P4 files match it row for row. Kimi scored in blocks of years and tagged every score. In the P4 windows, 480 of the 832 scores for Lockheed Martin, Illumina and Verizon are tagged <i>Carried_Forward</i>: no year-specific evidence was examined and the previous score was held. Only 152 are <i>New_Evidence</i>. Kimi&rsquo;s note says relational analysis must not treat carried-forward cells as independent observations. It shows in the gaps: Illumina reads +1.17 in each year 2013&ndash;2016, Lockheed Martin &minus;1.17 in each year 2013&ndash;2015 and &minus;1.50 in each year 2020&ndash;2022, and Verizon &minus;2.00 twice and then &minus;1.83 three times. Their firing runs are therefore partly built in by the scoring method, which matters for any persistence criterion and for the circular-shift null. It also weakens the portraits&rsquo; reading of Lockheed Martin&rsquo;s &ldquo;near-zero volatility&rdquo; as a trait of the firm.</li>
 <li><b>Scored windows are wider than the protocol&rsquo;s.</b> The protocol gives approximate windows (Boeing ~2018&ndash;2020, Theranos ~2003&ndash;2018, WorldCom ~1999&ndash;2002). The scored years are 2013&ndash;2022, 2008&ndash;2018 and 1996&ndash;2004. Nothing on record shows the scored years were fixed before scoring.</li>
 <li><b>The baseline commit is missing.</b> The protocol and hash record cite baseline commit <code>58fcaaf</code>, which does not exist in this repository.</li>
 <li><b>The sealed rule&rsquo;s own note no longer fits.</b> It says the rule &ldquo;fires rarely and cleanly&rdquo;. On firms it fires in 44&ndash;100% of years. The rule itself is unchanged; the note describes national data only.</li>
@@ -267,6 +268,7 @@ body{background:var(--bg)}
 <li><a href="analysis/P4/P4_detector_report_9firm.md">P4_detector_report_9firm.md</a> · <a href="analysis/P4/P4_detector_results_9firm.csv">results</a> · <a href="analysis/P4/P4_detector_summary_9firm.csv">summary</a></li>
 <li><a href="analysis/P4/P4_detector_report.md">P4_detector_report.md</a> (first run, six firms)</li>
 <li><a href="analysis/P4/P4_personality_portraits.md">P4_personality_portraits.md</a></li>
+<li>Kimi&rsquo;s single-scorer run (source of the secondary controls): <a href="analysis/P4/kimi_scoring_2026-11-10/cams_scores_1990-2026.csv">scores</a> · <a href="analysis/P4/kimi_scoring_2026-11-10/cams_score_status_1990-2026.csv">per-score status</a> · <a href="analysis/P4/kimi_scoring_2026-11-10/cams_protocol_note_2026-11-10.md">protocol note</a> · <a href="analysis/P4/kimi_scoring_2026-11-10/build_cams_panel.py">build script</a></li>
 <li>Scores: ENS (ensemble mean) and ENV (scorer spread) for each firm in <a href="https://github.com/KaliBond/wintermute/tree/main/analysis/P4">analysis/P4/</a></li>
 </ul>
 
