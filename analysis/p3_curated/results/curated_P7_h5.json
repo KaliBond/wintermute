@@ -1,0 +1,27 @@
+{
+ "n_society_years": 1199,
+ "n_societies": 18,
+ "n_positive_targets": 135,
+ "base_rate": 0.11259382819015847,
+ "pooled_auc": {
+  "baseline": 0.7859,
+  "baseline_plus_lambda2": 0.7874,
+  "base_rate": 0.1727
+ },
+ "pooled_brier": {
+  "baseline": 0.09854,
+  "baseline_plus_lambda2": 0.09833,
+  "base_rate": 0.10172
+ },
+ "delta_auc_baseline_plus_lambda2_minus_baseline": 0.0014,
+ "delta_auc_ci95": [
+  -0.0047,
+  0.0065
+ ],
+ "delta_brier_baseline_plus_lambda2_minus_baseline": -0.00021,
+ "delta_brier_ci95": [
+  -0.00105,
+  0.00063
+ ],
+ "bootstrap_reps_used": 2000
+}
