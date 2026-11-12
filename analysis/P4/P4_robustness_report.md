@@ -18,7 +18,7 @@
 | Airbus | 6 | 6 | 5.10 | 0.502 |
 | Theranos | 6 | 4 | 3.64 | 0.727 |
 | Quest Diagnostics | 5 | 3 | 2.82 | 0.818 |
-| WorldCom | 4 | 4 | 3.55 | 0.661 |
+| WorldCom | 4 | 4 | 3.55 | 0.662 |
 | AT&T | 5 | 2 | 2.00 | 1.000 |
 | Lockheed Martin | 6 | 3 | 5.10 | 1.000 |
 | Illumina | 6 | 4 | 3.64 | 0.731 |
@@ -51,13 +51,15 @@ The implication for the phase-space argument: **year ordering adds minimal infor
 | Lockheed Martin | 1.000 | 0.500 | −0.465 |
 | Illumina | 1.000 | 0.545 | −0.378 |
 | Verizon | 1.000 | 0.200 | −0.408 |
-| **Global** | **1.000** | **0.500** | **+0.176** |
+| **Global** | **1.000** | **0.593** | **+0.020** |
 
 Note: EPI/ECO accuracy is 1.0 by construction (fire is defined using the same threshold). The comparison is between how well the EPI/ECO topology partitions the problem vs. how well ΔS alone achieves the same partition.
 
+How the Global row is computed: Global accuracy is the year-weighted mean of the per-firm accuracies, that is, correct firm-years summed over all nine firms divided by 86 firm-years (7 + 7 + 7 + 7 + 6 + 5 + 5 + 6 + 1 = 51 of 86 = 0.593). Global r is the unweighted mean of the nine per-firm r values (sum +0.176, divided by 9 = +0.020). It is not a pooled correlation. The year counts are in the N_years column of P4_test_B_stress_change.csv.
+
 **Interpretation:**
 
-The global correlation between ΔS and the EPI/ECO gap is r = 0.176. ΔS alone explains approximately 3% of variance in the gap. The best ΔS classifier achieves 50% accuracy globally: no better than chance. Per-firm accuracy peaks at 70% (Boeing, Airbus) and falls as low as 20% (Verizon).
+The mean of the nine per-firm correlations between ΔS and the EPI/ECO gap is r = +0.020. (An earlier version gave +0.176, which is the sum of the nine values, not their mean.) Because the per-firm signs differ, this mean is not a pooled correlation, and no share of variance is claimed from it. Weighted by years, the best per-firm ΔS classifiers are right in 51 of 86 firm-years (0.593). That is the same as the share of firm-years that fire (51 of 86), so it is the rate a rule that always predicts a fire would reach. Per-firm accuracy peaks at 70% (Boeing, Airbus) and falls as low as 20% (Verizon).
 
 The sign of r(ΔS, Gap) varies across firms: positive for the cases (Boeing +0.654, WorldCom +0.750, Theranos +0.466) and negative for the secondary controls (Lockheed −0.465, Illumina −0.378, Verizon −0.408). This sign reversal reflects the EPI/ECO topology distinction: cases fire epistemologically (EPI trailing ECO), and in those firms rising stress is concentrated in the EPI nodes, so ΔS predicts the gap direction. Controls fire economically (ECO trailing EPI), and rising stress is concentrated in ECO nodes, reversing the relationship.
 
@@ -82,13 +84,15 @@ The sign of r(ΔS, Gap) varies across firms: positive for the cases (Boeing +0.6
 | Lockheed Martin | 1.000 | 0.600 | 17% |
 | Illumina | 1.000 | 0.545 | 17% |
 | Verizon | 1.000 | 1.000 | 0% |
-| **Global** | **1.000** | **0.593** |: |
+| **Global** | **1.000** | **0.640** |: |
+
+How the Global row is computed: as in Test B, the year-weighted mean of the per-firm accuracies (8 + 7 + 6 + 6 + 6 + 5 + 6 + 6 + 5 = 55 of 86 = 0.640). An earlier version gave 0.593, which is Test B's year-weighted ΔS accuracy, not Test C's. The year counts are in the N_years column of P4_test_C_first_differences.csv.
 
 **Interpretation:**
 
-Level gap outperforms first differences globally (1.000 vs. 0.593 at best thresholds). The detector is a **position instrument**, not a velocity instrument: it fires when the configuration is in the wrong region of phase space, not when it is moving toward that region. This is consistent with the phase-space analogy: the H-R diagram locates a star by its current observables, not by the direction of its recent drift.
+Level gap outperforms first differences globally (1.000 vs. 0.640 at best thresholds, year-weighted). The detector is a **position instrument**, not a velocity instrument: it fires when the configuration is in the wrong region of phase space, not when it is moving toward that region. This is consistent with the phase-space analogy: the H-R diagram locates a star by its current observables, not by the direction of its recent drift.
 
-However, the **leading indicator** result adds nuance. For the three cases, ΔGap exceeds 0.5 in the year before 62% (Boeing), 67% (Theranos) of fire years: the gap was already moving before it crossed the threshold. This is a trajectory property: the system approaches the boundary before crossing it. The leading signal is weaker for the secondary controls (17% for Lockheed and Illumina), consistent with their EPI/ECO imbalances being structural rather than dynamic.
+However, the **leading indicator** result adds nuance. For the three cases, ΔGap exceeds 0.5 in the year before 62% (Boeing), 67% (Theranos) and 25% (WorldCom) of fire years: for Boeing and Theranos, the gap was already moving before it crossed the threshold; for WorldCom, mostly not. This is a trajectory property: the system approaches the boundary before crossing it. The leading signal is weaker for the secondary controls (17% for Lockheed and Illumina), consistent with their EPI/ECO imbalances being structural rather than dynamic.
 
 The correct description is therefore: the detector fires on **position**, but position is reached via **trajectory**, and the trajectory is partially visible one year ahead in the first difference of the gap. The two descriptions are complementary, not competing.
 
@@ -99,8 +103,8 @@ The correct description is therefore: the detector fires on **position**, but po
 | Test | Question | Finding |
 |---|---|---|
 | A: Circular-shift null | Does year order matter? | No, beyond fire rate. Runs are not significantly more clustered than chance (Boeing marginal, p = 0.30). |
-| B: Stress-change-alone | Can ΔS replace topology? | No. ΔS explains 3% of gap variance. Best ΔS classifier is 50% globally. Topology specifies where stress accumulates, not just how much. |
-| C: First differences | Level or velocity? | Level wins (1.000 vs 0.593). But first differences show 50–67% lead signals for cases: the system approaches the boundary before crossing it. |
+| B: Stress-change-alone | Can ΔS replace topology? | No. Mean per-firm r(ΔS, Gap) is +0.020, with signs that differ by firm. Best ΔS classifiers are right in 0.593 of firm-years (year-weighted), the same as the share of firm-years that fire. Topology specifies where stress accumulates, not just how much. |
+| C: First differences | Level or velocity? | Level wins (1.000 vs 0.640, year-weighted). Lead signals for the cases are 62% (Boeing), 67% (Theranos) and 25% (WorldCom): two of the three cases approach the boundary before crossing it. |
 
 **Combined reading:** The EPI/ECO detector fires on structural position. That position is not an artifact of temporal ordering (Test A), is not reducible to global stress dynamics (Test B), and is best captured by level rather than velocity (Test C), though velocity provides partial early warning for case-tier firms (Test C lead signal). The three tests jointly support the phase-space location interpretation: the detector measures where the system is, not what is happening to it in the short term.
 
