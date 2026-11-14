@@ -158,6 +158,7 @@ textarea.big{min-height:300px}
         <div class="opts">
           <div><span class="lbl">Game</span><div class="seg" id="gMode"><button type="button" data-v="line" aria-pressed="true">What's My Line</button><button type="button" data-v="box" aria-pressed="false">Pick a Box</button></div></div>
           <div><span class="lbl">Years shown</span><div class="seg" id="gDiff"><button type="button" data-v="easy" aria-pressed="true">Real</button><button type="button" data-v="mid" aria-pressed="false">Shifted</button><button type="button" data-v="hard" aria-pressed="false">Hidden</button></div></div>
+          <div style="grid-column:1/-1"><span class="lbl">Arm</span><div class="seg" id="gArm"><button type="button" data-v="game" aria-pressed="true">Game</button><button type="button" data-v="real" aria-pressed="false">Pilot: real</button><button type="button" data-v="perm" aria-pressed="false">Pilot: order permuted</button><button type="button" data-v="shuf" aria-pressed="false">Pilot: nodes shuffled</button></div><p class="note">Pilot arms give matched files for one deal number: the real data and two negative controls that look identical to the model. Only the deal ID, decoded here, says which is which.</p></div>
         </div>
         <div class="btns"><button class="primary" id="gDeal" type="button">Deal new file</button><button id="gLoadBtn" type="button">Load deal ID</button></div>
         <div class="deal" id="gDealId"></div>
@@ -172,7 +173,7 @@ textarea.big{min-height:300px}
         </div>
       </div>
       <div class="card"><h3>Blind file preview</h3><textarea class="big" id="gFile" readonly aria-label="Blind file text"></textarea>
-        <p class="note">Society names are removed. Depending on the setting, years are real, shifted by a hidden offset, or replaced by step numbers. Scores, bonds and the eight node readings are untouched.</p></div>
+        <p class="note">Society names are removed. Depending on the setting, years are real, shifted by a hidden offset, or replaced by step numbers. In the Game and Pilot: real arms the scores are untouched. The two control arms deliberately scramble row order or node labels, and drop the P and G columns in all pilot arms so the three files look alike.</p></div>
     </div>
   </div>
 </div>
@@ -480,7 +481,8 @@ render();
 const POOL={'Rome':'Rome','Latium Vetus':'Latium Vetus','United States':'USA','Germany':'GER (ens)','China':'China (ens)','United Kingdom':'UK (ens)','Spain':'Spain','Italy':'Italy','Australia':'AUS (ens)','South Africa':'South Africa','Canada':'CAN (ens)','Norway':'Norway (ens)','Russia':'Russia (ens)','Thailand':'Thai (ens)','Türkiye':'Türkiye','India':'India (cam5)','Japan':'Japan (cam5)','Argentina':'Argentina','Sweden':'Sweden (cam5)'};
 const ALIAS={'usa':'United States','us':'United States','united states of america':'United States','uk':'United Kingdom','britain':'United Kingdom','great britain':'United Kingdom','turkey':'Türkiye','turkiye':'Türkiye','roman empire':'Rome','ancient rome':'Rome','west germany':'Germany','prussia':'Germany','siam':'Thailand'};
 const MODE_CODE={line:'LE',box:'BX'},DIFF_CODE={easy:1,mid:2,hard:3};
-let G={mode:'line',diff:'easy',seed:0,deal:null};
+let G={mode:'line',diff:'easy',arm:'game',seed:0,deal:null};
+const ARMS=['real','perm','shuf'];
 function shuffle(a,R){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(R()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function windowFor(name,R,diff){
   const key=POOL[name],yy=years[key],rows=yy.map(y=>row(key,y)),W=Math.min(24,rows.length);
@@ -489,22 +491,31 @@ function windowFor(name,R,diff){
   const off=diff==='mid'?Math.round((R()*600-300)/5)*5||5:0;
   return{name,key,rows:rows.slice(st,st+W),off,y0:rows[st].year,y1:rows[st+W-1].year};
 }
-function dealGame(mode,diff,seed){
+function dealGame(mode,diff,seed,arm){arm=arm||'game';
   const R=mulberry(seed*104729+(mode==='box'?7:3)+DIFF_CODE[diff]*13);
   const names=shuffle(Object.keys(POOL).filter(n=>years[POOL[n]].length>=12),R);
   const k=mode==='box'?4:1;
   const chosen=names.slice(0,k),decoys=names.slice(k,k+2);
   const boxes=chosen.map(n=>windowFor(n,R,diff));
   const candidates=mode==='box'?shuffle(chosen.concat(decoys),R):Object.keys(POOL).sort();
-  return{mode,diff,seed,boxes,decoys,candidates,id:`${MODE_CODE[mode]}-${DIFF_CODE[diff]}-${seed}`};
+  /* Pilot arms: same society and window for a given seed, so real / permuted / shuffled form a matched triplet.
+     perm: scored rows are put in random order while the year column stays in sequence (time structure destroyed).
+     shuf: node labels are reassigned by one random permutation per box (node identity destroyed, table shape kept). */
+  if(arm==='perm'||arm==='shuf'){const R2=mulberry(seed*7919+(arm==='perm'?101:211));
+    boxes.forEach(b=>{
+      if(arm==='perm'){const ys=b.rows.map(r=>r.year);let sh=shuffle(b.rows,R2);if(sh.every((r,i)=>r===b.rows[i]))sh=sh.slice(1).concat(sh[0]);b.rows=sh.map((r,i)=>Object.assign({},r,{year:ys[i]}))}
+      else{let pm=shuffle(NODES,R2);if(pm.every((n,i)=>n===NODES[i]))pm=pm.slice(1).concat(pm[0]);b.perm=pm;b.rows=b.rows.map(r=>{const n={};NODES.forEach((x,i)=>{n[x]=r.n[pm[i]]});return Object.assign({},r,{n})})}
+    })}
+  const sfx=arm==='game'?'':'-'+((ARMS.indexOf(arm)+seed)%3);
+  return{mode,diff,seed,arm,boxes,decoys,candidates,id:`${MODE_CODE[mode]}-${DIFF_CODE[diff]}-${seed}${sfx}`};
 }
 const L='ABCD';
-function csv(box,diff){
+function csv(box,diff,pilot){
   const hdr=['t']; if(diff!=='hard')hdr.push('year');
-  hdr.push('SK','b','P','G');NODES.forEach(n=>['C','K','S','A','V'].forEach(c=>hdr.push(n+'.'+c)));
+  hdr.push('SK','b');if(!pilot)hdr.push('P','G');NODES.forEach(n=>['C','K','S','A','V'].forEach(c=>hdr.push(n+'.'+c)));
   const lines=[hdr.join(',')];
   box.rows.forEach((r,i)=>{const o=[i]; if(diff!=='hard')o.push(r.year+box.off);
-    o.push(r.sk,r.b,r.pr,r.cg);NODES.forEach(n=>{const q=r.n[n];o.push(q.C,q.K,q.S,q.A,q.V)});lines.push(o.join(','))});
+    o.push(r.sk,r.b);if(!pilot)o.push(r.pr,r.cg);NODES.forEach(n=>{const q=r.n[n];o.push(q.C,q.K,q.S,q.A,q.V)});lines.push(o.join(','))});
   return lines.join('\n');
 }
 function buildBlind(g){
@@ -515,7 +526,7 @@ function buildBlind(g){
   s+=`You are a panelist in a deduction game. Below is anonymised data about ${box?'four human societies ("boxes" A to D)':'one human society (the "mystery guest")'}, measured with the CAMS framework, which scores how a society coordinates itself through eight functional nodes. The names have been removed. Work out `;
   s+=box?`which society sits in which box, using only the numbers and your general knowledge of world history.\n\n`:`who the mystery guest is, using only the numbers and your general knowledge of world history.\n\n`;
   s+=`RULES\n1. Do not ask questions, search the web, or run code. Reason from the data in this message.\n2. Treat the numbers as estimates from scoring panels, not exact facts.\n3. Be fair and even-handed. Judge every society by the same structural yardstick. Do not guess on the basis of stereotypes, only on patterns that show in the data and in history.\n4. Be honest about uncertainty. Probabilities must reflect how sure you are. A wrong guess made with humility beats a lucky one made with false certainty.\n5. ${yearsNote}\n\n`;
-  s+=`GLOSSARY\nEach row is one scored year. The eight nodes are: Helm (governance and decision), Shield (security and enforcement), Lore (shared meaning and legitimacy), Stewards (institutions and administration), Archive (knowledge and schooling), Craft (production and skill), Hands (labour and livelihood), Flow (money, goods and information).\nFor each node (columns Node.C etc): C = coherence 1-10 (how aligned it is), K = capacity 1-10 (what it can do), S = stress 1-10 (load on it), A = abstraction 1-10 (how far it operates from direct reality), V = node value (derived health, higher is healthier, roughly -8 to 22).\nSystem columns: SK = mean stress divided by capacity (above 1.4 is high threat); b = bond coherence, how tightly the nodes hold each other (higher is tighter); P = "praetorian" gap, Shield minus Helm, positive means security outweighs steering; G = cognitive gap, slow loops (Lore, Archive, Helm, Stewards) minus fast loops (Shield, Craft, Hands, Flow), negative means reaction outruns reflection.\n\n`;
+  s+=`GLOSSARY\nEach row is one scored year. The eight nodes are: Helm (governance and decision), Shield (security and enforcement), Lore (shared meaning and legitimacy), Stewards (institutions and administration), Archive (knowledge and schooling), Craft (production and skill), Hands (labour and livelihood), Flow (money, goods and information).\nFor each node (columns Node.C etc): C = coherence 1-10 (how aligned it is), K = capacity 1-10 (what it can do), S = stress 1-10 (load on it), A = abstraction 1-10 (how far it operates from direct reality), V = node value (derived health, higher is healthier, roughly -8 to 22).\nSystem columns: SK = mean stress divided by capacity (above 1.4 is high threat); b = bond coherence, how tightly the nodes hold each other (higher is tighter)${g.arm==='game'?'; P = "praetorian" gap, Shield minus Helm, positive means security outweighs steering; G = cognitive gap, slow loops (Lore, Archive, Helm, Stewards) minus fast loops (Shield, Craft, Hands, Flow), negative means reaction outruns reflection':''}.\n\n`;
   s+=`HOW TO PLAY\nThink like a panelist on "What's My Line". First list the strongest clues in the data: spikes in SK, sudden collapses or jumps in b, which nodes lead and which lag, long calm stretches, a shield rising over the helm, and so on. Match each clue to what you know of history. Eliminate candidates, then commit.\n\n`;
   if(box){
     s+=`CANDIDATES (each box is exactly one of these, and no candidate is used twice; two names are decoys that appear in no box):\n${g.candidates.join(', ')}\n\n`;
@@ -525,7 +536,7 @@ function buildBlind(g){
     s+=`YOUR TASK\nName the mystery guest and, if calendar years are real, the period shown. Start with up to 200 words of panel notes. Then end your reply with one JSON block, exactly in this shape and nothing after it:\n\`\`\`json\n{"mode":"whats_my_line","top_guesses":[{"society":"<candidate>","probability":0.0},{"society":"<candidate>","probability":0.0},{"society":"<candidate>","probability":0.0}],"era_guess":"<start year>-<end year> or unknown","key_clues":["<clue>","<clue>","<clue>"]}\n\`\`\`\nprobabilities are numbers from 0 to 1 and should sum to at most 1.\n\n`;
   }
   s+=`---\n\n## DATA\n\n`;
-  g.boxes.forEach((b,i)=>{s+=`### ${box?'BOX '+L[i]:'MYSTERY GUEST'} (${b.rows.length} scored years)\n\`\`\`csv\n${csv(b,g.diff)}\n\`\`\`\n\n`});
+  g.boxes.forEach((b,i)=>{s+=`### ${box?'BOX '+L[i]:'MYSTERY GUEST'} (${b.rows.length} scored years)\n\`\`\`csv\n${csv(b,g.diff,g.arm!=='game')}\n\`\`\`\n\n`});
   return s;
 }
 function normName(x){const k=String(x||'').trim().toLowerCase();return ALIAS[k]||Object.keys(POOL).find(n=>n.toLowerCase()===k)||String(x||'').trim()}
@@ -552,26 +563,29 @@ function scoreAnswer(g,txt){
   }
   return{rows,pts,max};
 }
-function keyHTML(g){return `<table><tr><th>Slot</th><th>Society</th><th>Source series</th><th>True years</th></tr>${g.boxes.map((b,i)=>`<tr><td class="n">${g.mode==='box'?'Box '+L[i]:'Guest'}</td><td>${b.name}</td><td>${b.key}</td><td>${b.y0} to ${b.y1}${g.diff==='mid'?` (shown shifted ${b.off>0?'+':''}${b.off})`:''}</td></tr>`).join('')}</table>`+(g.mode==='box'?`<p class="note">Decoys: ${g.decoys.join(', ')}</p>`:'')}
+const ARMNOTE={real:'Pilot arm: real data. Rows and node labels are untouched.',perm:'Negative control: the scored rows were put in random order (years still run in sequence). Any confident story about a trajectory here is a false positive.',shuf:'Negative control: node labels were reassigned at random. Any confident claim about a named node here is a false positive.'};
+function keyHTML(g){return (g.arm!=='game'?`<p><span class="pill ${g.arm==='real'?'ok':'no'}">${g.arm==='real'?'real':'control'}</span> ${ARMNOTE[g.arm]}</p>`:'')+`<table><tr><th>Slot</th><th>Society</th><th>Source series</th><th>True years</th></tr>${g.boxes.map((b,i)=>`<tr><td class="n">${g.mode==='box'?'Box '+L[i]:'Guest'}</td><td>${b.name}</td><td>${b.key}</td><td>${b.y0} to ${b.y1}${g.diff==='mid'?` (shown shifted ${b.off>0?'+':''}${b.off})`:''}</td></tr>`).join('')}</table>`+(g.mode==='box'?`<p class="note">Decoys: ${g.decoys.join(', ')}</p>`:'')}
 function showRes(html){const r=$('gRes');r.hidden=false;r.innerHTML=html}
 function renderGame(){
   const g=G.deal;$('gDealId').innerHTML=`Deal <b>${g.id}</b> · ${g.mode==='box'?'4 boxes, 6 candidates':'1 guest, '+g.candidates.length+' candidates'}`;
   const txt=buildBlind(g);$('gFile').value=txt;$('gSize').textContent=`${(txt.length/1024).toFixed(1)} KB, about ${Math.round(txt.length/3.6/100)*100} tokens`;
   $('gRes').hidden=true;$('gAns').value='';
 }
-function newDeal(seed){G.seed=seed!=null?seed:Math.floor(Math.random()*90000)+10000;G.deal=dealGame(G.mode,G.diff,G.seed);renderGame()}
+function newDeal(seed){G.seed=seed!=null?seed:Math.floor(Math.random()*90000)+10000;G.deal=dealGame(G.mode,G.diff,G.seed,G.arm);renderGame()}
 function seg(id,key){$(id).querySelectorAll('button').forEach(b=>b.onclick=()=>{G[key]=b.dataset.v;$(id).querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));newDeal(G.seed)})}
-seg('gMode','mode');seg('gDiff','diff');
+seg('gMode','mode');seg('gDiff','diff');seg('gArm','arm');
 $('gDeal').onclick=()=>newDeal();
 $('gCopy').onclick=()=>copy($('gFile').value,'Blind file copied');
 if(window.claude){$('gDl').hidden=true}
 $('gDl').onclick=()=>{try{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([$('gFile').value],{type:'text/markdown'}));a.download=`cams-blind-${G.deal.id}.md`;document.body.appendChild(a);a.click();a.remove()}catch(e){toast('Download blocked, use Copy')}};
 $('gScore').onclick=()=>{const r=scoreAnswer(G.deal,$('gAns').value);if(r.err){showRes(`<p>${r.err}</p>`);return}
-  showRes(`<h3>Score ${r.pts} of ${r.max}</h3><table><tr><th>Slot</th><th>Model said</th><th>Truth</th><th></th></tr>${r.rows.map(x=>`<tr><td class="n">${x[0]}</td><td>${x[1]}${x[4]!=null?` (${x[4]})`:''}</td><td>${x[2]}</td><td><span class="pill ${x[3]?'ok':'no'}">${x[3]?'correct':(x[5]||'miss')}</span></td></tr>`).join('')}</table>`)};
+  const an=G.deal.arm!=='game'?`<p><span class="pill ${G.deal.arm==='real'?'ok':'no'}">${G.deal.arm==='real'?'real':'control'}</span> ${ARMNOTE[G.deal.arm]}${G.deal.arm!=='real'?' The score below shows only whether the model named the source society. For a control, read its stated confidence: high confidence is the failure.':''}</p>`:'';
+  showRes(an+`<h3>Score ${r.pts} of ${r.max}</h3><table><tr><th>Slot</th><th>Model said</th><th>Truth</th><th></th></tr>${r.rows.map(x=>`<tr><td class="n">${x[0]}</td><td>${x[1]}${x[4]!=null?` (${x[4]})`:''}</td><td>${x[2]}</td><td><span class="pill ${x[3]?'ok':'no'}">${x[3]?'correct':(x[5]||'miss')}</span></td></tr>`).join('')}</table>`)};
 $('gReveal').onclick=()=>showRes(`<h3>The key</h3>${keyHTML(G.deal)}`);
 $('gLoadBtn').onclick=()=>{$('gLoadWrap').hidden=!$('gLoadWrap').hidden};
-$('gLoadGo').onclick=()=>{const m=$('gLoadIn').value.trim().toUpperCase().match(/^(LE|BX)-([123])-(\d+)$/);if(!m){toast('Deal ID looks like LE-1-48213');return}
-  G.mode=m[1]==='BX'?'box':'line';G.diff={1:'easy',2:'mid',3:'hard'}[m[2]];
+$('gLoadGo').onclick=()=>{const m=$('gLoadIn').value.trim().toUpperCase().match(/^(LE|BX)-([123])-(\d+)(?:-([012]))?$/);if(!m){toast('Deal ID looks like LE-1-48213 or LE-1-48213-2');return}
+  G.mode=m[1]==='BX'?'box':'line';G.diff={1:'easy',2:'mid',3:'hard'}[m[2]];G.arm=m[4]==null?'game':ARMS[((+m[4]-(+m[3]))%3+3)%3];
+  $('gArm').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===G.arm));
   $('gMode').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===G.mode));$('gDiff').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===G.diff));
   newDeal(+m[3]);$('gLoadWrap').hidden=true};
 function tab(w){const g=w==='game';$('viewStory').hidden=g;$('viewGame').hidden=!g;$('tabStory').setAttribute('aria-selected',!g);$('tabGame').setAttribute('aria-selected',g);if(g&&!G.deal)newDeal(48213)}
