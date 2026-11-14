@@ -141,6 +141,7 @@ textarea.big{min-height:300px}
     <article class="story" id="story" aria-live="polite"></article>
     <aside class="side">
       <div class="card"><h3>Stress against capacity</h3><div id="chart"></div>
+        <p class="note"><strong>Telescope measures, not JUNO v1.2-Final.</strong> The story tab reads the S/K ratio and bond coherence stored in the Telescope data. It assigns no regime label. The blind-file tab uses the JUNO v1.2-Final operators.</p>
         <p class="note">Top: S/K ratio, stress per unit of capacity. Above 1.4 is high threat. Bottom: system bond coherence. The shaded span is the story window.</p></div>
       <div class="card"><h3>Causal map, <span id="mapYears"></span></h3><div id="map"></div>
         <div class="legend"><span><i style="background:var(--teal)"></i>turning freely</span><span><i style="background:var(--amber)"></i>friction</span><span><i style="background:var(--red)"></i>grinding</span><span>node size: capacity · line weight: bond</span></div>
@@ -158,7 +159,7 @@ textarea.big{min-height:300px}
         <div class="opts">
           <div><span class="lbl">Game</span><div class="seg" id="gMode"><button type="button" data-v="line" aria-pressed="true">What's My Line</button><button type="button" data-v="box" aria-pressed="false">Pick a Box</button></div></div>
           <div><span class="lbl">Years shown</span><div class="seg" id="gDiff"><button type="button" data-v="easy" aria-pressed="true">Real</button><button type="button" data-v="mid" aria-pressed="false">Shifted</button><button type="button" data-v="hard" aria-pressed="false">Hidden</button></div></div>
-          <div style="grid-column:1/-1"><span class="lbl">Arm</span><div class="seg" id="gArm"><button type="button" data-v="game" aria-pressed="true">Game</button><button type="button" data-v="real" aria-pressed="false">Pilot: real</button><button type="button" data-v="perm" aria-pressed="false">Pilot: order permuted</button><button type="button" data-v="shuf" aria-pressed="false">Pilot: nodes shuffled</button></div><p class="note">Pilot arms give matched files for one deal number: the real data and two negative controls that look identical to the model. Only the deal ID, decoded here, says which is which.</p></div>
+          <div style="grid-column:1/-1"><span class="lbl">Arm</span><div class="seg" id="gArm"><button type="button" data-v="game" aria-pressed="true">Game</button><button type="button" data-v="real" aria-pressed="false">Pilot: real</button><button type="button" data-v="perm" aria-pressed="false">Pilot: order permuted</button><button type="button" data-v="shuf" aria-pressed="false">Pilot: nodes shuffled</button></div><p class="note">Pilot arms give matched files for one deal number: the real data and two different negative controls. Row permutation tests claims about change over time. Node-label shuffle tests claims about named nodes. The files share one shape and prompt; only the deal ID, decoded here, says which is which. Row permutation can be spotted from its roughness (see praxis/controls/CONTROL_VALIDITY.md).</p></div>
         </div>
         <div class="btns"><button class="primary" id="gDeal" type="button">Deal new file</button><button id="gLoadBtn" type="button">Load deal ID</button></div>
         <div class="deal" id="gDealId"></div>
@@ -173,7 +174,7 @@ textarea.big{min-height:300px}
         </div>
       </div>
       <div class="card"><h3>Blind file preview</h3><textarea class="big" id="gFile" readonly aria-label="Blind file text"></textarea>
-        <p class="note">Society names are removed. Depending on the setting, years are real, shifted by a hidden offset, or replaced by step numbers. In the Game and Pilot: real arms the scores are untouched. The two control arms deliberately scramble row order or node labels, and drop the P and G columns in all pilot arms so the three files look alike.</p></div>
+        <p class="note">Society names are removed. Depending on the setting, years are real, shifted by a hidden offset, or replaced by step numbers. System columns use the JUNO v1.2-Final operators. In the Game and Pilot: real arms the scores are untouched. The two control arms deliberately scramble row order or node labels.</p></div>
     </div>
   </div>
 </div>
@@ -509,13 +510,42 @@ function dealGame(mode,diff,seed,arm){arm=arm||'game';
   const sfx=arm==='game'?'':'-'+((ARMS.indexOf(arm)+seed)%3);
   return{mode,diff,seed,arm,boxes,decoys,candidates,id:`${MODE_CODE[mode]}-${DIFF_CODE[diff]}-${seed}${sfx}`};
 }
+
+/* ---------- JUNO v1.2-Final metrics (mirror of praxis/cams_praxis_calc.py, activation mode "formal") ---------- */
+function jacobiEig(M){const n=M.length,a=M.map(r=>r.slice());
+  for(let sw=0;sw<100;sw++){let off=0;for(let i=0;i<n;i++)for(let j=i+1;j<n;j++)off+=a[i][j]*a[i][j];if(off<1e-22)break;
+    for(let p=0;p<n;p++)for(let q=p+1;q<n;q++){if(Math.abs(a[p][q])<1e-300)continue;
+      const th=(a[q][q]-a[p][p])/(2*a[p][q]),tt=Math.sign(th||1)/(Math.abs(th)+Math.sqrt(th*th+1)),cc=1/Math.sqrt(tt*tt+1),ss=tt*cc;
+      for(let k=0;k<n;k++){const x=a[k][p],y=a[k][q];a[k][p]=cc*x-ss*y;a[k][q]=ss*x+cc*y}
+      for(let k=0;k<n;k++){const x=a[p][k],y=a[q][k];a[p][k]=cc*x-ss*y;a[q][k]=ss*x+cc*y}}}
+  return a.map((r,i)=>r[i]).sort((x,y)=>x-y)}
+function junoFG(nodes){ // nodes: {name:{C,K,S,A}}
+  const N=NODES.map(n=>nodes[n]),V=N.map(q=>q.C+q.K-q.S+0.5*q.A),
+    s=N.map(q=>{const d=q.K-q.S;return (q.A*q.C/100)*Math.sign(d)*Math.max(Math.abs(d),0.1)}),
+    qq=N.map(q=>(0.6*q.C+0.4*q.A)/10),n=N.length;
+  const B=N.map((a,i)=>N.map((b,j)=>i===j?0:Math.sqrt(qq[i]*qq[j])*Math.pow(2,-(a.S+b.S)/10)));
+  let bs=0,c=0;for(let i=0;i<n;i++)for(let j=i+1;j<n;j++){bs+=B[i][j];c++}
+  const Lp=B.map((r,i)=>r.map((w,j)=>i===j?r.reduce((x,y)=>x+y,0):-w));
+  const vm=V.reduce((x,y)=>x+y,0)/n;
+  return{V_mean:vm,V_min:Math.min(...V),B_mean:bs/c,lambda2:jacobiEig(Lp)[1],s_min:Math.min(...s),V};
+}
+const r6=(x,d)=>Number(x.toFixed(d));
+function classifyV12(f){const V=r6(f.V_mean,6),m=r6(f.V_min,6),B=r6(f.B_mean,6),s=r6(f.s_min,6);
+  if(V<0&&m<-3&&B<0.15)return'Freeze/Collapse';if(V<6&&m<0&&B<0.20)return'Systemic Crisis';
+  if(s<-0.65)return'Phantom Type II';if(m<4.0)return'Local Node Failure';
+  if(V>10&&m>5.0&&B>0.28&&s>-0.25)return'Stable Adaptive';if(V>=4)return'Strained';return'Unclassified'}
+function classifyV101(f){const V=r6(f.V_mean,4),m=r6(f.V_min,4),B=r6(f.B_mean,4),s=r6(f.s_min,4);
+  if(V<0&&m<-3&&B<0.15)return'Freeze/Collapse';if(V>=3&&V<=6&&m<0&&s<-0.7)return'Phantom Type II';
+  if(V<6&&m<0&&B<0.20)return'Systemic Crisis';if(m<4.5||s<-0.75)return'Local Node Failure';
+  if(V>10&&B>0.25)return'Stable Adaptive';return'Strained'}
+const tally=a=>{const o={};a.forEach(x=>o[x]=(o[x]||0)+1);return Object.entries(o).sort((x,y)=>y[1]-x[1]).map(([k,v])=>`${k} ${v}`).join(', ')};
 const L='ABCD';
-function csv(box,diff,pilot){
+function csv(box,diff){
   const hdr=['t']; if(diff!=='hard')hdr.push('year');
-  hdr.push('SK','b');if(!pilot)hdr.push('P','G');NODES.forEach(n=>['C','K','S','A','V'].forEach(c=>hdr.push(n+'.'+c)));
+  hdr.push('Vbar','Vmin','Bbar','lambda2','smin');NODES.forEach(n=>['C','K','S','A','V'].forEach(c=>hdr.push(n+'.'+c)));
   const lines=[hdr.join(',')];
   box.rows.forEach((r,i)=>{const o=[i]; if(diff!=='hard')o.push(r.year+box.off);
-    o.push(r.sk,r.b);if(!pilot)o.push(r.pr,r.cg);NODES.forEach(n=>{const q=r.n[n];o.push(q.C,q.K,q.S,q.A,q.V)});lines.push(o.join(','))});
+    const f=junoFG(r.n);o.push(r6(f.V_mean,3),r6(f.V_min,3),r6(f.B_mean,4),r6(f.lambda2,3),r6(f.s_min,3));NODES.forEach((n,k)=>{const q=r.n[n];o.push(q.C,q.K,q.S,q.A,r6(f.V[k],2))});lines.push(o.join(','))});
   return lines.join('\n');
 }
 function buildBlind(g){
@@ -526,8 +556,8 @@ function buildBlind(g){
   s+=`You are a panelist in a deduction game. Below is anonymised data about ${box?'four human societies ("boxes" A to D)':'one human society (the "mystery guest")'}, measured with the CAMS framework, which scores how a society coordinates itself through eight functional nodes. The names have been removed. Work out `;
   s+=box?`which society sits in which box, using only the numbers and your general knowledge of world history.\n\n`:`who the mystery guest is, using only the numbers and your general knowledge of world history.\n\n`;
   s+=`RULES\n1. Do not ask questions, search the web, or run code. Reason from the data in this message.\n2. Treat the numbers as estimates from scoring panels, not exact facts.\n3. Be fair and even-handed. Judge every society by the same structural yardstick. Do not guess on the basis of stereotypes, only on patterns that show in the data and in history.\n4. Be honest about uncertainty. Probabilities must reflect how sure you are. A wrong guess made with humility beats a lucky one made with false certainty.\n5. ${yearsNote}\n\n`;
-  s+=`GLOSSARY\nEach row is one scored year. The eight nodes are: Helm (governance and decision), Shield (security and enforcement), Lore (shared meaning and legitimacy), Stewards (institutions and administration), Archive (knowledge and schooling), Craft (production and skill), Hands (labour and livelihood), Flow (money, goods and information).\nFor each node (columns Node.C etc): C = coherence 1-10 (how aligned it is), K = capacity 1-10 (what it can do), S = stress 1-10 (load on it), A = abstraction 1-10 (how far it operates from direct reality), V = node value (derived health, higher is healthier, roughly -8 to 22).\nSystem columns: SK = mean stress divided by capacity (above 1.4 is high threat); b = bond coherence, how tightly the nodes hold each other (higher is tighter)${g.arm==='game'?'; P = "praetorian" gap, Shield minus Helm, positive means security outweighs steering; G = cognitive gap, slow loops (Lore, Archive, Helm, Stewards) minus fast loops (Shield, Craft, Hands, Flow), negative means reaction outruns reflection':''}.\n\n`;
-  s+=`HOW TO PLAY\nThink like a panelist on "What's My Line". First list the strongest clues in the data: spikes in SK, sudden collapses or jumps in b, which nodes lead and which lag, long calm stretches, a shield rising over the helm, and so on. Match each clue to what you know of history. Eliminate candidates, then commit.\n\n`;
+  s+=`GLOSSARY\nEach row is one scored year. The eight nodes are: Helm (governance and decision), Shield (security and enforcement), Lore (shared meaning and legitimacy), Stewards (institutions and administration), Archive (knowledge and schooling), Craft (production and skill), Hands (labour and livelihood), Flow (money, goods and information).\nFor each node (columns Node.C etc): C = coherence 1-10 (how aligned it is), K = capacity 1-10 (what it can do), S = stress 1-10 (load on it), A = abstraction 1-10 (how far it operates from direct reality), V = node viability = C + K - S + 0.5*A (higher is healthier).\nSystem columns, computed with the JUNO v1.2-Final operators and independent of node names: Vbar = mean viability of the eight nodes; Vmin = viability of the weakest node; Bbar = mean bond strength between node pairs, 0 to 1 (higher means the nodes hold each other more tightly; stress weakens bonds); lambda2 = algebraic connectivity of the bond network (higher is more tightly knit); smin = lowest cognitive activation of any node (negative means a node whose stress exceeds its capacity).\n\n`;
+  s+=`HOW TO PLAY\nThink like a panelist on "What's My Line". First list the strongest clues in the data: falls in Vbar or Vmin, sudden collapses or jumps in Bbar, a strongly negative smin, which nodes lead and which lag, long calm stretches, and so on. Match each clue to what you know of history. Eliminate candidates, then commit.\n\n`;
   if(box){
     s+=`CANDIDATES (each box is exactly one of these, and no candidate is used twice; two names are decoys that appear in no box):\n${g.candidates.join(', ')}\n\n`;
     s+=`YOUR TASK\nAssign a society to each of boxes A, B, C and D. Start with up to 120 words of panel notes per box. Then end your reply with one JSON block, exactly in this shape and nothing after it:\n\`\`\`json\n{"mode":"pick_a_box","assignments":{"A":{"society":"<candidate>","confidence":0.0},"B":{"society":"<candidate>","confidence":0.0},"C":{"society":"<candidate>","confidence":0.0},"D":{"society":"<candidate>","confidence":0.0}},"key_clues":{"A":["<clue>"],"B":["<clue>"],"C":["<clue>"],"D":["<clue>"]}}\n\`\`\`\nconfidence is a number from 0 to 1.\n\n`;
@@ -536,7 +566,7 @@ function buildBlind(g){
     s+=`YOUR TASK\nName the mystery guest and, if calendar years are real, the period shown. Start with up to 200 words of panel notes. Then end your reply with one JSON block, exactly in this shape and nothing after it:\n\`\`\`json\n{"mode":"whats_my_line","top_guesses":[{"society":"<candidate>","probability":0.0},{"society":"<candidate>","probability":0.0},{"society":"<candidate>","probability":0.0}],"era_guess":"<start year>-<end year> or unknown","key_clues":["<clue>","<clue>","<clue>"]}\n\`\`\`\nprobabilities are numbers from 0 to 1 and should sum to at most 1.\n\n`;
   }
   s+=`---\n\n## DATA\n\n`;
-  g.boxes.forEach((b,i)=>{s+=`### ${box?'BOX '+L[i]:'MYSTERY GUEST'} (${b.rows.length} scored years)\n\`\`\`csv\n${csv(b,g.diff,g.arm!=='game')}\n\`\`\`\n\n`});
+  g.boxes.forEach((b,i)=>{s+=`### ${box?'BOX '+L[i]:'MYSTERY GUEST'} (${b.rows.length} scored years)\n\`\`\`csv\n${csv(b,g.diff)}\n\`\`\`\n\n`});
   return s;
 }
 function normName(x){const k=String(x||'').trim().toLowerCase();return ALIAS[k]||Object.keys(POOL).find(n=>n.toLowerCase()===k)||String(x||'').trim()}
@@ -563,8 +593,8 @@ function scoreAnswer(g,txt){
   }
   return{rows,pts,max};
 }
-const ARMNOTE={real:'Pilot arm: real data. Rows and node labels are untouched.',perm:'Negative control: the scored rows were put in random order (years still run in sequence). Any confident story about a trajectory here is a false positive.',shuf:'Negative control: node labels were reassigned at random. Any confident claim about a named node here is a false positive.'};
-function keyHTML(g){return (g.arm!=='game'?`<p><span class="pill ${g.arm==='real'?'ok':'no'}">${g.arm==='real'?'real':'control'}</span> ${ARMNOTE[g.arm]}</p>`:'')+`<table><tr><th>Slot</th><th>Society</th><th>Source series</th><th>True years</th></tr>${g.boxes.map((b,i)=>`<tr><td class="n">${g.mode==='box'?'Box '+L[i]:'Guest'}</td><td>${b.name}</td><td>${b.key}</td><td>${b.y0} to ${b.y1}${g.diff==='mid'?` (shown shifted ${b.off>0?'+':''}${b.off})`:''}</td></tr>`).join('')}</table>`+(g.mode==='box'?`<p class="note">Decoys: ${g.decoys.join(', ')}</p>`:'')}
+const ARMNOTE={real:'Pilot arm: real data. Rows and node labels are untouched.',perm:'Negative control, ROW PERMUTATION: the scored rows were put in random order (years still run in sequence). This destroys trajectory, not levels. A confident story about change over time is a false positive. A correct society guess is not.',shuf:'Negative control, NODE-LABEL SHUFFLE: node names were reassigned at random (same relabelling on every row). This destroys node identity, not the trajectory or the system columns. A confident claim about a named node is a false positive. A correct society guess is not.'};
+function keyHTML(g){return (g.arm!=='game'?`<p><span class="pill ${g.arm==='real'?'ok':'no'}">${g.arm==='real'?'real':'control'}</span> ${ARMNOTE[g.arm]}</p>`:'')+`<table><tr><th>Slot</th><th>Society</th><th>Source series</th><th>True years</th><th>Regimes in window, JUNO v1.2-Final (canonical)</th><th>v1.0.1 (legacy comparator)</th></tr>${g.boxes.map((b,i)=>`<tr><td class="n">${g.mode==='box'?'Box '+L[i]:'Guest'}</td><td>${b.name}</td><td>${b.key}</td><td>${b.y0} to ${b.y1}${g.diff==='mid'?` (shown shifted ${b.off>0?'+':''}${b.off})`:''}</td><td>${tally(b.rows.map(r=>classifyV12(junoFG(r.n))))}</td><td>${tally(b.rows.map(r=>classifyV101(junoFG(r.n))))}</td></tr>`).join('')}</table>`+(g.mode==='box'?`<p class="note">Decoys: ${g.decoys.join(', ')}</p>`:'')}
 function showRes(html){const r=$('gRes');r.hidden=false;r.innerHTML=html}
 function renderGame(){
   const g=G.deal;$('gDealId').innerHTML=`Deal <b>${g.id}</b> · ${g.mode==='box'?'4 boxes, 6 candidates':'1 guest, '+g.candidates.length+' candidates'}`;
@@ -579,7 +609,7 @@ $('gCopy').onclick=()=>copy($('gFile').value,'Blind file copied');
 if(window.claude){$('gDl').hidden=true}
 $('gDl').onclick=()=>{try{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([$('gFile').value],{type:'text/markdown'}));a.download=`cams-blind-${G.deal.id}.md`;document.body.appendChild(a);a.click();a.remove()}catch(e){toast('Download blocked, use Copy')}};
 $('gScore').onclick=()=>{const r=scoreAnswer(G.deal,$('gAns').value);if(r.err){showRes(`<p>${r.err}</p>`);return}
-  const an=G.deal.arm!=='game'?`<p><span class="pill ${G.deal.arm==='real'?'ok':'no'}">${G.deal.arm==='real'?'real':'control'}</span> ${ARMNOTE[G.deal.arm]}${G.deal.arm!=='real'?' The score below shows only whether the model named the source society. For a control, read its stated confidence: high confidence is the failure.':''}</p>`:'';
+  const an=G.deal.arm!=='game'?`<p><span class="pill ${G.deal.arm==='real'?'ok':'no'}">${G.deal.arm==='real'?'real':'control'}</span> ${ARMNOTE[G.deal.arm]}${G.deal.arm!=='real'?' The score below shows only whether the model named the source society, which a control does not test. Read the panel notes for the claim type this control targets.':''}</p>`:'';
   showRes(an+`<h3>Score ${r.pts} of ${r.max}</h3><table><tr><th>Slot</th><th>Model said</th><th>Truth</th><th></th></tr>${r.rows.map(x=>`<tr><td class="n">${x[0]}</td><td>${x[1]}${x[4]!=null?` (${x[4]})`:''}</td><td>${x[2]}</td><td><span class="pill ${x[3]?'ok':'no'}">${x[3]?'correct':(x[5]||'miss')}</span></td></tr>`).join('')}</table>`)};
 $('gReveal').onclick=()=>showRes(`<h3>The key</h3>${keyHTML(G.deal)}`);
 $('gLoadBtn').onclick=()=>{$('gLoadWrap').hidden=!$('gLoadWrap').hidden};
