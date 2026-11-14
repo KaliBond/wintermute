@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Papers & Research — Neural Nations</title>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #F8F5EE;
+    --bg2: #F0EBE0;
+    --ink: #1A1A18;
+    --ink2: #4A4A44;
+    --ink3: #888880;
+    --rule: #D8D2C4;
+    --accent: #2A5F5A;
+
+    --tag-start:   #2A5F5A;
+    --tag-test:    #8B4513;
+    --tag-global:  #2D5986;
+    --tag-country: #5D4A86;
+    --tag-org:     #2D6B45;
+    --tag-method:  #7A3B6B;
+    --tag-predict: #9B7420;
+
+    --tag-paper:   #334;
+    --tag-report:  #334;
+    --tag-study:   #334;
+    --tag-book:    #334;
+    --tag-essay:   #334;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--bg);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    height: 48px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-logo {
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  nav a {
+    font-size: 13px;
+    color: var(--ink2);
+    text-decoration: none;
+  }
+  nav a:hover { color: var(--ink); }
+  .nav-spacer { flex: 1; }
+  .nav-back {
+    font-size: 12px;
+    color: var(--ink3);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .nav-back:hover { color: var(--ink); }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 52px 24px 32px;
+    max-width: 900px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--rule);
+  }
+  .hero h1 {
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+  .hero p {
+    font-size: 15px;
+    color: var(--ink2);
+    max-width: 580px;
+    line-height: 1.6;
+  }
+  .hero-meta {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--ink3);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── FILTER BAR ── */
+  .filter-bar {
+    position: sticky;
+    top: 48px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 24px;
+    z-index: 90;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .filter-bar::-webkit-scrollbar { display: none; }
+  .filter-tabs {
+    display: flex;
+    gap: 0;
+    min-width: max-content;
+  }
+  .filter-tab {
+    padding: 10px 16px;
+    font-size: 13px;
+    color: var(--ink2);
+    cursor: pointer;
+    border: none;
+    background: none;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .filter-tab:hover { color: var(--ink); }
+  .filter-tab.active {
+    color: var(--ink);
+    font-weight: 600;
+    border-bottom-color: var(--ink);
+  }
+  .filter-tab .count {
+    margin-left: 5px;
+    font-size: 11px;
+    color: var(--ink3);
+    font-weight: 400;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    padding-top: 44px;
+  }
+  .section-header {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink3);
+  }
+  .section-label {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .section-desc {
+    font-size: 13px;
+    color: var(--ink2);
+    margin-top: 2px;
+    font-style: italic;
+  }
+
+  /* ── PAPER CARDS ── */
+  .papers-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .paper-card {
+    background: var(--bg);
+    padding: 16px 18px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4px 16px;
+    align-items: start;
+    transition: background 0.1s;
+  }
+  .paper-card:hover { background: var(--bg2); }
+
+  .paper-card a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .paper-card a:hover .paper-title { text-decoration: underline; }
+
+  .paper-left { min-width: 0; }
+  .paper-right { text-align: right; white-space: nowrap; }
+
+  .paper-badges {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 2px;
+    line-height: 1.4;
+  }
+  .badge-new {
+    background: #E8F4F0;
+    color: #1A5A50;
+  }
+  .badge-type {
+    background: var(--bg2);
+    color: var(--ink2);
+    border: 1px solid var(--rule);
+  }
+  .badge-notable {
+    background: #FFF3CD;
+    color: #856404;
+  }
+
+  .paper-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.35;
+    margin-bottom: 3px;
+  }
+
+  .paper-desc {
+    font-size: 13px;
+    color: var(--ink2);
+    line-height: 1.5;
+    margin-bottom: 0;
+  }
+
+  .paper-date {
+    font-size: 12px;
+    color: var(--ink3);
+    font-variant-numeric: tabular-nums;
+    margin-top: 4px;
+  }
+
+  .paper-links {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+  }
+  .paper-link {
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .paper-link:hover { text-decoration: underline; }
+
+  /* ── HIDDEN STATE ── */
+  .section.hidden { display: none; }
+
+  /* ── FOOTER ── */
+  .page-footer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 24px 48px;
+    border-top: 1px solid var(--rule);
+    font-size: 12px;
+    color: var(--ink3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .page-footer a { color: var(--ink3); }
+  .page-footer a:hover { color: var(--ink); }
+
+  @media (max-width: 600px) {
+    .paper-card { grid-template-columns: 1fr; }
+    .paper-right { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">NN</a>
+  <a href="explore.html">Explore</a>
+  <div class="nav-spacer"></div>
+  <a href="explore.html" class="nav-back">← Back to Explore</a>
+</nav>
+
+<div class="hero">
+  <h1>Papers &amp; Research</h1>
+  <p>Published analyses, empirical tests, and framework papers from the Neural Nations project — a programme measuring how societies and organisations coordinate under stress.</p>
+  <div class="hero-meta">Kari Freyr McKern · 2026 · <a href="https://github.com/KaliBond/wintermute" style="color:inherit;">Open science — forks welcome</a></div>
+</div>
+
+<div class="filter-bar">
+  <div class="filter-tabs">
+    <button class="filter-tab active" data-filter="all">All <span class="count" id="count-all"></span></button>
+    <button class="filter-tab" data-filter="start">Start Here <span class="count" id="count-start"></span></button>
+    <button class="filter-tab" data-filter="test">Does It Hold Up? <span class="count" id="count-test"></span></button>
+    <button class="filter-tab" data-filter="global">Global Findings <span class="count" id="count-global"></span></button>
+    <button class="filter-tab" data-filter="country">Country Studies <span class="count" id="count-country"></span></button>
+    <button class="filter-tab" data-filter="org">Organisations &amp; Beyond <span class="count" id="count-org"></span></button>
+    <button class="filter-tab" data-filter="method">Framework &amp; Method <span class="count" id="count-method"></span></button>
+    <button class="filter-tab" data-filter="predict">Predictions on Record <span class="count" id="count-predict"></span></button>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ───────────────────────────────── START HERE ── -->
+<div class="section" data-section="start">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Section 1</div>
+      <div class="section-label">Start Here</div>
+      <div class="section-desc">What the project is, what it claims, and what would prove it wrong</div>
+    </div>
+  </div>
+  <div class="papers-grid">
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="natural-history-of-civilisations.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Essay</span><span class="badge badge-notable">Start here</span></div>
+          <div class="paper-title">The Natural History of Civilisations</div>
+          <div class="paper-desc">The master essay — a full synthesis of what CAMS has found, where the framework stands, and how the pieces fit together.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">8 Nov 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="dynamics-of-social-organisation.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Book</span></div>
+          <div class="paper-title">The Dynamics of Social Organisation</div>
+          <div class="paper-desc">A free book and 30-second film explaining the whole project in plain terms. Every organisation as an adaptive human system. CC BY 4.0.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">31 Oct 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="https://github.com/KaliBond/wintermute/blob/main/juno/PUBLIC_STATUS_2026-09-12.md">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Status note</span></div>
+          <div class="paper-title">What CAMS Is Claiming in Public</div>
+          <div class="paper-desc">Honest summary: a thermometer, not a crystal ball. What the instrument can and cannot do, stated plainly before you read anything else.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">12 Sep 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="a-short-history-of-cams.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">History</span></div>
+          <div class="paper-title">A Short History of CAMS</div>
+          <div class="paper-desc">How the instrument was built — wrong turns included. The node names, metrics, and categories that changed along the way.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Sep 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="meta-animal-under-the-microscope.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Essay</span></div>
+          <div class="paper-title">The Meta-Animal Under the Microscope</div>
+          <div class="paper-desc">What the framework claims and doesn't claim — and the specific tests that would prove it wrong.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Sep 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="response-to-critics.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Response</span></div>
+          <div class="paper-title">A Core Response to Outright Dismissal</div>
+          <div class="paper-desc">Why dismissal without engagement isn't refutation — and the pre-registered test (Spearman ρ = 0.70) that would have killed the project if it had failed.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Sep 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="canonical-definitions.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Reference</span></div>
+          <div class="paper-title">Canonical Definitions</div>
+          <div class="paper-desc">The authoritative definitions of all four metrics (Coherence, Capacity, Stress, Abstraction), Node Value, and every derived composite used across the project.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Reference</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="https://claude.ai/public/artifacts/78723e5c-f3db-439b-8aeb-33c7a2084abd">
+          <div class="paper-badges"><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">Why Eight Nodes? A Rate-Separation and Coupling Argument</div>
+          <div class="paper-desc">The case for why exactly these eight functions — not seven or ten — are the right partition for systems of this scale.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Mar 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="https://claude.ai/public/artifacts/2731c15a-6827-4981-9ff7-424ce631a585">
+          <div class="paper-badges"><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">History Doesn't Repeat — It Rhymes</div>
+          <div class="paper-desc">A theory of societal pattern, coordination, and collapse. The structural argument for why societies follow recurring templates.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Apr 2026</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ───────────────────────────────── TESTING ── -->
+<div class="section" data-section="test">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Section 2</div>
+      <div class="section-label">Does It Hold Up?</div>
+      <div class="section-desc">Blind tests, adversarial probes, pre-registered predictions — results reported honestly, failures included</div>
+    </div>
+  </div>
+  <div class="papers-grid">
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="adversary-02-results.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Report</span><span class="badge badge-notable">Pre-registered</span></div>
+          <div class="paper-title">ADVERSARY-02 — A Pre-registered Test of CAMS</div>
+          <div class="paper-desc">15 predictions sealed before scoring for China and 7 Chinese firms (2021–2024). Result: 6 passed, 9 failed. The kill-switch was not triggered. Written for readers new to CAMS.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">6 Nov 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="p4-retrospective-validation.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Report</span></div>
+          <div class="paper-title">P4: Does the Crisis Detector Work on Firms?</div>
+          <div class="paper-desc">The sealed crisis-detection rule applied unchanged to Boeing, Theranos and WorldCom against six matched controls. Interim results — baselines pending.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">10 Nov 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_independent_ai_replication_2026-11-07/CAMS_Personality_Independent_AI_Replication_Report_2026-11-07.md">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Report</span></div>
+          <div class="paper-title">CAMS Personality: Independent AI Replication</div>
+          <div class="paper-desc">Blind era-recognition test: could an AI identify a masked society from its metric signature alone? Exploratory and promising — not causal validation, not peer review.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">7 Nov 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="https://github.com/KaliBond/wintermute/blob/main/crisis_typology_rule_v1.md">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Rule</span><span class="badge badge-notable">Sealed</span></div>
+          <div class="paper-title">Crisis Typology — Cluster-Gap Rule v1.0</div>
+          <div class="paper-desc">A sealed rule for distinguishing epistemological crises (failure of knowledge and governance) from economic crises (failure of labour and resources). 87% accuracy on canonical data.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">5 Nov 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="attractor-coherence-revisited.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Study</span></div>
+          <div class="paper-title">Attractor Coherence, Revisited</div>
+          <div class="paper-desc">The functional attractor coherence study re-run on the full 53-society dataset. A consistency check, not a blind test.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">9 Nov 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="blind-test/CAMS_Blind_Experiment_Report.pdf">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Report</span><span class="badge badge-notable">Panel results</span></div>
+          <div class="paper-title">CAMS Blind Experiment Report</div>
+          <div class="paper-desc">Full panel analysis by Kari McKern and Fable 5 (Anthropic): blinded society classification, scoring, and morphospace placement. Includes PDF.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="blind-protocol-v111.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Protocol</span></div>
+          <div class="paper-title">Protocol v1.1.1 — Cognitive-Affective Extension</div>
+          <div class="paper-desc">3 blind sets, 24 societies, mean reciprocal rank improved from 0.667 to 0.833. Calibration gate failure documented. With figures and data.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="backstory-deep-time.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Report</span></div>
+          <div class="paper-title">Reading Societies Without Their Stories — CAMS Deep-Time Test</div>
+          <div class="paper-desc">20 ancient societies from Longshan to the Xiongnu, 22 blind passes from Claude, Grok and GPT. Five pre-registered hypotheses; collapse drains every node at once.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">2 Oct 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="cams-blind-test-assessment.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">CAMS v1.1 Blind Test — Named Scientific Assessment</div>
+          <div class="paper-desc">JUNO experiment reveal: 8 masked societies unmasked (Germany, Norway, Russia, UK, Chile, Poland, Argentina, Australia). 1,201 society-years. Core formulas validated at machine precision.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">1 Jul 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="ensemble-validation.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">Ensemble Validation — The Wright Thesis: Confirmed with Qualifications</div>
+          <div class="paper-desc">Variance reduction = 1/√N exactly; five independent scorers produce the optimal estimate. Germany and USA 1880–2026. Uncertainty reflects genuine ambiguity, not noise.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">May 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="cams-testing-report-june2026.html">
+          <div class="paper-badges"><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">CAMS v1.0.1 — Instrument Test Battery</div>
+          <div class="paper-desc">Six-part validation: corpus audit, formalism repair, vantage-point bias control, and pre-registered 2027–2028 predictions. 2,532 society-years, 25 entities.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Jun 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="research/cams-validation-2026.html">
+          <div class="paper-badges"><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">Graph-Theoretic Diagnosis of Societal Collapse: CAMS Validation Across 18 Societies</div>
+          <div class="paper-desc">Principal component analysis across 7,880 node-year observations; one factor explains 72.7% of variance. 17 crisis fingerprints matched. 12 falsifiable predictions registered.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">10 Jun 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="CAMS_Lab_Note_2026-08-15.pdf">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Note</span></div>
+          <div class="paper-title">JUNO Structural Audit — Rank-1 Bonds, Node Dynamics &amp; Stewards</div>
+          <div class="paper-desc">36 societies, 32,361 node-years. The bond formula proven algebraically. Stewards confirmed as a leading political-economy indicator (AUC 0.930).</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Aug 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="https://claude.ai/public/artifacts/5025a38a-da7c-487c-9be1-bd40f370e295">
+          <div class="paper-badges"><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">Cross-LLM Structural Concordance in CAMS Datasets</div>
+          <div class="paper-desc">Do different AI models score the same societies the same way? Reproducible coordination signatures across independent AI assessors.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="human-ai-scientific-record.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Record</span></div>
+          <div class="paper-title">CAMS Human–AI Scientific Record</div>
+          <div class="paper-desc">The preserved, verified record of the GPT conversation that produced the book. All 13 files match their hashes. Blind-rater agreement r 0.89–0.93. Zenodo DOI: 10.5281/zenodo.23793977.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">30 Oct 2026</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ───────────────────────────────── GLOBAL FINDINGS ── -->
+<div class="section" data-section="global">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Section 3</div>
+      <div class="section-label">Global Findings</div>
+      <div class="section-desc">What the data reveals across societies, histories, and eras</div>
+    </div>
+  </div>
+  <div class="papers-grid">
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="synchronised-slide.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Report</span><span class="badge badge-notable">Key finding</span></div>
+          <div class="paper-title">The Synchronised Slide — Global Stress After 2000</div>
+          <div class="paper-desc">Stress across nations became dramatically more synchronised after 2000: one common factor now explains nearly half the global variance. The 1920s–30s parallel, with the debt sign inverted.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">23 Oct 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="organisational-pathologies.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Report</span></div>
+          <div class="paper-title">Organisational Pathologies — Interim Results</div>
+          <div class="paper-desc">Six recurring failure patterns on 37 societies. Late Abstraction Collapse (when memory and meaning-making detach) precedes major falls with p = 0.0002.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">20 Oct 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="pr-gap2-rupture-study.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Study</span></div>
+          <div class="paper-title">PR-GAP-2: CAMS as a Leading Indicator of Rupture</div>
+          <div class="paper-desc">44 societies, 4,541 society-years, 1900–2025. 126 coups and crises split into two types. Leave-one-country-out accuracy: 74% for deficit crises.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Jul 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="pr-gap2-full-paper.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">PR-GAP-2: Structural Coordination and Rupture Morphology — Full Paper</div>
+          <div class="paper-desc">Full academic paper with Methods/Results/Discussion, adding cultural-grounding path-type results. Japan and Russia reclassified. 4 figures.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Aug 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="papers/civilisation_types_report.pdf">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Report</span></div>
+          <div class="paper-title">What Actually Makes a Civilisation Work</div>
+          <div class="paper-desc">Six findings from scoring 238 societies: fixation capacity (the Archive node) correlates r = 0.976 with long-run viability. Four civilisation types as strategies, not a ladder.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Jul 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="functional_taxonomy.html">
+          <div class="paper-badges"><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">A Functional Taxonomy of Human Social Organisation</div>
+          <div class="paper-desc">229 polities. Coordination problems, geography, and the eight-node architecture. Why different societies face different structural constraints.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">May 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="CAMS_Paper4_Entropy_Flows_Collapse_Signatures.pdf">
+          <div class="paper-badges"><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">Entropy Flows and Collapse Signatures</div>
+          <div class="paper-desc">Germany 1910–1930 and Late Rome 380–450 CE vs a UK control. When the wealth-stewardship floor breaks, collapse follows — a structural early warning.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">May 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="cams5-thesis-validation-report.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Report</span></div>
+          <div class="paper-title">Does a Society Think and Feel? Testing the CAMS Distributed-Cognition Thesis</div>
+          <div class="paper-desc">Australia and Argentina, 229 society-years. The emotional signal (capacity minus stress) is empirically robust; the cognitive signal (clarity times coherence) is not yet load-bearing.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">19 Jul 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="operator-portability-synthesis.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Study</span></div>
+          <div class="paper-title">Operator Portability in CAMS — Synthesis &amp; Verification Trail</div>
+          <div class="paper-desc">9-firm corporate panel plus Denmark and France: the same derived metrics work structurally across nations and firms, but the parameters vary. Confirmed by two independent computational audits.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Jul 2026</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ───────────────────────────────── COUNTRY STUDIES ── -->
+<div class="section" data-section="country">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Section 4</div>
+      <div class="section-label">Country Studies</div>
+      <div class="section-desc">Deep dives into specific nations — what CAMS reveals when you look closely</div>
+    </div>
+  </div>
+  <div class="papers-grid">
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="crisis-before-trump.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Essay</span></div>
+          <div class="paper-title">The Crisis Before Trump — A CAMS Reading of America</div>
+          <div class="paper-desc">USA 1995–2026. The GFC rescued financial stewardship in two years; the workforce took six. How disaffection became political coordination in 2016 — and again in 2024. 16 charts.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">13 Oct 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="great-power-attractors.html">
+          <div class="paper-badges"><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">Three Great-Power Trajectories Against Their Own Historical Attractors</div>
+          <div class="paper-desc">China, Russia, and USA each plotted against their own 20th-century baseline. USA is the outlier: viability and coupling both outside the historical envelope. z = −2.73.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Jun 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="us-legitimacy-cams-study.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Study</span></div>
+          <div class="paper-title">US Legitimacy Crisis × CAMS Stress — Study 2</div>
+          <div class="paper-desc">1996–2025. CAMS Stress leads the collapse in Gallup and Pew public trust surveys by 2–3 years — the structural signal comes before the polling does.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Jul 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="geopolitics-as-group-adaptation.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Essay</span></div>
+          <div class="paper-title">Geopolitics as Group Adaptation</div>
+          <div class="paper-desc">States as pods adapted to river valley, coast, continent, and steppe. Why every bloc is sincere and every bloc projects. Simultaneous constriction, not raw power, as the warning sign.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Oct 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="netherlands-cams-v1-2.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Report</span></div>
+          <div class="paper-title">Netherlands CAMS v1.2 — A Critically Contextualised Analysis</div>
+          <div class="paper-desc">176 annual observations, 1850–2025. 1944 viability trough. Long-run high Archive and Flow; historically low Hands. Low 2025 Helm with critical reflection on recent institutional pressure.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Aug 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="anxiety-machine.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">The Anxiety Machine — Epiphenomenon@Trove</div>
+          <div class="paper-desc">125 years of Australian threat discourse in Trove and Hansard. Three regimes of threat framing; workforce grievances lead security mobilisation.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">17 May 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="the-borrowed-nation.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Essay series</span></div>
+          <div class="paper-title">The Borrowed Nation</div>
+          <div class="paper-desc">Five essays on 175 years of Australian strategic dependency: colonial architecture, foreign-owned stewardship, the Anxiety Machine's findings, the trade paradox, and a 2014 counterfactual.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Aug 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="Epiphenomenon_CompanionII_Fertility_McKern2026.pdf">
+          <div class="paper-badges"><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">Epiphenomenon@Trove — Companion II: The Cradle and the State</div>
+          <div class="paper-desc">Fertility discourse and institutional stress in Australia 1900–2025. The Archive–Hands nexus as driver of demographic politics. Three-regime typology extended.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Jun 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="slavery-path-dependency-2023.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Analysis</span></div>
+          <div class="paper-title">Modern Slavery &amp; Structural Path Dependencies</div>
+          <div class="paper-desc">Global Slavery Index 2023 crossed with CAMS data for 42 societies. Archive and Stewards are the critical nodes. A four-path structural taxonomy.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Jul 2026</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ───────────────────────────────── ORGANISATIONS ── -->
+<div class="section" data-section="org">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Section 5</div>
+      <div class="section-label">Organisations &amp; Beyond</div>
+      <div class="section-desc">Applying the framework to firms, industries, and other systems</div>
+    </div>
+  </div>
+  <div class="papers-grid">
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="CAMCORP5_Ensemble_Analysis_2026.pdf">
+          <div class="paper-badges"><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">CAMCORP5 Ensemble Analysis — Corporate CAMS 2026</div>
+          <div class="paper-desc">Five-scorer ensemble analysis of Apple, Cargill, Citigroup, Coherent, GE Aerospace, and Goldman Sachs, 2000–2026. The same framework, now applied to firms.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="kimi-coordination-analysis.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Analysis</span></div>
+          <div class="paper-title">Kimi K3, OpenAI Losses, and the AI Coordination Crisis</div>
+          <div class="paper-desc">Four synchronised signals in the AI sector: threat framing, $38.5B net loss, ratepayer stress from data centres, and 45% S&amp;P500 AI concentration as fragility indicator.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Jul 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="why-cams.html">
+          <div class="paper-badges"><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">Why CAMS Is Not Just Another Macro Model</div>
+          <div class="paper-desc">What distinguishes the CAMS approach from standard macroeconomic or political science modelling — and why that distinction matters empirically.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">2026</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ───────────────────────────────── FRAMEWORK ── -->
+<div class="section" data-section="method">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Section 6</div>
+      <div class="section-label">Framework &amp; Method</div>
+      <div class="section-desc">The technical and theoretical foundations — for readers who want to understand how the instrument was built</div>
+    </div>
+  </div>
+  <div class="papers-grid">
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="https://github.com/KaliBond/wintermute/blob/main/docs/CAMS_IN_HPS_AND_COMPLEX_SYSTEMS.md">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Essay</span></div>
+          <div class="paper-title">CAMS in the History and Philosophy of Science</div>
+          <div class="paper-desc">Where the framework sits among Popper, Kuhn, Prigogine, the Santa Fe school, Ibn Khaldun, and Turchin. Each big claim stated alongside the conditions under which it would fail.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">2026 draft</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="research-diary.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Diary</span></div>
+          <div class="paper-title">CAMS Lab Diary</div>
+          <div class="paper-desc">First-person log, October 2024 to November 2026. Wrong turns left in. Twelve phases, short commit SHAs throughout. "We don't edit the past, we qualify it."</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Oct 2024–Nov 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="CAMS_Paper1_Introducing_CAMS.pdf">
+          <div class="paper-badges"><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">Human Societies as Complex Adaptive Meta-Systems: Introducing CAMS</div>
+          <div class="paper-desc">The founding paper. Five longitudinal datasets, six falsification criteria. The original case for the eight-node, four-metric architecture.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Apr 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="CAMS_Paper3_EES_Coordination_Formalism.pdf">
+          <div class="paper-badges"><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">CAMS and the Extended Evolutionary Synthesis</div>
+          <div class="paper-desc">How the thermodynamic coordination formalism fits with extended evolutionary theory. Phase-space diagnostics from first principles.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Apr 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="metabolism-meaning.html">
+          <div class="paper-badges"><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">Operational Pressure and Symbolic Integration: A Dyadic Scalar</div>
+          <div class="paper-desc">Two composite signals that track how hard a society is working (operational pressure) and how much it holds together symbolically (symbolic integration). Tested on 2,500 years of Latium.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">May 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="paladin-validation.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Report</span></div>
+          <div class="paper-title">When a Metaphor Earns Its Keep — Adversarial Validation of the Paladin Layer</div>
+          <div class="paper-desc">Does the narrative overlay add information or just decoration? 4,033 complete society-years tested. Three headline renderings are relabelled extrema. Dream–energy alignment: non-redundant but non-predictive.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">20 Jul 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="coupled-cattle.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">Coupled Cattle, Tested</div>
+          <div class="paper-desc">Simulation report on the stampede-as-phase-transition claim. Explosive Kuramoto hysteresis and branching-process contagion. Conditional support — open code and data.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">Jun 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="scale-invariance.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Paper</span></div>
+          <div class="paper-title">The Scale Invariance Experiment</div>
+          <div class="paper-desc">Five blinded CAMS time-series. Does the same framework work at different scales of institution? A blind inference challenge with downloadable data.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">2026</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ───────────────────────────────── PREDICTIONS ── -->
+<div class="section" data-section="predict">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Section 7</div>
+      <div class="section-label">Predictions on Record</div>
+      <div class="section-desc">Forward-looking tests locked and timestamped before scoring — the only kind of test that can't be gamed retrospectively</div>
+    </div>
+  </div>
+  <div class="papers-grid">
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="predictions-2027-2028.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Register</span><span class="badge badge-notable">Zenodo DOI</span></div>
+          <div class="paper-title">Prospective Predictions 2027–2028: USA, China, Australia</div>
+          <div class="paper-desc">32 falsifiable, probability-weighted claims under the current framework, lodged before outcomes are known. Zenodo DOI 10.5281/zenodo.24046639. Scoring begins when the period ends.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">8 Nov 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="https://github.com/KaliBond/wintermute/blob/main/juno/OOS_PREDICTIONS_2026-2028.md">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Register</span></div>
+          <div class="paper-title">Frozen 2026–2028 Out-of-Sample Prediction Register</div>
+          <div class="paper-desc">The 12 falsifiable predictions from the June 2026 paper, locked verbatim before any scoring. The instrument is not externally validated until this holdout is scored.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">28 Aug 2026</div>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-left">
+        <a href="adversary-02-results.html">
+          <div class="paper-badges"><span class="badge badge-new">New</span><span class="badge badge-type">Report</span></div>
+          <div class="paper-title">ADVERSARY-02 Scoring Table and Sealed Predictions</div>
+          <div class="paper-desc">Verdicts for all 15 items under six scorer pools, including per-scorer verdicts and the signed Section 7 file. The raw record behind the results summary.</div>
+        </a>
+      </div>
+      <div class="paper-right">
+        <div class="paper-date">6 Nov 2026</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<div class="page-footer">
+  <span>Neural Nations · <a href="index.html">neuralnations.org</a></span>
+  <span>Kari Freyr McKern · 2026 · <a href="https://github.com/KaliBond/wintermute">Open science</a></span>
+</div>
+
+<script>
+(function() {
+  // Count cards per section
+  const sections = document.querySelectorAll('.section[data-section]');
+  let total = 0;
+  sections.forEach(sec => {
+    const cat = sec.dataset.section;
+    const count = sec.querySelectorAll('.paper-card').length;
+    total += count;
+    const el = document.getElementById('count-' + cat);
+    if (el) el.textContent = count;
+  });
+  document.getElementById('count-all').textContent = total;
+
+  // Filter tabs
+  const tabs = document.querySelectorAll('.filter-tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const filter = tab.dataset.filter;
+      sections.forEach(sec => {
+        if (filter === 'all' || sec.dataset.section === filter) {
+          sec.classList.remove('hidden');
+        } else {
+          sec.classList.add('hidden');
+        }
+      });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
