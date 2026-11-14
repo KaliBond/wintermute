@@ -309,6 +309,16 @@
         }
         .latest .lt-more a { color: #2F6F7D; text-decoration: none; }
         .latest .lt-more a:hover { text-decoration: underline; }
+        .latest .lt-tools {
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid #DAD2B8;
+        }
+        .latest .lt-tools h2 { margin-bottom: 4px; }
+        .latest .lt-tools ul { list-style: none; margin: 0; padding: 0; }
+        .latest .lt-tools li { margin-bottom: 0; padding-left: 0; }
+        .latest .lt-tools li:before,
+        .latest .lt-tools li::before { content: none; }
         .standing { margin: 0; padding-left: 20px; font-size: 0.9em; line-height: 1.7; color: #4A5560; }
         .standing li { margin-bottom: 8px; }
         .standing a { color: #2F6F7D; }
@@ -328,6 +338,120 @@
             .resource-grid { grid-template-columns: 1fr; }
             .cta-row { flex-direction: column; }
             .cta-row a { text-align: center; }
+        }
+
+        /* ── Opening splash ──────────────────────────────────────── */
+        #home-splash {
+            padding: 0;
+            border: none;
+            background: transparent;
+            color: #1B2A33;
+        }
+        #home-splash[open] {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            overflow: auto;
+            padding: 28px 16px;
+            box-sizing: border-box;
+        }
+        #home-splash::backdrop {
+            background: rgba(27, 42, 51, 0.42);
+        }
+        .splash-panel {
+            width: min(740px, 100%);
+            margin: auto;
+            background: #FFFDF6;
+            border: 1px solid #DAD2B8;
+            border-radius: 12px;
+            padding: 26px 26px 20px;
+            position: relative;
+            box-shadow: 0 16px 40px rgba(27, 42, 51, 0.16);
+        }
+        .splash-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            min-height: 44px;
+            padding: 8px 14px;
+            border: 1px solid #DAD2B8;
+            border-radius: 6px;
+            background: transparent;
+            color: #5A6570;
+            font: 600 0.72rem/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        .splash-close:hover,
+        .splash-close:focus-visible {
+            color: #1B2A33;
+            border-color: #2F6F7D;
+            outline: none;
+        }
+        .splash-frame {
+            margin: 0 88px 18px 0;
+            font-size: 1.02rem;
+            font-weight: 600;
+            line-height: 1.4;
+            color: #1B2A33;
+        }
+        .splash-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .splash-card {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            background: #F7F3E6;
+            border: 1px solid #E2DAC3;
+            border-radius: 8px;
+            padding: 14px 14px 13px;
+        }
+        .splash-card:hover { border-color: #2F6F7D; background: #F3F7F8; }
+        .splash-card:focus-visible { outline: 2px solid #2F6F7D; outline-offset: 2px; }
+        .splash-date {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #8A7A55;
+        }
+        .splash-title {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 1.02rem;
+            font-weight: 650;
+            line-height: 1.3;
+            color: #1B2A33;
+        }
+        .splash-desc {
+            display: block;
+            font-size: 0.84rem;
+            line-height: 1.45;
+            color: #3E4C56;
+        }
+        @media (max-width: 640px) {
+            #home-splash[open] { padding: 12px; }
+            .splash-panel { padding: 16px 14px 14px; }
+            .splash-close { position: static; display: block; margin: 0 0 12px auto; }
+            .splash-frame { margin: 0 0 14px; }
+            .splash-grid { grid-template-columns: 1fr; }
+        }
+        @media (prefers-reduced-motion: no-preference) {
+            #home-splash[open] .splash-panel { animation: splash-in 160ms ease-out; }
+        }
+        @keyframes splash-in {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: none; }
         }
     </style>
     <!-- Google Analytics -->
@@ -555,6 +679,15 @@
                 <li><a class="lt" href="https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_independent_ai_replication_2026-11-07/CAMS_Personality_Independent_AI_Replication_Report_2026-11-07.md" target="_blank" rel="noopener"><span class="lt-date">7 Nov 2026</span><span class="lt-title">Independent AI replication: the report ↗</span><span class="lt-desc">126 eras and six models, with sealed evidence and the audit caveats.</span></a></li>
             </ol>
             <div class="lt-more"><a href="explore.html">Everything on Explore →</a><a href="site-index.html">All pages →</a></div>
+            <section class="lt-tools" aria-labelledby="tools-h">
+                <h2 id="tools-h">Tools</h2>
+                <ul>
+                    <li><a class="lt" href="thermodynamic-jungle.html"><span class="lt-title">Thermodynamic Jungle</span><span class="lt-desc">Societies in phase space, with a year slider.</span></a></li>
+                    <li><a class="lt" href="cams-morphospace-atlas.html"><span class="lt-title">Morphospace Atlas</span><span class="lt-desc">Civilisational types, and how to classify a blinded case.</span></a></li>
+                    <li><a class="lt" href="seshat-explorer.html"><span class="lt-title">Seshat × CAMS</span><span class="lt-desc">Seshat social complexity set against CAMS coherence.</span></a></li>
+                    <li><a class="lt" href="cams-3d-attractor.html"><span class="lt-title">3D Attractor Space</span><span class="lt-desc">Power types as trajectories in three-dimensional phase space.</span></a></li>
+                </ul>
+            </section>
         </aside>
         </div><!-- /.home-layout -->
 
@@ -598,6 +731,61 @@
     <p>&copy; 2026 Kari McKern &mdash; Neural Nations CAMS Research. Built as open science &mdash; contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p>
 </footer>
 
+<dialog id="home-splash" aria-labelledby="home-splash-frame">
+    <div class="splash-panel">
+        <button type="button" class="splash-close" autofocus>Close</button>
+        <p class="splash-frame" id="home-splash-frame">Four ways into the work, each standing on its own.</p>
+        <div class="splash-grid">
+            <a class="splash-card" href="what-is-cams.html">
+                <span class="splash-title">What Is CAMS?</span>
+                <span class="splash-desc">The plain-language way in: a dolphin pod, and abstraction as the trick that let humans scale.</span>
+            </a>
+            <a class="splash-card" href="epiphenomenon/without-hindcasting.html">
+                <span class="splash-title">Without Hindcasting</span>
+                <span class="splash-desc">What the scores for 1930, 1935 and 1938 would have said with no knowledge of 1939, across five independent scoring passes.</span>
+            </a>
+            <a class="splash-card" href="analysis/us_interest_burden_cams_study.html">
+                <span class="splash-date">July 2026</span>
+                <span class="splash-title">US Interest Burden × CAMS Stress</span>
+                <span class="splash-desc">US interest payments as a share of federal revenue, 1996 to 2025, set against CAMS Stress, trained to 2020 and tested blind on 2021 to 2025.</span>
+            </a>
+            <a class="splash-card" href="cams-morphospace-atlas.html">
+                <span class="splash-date">July 2026</span>
+                <span class="splash-title">Morphospace Atlas</span>
+                <span class="splash-desc">A formal classifier sorting a society's whole trajectory into one of eight types. Epiphenomena are the weather; morphospace type is the climate.</span>
+            </a>
+        </div>
+    </div>
+</dialog>
+<script>
+(function () {
+    var KEY = 'nn-home-splash-dismissed';
+    var dialog = document.getElementById('home-splash');
+    if (!dialog || typeof dialog.showModal !== 'function') return;
+
+    function remembered() {
+        try { return localStorage.getItem(KEY) === '1'; }
+        catch (err) { return false; }
+    }
+    function remember() {
+        try { localStorage.setItem(KEY, '1'); }
+        catch (err) {}
+    }
+    if (remembered()) return;
+
+    function dismiss() {
+        remember();
+        if (dialog.open) dialog.close();
+    }
+    dialog.addEventListener('cancel', remember);
+    dialog.addEventListener('close', remember);
+    dialog.addEventListener('click', function (e) {
+        if (e.target === dialog) dismiss();
+    });
+    dialog.querySelector('.splash-close').addEventListener('click', dismiss);
+    dialog.showModal();
+})();
+</script>
 <script src="nav.js"></script>
 </body>
 </html>
