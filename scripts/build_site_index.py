@@ -52,7 +52,7 @@ GROUPS = [
         'analysis/pr_gap2_general_audience', 'analysis/inelasticity_results', 'juno-v1-2', 'bond-strength-spec',
         'blind-protocol-v111', 'blind-test', ('cams-personality-experiment', 'Guide'), 'cams-blind-test-assessment', 'cams-testing-report-june2026',
         'cams5-thesis-validation-report', 'ensemble-validation', 'paladin-validation',
-        'operator-portability-synthesis', 'peer-review', 'carbon-evaluation', 'blind-testing', 'papers-and-research', 'response-to-critics', 'functional_taxonomy', 'figures',
+        'operator-portability-synthesis', 'peer-review', 'carbon-evaluation', 'blind-testing', 'papers-and-research', 'robodebt-cams-register', 'response-to-critics', 'functional_taxonomy', 'figures',
         'metabolism-meaning', 'scale-invariance', 'thermodynamic-jungle', 'war', 'social-cognition',
         'coupled-cattle', 'meta-animal-under-the-microscope', 'backstory-deep-time', 'organisational-pathologies', 'canonical-definitions',
         'natural-history-of-civilisations', 'geopolitics-as-group-adaptation', 'synchronised-slide', 'human-ai-scientific-record',

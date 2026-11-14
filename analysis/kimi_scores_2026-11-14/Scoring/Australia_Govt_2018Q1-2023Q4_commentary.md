@@ -1,0 +1,40 @@
+# Commentary — Australian Government, all eight functions, 2018Q1–2023Q4
+
+Delivered separately from the CSV per CAMS Universal Instruction Set v1.4. Companion to the Helm-only run on the Federal Executive (PM and Cabinet), same date. Scores are probes; the audit trail is the protocol note.
+
+## Era statements — one sentence per function per era
+
+**Helm** — see the companion commentary; in one line: the executive oscillates between drift and bind — spills (2018), fires (2019), pandemic command (2020), rollout failure and model-governed reopening (2021), abdication and exposure (2022), repair then the Voice defeat (2023).
+
+**Shield** — The coercive/protective function absorbed the whole period's load (bushfires, COVID borders, cyber, China) without breaking coherence, but the accumulated evidence of the period is a widening gap between missions assigned and capability held: by 2022–23 recruitment shortfalls, a two-decade submarine gap and serial breaches of the digital boundary cap Capacity at 5 while Stress stays pinned at 7–8.
+
+**Lore** — Symbolic coordination tracks the crisis cycle exactly: it binds hardest in the 2020 emergency (C=8 in 2020Q2, the panel maximum outside Helm Stress), frays at every polarising event (fires 2019, lockdown protests 2021, referendum 2023, C=4 each), and its deep ritual stock (Anzac, sport, monarchy-in-transition) never falls below K=5.
+
+**Stewards** — Custody of the store swung from surplus rhetoric (2018–19) through the largest fiscal expansion since 1945 (2020, S=9) into a decade of structural pressure (NDIS growth, housing, energy prices), and the 2022–23 surplus shows allocation re-tied to real constraint rather than the constraint having been mastered.
+
+**Craft** — Technique is the weakest function in the panel across the whole six years: robodebt (unlawful method, 2019), the COVIDSafe white elephant (2,827 contacts from 7.4m registrations), the vaccine "strollout" (2021), and the Optus/Medibank breaches (2022) keep Capacity at 4–6 with Coherence at 4 through 2022–23 — the state can still deliver when an existing machine exists (JobKeeper through the ATO, 2020Q2 K=6) but cannot reliably build new method.
+
+**Hands** — Mass mobilisation was the state's quiet strength: firefighters and volunteers through Black Summer, the health and care workforce through COVID (S=9 in 2020Q2 held without flight or faction), and the 2022–23 strike wave expressed pressure through institutions — unions bargaining, not bonds dissolving — with wage growth and migration inflow beginning to relieve the load only in 2023.
+
+**Archive** — Usable memory ran on two tracks: an extraordinary inquiry culture (banking, bushfires, aged care, robodebt — Abstraction 5–6 through the period) riding on a physically and institutionally starved custodian (National Archives underfunded, 6% digitisable, K=4 across 2020–21), with secrecy episodes (AFP raids 2019, National Cabinet opacity 2020) marking the contested border.
+
+**Flow** — Circulation failed twice in distinct modes: a deliberate stop (COVID border closure, absorbed) and an involuntary break (June 2022 energy market suspension, S=9, the only quarter any node hits 9 outside 2020Q2), with China's trade coercion (2020–22) testing and ultimately re-routing export flows without starvation.
+
+## Quarter-level notes at score changes
+
+- **Helm** — full change table in the companion file (`Australia_FedExec_Helm_2018Q1-2023Q4_commentary.md`); the pattern is crisis-binding between coordination failures.
+- **Shield** — 2019Q4 S 5→7: bushfire deployment began Sept 2019, escalating to the first compulsory reserve call-out (4 Jan 2020). 2021Q3 A 5→6: AUKUS (15 Sep 2021) put long-range force-structure planning in charge, replacing the cancelled Attack-class reflex. 2022Q2 C 6→5, S 7→8: the Solomons–China pact was a regional protection failure on the outgoing executive's watch, discovered mid-campaign. 2022Q3 K 6→5: Optus/Medibank breaches plus recruitment shortfalls. 2022Q4→2023 A 6 held: AUKUS pathway (Mar 2023) and Defence Strategic Review (Apr 2023) — the one function whose Abstraction rose and stayed up through 2023.
+- **Lore** — 2019Q4 C 5→4, S 6→8: the fires hollowed the PM's symbolic authority ("I don't hold a hose"; Hawaii). 2020Q1 C 4→6, Q2 C 6→8: volunteer solidarity and the Anzac driveways bound the country at its maximum. 2020Q3 C 8→6: border wars re-fractionalised "us". 2021Q3 C 5→4: lockdown protests. 2023Q3 S 6→8, Q4 C 5→4: the referendum consumed the symbolic field and lost — every state voted No.
+- **Stewards** — 2020Q1 S 6→8, Q2 S 8→9: the store was opened wholesale and mostly kept households whole; JobKeeper's design flaws were real but the allocation held. 2021–22 S 7–8 held: withdrawal of support, NDIS growth, housing inflation, then the energy price crisis. 2022Q4→2023 C/K 5→6: caps, two budgets, surplus — allocation re-tied to constraint.
+- **Craft** — 2019Q3–Q4 C 5→4, K 5→4: robodebt's method collapsed in court (Amato, Nov 2019). 2020Q2 K 5→6: the ATO/Service Australia surge worked — peak delivery — while COVIDSafe (~$5m+, 2,827 contacts) showed the failure mode. 2021Q2 K 5→4: the strollout. 2022Q3 C 5→4, K 5→4: breaches. 2023 C=4 held: the robodebt Royal Commission catalogued a decade of method failure; reform accepted on paper (56/57 recommendations) but not yet institutionalised.
+- **Hands** — 2019Q4 S 6→8: firefighting mobilisation. 2020Q2 S 8→9: care workforce under pandemic load; bond held. 2021Q2 S 7→8: closed borders starved sectors of workers (153→286 shortage occupations by 2022). 2022Q3 C 5→6: strikes organised, bargained, settled. 2023Q4 K 5→6: wage rises (FWC aged-care case) and migration inflow restored some margin.
+- **Archive** — 2019Q2 C 5→4: AFP raids on journalists. 2020Q2 K 5→4: Tune review — the custodian couldn't keep the records. 2020Q3 C 5→4: National Cabinet secrecy. 2021Q2 K 4→5: $67.7m rescue. 2022Q3 K 4→5: NACC established and robodebt RC running — oversight memory rebuilt. 2023Q3 A 5→6: the robodebt report is the period's strongest single artefact of usable memory.
+- **Flow** — 2020Q2 S 7→8: deliberate border stop; domestic flows held. 2020Q4–2021Q1 S 7→8: China's coercion campaign; exporters re-routed (barley to Saudi, coal to India) — degraded but not starved. 2022Q1 S 8: floods cut the east coast. 2022Q2 S 8→9, Q3 C/K 5→4: the NEM suspension was the panel's clearest circulation rupture. 2022Q4→2023Q1 C/K 5→6: thaw — coal resumed Jan 2023, barley duties lifted Aug 2023.
+
+## Helm against the other seven — the comparison you asked for
+
+Three observations. First, **Helm is not the binding constraint**: the executive's coherence collapses (2018Q3, 2019Q4, 2022Q1, 2023Q4) but the state's other functions mostly keep working through those quarters — the 2018 spills register nowhere else; the Voice defeat scars only Lore. The executive fails by narrative; the machine fails by technique.
+
+Second, **the state's real fragility is Craft-Archive**: the two functions that keep records and method sit at the bottom of the Capacity range (Craft 4–6, Archive 4–5) for the entire six years, and every Helm crisis in the panel has a Craft or Archive shadow (robodebt under the Morrison mandate; breaches and secrecy under the emergency; the archives starved throughout). If there is a testable hypothesis here, it is: *in this state, executive coherence recovers automatically after rupture, but technique and memory do not recover without inquiry-driven shock* — the Royal Commission is the state's only demonstrated repair mechanism for its weakest functions.
+
+Third, **Stress decouples by function**: 2020Q2 loads Helm, Stewards and Hands to 9 while Flow absorbs a border closure at 8 — the emergency was social-fiscal, not circulatory. 2022Q2 inverts it: Flow alone hits 9 while Helm sits at 5 — an energy-market failure the executive mostly watched. The state handles external shocks better than internal market failures: worth testing against other commodity-exporting states in the dataset.
