@@ -9,6 +9,9 @@ on:
 jobs:
   validate:
     runs-on: ${{ matrix.os }}
+    env:
+      # Windows runners default stdout to cp1252, which cannot print the ✅ used by the steps below
+      PYTHONIOENCODING: utf-8
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
