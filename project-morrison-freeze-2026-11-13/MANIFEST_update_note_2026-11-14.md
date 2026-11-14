@@ -20,5 +20,22 @@ modified; the new manifest covers exactly the files added after their
 timestamping. `MANIFEST_v1.sha256` therefore no longer lists every file in this
 directory — that gap is deliberate and this note is its disclosure.
 
+**OpenTimestamps proof.** `MANIFEST_reports_2026-11-14.sha256.ots.b64` is the
+OpenTimestamps proof for this manifest, stamped 2026-11-14 with pending
+attestations from four default calendars (alice/bob.btc.calendar.opentimestamps.org,
+btc.calendar.catallaxy.com, finney.calendar.eternitywall.com). It is stored
+base64-encoded because the transport used to write to this repository is
+text-only and cannot carry the proof's binary bytes (which begin with a null
+byte). Before use, decode it:
+
+    base64 -d MANIFEST_reports_2026-11-14.sha256.ots.b64 > MANIFEST_reports_2026-11-14.sha256.ots
+    ots verify MANIFEST_reports_2026-11-14.sha256.ots   # after ots upgrade confirms it
+
+This is a known deviation from the sibling manifests, whose `.ots` files are
+raw binary; the deviation is recorded here rather than papered over. The binary
+proof also exists locally at
+`C:\Users\julie\kimi_scores\Scoring\MANIFEST_reports_2026-11-14.sha256.ots`
+(735 bytes, verified to parse and to match the manifest digest).
+
 Hashes were computed over the exact bytes in the repository (verified against
 the working copies in `C:\Users\julie\kimi_scores\Scoring`).
