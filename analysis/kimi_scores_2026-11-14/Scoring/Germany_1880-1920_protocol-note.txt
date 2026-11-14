@@ -1,0 +1,77 @@
+PROTOCOL NOTE — CAMS Universal Instruction Set v1.4
+
+Protocol: CAMS Universal Instruction Set v1.4
+Scorer: Kimi Work desktop agent (Moonshot AI); model version not disclosed by host
+Run date: 2026-09-22
+Entity: Germany (named; not blinded)
+Year(s): 1880–1920 (41 annual conditions, 31 December of each year; 1880 scored at Reich scale, post-1871 unification)
+Mode: single scorer; ensemble not requested, so no ensemble.csv or envelope.csv produced
+
+Evidence basis:
+- Corpus knowledge of German political, military, economic and scientific history 1880–1920. Pre-1914 institutional facts rest on corpus only (see Caveats).
+- Web searches run 2026-09-22, cited in commentary:
+  1. Turnip Winter 1916–17 — War Food Office created 22 May 1916; official rations 1,560 cal/day summer 1917 falling to 1,000 in winter vs ~3,000 required; potato crop failure; blockade cut food imports ~33%; female mortality +11.5% (1916), +30% (1917); one contemporary Berlin physician reported 80,000 children starved in 1916; ≥400,000 excess deaths attributed to starvation across the war; black market supplied 1/5–1/3 of food; August 1916 Hamburg food riots (Watson, Ring of Steel, via Scientific American; standard historiography).
+  2. November 1918 — sailors refuse orders 29–30 Oct; Kiel mutiny 3 Nov; workers'/soldiers' councils spread to ~300 towns by 7 Nov; abdication proclaimed 9 Nov (Scheidemann; Liebknecht counter-proclamation); Armistice 11 Nov; Ebert–Groener pact; January 1919 Spartacist uprising crushed by Freikorps (Luxemburg/Liebknecht killed); National Assembly elections 19 Jan 1919 (SPD/Centre/DDP majority); Weimar Constitution 11 Aug 1919; Bavarian Soviet Republic April–May 1919 suppressed.
+  3. Kapp Putsch / Ruhr 1920 — 13 March 1920 Ehrhardt Brigade ~12,000 enter Berlin; Seeckt refuses to act ("Reichswehr does not fire on Reichswehr"); government flees to Dresden then Stuttgart; general strike ~12 million workers; civil-service non-cooperation; putsch collapses 17 March; Ruhr uprising: Red Ruhr Army 50,000–80,000 armed workers (~300,000 miners supportive), suppressed by Reichswehr/Freikorps (von Watter) by ~6–12 April, ~1,000 workers and ~600 soldiers killed; France briefly occupied Frankfurt/Darmstadt; SPD lost 62 seats in June 1920 election; Noske resigns 22 March.
+  4. January 1918 strike (Januarstreik) — began Berlin 28 Jan; ~400,000 munitions/metal workers; spread to Kiel, Hamburg, Mannheim, Augsburg; >1 million at height; 414-member Action Committee; dissolved by government; ~50,000 strikers conscripted; leaders arrested/sent to front; martial law threatened 1 Feb; collapse 3 Feb; organised by Revolutionary Stewards outside union control; USPD/Spartacus agitation.
+
+Blind rules applied: yes — entity named so case not blinded; prestige of named persons (Bismarck, the General Staff, the Kaiser) ignored; system labels ("empire", "republic", "democracy") ignored; each function scored as if the other seven did not exist; no cross-function reconciliation performed (divergences, e.g. Shield holding while Lore cracked from 1917, left standing as data).
+
+Fact-anchor rule (every score <5, >8, or year-over-year move of >=2, with supporting fact):
+
+Scores >8 (all 1918):
+- Helm S9, Shield S9, Lore S9, Stewards S9, Hands S9, Flow S9 — 1918: collapse year. Kiel mutiny (3 Nov); councils in ~300 towns (7 Nov); abdication (9 Nov); Armistice (11 Nov); provisioning failure (rations ~1,000 cal/day, black market 1/5–1/3 of food); >1 million at January strike height and mutiny in the fleet; circulation breakdown under continued blockade. Six functions at S9 in a single year is the panel's structural signature: total-system rupture, not localised failure.
+
+Moves >=2 (year over year):
+- Helm S 1887->1888 4->6 — Year of Three Emperors (Wilhelm I dies March; Frederick III dies June; Wilhelm II accedes).
+- Helm S 1889->1890 5->7 and 1890->1891 7->5 — Bismarck dismissed March 1890; new regime under Caprivi stabilises through 1890s.
+- Helm C 1907->1908 7->5, S 4->6 — Daily Telegraph affair: Kaiser's unauthorised interview claims German public hostility to Britain; Bulow distances himself; executive credibility dented.
+- Helm C 1913->1914 4->6 — Zabern affair and Army Bill deadlock (SPD largest party vs. military establishment) give way to Burgfrieden and war unity.
+- Helm A 1915->1916 5->3 — Hindenburg/Ludendorff assume Supreme Command Aug 1916: planning becomes raw material arithmetic (Hindenburg Programme), strategic abstraction collapses to trench-logic.
+- Helm A 1918->1919 2->4 — Ebert, National Assembly (Jan 1919), Weimar Constitution (Aug 1919): constitutional abstraction rebuilt.
+- Shield S 1913->1914 4->6 — war mobilisation executes to schedule (Schlieffen-Moltke plan rolls on rail timetables); Marne checks it.
+- Shield K 1917->1918 6->4 — spring offensive (March 1918) exhausts reserves; no operational answer to blockade + US arrivals; capacity visibly spent by autumn.
+- Shield A 1918->1919 4->2 — Freikorps ecology: violence privatised, doctrine indistinguishable from factional will.
+- Lore S 1907->1908 4->6 — Telegraph affair splits Kaiser myth from executive.
+- Lore C 1913->1914 5->8 — Burgfrieden: SPD votes war credits (4 Aug 1914); class truce proclaimed.
+- Lore C 1917->1918 5->3 — USPD split, Fatherland Party vs Peace Resolution (July 1917): symbolic unity breaks a year before the state does.
+- Stewards S 1913->1914 4->6 — war-bond finance (hostile-witness anchor, see below); fiscal coherence begins war on promise.
+- Stewards A 1915->1916 5->3 — War Food Office and ration arithmetic: provisioning abstraction degrades to survival counts.
+- Craft S 1913->1914 4->6 — blockade cuts nitrate and raw-material imports; shift to substitution chemistry begins.
+- Hands C 1917->1918 5->3 — January strike >1 million, Revolutionary Stewards, martial law threatened; then Kiel mutiny. Coherence of the labour bargain gone.
+- Hands K 1919->1920 5->7 — Kapp general strike ~12 million workers: mobilisation capacity demonstrated at scale, higher than any war year (it was the state that failed, not the workers' ability to move).
+- Flow S 1913->1914 4->7 — blockade: shipping insurance crisis, import collapse (~33% of food imports cut).
+- Flow S 1919->1920 8->6 — recovery from blockade (lifted July 1919) offset by Ruhr fighting and Kapp disruption.
+
+Scores <5:
+Peacetime baselines. S4 (mild, managed load) is the era norm for Helm, Shield, Lore, Stewards and Flow in stable years; these are enumerated in the CSV and covered by the era statements in the commentary rather than restated row-by-row. Anchors for the non-baseline <5 cells:
+- Helm 1913 C4 — Zabern affair: military arrests civilians in Alsace; Reichstag censure; Kaiser backs the army. Executive coherence at constitutional breaking point.
+- Helm 1916–18 A3, 1918 A2 — silent dictatorship of OHL; war aims drift; planning by material arithmetic, not strategy.
+- Helm 1917–20 C4 K4 (1918 C3) — peace resolution passed July 1917, ignored; October 1918 constitutional monarchy proclaimed too late; Weimar executive coalition-bound.
+- Shield 1918 K4 — spring offensive burns the last trained reserves; autumn collapse.
+- Shield 1919–20 C4 K3 A2 — Freikorps and unreliable Reichswehr (Seeckt, Kapp); no legitimate monopoly doctrine.
+- Lore 1918 C3, 1920 C3 — rupture year; Kapp flags vs red flags; stab-in-back myth as counter-symbol.
+- Stewards 1916–20 (C/K at 3–5, A3) — Turnip Winter facts above; provisioning state reduced to ration arithmetic; 1918 provisioning collapse.
+- Craft 1918 K4 — skilled workforce at the front; January strike idles munitions; material exhaustion.
+- Hands 1918 C3 — January strike and Kiel mutiny: the organised-labour bargain in pieces.
+- Hands 1919 C4 — demobilisation ~6.5 million men; ~5,000 strikes in 1919 (figure of medium authority, see Caveats).
+- Flow 1916–19 C/K at 3–4, A4 (1918 C3 K3 A3) — circulation failure: food cannot move to cities; black market out-competes official distribution.
+
+NA justifications: none — evidence for all eight functions, all forty-one years, contained both performance and strain facts.
+
+Hostile-witness anchors (v1.4 rule — financial tokens require material corroboration):
+- War-bond finance 1914–18 (Stewards C6 1914–15 resting partly on loan-subscription success): treated as adversarial testimony. Material corroboration of fiscal strain: calorie ration collapse (1,560 -> 1,000/day), female mortality +30% (1917), black market 1/5–1/3 of food, ≥400,000 starvation-related excess deaths. The bond figures themselves remain uncorroborated and were not load-bearing.
+- Reparations and 1919–20 budget/inflation figures: not used as anchors. Stewards 1919–20 scores rest on material facts instead (blockade to July 1919, demobilisation of ~6.5 million, Kapp general strike of ~12 million, Ruhr occupation).
+- Vote counts, strike participation and casualty/calorie figures are not financial tokens and are used directly.
+
+Deviations disclosed:
+1. Single-scorer run (no ensemble requested).
+2. v1.4 Procedure step 1 ("state in one sentence what the evidence shows the function doing") delivered at era level (8 functions x 7 eras) in the commentary file, with year-level variation stated wherever a score moves; 328 per-year sentences would add bulk without adding information beyond the scored rows.
+3. "The packet" interpreted as corpus knowledge plus the cited searches; no physical evidence packet exists.
+
+Provenance: score-status file Germany_1880-1920_score-status.csv (New_Evidence / Reaffirmed / Carried_Forward per cell). 1,095 of 1,280 comparable cells (85.5%) are Carried_Forward — coarse temporal resolution and state persistence, not defective scoring. These rows must not be treated as 41 independent annual observations in relational-grammar testing.
+
+Caveats:
+1. Pre-1914 scores rest on corpus knowledge, not fresh searches. Institutional landmarks used (social insurance 1883/1884/1889, naval laws 1898/1900/1906/1908/1912, SPD largest party 1912, Daily Telegraph affair 1908, Agadir 1911, Army Bill and Zabern 1913, Kaiser Wilhelm Institutes 1911, Haber-Bosch 1913, Reichsbank and gold mark) are standard historiography, but no source was opened for them this run. Confidence is lower than for 1914–20.
+2. The 1919 strike-wave figure (~5,000 strikes, ~48 million workdays) is medium authority (labour-movement historiography summarised on secondary sites); it shapes Hands 1919 but no single point rests on it alone.
+3. "Germany" 1880–1920 spans two regimes and a revolution; scores are of the function within the Reich/national society, not of the regime form. Regime changes appear as data (1918, 1919 rows), not as scoring-frame switches.

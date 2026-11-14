@@ -1,0 +1,88 @@
+PROTOCOL NOTE — CAMS Universal Instruction Set v1.2
+
+Protocol: CAMS Universal Instruction Set v1.2
+Scorer: Kimi Work desktop agent (Moonshot AI); model version not disclosed by host
+Run date: 2026-09-22
+Entity: Australia (named; not blinded)
+Year(s): 1900–1920 (21 annual conditions, 31 December of each year; 1900 scored at emergent-Commonwealth scale)
+Mode: single scorer; ensemble not requested, so no ensemble.csv or envelope.csv produced
+
+Evidence basis:
+- Corpus knowledge of Australian political, economic and military history 1900–1920.
+- Web searches run 2026-09-22, cited in commentary:
+  1. 1917 Australian general strike (extent, duration, deregistrations, government response) — NFSA, ANU Archives, labourhistory.org.au (Lucy Taksa), Museums of History NSW.
+  2. 1916/1917 conscription referendum results — National Archives of Australia, Museum of Australian Democracy, NMA, Trove.
+  3. AIF enlistment and casualty statistics — Australian War Memorial (enlistments by year: 1914: 52,561; 1915: 165,912; 1916: 124,352; 1917: 45,101; 1918: 28,883; total 416,809; deaths 60,284; embarkations 331,781; casualty rate 64.8%).
+  4. 1918–19 influenza pandemic in Australia (quarantine from Oct 1918; Sydney Jan 1919; ~12,000–15,000 deaths; First Nations ~one-third of Queensland deaths) — Cambridge Journal of Global History, NMA, medRxiv.
+  5. Federation drought 1895–1903 (national flock 106m sheep 1892 to 54m 1903; cattle −40%; peak 1901–02; recovery from 1903–04) — NMA, Australian Geographic, Keith Smith drought table (1913–16 drought: ~19m sheep, ~2m cattle lost, worst 1914–15).
+  6. Postwar economy (1919–20 inflation then severe recession to 1923; soldier settlement: 37,000+ ex-servicemen settled, many failed; war debts) — DCCEEW thematic study, Grace Building history summary (inflation 1919–20, recession to 1923).
+
+Blind rules applied: yes — entity named so case not blinded; prestige of named persons ignored; system labels ("democracy", "empire dominion") ignored; each function scored as if the other seven did not exist; no cross-function reconciliation performed (divergences, e.g. Helm vs Shield 1916–17, left standing as data).
+
+Fact-anchor rule (every score <5, >8, or year-over-year move of >=2, with supporting fact):
+
+Scores <5:
+- Helm 1900 C4 K3 — no Commonwealth executive yet operating; six colonial governments; Constitution proclaimed 17 Sep 1900 but machinery starts 1 Jan 1901.
+- Helm 1904 C4 — three prime ministers in 18 months (Watson, Reid, Deakin) after Watson's four-month Labour minority.
+- Helm 1913 C4, S6 — Cook government won 1913 election by one seat; Labor Senate rejected government bills; deadlock.
+- Helm 1916 C3 — conscription referendum defeated 28 Oct 1916 (No 51.61%); Labor Party split, Hughes expelled Nov–Dec 1916.
+- Helm 1917 C4 — second referendum defeated 20 Dec 1917 (No ~53.8%); governing by narrow Nationalist majority.
+- Shield 1900–1902 A3 — six separate colonial military forces, no unified command; planning ad hoc under British umbrella.
+- Lore 1900 C4 — colonial identities (NSW/Victoria rivalry) still primary; Commonwealth symbolism not yet operating.
+- Lore 1916–1917 C4 — conscription referenda cleaved symbols: sectarian (Catholic/Protestant) and class division; Hughes's scapegoating of "the Irish vote".
+- Stewards 1900–1902 C4 K4, S7 in 1900–01 — Federation drought peak: flock halved 106m→54m (1892–1903), cattle −40%; colonial treasuries post-1890s depression.
+- Craft 1900–1902 K4 — small industrial base in depression legacy; technique concentrated in mining/railway workshops.
+- Hands 1917 C4 — general strike from 2 Aug 1917, ~97,500–100,000 workers, transport and coal paralysed; 22 unions deregistered; state commandeered coal; striker shot.
+
+Scores >8: none.
+
+Moves >=2 (year over year):
+- Helm C 1900->1901 4->6: Commonwealth operating; Barton ministry; first federal parliament.
+- Helm C 1912->1913 7->4 and S 4->6: Cook one-seat majority; Senate deadlock; drought of 1913–14 begins.
+- Helm C 1913->1914 4->6: double-dissolution election Sep 1914 won by Fisher; war unity from Aug 1914.
+- Helm C 1915->1916 5->3: referendum defeat and Labor split.
+- Shield S 1913->1914 4->6 and C 6->7: war mobilisation; AN&MEF occupied German New Guinea Oct 1914; HMAS Sydney destroyed Emden Nov 1914.
+- Lore C 1900->1901 4->6: inauguration, royal visit, Commonwealth symbolism.
+- Lore C 1913->1914 6->8: war patriotism; 52,561 enlisted 1914.
+- Lore C 1915->1916 8->4: first conscription referendum; symbols now divide rather than bind.
+- Hands S 1902->1903 7->6 and 1903->1904 6->4: drought breaking from 1903; economic recovery.
+- Hands A 1903->1904 4->6: Conciliation and Arbitration Act 1904; Commonwealth Court of Conciliation and Arbitration.
+- Hands C 1913->1914 5->7: voluntary mass mobilisation; enlistment surge.
+- Hands C 1915->1916 7->5: enlistment fell from 165,912 (1915) to 124,352 (1916); casualty lists; referendum conflict.
+- Flow S 1913->1914 4->7: shipping insurance crisis Aug 1914; German raiders; convoy requisitioning; export disruption.
+- Flow C 1913->1914 7->5: same facts — wartime shipping seizure and censorship degrade circulation fidelity.
+
+NA justifications: none — evidence for all eight functions, all twenty-one years, contained both performance and strain facts.
+
+Deviations disclosed:
+1. Single-scorer run (no ensemble requested).
+2. v1.2 Procedure step 1 ("state in one sentence what the packet shows the function doing") delivered at era level (8 functions x 4 eras) in the commentary file, with year-level variation stated wherever a score moves; 168 per-year sentences would add bulk without adding information beyond the scored rows.
+3. "The packet" interpreted per the v1.2 transitional clause as corpus knowledge plus the cited searches; no physical evidence packet exists.
+
+
+---
+
+REVISION 1 — 2026-09-22, in response to external audit (GPT) of the first panel.
+
+Archive rows revised for all 21 years. The audit found the function scored too flat: Capacity held at 5 ("barely reliable" anchor) for all 21 years and Coherence/Abstraction unmoved 1901–05 despite the construction of the national memory layer. Revision facts (corpus, high confidence unless noted):
+- High Court established 1903: national precedent system begins (Archive C 6->7, A 5->6, 1903).
+- Census and Statistics Act 1905; Commonwealth Bureau of Census and Statistics established 1906 under Knibbs (C 7 from 1905; K 5->6, 1906).
+- Bureau of Meteorology Act 1906; national meteorological service operational 1907–08 (K 6 from 1906; the K anchor "core job done, little margin" better fits a national statistical+meteorological+high-literacy-press system than K5 "barely reliable").
+- Patents Act 1903 (national IP registry); federal Parliamentary Library from 1901 (basis of the later National Library).
+- Universities of Queensland (founded 1909, opened 1911) and Western Australia (founded 1911) extend the transmit-method layer.
+- War Records Section established 1917 (Treloar); Commonwealth Serum Laboratories founded 1916; Advisory Council of Science and Industry 1916.
+- Bean appointed official historian 1919 (Archive C 6->7, 1919).
+- Institute of Science and Industry founded 1920 (Archive A 6->7, 1920; interpolation between anchors, no anchor text invented).
+- Wartime: War Precautions Act 1914 censorship strains the press/record layer (S 4->5 in 1914, ->6 1915–18; C held 6 — the collection machinery kept working under strain).
+All Archive moves are single-point; no new >=2 moves introduced; no new scores <5 or >8 introduced.
+
+Lore 8->4 (1915->1916) supplementary anchors added per audit: referendum defeat 28 Oct 1916 (No 51.61%); Hughes's post-defeat scapegoating quote — "the selfish vote, and shirker vote and the Irish vote were too much for us"; documented class cleavage (working-class suburbs 70%+ No) and sectarian cleavage; even the AIF's own majority Yes vote of only ~13,000 margins showed the split ran through the society, not around it.
+
+Event-window rule applied on review: a fact lands in the year its condition holds at 31 December. Shield A6 in 1910 rests on the Defence Act compulsory-training amendments assented December 1910 (scheme commencing January 1911); announced-but-not-yet-operative conditions do not move scores.
+
+Carried-forward flag file generated: Australia_1900-1920_carryforward-flags.csv (BASE/CARRIED/MOVED per cell). 480 of 640 year-over-year comparisons carried (75%), matching the external audit's count. These rows must not be treated as 21 independent annual observations in relational-grammar testing; sensitivity runs excluding constant dimensions and frozen sequences remain recommended and not yet performed.
+
+
+REVISION 2 — 2026-09-22, v1.4 hostile-witness rule applied retroactively.
+
+Hostile-witness anchors: one financial anchor is used in this panel — Stewards 1918 (C4, S8) rests partly on 1918 war-loan subscription figures (a financial token), already marked in the commentary as corpus recollection. Material corroboration for the strain: widow/pension loads and repatriation obligations at war's end (organisational facts) support S8; the loan-fatigue figure itself remains uncorroborated. All other anchors are material, organisational or behavioural facts (flock numbers, enlistment figures, vote counts, strike participation, mortality). Vote counts are not financial tokens.

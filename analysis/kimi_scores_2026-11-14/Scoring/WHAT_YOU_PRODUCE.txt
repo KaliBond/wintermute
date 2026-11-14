@@ -1,0 +1,222 @@
+WHAT YOU PRODUCE
+Five INDEPENDENT scoring passes of the same panel. You only score: you do not calculate, aggregate, average, compare or summarise anything.
+
+Entities (canonical order): China, Evergrande, Vanke, Longfor, Huawei, SMIC, BYD, CATL.
+Years: 2021, 2022, 2023, 2024 (the entity's functional condition at 31 December of each year).
+Nodes: 8 per entity (national and corporate sets are defined in section 6).
+Primitives per node-year: C (Coherence), K (Capacity), S (Stress), A (Abstraction), integers 1-10, or NA where permitted.
+8 entities x 4 years x 8 nodes = 256 rows per pass (plus header).
+Independence: each pass must run in a fresh, isolated context. A pass must not see another pass's output, notes, search results or intermediate files. Each pass does its own evidence gathering.
+
+MODE A (you can launch isolated sub-contexts or sub-agents and write files): run 5 isolated passes. Give each sub-context only this prompt (sections 1-7) and its pass number, and save pass1.csv ... pass5.csv.
+MODE B (you are a chat model and cannot isolate contexts): produce ONE pass only, as CSV only (section 7), in this conversation. The operator runs five fresh conversations, one pass per conversation. In either mode, say in the run note (section 8) which mode ran and what isolation was actually achieved. Do not claim isolation you did not have.
+TIME CONVENTION, EVIDENCE CUTOFF AND DATE DISCIPLINE
+Each year Y represents the entity's functional condition at 31 December Y. When scoring year Y, use 31 December Y-1 as the baseline. For 2021 the baseline is the end-2020 condition, which you must establish yourself from evidence dated on or before 30 June 2021 (do not look for or use any earlier scorer's end-2020 numbers).
+
+EVIDENCE CUTOFF: the evidence for year Y may include only material with a publication or event date on or before 30 June of Y+1, inclusive. 2021 -> 30 June 2022 | 2022 -> 30 June 2023 | 2023 -> 30 June 2024 | 2024 -> 30 June 2025. [Cutoff confirmed by Kari 4 Nov 2026 21:23 AEDT: 30 June of Y+1.]
+
+Date rules:
+
+DATED SOURCES ONLY. Every piece of evidence you rely on must be a source whose publication date (or, for an event, its date) you can state and that falls on or before the cutoff for the year being scored. If you cannot date it, do not use it.
+NO HINDSIGHT BEYOND THE CUTOFF. Do not use anything you know that was published or happened after the cutoff for the year you are scoring, including later restatements, later court or regulatory findings, later outcomes, and retrospective accounts. A later fact may not be used even as "corroboration". If a later fact only became knowable after the cutoff, it does not exist for that year.
+NO BACK-REVISION. Score years in chronological order (2021 first). Do not revise an earlier year after seeing evidence for a later year. Each year's score is a judgment made as of that year's cutoff.
+IF YOU SEARCH: apply date filters and check the publication date on the page itself. If a result is dated after the cutoff, or surfaces later-period material in a snippet, discard it, do not let it inform any score, and count it for the run note. If you do not search, you are scoring from memory: say so, mark source dates as approximate, and do not pretend to certify that memory contains no later information.
+You may not be able to certify zero exposure to later events. State that limit honestly in the run note rather than claiming compliance you cannot verify.
+GENERAL RULES (apply to every entity)
+Score OPERATIONAL TRUTH, not formal structure, reputation or aspirational potential.
+Score each node INDEPENDENTLY - no cross-node smoothing. A single event must not automatically move all eight nodes.
+Stress = the rate at which the node generates disorder or breakdown, NOT how hard external conditions are.
+High Abstraction is not automatically good.
+Seek independent evidence per node-year rather than carrying forward the previous year's score.
+Output only the integers 1-10 (or NA where section 5 permits). No decimals. No blanks. No confidence labels. No interpolation. No smoothing.
+Do not compute any derived values (no Node Value, no totals, means, spreads or bond/coupling measures, no aggregation of any kind). Output the primitives only.
+NA RULES
+National node-years (China): integers 1-10 only. NA is not used (the Part 1 national rubric has no NA rule). Corporate node-years (the seven companies): EVIDENCE GATE per node-year, before any non-NA score. Confirm ALL three: [ ] One concrete indicator of functional performance observed (dated, on or before the cutoff). [ ] One concrete indicator of strain, failure, or limitation observed (dated, on or before the cutoff). [ ] A mechanism connecting that evidence to THIS node's specific function identified. If any box is unchecked, score NA for ALL FOUR primitives of that node-year (never a partial NA). If a company's financial or operational data are thin, NA is correct; do not fill the cell from reputation or later knowledge. Time-convention check for companies: a score unchanged from Y-1 is valid ONLY after a genuine re-check finds no material functional change. Default repetition is prohibited.
+
+SCALES, RUBRICS AND NODE DEFINITIONS (identical to Part 1)
+=== 6.1 CHINA - NATIONAL (CAMNATIONSM5, CAMS v2.1 rubric) === entity label in CSV: China
+
+NODES (8): Helm - Shield - Lore - Stewards - Craft - Hands - Archive - Flow DIMENSIONS (4 per node, integers 1-10): Coherence - internal alignment and unity of the node Capacity - resources, competence, ability to act Stress - disorder PRODUCTION RATE (not external challenge severity) Abstraction - symbolic/cognitive complexity
+
+RULES: • Score OPERATIONAL TRUTH, not formal structure or aspirational potential • Score each node INDEPENDENTLY — no cross-node smoothing • Stress = rate at which the node generates disorder, not how hard conditions are • High Abstraction is not automatically good • In stable periods, consecutive years may be identical — do not force variation
+
+CALIBRATION GUIDE: Stable period → C 5–7, K 5–7, S 3–5, A 5–7 Manageable crisis → C 5–7, K 5–7, S 5–7, A 5–7 Severe crisis → C 3–5, K 4–6, S 7–9, A 4–6 Collapse → C 2–4, K 2–5, S 8–10, A 3–5
+
+NODE LOCI (for grounding): Helm — Crown/Throne: strategic decider, Party executive coordination Shield — Warrior/Sword: PLA, PAP, security apparatus, border control Lore — Temple/Priesthood: CCP ideology, education, media, legitimacy production Stewards — Estates/Barons: SOEs, SASAC, major asset holders, capital allocation Craft — Workshop: manufacturing, engineering, applied technology, industrial system Hands — Metabolic Core: labour force, agricultural and industrial throughput Archive — Library: bureaucracy, law, courts, civil service, institutional memory Flow — Agora/Marketplace: commerce, finance, logistics, credit, trade
+
+=== 6.2 CORPORATE SCALES (CAMCORPSM5, v1.1-OPT rubric, evidence-gated) - apply to all seven companies === Node order (canonical): Board, Risk, RD, Finance, Operations, Workforce, Brand, Markets.
+
+DIMENSIONS (integers 1–10 or NA)
+COHERENCE: Internal alignment and coordination clarity within this node. 9–10: Exceptionally unified. 7–8: Strongly aligned. 5–6: Functional despite tension. 3–4: Divided or inconsistent. 1–2: Fragmented or paralysed.
+
+CAPACITY: Demonstrated ability to perform the node's function. 9–10: Dominant or exceptional. 7–8: Strong and resilient. 5–6: Adequate. 3–4: Weak or unreliable. 1–2: Unable to function.
+
+STRESS: Rate of breakdown or entropy production within this function. Higher = more internal breakdown, NOT more external pressure. 9–10: Active collapse. 7–8: Visible degradation. 5–6: Pressured but functioning. 3–4: Stable. 1–2: Strengthening.
+
+ABSTRACTION: Operational sophistication and learning capacity. 9–10: Frontier sophistication. 7–8: Advanced adaptation. 5–6: Functional learning. 3–4: Basic systems. 1–2: Reactive.
+
+UPSTREAM CONSTRAINTS (corporate)
+
+A change of 2+ points on any dimension requires two distinct evidence pieces OR one unmistakable structural discontinuity (crisis onset, regulatory action, collapse).
+Score below 5 or above 8 requires explicit functional evidence.
+All four dimensions unchanged from Y-1 is permitted ONLY after re-checking evidence.
+A single event must not automatically move all eight nodes. Score each node on its own evidence.
+=== 6.3 EVERGRANDE === entity: Evergrande Group (China Evergrande Group, 03333.HK) start_year: 2021 end_year: 2024 entity label in CSV: Evergrande
+
+NODE DEFINITIONS
+
+BOARD: Executive governance, board-CEO alignment, Hui Ka Yan's leadership coordination, strategic decision authority, shareholder accountability, succession. Boundary: Score demonstrated governance coordination, not share price or market cap. Common error: Treating expansion ambition as strategic coherence.
+
+RISK: Legal, regulatory compliance, audit, internal controls, creditor relations, land-bank regulatory exposure. Boundary: Score operational risk coordination, not leverage ratio alone. Common error: Conflating financial leverage with risk management function.
+
+RD: Product innovation, construction technology, diversification into EVs/health/sports — score only where functional evidence exists, not announcement. Boundary: Score demonstrated knowledge production, not capital committed. Common error: Scoring investment announcements as innovation capacity.
+
+FINANCE: Balance sheet health, liquidity, capital allocation, bond issuance, trust products, wealth management products (WMPs), land acquisition financing. Boundary: Score demonstrated financial stewardship, including off-balance-sheet. Common error: Treating debt growth as financial capacity.
+
+OPERATIONS: Property development delivery, construction throughput, project completion, supply chain coordination, quality consistency. Boundary: Score demonstrated delivery function, not contracted sales. Common error: Scoring contracted sales rather than completed delivery.
+
+WORKFORCE: Human capital, management talent, labour relations, construction workforce, organisational throughput across the organisation. Common error: Using headcount alone.
+
+BRAND: Brand equity, reputation among homebuyers and investors, narrative coherence, trust in pre-sales model. Common error: Scoring marketing spend rather than demonstrated trust.
+
+MARKETS: Revenue generation, contracted sales, market position, land acquisition pipeline, pricing power, geographic reach. Common error: Scoring contracted sales targets rather than cash collection.
+
+=== 6.4 VANKE === entity: Vanke Co., Ltd. (000002.SZ / 02202.HK) start_year: 2021 end_year: 2024 entity label in CSV: Vanke
+
+NODE DEFINITIONS
+
+BOARD: Yu Liang leadership, board governance, strategic coordination, shareholder-management relations. Common error: Treating a shareholder dispute as governance collapse without evidence of operational coordination breakdown.
+
+RISK: Regulatory compliance, land acquisition risk management, audit, internal controls, leverage discipline. Boundary: Score operational risk management, not headline leverage ratio.
+
+RD: Property management technology, urban renewal innovation, overseas development capabilities. Limited compared to tech companies — expect NA where evidence of functional R&D activity is insufficient.
+
+FINANCE: Balance sheet discipline, land bank financing, cash flow management, pre-sales management. Common error: Scoring revenue scale rather than demonstrated financial stewardship.
+
+OPERATIONS: Property project delivery, construction quality, project completion rates, supply chain management with contractors. Common error: Scoring contracted sales rather than completed project delivery.
+
+WORKFORCE: Management talent, property management staff quality, organisational depth.
+
+BRAND: Reputation and consumer brand among homebuyers, Vanke property management brand.
+
+MARKETS: Sales volume, market share, geographic diversification within China, pricing power in key markets.
+
+=== 6.5 LONGFOR === entity: Longfor Group Holdings Limited (00960.HK) start_year: 2021 end_year: 2024 entity label in CSV: Longfor
+
+NODE DEFINITIONS
+
+BOARD: Wu Yajun and Cai Kui governance, strategic coordination, founder-driven culture with professional management layer, capital allocation discipline. Common error: Scoring founder profile rather than demonstrated governance function.
+
+RISK: Financial conservatism as risk management philosophy, regulatory compliance, land acquisition risk controls, audit function. Boundary: Score operational risk management, not debt ratio alone.
+
+RD: Commercial real estate innovation (Longfor Paradise Walk mall concept), property management technology. Score demonstrated innovation output.
+
+FINANCE: Conservative leverage, perpetual bond usage, diversified funding, pre-sales cash management. Common error: Scoring leverage metrics alone rather than demonstrated stewardship.
+
+OPERATIONS: Property project delivery, mall operations (commercial segment), property management services, construction quality. Common error: Scoring contracted sales targets.
+
+WORKFORCE: Management talent, property management staff (Longfor Property Management), culture and retention.
+
+BRAND: Premium residential brand, Paradise Walk commercial brand, reputation for quality and financial reliability among investors.
+
+MARKETS: Sales volume, commercial property rental revenue, geographic expansion within China, market positioning.
+
+=== 6.6 HUAWEI === entity: Huawei Technologies Co., Ltd. (private) start_year: 2021 end_year: 2024 entity label in CSV: Huawei
+
+NODE DEFINITIONS
+
+BOARD: Ren Zhengfei's leadership, rotating CEO system, board governance, strategic coordination across BG divisions (Carrier, Enterprise, Consumer), succession. Boundary: Score demonstrated governance coherence, not founder mythology. Common error: Treating Ren's presence as governance coherence without evidence.
+
+RISK: Legal, export compliance, US entity list exposure, cybersecurity allegations, audit, IP litigation, Meng Wanzhou affair. Boundary: Score operational risk management function, not geopolitical environment. Common error: Scoring external geopolitical pressure as internal Risk breakdown.
+
+RD: R&D spend and output, Kirin chip development (HiSilicon), patent portfolio, 5G standard contributions, proprietary software development. Boundary: Score demonstrated innovation output, not investment size. Common error: Scoring R&D budget rather than demonstrated technological output.
+
+FINANCE: Revenue, profitability, cash position, capital allocation, employee ownership structure (ESOP), financial controls. Huawei is private — financial data is limited. Boundary: Score from available disclosed data; NA if evidence is insufficient. Common error: Inferring financial health from revenue growth alone.
+
+OPERATIONS: Telecommunications equipment delivery, network deployment throughput, consumer device production, supply chain coordination, manufacturing quality. Boundary: Score demonstrated delivery function. Common error: Scoring contract wins rather than delivered network performance.
+
+WORKFORCE: Engineering talent density, employee ownership alignment, R&D workforce retention, global workforce management, labour relations. Common error: Using headcount alone; ignoring talent flight risk under sanctions.
+
+BRAND: Brand equity in enterprise/carrier markets, consumer brand (Mate, P-series), reputational standing in Western markets, trust among network operators. Common error: Scoring social media presence rather than structural brand trust.
+
+MARKETS: Revenue generation, carrier market share (global 5G), consumer device market share, geographic diversification, pricing power. Common error: Scoring revenue growth trajectory without cash-collection evidence.
+
+=== 6.7 SMIC === entity: Semiconductor Manufacturing International Corporation - SMIC (00981.HK / 688981.SH) start_year: 2021 end_year: 2024 entity label in CSV: SMIC
+
+NODE DEFINITIONS
+
+BOARD: Current leadership governance, board composition (state-owned shareholders including CITIC Capital), strategic coordination, executive stability. Common error: Treating state ownership as governance coherence without evidence.
+
+RISK: Export control compliance (US export restrictions, entity listing December 2020), IP litigation, technology licensing. Boundary: Score operational risk management function, not geopolitical environment. Common error: Conflating external export control pressure with internal risk failure.
+
+RD: Process node development (relative to TSMC/Samsung), yield improvement, EUV access constraints. Boundary: Score demonstrated technology output at each year's node, not roadmap.
+
+FINANCE: Revenue, capital expenditure cycle, state investment (CITIC, government funds), listed entity financial controls. SMIC is listed — financial data available. Common error: Scoring capex plan rather than demonstrated financial stewardship.
+
+OPERATIONS: Wafer fabrication throughput, yield rates, capacity utilisation, fab construction and ramp execution, customer delivery reliability. Common error: Scoring capacity announcements.
+
+WORKFORCE: Engineering talent (semiconductor process engineers), management depth. Common error: Using headcount alone; ignoring talent competition with TSMC.
+
+BRAND: Enterprise reputation among Chinese fabless customers (HiSilicon, Spreadtrum), standing among international customers. Common error: Scoring media profile rather than demonstrated customer trust.
+
+MARKETS: Revenue from Chinese domestic customers vs international, geographic customer concentration, pricing relative to TSMC/GlobalFoundries, market share in China. Common error: Scoring growth narrative rather than demonstrated commercial execution.
+
+=== 6.8 BYD === entity: BYD Co., Ltd. (002594.SZ / 01211.HK) start_year: 2021 end_year: 2024 entity label in CSV: BYD
+
+NODE DEFINITIONS
+
+BOARD: Wang Chuanfu's leadership, board governance, strategic coordination across auto/battery/electronics divisions, capital allocation decisions. Common error: Treating founder-CEO dominance as strategic coherence without evidence of coordination quality.
+
+RISK: Regulatory compliance (NEV subsidy requirements), product safety (battery fires), audit, IP litigation, supply chain risk. Common error: Conflating external regulatory environment with internal risk management.
+
+RD: EV technology development (blade battery, DM hybrid system, e-platform), patent output, battery chemistry innovation, semiconductor development. Boundary: Score demonstrated innovation output and deployment, not R&D spend.
+
+FINANCE: Revenue mix (auto, battery, handset components), profitability through the NEV subsidy cycle, capex discipline, debt management, cash position. Common error: Scoring revenue scale rather than demonstrated financial stewardship.
+
+OPERATIONS: Vehicle assembly throughput, battery production capacity utilisation, supply chain vertical integration, quality consistency, delivery execution. Boundary: Score demonstrated production function, not capacity announcements.
+
+WORKFORCE: Engineering talent (battery, software, auto design), manufacturing labour relations, talent pipeline in EV-specific skills. Common error: Using headcount alone.
+
+BRAND: Consumer brand strength in Chinese EV market, fleet/commercial vehicle reputation, international brand development. Common error: Scoring sales volume rather than demonstrated brand structural strength.
+
+MARKETS: EV sales volume and market share, NEV subsidy capture, commercial vehicle fleet contracts, battery supply contracts. Common error: Scoring contracted volumes rather than delivered revenue and cash.
+
+=== 6.9 CATL === entity: Contemporary Amperex Technology Co., Limited - CATL (300750.SZ) start_year: 2021 end_year: 2024 entity label in CSV: CATL
+
+NODE DEFINITIONS
+
+BOARD: Robin Zeng (Zeng Yuqun) leadership, board governance, strategic coordination, relationship management with NEV OEM customers (BMW, SAIC, Geely, then global). Common error: Treating founder dominance as governance coherence without evidence.
+
+RISK: Product safety (battery thermal management), regulatory compliance (NEV subsidy standards), IP protection (versus BYD, LG Chem, LGES competition), audit. Common error: Conflating battery fire incidents with operational risk management function separately.
+
+RD: Battery chemistry R&D (NMC, LFP chemistry advances), cell-to-pack innovation, manufacturing process R&D, patent portfolio development. Boundary: Score demonstrated innovation output and deployment speed.
+
+FINANCE: Revenue growth trajectory, profitability, capital allocation for gigafactory expansion. Boundary: Score demonstrated financial stewardship, not growth narrative.
+
+OPERATIONS: Battery cell and pack manufacturing throughput, yield rates, delivery reliability to OEM customers, quality consistency, capacity utilisation. Common error: Scoring capacity announcements rather than demonstrated throughput.
+
+WORKFORCE: Engineering talent (electrochemistry, manufacturing), management depth, talent pipeline in a rapidly scaling organisation. Common error: Using headcount alone.
+
+BRAND: Enterprise brand strength with global OEMs, reputation for supply reliability and technology, institutional investor confidence. Common error: Scoring media coverage rather than demonstrated B2B trust.
+
+MARKETS: Battery supply contracts, market share in Chinese NEV battery market, geographic reach, pricing power versus BYD/LG/Panasonic competition. Common error: Scoring contract announcements rather than delivered supply revenue.
+
+SCORER PASS OUTPUT (passN.csv)
+Output ONLY CSV for the pass. No prose, no markdown, no commentary, no evidence notes in this file. First line exactly: Entity,Year,Node,C,K,S,A
+
+Rows: Entity order China, Evergrande, Vanke, Longfor, Huawei, SMIC, BYD, CATL; within each entity, Year ascending (2021-2024); within each year, nodes in canonical order: China: Helm, Shield, Lore, Stewards, Craft, Hands, Archive, Flow Companies: Board, Risk, RD, Finance, Operations, Workforce, Brand, Markets 256 data rows, no repeated header, no extra columns. Values: integers 1-10 or NA (NA only for corporate nodes, all four primitives together). Example of the form only (not scores): China,2021,Helm,[C],[K],[S],[A]
+
+OUTPUT FILES (one folder per scorer model)
+pass1.csv, pass2.csv, pass3.csv, pass4.csv, pass5.csv (section 7 format) run_note.md (see below) (No source lists. Use dated sources only; a justification for any score may be requested later.) MANIFEST.sha256 (sha256sum of every other file in the folder, standard "hash filename" lines; compute it last and do not edit any file after) In MODE B the operator saves each conversation's pass CSV and prepares the other files.
+
+run_note.md must state, factually and briefly (no commentary on scores):
+
+scorer model/tool name as you identify it, date and time of the run, and MODE A or B;
+how isolation was achieved for each pass, and any pass that was interrupted, resumed or restarted;
+whether you searched or scored from memory, and which cutoff rule you applied (30 June Y+1 or 31 Dec Y, per section 3);
+the number of post-cutoff items you encountered and discarded, and whether you can certify zero exposure to post-cutoff material (if not, say so plainly);
+confirmation that you saw no Section 7 predictions and no Part 1 results, or the CONTAMINATED CONTEXT reply;
+how many NA cells there are per pass and the general reason (evidence gate), without interpreting scores;
+any rule not fully followed, with the reason.
+FINAL CHECK BEFORE YOU OUTPUT
+[ ] No source used is dated after the cutoff for the year it informs. [ ] No Section 7 or Part 1 material was seen or used. [ ] 256 rows per pass; the header is exactly Entity,Year,Node,C,K,S,A; no extra columns. [ ] Corporate NAs are all-four-or-none and gate-justified; China has no NA. [ ] Years were scored in order and no earlier year was revised after later evidence. [ ] No derived values were computed or output anywhere.
