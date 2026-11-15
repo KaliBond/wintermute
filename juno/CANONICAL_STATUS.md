@@ -64,3 +64,5 @@ and [`JUNO_SeparateRun_2026-09_staging.csv`](JUNO_SeparateRun_2026-09_staging.cs
 ## Related (Epiphenomenon)
 
 Exploratory Hansard horse-race note (10 Sep 2026): [`Epiphenomenon_HorseRace_2026-09-10.md`](Epiphenomenon_HorseRace_2026-09-10.md) — place beside OOS freeze; not a JUNO validation claim.
+
+**15 Nov 2026:** Burma is merged as the 49th society in a new file, [`JUNO_Unified_Dataset_49soc_2026-11-15.csv`](JUNO_Unified_Dataset_49soc_2026-11-15.csv). The 48-society `JUNO_Unified_Dataset.csv` is kept unchanged. Burma is also in `data/juno_full.json` and `juno_data.js`. See the decision note in [`SeparateRun_2026-09_README.md`](SeparateRun_2026-09_README.md).

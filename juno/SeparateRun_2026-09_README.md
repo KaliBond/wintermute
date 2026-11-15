@@ -62,3 +62,12 @@ whether Burma should be **merged in** as a 49th society, is a methodology call
 for Kari — it changes published, citable figures (Zenodo-archived at
 `10.5281/zenodo.22029112`). This file exists so that decision can be made by
 looking at real recomputed numbers, not raw scores alone.
+
+## Decision, 15 November 2026: Burma merged as the 49th society
+
+Kari McKern decided that Burma joins the panel as the 49th society, and that the published file stays as it is.
+
+- `JUNO_Unified_Dataset.csv` (48 societies, the version archived at Zenodo) is unchanged.
+- [`JUNO_Unified_Dataset_49soc_2026-11-15.csv`](JUNO_Unified_Dataset_49soc_2026-11-15.csv) is that file, byte for byte, with the 1,304 Burma rows from this staging file appended (1811 to 2026, 163 society-years), in the same columns. The `Run` tag is dropped to keep the schema identical; Burma's regime columns stay `not_computed`.
+- Burma was added to `data/juno_full.json` (built with `generate_site_json.build_society`: series BS from `SBD_Calc`, node BS from `Bond_Strength_Calc`) and to `juno_data.js` (regime shown as "Not computed"). No other society's entry changed.
+- The Italy and Netherlands rescores in this file are still staging only. No decision has been made on them.
