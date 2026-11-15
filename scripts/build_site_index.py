@@ -38,7 +38,7 @@ GROUPS = [
         'datasets', 'cams/', 'epiphenomenon/data', 'repository-access', 'request-access',
     ]),
     ('Tools & Explorers', 'Tool', 'monthly', '0.7', [
-        'explore', 'cams', 'cams-scorer', 'cams-scorer-local', 'cams-explorer', 'juno-36-explorer', 'juno_calculator',
+        'explore', 'sdrl/', 'cams', 'cams-scorer', 'cams-scorer-local', 'cams-explorer', 'juno-36-explorer', 'juno_calculator',
         'cams-interpreter', 'cams-interpreter/', 'cams-compare/', 'cams-zeitgeist', 'cams-advanced-analysis',
         'cams-integrated-dashboard', 'juno/CAMS_4society_dashboard', 'cams-network-explorer', 'attractors', 'cams-3d-attractor',
         'cams-coordination', 'seshat-explorer', 'granger-validator', 'cams-telescope/',
@@ -52,7 +52,7 @@ GROUPS = [
         'analysis/pr_gap2_general_audience', 'analysis/inelasticity_results', 'juno-v1-2', 'bond-strength-spec',
         'blind-protocol-v111', 'blind-test', ('cams-personality-experiment', 'Guide'), 'cams-blind-test-assessment', 'cams-testing-report-june2026',
         'cams5-thesis-validation-report', 'ensemble-validation', 'paladin-validation',
-        'operator-portability-synthesis', 'peer-review', 'carbon-evaluation', 'blind-testing', 'papers-and-research', 'robodebt-cams-register', 'cams-praxis-methods', 'response-to-critics', 'functional_taxonomy', 'figures',
+        'operator-portability-synthesis', 'peer-review', 'carbon-evaluation', 'blind-testing', 'papers-and-research', 'persistent-topology', 'robodebt-cams-register', 'cams-praxis-methods', 'response-to-critics', 'functional_taxonomy', 'figures',
         'metabolism-meaning', 'scale-invariance', 'thermodynamic-jungle', 'war', 'social-cognition',
         'coupled-cattle', 'meta-animal-under-the-microscope', 'backstory-deep-time', 'organisational-pathologies', 'canonical-definitions',
         'natural-history-of-civilisations', 'geopolitics-as-group-adaptation', 'synchronised-slide', 'human-ai-scientific-record',

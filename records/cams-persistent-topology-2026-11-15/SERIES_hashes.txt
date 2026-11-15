@@ -1,0 +1,35 @@
+CAMS blind series B4–B7: write-up digest
+Computed 2026-11-15 18:29 AEDT (Australia/Sydney), over the exact file bytes, before any sign-off was appended.
+
+sha256:cb0193ccc38602541533f1d3158f3a4bc87303a2c00f08fecbc80ec94ff7370e  SERIES_B4-B7_writeup.md
+
+Round anchors (from each round's own hash file):
+  B4 manifest e272f80307d601a22a5dbb88b6c81f2564d04d51d8d17bb6c686e673fd459159
+  B5 manifest e2d35dd2a27e4ad0a0b90301e13f0df6cdec36ff67a016116dd2767cf35b2701
+  B6 draw manifest 210b09a217c6ef482075c014f04b6d0b4b18269f73e800f8507d240cb3d33b0e
+  B7 v1.2 pre-run manifest 40ed775d0b03edb1ba97acc60dd2573fa90e945252dc18f4067ba3c1b268e5c7
+  hashes_B4.txt 3dea8e1526231f68d01951bfa6a74f0c924107dd5b1e930329e1195213d0effc
+  hashes_B5.txt 49ffaeff80c4d706874136f8f71be149e465c66213a8c5718751512a347f0956
+  hashes_B6.txt 1b51f74279396ca99f3bc338c03de3f63c4c9b3221de09494a14967be8adff63
+  hashes_B7.txt 067dd0de40db27a85dfff454257d5c8c1924e9579bec3c1696b64751ea1fe0c6
+Hermes's sign-off is appended to the write-up's own sign-off block. Once it is added, its new digest is appended here as a dated note.
+
+--- Appended note, 2026-11-15 18:32 AEDT (Australia/Sydney) ---
+Hermes sign-off received. Nitra C:\Users\julie\Downloads\SERIES_B4-B7_writeup.md was copied to the box unchanged as SERIES_B4-B7_writeup_signed.md.
+The first 21,977 bytes are byte-identical to the unsigned write-up (sha256 cb0193cc...7370e). Only a sign-off block was appended:
+"Hermes sign-off (appended 2026-11-15 19:12 AEDT)", which states the received digest cb0193cc...7370e and "Objections: none".
+Caveat: the sign-off is timestamped 19:12 AEDT, but the box clock showed about 18:33 AEDT when the signed file was received. The stated time is therefore
+about 40 minutes in the future. We have recorded it as stated and not corrected it.
+sha256:92bce115d06fa915537a89097e6f8ba096a2762892037edd7b31da8e3de33fce  SERIES_B4-B7_writeup_signed.md
+
+--- Appended note, 2026-11-15 18:34 AEDT (Australia/Sydney) ---
+Methods and results paper (Kari McKern), with a .docx export made with pandoc 3.9:
+sha256:8f152d525d0eb56d0201723fba4a23843a92cc685175f70a6be29817221ef6d4  CAMS_persistent_topology_paper.md
+sha256:a34faeadea059955f479a95264cbd7cce0e20f0828223aff26e4e955270b65d3  CAMS_persistent_topology_paper.docx
+
+--- Appended note, 2026-11-15 18:39 AEDT (Australia/Sydney) ---
+Paper credits decision (Kari McKern, 2026-11-15): "Conducted by AI systems (Diogenes; Hermes); commissioned by Kari McKern."
+Two additions were made to the paper: a one-line pointer after the title block, and a dated credits note at the end. No existing text was changed.
+Stripping both additions reproduces the earlier text exactly (earlier .md sha256 8f152d52...ef6d4). The .docx was regenerated with pandoc 3.9.
+sha256:b0f7c3f5daef3fcec688fb259e0c0d8d6a0922843cb0dbf8eab250693ddcd866  CAMS_persistent_topology_paper.md
+sha256:94dc8acd6be8fca391936898193615ea96d18e536470c7a964fd3c41136b1015  CAMS_persistent_topology_paper.docx
