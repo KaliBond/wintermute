@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CAMS Praxis: Methodological Outline — Neural Nations</title>
+<meta name="description" content="CAMS Praxis, draft v0.2, November 2026: the methodological charter for a collaborative research environment combining CAMS with established methods and practitioner judgement, starting with the Australian soil system.">
+<link rel="canonical" href="https://neuralnations.org/cams-praxis-methods">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#ffffff; --ink:#1a242b; --muted:#5a6870; --line:#dfe5e8; --accent:#2a6875; --accent2:#b8701f; --soft:#eef4f5; --warm:#fbf6ee; --pass:#2f7a4b; --passbg:#e3f2e8; --fail:#b3392e; --failbg:#f8e1de; --weak:#8b5a00; --weakbg:#f6e7c8; --na:#5a6870; --nabg:#eceff1;}
+body{background:var(--bg)}
+.essay-wrap{padding:0 16px}
+.essay{max-width:720px;margin:0 auto;padding-block:52px 80px;font-family:'Newsreader',Georgia,'Times New Roman',serif;font-size:19px;line-height:1.7;color:var(--ink)}
+.sans,.essay table,.chart-box,.contents,.tiles{font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif}
+.essay .kicker{font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0}
+.essay h1{font-family:'Newsreader',Georgia,serif;font-size:clamp(34px,6vw,52px);line-height:1.08;font-weight:700;margin:12px 0 14px;text-wrap:balance;color:var(--ink);text-align:left}
+.essay .standfirst{font-size:21px;line-height:1.5;margin:0 0 16px}
+.essay .byline{font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:14px;color:var(--muted);margin:0 0 6px}
+.essay .status{display:inline-block;font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:12px;font-weight:600;color:var(--accent2);border:1px solid currentColor;border-radius:999px;padding:2px 10px;margin:4px 0 26px}
+.contents{background:var(--soft);border-radius:10px;padding:18px 20px;margin:0 0 20px}
+.contents ol{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.contents a{color:var(--ink);text-decoration:none;display:block}
+.contents a:hover .ct{text-decoration:underline}
+.contents .pt{font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.contents .ct{display:block;font-size:16px;font-weight:600;line-height:1.3}
+.contents .cd{display:block;font-size:13.5px;color:var(--muted);line-height:1.45}
+.part{margin-top:72px;padding-top:28px;border-top:3px solid var(--ink)}
+.part .partlabel{font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0}
+.part h2{font-family:'Newsreader',Georgia,serif;font-size:clamp(28px,4.6vw,38px);line-height:1.12;font-weight:700;margin:8px 0 6px;text-wrap:balance}
+.part .subtitle{font-style:italic;font-size:21px;color:var(--muted);margin:0 0 10px;line-height:1.4}
+.essay h3{font-family:'Newsreader',Georgia,serif;font-size:25px;line-height:1.25;font-weight:600;margin:48px 0 14px;text-wrap:balance}
+.essay h4{font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);margin:30px 0 8px}
+.essay p{margin:0 0 18px}
+.essay ul,.essay ol.plain{margin:0 0 18px;padding-left:24px}
+.essay li{margin:0 0 6px}
+.essay a{color:var(--accent)}
+.essay code{font-family:ui-monospace,Consolas,monospace;font-size:.78em;background:var(--soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.essay .formula{text-align:center;font-size:20px;font-style:italic;margin:20px 0;padding:12px;background:var(--soft);border-radius:8px;overflow-x:auto}
+.essay .pull{font-size:22px;line-height:1.4;font-weight:600;color:var(--accent);margin:28px 0;padding-left:18px;border-left:3px solid var(--accent2)}
+.essay blockquote{margin:22px 0;padding:14px 18px;background:var(--warm);border-left:3px solid var(--accent2);border-radius:0 8px 8px 0;font-style:italic}
+.box{font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:15px;line-height:1.55;background:var(--warm);border-left:3px solid var(--accent2);padding:14px 18px;border-radius:0 8px 8px 0;margin:22px 0}
+.box.teal{background:var(--soft);border-left-color:var(--accent)}
+.box .bt{display:block;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);margin-bottom:4px}
+.box.teal .bt{color:var(--accent)}
+.box p{margin:0 0 10px}.box p:last-child{margin:0}
+.box ol{margin:6px 0 0;padding-left:20px}.box li{margin:0 0 8px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:22px 0}
+.tile{background:var(--soft);border-radius:10px;padding:16px 14px;text-align:center}
+.tile b{display:block;font-size:30px;line-height:1.05;color:var(--accent);margin-bottom:6px}
+.tile span{font-size:12.5px;color:var(--muted);line-height:1.35;display:block}
+.nodes{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0 22px;font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif}
+.nodes div{border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--muted);line-height:1.35}
+.nodes b{display:block;color:var(--accent2);font-size:15px}
+.chart-box{border:1px solid var(--line);border-radius:12px;padding:20px 18px 14px;margin:26px 0}
+.chart-box .ctitle{font-size:12.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.chart-box .legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;color:var(--muted);margin-bottom:8px}
+.chart-box .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.chart-box .cap{font-size:12.5px;line-height:1.45;color:var(--muted);margin-top:10px}
+.chart-in{position:relative;width:100%}
+.tbl-wrap{overflow-x:auto;margin:20px 0 26px}
+.essay table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.45}
+.essay th{text-align:left;padding:9px 10px;background:var(--soft);border-bottom:2px solid var(--line);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.essay td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.essay td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.pill.pass{background:var(--passbg);color:var(--pass)}.pill.fail{background:var(--failbg);color:var(--fail)}.pill.weak{background:var(--weakbg);color:var(--weak)}.pill.na{background:var(--nabg);color:var(--na)}
+.essay .note{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:13.5px;line-height:1.55;color:var(--muted)}
+@media (max-width:560px){.essay{font-size:17.5px;padding-block:32px 60px}.essay h3{font-size:22px}.essay .standfirst{font-size:19px}}
+</style>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+<div class="essay-wrap"><main class="essay">
+<p class="kicker">Neural Nations · methods</p>
+<h1>CAMS Praxis</h1>
+<p class="standfirst">Draft Methodological Outline and Foundational Requirements</p>
+<p class="byline">Kari McKern · version 0.2, November 2026 · draft for discussion</p>
+<span class="status">Draft v0.2 · for discussion</span>
+<nav class="contents" aria-label="Contents"><ol><li><a href="#part-i-foundational-requirements"><span class="pt">Part I</span><span class="ct">Foundational Requirements</span></a></li><li><a href="#part-ii-methodological-outline"><span class="pt">Part II</span><span class="ct">Methodological Outline</span></a></li></ol></nav>
+<section class="part">
+<p>Version 0.2, November 2026. Prepared for discussion with Cameron Leckie and participating colleagues. This document supersedes the draft Project Instructions as the statement of method. It is written as a methodological charter rather than as software configuration: the same content will later be compressed into the instructions and knowledge base of the shared AI workspace, but the agreements it records belong to the participants, not to the platform.</p>
+<h2 id="part-i-foundational-requirements">Part I. Foundational Requirements</h2>
+<h3>1. Purpose and scope</h3>
+<p>CAMS Praxis is a collaborative research environment that combines the Complex Adaptive Model of Societies (CAMS), developed by Kari McKern, with established scientific methodologies and the professional judgement of practising specialists. Its purpose is to extend the analytical capacity of those specialists, not to substitute for it.</p>
+<p>The initial domain of application is the Australian soil and agricultural system: soil health, workforce capability, institutional coordination and the persistent gap between knowledge, investment and landscape-scale outcomes. The first payload is a CAMS-informed protocol for the 2027 Regional Soil Capacity Gap Analysis update. The environment is designed so that the same core can later serve other domains without rebuilding.</p>
+<p>The guiding question of every investigation is: what configuration of interacting functions produces the observed behaviour of this system, and what evidence would allow us to understand or change it?</p>
+<h3>2. Conceptual foundation</h3>
+<h4>2.1 The eight functions</h4>
+<p>CAMS proposes that human cooperative systems organise themselves through eight recurring functional capacities. The canonical set is fixed and is not adapted per domain:</p>
+<ul><li><b>Helm:</b> governance, strategic coordination and collective decision-making.</li><li><b>Shield:</b> defence of the system against threat; security, biosecurity, enforcement and coercive capacity.</li><li><b>Lore:</b> shared meanings, legitimacy, norms and cultural coherence.</li><li><b>Stewards:</b> husbandry of the productive base; the care, allocation and renewal of the resources the system lives on.</li><li><b>Craft:</b> technical capability, production systems and innovation.</li><li><b>Hands:</b> operational labour, practical skills and implementation.</li><li><b>Archive:</b> institutional memory, evidence, scientific knowledge and continuity.</li><li><b>Flow:</b> exchange, distribution, logistics and the circulation of resources, goods and information.</li></ul>
+<p>Two requirements follow. First, the names and functional assignments come from the authoritative CAMS specification in the Project knowledge base and are not rewritten for convenience; where a domain gloss is needed, it is added as a gloss, with the canonical term intact. Second, the environment in which the system sits (catchments, climate, trade exposure, ecological constraint) is treated as exogenous condition and stress acting on the eight functions, not as a ninth function. A recurrent drafting error replaced Shield with a node called "Boundary"; that error is corrected here and must not reappear in any Project material.</p>
+<h4>2.2 State dimensions and relations</h4>
+<p>Each function is examined through four vitals: Coherence, Capacity, Stress and Abstraction. Coherence is used with a standing caution: as currently scored it conflates compliance, coordination and commitment, and analyses should say which sense they are relying on. A coherent system is not necessarily a benign one, and a stressed system may be adapting rather than failing.</p>
+<p>Equally important are the relations between functions: coupling, feedback, dependency and the distinction between integrative coordination and reactive response. The central object of investigation is the organisation of the system as a whole and its adaptive trajectory through time, never eight scores in isolation.</p>
+<h4>2.3 The computation firewall</h4>
+<p>All canonical CAMS computation is excluded from the shared workspace. Within CAMS Praxis the framework is used qualitatively: functional mapping, hypothesis generation, evidence organisation and structured comparison. No numerical node values, bond strengths or derived operators are produced inside the environment, and none are reconstructed from model memory under any circumstances.</p>
+<p>Where quantitative CAMS work is warranted, it is exported to the framework steward's verified pipeline, which carries a dated formula-lock line and confirms which locked rule governs the artefact in hand. This requirement exists because two different locked rules are in circulation in the research programme, and a published figure has already been drawn against the wrong one. The environment treats that precedent as a design constraint.</p>
+<p>Where evidence is too thin to support a defensible judgement, the correct output is "not assessable", never an interpolated score.</p>
+<h3>3. Epistemic requirements</h3>
+<p>These requirements bind every substantive output of the environment.</p>
+<p><b>Claim classification.</b> Every analytical claim is identifiable as one of: direct observation; documented empirical finding; practitioner assessment; model-derived result; causal hypothesis; or speculative interpretation. The classification travels with the claim.</p>
+<p><b>Provenance.</b> External factual claims rest on verifiable primary sources, published research or official datasets, with references supplied. The assistant never implies a source has been consulted when it has not. Project knowledge-base documents outrank conversational memory for CAMS definitions, and version conflicts between documents are surfaced, never silently merged.</p>
+<p><b>No fabrication.</b> References, datasets, measurements, quotations, statistical results and validation outcomes are never invented. This is an absolute condition, not a style preference.</p>
+<p><b>Competing explanations.</b> Every CAMS interpretation is developed alongside at least one conventional disciplinary explanation and, where feasible, a structural alternative. The analysis records what evidence would discriminate between them.</p>
+<p><b>The surprise requirement.</b> The environment must remain capable of concluding that CAMS is not the most useful framework for a given question, and of producing findings that contradict CAMS-derived expectations. An instrument that only confirms prior readings is a mirror, and the pilot evaluation includes an explicit test for this.</p>
+<p><b>Adversarial review.</b> On request, or automatically for any finding headed toward publication or policy advice, the assistant attempts to defeat the preferred explanation: weakest assumption, most damaging counter-evidence, cheapest alternative account.</p>
+<p><b>Reflexivity.</b> Participants are inside the systems they study. Cameron and his fellow coordinators are part of the Stewards function of the soil system. Positional involvement is declared in each investigation record, and coordinator self-assessment is treated as one instrument, not as ground truth.</p>
+<h3>4. Roles and governance</h3>
+<p>Three roles are defined; individuals may hold more than one.</p>
+<p><b>Domain practitioners</b> (Cameron and participating colleagues) frame problems, supply contextual knowledge and evidence, challenge interpretations and judge practical feasibility.</p>
+<p><b>Framework steward</b> (Kari McKern) holds canonical authority: definitions, formulas, quantitative computation and framework-level interpretation. Proposed changes to the general CAMS ontology, as distinct from domain findings, route to the steward and require separate scrutiny.</p>
+<p><b>AI research assistant</b> organises evidence, proposes methods, performs supported analyses, generates competing explanations and documents results. It holds no independent authority to certify findings or make policy recommendations in its own right.</p>
+<p>Decisions with standing consequence (adoption of a protocol, publication of a finding, a change to method) are recorded in the research register with date, rationale and dissent where it exists. The Project is designed to survive the departure of any one participant, including its originators.</p>
+<h3>5. Infrastructure requirements</h3>
+<p><b>Curated knowledge base.</b> The workspace carries a small, versioned reference set: the authoritative CAMS ontology and glossary; the current field specification; a validation and limitations register stating plainly what has been tested and what has not; worked examples; a methodological companion; the soil programme context pack (national strategy documents, the five published regional gap analyses, relevant data); the research record template; and this charter.</p>
+<p><b>Version discipline.</b> Every knowledge-base document carries a dated version identifier. Analyses cite the specification version they used.</p>
+<p><b>Research records.</b> Conversational memory is not an archive. Each formal investigation produces a structured record: question, system boundary, evidence and provenance, methods, findings, uncertainties, dissent, and subsequent outcomes. Records are exported on a fixed cadence to a controlled repository outside the chat platform.</p>
+<p><b>Confidentiality.</b> Material enters the shared workspace only where authorisation and organisational policy permit. Sensitive government information and unpublished partner material are identified and handled accordingly.</p>
+<h2 id="part-ii-methodological-outline">Part II. Methodological Outline</h2>
+<h3>6. Classes of investigation</h3>
+<p>Two classes are recognised, and the assistant distinguishes them explicitly.</p>
+<p><b>Exploratory work</b> is conversational and fast: problem framing, provisional functional mapping, identification of missing information. It carries the claim-classification requirement but not the full protocol.</p>
+<p><b>Formal investigation</b> is anything whose output will inform policy advice, publication or expenditure. It follows the full workflow of section 7, produces a research record, and passes adversarial review before release. The threshold for escalation is the consequence of the analysis, not its length.</p>
+<h3>7. Standard investigation workflow</h3>
+<p><b>Stage 1. Define the problem.</b> The observed condition, system boundary in geography and time, affected populations, the practical decision at stake, and what would count as a useful answer.</p>
+<p><b>Stage 2. Map the system.</b> The relevant CAMS functions in their institutional and operational manifestations, their couplings, and the exogenous constraints acting on them. The map is hypothesis-generating, never a pre-scored diagnosis.</p>
+<p><b>Stage 3. Establish the evidence base.</b> What is known, disputed, inferred and unmeasured, with provenance and quality recorded. Gaps are named as gaps.</p>
+<p><b>Stage 4. Construct competing explanations.</b> A CAMS functional interpretation, at least one conventional disciplinary account, and where feasible a structural rival. For each: what evidence would confirm, what would disconfirm.</p>
+<p><b>Stage 5. Select methods.</b> Chosen for discriminatory power against the competing explanations, with assumptions, data requirements and limitations stated. Feasibility within real budgets, staffing and authority is a selection criterion, not an afterthought.</p>
+<p><b>Stage 6. Analyse and challenge.</b> Apply the methods, inspect uncertainty, seek disconfirming evidence and negative cases, test sensitivity to the assumptions doing the most work.</p>
+<p><b>Stage 7. Develop options.</b> Candidate interventions as coupling repairs: leverage points, implementation dependencies, distributional consequences, unintended effects, measurable outcomes and decision points. An intervention whose effects cannot propagate through the existing bond structure is identified as such, however attractive it looks on its own terms.</p>
+<p><b>Stage 8. Evaluate and retain learning.</b> Expectations against outcomes, failed approaches documented alongside successful ones, and transferable lessons written to the research register.</p>
+<p>Experienced users may enter at any stage; the record must still show which stages were exercised and which were skipped.</p>
+<h3>8. Methodological repertoire</h3>
+<p>Method follows question. The working families are:</p>
+<ul><li><b>Complex adaptive systems:</b> emergence, nonlinear dynamics, feedback, path dependence, adaptation.</li><li><b>System dynamics:</b> stocks, flows, delays, causal-loop structure, policy resistance.</li><li><b>Causal inference:</b> counterfactuals, confounding, natural experiments, identification strategies.</li><li><b>Network science:</b> connectivity, centrality, modularity, dependency, structural vulnerability.</li><li><b>Institutional analysis:</b> governance, collective action, incentives, authority, legitimacy.</li><li><b>Implementation science:</b> adoption, capability constraint, organisational readiness, delivery.</li><li><b>Qualitative research:</b> interviews, thematic analysis, process tracing, comparative cases, participatory inquiry.</li><li><b>Quantitative research:</b> statistical modelling, longitudinal analysis, sensitivity and uncertainty treatment.</li><li><b>Evaluation science:</b> programme theory, theories of change, process and outcome evaluation.</li></ul>
+<p>Where a CAMS concept overlaps an established construct (coherence against network density, trust or consensus, for instance), the mapping is made explicit and treated as a hypothesis requiring investigation, never assumed. The assistant explains what a method assumes and what it cannot show, whenever that materially affects the conclusion.</p>
+<h3>9. The pilot investigation</h3>
+<p>The pilot applies the full workflow to a question drawn from the published gap analyses: why significant investment in soil science, professional capability, extension and public programme effort has not produced corresponding improvement in soil condition at landscape scale.</p>
+<p>The pilot runs in three passes. First, a retrospective functional mapping of one region (SQNNSW) against its published gap analysis, with findings compared against the original report to isolate what, if anything, the CAMS layer adds. Second, competing explanations tested against farm economics, adoption evidence, workforce data, monitoring series and policy history. Third, a CAMS-informed Soil Capacity Gap Analysis Protocol drafted for trial in the 2027 update work.</p>
+<p>Two design features are fixed in advance. The comparison against a non-CAMS analysis of the same material, equally resourced, is pre-registered with pass and fail criteria before the pilot begins, so that the framework's contribution is measured rather than asserted. And the pilot log must record at least one finding that surprised the domain practitioners; a pilot that surprises no one has demonstrated fluency, not instrument value.</p>
+<p>Agricultural landscapes are biophysical systems as well as institutional ones. CAMS reads the human coordination layer; it does not absorb soil chemistry, hydrology or ecology into social functions, and the protocol keeps those accounts adjacent but distinct.</p>
+<h3>10. Evaluation criteria</h3>
+<p>The pilot and each subsequent investigation are assessed against: conceptual fidelity (correct use of the canonical ontology); analytical added value (mechanisms or questions surfaced that the original analysis missed); methodological quality; practical usefulness as judged by practitioners; efficiency against unaided effort; reproducibility of the analytical pathway by another investigator; and intellectual independence, meaning demonstrated capacity to reach conclusions that contradict CAMS expectations. Enthusiasm for the quality of the prose is not a criterion.</p>
+<h3>11. Learning and revision</h3>
+<p>The environment improves through use. Recurring analytical difficulties, missing methods and candidate refinements are logged. Findings specific to the soil domain are separated from proposed changes to the general framework, and only the steward may promote the latter. Unsuccessful investigations are documented with the same care as successful ones; the register of what did not work is part of the Project's durable value.</p>
+<p>The long-term object is a reusable body of applied knowledge about cooperative adaptation: the capacity to recognise structurally similar problems beneath very different institutional appearances, without erasing what is particular to each domain.</p>
+<p class="note">Draft v0.2 for discussion. Corrections from v0.1 and the instruction draft: framework name restored to Complex Adaptive Model of Societies; Shield restored and "Boundary" removed from the canonical eight; Stewards definition aligned to the husbandry sense; computation firewall added; reflexivity, surprise requirement and pre-registered comparison test added; document recast from assistant instructions to methodological charter.</p>
+<p class="note">Source: <a href="https://github.com/KaliBond/wintermute/blob/main/docs/praxis/CAMS_Praxis_Methodological_Outline_v0.2.md">CAMS_Praxis_Methodological_Outline_v0.2.md</a>, presented as written.</p>
+</section>
+</main></div>
+<footer class="footer"><nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;"><a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a><a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a><a href="results.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Results</a></nav><p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p></footer><script src="site-chrome.js"></script><script src="nav.js"></script>
+</body>
+</html>
