@@ -38,7 +38,7 @@ GROUPS = [
         'datasets', 'cams/', 'epiphenomenon/data', 'repository-access', 'request-access',
     ]),
     ('Tools & Explorers', 'Tool', 'monthly', '0.7', [
-        'explore', 'cams', 'cams-scorer', 'cams-scorer-local', 'cams-explorer', 'juno-36-explorer', 'juno_calculator',
+        'explore', 'sdrl/', 'cams', 'cams-scorer', 'cams-scorer-local', 'cams-explorer', 'juno-36-explorer', 'juno_calculator',
         'cams-interpreter', 'cams-interpreter/', 'cams-compare/', 'cams-zeitgeist', 'cams-advanced-analysis',
         'cams-integrated-dashboard', 'juno/CAMS_4society_dashboard', 'cams-network-explorer', 'attractors', 'cams-3d-attractor',
         'cams-coordination', 'seshat-explorer', 'granger-validator', 'cams-telescope/',
