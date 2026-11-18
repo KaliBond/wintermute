@@ -377,7 +377,7 @@ async function loadJson<T>(url: string): Promise<T> {
 }
 
 export function loadPanel(): Promise<PanelSociety[]> {
-  panelPromise ??= loadJson<PanelSociety[]>("/data/panel.json").catch((error: unknown) => {
+  panelPromise ??= loadJson<PanelSociety[]>(`${import.meta.env.BASE_URL}data/panel.json`).catch((error: unknown) => {
     panelPromise = null;
     throw error;
   });
@@ -385,7 +385,7 @@ export function loadPanel(): Promise<PanelSociety[]> {
 }
 
 export function loadCases(): Promise<CaseRound[]> {
-  casesPromise ??= loadJson<CaseRound[]>("/data/cases.json").catch((error: unknown) => {
+  casesPromise ??= loadJson<CaseRound[]>(`${import.meta.env.BASE_URL}data/cases.json`).catch((error: unknown) => {
     casesPromise = null;
     throw error;
   });
