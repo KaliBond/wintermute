@@ -5,8 +5,7 @@ compatibility_date = "2025-01-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "cams-observatory"
-# Replace with the id printed by `npx wrangler d1 create cams-observatory`.
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "dda23154-72d8-4431-b1ac-d9da5e05a3a1"
 
 # At most 10 submissions per minute from one connection (IP held in memory only).
 [[ratelimits]]
