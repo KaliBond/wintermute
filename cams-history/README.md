@@ -21,3 +21,13 @@ npm run dev
 The dev server listens on port 8080.
 
 Data lives in `public/data/panel.json` (named JUNO panel) and `public/data/cases.json` (blind rounds).
+
+## Static build for neuralnations.org
+
+```bash
+npm run build:static
+```
+
+Prerenders Atlas, Prophet and Primer into `app/`, which the site serves at
+<https://neuralnations.org/cams-history/app/>. Commit `app/` after rebuilding;
+Cloudflare Pages serves the repository as-is and runs no build step.

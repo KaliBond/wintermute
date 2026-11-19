@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMS History: Atlas, Blind Prophet &amp; Primer — Neural Nations</title>
+    <meta name="description" content="CAMS History reads the 48-society JUNO panel on the CAMS instruments. Atlas shows societies with names on, Blind Prophet covers the names and asks you to call the break, Primer explains how to read node value.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/cams-history">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/cams-history">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="CAMS History: Atlas, Blind Prophet &amp; Primer">
+    <meta property="og:description" content="Read 48 societies on the CAMS instruments, then call the crisis before the year arrives.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .open-app { display:inline-block; margin:6px 12px 6px 0; padding:12px 22px; border-radius:6px; background:#D98B2B; color:#fff; font-weight:600; text-decoration:none; }
+        .open-app.secondary { background:#2F6F7D; }
+        .open-app:hover { opacity:0.9; }
+        .screens { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:16px; margin-top:12px; }
+        .screens .card { margin:0; }
+        .formula { font-family: Georgia, serif; font-size:1.5em; font-style:italic; margin:8px 0 4px; }
+        .note { border-left:4px solid #C84C3E; background:#fdf5f4; padding:12px 16px; border-radius:4px; }
+        table.rules { border-collapse:collapse; width:100%; max-width:560px; }
+        table.rules td { padding:6px 10px; border-bottom:1px solid #e5e0d4; }
+        table.rules td:last-child { text-align:right; font-family: monospace; white-space:nowrap; }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+<div class="container">
+    <div class="hero-section">
+        <h1>CAMS History</h1>
+        <p class="hero-subtitle">Atlas, Blind Prophet and Primer: read 48 societies on the CAMS instruments, then call the crisis before the year arrives.</p>
+        <p>
+            <a class="open-app" href="cams-history/app/">Open the Atlas</a>
+            <a class="open-app secondary" href="cams-history/app/prophet">Play Blind Prophet</a>
+            <a class="open-app secondary" href="cams-history/app/primer">Read the Primer</a>
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>What it is</h2>
+        <p>CAMS History is an interactive way into the <strong>JUNO panel</strong>: 48 societies scored year by year on eight institutional nodes (Helm, Shield, Lore, Stewards, Craft, Hands, Archive, Flow) and four dimensions (Coherence, Capacity, Stress, Abstraction). It has three screens. The first lets you browse the record, the second tests whether you can read it without the names, and the third explains the instrument.</p>
+        <p>It was built with Grok (xAI) in November 2026 and runs entirely in your browser. There is no sign-in and no server behind it.</p>
+    </div>
+
+    <h2>The three screens</h2>
+    <div class="screens">
+        <div class="card">
+            <h3><a href="cams-history/app/">Atlas</a></h3>
+            <p>The societies with the names on. Pick a society from the list and scrub through its years. For each year you see the eight nodes, the node values, the bond ring and the society's mean value on a chart over time. A dashed line marks the strained floor, and red dots mark years with system-wide flags.</p>
+        </div>
+        <div class="card">
+            <h3><a href="cams-history/app/prophet">Blind Prophet</a></h3>
+            <p>The same instrument with the names and the calendar covered. A window of years streams forward and you watch the eight nodes. You get two calls to say "the break is here". Afterwards you name the society and, separately, the shape of what it did (its archetype). Three rounds per game.</p>
+        </div>
+        <div class="card">
+            <h3><a href="cams-history/app/primer">Primer</a></h3>
+            <p>How to read the instrument: what the four dimensions mean, how node value is calculated, what each of the eight nodes stands for, and when a year counts as strained or severe.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>How to read it</h2>
+        <p class="formula">V = C + K &minus; S + &frac12;A</p>
+        <p>Each node's value <em>V</em> is its coherence (<em>C</em>) plus its capacity (<em>K</em>), minus its stress (<em>S</em>), plus half its abstraction (<em>A</em>). The app shows the mean of the eight node values for each year, and the worst of them.</p>
+        <ul>
+            <li>A year is <strong>strained</strong> when the worst node is under 4.</li>
+            <li>A year is <strong>severe</strong> when value passes through zero.</li>
+        </ul>
+        <p>For the full definitions of the dimensions and nodes, see <a href="canonical-definitions.html">Canonical Definitions</a>.</p>
+    </div>
+
+    <div class="card">
+        <h2>Blind Prophet scoring</h2>
+        <table class="rules">
+            <tr><td>A hit: a call within 5 years of a real onset</td><td>more the earlier</td></tr>
+            <tr><td>A call after the onset</td><td>+40</td></tr>
+            <tr><td>A false call</td><td>&minus;50</td></tr>
+            <tr><td>Naming the society correctly</td><td>+100</td></tr>
+            <tr><td>Naming the archetype correctly</td><td>+100</td></tr>
+        </table>
+        <p>A window with no onset, left uncalled, is its own kind of correct. Keyboard: Space starts, C calls, Esc pauses.</p>
+    </div>
+
+    <div class="card note">
+        <h2>What it is not</h2>
+        <p><strong>Blind Prophet is a teaching game, not a blinded test.</strong> The answers for each round (the society, its onset years and its archetype) are in the data file your browser downloads, so anyone who looks can see them. For the project's actual blind experiments, which keep the key away from the person or model being tested, see <a href="results.html">Results</a>.</p>
+        <p>The panel inside the app is a copy of the JUNO data taken when the app was built. It does not update automatically when the JUNO datasets change. The live datasets are on the <a href="datasets.html">Datasets</a> page.</p>
+    </div>
+
+    <div class="card">
+        <h2>Source and rebuilding</h2>
+        <p>The source is in <a href="https://github.com/KaliBond/wintermute/tree/main/cams-history" target="_blank">cams-history/</a> in the repository: a TanStack Start app, with the CAMS calculations in <code>src/lib/cams/model.ts</code> and the data in <code>public/data/panel.json</code> (named panel) and <code>public/data/cases.json</code> (blind rounds).</p>
+        <p>The site serves a prerendered static copy at <code>cams-history/app/</code>. After changing the app, run <code>npm run build:static</code> in <code>cams-history/</code> and commit the rebuilt <code>app/</code> folder; the site host does not run a build step.</p>
+    </div>
+</div>
+<footer class="footer"><nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;"><a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a><a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a><a href="results.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Results</a></nav><p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p></footer><script src="site-chrome.js"></script><script src="nav.js"></script>
+</body></html>
