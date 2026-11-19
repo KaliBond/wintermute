@@ -1,0 +1,117 @@
+======================================================================
+CAMS WAR INITIATION THESIS — QUANTITATIVE RESULTS
+======================================================================
+
+Societies with Stewards data: ['China', 'England', 'Finland', 'France', 'Germany', 'USA']
+Total peace-year observations: 623
+War-initiation outcomes (10yr window): 82
+Overload_3yr events: 102
+
+
+======================================================================
+MODEL 1 — H1 Baseline: war_10yr ~ overload_3yr
+======================================================================
+
+--- Model 1 ---
+  N = 623, Events = 82
+  Pseudo-R² (McFadden) = 0.0245
+  Variable                           Coef     ClSE       z        p       OR
+  ------------------------------ -------- -------- ------- -------- --------
+  const                            -2.097    0.173  -12.10   0.0000    0.123 ***
+  overload_3yr                      0.972    0.443    2.20   0.0281    2.643 *
+
+======================================================================
+MODEL 2 — H1 Controlled: war_10yr ~ overload_3yr + Shield_Stress + system_stress
+======================================================================
+
+--- Model 2 ---
+  N = 623, Events = 82
+  Pseudo-R² (McFadden) = 0.0324
+  Variable                           Coef     ClSE       z        p       OR
+  ------------------------------ -------- -------- ------- -------- --------
+  const                            -2.190    0.285   -7.68   0.0000    0.112 ***
+  overload_3yr                      1.027    0.565    1.82   0.0690    2.792 .
+  Shield_Stress                    -0.200    0.225   -0.89   0.3743    0.819 
+  system_stress                     0.204    0.230    0.89   0.3751    1.226 
+
+======================================================================
+MODEL 3 — H2 Interaction: war_10yr ~ overload_3yr * lore_archive_idx + Shield_Stress + system_stress
+======================================================================
+
+--- Model 3 ---
+  N = 623, Events = 82
+  Pseudo-R² (McFadden) = 0.0841
+  Variable                           Coef     ClSE       z        p       OR
+  ------------------------------ -------- -------- ------- -------- --------
+  const                            -2.838    1.203   -2.36   0.0183    0.059 *
+  overload_3yr                      8.462    4.455    1.90   0.0575 4733.243 .
+  lore_archive_idx                  0.085    0.161    0.53   0.5993    1.089 
+  ol3_x_la                         -1.278    0.857   -1.49   0.1360    0.279 
+  Shield_Stress                    -0.267    0.211   -1.26   0.2062    0.766 
+  system_stress                     0.260    0.214    1.22   0.2241    1.298 
+
+======================================================================
+PLACEBO TEST — Shuffle overload_3yr timing within each society (500 shuffles)
+======================================================================
+  Placebo median coef:    0.426
+  Placebo 95th pctile:    0.752
+  Real Model 1 coef:      0.972
+  Percentile rank vs placebo: 99.6%
+  → Real effect EXCEEDS 95th percentile of placebo — supports H1
+
+======================================================================
+H3 TEST — Jubilee Alternative
+Overload resolution: does Stewards Stress fall below Capacity within 5yr?
+No Shield rise: Shield_Stress does not increase >1 in that window
+======================================================================
+  Lore-Archive index median: 7.750
+  Overload_3yr rows: 102
+
+  High Lore-Archive (n=17):
+    Resolved (Stress falls below Cap in 5yr): 16/17 = 94.1%
+    No Shield rise:                          15/17 = 88.2%
+    Jubilee (resolved AND no Shield rise):   14/17 = 82.4%
+
+  Low Lore-Archive (n=83):
+    Resolved (Stress falls below Cap in 5yr): 20/83 = 24.1%
+    No Shield rise:                          64/83 = 77.1%
+    Jubilee (resolved AND no Shield rise):   20/83 = 24.1%
+
+  Fisher's exact (high_LA × resolved): OR=50.400, p=0.0000
+
+  Jubilee rate — High LA: 82.4%  |  Low LA: 24.1%
+  → H3 SUPPORTED: High Lore-Archive societies more often resolve without Shield rise
+
+======================================================================
+REPLICATION CHECK — Germany Gem vs Grok
+======================================================================
+  Grok Germany: 142 peace years, 11 overload, 20 war-window years
+  Gem  Germany: 142 peace years, 12 overload, 20 war-window years
+  Gem — overload_3yr coef: 0.219, OR: 1.244, p: 0.7885
+  Grok — overload_3yr coef: -0.529, OR: 0.589, p: 0.6239
+
+======================================================================
+DESCRIPTIVE STATS BY SOCIETY
+======================================================================
+  China        years=1875–2026    peace-N= 146  overload_3yr= 73  war_window= 30  overlap= 23
+  England      years=1750–1898    peace-N= 149  overload_3yr=  0  war_window= 10  overlap=  0
+  Finland      years=1900–2025    peace-N= 113  overload_3yr= 17  war_window= 10  overlap=  0
+  France       years=1785–2024    peace-N=  48  overload_3yr=  0  war_window=  8  overlap=  0
+  Germany      years=1880–2025    peace-N= 142  overload_3yr= 12  war_window= 20  overlap=  2
+  USA          years=1900–2026    peace-N=  25  overload_3yr=  0  war_window=  4  overlap=  0
+
+======================================================================
+FALSIFICATION CRITERIA ASSESSMENT
+======================================================================
+
+FC1 (Shield/system_stress controls): Compare Model 1 vs Model 2.
+     If overload_3yr coef shrinks substantially or becomes non-significant,
+     effect may be driven by general militarisation, not rentier overload.
+
+FC2 (Civil conflict equally predicted): Not tested here — no civil conflict
+     outcome variable in this dataset.
+
+FC3 (Effect similar across LA groups): Model 3 interaction term.
+     If ol3_x_la coefficient is small/non-significant, no moderation by LA.
+
+FC4 (Replication across scorers): Gem vs Grok Germany above.
