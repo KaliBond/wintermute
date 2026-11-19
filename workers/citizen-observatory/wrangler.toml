@@ -1,0 +1,15 @@
+name = "citizen-observatory"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "cams-observatory"
+# Replace with the id printed by `npx wrangler d1 create cams-observatory`.
+database_id = "00000000-0000-0000-0000-000000000000"
+
+# At most 10 submissions per minute from one connection (IP held in memory only).
+[[ratelimits]]
+name = "SUBMIT_LIMITER"
+namespace_id = "1001"
+simple = { limit = 10, period = 60 }
