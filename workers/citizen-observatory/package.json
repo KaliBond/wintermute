@@ -1,0 +1,13 @@
+{
+  "name": "citizen-observatory",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/validate.test.js",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "4.165.0"
+  }
+}

@@ -1,0 +1,14 @@
+name = "citizen-observatory"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "cams-observatory"
+database_id = "dda23154-72d8-4431-b1ac-d9da5e05a3a1"
+
+# At most 10 submissions per minute from one connection (IP held in memory only).
+[[ratelimits]]
+name = "SUBMIT_LIMITER"
+namespace_id = "1001"
+simple = { limit = 10, period = 60 }

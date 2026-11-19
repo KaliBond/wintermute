@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMS Citizen Scoring Observatory — Neural Nations</title>
+    <meta name="description" content="Contribute an AI model's scoring of historical societies to the CAMS v1.2 study. Draw an original prompt, run it in a fresh chat, paste the reply back and get a receipt.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/observatory">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/observatory">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:title" content="CAMS Citizen Scoring Observatory">
+    <meta property="og:description" content="Explore societies. Test the lens of AI. Contribute a model's scoring to the CAMS v1.2 study.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <link rel="stylesheet" href="style.css">
+    <script>
+    /* Set endpoint to the deployed Worker URL (printed by `wrangler deploy`,
+       see workers/citizen-observatory/README.md). Empty = not open yet. */
+    window.OBSERVATORY_CONFIG = {
+      endpoint: 'https://citizen-observatory.kari-freyr-4.workers.dev'
+    };
+    </script>
+    <style>
+        .obs { max-width: 980px; margin: 0 auto; }
+        .obs .metrics { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:0 0 18px; }
+        .obs .metric { border:1px solid #dcd6c6; background:#fff; padding:16px; border-radius:10px; }
+        .obs .metric strong { display:block; color:#2F6F7D; font-size:26px; }
+        .obs .metric span { font-size:12px; color:#666; }
+        .obs .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:16px 0; }
+        .obs .step { padding:14px; border-radius:8px; background:#f4f1e8; line-height:1.5; }
+        .obs .step b { display:block; margin-bottom:4px; }
+        .obs .step span { color:#555; font-size:0.9em; }
+        .obs .actions { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:14px 0; }
+        .obs button { cursor:pointer; background:#2F6F7D; border:0; color:#fff; border-radius:8px; padding:11px 16px; font:inherit; font-weight:600; }
+        .obs button.secondary { background:#fff; color:#2F6F7D; border:1px solid #9bbcc2; }
+        .obs button:disabled { opacity:.5; cursor:default; }
+        .obs select, .obs input[type=text], .obs textarea { width:100%; font:inherit; border:1px solid #cfc8b6; border-radius:8px; padding:10px; background:#fff; box-sizing:border-box; }
+        .obs select { max-width:220px; }
+        .obs label.field { font-weight:600; font-size:0.9em; display:block; margin:10px 0 5px; }
+        .obs textarea { min-height:190px; resize:vertical; font-family:ui-monospace,Consolas,monospace; font-size:12px; }
+        .obs .muted { color:#666; font-size:0.9em; line-height:1.6; }
+        .obs #assignment { display:none; border-top:1px solid #e3ddcc; margin-top:18px; padding-top:16px; }
+        .obs .pill { display:inline-block; padding:4px 9px; background:#e6f1f2; color:#2F6F7D; font-size:12px; border-radius:99px; font-weight:700; }
+        .obs .formgrid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+        .obs .check { display:flex; gap:9px; align-items:flex-start; margin:12px 0; font-size:0.9em; }
+        .obs .check input { width:18px; flex:none; margin-top:3px; }
+        .obs .error { color:#a3262f; background:#fdf0f0; border-radius:8px; padding:12px; margin:12px 0; white-space:pre-wrap; }
+        .obs .ok { background:#eaf6ee; color:#1d5a3a; border-radius:8px; padding:14px; line-height:1.7; }
+        .obs .closed { background:#fdf8f0; border-left:4px solid #D98B2B; padding:14px 16px; border-radius:6px; margin-bottom:16px; }
+        .obs .hidden { display:none; }
+        .obs dialog { width:min(700px, calc(100% - 24px)); border:0; border-radius:14px; padding:0; box-shadow:0 24px 80px rgba(8,39,57,.35); max-height:92vh; }
+        .obs dialog::backdrop { background:rgba(8,29,49,.6); }
+        .obs .modal { padding:22px; max-height:90vh; overflow:auto; }
+        .obs .modalhead { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+        @media (max-width:650px) { .obs .metrics, .obs .steps, .obs .formgrid { grid-template-columns:1fr; } }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+<div class="container obs">
+    <div class="hero-section">
+        <h1>Citizen Scoring Observatory</h1>
+        <p class="hero-subtitle">Explore societies. Test the lens of AI. Contribute an independent, evidence-based AI scoring of historical societies to the CAMS v1.2 study. No account needed.</p>
+    </div>
+
+    <div id="closed" class="closed hidden"><strong>The Observatory is not open yet.</strong> You can read how it will work below. Submissions open once the collection service is live.</div>
+
+    <div class="metrics">
+        <div class="metric"><strong id="submissions">—</strong><span>Submissions received</span></div>
+        <div class="metric"><strong id="rows">—</strong><span>Scoring observations received</span></div>
+        <div class="metric"><strong>105</strong><span>Original assignments</span></div>
+    </div>
+
+    <div class="card">
+        <h2>Make a contribution</h2>
+        <p class="muted">Each assignment asks a model to score eight societies on 16 CAMS measures. The prompts are the original, unchanged v1.2 study prompts. You choose a model family; the Observatory draws, at random, one of the assignments with the fewest submissions so far.</p>
+        <div class="steps">
+            <div class="step"><b>1 · Draw a prompt</b><span>Choose an AI family and copy the assignment.</span></div>
+            <div class="step"><b>2 · Ask the AI</b><span>Use one entirely fresh chat, with memory and custom instructions off.</span></div>
+            <div class="step"><b>3 · Return the data</b><span>Paste the complete reply and get your receipt.</span></div>
+        </div>
+        <div class="actions">
+            <select id="family" aria-label="AI model family">
+                <option value="any">Any family</option><option>claude</option><option>deepseek</option><option>gemini</option><option>gpt</option><option>grok</option><option>kimi</option><option>qwen</option>
+            </select>
+            <button id="draw">Draw a random assignment</button>
+        </div>
+        <div id="drawError" class="error hidden" role="alert"></div>
+        <div id="assignment">
+            <span class="pill" id="assignmentTag"></span>
+            <p class="muted">Copy this prompt exactly into a fresh chat, then come back with the complete reply, including the SESSION line at the end.</p>
+            <div class="actions">
+                <button id="copy">Copy complete prompt</button>
+                <button class="secondary" id="save">Save prompt as TXT</button>
+                <button class="secondary" id="submitOpen">Paste model results</button>
+            </div>
+            <details><summary>Preview the scoring prompt</summary><textarea id="promptText" readonly aria-label="Full scoring prompt"></textarea></details>
+            <p class="muted">Whether the chat was fresh is self-reported; this page cannot check it.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>How results are treated</h2>
+        <p>Every submission is checked for the required CSV columns, all 128 rows, the case and metric order, the score and evidence-tier format, and the SESSION code. An identical reply submitted twice is rejected.</p>
+        <p class="muted">Passing these checks means <b>structurally valid</b>, not historically verified. Before any submission is used in research it is reviewed for evidence quality, independence, model version and possible coordinated submissions. Public submissions are kept as a separate cohort and are never pooled with the original controlled 105-session study.</p>
+    </div>
+
+    <div class="card">
+        <h2>What is stored</h2>
+        <ul>
+            <li>The model reply you paste, the assignment it answers, and the model name and version you enter.</li>
+            <li>The server's time of receipt (UTC).</li>
+            <li>Your local time and city or country, only if you choose to enter them. They appear on your receipt.</li>
+        </ul>
+        <p>No name, email address, IP address or device location is stored. Submissions are kept as research data for the CAMS project, which publishes its data openly, so submitted replies may be included in a future open dataset. To ask for a submission to be removed, email <a href="mailto:kari.freyr.4@gmail.com">kari.freyr.4@gmail.com</a> with its receipt ID.</p>
+    </div>
+
+    <dialog id="modal"><div class="modal">
+        <div class="modalhead"><div><h2>Submit your scoring response</h2><p class="muted" id="modalAssignment"></p></div><button class="secondary" id="close" aria-label="Close">×</button></div>
+        <div id="formArea">
+            <label class="field" for="raw">Full model reply (the CSV code block and the SESSION line)</label>
+            <textarea id="raw" placeholder="```csv&#10;case_id,arm,rater_id,metric,score,tier,note&#10;...&#10;```&#10;SESSION ..."></textarea>
+            <div class="formgrid">
+                <div><label class="field" for="model">Model name</label><input type="text" id="model" placeholder="e.g. Claude" required></div>
+                <div><label class="field" for="version">Model version</label><input type="text" id="version" placeholder="e.g. Sonnet 5.5" required></div>
+                <div><label class="field" for="time">Your local time (optional)</label><input type="text" id="time" placeholder="e.g. 19 Nov 2026 14:00 AEDT"></div>
+                <div><label class="field" for="place">City or country (optional)</label><input type="text" id="place" placeholder="e.g. Sydney, Australia"></div>
+            </div>
+            <label class="check"><input type="checkbox" id="fresh"><span>I used a fresh chat, with memory and custom instructions turned off, outside any project or agent workspace, and pasted the assignment unchanged.</span></label>
+            <label class="check"><input type="checkbox" id="consent"><span>I agree that this submission (the reply, the model details and any optional fields) is stored as research data and may be published in an open dataset, as described under "What is stored".</span></label>
+            <div id="error" class="error hidden" role="alert"></div>
+            <button id="send">Check and submit</button>
+        </div>
+        <div id="receipt" class="ok hidden" role="status"></div>
+    </div></dialog>
+</div>
+<footer class="footer"><nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;"><a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a><a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a><a href="results.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Results</a></nav><p>&copy; 2026 Kari McKern — Neural Nations CAMS Research. Built as open science — contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p></footer>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const esc = (x) => String(x ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  // Test hosts may override the endpoint with ?endpoint=...; the live site never does.
+  const testHost = /^(localhost|127\.0\.0\.1)$|\.pages\.dev$/.test(location.hostname);
+  const override = testHost ? new URLSearchParams(location.search).get('endpoint') : null;
+  const API = (override || (window.OBSERVATORY_CONFIG || {}).endpoint || '').replace(/\/$/, '');
+  let chosen = null, latestReceipt = null;
+
+  function show(el, msg) { el.textContent = msg; el.classList.remove('hidden'); }
+  function hide(el) { el.classList.add('hidden'); }
+
+  if (!API) {
+    $('closed').classList.remove('hidden');
+    $('draw').disabled = true;
+    $('submissions').textContent = '0'; $('rows').textContent = '0';
+    return;
+  }
+
+  async function refresh() {
+    try {
+      const s = await (await fetch(API + '/api/stats')).json();
+      $('submissions').textContent = s.received_submissions.toLocaleString();
+      $('rows').textContent = s.received_scoring_rows.toLocaleString();
+    } catch (e) { $('submissions').textContent = 'Offline'; $('rows').textContent = '—'; }
+  }
+  refresh();
+
+  $('draw').onclick = async () => {
+    hide($('drawError'));
+    try {
+      const r = await fetch(API + '/api/assignment?family=' + encodeURIComponent($('family').value));
+      if (!r.ok) throw new Error('Could not draw an assignment. Please try again.');
+      chosen = await r.json();
+      $('assignment').style.display = 'block';
+      $('assignmentTag').textContent = chosen.id + ' · ' + chosen.family.toUpperCase() + ' · 8 cases · 128 rows';
+      $('promptText').value = chosen.prompt;
+      $('assignment').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (e) { show($('drawError'), e.message); }
+  };
+
+  $('copy').onclick = async () => {
+    try {
+      await navigator.clipboard.writeText(chosen.prompt);
+      $('copy').textContent = 'Copied';
+      setTimeout(() => { $('copy').textContent = 'Copy complete prompt'; }, 1500);
+    } catch (e) {
+      $('promptText').closest('details').open = true;
+      $('promptText').select();
+      $('copy').textContent = 'Clipboard blocked: copy from the preview';
+    }
+  };
+
+  $('save').onclick = () => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([chosen.prompt], { type: 'text/plain' }));
+    a.download = chosen.id + '.txt'; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+  };
+
+  $('submitOpen').onclick = () => {
+    $('modalAssignment').textContent = 'Assignment ' + chosen.id + ' · expected SESSION ' + chosen.session;
+    hide($('receipt')); $('formArea').classList.remove('hidden'); hide($('error'));
+    $('modal').showModal();
+  };
+  $('close').onclick = () => $('modal').close();
+
+  $('send').onclick = async () => {
+    if (!chosen) return;
+    const input = {
+      assignment_id: chosen.id, raw_response: $('raw').value,
+      actual_model: $('model').value, model_version: $('version').value,
+      visitor_local_time: $('time').value || null, optional_place: $('place').value || null,
+      attested_fresh: $('fresh').checked, consent: $('consent').checked,
+    };
+    hide($('error')); $('send').disabled = true; $('send').textContent = 'Checking response…';
+    try {
+      const r = await fetch(API + '/api/submit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(input) });
+      const result = await r.json();
+      if (!r.ok) throw new Error((result.errors || ['Please check your input']).join('\n'));
+      latestReceipt = result;
+      $('formArea').classList.add('hidden'); $('receipt').classList.remove('hidden');
+      $('receipt').innerHTML = '<h2>Thank you for contributing!</h2>'
+        + '<p><b>Receipt:</b> ' + esc(result.receipt_id) + '</p>'
+        + '<p><b>Received:</b> ' + esc(result.timestamp_utc) + ' UTC<br><b>Place:</b> ' + esc(result.place || 'Not provided')
+        + '<br><b>Model:</b> ' + esc(result.model + ' ' + result.model_version) + '<br><b>Rows:</b> ' + esc(result.rows_accepted) + '</p>'
+        + '<p>' + esc(result.status) + '</p>'
+        + (result.warnings && result.warnings.length ? '<p class="muted">Notes for review: ' + esc(result.warnings.join('; ')) + '</p>' : '')
+        + '<button class="secondary" id="downloadReceipt">Download receipt (JSON)</button>';
+      $('downloadReceipt').onclick = () => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([JSON.stringify(latestReceipt, null, 2)], { type: 'application/json' }));
+        a.download = result.receipt_id + '.json'; a.click();
+      };
+      refresh();
+    } catch (e) { show($('error'), e.message); }
+    finally { $('send').disabled = false; $('send').textContent = 'Check and submit'; }
+  };
+})();
+</script>
+<script src="site-chrome.js"></script><script src="nav.js"></script>
+</body></html>
