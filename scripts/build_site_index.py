@@ -21,6 +21,8 @@ EXCLUDE = {
     'test', 'research',                         # 301 redirects (_redirects)
     'cams-reconstructor',                       # meta-refresh stub
     'mindscapes/Russia_2024-2026_CAMS_Report',  # duplicate of Russia_2026
+    'archive',                                  # deliberately unlinked (#20)
+    'cams-history/scripts/install-page',        # build template, not a page
 }
 
 # (group, default type, changefreq, priority, entries). An entry is a slug or
@@ -43,7 +45,8 @@ GROUPS = [
         'cams-integrated-dashboard', 'juno/CAMS_4society_dashboard', 'cams-network-explorer', 'attractors', 'cams-3d-attractor',
         'cams-coordination', 'seshat-explorer', 'granger-validator', 'cams-telescope/',
         ('cams-telescope/guide', 'Guide'), 'cams-instrument', 'cams-morphospace-atlas', 'mind-reader', 'story-maker', 'test/story_maker',
-        ('cams-diy-kit', 'Guide'),
+        ('cams-diy-kit', 'Guide'), 'observatory',
+        'cams-history', 'cams-history/app/', 'cams-history/app/primer/', 'cams-history/app/prophet/',
     ]),
     ('Papers & Validation', 'Paper', 'monthly', '0.7', [
         'research/', 'research/cams-validation-2026', 'research/pr-gap2-findings', 'pr-gap2-full-paper',
