@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en-AU"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best papers | Neural Nations</title>
+    <meta name="description" content="The CAMS research record ranked by scientific interest, with a 90-minute reading route.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/best-papers">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/best-papers">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="Best papers">
+    <meta property="og:description" content="The CAMS research record ranked by scientific interest, with a 90-minute reading route.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="style.css">
+    <style>
+.best .lede { font-size:1.02rem; max-width:46em; color:#4d4b57; }
+.best .lede strong { color:#1B2A33; }
+.best .asof { font-size:0.85rem; color:#5a5866; border-left:3px solid #D98B2B; background:#fdf8f0; padding:8px 12px; border-radius:4px; max-width:60em; }
+.best .toolbar { display:flex; gap:0.6rem; flex-wrap:wrap; align-items:center; margin:1.2rem 0 0.6rem; padding:0.8rem 1rem; background:#fff; border:1px solid #DAD2B8; border-radius:10px; position:sticky; top:0; z-index:5; }
+.best .toolbar input[type="search"] { flex:1 1 240px; padding:0.5rem 0.8rem; font-size:0.95rem; border:1px solid #DAD2B8; border-radius:6px; background:#FAF8F3; }
+.best .chip { border:1px solid #DAD2B8; background:#FAF8F3; color:#4d4b57; border-radius:999px; padding:0.3rem 0.85rem; font-size:0.85rem; cursor:pointer; }
+.best .chip[aria-pressed="true"] { background:#1B2A33; color:#fff; border-color:#1B2A33; }
+.best .count { font-size:0.85rem; color:#4d4b57; margin-left:auto; }
+.best section.group { margin-top:2.2rem; }
+.best section.group > h2 { font-size:1.2rem; border-bottom:1px solid #DAD2B8; padding-bottom:0.35rem; margin-bottom:0.2rem; }
+.best .group-note { color:#4d4b57; font-size:0.9rem; margin:0.3rem 0 1rem; max-width:60em; }
+.best .bcard { background:#fff; border:1px solid #DAD2B8; border-radius:10px; padding:1rem 1.2rem; margin:0.75rem 0; display:grid; grid-template-columns:3.2rem 1fr; gap:0 1rem; }
+.best .rank { font-family:Georgia,serif; font-size:1.5rem; color:#4d4b57; text-align:right; padding-top:0.1rem; }
+.best .bcard h3 { margin:0; font-size:1.08rem; }
+.best .bcard h3 a { color:#1B2A33; text-decoration:none; }
+.best .bcard h3 a:hover { color:#2F6F7D; text-decoration:underline; }
+.best .meta { font-size:0.82rem; color:#4d4b57; margin:0.25rem 0 0.4rem; }
+.best .meta .tag { display:inline-block; border-radius:4px; padding:0.05rem 0.45rem; margin-right:0.35rem; background:#e3efee; color:#2F6F7D; font-weight:600; }
+.best .meta .tag.amber { background:#f7ecd9; color:#8a5410; }
+.best .bcard p { margin:0.3rem 0; font-size:0.93rem; }
+.best .why { color:#4d4b57; font-size:0.9rem; border-left:3px solid #DAD2B8; padding-left:0.7rem; }
+.best .why b { color:#1B2A33; font-weight:600; }
+.best .door-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1.1rem; margin-top:1.6rem; }
+.best .door { border:2px solid #1B2A33; border-radius:12px; padding:1.3rem 1.3rem 1.1rem; background:#fff; text-decoration:none; color:#1B2A33; display:block; }
+.best .door:hover { background:#e3efee; border-color:#2F6F7D; }
+.best .door h2 { margin:0 0 0.4rem; font-size:1.25rem; }
+.best .door p { margin:0; color:#4d4b57; font-size:0.93rem; }
+.best .door .n { font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase; color:#2F6F7D; font-weight:700; }
+.best .status-strip { display:flex; flex-wrap:wrap; gap:0.8rem; margin-top:1.2rem; }
+.best .stat { flex:1 1 160px; background:#fff; border:1px solid #DAD2B8; border-radius:10px; padding:0.8rem 1rem; }
+.best .stat .v { font-family:Georgia,serif; font-size:1.6rem; }
+.best .stat .l { font-size:0.8rem; color:#4d4b57; }
+.best .stat .src { font-size:0.75rem; margin-top:4px; }
+.best .tabs { display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 0; }
+.best .tabs a { padding:6px 14px; border:1px solid #DAD2B8; border-radius:999px; text-decoration:none; color:#4d4b57; font-size:0.9rem; background:#fff; }
+.best .tabs a.active { background:#1B2A33; color:#fff; border-color:#1B2A33; }
+.best pre { background:#1B2A33; color:#f5f1e4; padding:12px 14px; border-radius:6px; overflow-x:auto; font-size:0.85rem; line-height:1.5; }
+.best .use h3 { margin-top:0; }
+.best .use ol { padding-left:1.3rem; }
+.best .use li { margin:0.3rem 0; }
+.best .added { border-left:4px solid #2F6F7D; background:#f0f7f7; padding:10px 16px; border-radius:6px; margin-top:2.4rem; }
+@media (max-width:600px) { .best .bcard { grid-template-columns:1fr; } .best .rank { text-align:left; font-size:1.1rem; } }
+</style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+<div class="container best">
+    <div class="hero-section">
+        <h1>Best papers</h1>
+        <p class="hero-subtitle">The research record ranked by scientific interest: how strong the test design is, how much rides on the claim, and how honestly the failures are reported. Not ranked by confidence; several of the best entries here are negative results.</p>
+        <nav class="tabs" aria-label="Best of"><a href="best.html">Best of</a><a href="best-papers.html" class="active">Best papers</a><a href="best-tools.html">Best tools</a><a href="best-data.html">Best use of the data</a><a href="juno_calculator.html">Score one yourself</a></nav>
+    </div>
+<p class="asof"><strong>Source and date.</strong> Ranking, descriptions and the counts quoted inside each card are as written by Kimi (Moonshot AI) for the Neural Nations layout prototype, 19 November 2026, and are presented as written apart from punctuation and wording swaps to the site&rsquo;s CAS lexicon. Check the linked page for current figures. Links point to the live pages on this site.</p>
+  <div class="toolbar">
+    <input type="search" id="q" placeholder="Filter: try &ldquo;blind&rdquo;, &ldquo;rupture&rdquo;, &ldquo;JUNO&rdquo;, &ldquo;specification&rdquo;&hellip;" aria-label="Filter papers">
+    <button class="chip" data-tag="all" aria-pressed="true">All</button>
+    <button class="chip" data-tag="preregistered" aria-pressed="false">Pre-registered</button>
+    <button class="chip" data-tag="blind" aria-pressed="false">Blind rounds</button>
+    <button class="chip" data-tag="validation" aria-pressed="false">Validation</button>
+    <button class="chip" data-tag="finding" aria-pressed="false">Findings</button>
+    <button class="chip" data-tag="theory" aria-pressed="false">Theory &amp; specs</button>
+    <button class="chip" data-tag="review" aria-pressed="false">Reviews</button>
+    <span class="count" id="count"></span>
+  </div>
+
+  <section class="group">
+    <h2>Prospective and pre-registered tests</h2>
+    <p class="group-note">The only tests that can&rsquo;t be gamed retrospectively. Ranked first because the design does the defending.</p>
+
+    <article class="bcard" data-tags="preregistered finding" data-search="pr-gap2 rupture leading indicator societal rupture 44 societies 125 years 126 coups crises regime transitions leave-one-society-out auc 0.740 deficit crises coordination transitions">
+      <div class="rank">1</div>
+      <div>
+        <h3><a href="pr-gap2-rupture-study.html">PR-GAP-2: CAMS as a Leading Indicator of Societal Rupture</a></h3>
+        <p class="meta"><span class="tag">Pre-registered</span><span class="tag">Finding</span> Updated Nov 2026 · 44 societies, 1900–2025, 126 ruptures</p>
+        <p>Leave-one-society-out cross-validation reaches AUC 0.740 for deficit crises once coordination transitions are correctly separated: using only structural coordination metrics, no political or economic covariates.</p>
+        <p class="why"><b>Why first:</b> the strongest single empirical claim on the site: genuine out-of-sample structure, an explicit confound-handling move, and a headline number modest enough to believe. Read beside the full paper next.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="preregistered validation" data-search="pr-gap2 full paper structural coordination rupture morphology retrospective panel validation 44 societies robson gauge cultural grounding cross-system parsimony">
+      <div class="rank">2</div>
+      <div>
+        <h3><a href="pr-gap2-full-paper.html">PR-GAP-2: Structural Coordination and Rupture Morphology, Full Paper</a></h3>
+        <p class="meta"><span class="tag">Pre-registered</span><span class="tag">Validation</span> Aug 2026 draft · with findings summary and six supporting analyses</p>
+        <p>The full academic paper behind the rupture study: panel validation across 44 societies, Robson Gauge cultural-grounding results, and a cross-system parsimony assessment. Supported by the findings note, a synthesis, a formalism audit, an NCT/LOSO report, a Robson-plane analysis and a general-audience version.</p>
+        <p class="why"><b>Why second:</b> the closest thing CAMS has to a flagship manuscript, and it carries its own audit trail in public.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="preregistered" data-search="adversary-02 results sealed predictions china seven chinese firms 2021 2024 six passed nine failed kill switch fc5 not triggered">
+      <div class="rank">3</div>
+      <div>
+        <h3><a href="adversary-02-results.html">ADVERSARY-02 Results: a Pre-registered Test of CAMS</a></h3>
+        <p class="meta"><span class="tag">Pre-registered</span> 6 Nov 2026 · 15 predictions, China + 7 firms, 2021–2024</p>
+        <p>Fifteen predictions sealed before any scoring: six passed, nine failed, and the built-in kill-switch (FC5) was not triggered. Written for new readers, with the scoreboard, scorer grades and limitations.</p>
+        <p class="why"><b>Why third:</b> the cleanest demonstration of the project&rsquo;s epistemic discipline, a 40% hit rate published with the same prominence as a win would get. That is what pre-registration is for.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="blind preregistered" data-search="persistent national topology coded institutional profiles four pre-registered blind rounds 24 eras crisis swamping single carrier falsified helm sigma blind spot">
+      <div class="rank">4</div>
+      <div>
+        <h3><a href="persistent-topology.html">Persistent National Topology in Coded Institutional Profiles</a></h3>
+        <p class="meta"><span class="tag">Pre-registered</span><span class="tag">Blind rounds</span> 15 Nov 2026 · four blind rounds, 24 eras</p>
+        <p>Four pre-registered blind rounds asking whether a national signature persists in CAMS 8×4 profiles across 24 eras. Crisis-swamping and single-carrier explanations are falsified; Helm is flagged as σ&rsquo;s blind spot.</p>
+        <p class="why"><b>Why fourth:</b> a falsification-oriented design that reports what didn&rsquo;t work and names the instrument&rsquo;s own weak node, rarer and more valuable than another confirmation.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="preregistered" data-search="predictions 2027 2028 register 32 probability weighted claims usa china australia zenodo locked unscored">
+      <div class="rank">5</div>
+      <div>
+        <h3><a href="predictions-2027-2028.html">Predictions on Record: the 2027–2028 Register</a></h3>
+        <p class="meta"><span class="tag">Pre-registered</span> Lodged Aug 2026 · 32 claims · scored when the years close</p>
+        <p>Thirty-two probability-weighted claims about the USA, China and Australia for 2027–2028, lodged at Zenodo and frozen. Currently the strongest reason to wait before judging the framework.</p>
+        <p class="why"><b>Why fifth:</b> not a result but the decisive pending experiment, the entry that turns every other ranking on this page into a provisional one.</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="group">
+    <h2>Validation studies and blind rounds</h2>
+    <p class="group-note">Does the instrument measure what it claims? Ranked by design quality and by how much of the framework each one stress-tests.</p>
+
+    <article class="bcard" data-tags="validation" data-search="graph theoretic diagnosis societal collapse cams validation 18 societies dimensional collapse node coupling crisis signature 12 falsifiable predictions">
+      <div class="rank">6</div>
+      <div>
+        <h3><a href="research/cams-validation-2026.html">Graph-Theoretic Diagnosis of Societal Collapse: CAMS Validation Across 18 Societies</a></h3>
+        <p class="meta"><span class="tag">Validation</span> 10 Jun 2026 · 10–2026 CE · 12 falsifiable predictions</p>
+        <p>Tests three core CAMS claims against 18 societies spanning 2,000 years: dimensional collapse, node coupling architectures, and crisis-signature matching, with 12 predictions stated up front.</p>
+        <p class="why"><b>Why sixth:</b> the broadest historical validation and an early statement of the falsification culture that later work sharpened.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="validation" data-search="temporal inelasticity results juno bonds rank 1 outer product pair specific information laplacian algebraic connectivity internal audit">
+      <div class="rank">7</div>
+      <div>
+        <h3><a href="analysis/inelasticity_results.html">CAMS Temporal Inelasticity: Results</a></h3>
+        <p class="meta"><span class="tag">Validation</span> 15 Aug 2026 · internal audit · Cuba, Iceland, ASPI pilots</p>
+        <p>Shows the JUNO v1.2 bond formula factors completely into node-level weights: B = w⊗w is rank-1, so the bond matrix carries no pair-specific information and λ₂ is algebraically constrained rather than empirically discovered.</p>
+        <p class="why"><b>Why seventh, and arguably first in importance:</b> the most consequential single result on the site; it defunds an entire family of &ldquo;network&rdquo; claims. A model auditing itself this hard earns the right to be read.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="blind" data-search="juno cams blind analysis protocol v1.1.1 cognitive affective extension 24 societies three blind sets mrr 0.667 0.833 calibration gate failed conflict states">
+      <div class="rank">8</div>
+      <div>
+        <h3><a href="blind-protocol-v111.html">JUNO/CAMS Blind-Analysis Protocol v1.1.1</a></h3>
+        <p class="meta"><span class="tag">Blind rounds</span> Nov 2026 · 24 societies, 3 blind sets</p>
+        <p>Results of the cognitive-affective extension experiment: MRR improved 0.667 → 0.833, but the calibration gate failed on conflict states.</p>
+        <p class="why"><b>Why eighth:</b> an honest mixed result that marks its own boundary, exactly where a blind protocol earns trust.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="blind" data-search="juno cams blind analysis challenge open anonymised dataset protocol prompt five stage analysis unblinding key participate">
+      <div class="rank">9</div>
+      <div>
+        <h3><a href="blind-test.html">JUNO/CAMS Blind Analysis Challenge</a></h3>
+        <p class="meta"><span class="tag">Blind rounds</span> Open now · 8 anonymised societies, 1750–2026</p>
+        <p>The open challenge: load an anonymised dataset and the protocol prompt into any capable LLM, run the five-stage analysis, and compare against the sealed key before unblinding.</p>
+        <p class="why"><b>Why ninth:</b> not a finding but an invitation, the entry point for any outsider who wants the strongest form of evidence the project can offer: their own run.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="blind" data-search="cams personality experiment accumulating case unification meaning metabolism eight pole journey recognition counts closed disclosure participant route">
+      <div class="rank">10</div>
+      <div>
+        <h3><a href="cams-personality-experiment.html">An Accumulating Case for CAMS: the Personality Experiment</a></h3>
+        <p class="meta"><span class="tag">Blind rounds</span> 7 Nov 2026 · recognition counts start closed</p>
+        <p>A possible unification of meaning and metabolism, offered with the mechanism explicitly not treated as demonstrated: and a participant route that keeps the November grades undisclosed so you can take part clean.</p>
+        <p class="why"><b>Why tenth:</b> the most methodologically careful piece of speculative work on the site: it builds a disclosure firewall into its own design. The speculation is labelled speculation.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="validation" data-search="ensemble validation wright thesis variance reduction snr improvement contestation index kappa uncertainty bounds germany usa 1880 2026">
+      <div class="rank">11</div>
+      <div>
+        <h3><a href="ensemble-validation.html">Ensemble Validation: CAMS v2.3</a></h3>
+        <p class="meta"><span class="tag">Validation</span> May 2026 · Germany &amp; USA 1880–2026</p>
+        <p>The Wright Thesis confirmed with qualifications: variance reduction, SNR improvement, contestation index and κ-uncertainty bounds for ensemble scoring.</p>
+        <p class="why"><b>Why eleventh:</b> the measurement-theory foundation under every score the site publishes, unglamorous and load-bearing.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="validation" data-search="operator portability synthesis corporate national domains structurally portable parametrically non invariant computational audits soil bond index paused rework">
+      <div class="rank">12</div>
+      <div>
+        <h3><a href="operator-portability-synthesis.html">Operator Portability in CAMS: Synthesis &amp; Verification Trail</a></h3>
+        <p class="meta"><span class="tag">Validation</span> Nov 2026 · two independent computational audits</p>
+        <p>Canonical operators are structurally portable across corporate and national domains but parametrically non-invariant: confirmed twice independently. The companion Soil-Bond Index paper is explicitly paused pending rework.</p>
+        <p class="why"><b>Why twelfth:</b> the cross-scale claim tested with replication, plus a rare public example of a result being stood down rather than quietly left standing.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="validation" data-search="p4 retrospective validation crisis detector firms boeing theranos worldcom matched controls sealed cluster gap rule controls fired almost as often">
+      <div class="rank">13</div>
+      <div>
+        <h3><a href="p4-retrospective-validation.html">P4 Retrospective Validation: Does the Crisis Detector Work on Firms?</a></h3>
+        <p class="meta"><span class="tag">Validation</span> 10 Nov 2026 · interim · 3 cases, 6 matched controls</p>
+        <p>A rule sealed on fifteen national crises was run unchanged on Boeing, Theranos and WorldCom against matched survivors. The controls set it off almost as often as the cases.</p>
+        <p class="why"><b>Why thirteenth:</b> a clean negative that bounds the portability claim, published as prominently as the positives. This is the audit culture working.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="validation" data-search="paladin validation metaphor earns its keep adversarial rendering layer measurement which claims survive metaphor discipline">
+      <div class="rank">14</div>
+      <div>
+        <h3><a href="paladin-validation.html">When a Metaphor Earns Its Keep: Adversarial Validation of the Paladin Rendering Layer</a></h3>
+        <p class="meta"><span class="tag">Validation</span> Nov 2026 · adversarial audit over JUNO</p>
+        <p>Which claims in the interpretive layer survive as measurement and which survive only as metaphor: with a rendering protocol that keeps the difference visible.</p>
+        <p class="why"><b>Why fourteenth:</b> a whole paper about not over-claiming the interpretive layer; methodologically interesting beyond CAMS.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="validation" data-search="cams 1.0.1 instrument test battery june 2026 corpus verification 2532 society years juno formalism audit blind scoring control">
+      <div class="rank">15</div>
+      <div>
+        <h3><a href="cams-testing-report-june2026.html">CAMS v1.0.1: Instrument Test Battery</a></h3>
+        <p class="meta"><span class="tag">Validation</span> Jun 2026 · 2,532 society-years verified</p>
+        <p>The full test battery for the v1.0.1 instrument: corpus verification, JUNO formalism audit, blind scoring control, and the first pre-registered prospective predictions.</p>
+        <p class="why"><b>Fifteenth:</b> superseded in parts by later versions but documents the instrument&rsquo;s quality bar at the time, useful for tracing what changed and why.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="review" data-search="carbon evaluation outside evaluation physics of the human metasystem ai system report presented as written checks against site">
+      <div class="rank">16</div>
+      <div>
+        <h3><a href="carbon-evaluation.html">Carbon&rsquo;s Evaluation of CAMS</a></h3>
+        <p class="meta"><span class="tag">Review</span> 11 Nov 2026 · external AI evaluation, checks included</p>
+        <p>An outside AI system reads the synthesis and the papers and judges the scientific value; the report is presented as written, followed by Neural Nations&rsquo; own claim-by-claim checks.</p>
+        <p class="why"><b>Why sixteenth:</b> the nearest thing to peer review the project currently has, and the meta-check format is more honest than most human review cycles.</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="group">
+    <h2>Findings from the datasets</h2>
+    <p class="group-note">What the numbers say, once the instrument&rsquo;s limits are on the table. In-sample unless marked; the distinction is marked throughout.</p>
+
+    <article class="bcard" data-tags="finding" data-search="synchronised slide global stress after 2000 juno v3 common factor analysis public debt build up 1920s 30s parallel sign inverted">
+      <div class="rank">17</div>
+      <div>
+        <h3><a href="synchronised-slide.html">The Synchronised Slide: Global Stress After 2000</a></h3>
+        <p class="meta"><span class="tag">Finding</span> 23 Oct 2026 · JUNO v3 common-factor analysis · external series: IMF, World Bank, NASA GISTEMP, FRED</p>
+        <p>Stress synchrony jumps after 2000 to war-era levels without a world war, carried by a new near-uniform global factor. Of the drivers tested, only the public-debt build-up tracks it; the 1920s–30s parallel arrives with the rate sign inverted.</p>
+        <p class="why"><b>Why seventeenth:</b> the most scientifically interesting descriptive finding, an unexpected, testable macro claim with the comparison series named, and the inverted-sign parallel flagged rather than smoothed over.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="finding" data-search="organisational pathologies interim results six frozen signatures 37 societies 12 of 18 windows hold late abstraction collapse precedes big falls cross scale">
+      <div class="rank">18</div>
+      <div>
+        <h3><a href="organisational-pathologies.html">Organisational Pathologies: Interim Results</a></h3>
+        <p class="meta"><span class="tag">Finding</span> 20 Oct 2026 · six frozen signatures · 37 JUNO v3 societies</p>
+        <p>The failures we recognise in families and offices recur at national scale: twelve of eighteen named historical windows hold, all four windowed signatures cluster beyond chance, and Late Abstraction Collapse precedes big falls.</p>
+        <p class="why"><b>Why eighteenth:</b> the cross-scale claim that would matter most if it survives replication, and &ldquo;twelve of eighteen&rdquo; is reported as twelve of eighteen.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="finding" data-search="us institutional trust cams stress study 2 30 year panel 1996 2025 structural stress leads gallup pew trust collapse 2 3 years opposite fiscal study 1">
+      <div class="rank">19</div>
+      <div>
+        <h3><a href="us-legitimacy-cams-study.html">US Legitimacy Crisis × CAMS Stress: Study 2</a></h3>
+        <p class="meta"><span class="tag">Finding</span> Nov 2026 · 1996–2025 panel</p>
+        <p>CAMS Stress leads Gallup and Pew institutional-trust series by 2–3 years: the exact opposite of the fiscal finding in Study 1.</p>
+        <p class="why"><b>Why nineteenth:</b> a lead-lag result against external survey data is genuinely testable, and the open contradiction with Study 1 is the interesting part; two probes, two answers, both published.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="finding" data-search="attractor coherence revisited do societies break in the same places every time 53 societies 47960 node years consistency check named data">
+      <div class="rank">20</div>
+      <div>
+        <h3><a href="attractor-coherence-revisited.html">Attractor Coherence, Revisited</a></h3>
+        <p class="meta"><span class="tag">Finding</span> 9 Nov 2026 · 53 societies, 47,960 node-years · labelled: consistency check, not a blind test</p>
+        <p>An old experiment re-run on the combined JUNO dataset after its first blind prospective test failed: do societies break in the same places every time?</p>
+        <p class="why"><b>Why twentieth:</b> valuable as candour, a failed replication revisited on fuller data, with the &ldquo;not blind&rdquo; label worn on the sleeve.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="preregistered" data-search="robodebt australian state register report kimi pre-registered question register hash frozen addenda three scorer ensembles retrospective scorers not blind">
+      <div class="rank">21</div>
+      <div>
+        <h3><a href="robodebt-cams-register.html">Robodebt and the Australian State</a></h3>
+        <p class="meta"><span class="tag">Pre-registered</span> 14 Nov 2026 · retrospective · scorers not blind: flagged on the page</p>
+        <p>A question register timestamped before any score was examined, run by Kimi against three hash-frozen CAMS panels with three-scorer ensembles; presented as written, with checks against the score files.</p>
+        <p class="why"><b>Why twenty-first:</b> a well-constructed register study of a live Australian wound; its own authors downgrade it (&ldquo;retrospective, scorers not blind&rdquo;), the ranking follows their label.</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="group">
+    <h2>Theory, specifications and synthesis</h2>
+    <p class="group-note">The scaffolding: canonical definitions, formalisms and the current statement of the framework. Reference material more than findings.</p>
+
+    <article class="bcard" data-tags="theory" data-search="canonical definitions coherence capacity stress abstraction node value derived composites sigma bond strength phi p t y t">
+      <div class="rank">22</div>
+      <div>
+        <h3><a href="canonical-definitions.html">Canonical Definitions</a> <span style="font-size:0.8rem;color:var(--ink-soft);">+ <a href="bond-strength-spec.html">Bond Strength spec</a></span></h3>
+        <p class="meta"><span class="tag">Theory &amp; specs</span> Oct / May 2026 · the authoritative reference</p>
+        <p>Authoritative definitions of the four metrics, Node Value, and the derived composites (σ, bond strength, Φ, 𝒫(t)/𝒴(t)): with the bond-strength formula, scale, interpretation and version history.</p>
+        <p class="why"><b>Why twenty-second:</b> every claim on this page reduces to these definitions; they are the contract between the project and its critics. Low drama, highest dependency.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="theory" data-search="juno v1.2 final production specification regime classifier numerical policy reference ranges 3002 society year blind corpus test v1.1">
+      <div class="rank">23</div>
+      <div>
+        <h3><a href="juno-v1-2.html">JUNO v1.2-Final: Production Specification</a></h3>
+        <p class="meta"><span class="tag">Theory &amp; specs</span> Nov 2026 · follows the 3,002 society-year blind-corpus test</p>
+        <p>Regime classifier, numerical policy and reference ranges for the production formalism: the current scoring machinery behind the datasets.</p>
+        <p class="why"><b>Why twenty-third:</b> the spec that operationalises everything; read after the Inelasticity audit, which limits what its network quantities can mean.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="theory" data-search="natural history of civilisations master essay human metasystem alien naturalist eight functions culture as flower november 2026 replication round">
+      <div class="rank">24</div>
+      <div>
+        <h3><a href="natural-history-of-civilisations.html">The Natural History of Civilisations</a> <span style="font-size:0.8rem;color:var(--ink-soft);">+ <a href="dynamics-of-social-organisation.html">the book</a></span></h3>
+        <p class="meta"><span class="tag">Theory &amp; specs</span> 8 / 31 Oct 2026 · master essay · CC BY 4.0</p>
+        <p>The current statement of the framework: an alien naturalist, eight functions, culture as flower, meaning and metabolism, with the supporting document linking each claim to its evidence, and the book-length personal account with free PDF/EPUB.</p>
+        <p class="why"><b>Why twenty-fourth:</b> the best-written prose on the site and the frame everything else hangs in, but as science it is the hypothesis, not the test, so it stands behind the tests in this ranking.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="theory" data-search="why eight nodes rate separation coupling argument first principles derivation 8 node architecture coordination phase transition theorem criticality index draft march 2026">
+      <div class="rank">25</div>
+      <div>
+        <h3><a href="dynamics-of-social-organisation.html">Why Eight Nodes? A Rate-Separation and Coupling Argument</a> <span style="font-size:0.8rem;color:var(--ink-soft);">(Mar 2026 draft, in the book&rsquo;s research thread)</span></h3>
+        <p class="meta"><span class="tag">Theory &amp; specs</span> Mar 2026 draft · first-principles derivation</p>
+        <p>A derivation of the 8-node architecture from multi-timescale coordination mathematics, introducing the Coordination Phase Transition Theorem and the criticality index 𝒳(t).</p>
+        <p class="why"><b>Why twenty-fifth:</b> the most ambitious theoretical move, and still a draft. If the derivation survives formal scrutiny it justifies the architecture; until then it is the framework&rsquo;s biggest open bet.</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="group">
+    <h2>Review, record and response</h2>
+    <p class="group-note">The layer that lets outsiders check the work.</p>
+
+    <article class="bcard" data-tags="review" data-search="human ai scientific record preservation package integrity hashes blind rater agreement icc 0.869 usa 1900 2026 zenodo doi">
+      <div class="rank">26</div>
+      <div>
+        <h3><a href="human-ai-scientific-record.html">CAMS Human–AI Scientific Record</a></h3>
+        <p class="meta"><span class="tag">Review</span> 30 Oct 2026 · Zenodo DOI · checked with Claude Opus 5.5</p>
+        <p>Preservation package with hash verification: all 13 files match, and the blind-rater agreement (r 0.89–0.93, ICC 0.869) reproduces from the raw CSVs.</p>
+        <p class="why"><b>Why twenty-sixth:</b> reproducibility infrastructure rather than a result, but it is what makes every other ranking on this page checkable.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="review" data-search="blind testing validation hub take part open challenges panel results validation studies predictions on record adversary counts">
+      <div class="rank">27</div>
+      <div>
+        <h3><a href="blind-testing.html">Blind Testing &amp; Validation: the hub</a></h3>
+        <p class="meta"><span class="tag">Review</span> Updated 13 Nov 2026 · the honest front door</p>
+        <p>&ldquo;CAMS is not externally validated. The out-of-sample holdout is locked and unscored. Everything here is in-sample or pre-registered: the distinction matters and is marked throughout.&rdquo; Counts, challenges and categories on one page.</p>
+        <p class="why"><b>Why twenty-seventh:</b> the single best page for a scientist arriving cold; in this layout its candour is the standard every other card is ranked against.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="review" data-search="peer review open validation invite response to critics canonical invited critique">
+      <div class="rank">28</div>
+      <div>
+        <h3><a href="peer-review.html">Open Validation Invite</a> <span style="font-size:0.8rem;color:var(--ink-soft);">+ <a href="response-to-critics.html">Response to Critics</a></span></h3>
+        <p class="meta"><span class="tag">Review</span> 2026 · standing invitation</p>
+        <p>The standing invitation to scrutinise the framework, and the collected responses to published criticism.</p>
+        <p class="why"><b>Why twenty-eighth:</b> process pages, necessary, and they close the loop between claim and scrutiny.</p>
+      </div>
+    </article>
+  </section>
+
+  <p class="lede" style="margin-top:2rem;"><strong>Reading order for a scientist in a hurry:</strong> Blind Testing hub → ADVERSARY-02 → Temporal Inelasticity → PR-GAP-2 rupture study → Synchronised Slide → the 2027–2028 register. Ninety minutes, and you will know exactly how much of the rest to believe.</p>
+
+</div>
+<footer class="footer"><nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;"><a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a><a href="best.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Best of</a><a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a><a href="site-index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">All Pages</a></nav><p>&copy; 2026 Kari McKern, Neural Nations CAMS Research. Built as open science: contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p></footer><script src="site-chrome.js"></script><script src="nav.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var input = document.getElementById("q");
+  if (!input) return;
+  var chips = Array.prototype.slice.call(document.querySelectorAll(".best .chip"));
+  var cards = Array.prototype.slice.call(document.querySelectorAll(".best .bcard"));
+  var groups = Array.prototype.slice.call(document.querySelectorAll(".best section.group"));
+  var count = document.getElementById("count");
+  var activeTag = "all";
+  function apply() {
+    var q = (input.value || "").toLowerCase().trim(), shown = 0;
+    cards.forEach(function (c) {
+      var hay = (c.dataset.search || "").toLowerCase() + " " + c.textContent.toLowerCase();
+      var tags = (c.dataset.tags || "").split(/\s+/);
+      var ok = (!q || hay.indexOf(q) !== -1) && (activeTag === "all" || tags.indexOf(activeTag) !== -1);
+      c.style.display = ok ? "" : "none";
+      if (ok) shown++;
+    });
+    groups.forEach(function (g) {
+      var any = Array.prototype.some.call(g.querySelectorAll(".bcard"), function (c) { return c.style.display !== "none"; });
+      g.style.display = any ? "" : "none";
+    });
+    count.textContent = shown + " shown";
+  }
+  chips.forEach(function (ch) {
+    ch.addEventListener("click", function () {
+      activeTag = ch.dataset.tag;
+      chips.forEach(function (c) { c.setAttribute("aria-pressed", c === ch ? "true" : "false"); });
+      apply();
+    });
+  });
+  input.addEventListener("input", apply);
+  apply();
+});
+</script>
+</body>
+</html>
