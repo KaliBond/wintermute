@@ -31,6 +31,7 @@ GROUPS = [
     ('Start Here', 'Guide', 'monthly', '0.9', [
         '', 'start-here', 'what-is-cams', 'why-cams', 'model', 'framework/', 'faq',
         'a-short-history-of-cams', 'dynamics-of-social-organisation', 'cams-project-history', 'cams-foundational-conversations',
+        'best', 'best-papers', 'best-tools', 'best-data',
     ]),
     ('Results & Predictions', 'Findings', 'monthly', '0.8', [
         'results', 'validation', 'predictions', 'predictions-2027-2028', 'status_report', 'escalation-archetypes',
