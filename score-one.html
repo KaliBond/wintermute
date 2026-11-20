@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en-AU"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score One Yourself | Neural Nations</title>
+    <meta name="description" content="Score one society in one year on the eight CAMS nodes with any AI model. The prompt is built in your browser, the reply is checked in your browser, and you leave with two CSV files.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/score-one">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/score-one">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="Score One Yourself">
+    <meta property="og:description" content="Score one society-year on the eight CAMS nodes with any AI model, checked in your browser.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .so label { display:block; font-weight:600; font-size:0.9rem; margin:10px 0 4px; }
+        .so input[type="text"], .so input[type="number"] { padding:8px 10px; font-size:1rem; border:1px solid #DAD2B8; border-radius:6px; background:#fff; width:100%; max-width:360px; box-sizing:border-box; }
+        .so textarea { width:100%; box-sizing:border-box; font-family:ui-monospace, Consolas, monospace; font-size:0.82rem; border:1px solid #DAD2B8; border-radius:6px; padding:10px; background:#fff; }
+        .so .row { display:flex; gap:16px; flex-wrap:wrap; }
+        .so .row > div { flex:1 1 220px; }
+        .so button { padding:10px 18px; border-radius:6px; border:0; background:#D98B2B; color:#fff; font-weight:600; font-size:0.95rem; cursor:pointer; margin:8px 8px 0 0; }
+        .so button.secondary { background:#2F6F7D; }
+        .so button:disabled { opacity:0.5; cursor:not-allowed; }
+        .so .step { font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase; color:#2F6F7D; font-weight:700; }
+        .so .session { font-family:ui-monospace, Consolas, monospace; font-size:1.1rem; background:#f0f7f7; border:1px solid #2F6F7D; border-radius:4px; padding:2px 8px; }
+        .so .err { border-left:4px solid #C84C3E; background:#fdf5f4; padding:10px 14px; border-radius:4px; margin-top:12px; }
+        .so .err ul { margin:6px 0 0; padding-left:1.2rem; }
+        .so .okbox { border-left:4px solid #2F6F7D; background:#f0f7f7; padding:10px 14px; border-radius:4px; margin-top:12px; }
+        .so table { border-collapse:collapse; margin-top:10px; font-size:0.9rem; }
+        .so th, .so td { padding:4px 10px; border-bottom:1px solid #e5e0d4; text-align:left; }
+        .so td.num { text-align:right; font-family:ui-monospace, Consolas, monospace; }
+        .so tr.bad td { background:#fdf5f4; }
+        .so pre { background:#1B2A33; color:#f5f1e4; padding:12px 14px; border-radius:6px; overflow-x:auto; font-size:0.8rem; line-height:1.5; white-space:pre; }
+        .so .muted { color:#5a5866; font-size:0.88rem; }
+        .so .hidden { display:none; }
+        .so .protocol { max-height:420px; overflow:auto; white-space:pre-wrap; background:#fff; color:#1B2A33; border:1px solid #DAD2B8; }
+        .so .note { border-left:4px solid #D98B2B; background:#fdf8f0; padding:10px 14px; border-radius:4px; font-size:0.9rem; }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+<div class="container so">
+    <div class="hero-section">
+        <h1>Score one yourself</h1>
+        <p class="hero-subtitle">Pick a society and a year. This page writes a scoring prompt from CAMS Scoring Protocol v2.1; you run it in a fresh chat with any AI model, paste the reply back, and leave with two CSV files. Everything happens in your browser: no account, no server, no API key.</p>
+    </div>
+
+    <div class="card">
+        <span class="step">Step 1</span>
+        <h2 style="margin-top:4px;">Choose a society and a year</h2>
+        <div class="row">
+            <div><label for="society">Society</label><input type="text" id="society" placeholder="for example Australia, Venice, Song China" autocomplete="off"></div>
+            <div><label for="year">Year</label><input type="text" id="year" inputmode="numeric" placeholder="for example 1937" autocomplete="off"></div>
+        </div>
+        <button id="build">Build the prompt</button>
+        <div id="reqErr" class="err hidden"></div>
+    </div>
+
+    <div class="card hidden" id="promptCard">
+        <span class="step">Step 2</span>
+        <h2 style="margin-top:4px;">Run the prompt in a fresh chat</h2>
+        <p>Your session code is <span class="session" id="sessionCode"></span>. The model must echo it, which ties the reply to this prompt. Start a <strong>new</strong> conversation so nothing earlier in the chat can steer the scores; the prompt asks the model to answer CONTAMINATED if the chat is not clean.</p>
+        <button id="copyPrompt">Copy prompt</button><button class="secondary" id="savePrompt">Download prompt as .txt</button>
+        <details style="margin-top:12px;"><summary>Show the prompt</summary><textarea id="promptText" rows="14" readonly></textarea></details>
+    </div>
+
+    <div class="card hidden" id="replyCard">
+        <span class="step">Step 3</span>
+        <h2 style="margin-top:4px;">Paste the reply</h2>
+        <label for="reply">The model&rsquo;s full reply</label>
+        <textarea id="reply" rows="12" placeholder="Paste everything the model returned, including the SESSION line."></textarea>
+        <label for="replyFile">or upload it as a .txt file</label>
+        <input type="file" id="replyFile" accept=".txt,text/plain">
+        <label for="model">Model used (goes into the wide CSV)</label>
+        <input type="text" id="model" placeholder="for example Claude Opus 5.5, GPT, Grok, Kimi" autocomplete="off">
+        <br><button id="check">Check the reply</button>
+        <div id="checkOut"></div>
+    </div>
+
+    <div class="card hidden" id="outCard">
+        <span class="step">Step 4</span>
+        <h2 style="margin-top:4px;">Your scores</h2>
+        <h3>Long CSV (8 rows)</h3>
+        <p class="muted">Same columns as the JUNO datasets and the <a href="juno_calculator.html">JUNO Calculator</a>. Node Value and Bond Strength use the Calculator&rsquo;s JUNO v1.2-Final formulas: V = C + K &minus; S + 0.5&middot;A; bond strength is the mean of &radic;(q<sub>i</sub>q<sub>j</sub>)&middot;2<sup>&minus;(S<sub>i</sub>+S<sub>j</sub>)/10</sup> over the other seven nodes, with q = (0.6&middot;C + 0.4&middot;A)/10.</p>
+        <div id="table"></div>
+        <pre id="longOut"></pre>
+        <button id="copyLong">Copy long CSV</button><button class="secondary" id="saveLong">Download long CSV</button>
+        <h3 style="margin-top:22px;">Wide CSV (one line)</h3>
+        <p class="muted">Society, year, the 32 raw values (Helm_C, Helm_K, Helm_S, Helm_A, then Shield and onward), model, session code and date.</p>
+        <pre id="wideOut"></pre>
+        <button id="copyWide">Copy wide CSV</button><button class="secondary" id="saveWide">Download wide CSV</button>
+        <p class="note" style="margin-top:18px;">One reply is one reading by one scorer. The site&rsquo;s panels use ensembles of independent passes, so treat a single score as a hypothesis: run the same prompt in two or three different models and compare. Read the result as stress levels and coupling across the eight nodes, not as a grade. Nothing is sent anywhere; to contribute to the public cohort, use the <a href="observatory.html">Citizen Scoring Observatory</a>.</p>
+    </div>
+
+    <div class="card">
+        <h2>The protocol</h2>
+        <p>The prompt quotes <strong>CAMS Scoring Protocol v2.1</strong> verbatim, from <a href="CAMS_SCORING_PROTOCOL_V2_1.md">CAMS_SCORING_PROTOCOL_V2_1.md</a>, then adds the society, the year, a contamination check and the session code.</p>
+        <details><summary>Read Protocol v2.1 as quoted</summary><pre class="protocol" id="protocolText"></pre></details>
+        <p class="note" style="margin-top:12px;"><strong>Note added 20 November 2026.</strong> The site now describes results in the thermodynamic CAS lexicon: coupling, coordination efficiency, stress levels, and failure modes along the Holling cycle (exploitation, conservation, release, reorganisation). The protocol above is quoted as published and keeps its original wording, including in the Lore row.</p>
+    </div>
+</div>
+
+<footer class="footer"><nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;"><a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a><a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a><a href="site-index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">All Pages</a></nav><p>&copy; 2026 Kari McKern, Neural Nations CAMS Research. Built as open science: contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p></footer>
+<script src="score-one.js"></script>
+<script>
+(function () {
+  var S = window.ScoreOne;
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (x) { return String(x == null ? '' : x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+  var req = null, prompt = '', longText = '', wideText = '';
+
+  $('protocolText').textContent = S.PROTOCOL;
+
+  function slug(s) { return s.replace(/[^A-Za-z0-9]+/g, '_').replace(/^_|_$/g, '') || 'society'; }
+  function today() { var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+
+  // download / copy helpers, after cams-scorer.js csvToDownloadUrl
+  function download(text, name, type) {
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([text], { type: type }));
+    a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 3000);
+  }
+  function copy(text, btn, label) {
+    navigator.clipboard.writeText(text).then(function () {
+      btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = label; }, 1500);
+    }, function () { btn.textContent = 'Clipboard blocked: select the text and copy'; });
+  }
+
+  $('build').onclick = function () {
+    var soc = $('society').value, yr = $('year').value, p = S.checkRequest(soc, yr);
+    if (p.length) { $('reqErr').innerHTML = p.map(esc).join('<br>'); $('reqErr').classList.remove('hidden'); return; }
+    $('reqErr').classList.add('hidden');
+    req = { society: soc.replace(/\s+/g, ' ').trim(), year: yr.trim(), session: S.newSession() };
+    prompt = S.buildPrompt(req.society, req.year, req.session);
+    $('sessionCode').textContent = req.session;
+    $('promptText').value = prompt;
+    ['promptCard', 'replyCard'].forEach(function (id) { $(id).classList.remove('hidden'); });
+    $('outCard').classList.add('hidden'); $('checkOut').innerHTML = ''; $('reply').value = '';
+    $('promptCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
+
+  $('copyPrompt').onclick = function () {
+    navigator.clipboard.writeText(prompt).then(function () {
+      $('copyPrompt').textContent = 'Copied'; setTimeout(function () { $('copyPrompt').textContent = 'Copy prompt'; }, 1500);
+    }, function () {
+      $('promptText').closest('details').open = true; $('promptText').select();
+      $('copyPrompt').textContent = 'Clipboard blocked: copy from the preview';
+    });
+  };
+  $('savePrompt').onclick = function () { download(prompt, 'CAMS_prompt_' + slug(req.society) + '_' + req.year + '_' + req.session + '.txt', 'text/plain'); };
+
+  $('replyFile').onchange = function (e) {
+    var f = e.target.files[0]; if (!f) return;
+    var r = new FileReader();
+    r.onload = function () { $('reply').value = r.result; };
+    r.readAsText(f);
+  };
+
+  $('check').onclick = function () {
+    var res = S.validateReply($('reply').value, req);
+    if (!res.ok) {
+      $('outCard').classList.add('hidden');
+      var html = '<div class="err"><strong>The reply did not pass. Fix or re-run, then check again.</strong>';
+      if (res.problems.length) html += '<ul>' + res.problems.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ul>';
+      if (res.rowErrors.length) html += '<ul>' + res.rowErrors.map(function (r) {
+        return '<li>Row ' + r.row + ' (' + esc(r.node) + '): ' + r.messages.map(esc).join('; ') + '</li>'; }).join('') + '</ul>';
+      $('checkOut').innerHTML = html + '</div>';
+      return;
+    }
+    $('checkOut').innerHTML = '<div class="okbox">All 8 nodes present, 32 values in range, society, year and SESSION code match.</div>';
+    longText = S.longCsv(res.rows, req);
+    wideText = S.wideCsv(res.rows, req, $('model').value, today());
+    // table, after cams-scorer.js renderTable
+    var lines = longText.trim().split('\n').map(function (l) { return S.parseCsv(l)[0]; });
+    $('table').innerHTML = '<table><thead><tr>' + lines[0].map(function (h) { return '<th>' + esc(h) + '</th>'; }).join('') + '</tr></thead><tbody>'
+      + lines.slice(1).map(function (r) { return '<tr>' + r.map(function (c, i) { return '<td class="' + (i >= 3 ? 'num' : '') + '">' + esc(c) + '</td>'; }).join('') + '</tr>'; }).join('')
+      + '</tbody></table>';
+    $('longOut').textContent = longText; $('wideOut').textContent = wideText;
+    $('outCard').classList.remove('hidden');
+    $('outCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
+  $('model').oninput = function () { if (wideText) { /* keep wide CSV in step with the model field */
+    var res = S.validateReply($('reply').value, req); if (res.ok) { wideText = S.wideCsv(res.rows, req, $('model').value, today()); $('wideOut').textContent = wideText; } } };
+
+  var base = function () { return 'CAMS_' + slug(req.society) + '_' + req.year + '_' + req.session; };
+  $('copyLong').onclick = function () { copy(longText, $('copyLong'), 'Copy long CSV'); };
+  $('saveLong').onclick = function () { download(longText, base() + '_long.csv', 'text/csv'); };
+  $('copyWide').onclick = function () { copy(wideText, $('copyWide'), 'Copy wide CSV'); };
+  $('saveWide').onclick = function () { download(wideText, base() + '_wide.csv', 'text/csv'); };
+})();
+</script>
+<script src="site-chrome.js"></script><script src="nav.js"></script>
+</body></html>
