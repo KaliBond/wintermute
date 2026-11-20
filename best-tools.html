@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en-AU"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best tools | Neural Nations</title>
+    <meta name="description" content="Every interactive CAMS instrument ranked by usability, in three tiers.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/best-tools">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/best-tools">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="Best tools">
+    <meta property="og:description" content="Every interactive CAMS instrument ranked by usability, in three tiers.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="style.css">
+    <style>
+.best .lede { font-size:1.02rem; max-width:46em; color:#4d4b57; }
+.best .lede strong { color:#1B2A33; }
+.best .asof { font-size:0.85rem; color:#5a5866; border-left:3px solid #D98B2B; background:#fdf8f0; padding:8px 12px; border-radius:4px; max-width:60em; }
+.best .toolbar { display:flex; gap:0.6rem; flex-wrap:wrap; align-items:center; margin:1.2rem 0 0.6rem; padding:0.8rem 1rem; background:#fff; border:1px solid #DAD2B8; border-radius:10px; position:sticky; top:0; z-index:5; }
+.best .toolbar input[type="search"] { flex:1 1 240px; padding:0.5rem 0.8rem; font-size:0.95rem; border:1px solid #DAD2B8; border-radius:6px; background:#FAF8F3; }
+.best .chip { border:1px solid #DAD2B8; background:#FAF8F3; color:#4d4b57; border-radius:999px; padding:0.3rem 0.85rem; font-size:0.85rem; cursor:pointer; }
+.best .chip[aria-pressed="true"] { background:#1B2A33; color:#fff; border-color:#1B2A33; }
+.best .count { font-size:0.85rem; color:#4d4b57; margin-left:auto; }
+.best section.group { margin-top:2.2rem; }
+.best section.group > h2 { font-size:1.2rem; border-bottom:1px solid #DAD2B8; padding-bottom:0.35rem; margin-bottom:0.2rem; }
+.best .group-note { color:#4d4b57; font-size:0.9rem; margin:0.3rem 0 1rem; max-width:60em; }
+.best .bcard { background:#fff; border:1px solid #DAD2B8; border-radius:10px; padding:1rem 1.2rem; margin:0.75rem 0; display:grid; grid-template-columns:3.2rem 1fr; gap:0 1rem; }
+.best .rank { font-family:Georgia,serif; font-size:1.5rem; color:#4d4b57; text-align:right; padding-top:0.1rem; }
+.best .bcard h3 { margin:0; font-size:1.08rem; }
+.best .bcard h3 a { color:#1B2A33; text-decoration:none; }
+.best .bcard h3 a:hover { color:#2F6F7D; text-decoration:underline; }
+.best .meta { font-size:0.82rem; color:#4d4b57; margin:0.25rem 0 0.4rem; }
+.best .meta .tag { display:inline-block; border-radius:4px; padding:0.05rem 0.45rem; margin-right:0.35rem; background:#e3efee; color:#2F6F7D; font-weight:600; }
+.best .meta .tag.amber { background:#f7ecd9; color:#8a5410; }
+.best .bcard p { margin:0.3rem 0; font-size:0.93rem; }
+.best .why { color:#4d4b57; font-size:0.9rem; border-left:3px solid #DAD2B8; padding-left:0.7rem; }
+.best .why b { color:#1B2A33; font-weight:600; }
+.best .door-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1.1rem; margin-top:1.6rem; }
+.best .door { border:2px solid #1B2A33; border-radius:12px; padding:1.3rem 1.3rem 1.1rem; background:#fff; text-decoration:none; color:#1B2A33; display:block; }
+.best .door:hover { background:#e3efee; border-color:#2F6F7D; }
+.best .door h2 { margin:0 0 0.4rem; font-size:1.25rem; }
+.best .door p { margin:0; color:#4d4b57; font-size:0.93rem; }
+.best .door .n { font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase; color:#2F6F7D; font-weight:700; }
+.best .status-strip { display:flex; flex-wrap:wrap; gap:0.8rem; margin-top:1.2rem; }
+.best .stat { flex:1 1 160px; background:#fff; border:1px solid #DAD2B8; border-radius:10px; padding:0.8rem 1rem; }
+.best .stat .v { font-family:Georgia,serif; font-size:1.6rem; }
+.best .stat .l { font-size:0.8rem; color:#4d4b57; }
+.best .stat .src { font-size:0.75rem; margin-top:4px; }
+.best .tabs { display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 0; }
+.best .tabs a { padding:6px 14px; border:1px solid #DAD2B8; border-radius:999px; text-decoration:none; color:#4d4b57; font-size:0.9rem; background:#fff; }
+.best .tabs a.active { background:#1B2A33; color:#fff; border-color:#1B2A33; }
+.best pre { background:#1B2A33; color:#f5f1e4; padding:12px 14px; border-radius:6px; overflow-x:auto; font-size:0.85rem; line-height:1.5; }
+.best .use h3 { margin-top:0; }
+.best .use ol { padding-left:1.3rem; }
+.best .use li { margin:0.3rem 0; }
+.best .added { border-left:4px solid #2F6F7D; background:#f0f7f7; padding:10px 16px; border-radius:6px; margin-top:2.4rem; }
+@media (max-width:600px) { .best .bcard { grid-template-columns:1fr; } .best .rank { text-align:left; font-size:1.1rem; } }
+</style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+<div class="container best">
+    <div class="hero-section">
+        <h1>Best tools</h1>
+        <p class="hero-subtitle">Every interactive instrument, ranked by usability: how self-explanatory it is, how little it asks of you before paying off, and how honestly it states its limits.</p>
+        <nav class="tabs" aria-label="Best of"><a href="best.html">Best of</a><a href="best-papers.html">Best papers</a><a href="best-tools.html" class="active">Best tools</a><a href="best-data.html">Best use of the data</a><a href="juno_calculator.html">Score one yourself</a></nav>
+    </div>
+<p class="asof"><strong>Source and date.</strong> Ranking, descriptions and the counts quoted inside each card are as written by Kimi (Moonshot AI) for the Neural Nations layout prototype, 19 November 2026, and are presented as written apart from punctuation and wording swaps to the site&rsquo;s CAS lexicon. Check the linked page for current figures. Links point to the live pages on this site.</p>
+  <div class="toolbar">
+    <input type="search" id="q" placeholder="Filter tools: try &ldquo;score&rdquo;, &ldquo;3D&rdquo;, &ldquo;download&rdquo;, &ldquo;blind&rdquo;&hellip;" aria-label="Filter tools">
+    <button class="chip" data-tag="all" aria-pressed="true">All</button>
+    <button class="chip" data-tag="browser" aria-pressed="false">Runs in browser</button>
+    <button class="chip" data-tag="download" aria-pressed="false">Download</button>
+    <button class="chip" data-tag="key" aria-pressed="false">Needs API key</button>
+    <button class="chip" data-tag="read" aria-pressed="false">Read / narrative</button>
+    <span class="count" id="count"></span>
+  </div>
+
+  <section class="group">
+    <h2>Tier 1: works immediately, explains itself</h2>
+    <p class="group-note">Start here. No prerequisites beyond curiosity; each tool says what it does on the page and pays off inside a minute.</p>
+
+    <article class="bcard" data-tags="browser" data-search="juno calculator score 8 nodes 4 dimensions node value bond strength formulas csv compute">
+      <div class="rank">1</div>
+      <div>
+        <h3><a href="juno_calculator.html">JUNO Formulation: CAMS Calculator</a></h3>
+        <p class="meta"><span class="tag">Runs in browser</span> For: newcomers · Effort: type 32 integers, click Compute</p>
+        <p>Type raw C/K/S/A scores for the eight nodes; get Node Values, bond strengths, S/K ratio, System Bond Λ, Praetorian Index, attractor basin and the Robson Gauge, plus a copyable CSV. Every formula is printed on the page.</p>
+        <p class="why"><b>Why first:</b> zero dependencies, zero jargon-gating, and the formulas sit next to the outputs, the only tool a sceptic can fully audit in one sitting.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="download" data-search="cams diy kit practitioner skeptic field guide claude project schema templates formulas download">
+      <div class="rank">2</div>
+      <div>
+        <h3><a href="cams-diy-kit.html">CAMS-CAN DIY Kit: Practitioner &amp; Skeptic Field Guide</a></h3>
+        <p class="meta"><span class="tag">Download</span> For: newcomers and sceptics · Effort: 4 files, ~4 KB, no key, no install</p>
+        <p>Everything to run CAMS-CAN scoring by hand inside a Claude Project (project instructions, two blank schema templates, README) alongside the reliability evidence for deciding whether to believe the output. Instructions and templates are reproduced in full on the page.</p>
+        <p class="why"><b>Why second:</b> the lowest-friction on-ramp to actually running the method yourself, and the trust evidence travels with the tool rather than being buried elsewhere.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="browser" data-search="story maker name masked dataset packet ai prompt blind analysis download copy">
+      <div class="rank">3</div>
+      <div>
+        <h3><a href="story-maker.html">Story Maker</a> <span style="font-size:0.8rem;color:var(--ink-soft);">(and the <a href="test/story_maker.html">Aha! variant</a>)</span></h3>
+        <p class="meta"><span class="tag">Runs in browser</span> For: curious readers · Effort: pick dataset, pick masking profile, download</p>
+        <p>Turns a CAMS era-means dataset into a name-masked story packet (data, a ready-to-use AI prompt, reading rules, README) so a fresh AI session can recover the story blind. States plainly that masking is not anonymity.</p>
+        <p class="why"><b>Why third:</b> a two-step flow with exactly one decision at each step and an honest caveat where it belongs. A model for how the denser tools should introduce themselves.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="browser" data-search="cams scorer live score any country company city three isolated kimi passes ensemble uncertainty envelope">
+      <div class="rank">4</div>
+      <div>
+        <h3><a href="cams-scorer.html">CAMS Scorer: Live</a></h3>
+        <p class="meta"><span class="tag">Runs in browser</span> For: curious readers · Effort: name an entity, set a year range, wait for three passes</p>
+        <p>Scores any country, company or city on demand: three isolated Kimi passes read the historical record and are ensembled into node-level C/K/S/A with an uncertainty envelope.</p>
+        <p class="why"><b>Why here:</b> the clearest value proposition on the site (&ldquo;score anything&rdquo;), but it runs on a live backend, so latency and availability sit outside the reader&rsquo;s control, and the page could say more about what the envelope means before you click.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="download key" data-search="cams scorer local edition windows standalone openai grok claude kimi provider key exe download">
+      <div class="rank">5</div>
+      <div>
+        <h3><a href="cams-scorer-local.html">CAMS Scorer: Local Edition</a></h3>
+        <p class="meta"><span class="tag">Download</span><span class="tag amber">Needs API key</span> For: readers who want control · Effort: unzip ~22 MB, double-click, paste your own key</p>
+        <p>The same scoring ensemble running entirely on your machine with your own OpenAI, Grok, Claude or Kimi account: nothing sent to Neural Nations, billed by your provider. GUI and command-line builds; runs capped at 9 years, 1/3/5 passes.</p>
+        <p class="why"><b>Why here:</b> excellent documentation and honest cost disclosure, but it asks for a download plus a paid key, two friction steps the browser tools don&rsquo;t have.</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="group">
+    <h2>Tier 2: rewarding, but assumes CAMS literacy</h2>
+    <p class="group-note">Well built and honest; you will get more out of them after reading <em>What Is CAMS?</em> or spending five minutes in Tier 1.</p>
+
+    <article class="bcard" data-tags="browser" data-search="cams compare two societies year slider phase space divergence bond strength computed live kernel">
+      <div class="rank">6</div>
+      <div>
+        <h3><a href="cams-compare/">CAMS Compare</a></h3>
+        <p class="meta"><span class="tag">Runs in browser</span> For: CAMS-literate readers · Effort: pick two societies, scrub the year slider</p>
+        <p>Two societies, one kernel: V̄, κ, λ₂, phase space and structural events computed live from the 8×4 ensemble matrix. Every panel carries a one-line gloss (e.g. &ldquo;falling λ₂ = fragmenting network&rdquo;).</p>
+        <p class="why"><b>Why sixth:</b> the best-labelled of the dense dashboards (the panels explain their own symbols) but &ldquo;structural events&rdquo; and attractor basins only mean something if you already know the model.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="browser" data-search="cams dashboard usa iran saudi arabia israel quarterly 2015 2026 key events annotated accessible">
+      <div class="rank">7</div>
+      <div>
+        <h3><a href="juno/CAMS_4society_dashboard.html">CAMS Dashboard: USA, Iran, Saudi Arabia, Israel (2015–2026)</a></h3>
+        <p class="meta"><span class="tag">Runs in browser</span> For: newcomers · Effort: read four annotated charts</p>
+        <p>Quarterly scoring of four societies through shocks and turning points, with a plain-English &ldquo;What is this?&rdquo; box, per-domain breakdowns, stress heatmaps and a key-events list telling you where to look.</p>
+        <p class="why"><b>Why seventh:</b> the most accessible of the data dashboards precisely because it narrows the scope to four societies and annotates the history, a template for onboarding the bigger explorers.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="browser" data-search="cams explorer thermodynamics of history 45 societies step through year node values bond strengths failure modes hierarchy">
+      <div class="rank">8</div>
+      <div>
+        <h3><a href="cams-explorer.html">CAMS Explorer: Thermodynamics of History</a></h3>
+        <p class="meta"><span class="tag">Runs in browser</span> For: CAMS-literate readers · Effort: pick a society, step through history</p>
+        <p>Select any of 45 societies and step year by year while node values, bond strengths and Λ(t) update in real time, with a failure-modes hierarchy alongside.</p>
+        <p class="why"><b>Why eighth:</b> powerful time-travel mechanic, thin onboarding; the page assumes you know what Λ(t) is and why the hierarchy matters.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="browser" data-search="zeitgeist detector mythic material grounding composite signal civilisational vitality 45 societies">
+      <div class="rank">9</div>
+      <div>
+        <h3><a href="cams-zeitgeist.html">Zeitgeist Detector</a></h3>
+        <p class="meta"><span class="tag">Runs in browser</span> For: curious readers · Effort: pick society, press play</p>
+        <p>Tracks A*·C·(K–S) (symbolic richness × coherence × surplus) as a &ldquo;civilisational vitality&rdquo; signal across 45 societies, with a rank ladder and playback.</p>
+        <p class="why"><b>Why ninth:</b> playful and immediate, but the composite is the least self-evident quantity on the site; one worked example of the arithmetic would lift it a tier.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="browser" data-search="mind reader distributed cognition activation vectors juno bond matrix algebraic connectivity attractor state classification">
+      <div class="rank">10</div>
+      <div>
+        <h3><a href="mind-reader.html">CAMS Mind Reader</a></h3>
+        <p class="meta"><span class="tag">Runs in browser</span> For: CAMS-literate readers · Effort: run the pipeline, read the classification</p>
+        <p>Computes each node&rsquo;s cognitive activation, reconstructs the JUNO bond matrix, measures global synchronisability via the spectral gap and classifies the system&rsquo;s attractor state: societies as distributed cognitive organisms.</p>
+        <p class="why"><b>Why tenth:</b> the pipeline narrative is clearly written; the outputs (λ₂, activation vectors) land somewhere between tool and research output, so it rewards readers who like the maths.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="browser" data-search="juno dataset explorer 53 societies 47960 node years trajectory charts phase portraits per node stress level coupling diagnostics">
+      <div class="rank">11</div>
+      <div>
+        <h3><a href="juno-36-explorer.html">JUNO Dataset Explorer</a></h3>
+        <p class="meta"><span class="tag">Runs in browser</span> For: specialists · Effort: choose from 47,960 node-years</p>
+        <p>The full JUNO unified dataset (53 societies, 8 nodes, 1750–2026) as trajectory charts, thermodynamic phase portraits and per-node stress-level and coupling diagnostics.</p>
+        <p class="why"><b>Why eleventh:</b> the most complete data window on the site and honest about it, but the sheer surface area needs a guide; the stats banner up top tells you how much there is, not where to start.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="browser" data-search="cams instrument living complex adaptive system 8 nodes 4 modes 7 regimes phase space epiphenomena field guide">
+      <div class="rank">12</div>
+      <div>
+        <h3><a href="cams-instrument.html">CAMS Instrument</a></h3>
+        <p class="meta"><span class="tag">Runs in browser</span> For: CAMS-literate readers · Effort: one society, many panels, built-in field guide</p>
+        <p>One society read as a living system: eight-node network, phase-space trail, four modes, and the Ψ epiphenomena field, with a &ldquo;reading the instrument&rdquo; guide actually built into the page.</p>
+        <p class="why"><b>Why twelfth:</b> the built-in field guide is exactly the right pattern; the panel density still makes the first five minutes steep.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="browser read" data-search="morphospace atlas formal typology civilisational types threshold rules activation profiles coupling signatures blind classification">
+      <div class="rank">13</div>
+      <div>
+        <h3><a href="cams-morphospace-atlas.html">Morphospace Atlas</a></h3>
+        <p class="meta"><span class="tag">Runs in browser</span> For: specialists · Effort: a long, careful read</p>
+        <p>A formal typology of eight civilisational attractor types with threshold rules, node-activation profiles and coupling signatures: designed so a blinded case can be scored and classified without its name. Explicitly provisional (&ldquo;the minimum set recovered so far&rdquo;).</p>
+        <p class="why"><b>Why thirteenth:</b> superb scientific writing and honest scope; it ranks lower on usability purely because it is a document you study, not a tool you operate.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="browser" data-search="network explorer institutional weather 8 node scenario scrub time nudge node intervention bounded dynamics caveat">
+      <div class="rank">14</div>
+      <div>
+        <h3><a href="cams-network-explorer.html">CAMS Network Explorer: Institutional Weather</a></h3>
+        <p class="meta"><span class="tag">Runs in browser</span> For: CAMS-literate readers · Effort: pick a scenario, or nudge a node yourself</p>
+        <p>An 8-node coordination network you can perturb: pick a scenario, scrub time, or nudge one node and watch the system respond. Carries the site&rsquo;s best caveat practice: &ldquo;bounded exploratory dynamics, not calibrated prediction&rdquo;, at the top.</p>
+        <p class="why"><b>Why fourteenth:</b> the interactive what-if is engaging and the limits are stated up front; the controls assume you know which node is which and why you&rsquo;d nudge it.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="browser" data-search="seshat explorer cross dataset validation latium vetus social complexity pc1 pearson spearman negative result">
+      <div class="rank">15</div>
+      <div>
+        <h3><a href="seshat-explorer.html">Seshat × CAMS: Cross-Dataset Validation</a></h3>
+        <p class="meta"><span class="tag">Runs in browser</span> For: specialists · Effort: read one careful comparison</p>
+        <p>Compares Seshat Social Complexity PC1 against CAMS Λ(t) for Latium Vetus, CE 460–1800: N=14 century-level observations, Pearson r = −0.31, Spearman ρ = 0.00. A negative result, published anyway.</p>
+        <p class="why"><b>Why fifteenth:</b> small, focused and honest; scientifically valuable, but a null on N=14 is a specialist interest rather than a general instrument.</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="group">
+    <h2>Tier 3: powerful, dense, or partially superseded</h2>
+    <p class="group-note">Worth the climb for researchers already inside the framework. Several overlap; consolidation would help more than polish.</p>
+
+    <article class="bcard" data-tags="browser read" data-search="escalation archetypes five pathways causal loop diagrams institutional stress systemic crisis">
+      <div class="rank">16</div>
+      <div>
+        <h3><a href="escalation-archetypes.html">Escalation Archetypes</a></h3>
+        <p class="meta"><span class="tag">Runs in browser</span> For: CAMS-literate readers · Effort: work through five causal-loop diagrams</p>
+        <p>The five archetypal pathways from institutional stress to systemic crisis, drawn as causal loop diagrams.</p>
+        <p class="why"><b>Why here:</b> CLDs are the least self-explanatory visual idiom on the site; no loop is obvious to a first reader without a walk-through. Pairs well with the Failure Modes Story below.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="browser" data-search="failure modes map causal loop diagram four spirals flow hands death spiral rent seeking shield capture institutional amnesia">
+      <div class="rank">17</div>
+      <div>
+        <h3><a href="cams-failure-modes.html">Failure Modes Map</a></h3>
+        <p class="meta"><span class="tag">Runs in browser</span> For: CAMS-literate readers · Effort: navigate one dense CLD</p>
+        <p>Interactive causal loop diagram of the four failure spirals: R1 Flow–Hands death spiral, R2 rent-seeking trap, R3 Shield capture, R4 institutional amnesia.</p>
+        <p class="why"><b>Why seventeenth:</b> the content is the framework&rsquo;s most legible applied contribution; the map format keeps it from newcomers. The companion story (next entry) is the better first contact.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="read" data-search="failure modes story how complex systems drift into collapse narrative four failure modes readable guide">
+      <div class="rank">18</div>
+      <div>
+        <h3><a href="failure-modes-story.html">Failure Modes Story</a></h3>
+        <p class="meta"><span class="tag amber">Read / narrative</span> For: newcomers · Effort: read one essay</p>
+        <p>The narrative companion to the Failure Modes Map: how complex systems drift into collapse, from coordinated decline to institutional capture, in plain prose.</p>
+        <p class="why"><b>Why eighteenth (and should be promoted):</b> as a tool it&rsquo;s just prose, but it is the most humane entry point to the framework&rsquo;s darkest material; link it before the map, not after.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="browser" data-search="advanced analysis node trajectories esch stress profiles cross layer bond networks regime detection 38 societies">
+      <div class="rank">19</div>
+      <div>
+        <h3><a href="cams-advanced-analysis.html">CAMS Advanced Analysis</a></h3>
+        <p class="meta"><span class="tag">Runs in browser</span> For: specialists · Effort: bring your own questions</p>
+        <p>Deep-dive visualisations: node trajectories, ESCH stress profiles, cross-layer bond networks and Λ(t) regime detection across 38 societies.</p>
+        <p class="why"><b>Why nineteenth:</b> depth without a map, powerful if you arrive with a question, bewildering if you don&rsquo;t.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="browser" data-search="cams-can integrated dashboard combined coordination analysis network coordination efficiency stress levels">
+      <div class="rank">20</div>
+      <div>
+        <h3><a href="cams-integrated-dashboard.html">CAMS-CAN Integrated Dashboard</a></h3>
+        <p class="meta"><span class="tag">Runs in browser</span> For: specialists · Effort: untangle two frameworks at once</p>
+        <p>Combined CAMS and CAN dashboard for integrated reading of coordination efficiency and stress levels.</p>
+        <p class="why"><b>Why twentieth:</b> the least-introduced of the dashboards; it presumes fluency in both formalisms it merges. A candidate for merging with Advanced Analysis or the Explorer.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="browser" data-search="granger causality validator synthetic validation suite lag noise series length stress test">
+      <div class="rank">21</div>
+      <div>
+        <h3><a href="granger-validator.html">Granger Causality Validator</a></h3>
+        <p class="meta"><span class="tag">Runs in browser</span> For: specialists · Effort: set lag, noise, series length</p>
+        <p>In-browser synthetic validation suite: a three-scenario stress test with adjustable lag, noise and series length, probing Granger causality in CAMS-structured time series.</p>
+        <p class="why"><b>Why twenty-first:</b> a methods tool for methods readers, genuinely useful, but its whole purpose is auditing one statistical claim.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="browser" data-search="attractors 3d plotly civilisational trajectories far from equilibrium metabolic networks rotate phase space coherence stress abstraction">
+      <div class="rank">22</div>
+      <div>
+        <h3><a href="attractors.html">Civilisational Attractor Space</a> <span style="font-size:0.8rem;color:var(--ink-soft);">+ <a href="cams-3d-attractor.html">3D Attractor</a></span></h3>
+        <p class="meta"><span class="tag">Runs in browser</span> For: specialists · Effort: learn to fly a 3D phase space</p>
+        <p>Two overlapping 3D renderings of civilisational attractors (Plotly): trajectories as far-from-equilibrium metabolic networks; C, S and A as state axes. Isolate, compare, rotate.</p>
+        <p class="why"><b>Why twenty-second:</b> the prettiest objects on the site and the hardest to read without a guide, and the two pages duplicate each other. Consolidate, then explain the axes with one worked society.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="read" data-search="mindscapes national mood reports vision affect mythic attractor claude generated france norway pipeline">
+      <div class="rank">23</div>
+      <div>
+        <h3><a href="mindscapes.html">Mindscapes</a></h3>
+        <p class="meta"><span class="tag amber">Read / narrative</span> For: curious readers · Effort: read a mood report</p>
+        <p>Claude-generated Vision–Affect and Mythic Attractor reports on national mood: France and Norway live, pipeline open.</p>
+        <p class="why"><b>Why twenty-third:</b> engaging writing, but only two countries and the interpretive layer (&ldquo;mood&rdquo;) is the framework&rsquo;s least-defended move; readers should meet it after the structural tools.</p>
+      </div>
+    </article>
+
+    <article class="bcard" data-tags="read" data-search="how societies coordinate coordination theory eight functional nodes four metrics bond network resilience">
+      <div class="rank">24</div>
+      <div>
+        <h3><a href="cams-coordination.html">How Societies Coordinate</a></h3>
+        <p class="meta"><span class="tag amber">Read / narrative</span> For: newcomers · Effort: read the theory once</p>
+        <p>The coordination theory underneath the instruments: eight functional nodes, four metrics, and the bond network that determines resilience to stress.</p>
+        <p class="why"><b>Why twenty-fourth:</b> filed under Tools but it is an explainer; in this layout it belongs to Orientation on the Everything Else page, one click from the tools that need it.</p>
+      </div>
+    </article>
+  </section>
+
+  <p class="lede" style="margin-top:2rem;"><strong>Usability verdict:</strong> the strongest pattern on the site is honesty, limits stated at the top, failures published. The weakest is onboarding: a dozen dashboards open cold, assuming the reader already speaks CAMS. Moving JUNO Calculator, the DIY Kit and Story Maker to the front of the Tools menu, and giving each Tier 2/3 dashboard a three-line &ldquo;start here&rdquo; box modelled on the 4-Society Dashboard&rsquo;s, would lift the whole tier without touching a line of their internals.</p>
+<section class="added" id="added-2026-11-20"><h2 style="margin-top:0;">Added 20 November 2026</h2><p class="group-note">Tools published after Kimi&rsquo;s ranking was written. Listed here unranked, in no order of merit; descriptions are drawn from each tool&rsquo;s own page or its Explore listing.</p><ul><li><a href="observatory.html"><strong>Citizen Scoring Observatory</strong></a>: Score one society-year with any AI model and submit it to a public cohort that is kept separate from the research panel and reviewed before any use.</li><li><a href="cams-history.html"><strong>CAMS History</strong></a>: Atlas, Blind Prophet and Primer: read the JUNO panel on the CAMS instruments, then call the crisis before the year arrives.</li><li><a href="status_report.html"><strong>CAMS Global Stress Dashboard</strong></a>: Observed-only readout of the eight-node by four-metric CAMS matrix: active pathology signatures, the &Lambda; coordination index and historical analogue matching. No projection.</li><li><a href="war.html"><strong>Deliberative Decay &amp; Lore Misdirection (DDI &times; LMI)</strong></a>: A diagnostic matrix setting institutional atrophy against ideological capture, with a trajectory view and a snapshot slider.</li><li><a href="social-cognition.html"><strong>Social Cognition in Real Time</strong></a>: Collective mood signals read as an epiphenomenon of meaning and metabolism.</li></ul><p class="group-note">Note added 20 November 2026: the &ldquo;start here&rdquo; boxes recommended in the usability verdict above are now on six dashboards (Explorer, JUNO Dataset Explorer, Compare, Instrument, Advanced Analysis, Integrated Dashboard).</p></section>
+</div>
+<footer class="footer"><nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;"><a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a><a href="best.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Best of</a><a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a><a href="site-index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">All Pages</a></nav><p>&copy; 2026 Kari McKern, Neural Nations CAMS Research. Built as open science: contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p></footer><script src="site-chrome.js"></script><script src="nav.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var input = document.getElementById("q");
+  if (!input) return;
+  var chips = Array.prototype.slice.call(document.querySelectorAll(".best .chip"));
+  var cards = Array.prototype.slice.call(document.querySelectorAll(".best .bcard"));
+  var groups = Array.prototype.slice.call(document.querySelectorAll(".best section.group"));
+  var count = document.getElementById("count");
+  var activeTag = "all";
+  function apply() {
+    var q = (input.value || "").toLowerCase().trim(), shown = 0;
+    cards.forEach(function (c) {
+      var hay = (c.dataset.search || "").toLowerCase() + " " + c.textContent.toLowerCase();
+      var tags = (c.dataset.tags || "").split(/\s+/);
+      var ok = (!q || hay.indexOf(q) !== -1) && (activeTag === "all" || tags.indexOf(activeTag) !== -1);
+      c.style.display = ok ? "" : "none";
+      if (ok) shown++;
+    });
+    groups.forEach(function (g) {
+      var any = Array.prototype.some.call(g.querySelectorAll(".bcard"), function (c) { return c.style.display !== "none"; });
+      g.style.display = any ? "" : "none";
+    });
+    count.textContent = shown + " shown";
+  }
+  chips.forEach(function (ch) {
+    ch.addEventListener("click", function () {
+      activeTag = ch.dataset.tag;
+      chips.forEach(function (c) { c.setAttribute("aria-pressed", c === ch ? "true" : "false"); });
+      apply();
+    });
+  });
+  input.addEventListener("input", apply);
+  apply();
+});
+</script>
+</body>
+</html>

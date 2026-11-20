@@ -15,7 +15,8 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: ['3.9', '3.10', '3.11', '3.12']
+        # Python 3.9 dropped 20 Nov 2026: ubuntu-latest is now 26.04 and setup-python has no 3.9 there. 3.9 reached end of life in October 2025.
+        python-version: ['3.10', '3.11', '3.12']
 
     steps:
     - uses: actions/checkout@v4
