@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en-AU"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best use of the data | Neural Nations</title>
+    <meta name="description" content="Five worked uses of the open JUNO datasets: download, load, compare, score a new period, test blind.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/best-data">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/best-data">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="Best use of the data">
+    <meta property="og:description" content="Five worked uses of the open JUNO datasets: download, load, compare, score a new period, test blind.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="style.css">
+    <style>
+.best .lede { font-size:1.02rem; max-width:46em; color:#4d4b57; }
+.best .lede strong { color:#1B2A33; }
+.best .asof { font-size:0.85rem; color:#5a5866; border-left:3px solid #D98B2B; background:#fdf8f0; padding:8px 12px; border-radius:4px; max-width:60em; }
+.best .toolbar { display:flex; gap:0.6rem; flex-wrap:wrap; align-items:center; margin:1.2rem 0 0.6rem; padding:0.8rem 1rem; background:#fff; border:1px solid #DAD2B8; border-radius:10px; position:sticky; top:0; z-index:5; }
+.best .toolbar input[type="search"] { flex:1 1 240px; padding:0.5rem 0.8rem; font-size:0.95rem; border:1px solid #DAD2B8; border-radius:6px; background:#FAF8F3; }
+.best .chip { border:1px solid #DAD2B8; background:#FAF8F3; color:#4d4b57; border-radius:999px; padding:0.3rem 0.85rem; font-size:0.85rem; cursor:pointer; }
+.best .chip[aria-pressed="true"] { background:#1B2A33; color:#fff; border-color:#1B2A33; }
+.best .count { font-size:0.85rem; color:#4d4b57; margin-left:auto; }
+.best section.group { margin-top:2.2rem; }
+.best section.group > h2 { font-size:1.2rem; border-bottom:1px solid #DAD2B8; padding-bottom:0.35rem; margin-bottom:0.2rem; }
+.best .group-note { color:#4d4b57; font-size:0.9rem; margin:0.3rem 0 1rem; max-width:60em; }
+.best .bcard { background:#fff; border:1px solid #DAD2B8; border-radius:10px; padding:1rem 1.2rem; margin:0.75rem 0; display:grid; grid-template-columns:3.2rem 1fr; gap:0 1rem; }
+.best .rank { font-family:Georgia,serif; font-size:1.5rem; color:#4d4b57; text-align:right; padding-top:0.1rem; }
+.best .bcard h3 { margin:0; font-size:1.08rem; }
+.best .bcard h3 a { color:#1B2A33; text-decoration:none; }
+.best .bcard h3 a:hover { color:#2F6F7D; text-decoration:underline; }
+.best .meta { font-size:0.82rem; color:#4d4b57; margin:0.25rem 0 0.4rem; }
+.best .meta .tag { display:inline-block; border-radius:4px; padding:0.05rem 0.45rem; margin-right:0.35rem; background:#e3efee; color:#2F6F7D; font-weight:600; }
+.best .meta .tag.amber { background:#f7ecd9; color:#8a5410; }
+.best .bcard p { margin:0.3rem 0; font-size:0.93rem; }
+.best .why { color:#4d4b57; font-size:0.9rem; border-left:3px solid #DAD2B8; padding-left:0.7rem; }
+.best .why b { color:#1B2A33; font-weight:600; }
+.best .door-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1.1rem; margin-top:1.6rem; }
+.best .door { border:2px solid #1B2A33; border-radius:12px; padding:1.3rem 1.3rem 1.1rem; background:#fff; text-decoration:none; color:#1B2A33; display:block; }
+.best .door:hover { background:#e3efee; border-color:#2F6F7D; }
+.best .door h2 { margin:0 0 0.4rem; font-size:1.25rem; }
+.best .door p { margin:0; color:#4d4b57; font-size:0.93rem; }
+.best .door .n { font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase; color:#2F6F7D; font-weight:700; }
+.best .status-strip { display:flex; flex-wrap:wrap; gap:0.8rem; margin-top:1.2rem; }
+.best .stat { flex:1 1 160px; background:#fff; border:1px solid #DAD2B8; border-radius:10px; padding:0.8rem 1rem; }
+.best .stat .v { font-family:Georgia,serif; font-size:1.6rem; }
+.best .stat .l { font-size:0.8rem; color:#4d4b57; }
+.best .stat .src { font-size:0.75rem; margin-top:4px; }
+.best .tabs { display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 0; }
+.best .tabs a { padding:6px 14px; border:1px solid #DAD2B8; border-radius:999px; text-decoration:none; color:#4d4b57; font-size:0.9rem; background:#fff; }
+.best .tabs a.active { background:#1B2A33; color:#fff; border-color:#1B2A33; }
+.best pre { background:#1B2A33; color:#f5f1e4; padding:12px 14px; border-radius:6px; overflow-x:auto; font-size:0.85rem; line-height:1.5; }
+.best .use h3 { margin-top:0; }
+.best .use ol { padding-left:1.3rem; }
+.best .use li { margin:0.3rem 0; }
+.best .added { border-left:4px solid #2F6F7D; background:#f0f7f7; padding:10px 16px; border-radius:6px; margin-top:2.4rem; }
+@media (max-width:600px) { .best .bcard { grid-template-columns:1fr; } .best .rank { text-align:left; font-size:1.1rem; } }
+</style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+<div class="container best">
+    <div class="hero-section">
+        <h1>Best use of the data</h1>
+        <p class="hero-subtitle">Five worked uses of the open JUNO datasets, from download to scoring a period that is not in the record yet.</p>
+        <nav class="tabs" aria-label="Best of"><a href="best.html">Best of</a><a href="best-papers.html">Best papers</a><a href="best-tools.html">Best tools</a><a href="best-data.html" class="active">Best use of the data</a><a href="juno_calculator.html">Score one yourself</a></nav>
+    </div>
+
+    <p class="lede">The JUNO datasets are open. These five worked uses go from downloading a file to scoring a period that is not in the record yet. Every file linked here is in the site repository; counts are computed from the files themselves (as of 20 November 2026).</p>
+
+    <div class="card use">
+        <h3>1. Download the JUNO v3 corpus and pull out one society</h3>
+        <p><a href="juno/v3/JUNO_Unified_Dataset_v3_2026-10-19.csv" download>JUNO_Unified_Dataset_v3_2026-10-19.csv</a>: 41,914 rows, 42 societies, 1752 to 2026, one row per society, year and node. Columns: <code>Society, Year, Node, Coherence, Capacity, Stress, Abstraction, Node_Value_v2, Source_File, Source_Note</code>. What changed in v3 is in the <a href="juno/v3/JUNO_v3_CHANGELOG.md">changelog</a>; the wider archive is on <a href="datasets.html">Datasets</a>.</p>
+        <pre>import pandas as pd
+df = pd.read_csv("JUNO_Unified_Dataset_v3_2026-10-19.csv")
+au = df[df.Society == "Australia"]
+au.pivot_table(index="Year", columns="Node", values="Stress").tail()</pre>
+        <p>In a spreadsheet, filter the <code>Society</code> column instead. Each row is one node in one year, so a full year is eight rows: Helm, Shield, Lore, Stewards, Craft, Hands, Archive, Flow.</p>
+    </div>
+
+    <div class="card use">
+        <h3>2. Load one society into Advanced Analysis</h3>
+        <ol>
+            <li>Download a single-society file, for example <a href="cleaned_datasets/Australia_ENS_1875_2026_cleaned.csv" download>Australia_ENS_1875_2026_cleaned.csv</a> (1,216 rows, 1875 to 2026, columns <code>Society, Year, Node, Coherence, Capacity, Stress, Abstraction, Node Value, Bond Strength</code>).</li>
+            <li>Open <a href="cams-advanced-analysis.html">CAMS Advanced Analysis</a> and use <em>Upload CSV</em>. The file carries a Bond Strength column, which turns on the full 3D attractor view.</li>
+            <li>Read the stress profiles and coupling between nodes over time, and look for the phase of the Holling cycle each period sits in: exploitation, conservation, release or reorganisation.</li>
+        </ol>
+        <p class="group-note">Advanced Analysis groups uploaded rows by Year and Node only. Upload one society at a time: a multi-society file such as the v3 corpus would be averaged across societies. Filter it first (use 1), or pick a society from the page&rsquo;s built-in list.</p>
+    </div>
+
+    <div class="card use">
+        <h3>3. Compare two societies</h3>
+        <p>In the browser: <a href="cams-compare/">CAMS Compare</a> sets two societies side by side on one kernel with a year slider. In code, from the v3 corpus:</p>
+        <pre>pair = df[df.Society.isin(["Australia", "Argentina"]) &amp; df.Year.between(1950, 2026)]
+pair.assign(SK=pair.Stress / pair.Capacity) \
+    .groupby(["Society", "Node"]).SK.mean().unstack(0).round(2)</pre>
+        <p>The ratio of Stress to Capacity per node shows where each system carries load it cannot absorb. Read it as stress levels and coupling, not as a score of merit: a score is a state, not a grade. Before reading anything into the network quantities, see the <a href="analysis/inelasticity_results.html">Temporal Inelasticity audit</a>, which limits what bond-derived measures can carry.</p>
+    </div>
+
+    <div class="card use">
+        <h3>4. Score a new period and set it against the record</h3>
+        <ol>
+            <li>Score the eight nodes for one society and one year: by hand with the <a href="cams-diy-kit.html">DIY Kit</a>, or with the <a href="cams-scorer.html">CAMS Scorer</a>.</li>
+            <li>Type the 32 integers into the <a href="juno_calculator.html">JUNO Calculator</a> to get Node Values, bond strengths and the system readouts, with every formula printed on the page. Definitions are on <a href="canonical-definitions.html">Canonical Definitions</a>.</li>
+            <li>Copy the CSV it produces and append it to the same society&rsquo;s rows from use 1 to see whether your year continues the trajectory or breaks from it.</li>
+        </ol>
+        <p class="group-note">A new score is one reading by one scorer. The site&rsquo;s own panels use ensembles of independent passes; treat a single score as a hypothesis to test against them.</p>
+    </div>
+
+    <div class="card use">
+        <h3>5. Test the record blind</h3>
+        <p>The <a href="blind-test.html">Blind Analysis Challenge</a> gives anonymised society files with years replaced by offsets, a protocol prompt for any capable model, and a sealed key. Run it before you look at the named data, so the result is yours and not a recognition of history you already know.</p>
+    </div>
+
+</div>
+<footer class="footer"><nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;"><a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a><a href="best.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Best of</a><a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a><a href="site-index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">All Pages</a></nav><p>&copy; 2026 Kari McKern, Neural Nations CAMS Research. Built as open science: contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p></footer><script src="site-chrome.js"></script><script src="nav.js"></script>
+
+</body>
+</html>

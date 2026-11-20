@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en-AU"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best of Neural Nations | Neural Nations</title>
+    <meta name="description" content="Three doors into Neural Nations: the best papers, the best tools, and the best use of the open JUNO data.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/best">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuralnations.org/best">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="Best of Neural Nations">
+    <meta property="og:description" content="Three doors into Neural Nations: the best papers, the best tools, and the best use of the open JUNO data.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="style.css">
+    <style>
+.best .lede { font-size:1.02rem; max-width:46em; color:#4d4b57; }
+.best .lede strong { color:#1B2A33; }
+.best .asof { font-size:0.85rem; color:#5a5866; border-left:3px solid #D98B2B; background:#fdf8f0; padding:8px 12px; border-radius:4px; max-width:60em; }
+.best .toolbar { display:flex; gap:0.6rem; flex-wrap:wrap; align-items:center; margin:1.2rem 0 0.6rem; padding:0.8rem 1rem; background:#fff; border:1px solid #DAD2B8; border-radius:10px; position:sticky; top:0; z-index:5; }
+.best .toolbar input[type="search"] { flex:1 1 240px; padding:0.5rem 0.8rem; font-size:0.95rem; border:1px solid #DAD2B8; border-radius:6px; background:#FAF8F3; }
+.best .chip { border:1px solid #DAD2B8; background:#FAF8F3; color:#4d4b57; border-radius:999px; padding:0.3rem 0.85rem; font-size:0.85rem; cursor:pointer; }
+.best .chip[aria-pressed="true"] { background:#1B2A33; color:#fff; border-color:#1B2A33; }
+.best .count { font-size:0.85rem; color:#4d4b57; margin-left:auto; }
+.best section.group { margin-top:2.2rem; }
+.best section.group > h2 { font-size:1.2rem; border-bottom:1px solid #DAD2B8; padding-bottom:0.35rem; margin-bottom:0.2rem; }
+.best .group-note { color:#4d4b57; font-size:0.9rem; margin:0.3rem 0 1rem; max-width:60em; }
+.best .bcard { background:#fff; border:1px solid #DAD2B8; border-radius:10px; padding:1rem 1.2rem; margin:0.75rem 0; display:grid; grid-template-columns:3.2rem 1fr; gap:0 1rem; }
+.best .rank { font-family:Georgia,serif; font-size:1.5rem; color:#4d4b57; text-align:right; padding-top:0.1rem; }
+.best .bcard h3 { margin:0; font-size:1.08rem; }
+.best .bcard h3 a { color:#1B2A33; text-decoration:none; }
+.best .bcard h3 a:hover { color:#2F6F7D; text-decoration:underline; }
+.best .meta { font-size:0.82rem; color:#4d4b57; margin:0.25rem 0 0.4rem; }
+.best .meta .tag { display:inline-block; border-radius:4px; padding:0.05rem 0.45rem; margin-right:0.35rem; background:#e3efee; color:#2F6F7D; font-weight:600; }
+.best .meta .tag.amber { background:#f7ecd9; color:#8a5410; }
+.best .bcard p { margin:0.3rem 0; font-size:0.93rem; }
+.best .why { color:#4d4b57; font-size:0.9rem; border-left:3px solid #DAD2B8; padding-left:0.7rem; }
+.best .why b { color:#1B2A33; font-weight:600; }
+.best .door-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1.1rem; margin-top:1.6rem; }
+.best .door { border:2px solid #1B2A33; border-radius:12px; padding:1.3rem 1.3rem 1.1rem; background:#fff; text-decoration:none; color:#1B2A33; display:block; }
+.best .door:hover { background:#e3efee; border-color:#2F6F7D; }
+.best .door h2 { margin:0 0 0.4rem; font-size:1.25rem; }
+.best .door p { margin:0; color:#4d4b57; font-size:0.93rem; }
+.best .door .n { font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase; color:#2F6F7D; font-weight:700; }
+.best .status-strip { display:flex; flex-wrap:wrap; gap:0.8rem; margin-top:1.2rem; }
+.best .stat { flex:1 1 160px; background:#fff; border:1px solid #DAD2B8; border-radius:10px; padding:0.8rem 1rem; }
+.best .stat .v { font-family:Georgia,serif; font-size:1.6rem; }
+.best .stat .l { font-size:0.8rem; color:#4d4b57; }
+.best .stat .src { font-size:0.75rem; margin-top:4px; }
+.best .tabs { display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 0; }
+.best .tabs a { padding:6px 14px; border:1px solid #DAD2B8; border-radius:999px; text-decoration:none; color:#4d4b57; font-size:0.9rem; background:#fff; }
+.best .tabs a.active { background:#1B2A33; color:#fff; border-color:#1B2A33; }
+.best pre { background:#1B2A33; color:#f5f1e4; padding:12px 14px; border-radius:6px; overflow-x:auto; font-size:0.85rem; line-height:1.5; }
+.best .use h3 { margin-top:0; }
+.best .use ol { padding-left:1.3rem; }
+.best .use li { margin:0.3rem 0; }
+.best .added { border-left:4px solid #2F6F7D; background:#f0f7f7; padding:10px 16px; border-radius:6px; margin-top:2.4rem; }
+@media (max-width:600px) { .best .bcard { grid-template-columns:1fr; } .best .rank { text-align:left; font-size:1.1rem; } }
+</style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+<div class="container best">
+    <div class="hero-section">
+        <h1>Best of Neural Nations</h1>
+        <p class="hero-subtitle">CAMS reads societies, firms and civilisations through eight functions of human coordination, and tests what that reading can and cannot recover.</p>
+        <nav class="tabs" aria-label="Best of"><a href="best.html" class="active">Best of</a><a href="best-papers.html">Best papers</a><a href="best-tools.html">Best tools</a><a href="best-data.html">Best use of the data</a><a href="juno_calculator.html">Score one yourself</a></nav>
+    </div>
+
+    <p class="lede">The site holds a long research record and a shelf of instruments. This page is a short way in: <strong>three doors</strong>, one for the papers worth reading first, one for the tools worth opening first, and one for using the data yourself. A fourth door lets you score a society-year on your own.</p>
+    <div class="door-grid">
+        <a class="door" href="best-papers.html"><span class="n">Door 1 &middot; 28 papers</span><h2>Best papers</h2><p>The research record ranked by scientific interest: pre-registered predictions, blind rounds, validation studies, findings, internal audits and the theory underneath. Includes a ninety-minute reading route.</p></a>
+        <a class="door" href="best-tools.html"><span class="n">Door 2 &middot; 24 ranked + 5 new</span><h2>Best tools</h2><p>Every interactive instrument ranked by usability: what it does, who it is for, and how much CAMS literacy it assumes before it makes sense.</p></a>
+        <a class="door" href="best-data.html"><span class="n">Door 3 &middot; 5 worked uses</span><h2>Best use of the data</h2><p>Download the JUNO corpus, load a society into Advanced Analysis, compare two societies, score a new period, test the record blind.</p></a>
+        <a class="door" href="juno_calculator.html"><span class="n">Score one yourself</span><h2>Score one yourself</h2><p>Type 32 raw scores for the eight nodes and get Node Values, bond strengths and the system readouts, with every formula on the page.</p></a>
+    </div>
+    <p class="group-note" style="margin-top:8px;">Door counts are computed from the cards on each page.</p>
+
+    <h2 style="margin-top:2.2rem;">Where things stand</h2>
+    <p class="group-note">Each figure is as stated on its source page, as of 20 November 2026.</p>
+    <div class="status-strip">
+        <div class="stat"><div class="v">6 / 15</div><div class="l">ADVERSARY-02 sealed predictions passed (nine failed; the kill-switch was not triggered)</div><div class="src"><a href="adversary-02-results.html">Source</a></div></div>
+        <div class="stat"><div class="v">32</div><div class="l">Prospective claims for 2027 and 2028, lodged at Zenodo and not yet scored</div><div class="src"><a href="predictions-2027-2028.html">Source</a></div></div>
+        <div class="stat"><div class="v">12 / 18</div><div class="l">Named pathology windows that hold on JUNO v3 (frozen thresholds)</div><div class="src"><a href="organisational-pathologies.html">Source</a></div></div>
+        <div class="stat"><div class="v">AUC 0.740</div><div class="l">Leave-one-society-out rupture prediction for deficit crises, 44 societies, 1900 to 2025</div><div class="src"><a href="pr-gap2-rupture-study.html">Source</a></div></div>
+    </div>
+
+    <p class="lede" style="margin-top:1.6rem;">Independent research, not formally peer-reviewed. Every dataset, formula and scoring protocol is published openly. Scrutiny is not a challenge to this project; it is the point. A score is a state, not a grade; a trajectory is a history, not a destiny.</p>
+    <p class="lede">Looking for something not listed here? <a href="site-index.html">All Pages</a> lists every page on the site, and <a href="explore.html">Explore</a> keeps the full working shelf.</p>
+    <p class="asof">Layout and copy adapted from Kimi&rsquo;s Neural Nations layout prototype (19 November 2026).</p>
+
+</div>
+<footer class="footer"><nav style="margin-bottom:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;"><a href="index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Home</a><a href="best.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Best of</a><a href="explore.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">Explore</a><a href="site-index.html" style="color:#1f77b4;text-decoration:none;font-size:0.9em;font-weight:600;">All Pages</a></nav><p>&copy; 2026 Kari McKern, Neural Nations CAMS Research. Built as open science: contributions &amp; forks welcome at <a href="https://github.com/KaliBond/wintermute" target="_blank">KaliBond/wintermute</a>.</p></footer><script src="site-chrome.js"></script><script src="nav.js"></script>
+
+</body>
+</html>
