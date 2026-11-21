@@ -30,6 +30,7 @@ const SITE = {
     { label: 'Research Diary', href: 'research-diary.html' },
     { label: 'Mindscapes',     href: 'mindscapes.html' },
     { label: 'FAQ',            href: 'faq.html' },
+    { label: 'Project Origins', href: 'project-origins.html' },
     { label: 'All Pages',      href: 'site-index.html' },
     { label: 'Contact',        href: 'contact.html' },
   ],

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project Origins | Neural Nations</title>
+    <meta name="description" content="How CAMS and Neural Nations began: Kari McKern&#39;s path from lifelong science reader, public servant and State Library IT specialist to an open instrument for measuring societies.">
+    <meta name="author" content="Kari McKern">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://neuralnations.org/project-origins">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neuralnations.org/project-origins">
+    <meta property="og:site_name" content="Neural Nations">
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content="Project Origins | Neural Nations">
+    <meta property="og:description" content="How CAMS and Neural Nations began: Kari McKern&#39;s path from lifelong science reader, public servant and State Library IT specialist to an open instrument for measuring societies.">
+    <meta property="og:image" content="https://neuralnations.org/og-image.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Project Origins | Neural Nations">
+    <meta name="twitter:description" content="How CAMS and Neural Nations began: Kari McKern&#39;s path from lifelong science reader, public servant and State Library IT specialist to an open instrument for measuring societies.">
+    <meta name="twitter:image" content="https://neuralnations.org/og-image.png">
+
+    <link rel="stylesheet" href="style.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESZ16XVVNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ESZ16XVVNN');
+    </script>
+    <style>
+        .origins { line-height: 1.7; }
+        .origins .hero {
+            background: #F0E9D2;
+            margin: -30px -30px 32px;
+            padding: 56px 40px 44px;
+            text-align: center;
+            border-radius: 15px 15px 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .origins .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(27,42,51,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(27,42,51,0.05) 1px, transparent 1px);
+            background-size: 48px 48px;
+            pointer-events: none;
+        }
+        .origins .hero > * { position: relative; }
+        .origins .hero h1 {
+            font-size: 2.6em;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            margin: 0 0 14px;
+            line-height: 1.15;
+            color: #1B2A33;
+            text-align: center;
+        }
+        .origins .sub {
+            font-size: 1.18em;
+            font-style: italic;
+            color: #2F4651;
+            max-width: 52ch;
+            margin: 0 auto;
+            padding-top: 16px;
+            border-top: 1px solid rgba(27,42,51,0.22);
+        }
+        .origins .byline { margin-top: 14px; font-size: 0.9em; color: #5a6a72; }
+        .origins .callout {
+            background: #F0E9D2;
+            border-left: 4px solid #2F6F7D;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 20px;
+            margin: 0 auto 28px;
+            max-width: 70ch;
+        }
+        .origins .callout .label {
+            font-size: 0.72em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #2F6F7D;
+            margin-bottom: 6px;
+        }
+        .origins .callout p { margin: 0; }
+        .origins .toc {
+            max-width: 70ch;
+            margin: 0 auto 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .origins .toc a {
+            font-size: 0.85em;
+            padding: 5px 12px;
+            border: 1px solid #DAD2B8;
+            border-radius: 999px;
+            color: #1B2A33;
+            text-decoration: none;
+            background: #fff;
+        }
+        .origins .toc a:hover { background: #F0E9D2; color: #2F6F7D; }
+        .origins main section {
+            max-width: 70ch;
+            margin: 0 auto;
+            padding: 26px 0;
+            border-top: 1px solid #DAD2B8;
+        }
+        .origins main section:first-of-type { border-top: none; }
+        .origins h2 {
+            color: #1B2A33;
+            font-size: 1.5em;
+            margin: 0 0 12px;
+            letter-spacing: -0.01em;
+        }
+        .origins p { margin: 0 0 14px; }
+        .origins a { color: #2F6F7D; }
+        .origins ul { list-style: disc; padding-left: 1.2em; margin: 0 0 14px; }
+        .origins li { margin-bottom: 6px; padding-left: 0; position: static; }
+        .origins li::before { content: none; }
+        .origins strong { color: #1B2A33; }
+        .origins .lead-quote {
+            font-size: 1.15em;
+            font-style: italic;
+            color: #2F4651;
+            border-left: 4px solid #2F6F7D;
+            padding-left: 16px;
+        }
+        .origins #what-cams-is ul {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 8px;
+        }
+        .origins #what-cams-is li {
+            background: #fff;
+            border: 1px solid #DAD2B8;
+            border-radius: 10px;
+            padding: 8px 12px;
+            margin: 0;
+            font-size: 0.95em;
+        }
+        .origins .table-wrap { overflow-x: auto; }
+        .origins table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95em;
+            background: #fff;
+            border: 1px solid #DAD2B8;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .origins th, .origins td {
+            text-align: left;
+            padding: 9px 12px;
+            border-bottom: 1px solid #DAD2B8;
+            vertical-align: top;
+        }
+        .origins th {
+            background: #F0E9D2;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #2F6F7D;
+        }
+        .origins td:first-child { white-space: nowrap; font-weight: 600; }
+        .origins tr:last-child td { border-bottom: none; }
+        @media (max-width: 640px) {
+            .origins.card { padding: 20px; }
+            .origins .hero { margin: -20px -20px 24px; padding: 40px 20px 32px; }
+            .origins .hero h1 { font-size: 2em; }
+            .origins td:first-child { white-space: normal; }
+        }
+        @media print {
+            #site-nav, footer.footer { display: none; }
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar" id="site-nav"></nav>
+<div class="container">
+<div class="card origins">
+<div class="hero">
+<h1>Project Origins</h1>
+<p class="sub">How a lifelong science reader in Sydney came to build an open instrument for measuring societies</p>
+<p class="byline">Kari McKern, Sydney, November 2026</p>
+</div>
+<div class="callout"><div class="label">A note before you read</div><p>Independent research, not formally peer-reviewed. Every dataset, formula and scoring protocol behind this project is published openly. This page is the human story behind it, told plainly.</p></div>
+<nav class="toc" aria-label="On this page"><a href="#the-question">The question</a><a href="#a-reader-first">A reader first</a><a href="#the-logic-of-retrieval">The logic of retrieval</a><a href="#writing-in-public">Writing in public</a><a href="#from-essay-to-instrument">From essay to instrument</a><a href="#what-cams-is">What CAMS is</a><a href="#how-the-scoring-works">How the scoring works</a><a href="#what-the-results-say-so-far">What the results say so far</a><a href="#where-i-stand-and-the-caveats">Where I stand, and the caveats</a><a href="#thanks">Thanks</a><a href="#timeline">Timeline</a><a href="#the-invitation">The invitation</a></nav>
+<main>
+<section id="the-question">
+<h2>The question</h2>
+<p>Does a society behave like an organism? Does it sense, remember, coordinate and tire? And if it does, can that behaviour be measured well enough to see trouble coming?</p>
+<p>That is the question behind CAMS, the Complex Adaptive Model of Societies, and behind everything on Neural Nations. I didn't come to it through a university. I came to it through sixty-odd years of reading, a working life in IT and libraries, a lot of essay writing and, from 2024, a long conversation with AI.</p>
+<p>This isn't offered as a credential. Nobody should take CAMS seriously on my say-so. The work is in the open so that it can be checked.</p>
+</section>
+<section id="a-reader-first">
+<h2>A reader first</h2>
+<p>I was born in Sydney in 1953, the year the structure of DNA was published, and I've always felt lucky in when I arrived. I was reading before I started school. One Christmas in the early 1960s I spent my present money on a book called <em>Pictorial Astronomy</em>, which as far as I was concerned was the best thing in the shop. I must have seen the planetarium show at the Museum of Applied Arts and Sciences twenty times.</p>
+<p>I never expected to do science of my own. I read it instead: every <em>Scientific American</em> I could get, and a great deal of science fiction, from Asimov and Clarke to, later, Greg Egan. Good science fiction is practice at imagining whole societies organised differently, and at thinking about minds that aren't individual humans.</p>
+<p>Then came the big-picture writers. Jacob Bronowski and Carl Sagan showed me science as a human story. Will Durant and Joseph Needham showed me civilisation at scale, Needham especially for taking Chinese science on its own terms. I also studied economic history, the discipline that first convinced me great changes were near, and later still I read the complexity scientists. Read together over a lifetime, it made the question "does a society behave like an organism?" feel natural.</p>
+</section>
+<section id="the-logic-of-retrieval">
+<h2>The logic of retrieval</h2>
+<p>My working life was spent in the Australian public service, in information technology. I worked at the Bureau of Statistics, rose to IT management, and spent a good stretch of my career at the State Library of New South Wales, where I managed ILANET, the Library's commercial information service.</p>
+<p>Much of my job there was teaching librarians the logic of data retrieval: Boolean structure, controlled vocabularies and regular expressions. From 6 April 1998 to 8 March 2004 I also edited <em>elogon</em>, the ilanetweb newsletter, which ran to 57 issues. Alongside the service news it carried links on peak oil, global warming, public debt and the Iraq war.</p>
+<p>The lesson I took from those years became the seed of CAMS. A badly framed query returns your own assumptions, while a well-framed one surprises you. A catalogue is a model of the world, and it can be wrong in systematic ways. At heart, CAMS is a disciplined way of cataloguing history.</p>
+</section>
+<section id="writing-in-public">
+<h2>Writing in public</h2>
+<p>After the Library I started Kontent Konsult, and around 2007 to 2009 it became a vehicle for big-picture commentary: uranium, nuclear power, peak oil, green technology and credit cycles. Energy, systemic fragility and financial strain turned out to be early forms of what CAMS now calls Stress and Capacity.</p>
+<p>During the COVID-19 pandemic my essays began appearing in John Menadue's <em>Pearls &amp; Irritations</em>. They grew out of a lifelong interest in Asian affairs, sharpened by travel in the region, and a growing alarm at great-power rivalry and nuclear risk. Two frames shaped them. Big History supplied the timescale: societies as late arrivals in a long sequence of self-organising systems. Complexity science supplied the grammar: emergence, feedback and phase transition. I wrote under the banner of ComplexityWorkz, and later in my newsletter <em>Complex Adaptive Humans</em>.</p>
+</section>
+<section id="from-essay-to-instrument">
+<h2>From essay to instrument</h2>
+<p>By 2024 I had hit a wall. One essay can't compete with a steady stream of think-tank releases, and, more importantly, I couldn't explain why nations so often behaved in ways that looked irrational.</p>
+<p>So I asked a different question. Herds, flocks and colonies are complex adaptive systems. They show feedback, sudden changes of state, and an inability to go back the way they came. If human societies are the same kind of thing, their signatures should be measurable. I set out to approach societies as a naturalist rather than a political theorist, and to test whether the confident verdicts of commentary on China, Russia and the United States would survive contact with a common, transparent yardstick applied to every society alike.</p>
+<p>I worked the idea through with AI from the very start. The collaboration began with GPT-4 in 2024, and my lab diary runs from October that year.</p>
+</section>
+<section id="what-cams-is">
+<h2>What CAMS is</h2>
+<p>CAMS treats a society as eight interacting functions, the jobs any social unit must get done:</p>
+<ul>
+<li><strong>Lore</strong>: religion, ideology, media and education</li>
+<li><strong>Archive</strong>: knowledge and institutional memory</li>
+<li><strong>Helm</strong>: executive authority</li>
+<li><strong>Stewards</strong>: capital and assets</li>
+<li><strong>Shield</strong>: defence and coercion</li>
+<li><strong>Craft</strong>: production</li>
+<li><strong>Hands</strong>: labour</li>
+<li><strong>Flow</strong>: distribution and markets</li>
+</ul>
+<p>Each function is scored year by year on four dimensions from 1 to 10: <strong>Coherence</strong> (internal alignment), <strong>Capacity</strong> (demonstrated ability to do the job), <strong>Stress</strong> (strain on the function) and <strong>Abstraction</strong> (the symbolic work, such as law, ideas and institutions, that supports it). The operators that combine these scores were locked as <strong>v1.0-Final on 7 June 2026</strong>.</p>
+<p>The point is to describe a society by how well it coordinates itself rather than by the size of its economy or army. That lets a small, well-integrated state and a large, strained one be compared on the same terms. Eight is a working resolution, not a sacred number.</p>
+</section>
+<section id="how-the-scoring-works">
+<h2>How the scoring works</h2>
+<p>Coding centuries of evidence consistently across dozens of societies normally needs a funded team. I don't have one, so I use language models as a panel of blind historical raters rather than as an oracle.</p>
+<ul>
+<li><strong>Ensembles.</strong> Several independent scorers work from a fixed rubric, in separate conversations, and their disagreement is recorded as data.</li>
+<li><strong>Evidence gating.</strong> Where the record is too thin, a scorer returns NA rather than guessing, and the NA rate is reported.</li>
+<li><strong>Pre-registration with a kill-switch.</strong> Predictions are signed, hashed and lodged before outcomes are known, then scored honestly when they arrive, including the ones that fail.</li>
+</ul>
+</section>
+<section id="what-the-results-say-so-far">
+<h2>What the results say so far</h2>
+<ul>
+<li><strong>Deficit-crisis detection (PR-GAP-2, July 2026).</strong> Held up across 44 societies when each was left out in turn, with a LOSO AUC of 0.740.</li>
+<li><strong>Relational Inelasticity holdout (September 2026).</strong> Held on data kept back from the analysis, with a Spearman rho of 0.70.</li>
+<li><strong>The Synchronised Slide (October 2026).</strong> Stress across societies has become more synchronised since 2000. If that holds, our biggest hazards are shared ones, and the case for common global interests becomes an empirical claim, not only a moral one.</li>
+<li><strong>Three great powers (June 2026).</strong> On the same yardstick, the United States showed the most strain of the three. My hypothesis that great-power blocs coordinate with each other was not supported, and I published that.</li>
+<li><strong>ADVERSARY-02 (November 2026).</strong> Of 15 sealed predictions, six passed and nine failed. The kill-switch was not triggered.</li>
+<li><strong><a href="predictions-2027-2028.html">Prospective register</a> (8 November 2026).</strong> 32 probability-weighted claims about the USA, China and Australia for 2027 and 2028 are lodged at Zenodo (DOI <a href="https://doi.org/10.5281/zenodo.24046639">10.5281/zenodo.24046639</a>), to be scored when those years close.</li>
+</ul>
+<p>The longer argument is set out in the book <a href="dynamics-of-social-organisation.html"><em>The Dynamics of Social Organisation</em></a>, released with a film under a CC BY 4.0 licence, and in the essay <a href="natural-history-of-civilisations.html"><em>The Natural History of Civilisations</em></a>.</p>
+</section>
+<section id="where-i-stand-and-the-caveats">
+<h2>Where I stand, and the caveats</h2>
+<p class="lead-quote">I'm very satisfied with how the hypothesis has survived the results. That isn't because everything has passed. It's because the core idea, that societies show measurable signs of being complex adaptive systems, has kept surviving honest attempts to break it. The failures have mostly hit side hypotheses: Stress Entrainment and Abstraction Rent both failed their pre-registered tests, as did the bloc-coordination idea.</p>
+<p>Being satisfied is not the same as being proven, and the caveats are real:</p>
+<ul>
+<li><strong>Not peer-reviewed.</strong> This is independent research, offered for scrutiny.</li>
+<li><strong>The AI raters may be remembering, not reading.</strong> Language models have read the histories they score, and they share training material. Their agreement is not yet independent confirmation. This is the central threat to the whole project.</li>
+<li><strong>Fewer dimensions than it looks.</strong> The first principal component explains 47 to 89 per cent of the variance, so the eight functions behave more like two or three underlying patterns. The case for eight still has to be made.</li>
+<li><strong>Better at slow pressure than sudden breaks.</strong> The instrument sees strain accumulating more readily than it sees rupture.</li>
+</ul>
+<p>What would count against CAMS? Repeatedly missing crises that happen, flagging stable societies as high risk, depending on one model, scorer or dataset, or a prospective register that fails to beat a simple baseline. The 2027 to 2028 results will matter far more than anything I say now.</p>
+</section>
+<section id="thanks">
+<h2>Thanks</h2>
+<p>CAMS is a single-author project, but it was argued into shape with others. Systems thinker Gene Bellinger, Marius Joubert and Simon Young have been generous interlocutors. John Menadue published my early essays. And a panel of AI systems has served as raters, testers and sparring partners, in a collaboration that is real but lopsided, and documented openly.</p>
+</section>
+<section id="timeline">
+<h2>Timeline</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>When</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1953</td>
+<td>Born in Sydney</td>
+</tr>
+<tr>
+<td>Early 1960s</td>
+<td>Buys <em>Pictorial Astronomy</em> with Christmas money</td>
+</tr>
+<tr>
+<td>Career</td>
+<td>Australian public service and IT, including the Bureau of Statistics; later manages ILANET at the State Library of NSW</td>
+</tr>
+<tr>
+<td>1998 to 2004</td>
+<td>Edits <em>elogon</em>, 57 issues</td>
+</tr>
+<tr>
+<td>2007 to 2009</td>
+<td>Big-picture commentary through Kontent Konsult</td>
+</tr>
+<tr>
+<td>COVID-19 years</td>
+<td>Essays in <em>Pearls &amp; Irritations</em></td>
+</tr>
+<tr>
+<td>2024</td>
+<td>CAMS begins, in dialogue with GPT-4; lab diary from October</td>
+</tr>
+<tr>
+<td>April to May 2026</td>
+<td>CAMS Papers 1 to 4</td>
+</tr>
+<tr>
+<td>7 June 2026</td>
+<td>Operators locked as v1.0-Final</td>
+</tr>
+<tr>
+<td>June to October 2026</td>
+<td>Great-power study, PR-GAP-2, holdout test, Synchronised Slide</td>
+</tr>
+<tr>
+<td>31 October 2026</td>
+<td><a href="dynamics-of-social-organisation.html"><em>The Dynamics of Social Organisation</em></a> released</td>
+</tr>
+<tr>
+<td>November 2026</td>
+<td>ADVERSARY-02 scored; 32 claims for 2027 to 2028 lodged at Zenodo</td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="the-invitation">
+<h2>The invitation</h2>
+<p>I'd like CAMS to be tested properly by people better qualified than me. Curiosity is more useful than belief. Rerun the scoring, use different raters, try to break a headline result. The data, rubrics and code are all here and on GitHub. If it fails, I want to know.</p>
+<p><em>Neural Nations is independent research and has not been formally peer-reviewed.</em></p>
+</section>
+</main>
+</div>
+</div>
+<footer class="footer" id="site-footer"></footer>
+<script src="site-chrome.js"></script>
+<script src="nav.js"></script>
+</body>
+</html>

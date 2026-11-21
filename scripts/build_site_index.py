@@ -38,7 +38,9 @@ GROUPS = [
         'cams-failure-modes', 'failure-modes-story', 'great-power-attractors', 'applications', 'reports',
     ]),
     ('Datasets', 'Dataset', 'weekly', '0.8', [
-        'datasets', 'cams/', 'epiphenomenon/data', 'repository-access', 'request-access',
+        'datasets', 'camnations-family/', 'camnations-family/camnations5/', 'camnations-family/camnations5n/',
+        'camnations-family/camnationsm5n_staging_2026-09/', 'camnations-family/camnationsmfin/',
+        'cams/', 'epiphenomenon/data', 'repository-access', 'request-access',
     ]),
     ('Tools & Explorers', 'Tool', 'monthly', '0.7', [
         'explore', 'sdrl/', 'cams', 'cams-scorer', 'cams-scorer-local', 'cams-explorer', 'juno-36-explorer', 'juno_calculator',
@@ -89,7 +91,7 @@ GROUPS = [
         'epiphenomenon/', 'epiphenomenon/australia-story', 'epiphenomenon/without-hindcasting', 'anxiety-machine',
     ]),
     ('Diary & About', 'Site', 'monthly', '0.5', [
-        'research-diary', 'site-index', 'explore-index', 'grok', 'about', 'contact',
+        'research-diary', 'project-origins', 'site-index', 'explore-index', 'grok', 'about', 'contact',
     ]),
 ]
 
@@ -106,6 +108,7 @@ TITLE_OVERRIDE = {
     'canada-arc-map': 'Canada — Arc Map',
     'mirror-escalation-map': 'Mirror Escalation — Aha! Map',
     'us-covid-cams-map': 'US COVID — Aha! Map',
+    'camnations-family/': 'CAMS Nations scoring runs',
 }
 
 
