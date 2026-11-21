@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAMS Nations Lens — one nation, one year, one fortune</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23b0c6b3'/%3E%3Ccircle cx='32' cy='32' r='28' fill='none' stroke='%23171c16' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='10' fill='%23c92c50'/%3E%3C/svg%3E">
+<meta name="description" content="Crack a cookie: an independent evidence-gated reading of one nation in one year, 1900–2010. We get the numbers. You get the fortune.">
+<meta name="author" content="Kari McKern">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://neuralnations.org/nations-lens">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://neuralnations.org/nations-lens">
+<meta property="og:site_name" content="Neural Nations">
+<meta property="og:title" content="CAMS Nations Lens — one nation, one year, one fortune">
+<meta property="og:description" content="Draw a nation and a year, take the prompt to any AI, bring back the reply. The page checks the numbers; you keep the fortune cookie.">
+<meta property="og:image" content="https://neuralnations.org/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#b0c6b3;
+    --paper-deep:#a3bba6;
+    --slip:#e9efe6;
+    --slip-edge:#d7e0d2;
+    --ink:#171c16;
+    --ink-2:#2c332b;
+    --ink-3:#55604f;
+    --line:rgba(23,28,22,.22);
+    --line-soft:rgba(23,28,22,.12);
+    --seal:#c92c50;
+    --seal-deep:#a3203f;
+    --grid:rgba(23,28,22,.055);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Archivo",system-ui,sans-serif;
+    font-size:16px;line-height:1.6;
+    min-height:100dvh;
+    background-image:
+      repeating-linear-gradient(0deg,var(--grid) 0 1px,transparent 1px 96px),
+      repeating-linear-gradient(90deg,var(--grid) 0 1px,transparent 1px 96px);
+  }
+  ::selection{background:var(--ink);color:var(--paper)}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+  .serif{font-family:"Newsreader",Georgia,serif}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  button{cursor:pointer;font:inherit}
+  :focus-visible{outline:2px solid var(--seal);outline-offset:3px}
+
+  /* hand-drawn underline */
+  .hu{position:relative;text-decoration:none;white-space:nowrap}
+  .hu::after{content:"";position:absolute;left:-4%;bottom:-.08em;width:108%;height:.09em;
+    background:var(--ink);transform:skewX(-14deg) rotate(-.6deg)}
+  .hu.v2::after{width:104%;left:-1%;transform:skewX(9deg) rotate(.4deg)}
+  .hu.v3::after{width:111%;left:-6%;transform:skewX(-24deg) rotate(-.9deg)}
+  .hu.seal::after{background:var(--seal)}
+
+  header.site{
+    position:sticky;top:0;z-index:30;
+    background:color-mix(in oklab,var(--paper) 88%,transparent);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--ink)}
+  .brand .mark{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;
+    border:1.5px solid var(--ink);padding:2px 7px;border-radius:999px;letter-spacing:.06em}
+  .brand .name{font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:600;font-size:19px}
+  nav.top{display:flex;gap:4px}
+  nav.top a{
+    color:var(--ink-2);text-decoration:none;font-size:14px;font-weight:600;
+    padding:8px 14px;border-radius:999px;min-height:44px;display:inline-flex;align-items:center}
+  nav.top a:hover{background:rgba(23,28,22,.07)}
+
+  /* hero */
+  .hero{padding:72px 0 40px}
+  .hero .kicker{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-3)}
+  .hero h1{font-family:"Newsreader",Georgia,serif;font-weight:500;font-size:clamp(38px,6.2vw,68px);
+    line-height:1.06;letter-spacing:-.01em;margin-top:14px;max-width:16ch}
+  .hero h1 em{font-style:italic}
+  .hero p.deal{margin-top:22px;max-width:52ch;font-size:18px;color:var(--ink-2)}
+  .hero p.deal strong{color:var(--ink)}
+
+  section{padding:34px 0}
+  .sec-label{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+  h2{font-family:"Newsreader",Georgia,serif;font-weight:550;font-size:clamp(26px,3.4vw,36px);line-height:1.15}
+  .sec-sub{color:var(--ink-2);max-width:60ch;margin-top:8px}
+
+  /* crack panel */
+  .crack-grid{display:grid;gap:28px;margin-top:24px}
+  @media(min-width:900px){.crack-grid{grid-template-columns:5fr 7fr;align-items:start}}
+  .panel{background:var(--slip);border:1px solid var(--line);border-radius:14px;padding:22px}
+  label.f{display:block;margin-bottom:16px}
+  label.f .lab{display:block;font-family:"IBM Plex Mono",monospace;font-size:12px;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+  select,input[type=text],textarea{
+    width:100%;background:#f2f5ee;border:1px solid var(--line);border-radius:10px;
+    padding:11px 12px;font:inherit;color:var(--ink);min-height:46px}
+  select:focus,input:focus,textarea:focus{outline:2px solid var(--seal);outline-offset:1px;border-color:transparent}
+  .row2{display:grid;gap:14px}
+  @media(min-width:560px){.row2{grid-template-columns:1fr 1fr}}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;flex:none;
+    white-space:nowrap;
+    border-radius:999px;font-weight:600;font-size:15px;min-height:46px;padding:10px 22px;
+    border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);
+    transition:transform .16s ease-out,background .16s ease-out}
+  .btn:hover{transform:translateY(-1px)}
+  .btn:active{transform:translateY(0) scale(.98)}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .btn.ghost:hover{background:rgba(23,28,22,.07)}
+  .btn.seal{background:var(--seal);border-color:var(--seal);color:#fdf3f0}
+  .btn.seal:hover{background:var(--seal-deep)}
+  .btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+  .btn-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+  .hint{font-size:13.5px;color:var(--ink-3);margin-top:10px}
+  .session-chip{display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+    font-family:"IBM Plex Mono",monospace;font-size:13px;border:1px dashed var(--line);
+    padding:7px 12px;border-radius:8px;color:var(--ink-2)}
+  .session-chip[hidden]{display:none}
+  textarea.code{font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.55;min-height:280px;resize:vertical}
+  details.draw{ margin-top:14px}
+  details.draw summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--ink-2);
+    min-height:44px;display:inline-flex;align-items:center}
+  .prompt-view{white-space:pre-wrap;font-family:"IBM Plex Mono",monospace;font-size:12px;line-height:1.55;
+    background:#f2f5ee;border:1px solid var(--line);border-radius:10px;padding:14px;
+    max-height:340px;overflow:auto;margin-top:10px}
+
+  /* problems */
+  .problems{margin-top:16px;border-left:3px solid var(--seal);background:#f6e8e5;
+    padding:14px 16px;border-radius:0 10px 10px 0}
+  .problems h3{font-size:15px;color:var(--seal-deep)}
+  .problems ul{margin:8px 0 0 18px;font-size:14px;color:var(--ink-2)}
+  .warnings{margin-top:16px;border-left:3px solid #8a6d1f;background:#f4eedd;
+    padding:14px 16px;border-radius:0 10px 10px 0}
+  .warnings h3{font-size:15px;color:#6d5616}
+  .warnings ul{margin:8px 0 0 18px;font-size:14px;color:var(--ink-2)}
+  .checkline{display:flex;gap:10px;align-items:flex-start;background:#f2f5ee;
+    border:1px solid var(--line);border-radius:10px;padding:12px;margin-top:4px}
+  .checkline input{width:20px;height:20px;margin-top:3px;accent-color:var(--seal)}
+  .checkline span{font-size:14px;color:var(--ink-2)}
+
+  /* ===== the cookie card ===== */
+  #card-zone{margin-top:8px}
+  .cookie{
+    background:var(--slip);border:1px solid var(--line);border-radius:16px;
+    overflow:hidden;margin-top:26px;scroll-margin-top:76px;
+    animation:crack .5s cubic-bezier(.2,.9,.3,1) both}
+  @keyframes crack{from{opacity:0;transform:scale(.95) translateY(14px)}to{opacity:1;transform:none}}
+  .cookie-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;
+    gap:8px;padding:22px 26px 14px}
+  .cookie-head .ny{font-family:"Newsreader",Georgia,serif;font-size:clamp(26px,3.6vw,40px);font-weight:550;line-height:1.1}
+  .cookie-head .ny .yr{font-style:italic}
+  .cookie-head .meta{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3);text-align:right;line-height:1.7}
+  .tear{border:none;border-top:2px dashed var(--line);margin:0 18px}
+  /* slip */
+  .slip{position:relative;padding:30px 30px 26px;background:
+    linear-gradient(180deg,var(--slip) 0%,var(--slip-edge) 140%)}
+  .slip .fortune{font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:450;
+    font-size:clamp(20px,2.8vw,27px);line-height:1.42;max-width:34ch}
+  .motifs{margin-top:24px;display:grid;gap:8px}
+  .motif{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline;
+    font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink-2)}
+  .motif .dot{width:8px;height:8px;border-radius:50%;background:var(--ink);transform:translateY(-1px)}
+  .motif .m-name{font-weight:600;color:var(--ink)}
+  .motif .m-fact{color:var(--ink-3)}
+  .slip-foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:14px;margin-top:26px}
+  .slip-foot .sig{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-3);line-height:1.7}
+  .zseal{
+    width:86px;height:86px;border-radius:50%;flex:none;
+    background:var(--seal);color:#fdf3f0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;transform:rotate(-7deg);
+    box-shadow:0 2px 0 rgba(23,28,22,.35);font-family:"IBM Plex Mono",monospace}
+  .zseal .z{font-size:24px;font-weight:600;line-height:1}
+  .zseal .zlab{font-size:9px;letter-spacing:.14em;margin-top:4px;text-transform:uppercase}
+  .zseal.void{background:var(--ink-3)}
+  /* ledger */
+  .ledger{padding:26px;background:#f2f5ee}
+  .ledger h3{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-3);margin-bottom:16px}
+  .ledger-grid{display:grid;gap:26px}
+  @media(min-width:900px){.ledger-grid{grid-template-columns:340px 1fr;align-items:start}}
+  .radar-box{background:var(--slip);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .vitals{display:grid;gap:10px;margin-top:4px}
+  .vital{display:grid;grid-template-columns:92px 1fr 56px;gap:10px;align-items:center;
+    font-family:"IBM Plex Mono",monospace;font-size:12.5px}
+  .vital .track{height:10px;background:rgba(23,28,22,.1);border-radius:99px;overflow:hidden}
+  .vital .fill{height:100%;background:var(--ink);border-radius:99px;
+    transition:width .5s ease-out}
+  .vital .fill.stress{background:var(--seal)}
+  .vital .val{text-align:right;font-weight:600}
+  .zline{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-family:"IBM Plex Mono",monospace;font-size:13px}
+  .zline .zv{font-size:22px;font-weight:600}
+  .zline .zv.neg{color:var(--seal)}
+  table.scores{width:100%;border-collapse:collapse;font-family:"IBM Plex Mono",monospace;font-size:12.5px}
+  table.scores th{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);
+    text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+  table.scores td{padding:7px 8px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+  table.scores td.s{font-weight:600;width:44px}
+  table.scores td.t{width:40px;color:var(--ink-3)}
+  table.scores td.n{color:var(--ink-2);font-size:12px}
+  .cookie-actions{display:flex;flex-wrap:wrap;gap:10px;padding:0 26px 24px;background:#f2f5ee}
+
+  /* deal + jar */
+  .deal-grid{display:grid;gap:22px;margin-top:24px}
+  @media(min-width:860px){.deal-grid{grid-template-columns:1fr 1fr}}
+  .deal-item h3{font-family:"Newsreader",Georgia,serif;font-size:21px;font-weight:600;margin-bottom:8px}
+  .deal-item p{color:var(--ink-2);font-size:15px}
+  .jar-list{display:grid;gap:10px;margin-top:22px}
+  .jar-item{display:flex;flex-wrap:wrap;align-items:center;gap:12px;
+    background:var(--slip);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+  .jar-item .ji-ny{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:17px}
+  .jar-item .ji-z{font-family:"IBM Plex Mono",monospace;font-size:12px;margin-left:auto}
+  .jar-item .ji-z.neg{color:var(--seal)}
+  .jar-item button{margin-left:0}
+  .ribbon{margin-top:20px;background:var(--slip);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .ribbon h4{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+  .empty{border:1.5px dashed var(--line);border-radius:12px;padding:28px;text-align:center;
+    color:var(--ink-3);font-size:14.5px;margin-top:22px}
+  footer.site{border-top:1px solid var(--line);margin-top:44px;padding:28px 0 44px}
+  footer.site p{font-size:13.5px;color:var(--ink-3);max-width:70ch}
+  footer.site a{color:var(--ink-2)}
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    html{scroll-behavior:auto}
+  }
+  @media(max-width:640px){
+    .hero .kicker{font-size:11px;letter-spacing:.13em}
+    .btn-row .btn{flex:1 1 auto}
+    nav.top a{padding:8px 9px;font-size:13px}
+    .slip{padding:22px 18px}
+    .cookie-head{padding:18px 18px 12px}
+    .cookie-actions{padding:0 18px 20px}
+    .ledger{padding:18px}
+  }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <span class="mark">CAMS</span>
+      <span class="name">Nations Lens</span>
+    </a>
+    <nav class="top" aria-label="Sections">
+      <a href="#crack">Crack</a>
+      <a href="#deal">The deal</a>
+      <a href="#jar">Cookie jar</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero wrap">
+    <p class="kicker">CAMS v1.0 · field lens · window 1900–2010</p>
+    <h1>One nation. One year.<br><em>One <span class="hu">fortune</span>.</em></h1>
+    <p class="deal"><strong>We get the numbers. You get the cookie.</strong>
+      Draw a nation and a year, have your own AI read it under the lens, and file the reply.
+      What comes back is an evidence-gated reading — eight paladins, four vitals, and the spirit
+      of the year — sealed with a receipt. The corpus keeps the ledger.</p>
+  </section>
+
+  <section id="crack" class="wrap">
+    <p class="sec-label">01 · Crack a cookie</p>
+    <h2>Draw, ask, file</h2>
+    <p class="sec-sub">Choose a nation and a year, or let the draw choose. Paste the prompt into a
+      <em>fresh</em> chat with any model — memory and custom instructions off — then bring the whole reply back.</p>
+
+    <div class="crack-grid">
+      <div class="panel">
+        <label class="f">
+          <span class="lab">Nation</span>
+          <select id="nation"></select>
+        </label>
+        <div class="row2">
+          <label class="f">
+            <span class="lab">Year (1900–2010)</span>
+            <input type="text" id="year" inputmode="numeric" maxlength="4" placeholder="e.g. 1906">
+          </label>
+          <label class="f">
+            <span class="lab">&nbsp;</span>
+            <button type="button" class="btn ghost" id="btn-random" style="width:100%">Let fate decide</button>
+          </label>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn seal" id="btn-draw">Draw the prompt</button>
+          <button type="button" class="btn ghost" id="btn-copy" disabled>Copy prompt</button>
+        </div>
+        <p class="session-chip" id="session-chip" hidden>SESSION <strong id="session-code"></strong></p>
+        <p class="hint" id="draw-hint">The prompt is the instrument: unchanged wording every time,
+          bound to your draw by its session code. Copy it exactly.</p>
+        <details class="draw" id="prompt-details" hidden>
+          <summary>Preview the full prompt</summary>
+          <div class="prompt-view" id="prompt-view"></div>
+        </details>
+      </div>
+
+      <div class="panel">
+        <label class="f">
+          <span class="lab">Paste the model's whole reply</span>
+          <textarea class="code" id="raw" spellcheck="false"
+            placeholder="The CSV block, the MOTIFS, the READ, and the SESSION line."></textarea>
+        </label>
+        <div class="row2">
+          <label class="f">
+            <span class="lab">Actual model</span>
+            <input type="text" id="model" placeholder="e.g. Claude">
+          </label>
+          <label class="f">
+            <span class="lab">Model version</span>
+            <input type="text" id="version" placeholder="as it reports itself">
+          </label>
+        </div>
+        <label class="checkline">
+          <input type="checkbox" id="fresh">
+          <span>I used a fresh chat with memory and custom instructions off, and pasted the prompt unchanged.</span>
+        </label>
+        <div class="btn-row">
+          <button type="button" class="btn ghost" id="btn-check" disabled>Check structure</button>
+          <button type="button" class="btn seal" id="btn-file" disabled>Validate &amp; crack</button>
+        </div>
+        <div id="verdict"></div>
+      </div>
+    </div>
+
+    <div id="card-zone" aria-live="polite"></div>
+  </section>
+
+  <section id="deal" class="wrap">
+    <p class="sec-label">02 · The deal, plainly</p>
+    <h2>What a cookie is — and is not</h2>
+    <div class="deal-grid">
+      <div class="deal-item">
+        <h3>The fortune rides on top. The evidence rides at the foot.</h3>
+        <p>Every number in the ledger carries a tier and a dated fact. The read is what one model
+          produced under one instrument on one day — checkable, because the window closed in 2010.
+          A reading you can argue with is the point.</p>
+      </div>
+      <div class="deal-item">
+        <h3>Structure, not virtue.</h3>
+        <p>The lens judges how a nation was organised, not whether it was good. A high Stress score
+          means pressure, not failure. Identical standards apply to every nation on the list —
+          Washington, London, Beijing and Moscow alike.</p>
+      </div>
+      <div class="deal-item">
+        <h3>NA is an honest answer.</h3>
+        <p>Where the model cannot name evidence, it must say NA — and where any vital is NA, that
+          paladin's Zeitgeist number is declared uncomputable rather than guessed. The cookie says so.</p>
+      </div>
+      <div class="deal-item">
+        <h3>Want the recent years?</h3>
+        <p>This lens stops at 2010, where the record is settled and the machines' memories run deep.
+          If you want the present, the scripts are public — modify them, run the protocol, and you
+          are doing CAMS research. The ceiling of this tool is the floor of the programme.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="jar" class="wrap">
+    <p class="sec-label">03 · Cookie jar</p>
+    <h2>Fortunes kept on this device</h2>
+    <p class="sec-sub">Your cookies stay in this browser — no account, no tracking, nothing leaves
+      the device unless you download it. Collect a nation across the years and the ribbon begins to form.</p>
+    <div id="jar-zone"></div>
+  </section>
+
+  <footer class="site">
+    <div class="wrap">
+      <p>CAMS Nations Lens v1.0 · window 1900–2010 · eight paladins, each scored on the four vitals;
+        per-paladin Z = (A·C)·(K−S) computed on this page, never by the model. Datasets, formulas and protocols are
+        published openly at <a href="https://neuralnations.org" rel="noopener">neuralnations.org</a>.
+        A reading is a replicate under a named model, not a finding. Peace, people.</p>
+    </div>
+  </footer>
+</main>
+<script src="nations-lens.js"></script>
+</body>
+</html>
