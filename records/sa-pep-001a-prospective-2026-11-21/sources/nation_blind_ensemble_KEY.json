@@ -1,0 +1,109 @@
+{
+  "dataset": "C:\\Users\\julie\\Downloads\\nation_blind_ensemble_primitives.csv",
+  "built": "2026-11-17",
+  "columns": "Set_ID, Year, Node, C, K, S, A",
+  "primitives": "C coherence, K capacity, S stress, A abstraction",
+  "excluded": "society name, node value, bond strength, envelopes",
+  "sets": [
+    {
+      "set_id": "S01",
+      "nation": "Japan",
+      "source": "C:\\Kari\\newdata\\Japan_CAMS_m5n_1850-2026_block1.csv",
+      "note": "m5n block1, 1850-2026, adjacent copy rate 0",
+      "years": 177,
+      "year_min": 1850,
+      "year_max": 2026,
+      "missing_node_years": 0
+    },
+    {
+      "set_id": "S02",
+      "nation": "Laos",
+      "source": "C:\\Users\\julie\\wintermute\\cleaned_datasets\\Laos_ENS_1875_2026_cleaned.csv",
+      "note": "cleaned ensemble, 1875-2026, adjacent copy rate 0.146",
+      "years": 152,
+      "year_min": 1875,
+      "year_max": 2026,
+      "missing_node_years": 0
+    },
+    {
+      "set_id": "S03",
+      "nation": "Belgium",
+      "source": "C:\\Kari\\newdata\\Belgium_CAMS_m5n_1900-2026_block1.csv",
+      "note": "m5n block1, 1900-2026, adjacent copy rate 0",
+      "years": 127,
+      "year_min": 1900,
+      "year_max": 2026,
+      "missing_node_years": 0
+    },
+    {
+      "set_id": "S04",
+      "nation": "USA",
+      "source": "C:\\Kari\\newdata\\USA_CAMS_m5n_2000-2026_block1.csv",
+      "note": "m5n block1, 2000-2026, adjacent copy rate 0",
+      "years": 27,
+      "year_min": 2000,
+      "year_max": 2026,
+      "missing_node_years": 0
+    },
+    {
+      "set_id": "S05",
+      "nation": "Sri Lanka",
+      "source": "C:\\Kari\\newdata\\Sri_Lanka_CAMS_m5n_1900-2026_block1.csv",
+      "note": "m5n block1, 1900-2026, adjacent copy rate 0",
+      "years": 127,
+      "year_min": 1900,
+      "year_max": 2026,
+      "missing_node_years": 0
+    },
+    {
+      "set_id": "S06",
+      "nation": "Germany",
+      "source": "C:\\Users\\julie\\OneDrive\\Documents\\Claude\\Projects\\CAMICAN INC\\Germany_CAMNATIONSM5_ensemble.csv",
+      "note": "CAMNATIONSM5 ensemble, 1980-2026, adjacent copy rate 0.065",
+      "years": 47,
+      "year_min": 1980,
+      "year_max": 2026,
+      "missing_node_years": 0
+    },
+    {
+      "set_id": "S07",
+      "nation": "Chile",
+      "source": "C:\\Kari\\newdata\\Chile_CAMS5_ensemble_mean.csv",
+      "note": "CAMS5 ensemble mean, 1875-2026, adjacent copy rate 0",
+      "years": 152,
+      "year_min": 1875,
+      "year_max": 2026,
+      "missing_node_years": 0
+    },
+    {
+      "set_id": "S08",
+      "nation": "Australia",
+      "source": "C:\\Kari\\newdata\\Australia_CAMS_m5n_2000-2026_block1.csv",
+      "note": "m5n block1, 2000-2026, adjacent copy rate 0",
+      "years": 27,
+      "year_min": 2000,
+      "year_max": 2026,
+      "missing_node_years": 0
+    },
+    {
+      "set_id": "S09",
+      "nation": "Netherlands",
+      "source": "C:\\Users\\julie\\Downloads\\Netherlands_CAMS_m5n_1850-2026_block1.csv",
+      "note": "m5n block1, 1850-2026, adjacent copy rate 0, primitive NA rate 0.006",
+      "years": 177,
+      "year_min": 1850,
+      "year_max": 2026,
+      "missing_node_years": 0
+    },
+    {
+      "set_id": "S10",
+      "nation": "China",
+      "source": "C:\\Kari\\newdata\\China_CAMS5_ensemble_mean_scores.csv",
+      "note": "CAMS5 ensemble mean, 1800-2025, adjacent copy rate 0",
+      "years": 226,
+      "year_min": 1800,
+      "year_max": 2025,
+      "missing_node_years": 0
+    }
+  ]
+}
