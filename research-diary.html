@@ -285,6 +285,9 @@
         <p style="font-size:0.85em; color:#4A5560; line-height:1.65; background:#F0E9D2; border-left:3px solid #DAD2B8; border-radius:0 6px 6px 0; padding:10px 16px; margin-bottom:18px;">
     <strong>Reading note:</strong> This diary is a chronological research log. Dataset sizes, society counts, and version labels reflect the state of the project at the time each entry was written. Current canonical figures — 50 series, 43 societies, 41,519 records, CAMS v2.3 — are on the <a href="datasets.html" style="color: #2F6F7D;">Datasets</a> and <a href="model.html" style="color: #2F6F7D;">Model</a> pages.
 </p>
+        <p style="font-size:0.85em; color:#4A5560; line-height:1.65; background:#F7F4EA; border-left:3px solid #DAD2B8; border-radius:0 6px 6px 0; padding:10px 16px; margin: -6px 0 18px;">
+    <strong>Note added 21 November 2026:</strong> The counts in the reading note are left as written. They match the static header in <a href="datasets.html" style="color: #2F6F7D;">datasets.html</a> (50 series, 43 societies, 41,519 records). After that page loads, it replaces the header from <a href="datasets.json" style="color: #2F6F7D;">datasets.json</a> (generated 2026-09-25): 112 files, 102,817 records, and 50 distinct society names. The same page's description states a third set, 95,545 records, 50 societies and 107 series. The <a href="model.html" style="color: #2F6F7D;">model page</a> still names CAMS v2.3 as the stable canonical framework. This note does not choose between those counts.
+</p>
         <p>This research diary documents the ongoing development and validation of the Complex Adaptive Model of Societies (CAMS) framework. Each entry captures key insights, breakthroughs, methodological developments, and empirical findings in the journey to understand societies as thermodynamic Complex Adaptive Systems with measurable physical characteristics.</p>
 
         <p style="padding: 14px 16px; background: #F4E6DD; border-left: 3px solid #B5523A; margin-top: 15px; font-size: 0.93em; line-height: 1.75;">
@@ -311,6 +314,166 @@
 
     <!-- Research Diary Entries -->
     <div id="diary-entries">
+
+        <div class="diary-entry research-milestone">
+            <div class="entry-header">
+                <h3>Best of, Score one yourself, Project Origins, and the camnations runs</h3>
+                <div>
+                    <span class="entry-type">Milestone</span>
+                    <span class="entry-date">2026-11-21</span>
+                </div>
+            </div>
+            <div class="entry-content">
+                <p>Two days of additions to the public site, grouped here because they are ways in, not new findings. On 20 November the <a href="best.html">Best of Neural Nations</a> hub opened: three doors, for the papers, the tools, and using the data, and a fourth door onto scoring a society-year yourself. The page labels those doors as 28 papers, 24 ranked tools plus 5 new, and 5 worked uses, and says the counts are computed from the cards. A note on the page says the layout and copy were adapted from a prototype of 19 November 2026.</p>
+
+                <p style="margin-top:12px;"><a href="score-one.html">Score one yourself</a>, added the same day, writes a prompt from CAMS Scoring Protocol v2.1. The prompt is run in a fresh chat with any model, the reply is pasted back, and the page checks it in the browser. There is no account, no server and no API key. The visitor leaves with two CSV files.</p>
+
+                <p style="margin-top:12px;">On 21 November, <a href="project-origins.html">Project Origins</a> was published: an account of how CAMS and Neural Nations began, signed from Sydney in November 2026. The same day the <a href="camnations-family/">camnations-family</a> scoring runs were added as a browsable copy. The <a href="camnations-family/README.md">README</a> says these files are not the unified JUNO panel. A five-scorer ensemble covers the Democratic Republic of the Congo (1960&ndash;2026), Egypt (1952&ndash;2026), Eritrea (1993&ndash;2026), and Ethiopia, Mauritania and Nigeria (each 1960&ndash;2026). Cuba (1990&ndash;2026) is a separate NA-aware run. A September 2026 batch (Burma, Italy and the Netherlands) is filed as staging. The <a href="camnations-family/camnationsm5n_staging_2026-09/SeparateRun_2026-09_README.md">decision note</a> in that folder, dated 15 November 2026, records that Burma was then added as the 49th society in <a href="juno/JUNO_Unified_Dataset_49soc_2026-11-15.csv">a new unified file</a> (1,304 Burma rows, 1811&ndash;2026, 163 society-years), with the 48-society file kept unchanged, and that the Italy and Netherlands rescores remain staging. The folder README still describes the Burma question as open; the decision note, and <a href="juno/CANONICAL_STATUS.md">juno/CANONICAL_STATUS.md</a>, are the later record. The USA file for 2015&ndash;2026 is delivered with a known discrepancy: 60 of 96 cells depart from the documented node-value rule by more than the &plusmn;0.175 rounding tolerance. The note judges rankings and trajectory shape robust, and the node-value and bond-strength figures not fully reconciled. <strong><a href="camnations-family/camnationsmfin/USA_mfin_RECONCILIATION_CAMSBOT_2026-09-17.md">Reconciliation note</a></strong>.</p>
+
+                <p style="margin-top:16px;font-weight:600;color:#1B2A33;">Kari McKern &nbsp;&middot;&nbsp; <span style="font-weight:400;color:#888;">ComplexityWorkz, November 2026</span></p>
+
+                <div class="tags">
+                    <span class="tag">#site</span>
+                    <span class="tag">#best-of</span>
+                    <span class="tag">#scoring</span>
+                    <span class="tag">#datasets</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="diary-entry research-milestone">
+            <div class="entry-header">
+                <h3>Thirty-two claims, lodged before 2027</h3>
+                <div>
+                    <span class="entry-type">Milestone</span>
+                    <span class="entry-date">2026-11-08</span>
+                </div>
+            </div>
+            <div class="entry-content">
+                <p>A prospective register for the United States, China and Australia in 2027 and 2028 was lodged on 8 November 2026. Version 1.0.0, under JUNO v1.2-Final, holds 32 claims: 12 for the United States, 11 for China and 9 for Australia. Each has a stated probability and a rule fixed in advance. The archive DOI is <a href="https://doi.org/10.5281/zenodo.24046639">10.5281/zenodo.24046639</a>. The public page is <a href="predictions-2027-2028.html">Predictions for 2027 and 2028</a>. A byte copy, marked not to be edited, is in <a href="records/cams-juno-prospective-predictions-2027-2028-v1-0-0-2026-11-08/">records/cams-juno-prospective-predictions-2027-2028-v1-0-0-2026-11-08/</a>.</p>
+
+                <p style="margin-top:12px;">Of the 32 claims, 11 are Tier A (about the same on every dataset), 20 are Tier B (they depend on which dataset is used) and one is conditional. The page states 95% that the United States is neither Strained nor Stable Adaptive in 2027 or 2028 (US-1), 84% that Hands stays among China's three weakest functions (CN-4), 79% for Stewards (CN-5), and 88% that Australia's Archive stays among the three strongest (AU-4). On whether the overall score rises or falls, it makes no call. The datasets for one society disagree by more than the &plusmn;1 node-value margin the page cites, and the page says JUNO v1.2 has not been externally validated. Lodging the register starts a test. It is not a result, and it does not replace the six-nation memo of 12 July 2026 or the twelve claims locked on 10 June 2026 and frozen on 28 August 2026.</p>
+
+                <p style="margin-top:12px;">The same day the site published <a href="natural-history-of-civilisations.html">The Natural History of Civilisations</a>. Its own description calls it the master essay for the state of the framework on 8 November 2026. The home page names it as the current statement of the framework, gathering the essay, the evidence, and the results below that note.</p>
+
+                <p style="margin-top:16px;font-weight:600;color:#1B2A33;">Kari McKern &nbsp;&middot;&nbsp; <span style="font-weight:400;color:#888;">ComplexityWorkz, November 2026</span></p>
+
+                <div class="tags">
+                    <span class="tag">#predictions</span>
+                    <span class="tag">#zenodo</span>
+                    <span class="tag">#juno</span>
+                    <span class="tag">#prospective</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="diary-entry validation">
+            <div class="entry-header">
+                <h3>Era recognition: the November replication, counted</h3>
+                <div>
+                    <span class="entry-type">Validation</span>
+                    <span class="entry-date">2026-11-07</span>
+                </div>
+            </div>
+            <div class="entry-content">
+                <p>A replication round closed on 7 November 2026. Models other than the original analyst were given era portraits built from eight CAMS node functions, with the historical name withheld, and asked to pick the era from a closed list. The deposited count is <a href="analysis/cams_personality_independent_ai_replication_2026-11-07/CAMS_Personality_Independent_AI_Replication_Report_2026-11-07.md">the report of that round</a>. A public kit for repeating the test is on <a href="cams-personality-experiment.html">the personality experiment page</a>. The next entry is the working account from the same day. This one is the count in the report, including the cells that were weak or never returned.</p>
+
+                <p style="margin-top:12px;">On the 56-era core (Russia 23, Australia 18, USA 15), Claude and Gemini each matched 56 of 56, and Kimi matched 52 of 56. The pre-registered bar on that panel is twice the mean chance rate, 10.71%, and those three clear it. Off the core the result thins. Kimi matched 8 of 51 extension eras. On the sparse Denmark control, Claude matched 13 of 19, Gemini 17 of 19 and Kimi 12 of 19. Codex matched 3 of 56 on the core, which is the chance rate, and does not clear the bar. Manus also returned 56 of 56 on the core. The report flags that run: an earlier arm in the same session had already read the tables, so it is not a clean blind.</p>
+
+                <p style="margin-top:12px;">The pre-registered nulls (a shuffled signal, random means, and a Wikipedia-only condition) were not in the deposit. Their outcome is unrecorded, not a pass. Where mood grades were returned, they usually sit on the sealed grade or the neighbouring grade, and the report treats that screen as weak: on the core, Claude and Gemini returned only close and broad, which are also the two grades the seal uses most. The report's own conclusion is a promising, repeatable demonstration. It is not peer reviewed, not a causal test, and not an external validation. The home page's November note reports the core-panel matches, the weaker extension and Denmark results, the missing nulls, and that same limit.</p>
+
+                <p style="margin-top:16px;font-weight:600;color:#1B2A33;">Kari McKern &nbsp;&middot;&nbsp; <span style="font-weight:400;color:#888;">ComplexityWorkz, November 2026</span></p>
+
+                <div class="tags">
+                    <span class="tag">#blind-test</span>
+                    <span class="tag">#era-recognition</span>
+                    <span class="tag">#replication</span>
+                    <span class="tag">#validation</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="diary-entry research-milestone">
+            <div class="entry-header">
+                <h3>Arm A / B / C Complete: 126 Eras, 84 % Close; Gemini Hypothesis Essay; v1.2-OPT Nation Ensemble Expansion</h3>
+                <div>
+                    <span class="entry-type">Validation</span>
+                    <span class="entry-date">2026-11-07</span>
+                </div>
+            </div>
+            <div class="entry-content">
+                <h3>The Personality AI Test: All Three Arms Sealed</h3>
+                <p>The full three-arm protocol testing whether structural topology alone can carry a society's personality is now complete. Arm A generated sealed pocket descriptions of 126 historical eras (Russia 23, Australia 18, USA 15, China 20, UK 16, Norway 15, Denmark 19) from means tables alone: no dates, no names. Arm B asked an independent AI to identify the eras from pocket topology alone; the blind identification rate was substantially above chance and Denmark's identical-sigma clusters failed to discriminate at exactly the right places, confirming the negative control. Arm C assessed Q3 mood continuity by independent web research, grading whether each pocket's topology predicted the popular, institutional, and official mood recorded by historians.</p>
+
+                <p style="margin-top:12px;">Arm C results across all 126 eras: <strong>84 % close, 15 % broad, 1 % partial</strong>, no mixed or direct-disagreement grades. The only partial grade was Denmark Era VII (1864–1873): the pocket correctly captures the Hedeselskabet recovery orientation, but cannot capture the initial emotional register of the Prussian defeat: a 1-in-126 register failure, not a topology failure. The failures were patterned: Australia's colonial-racial exclusion sits outside the Hands node's current definition; Denmark's identical-sigma clusters cannot encode within-era shock events; Norway's persistent Shield-negative generates a gap with official defence rhetoric in NATO-active eras (2005–2025). Those gaps are information about node-definition limits, not random noise.</p>
+
+                <p style="margin-top:12px;">Arm C files are sealed and hashed: CORE SHA <code>75a44314…</code>, EXTENSION SHA <code>da0212f8…</code>, LIMIT SHA <code>ff65e33c…</code>. No central scores were consulted.</p>
+
+                <h3>The Gemini Hypothesis Essay</h3>
+                <p>An outline essay working through the implications of the results is filed at <code>analysis/gemini_hypothesis_essay.txt</code>. Its argument: the σ topology is upstream of culture and economy, not downstream. The 84 % mood-continuity rate and the functioning negative control mean the pocket is both informationally dense (Arm B) and behaviourally valid (Arm C). The extended-social-cognition bet is paying out: independent AIs given eight numbers can write recognisable personality portraits before seeing the history. The Shield-only-positive topology for the Great Leap Forward and Cultural Revolution is an exact description of institutional reality; the company↔nation mapping stays provisional but the method does not change. What remains open: the Australia colonial-racial gap, the bridge study for cross-scale offset calibration, and the company mapping validation.</p>
+
+                <h3>v1.2-OPT Nation Ensemble Expansion</h3>
+                <p>Twenty-six nations now have full v1.2-OPT five-pass ensemble outputs in <code>data/nations/</code> (block1 + block2 for Argentina, Australia, Brazil, Chile, China, Colombia, Finland, France, Germany, Greece, Hong Kong, Iran, Japan, Laos, Mongolia, Netherlands, New Zealand, Norway, Poland, Russia, Saudi Arabia, Singapore, South Africa, Sweden, UK, Venezuela). These are the first production runs using the evidence-gated scorer and will serve as the canonical dataset for the cross-scale portability study.</p>
+
+                <p style="margin-top:16px;font-weight:600;color:#1B2A33;">Kari McKern &nbsp;&middot;&nbsp; <span style="font-weight:400;color:#888;">Neural Nations, November 2026</span></p>
+
+                <div class="tags">
+                    <span class="tag">#arm-c</span>
+                    <span class="tag">#blind-test</span>
+                    <span class="tag">#gemini-hypothesis</span>
+                    <span class="tag">#v12opt</span>
+                    <span class="tag">#extended-social-cognition</span>
+                    <span class="tag">#validation</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="diary-entry validation">
+            <div class="entry-header">
+                <h3>ADVERSARY-02: six passed, nine failed</h3>
+                <div>
+                    <span class="entry-type">Validation</span>
+                    <span class="entry-date">2026-11-06</span>
+                </div>
+            </div>
+            <div class="entry-content">
+                <p>Fifteen predictions about China and seven Chinese companies, for 2021&ndash;2024, were written down before any scoring of those years and signed on 4 November 2026 at 21:28:58 AEDT. The results page is dated 6 November 2026. Six passed and nine failed. The built-in kill switch, Failure Condition 5, would fire if three or more of the four core predictions failed. Only one of those four failed, so the switch was not triggered. The page says that held in all six reported pools. Nine runs were collected. The primary pool is 7 scorer-runs and 20 passes; Grok and Kimi Work are reported separately. Node value in this test is coherence plus capacity minus stress, with no abstraction term, so the page says those means are not directly comparable with node value elsewhere on the site.</p>
+
+                <p style="margin-top:12px;">The broad calls held: which entity breaks, which entities hold, and that none of eight policy shocks spread between entities. The nine failures sit in the finer calls about the shape and size of change. The sealed document itself says the eleven non-coupling predictions would also have passed if every entity had simply stayed at its 2020 value. Four of the six passes are of that no-reversal kind. The pass that persistence cannot produce is Huawei's reversal. Surviving the test is not the same as being shown to be right. <strong><a href="adversary-02-results.html">Read the results</a></strong>. The scoring table and the signed predictions are in <a href="analysis/adversary_02/part2/">analysis/adversary_02/part2/</a>.</p>
+
+                <p style="margin-top:16px;font-weight:600;color:#1B2A33;">Kari McKern &nbsp;&middot;&nbsp; <span style="font-weight:400;color:#888;">ComplexityWorkz, November 2026</span></p>
+
+                <div class="tags">
+                    <span class="tag">#adversary-02</span>
+                    <span class="tag">#pre-registration</span>
+                    <span class="tag">#firms</span>
+                    <span class="tag">#validation</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="diary-entry research-milestone">
+            <div class="entry-header">
+                <h3>The Dynamics of Social Organisation, version 1.0</h3>
+                <div>
+                    <span class="entry-type">Milestone</span>
+                    <span class="entry-date">2026-10-31</span>
+                </div>
+            </div>
+            <div class="entry-content">
+                <p>Version 1.0 of <a href="dynamics-of-social-organisation.html">The Dynamics of Social Organisation</a>, the Cassandra Edition, was released on 31 October 2026. It is free, as a PDF and an EPUB, under Creative Commons Attribution 4.0, with a thirty-second film. The files and checksums are in <a href="records/dynamics-of-social-organisation-v1-0-2026-10-31/">records/dynamics-of-social-organisation-v1-0-2026-10-31/</a>. The page calls the book a personal explanation for why the site exists, not a peer-reviewed paper, and says the one-sentence thesis is the hypothesis the programme tests, not a result. It also says Claude drafted the book with the author from the author's words and records, and that the opinions and the final say are the author's.</p>
+
+                <p style="margin-top:12px;">The film cites 696 firing years and 12 of 18 named windows held. Those figures come from the <a href="organisational-pathologies.html">organisational pathologies progress report</a> of 20 October 2026, which the book page also links, and which this diary had not recorded. JUNO v3 holds 42 societies and 41,914 rows. The frozen run used 37 of them: Denmark, India, Turkey, Thailand and Canada were excluded in advance, and Israel was used only from 2015. Six signatures, with thresholds frozen before counting, fired in 696 society-years. Four of the four windowed signatures cluster in their historical windows beyond chance, after a Holm correction. Twelve of eighteen named windows hold. Late Abstraction Collapse comes before large falls, at p = 0.0002. The page calls itself a progress report. The book page's own card states the same interim claim in one line: six signatures, thresholds frozen before counting, twelve of eighteen named windows held.</p>
+
+                <p style="margin-top:16px;font-weight:600;color:#1B2A33;">Kari McKern &nbsp;&middot;&nbsp; <span style="font-weight:400;color:#888;">ComplexityWorkz, October 2026</span></p>
+
+                <div class="tags">
+                    <span class="tag">#book</span>
+                    <span class="tag">#pathologies</span>
+                    <span class="tag">#juno-v3</span>
+                </div>
+            </div>
+        </div>
 
         <div class="diary-entry research-milestone">
             <div class="entry-header">
