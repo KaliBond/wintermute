@@ -89,7 +89,7 @@ GROUPS = [
         'epiphenomenon/', 'epiphenomenon/australia-story', 'epiphenomenon/without-hindcasting', 'anxiety-machine',
     ]),
     ('Diary & About', 'Site', 'monthly', '0.5', [
-        'research-diary', 'site-index', 'explore-index', 'grok', 'about', 'contact',
+        'research-diary', 'project-origins', 'site-index', 'explore-index', 'grok', 'about', 'contact',
     ]),
 ]
 
