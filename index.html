@@ -332,6 +332,8 @@
         .standing { margin: 0; padding-left: 20px; font-size: 0.9em; line-height: 1.7; color: #4A5560; }
         .standing li { margin-bottom: 8px; }
         .standing a { color: #2F6F7D; }
+        .standing-prose p { margin: 0 0 10px; font-size: 0.9em; line-height: 1.7; color: #4A5560; }
+        .standing-prose a { color: #2F6F7D; }
 
         @media (max-width: 1100px) {
             .home-layout { grid-template-columns: minmax(0, 1fr) 240px; gap: 24px; }
@@ -479,15 +481,12 @@
         <!-- ── Where things stand ──────────────────────────────────── -->
         <div style="padding:16px 20px;background:transparent;border-left:4px solid #2F6F7D;border-radius:0 8px 8px 0;margin-bottom:28px;">
             <h2 style="font-size:1.1em;margin:0 0 12px;color:#2F6F7D;">Where Things Stand (November 2026)</h2>
-            <p style="margin:0 0 10px;font-size:0.9em;line-height:1.7;color:#4A5560;">
-                The current statement of the framework is <a href="natural-history-of-civilisations.html" style="color:#2F6F7D;">The Natural History of Civilisations</a>. It brings together the essay, the evidence behind it and links to every result below. In brief:
-            </p>
-            <ul class="standing">
-                <li><strong>Era recognition.</strong> In the November 2026 replication round, AI systems were given only an eight-number portrait of each era. On the 56-era core panel (Russia, Australia and the USA), Claude and Gemini each matched every portrait to its era from a closed list, and Kimi matched 52. Recognition weakened on the extension panel and on the sparse Denmark control. The pre-registered null models were never returned. This is a promising demonstration, not an external validation. <a href="https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_independent_ai_replication_2026-11-07/CAMS_Personality_Independent_AI_Replication_Report_2026-11-07.md" target="_blank" rel="noopener">Report</a> &middot; <a href="cams-personality-experiment.html">repeat it yourself</a>.</li>
-                <li><strong>Sealed predictions, scored.</strong> In ADVERSARY-02, 15 predictions for China and seven firms over 2021&ndash;2024 were sealed before any data was looked at. Six passed and nine failed, and the built-in kill switch was not triggered. <a href="adversary-02-results.html">Results</a>.</li>
-                <li><strong>Prospective test lodged.</strong> 32 probability-weighted claims about the USA, China and Australia in 2027&ndash;2028 are lodged at Zenodo, to be scored when those years close. <a href="predictions-2027-2028.html">Register</a>.</li>
-                <li><strong>Pathologies across scales.</strong> On JUNO v3 (42 societies), with thresholds frozen before counting, four named signatures concentrate in their windows beyond chance. Twelve of eighteen named windows hold. <a href="organisational-pathologies.html">Interim results</a>.</li>
-            </ul>
+            <div class="standing-prose">
+                <p>The current statement of the framework is <a href="natural-history-of-civilisations.html">The Natural History of Civilisations</a>, which brings together the essay, the evidence behind it and links to every result below.</p>
+                <p>In the November 2026 replication round, AI systems were given only an eight-number portrait of each era. On the 56-era core panel (Russia, Australia and the USA), Claude and Gemini each matched every portrait to its era from a closed list, and Kimi matched 52. Recognition weakened on the extension panel and on the sparse Denmark control, and the pre-registered null models were never returned, so this is a promising demonstration, not an external validation (<a href="https://github.com/KaliBond/wintermute/blob/main/analysis/cams_personality_independent_ai_replication_2026-11-07/CAMS_Personality_Independent_AI_Replication_Report_2026-11-07.md" target="_blank" rel="noopener">report</a>; <a href="cams-personality-experiment.html">repeat it yourself</a>).</p>
+                <p>Sealed predictions have now been scored. In ADVERSARY-02, 15 predictions for China and seven firms over 2021&ndash;2024 were sealed before any data was looked at. Six passed and nine failed, and the built-in kill switch was not triggered (<a href="adversary-02-results.html">results</a>). A prospective test is also lodged: 32 probability-weighted claims about the USA, China and Australia in 2027&ndash;2028 sit at Zenodo, to be scored when those years close (<a href="predictions-2027-2028.html">register</a>).</p>
+                <p>Pathologies are also being tested across scales. On JUNO v3 (42 societies), with thresholds frozen before counting, four named signatures concentrate in their windows beyond chance, and twelve of eighteen named windows hold (<a href="organisational-pathologies.html">interim results</a>).</p>
+            </div>
             <p style="margin:12px 0 0;font-size:0.85em;line-height:1.6;color:#5A6570;">Failures are part of the record: see <a href="validation.html" style="color:#2F6F7D;">Validation &amp; Limits</a> and the <a href="https://github.com/KaliBond/wintermute/blob/main/docs/CAMS_LAB_DIARY.md" target="_blank" rel="noopener" style="color:#2F6F7D;">lab diary</a>.</p>
         </div>
 
