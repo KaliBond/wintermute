@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CAMS Nations Lens — one nation, one year, one fortune</title>
+<title>CAMS Nations Lens | One Nation. One Year. One Fortune.</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23b0c6b3'/%3E%3Ccircle cx='32' cy='32' r='28' fill='none' stroke='%23171c16' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='10' fill='%23c92c50'/%3E%3C/svg%3E">
 <meta name="description" content="Crack a cookie: an independent evidence-gated reading of one nation in one year, 1900–2010. We get the numbers. You get the fortune.">
 <meta name="author" content="Kari McKern">
@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://neuralnations.org/nations-lens">
 <meta property="og:site_name" content="Neural Nations">
-<meta property="og:title" content="CAMS Nations Lens — one nation, one year, one fortune">
+<meta property="og:title" content="CAMS Nations Lens | One Nation. One Year. One Fortune.">
 <meta property="og:description" content="Draw a nation and a year, take the prompt to any AI, bring back the reply. The page checks the numbers; you keep the fortune cookie.">
 <meta property="og:image" content="https://neuralnations.org/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -86,6 +86,18 @@
   .hero h1 em{font-style:italic}
   .hero p.deal{margin-top:22px;max-width:52ch;font-size:18px;color:var(--ink-2)}
   .hero p.deal strong{color:var(--ink)}
+  .hero p.deal + p.deal{margin-top:14px}
+  .hero .cta{margin-top:26px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .hero .cta .btn{text-decoration:none}
+  .hero .cta-note{font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.12em;color:var(--ink-3)}
+  ol.steps{margin:16px 0 0;padding-left:22px;max-width:62ch;color:var(--ink-2)}
+  ol.steps li{margin-bottom:8px}
+  ol.steps strong{color:var(--ink)}
+  .prose{max-width:66ch;margin-top:22px;color:var(--ink-2)}
+  .prose p{margin-bottom:14px}
+  .prose strong{color:var(--ink)}
+  #balcony,#jar{margin-top:20px}
+  .closing{margin-top:30px;font-family:"Newsreader",Georgia,serif;font-size:21px;line-height:1.45;color:var(--ink)}
 
   section{padding:34px 0}
   .sec-label{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.18em;
@@ -435,7 +447,7 @@
   }
   /* Laptop widths: keep the full menu on one line by dropping the logo text
      and the GitHub/Newsletter labels (icons stay), then fall back to the burger. */
-  @media (max-width: 1480px) {
+  @media (max-width: 1640px) {
       .nav-container { padding: 0 14px; gap: 10px; }
       .nav-logo-text { display: none; }
       .nav-btn-github { font-size: 0; gap: 0; }
@@ -472,7 +484,7 @@
     </a>
     <nav class="top" aria-label="Sections">
       <a href="#crack">Crack</a>
-      <a href="#deal">The deal</a>
+      <a href="#second">Crack it again</a>
       <a href="#jar">Cookie jar</a>
     </nav>
   </div>
@@ -481,18 +493,25 @@
 <main id="top">
   <section class="hero wrap">
     <p class="kicker">CAMS v1.0 · field lens · window 1900–2010</p>
-    <h1>One nation. One year.<br><em>One <span class="hu">fortune</span>.</em></h1>
-    <p class="deal"><strong>We get the numbers. You get the cookie.</strong>
-      Draw a nation and a year, have your own AI read it under the lens, and file the reply.
-      What comes back is an evidence-gated reading — eight paladins, four vitals, and the spirit
-      of the year — sealed with a receipt. The corpus keeps the ledger.</p>
+    <h1>One Nation. One Year.<br><em>One <span class="hu">Fortune</span>.</em></h1>
+    <p class="deal"><strong>Russia, 1917. Crack the cookie. Then make another AI defend a different reading.</strong></p>
+    <p class="deal">What held Russia together as the old order broke apart? Which institutions could still
+      get things done? Who could still move food, money and orders? Give two AIs the same prompt and see
+      where their accounts part company. Then check the evidence and decide which one you&rsquo;d back.</p>
+    <p class="deal">That&rsquo;s the <strong>CAMS Nations Lens</strong>. It&rsquo;s a fortune cookie with a ledger
+      underneath. Your first one takes about five minutes.</p>
+    <p class="cta"><a class="btn seal" href="#crack">Draw a nation and a year</a><span class="cta-note">1900&ndash;2010</span></p>
   </section>
 
   <section id="crack" class="wrap">
-    <p class="sec-label">01 · Crack a cookie</p>
-    <h2>Draw, ask, file</h2>
-    <p class="sec-sub">Choose a nation and a year, or let the draw choose. Paste the prompt into a
-      <em>fresh</em> chat with any model — memory and custom instructions off — then bring the whole reply back.</p>
+    <p class="sec-label">01 · Start here</p>
+    <h2>Crack your first cookie</h2>
+    <ol class="steps">
+      <li><strong>Make your draw.</strong> Choose a nation and a year, or let chance deal you a pair.</li>
+      <li><strong>Give the prompt to your AI.</strong> Paste it unchanged into a fresh chat with Claude, GPT,
+        Grok, Gemini or Kimi. Switch off memory and custom instructions.</li>
+      <li><strong>Bring back the whole reply.</strong> Enter the model and version, then press <strong>Crack</strong>.</li>
+    </ol>
 
     <div class="crack-grid">
       <div class="panel">
@@ -545,51 +564,70 @@
         </label>
         <div class="btn-row">
           <button type="button" class="btn ghost" id="btn-check" disabled>Check structure</button>
-          <button type="button" class="btn seal" id="btn-file" disabled>Validate &amp; crack</button>
+          <button type="button" class="btn seal" id="btn-file" disabled>Crack</button>
         </div>
         <div id="verdict"></div>
       </div>
     </div>
 
     <div id="card-zone" aria-live="polite"></div>
+
+    <div class="prose">
+      <p>The fortune gives you a reading of the year through eight jobs a society has to do.
+        <strong>Helm</strong> steers. <strong>Shield</strong> defends. <strong>Lore</strong> makes meaning.
+        <strong>Stewards</strong> hold resources. <strong>Craft</strong> makes things. <strong>Hands</strong> do the work.
+        <strong>Archive</strong> remembers. <strong>Flow</strong> moves goods, money and messages.</p>
+      <p>Each paladin gets four vitals: Coherence, Capacity, Stress and Abstraction. <strong>Every score has to
+        show its work.</strong> Look under the fortune for the evidence tier and dated fact behind each number.
+        The page calculates each paladin&rsquo;s Zeitgeist from the vitals. If the model can&rsquo;t supply evidence,
+        it has to say so. A missing vital leaves that Zeitgeist uncomputed. The session code ties the reply to
+        your draw, and the cookie comes with a receipt.</p>
+    </div>
   </section>
 
-  <section id="deal" class="wrap">
-    <p class="sec-label">02 · The deal, plainly</p>
-    <h2>What a cookie is — and is not</h2>
+  <section id="second" class="wrap">
+    <p class="sec-label">02 · Crack it again</p>
+    <h2>The second cookie is where it gets interesting</h2>
     <div class="deal-grid">
       <div class="deal-item">
-        <h3>The fortune rides on top. The evidence rides at the foot.</h3>
-        <p>Every number in the ledger carries a tier and a dated fact. The read is what one model
-          produced under one instrument on one day — checkable, because the window closed in 2010.
-          A reading you can argue with is the point.</p>
+        <h3>Same nation. Same year. Different AI.</h3>
+        <p>Say both models give Russia&rsquo;s Shield high Stress. Does one cite desertions while the other leans
+          on battlefield losses? Those are different accounts of what was under pressure, even if the scores
+          match. And if the scores diverge, you can go straight to the facts each model used and see which
+          reading holds up.</p>
       </div>
       <div class="deal-item">
-        <h3>Structure, not virtue.</h3>
-        <p>The lens judges how a nation was organised, not whether it was good. A high Stress score
-          means pressure, not failure. Identical standards apply to every nation on the list —
-          Washington, London, Beijing and Moscow alike.</p>
-      </div>
-      <div class="deal-item">
-        <h3>NA is an honest answer.</h3>
-        <p>Where the model cannot name evidence, it must say NA — and where any vital is NA, that
-          paladin's Zeitgeist number is declared uncomputable rather than guessed. The cookie says so.</p>
-      </div>
-      <div class="deal-item">
-        <h3>Want the recent years?</h3>
-        <p>This lens stops at 2010, where the record is settled and the machines' memories run deep.
-          If you want the present, the scripts are public — modify them, run the protocol, and you
-          are doing CAMS research. The ceiling of this tool is the floor of the programme.</p>
+        <h3>Same nation. Different years.</h3>
+        <p>Try Russia in 1913, 1917 and 1921. Follow Britain through two world wars, or China from the last
+          emperor to the Olympic year. Collect the cookies and a ribbon begins to form. Watch which functions
+          come under strain first, which keep working through the shock and which take longest to recover.</p>
       </div>
     </div>
   </section>
 
+  <section id="balcony" class="wrap">
+    <p class="sec-label">03 · What the lens looks at</p>
+    <h2>Look past the balcony</h2>
+    <div class="prose">
+      <p>History gives us plenty of kings, presidents and generals. CAMS asks what they could actually get done.
+        Could the centre get orders carried out? Could the roads and railways keep food moving? Could officials
+        find the records they needed? A leader can sign a decree in an afternoon. Getting a country to act on it
+        is a different proposition.</p>
+      <p>The same questions apply in Washington, London, Beijing and Moscow. The scores describe how the society
+        was organised. High Stress means pressure, and a function can keep working under a great deal of it.</p>
+      <p>Each cookie is one model&rsquo;s reading on one run. Two models can agree and still lean on the same weak
+        evidence. That&rsquo;s a reason to open the ledger.</p>
+    </div>
+  </section>
+
   <section id="jar" class="wrap">
-    <p class="sec-label">03 · Cookie jar</p>
+    <p class="sec-label">04 · Cookie jar</p>
     <h2>Fortunes kept on this device</h2>
-    <p class="sec-sub">Your cookies stay in this browser — no account, no tracking, nothing leaves
-      the device unless you download it. Collect a nation across the years and the ribbon begins to form.</p>
+    <p class="sec-sub">Your cookies stay in a jar on your device. There&rsquo;s no account or tracking on the Lens.
+      If you want to work beyond 2010, the scripts, datasets, formulas and protocols are open at
+      <a href="https://neuralnations.org" rel="noopener">neuralnations.org</a>.</p>
     <div id="jar-zone"></div>
+    <p class="closing"><strong>Pick a year you think you know. Crack it twice. See what you&rsquo;d argue with.</strong><br>Peace, people.</p>
   </section>
 
   <footer class="site">
@@ -597,7 +635,7 @@
       <p>CAMS Nations Lens v1.0 · window 1900–2010 · eight paladins, each scored on the four vitals;
         per-paladin Z = (A·C)·(K−S) computed on this page, never by the model. Datasets, formulas and protocols are
         published openly at <a href="https://neuralnations.org" rel="noopener">neuralnations.org</a>.
-        A reading is a replicate under a named model, not a finding. Peace, people.</p>
+        A reading is a replicate under a named model, not a finding.</p>
     </div>
   </footer>
 </main>
