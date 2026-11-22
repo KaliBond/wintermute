@@ -61,7 +61,7 @@
   .hu.seal::after{background:var(--seal)}
 
   header.site{
-    position:sticky;top:0;z-index:30;
+    position:static;z-index:30;
     background:color-mix(in oklab,var(--paper) 88%,transparent);
     backdrop-filter:blur(8px);
     border-bottom:1px solid var(--line);
@@ -243,9 +243,227 @@
     .cookie-actions{padding:0 18px 20px}
     .ledger{padding:18px}
   }
+
+  /* ===== house chrome (navbar + mobile drawer), copied verbatim from style.css
+     so this page carries the site nav without inheriting style.css globals ===== */
+/* ── Navigation ──────────────────────────────────────────────── */
+  .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #D0C4A8;
+      border-bottom: 1px solid #B8AC98;
+      box-shadow: 0 1px 0 rgba(27,42,51,0.04);
+  }
+  
+  .nav-container {
+      max-width: 1480px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 60px;
+      gap: 16px;
+  }
+  
+  /* Logo */
+  .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #1B2A33;
+      flex-shrink: 0;
+  }
+  .nav-logo-badge {
+      width: 34px;
+      height: 34px;
+      background: #1B2A33;
+      color: #F5F1E4;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75em;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      flex-shrink: 0;
+  }
+  .nav-logo-text {
+      font-size: 1.1em;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #1B2A33;
+  }
+  
+  /* Centre menu */
+  .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex: 1;
+      justify-content: center;
+  }
+  
+  .nav-link {
+      color: #5A6E78;
+      text-decoration: none;
+      padding: 6px 8px;
+      border-radius: 10px;
+      font-size: 0.875em;
+      font-weight: 500;
+      transition: color 0.15s, background 0.15s;
+      white-space: nowrap;
+  }
+  .nav-link:hover  { color: #1B2A33; background: #EDE7D4; }
+  .nav-link.active { color: #1B2A33; font-weight: 600; }
+  
+  /* Dropdown */
+  .nav-dropdown { position: relative; display: flex; align-items: center; }
+  .nav-dropdown-toggle {
+      cursor: pointer; user-select: none;
+      color: #4A5560; padding: 6px 12px; border-radius: 10px;
+      font-size: 0.875em; font-weight: 500; background: none; border: none;
+      transition: color 0.15s, background 0.15s; white-space: nowrap;
+      display: flex; align-items: center; gap: 4px;
+  }
+  .nav-dropdown-toggle:hover,
+  .nav-dropdown:hover .nav-dropdown-toggle { color: #1B2A33; background: rgba(27,42,51,0.06); }
+  
+  .nav-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      border-radius: 16px;
+      padding: 6px;
+      min-width: 220px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.06);
+      z-index: 2000;
+      animation: navDropIn 0.18s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+  /* Invisible bridge fills the gap so the mouse doesn't lose hover */
+  .nav-dropdown-menu::before {
+      content: '';
+      position: absolute;
+      top: -12px;
+      left: 0;
+      right: 0;
+      height: 12px;
+  }
+  @keyframes navDropIn {
+      from { opacity:0; transform: translateX(-50%) translateY(-6px); }
+      to   { opacity:1; transform: translateX(-50%) translateY(0); }
+  }
+  .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown-menu a {
+      display: block; padding: 9px 14px; color: #374151;
+      text-decoration: none; font-size: 0.875em; font-weight: 500;
+      border-radius: 10px; transition: background 0.12s, color 0.12s; white-space: nowrap;
+  }
+  .nav-dropdown-menu a:hover { background: #F0E9D2; color: #2F6F7D; }
+  .nav-dropdown-menu .menu-divider { border: none; border-top: 1px solid #f3f4f6; margin: 4px 0; }
+  
+  /* Right-side action buttons */
+  .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+  }
+  .nav-btn-github {
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 10px;
+      background: transparent; color: #1B2A33; text-decoration: none;
+      border: 1px solid #DAD2B8;
+      font-size: 0.875em; font-weight: 500; transition: background 0.15s, border-color 0.15s; white-space: nowrap;
+  }
+  .nav-btn-github:hover { background: rgba(27,42,51,0.06); border-color: #1B2A33; }
+  .nav-btn-github svg  { width:15px; height:15px; flex-shrink:0; }
+  
+  .nav-btn-newsletter {
+      display: flex; align-items: center; gap: 6px;
+      padding: 0 16px; height: 34px; border-radius: 10px;
+      background: #1B2A33; color: #F5F1E4; text-decoration: none;
+      font-size: 0.875em; font-weight: 600; transition: background 0.15s; white-space: nowrap;
+  }
+  .nav-btn-newsletter:hover { background: #2F6F7D; }
+  .nav-btn-newsletter svg  { width:15px; height:15px; flex-shrink:0; }
+  
+  /* Hamburger */
+  .nav-hamburger {
+      display: none; flex-direction: column; justify-content: center;
+      align-items: center; width: 36px; height: 36px; border-radius: 10px;
+      background: transparent; border: 1px solid #DAD2B8; cursor: pointer;
+      gap: 5px; padding: 0; transition: background 0.15s;
+  }
+  .nav-hamburger:hover { background: rgba(27,42,51,0.06); }
+  .nav-hamburger span {
+      display: block; width: 18px; height: 2px; background: #1B2A33;
+      border-radius: 2px; transition: transform 0.22s, opacity 0.22s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  
+  /* Mobile drawer */
+  .nav-mobile {
+      display: none;
+      background: #D0C4A8;
+      border-top: 1px solid #B8AC98;
+      padding: 10px 16px 18px;
+  }
+  .nav-mobile.open { display: block; }
+  .nav-mobile a {
+      display: block; padding: 10px 14px; color: #4A5560;
+      text-decoration: none; font-size: 0.9em; font-weight: 500;
+      border-radius: 10px; transition: background 0.15s;
+  }
+  .nav-mobile a:hover { background: rgba(27,42,51,0.06); color: #1B2A33; }
+  .mobile-section-title {
+      font-size: 0.7em; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: #8A7E63; padding: 12px 14px 4px;
+  }
+  .mobile-divider { border: none; border-top: 1px solid #DAD2B8; margin: 8px 0; }
+  
+  /* Responsive — full menu needs ~1560px with Project Origins; compact it, then fall back to the hamburger */
+  @media (max-width: 1600px) {
+      .nav-link { padding: 5px 6px; font-size: 0.8em; }
+  }
+  /* Laptop widths: keep the full menu on one line by dropping the logo text
+     and the GitHub/Newsletter labels (icons stay), then fall back to the burger. */
+  @media (max-width: 1480px) {
+      .nav-container { padding: 0 14px; gap: 10px; }
+      .nav-logo-text { display: none; }
+      .nav-btn-github { font-size: 0; gap: 0; }
+      .nav-btn-newsletter .newsletter-text { display: none; }
+  }
+  /* Narrower windows: let the menu wrap onto a second row rather than hide it. */
+  @media (max-width: 1220px) {
+      .nav-container { height: auto; min-height: 60px; flex-wrap: wrap; padding: 6px 14px; row-gap: 4px; }
+      .nav-menu { flex: 1 1 100%; order: 3; flex-wrap: wrap; justify-content: center; }
+  }
+  /* Phones and very narrow windows: the burger menu. */
+  @media (max-width: 760px) {
+      .nav-container { height: 60px; flex-wrap: nowrap; padding: 0 14px; }
+      .nav-menu { display: none; }
+      .nav-hamburger { display: flex; }
+  }
+  @media (max-width: 600px) {
+      .nav-btn-newsletter .newsletter-text { display: none; }
+      .nav-logo-text { display: none; }
+  }
+  /* house footer (style.css .footer, margin-top zeroed: it follows the Lens footer) */
+  .footer { text-align:center; margin-top:0; color:#6B7480; padding:2rem 0; }
+  .footer p { font-size:13.5px; }
+  [id] { scroll-margin-top:76px; }
 </style>
 </head>
 <body>
+<nav class="navbar" id="site-nav"></nav>
 <header class="site">
   <div class="wrap">
     <a class="brand" href="#top">
@@ -383,6 +601,9 @@
     </div>
   </footer>
 </main>
+<footer class="footer" id="site-footer"></footer>
+<script src="site-chrome.js"></script>
+<script src="nav.js"></script>
 <script src="nations-lens.js"></script>
 </body>
 </html>
