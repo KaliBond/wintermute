@@ -8,6 +8,7 @@ const SITE = {
     { label: 'Model',      href: 'model.html' },
     { label: 'Datasets',   href: 'datasets.html' },
     { label: 'Explore',    href: 'explore.html' },
+    { label: 'Nations Lens', href: 'nations-lens.html' },
   ],
   insights: {
     label: 'Insights',
@@ -50,7 +51,7 @@ const SITE = {
 
 function currentPage() {
   const f = location.pathname.split('/').filter(Boolean).pop() || 'index.html';
-  return f.includes('.') ? f : 'index.html';
+  return f.includes('.') ? f : f + '.html';
 }
 
 function escAttr(s) {
