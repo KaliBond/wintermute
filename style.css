@@ -203,7 +203,7 @@ body {
 }
 /* Laptop widths: keep the full menu on one line by dropping the logo text
    and the GitHub/Newsletter labels (icons stay), then fall back to the burger. */
-@media (max-width: 1480px) {
+@media (max-width: 1640px) {
     .nav-container { padding: 0 14px; gap: 10px; }
     .nav-logo-text { display: none; }
     .nav-btn-github { font-size: 0; gap: 0; }
