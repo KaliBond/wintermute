@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CAMS Shannon Laboratory: Agreement, Learning and Information Flow</title>
+<style>
+:root{color-scheme:light;--ink:#172536;--muted:#617084;--navy:#132a42;--blue:#2463a2;--orange:#ba5b26;--bg:#f4f7fb;--line:#dbe4ed;--card:#fff;--accent:#147f74}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.5}
+main{max-width:1100px;margin:auto;padding:22px 16px 64px}header{padding:30px 24px;color:#f4f8fc;background:linear-gradient(120deg,#122a43,#1d4f59);border-radius:16px}
+.eyebrow{text-transform:uppercase;font-size:.75rem;letter-spacing:.14em;color:#a8d2d3;font-weight:750}h1{font-size:clamp(1.75rem,5vw,2.65rem);line-height:1.15;letter-spacing:-.025em;margin:10px 0}header p{max-width:850px;color:#d7e7ef;margin-bottom:0}h2{font-size:1.25rem;margin:0 0 14px}h3{font-size:1rem;margin:0 0 8px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:16px;box-shadow:0 2px 7px #11263b08}.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}label{display:block;font-weight:650;font-size:.94rem}label small{display:block;font-weight:400;color:var(--muted)}input[type=range]{width:100%;margin-top:10px;accent-color:var(--blue)}input[type=number],select{width:100%;border:1px solid #aebccd;padding:9px;border-radius:8px;background:#fff;color:var(--ink);font-size:1rem}.field{margin-bottom:15px}.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.value{font-variant-numeric:tabular-nums;background:#eaf0f7;color:#1f3b5a;padding:2px 7px;border-radius:6px}.buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}button{background:#153b5d;color:white;border:0;border-radius:9px;padding:11px 15px;cursor:pointer;font-weight:650}button.secondary{background:#e9f0f5;color:#17446a;border:1px solid #c6d7e3}button:hover{filter:brightness(1.07)}.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.88rem;color:var(--muted)}.swatch{display:inline-block;width:15px;height:4px;border-radius:3px;vertical-align:middle;margin:0 6px 2px 0}.orange{background:var(--orange)}.blue{background:var(--blue)}svg.chart{width:100%;height:auto;display:block;margin:6px auto}.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.metric{border:1px solid var(--line);border-radius:10px;padding:12px}.metric .title{font-size:.79rem;color:var(--muted)}.metric .nums{display:flex;gap:12px;flex-wrap:wrap;font-size:1.25rem;font-weight:720;margin-top:6px;font-variant-numeric:tabular-nums}.smalldef{font-size:.8rem;color:var(--muted);margin-top:6px}.a{color:var(--orange)}.b{color:var(--blue)}.small{font-size:.89rem;color:var(--muted)}.callout{border-left:4px solid var(--accent);padding:10px 13px;background:#eff9f7;border-radius:0 8px 8px 0}.warning{border-left-color:#b88a2d;background:#fffbef}.subtle{border-top:1px solid var(--line);margin-top:16px;padding-top:16px}.table-scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.91rem}th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}th{color:#41566d}td:not(:first-child),th:not(:first-child){text-align:right}details{border:1px solid var(--line);border-radius:10px;padding:12px;margin-top:12px;background:white}summary{cursor:pointer;font-weight:700}code{background:#edf2f7;padding:1px 4px;border-radius:3px}a{color:var(--blue)}p{margin:9px 0}.mono{font-family:ui-monospace,Consolas,monospace}.heat{display:flex;gap:22px;flex-wrap:wrap}.heat svg{max-width:100%;height:auto;display:block}@media(max-width:730px){.grid,.cols,.metric-grid{grid-template-columns:1fr}header{padding:24px 18px}.card{padding:15px}main{padding:12px 10px 48px}.metric-grid{gap:8px}}
+</style>
+</head>
+<body><main>
+<header><div class="eyebrow">CAMS · synthetic experiment · version 2.2 · Shannon layer, audited</div><h1>When agreement stops being learning</h1><p>Compare two eight-function societies exposed to <strong>exactly the same environmental change and observations</strong>. Change only the extent to which operational feedback reaches decision-making. Does coherence guarantee adaptive success? Version 2.0 added the information-theoretic layer; 2.1 asked what a node is in information-processing terms. <strong>Version 2.2 incorporates an independent audit (November 2026)</strong>: transfer entropy is now reported against a muted-source baseline and conditioned on the shared environment, so common drive is no longer sold as message; Archive gets a real record and a recurring environment; the authority echo is measured; and the dictionary is corrected (η_loop, Stress, the redundancy ceiling, and node value's candidate analogue).</p></header>
+<section class="card"><h2>1 · Set up a controlled comparison</h2>
+<div class="cols"><div class="field"><div class="row"><label for="gateA">Society A · upward feedback</label><strong id="gateAVal" class="value"></strong></div><input id="gateA" type="range" min="0" max="100" value="10"><small class="small">Access of Hands, Craft and Flow signals to Helm and Lore.</small></div>
+<div class="field"><div class="row"><label for="gateB">Society B · upward feedback</label><strong id="gateBVal" class="value"></strong></div><input id="gateB" type="range" min="0" max="100" value="90"><small class="small">Same nodes, evidence stream and starting beliefs.</small></div>
+<div class="field"><div class="row"><label for="authority">Shared Helm influence</label><strong id="authorityVal" class="value"></strong></div><input id="authority" type="range" min="0" max="100" value="75"><small class="small">Strength of central messages to other nodes.</small></div>
+<div class="field"><div class="row"><label for="evidence">Shared direct-evidence response</label><strong id="evidenceVal" class="value"></strong></div><input id="evidence" type="range" min="0" max="100" value="65"><small class="small">How strongly each function updates from local observations.</small></div>
+<div class="field"><div class="row"><label for="shock">Environmental change at round</label><strong id="shockVal" class="value"></strong></div><input id="shock" type="range" min="8" max="32" value="18"><small class="small">Reality abruptly reverses; both societies face the same shock.</small></div>
+<div class="field"><label for="seed">Random seed <small>Reproducible observation noise (42 is the default).</small></label><input id="seed" type="number" min="1" max="99999999" value="42"></div>
+<div class="field"><label for="bins">Symbol alphabet <small>Quantisation of beliefs for entropy estimation. Sign, thirds or quartiles of [−1,+1].</small></label><select id="bins"><option value="2">2 symbols (sign)</option><option value="3" selected>3 symbols (thirds)</option><option value="4">4 symbols (quartiles)</option></select></div>
+<div class="field"><div class="row"><label for="estRounds">Estimation run length</label><strong id="estRoundsVal" class="value"></strong></div><input id="estRounds" type="range" min="500" max="5000" step="250" value="2000"><small class="small">Long paired run used only for the Shannon panels.</small></div>
+<div class="field"><div class="row"><label for="flip">Environment rate of change</label><strong id="flipVal" class="value"></strong></div><input id="flip" type="range" min="5" max="250" step="5" value="40"><small class="small">Flip probability per round (÷1000). The environment's entropy rate: what Stress maps to. Audit finding: a tenfold rise in observation noise costs Helm ≈0.02 bits; moving this slider across its range costs ≈0.6.</small></div></div>
+<div class="buttons"><button id="run">Run both societies</button><button id="robust" class="secondary">Check 100 seeds</button><button id="csv" class="secondary">Export this run as CSV</button></div>
+<p class="small">Controls worth trying: set both feedback sliders equal (negative control); reduce Helm influence; move the environmental change; or set evidence response near zero. The Shannon panel recomputes on <em>Run both societies</em>. Do not interpret numerical scores as empirical CAMS measurements.</p></section>
+<section class="card"><h2>2 · What happened?</h2><p class="small">At each round the societies form beliefs about an external condition. At the shock that condition changes from <strong>+1</strong> to <strong>−1</strong>. A positive institutional belief after the shock is therefore inaccurate, even when everybody agrees.</p>
+<div id="metrics" class="metric-grid"></div><div class="grid"><section><h3>Decision fit: is Helm tracking reality?</h3><div id="fitChart"></div></section><section><h3>Coherence: are the functions in agreement?</h3><div id="coherenceChart"></div></section></div><div class="legend"><span><i class="swatch orange"></i>Society A</span><span><i class="swatch blue"></i>Society B</span><span><i class="swatch" style="background:#8899a9"></i>Environmental change (vertical marker)</span></div>
+<p id="interpretation" class="callout"></p>
+<h3 class="subtle">Final beliefs by functional node</h3><div id="nodesTable" class="table-scroll"></div><p class="small">−1 = new environmental state; +1 = old state. These are model beliefs, not node scores.</p>
+<p class="small"><strong>The coherence dip is the learning.</strong> After the shock, coherence and decision fit fall and rise together (r ≈ +0.7 to +0.8 across seeds): agreement dips while the operators switch first and Helm lags, then recovers as Helm catches up. Agreement without correctness exists only in the first rounds, while everyone still agrees on the old state. A society that never dips either never heard the news or suppressed it, which makes the dip a better diagnostic than the level.</p>
+<div id="robustResult"></div>
+</section>
+<section class="card"><h2>3 · Shannon analysis: what is shared, what moves, and what is only echoed</h2>
+<p class="small">A long paired run (length set above, same seed) in which the environment reverses at the rate set by the slider, so reality itself carries entropy rather than switching once. The belief streams are quantised into discrete symbols. From the symbol streams: <strong>mutual information</strong> between functions, the informational analogue of bond strength B<sub>ij</sub>; <strong>transfer entropy</strong> at lag 1, directed flow between functions; the <strong>bits of the true environment</strong> carried by Helm's belief; and <strong>total correlation</strong>, the informational face of cross-node agreement. The 2026 audit forced two controls that change what these numbers mean. Every transfer entropy now stands beside its <strong>muted-source baseline</strong> (the same quantity with the source cut off from everyone: whatever remains cannot be a message, only common drive), and beside its value <strong>conditioned on the environment</strong>. Only the surplus over the baseline is flow in the strong sense. Plug-in estimators with Miller–Madow correction; circular-shift nulls that preserve autocorrelation, with the achievable p-floor printed. Descriptive, not validated.</p>
+<div id="shannonMetrics" class="metric-grid"></div>
+<div class="grid"><section><h3>Directed transfer entropy between key pairs (bits)</h3><div id="teChart"></div></section><section><h3>Mutual information between functions (bits)</h3><div id="miCharts" class="heat"></div><p class="small">Cell intensity is proportional to mutual information on a common scale. Diagonal is the function's own entropy, greyed.</p></section></div>
+<div class="legend"><span><i class="swatch orange"></i>Society A</span><span><i class="swatch blue"></i>Society B</span></div>
+<p id="shannonInterp" class="callout"></p>
+<details><summary>How the Shannon quantities are estimated</summary>
+<p>Beliefs are quantised into the chosen symbol alphabet. Entropies are plug-in (maximum likelihood) with the Miller–Madow bias correction, Ĥ + (m−1)/(2N ln 2). Mutual information I(X;Y) = H(X) + H(Y) − H(X,Y), floored at zero. Transfer entropy TE(X→Y) = H(Y′|Y) − H(Y′|Y,X) at lag 1 under a first-order Markov assumption on the symbol stream. The environment-conditioned variant TE(X→Y|E) conditions every term on the next environmental state as well, removing what both streams merely share about the world. The muted-source baseline reruns the whole simulation with the source's outgoing weights zeroed and measures the same TE: what survives an intervention that makes messages impossible is common drive, and only the excess over it is flow.</p>
+<p>The null is now 199 circular shifts of the source stream, which preserves each stream's autocorrelation (the earlier shuffle null destroyed it and was lenient); p is plus-one corrected, so the achievable floor is p ≥ 1/200 = 0.005, printed beside every value. Redundancy is the total correlation ΣH(Xᵢ) − H(X₁,…,X₈) on binary symbols: with larger alphabets the eight-variable joint is too sparse at these run lengths. Eight binary streams share at most <strong>7 bits</strong> (eight marginals of at most 1 bit, minus a joint entropy of at least 1 bit); the ceiling printed in earlier versions was wrong. Conditioning the same quantity on the environment, ΣH(Xᵢ|E) − H(X₁,…,X₈|E), leaves the agreement that is more than everyone watching the same world. O-information (Rosas et al. 2019) summarises the whole system: positive means redundancy-dominated, negative synergy-dominated. This toy is always positive, and has to be: weighted averaging copies information but cannot create joint-only information, so an emergence model would need nonlinear coupling.</p>
+<p>Channel capacity treats the gate as a binary symmetric channel with crossover probability (1 − gate)/2, so C = 1 − h₂(e) bits per message; this is an illustrative model of the gate, not a measured property. The entropy rate tile is the mean per-function conditional entropy H(Xᵢ′|Xᵢ), the uncertainty each function generates per round after accounting for its own past.</p>
+<p>Limits: quantisation discards magnitude; plug-in entropies remain biased at short run lengths; lag-1 first-order transfer entropy misses longer or higher-order structure; conditioned estimators are noisier still. The random-reversal design is necessary: with a single scheduled shock the post-shock environment is a constant, and a constant carries zero bits: mutual information with it is degenerate by construction. All of it describes a constructed toy.</p>
+</details>
+</section>
+<section class="card"><h2>4 · What is a node? An information-processing signature</h2>
+<p class="small">Treat each function not as a label but as a processing role, measured five ways: how much it fluctuates (entropy H), how much novelty it generates given its own past (entropy rate), how much it is informed (transfer entropy in), how much it informs others (transfer entropy out), and how much it knows about the environment (mutual information with the true state). Two functions with identical signatures under every intervention would be one node wearing two names; a partition that merges dissimilar signatures destroys real processing distinctions. That is the Compression Theorem stated in bits, and here it is testable.</p>
+<div class="grid"><section><h3>Signatures by function</h3><div id="sigTables" class="table-scroll"></div><p class="small">H = entropy of the symbol stream; h rate = conditional entropy given the function's own past; TE in/out = mean transfer entropy from/to the other seven functions; env MI = bits about the true state.</p></section><section><h3>Silence a function: what does Helm lose?</h3><div id="ablationChart"></div><p class="small">Each bar: bits of environmental mutual information Helm loses when that function's outgoing messages are cut, same seed. Positive means the function was load-bearing for executive accuracy.</p></section></div>
+<p id="ablationReading" class="callout"></p>
+<h3 class="subtle">Do the layers emerge from information alone?</h3><div id="dendros" class="grid"></div>
+<p id="clusterReading" class="callout warning"></p>
+<details><summary>Methods, and the caveat that matters</summary>
+<p>Signatures use the same quantised streams and estimators as Section 3. Clustering is agglomerative average-linkage on the five standardised signature features; the three-cluster cut is compared with the LAPH layer assignment (cognitive: Archive, Lore, Stewards; executive: Helm, Shield; material: Craft, Flow, Hands) under the best of the six label permutations. Silencing zeroes one function's outgoing network weights and reruns the identical seeded stream.</p>
+<p><strong>The caveat that matters:</strong> in this toy the signatures were written by the chosen reliabilities and weights, so layer recovery here validates the measurement programme, not the eightfold partition. On scored historical data the parameters are not imposed, and that is where this programme would bite. The transferable pieces are the signature vector, the emergence check and the intervention, not the numbers.</p></details>
+</section>
+<section class="card"><h2>5 · The authority echo: control is not news</h2>
+<p class="small">The audit's most robust finding. Helm's broadcast is the heaviest weight in the network, yet it adds essentially nothing over its own muted baseline: a broadcast that repeats what everyone already believes carries almost no new bits, though it can fix the level everyone sits at. What it does instead is subtler. Sweep the authority slider and two quantities move in opposite directions: agreement <em>beyond what the shared environment explains</em> (conditioned redundancy) rises, while Helm's own knowledge of the environment falls. The mechanism: the broadcast pulls the other nodes towards Helm, so their reports back to Helm carry Helm's own past. Authority contaminates the channels it depends on. This is the masking state in miniature: agreement up, information about the world down. And it is why the silencing chart in Section 4 shows negative bars for Helm and Archive: cutting Helm's own echo improves its accuracy in every audited seed.</p>
+<div class="grid"><section><h3>Agreement beyond the environment (TC | E)</h3><div id="echoTCE"></div></section><section><h3>Helm's knowledge of the environment</h3><div id="echoEnv"></div></section></div>
+<p id="echoReading" class="callout"></p>
+</section>
+<section class="card"><h2>6 · What memory is worth: give Archive a record and the world a cycle</h2>
+<p class="small">The lab's original Archive had the weakest access to evidence and took most of its social input from Helm's broadcast: an echo of Helm, not a record, in a memoryless environment where the present says everything the past can. Under that design "memory is a drag" was guaranteed. An archive can help only if the past holds information about the future beyond what the present already gives (predictive information), and a memoryless world offers none. Here you can repair both defects: let the environment recur (a 60-round cycle with random phase slips, a season or a flood year) and let Archive keep a record (what the operators saw one cycle ago, read a little ahead). The control matters: the same record read a quarter-cycle out of phase separates the record's <em>content</em> from its mere <em>presence</em> as another voice.</p>
+<div class="cols"><div class="field"><label for="memEnv">Environment</label><select id="memEnv"><option value="periodic" selected>Recurring 60-round cycle</option><option value="markov">Memoryless (random reversals)</option></select></div>
+<div class="field"><label for="memArch">Archive</label><select id="memArch"><option value="calendar" selected>Keeps a one-cycle record (read 8 rounds ahead)</option><option value="echo">Echo of Helm (lab default)</option></select></div>
+<div class="field"><div class="row"><label for="memSlip">Cycle phase-slip probability</label><strong id="memSlipVal" class="value"></strong></div><input id="memSlip" type="range" min="0" max="80" step="5" value="5"><small class="small">Per round (÷1000). The record's worth should fall as the slips' entropy rate approaches the environment's own.</small></div></div>
+<div class="buttons"><button id="memRun" class="secondary">Run the memory test</button></div>
+<div id="memMetrics" class="metric-grid"></div>
+<div id="memChart"></div>
+<p id="memReading" class="callout"></p>
+</section>
+<section class="card"><h2>7 · CAMS in Shannon terms: a working correspondence</h2>
+<p class="small">A heuristic dictionary between the framework's quantities and information-theoretic ones. It is a correspondence to test, not an identity.</p>
+<div class="table-scroll"><table><thead><tr><th>CAMS quantity</th><th>Shannon reading</th><th>Where it appears in this lab</th></tr></thead><tbody>
+<tr><td>K − S (functional margin)</td><td><strong>The coding condition</strong>: a channel carries a source reliably only while the source's entropy rate is below capacity. Above it, two exits: slow down and repeat (C holds, A falls) or hold the rate and lose agreement (C falls, A holds). Ashby's requisite variety is the same theorem.</td><td>The environment-rate slider; the two exits are the audit's testable fork</td></tr>
+<tr><td>Coherence C (within a node)</td><td>Low entropy of opinion inside one function</td><td>Not measured here (one belief per function)</td></tr>
+<tr><td>Cross-node agreement</td><td>Redundancy: bits shared across functions; split into agreement explained by the shared environment and agreement beyond it</td><td>Total-correlation and TC | E tiles</td></tr>
+<tr><td>Capacity K</td><td>Channel capacity: bits a function can move per round</td><td>Gate capacity tile (illustrative BSC model)</td></tr>
+<tr><td>Stress S</td><td><strong>Rate of change</strong>: the environment's entropy rate, not observation noise. Noise barely bites (×10 costs Helm ≈0.02 bits); rate overwhelms the chain (89% → 12% of Hands' knowledge across the sweep)</td><td>Environment-rate slider</td></tr>
+<tr><td>Abstraction A</td><td>Compression along the information bottleneck: well-anchored abstraction keeps bits about the world; masking abstraction keeps the bits nodes share while environmental information drains. Γ = A/C reads as shared information rising while world information falls</td><td>TC | E versus env MI, qualitatively</td></tr>
+<tr><td>Bond strength B<sub>ij</sub></td><td>Mutual information I(Xᵢ;Xⱼ)</td><td>Heatmaps</td></tr>
+<tr><td>η_loop (Library Attractor)</td><td><strong>No Shannon analogue claimed.</strong> η_loop is the structural operator (BS<sub>Lore</sub> × BS<sub>Archive</sub>)/S<sub>Hands</sub>. Earlier versions mislabelled directed transfer entropy as its analogue; that mapping is withdrawn. Memory's informational worth is measured directly in Section 6.</td><td>Section 6</td></tr>
+<tr><td>λ₂ (algebraic connectivity)</td><td>Mixing rate: how fast local news becomes global</td><td>Not yet modelled</td></tr>
+<tr><td>Node value Vᵢ</td><td>Candidate analogue: <strong>semantic information</strong> (Kolchinsky &amp; Wolpert 2018): the information about the environment a system needs to persist, measured by scrambling it and watching viability fall. The silencing bars are exactly that measurement.</td><td>Silencing chart, Section 4</td></tr>
+<tr><td>The Sybond (whole)</td><td>Synergy, if any: information about the world that exists only jointly. O-information separates redundancy- from synergy-dominated systems; this toy is redundancy-dominated by construction (weighted averaging cannot create joint-only bits)</td><td>O-information tile</td></tr>
+</tbody></table></div>
+<p class="small">Discipline note: CAMS has been burned before by recombinations of its own quantities that redescribed value without adding predictive purchase. The Shannon layer earns its place only if bits predict something the raw scores do not, for instance, whether environment-conditioned upward transfer entropy forecasts post-shock correction across settings beyond what the gate weights alone already say. Treat everything on this page as a candidate for pre-registered testing, not a result.</p></section>
+<section class="card"><h2>8 · Turn a demonstration into a research question</h2>
+<div class="grid"><div><h3>Hypothesis</h3><p>For the <em>same starting institutional condition</em>, stronger upward transmission of disconfirming operational evidence should improve adjustment after environmental change, although it need not increase agreement.</p><h3>Proposed discriminating observation</h3><p>A society can maintain high coherence while Helm remains wrong. If observed feedback quality predicts correction beyond CAMS node attributes, an informational layer might earn a place in the empirical model.</p></div><div><h3>What could defeat the idea?</h3><p>If varying the feedback gate does not reliably improve the post-shock decision fit over a sensible range of model assumptions; or if simpler baselines explain independent historical outcomes just as well, the proposed extension has not earned complexity.</p><h3>Rival explanations</h3><p>Selection by power, differences in observation quality, simple decentralisation, economic slack, or changes in the environment may explain outcomes without relying on the CAMS partition.</p></div></div>
+<div class="callout warning"><strong>What this cannot establish:</strong> the model is a constructed mechanism demonstration. Its eight labels, network weights, noise distribution and update rule were chosen for exploration; no historical evidence calibrated them. A positive simulation result demonstrates conditional behaviour inside these assumptions, not empirical validation of CAMS or van der Leeuw and Dirks.</div>
+<h3 class="subtle">Transfer to a historical case</h3><p>Choose one documented institutional surprise, then build a <strong>timestamped evidence chain</strong>: (1) who first observed the problem; (2) what was transmitted, to whom, and when; (3) what organisational filters changed the message; (4) whether a policy or practice was corrected; and (5) the independently assessed consequence. Code these records before interpreting them through CAMS.</p>
+<p>Compare a model with ordinary resources and institutional attributes against one adding independently observed <strong>direction, fidelity, delay and decision impact</strong> of information flows. Keep some cases out of model development for a genuine test. Compare against non-CAMS functional partitions as a negative control.</p></section>
+<section class="card"><h2>9 · Methods and limitations</h2>
+<details><summary>Open the mechanism (auditable, deliberately simple)</summary><p>There are eight functional labels: Helm, Shield, Lore, Stewards, Craft, Hands, Archive and Flow. Each has a numerical belief <code>bᵢ</code> between −1 and +1. Each round, it receives a noisy observation of the same environmental state with function-specific access to evidence.</p>
+<p>Every node updates from (a) direct evidence and (b) a weighted mean of incoming neighbours' prior beliefs. The direct evidence step is <code>dᵢ = bᵢ + 0.55 × evidence × rᵢ × (signalᵢ − bᵢ)</code>, where <code>rᵢ</code> is an illustrative observation-access factor. The next belief is <code>bᵢ′ = 0.62 × dᵢ + 0.38 × mean(incoming beliefs)</code>, capped to [−1,+1].</p>
+<p>Both societies receive identical observations generated from the same seed. Directed links include top-down Helm broadcasts and operational reports from Hands, Craft and Flow. The <em>upward feedback</em> slider varies the weights of their messages to Helm and Lore. Helm influence changes the weight of outgoing Helm messages. All other weights remain fixed. There is no fitted model or scoring calibration; the Shannon layer computes entropies from the simulated belief streams but does not alter the dynamics.</p>
+<p><strong>Coherence</strong> = <code>1 − (max belief − min belief)/2</code>. <strong>Decision fit</strong> = <code>1 − |Helm belief − true state|/2</code>. <strong>Post-shock fit</strong> is the average decision fit after the shock. <strong>Reorientation round</strong> is the first post-shock round with a negative Helm belief, if any. Thresholds are descriptive, not validated.</p>
+<p>For stochastic sensitivity, the 100-seed check repeats the entire comparison with seeds 1–100, keeping all shared inputs constant between A and B within each seed. It reports descriptive means and the fraction in which B has better post-shock decision fit.</p></details>
+<details><summary>What would a next-generation model need?</summary><p>Explicit uncertainty distributions rather than scalar beliefs; independently observed directed interactions; multiple competing information types; signal distortion and strategic manipulation; changes in topology over time; social costs of dissent; costly sensing and implementation; richer Archive records than the one-cycle calendar added in v2.2; nonlinear coupling that could generate synergy rather than only copy redundancy; heterogeneity within nodes; more realistic policies and externally defined outcome measures. The selection of eight functions itself needs comparison with rival partitions and continuous models. On the Shannon side: continuous-valued entropy estimators (k-nearest-neighbour rather than quantised plug-in), longer lags, and an explicit compression step so that Abstraction has something to be.</p></details>
+<p class="small">Conceptual companion: Sander van der Leeuw and Gary Dirks, <a href="https://asu.elsevierpure.com/en/publications/society-building-as-collaborative-selection-of-information-proces/" target="_blank" rel="noreferrer">“Society Building as Collaborative Selection of Information-Processing Dimensions?” (2025)</a>. This experimental toy is independent of the paper and does not claim to reproduce its methods.</p></section>
+<footer class="small" style="margin:18px 0">CAMS Shannon Laboratory v2.2 · extended from CAMS Information Laboratory v1.0 · v2.2 revisions follow an independent audit (24 November 2026): muted-source baselines, environment-conditioned flow and redundancy, circular-shift nulls, the 7-bit ceiling, the authority echo, and the memory-worth test. Independent, local HTML. All computation occurs in your browser. No dependencies or network calls are required.</footer>
+</main>
+<script>
+'use strict';
+const names=['Helm','Shield','Lore','Stewards','Craft','Hands','Archive','Flow'];
+const reliability=[.12,.45,.18,.22,.70,.85,.08,.64];
+const initial=[.75,.73,.76,.68,.69,.72,.71,.72];
+const rounds=42;
+let current=null;
+const $=x=>document.getElementById(x);
+function clamp(x,min=-1,max=1){return Math.min(max,Math.max(min,x));}
+function RNG(seed){let s=(seed>>>0)||1;return function(){s+=0x6D2B79F5;let t=s;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return ((t^(t>>>14))>>>0)/4294967296;};}
+function normal(rand){let u=Math.max(rand(),1e-12),v=rand();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+function config(){return {gateA:+$('gateA').value/100,gateB:+$('gateB').value/100,authority:+$('authority').value/100,evidence:+$('evidence').value/100,shock:+$('shock').value,seed:Math.max(1,Math.floor(+$('seed').value||42)),bins:+$('bins').value,estRounds:+$('estRounds').value,flip:+$('flip').value/1000};}
+function drawSignals(seed,shock){let rand=RNG(seed), out=[];for(let t=0;t<rounds;t++){const truth=t<shock?1:-1;out.push(names.map(()=>clamp(truth+normal(rand)*.6)));}return out;}
+function network(gate,authority){const W=Array.from({length:8},()=>Array(8).fill(0));const edge=(from,to,w)=>{W[to][from]+=w;};
+ for(let i=0;i<8;i++){if(i!==0)edge(0,i,.2+1.25*authority);if(i!==2)edge(2,i,.28);}
+ [[0,.38],[2,.48],[3,.25]].forEach(([to,w])=>edge(6,to,w));
+ [[0,.35],[7,.16]].forEach(([to,w])=>edge(1,to,w));
+ [[0,.25],[5,.22]].forEach(([to,w])=>edge(3,to,w));
+ [[5,.55],[0,.92*gate],[2,.55*gate],[3,.40]].forEach(([to,w])=>edge(4,to,w));
+ [[4,.60],[7,.30],[0,1.0*gate],[2,.50*gate]].forEach(([to,w])=>edge(5,to,w));
+ [[0,.85*gate],[3,.50],[5,.35],[2,.25*gate]].forEach(([to,w])=>edge(7,to,w));
+ return W;
+}
+function simulate(gate,c,signals){const W=network(gate,c.authority);let beliefs=initial.slice();const hist=[];
+ for(let t=0;t<rounds;t++){const truth=t<c.shock?1:-1;let next=[];
+  for(let i=0;i<8;i++){const direct=beliefs[i]+.55*c.evidence*reliability[i]*(signals[t][i]-beliefs[i]);const denom=W[i].reduce((a,b)=>a+b,0);const social=denom?W[i].reduce((sum,w,j)=>sum+w*beliefs[j],0)/denom:direct;next.push(clamp(.62*direct+.38*social));}
+  beliefs=next;const coherence=1-(Math.max(...beliefs)-Math.min(...beliefs))/2;const fit=1-Math.abs(beliefs[0]-truth)/2;
+  const meanFit=1-beliefs.reduce((s,b)=>s+Math.abs(b-truth),0)/16;
+  hist.push({t:t+1,truth,coherence,fit,meanFit,beliefs:beliefs.slice()});
+ }
+ const after=hist.filter(h=>h.t>c.shock);const postFit=after.reduce((s,h)=>s+h.fit,0)/after.length;const corrected=after.find(h=>h.beliefs[0]<0);
+ return {hist,postFit,reorientation:corrected?corrected.t-c.shock:null,last:hist.at(-1)};
+}
+function compute(c){const sig=drawSignals(c.seed,c.shock);return {c,A:simulate(c.gateA,c,sig),B:simulate(c.gateB,c,sig)};}
+const pc=x=>(x*100).toFixed(1)+'%';
+function metrics(r){const one=(title,a,b,sub)=>`<div class="metric"><div class="title">${title}</div><div class="nums"><span class="a">A ${a}</span><span class="b">B ${b}</span></div><div class="smalldef">${sub}</div></div>`;
+ $('metrics').innerHTML=one('Post-shock decision fit',pc(r.A.postFit),pc(r.B.postFit),'Average accuracy of Helm decisions after the environmental change.')+one('Final coherence',pc(r.A.last.coherence),pc(r.B.last.coherence),'Agreement among the eight node beliefs, not environmental accuracy.')+one('Rounds to reorient',r.A.reorientation??'not yet',r.B.reorientation??'not yet','First round after the change in which Helm accepts the new sign.');
+}
+function svgChart(r,key){const w=470,h=260,p={l:40,r:14,t:18,b:35};const x=t=>p.l+(t-1)*(w-p.l-p.r)/(rounds-1),y=v=>h-p.b-v*(h-p.t-p.b);let parts=[];
+ for(let v=0;v<=1.01;v+=.25){parts.push(`<line x1="${p.l}" x2="${w-p.r}" y1="${y(v)}" y2="${y(v)}" stroke="#e0e8ef"/>`);parts.push(`<text x="${p.l-7}" y="${y(v)+4}" font-size="11" fill="#65758a" text-anchor="end">${Math.round(v*100)}</text>`);}
+ for(let t of [1,10,20,30,42])parts.push(`<text x="${x(t)}" y="${h-12}" font-size="11" fill="#65758a" text-anchor="middle">${t}</text>`);
+ parts.push(`<line x1="${x(r.c.shock+.5)}" x2="${x(r.c.shock+.5)}" y1="${p.t}" y2="${h-p.b}" stroke="#8798a8" stroke-dasharray="5 5" stroke-width="1.4"/>`);
+ function line(hist,colour){let pts=hist.map(k=>`${x(k.t).toFixed(1)},${y(k[key]).toFixed(1)}`).join(' ');return `<polyline points="${pts}" fill="none" stroke="${colour}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;}
+ parts.push(line(r.A.hist,'#ba5b26'),line(r.B.hist,'#2463a2'));parts.push(`<text x="${w/2}" y="${h-2}" fill="#65758a" font-size="11" text-anchor="middle">Round</text>`);parts.push(`<text x="${p.l+4}" y="12" font-size="11" fill="#65758a">0–100%</text>`);
+ return `<svg class="chart" role="img" aria-label="${key} values across 42 rounds for Society A and B, with a shock at round ${r.c.shock}" viewBox="0 0 ${w} ${h}">${parts.join('')}</svg>`;
+}
+function render(r){current=r;metrics(r);$('fitChart').innerHTML=svgChart(r,'fit');$('coherenceChart').innerHTML=svgChart(r,'coherence');
+ const diff=r.B.postFit-r.A.postFit;let message=diff>0.015?`Under these assumptions, B's more permeable feedback network outperforms A in post-shock decision fit by ${(diff*100).toFixed(1)} percentage points.`:diff<-.015?`Under these assumptions, A outperforms B by ${(-diff*100).toFixed(1)} percentage points. This is a useful counterexample to investigate.`:'The societies perform similarly in post-shock decision fit under these assumptions.';
+ message+=' Compare the coherence chart: agreement and correctness need not move together. Vary the controls and check whether this remains true.';$('interpretation').textContent=message;
+ let table='<table><thead><tr><th>Function</th><th>Society A</th><th>Society B</th></tr></thead><tbody>';names.forEach((name,i)=>{table+=`<tr><td>${name}</td><td>${r.A.last.beliefs[i].toFixed(3)}</td><td>${r.B.last.beliefs[i].toFixed(3)}</td></tr>`});table+='</tbody></table>';$('nodesTable').innerHTML=table;
+ $('robustResult').innerHTML='';
+}
+function robustness(){const c=config();let sumA=0,sumB=0,winsB=0,ties=0,diffs=[];for(let seed=1;seed<=100;seed++){let r=compute({...c,seed});sumA+=r.A.postFit;sumB+=r.B.postFit;let d=r.B.postFit-r.A.postFit;diffs.push(d);if(d>1e-9)winsB++;if(Math.abs(d)<=1e-9)ties++;}
+ const avg=(sumB-sumA)/100;const sd=Math.sqrt(diffs.reduce((s,d)=>s+(d-avg)**2,0)/99);
+ $('robustResult').innerHTML=`<div class="subtle"><h3>100-seed sensitivity check</h3><p>With the current settings, average post-shock fit: <strong class="a">A ${pc(sumA/100)}</strong> versus <strong class="b">B ${pc(sumB/100)}</strong>. B does better in <strong>${winsB}/100</strong> seeded runs (${ties} ties). Mean B−A difference: <strong>${(avg*100).toFixed(2)} percentage points</strong>; sample standard deviation across runs: <strong>${(sd*100).toFixed(2)} points</strong>.</p><p class="small">These are Monte Carlo summaries of this programmed toy, not confidence intervals for real societies. Seeds 1–100 are fixed and reproducible.</p></div>`;
+}
+function exportCSV(){if(!current)fullRun();const r=current;const q=v=>typeof v==='number'?String(v):v;let csv=['round,true_environment,society,coherence,decision_fit,mean_node_fit,'+names.map(n=>n.toLowerCase()+'_belief').join(',')];for(const [tag,run] of [['A',r.A],['B',r.B]])for(const h of run.hist)csv.push([h.t,h.truth,tag,h.coherence,h.fit,h.meanFit,...h.beliefs].map(q).join(','));
+ const blob=new Blob([csv.join('\n')+'\n'],{type:'text/csv;charset=utf-8'});const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='cams_information_lab_seed_'+r.c.seed+'.csv';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);
+}
+/* ---- Shannon layer: the 42-round dynamics above are untouched; everything below only reads belief streams. ---- */
+function simulateLong(gate,c,mute){
+ const R=c.estRounds;
+ const W=network(gate,c.authority);
+ if(mute!=null){const ms=Array.isArray(mute)?mute:[mute];for(const m of ms)for(let to=0;to<8;to++)if(to!==m)W[to][m]=0;}
+ let beliefs=initial.slice();const rand=RNG(c.seed);
+ const hist=new Array(R),truths=new Array(R);let truth=1;
+ for(let t=0;t<R;t++){if(rand()<(c.flip??0.04))truth=-truth;truths[t]=truth;
+  const obs=new Array(8);for(let i=0;i<8;i++)obs[i]=clamp(truth+normal(rand)*.6);
+  const next=new Array(8);
+  for(let i=0;i<8;i++){const direct=beliefs[i]+.55*c.evidence*reliability[i]*(obs[i]-beliefs[i]);let denom=0,acc=0;for(let j=0;j<8;j++){denom+=W[i][j];acc+=W[i][j]*beliefs[j];}next[i]=clamp(.62*direct+.38*(denom?acc/denom:direct));}
+  beliefs=next;hist[t]=beliefs.slice();}
+ return {hist,truths};
+}
+function qsym(v,bins){let s=Math.floor((v+1)/2*bins);return s<0?0:(s>=bins?bins-1:s);}
+function columns(run,bins){const R=run.hist.length,cols=[];for(let i=0;i<8;i++){const col=new Array(R);for(let t=0;t<R;t++)col[t]=qsym(run.hist[t][i],bins);cols.push(col);}return cols;}
+function Hn(N){const cols=[...arguments].slice(1);const counts=new Map();
+ for(let t=0;t<N;t++){let k=cols[0][t];for(let d=1;d<cols.length;d++)k=k*8+cols[d][t];counts.set(k,(counts.get(k)||0)+1);}
+ let H=0,m=0;for(const c of counts.values()){const p=c/N;H-=p*Math.log2(p);m++;}
+ return H+(m-1)/(2*N*Math.LN2);
+}
+function mi(N,x,y){return Math.max(0,Hn(N,x)+Hn(N,y)-Hn(N,x,y));}
+function tePair(src,dst){const N=src.length-1;const y1=new Array(N),y0=new Array(N),x0=new Array(N);
+ for(let t=0;t<N;t++){y1[t]=dst[t+1];y0[t]=dst[t];x0[t]=src[t];}
+ return Math.max(0,(Hn(N,y1,y0)-Hn(N,y0))-(Hn(N,y1,y0,x0)-Hn(N,y0,x0)));
+}
+function shuffled(a,rand){const x=a.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));const tmp=x[i];x[i]=x[j];x[j]=tmp;}return x;}
+function circShift(a,k){const n=a.length;return a.map((_,i)=>a[(i+k)%n]);}
+/* Transfer entropy conditioned on the environment at the target's next step: removes what both streams merely share about the world */
+function teCond(src,dst,E){const N=src.length-1;const y1=[],y0=[],x0=[],e1=[];
+ for(let t=0;t<N;t++){y1.push(dst[t+1]);y0.push(dst[t]);x0.push(src[t]);e1.push(E[t+1]);}
+ return Math.max(0,(Hn(N,y1,y0,e1)-Hn(N,y0,e1))-(Hn(N,y1,y0,x0,e1)-Hn(N,y0,x0,e1)));
+}
+/* Redundancy beyond the shared environment: sum H(Xi|E) - H(X1..X8|E), binary symbols */
+function condTotalCorr(bc,E){const R=E.length;const HE=Hn(R,E);let s=0;for(let i=0;i<8;i++)s+=Hn(R,bc[i],E)-HE;
+ return Math.max(0,s-(Hn(R,bc[0],bc[1],bc[2],bc[3],bc[4],bc[5],bc[6],bc[7],E)-HE));}
+/* O-information (Rosas et al. 2019): positive = redundancy-dominated, negative = synergy-dominated */
+function oInfo(bc){const R=bc[0].length,n=8;const Hall=Hn(R,bc[0],bc[1],bc[2],bc[3],bc[4],bc[5],bc[6],bc[7]);
+ let s=0;for(let i=0;i<n;i++){const rest=bc.filter((_,j)=>j!==i);s+=Hn(R,bc[i])-Hn(R,...rest);}
+ return (n-2)*Hall+s;}
+function h2(e){if(e<=0||e>=1)return 0;return -e*Math.log2(e)-(1-e)*Math.log2(1-e);}
+const TE_EDGES=[[5,0],[4,0],[7,0],[6,0],[0,5],[0,4],[0,7]];
+const TE_LABELS=['Ha→He','Cr→He','Fl→He','Ar→He','He→Ha','He→Cr','He→Fl'];
+function shannonOne(gate,c){
+ const run=simulateLong(gate,c);const R=c.estRounds;const cols=columns(run,c.bins);
+ const tS=new Array(R);for(let t=0;t<R;t++)tS[t]=run.truths[t]>0?1:0;
+ const envNodes=[];for(let i=0;i<8;i++){const s=new Array(R);for(let t=0;t<R;t++)s[t]=run.hist[t][i]>=0?1:0;envNodes[i]=mi(R,s,tS);}
+ const envMI=envNodes[0];
+ const bc=columns(run,2);let sumH=0;for(let i=0;i<8;i++)sumH+=Hn(R,bc[i]);
+ const tc=Math.max(0,sumH-Hn(R,bc[0],bc[1],bc[2],bc[3],bc[4],bc[5],bc[6],bc[7]));
+ const tce=condTotalCorr(bc,tS),oinfo=oInfo(bc);
+ const sig=[];let er=0;
+ for(let i=0;i<8;i++){const x=cols[i],x0=x.slice(0,R-1),x1=x.slice(1);
+  const H=Hn(R,x),eri=Hn(R-1,x0,x1)-Hn(R-1,x0);er+=eri/8;let tin=0,tout=0;
+  for(let j=0;j<8;j++)if(j!==i){tin+=tePair(cols[j],cols[i]);tout+=tePair(cols[i],cols[j]);}
+  sig.push({H,er:eri,tin:tin/7,tout:tout/7,env:envNodes[i]});}
+ const edges=TE_EDGES.map(([s,d])=>tePair(cols[s],cols[d]));
+ const up=(edges[0]+edges[1]+edges[2])/3,down=(edges[4]+edges[5]+edges[6])/3;
+ const edgesE=TE_EDGES.map(([s,d])=>teCond(cols[s],cols[d],tS));
+ const upE=(edgesE[0]+edgesE[1]+edgesE[2])/3,downE=(edgesE[4]+edgesE[5]+edgesE[6])/3;
+ const rand=RNG(c.seed+7919),reps=199;
+ const nullAgg=list=>{const obs=list.reduce((s,[a,b])=>s+tePair(cols[a],cols[b]),0)/list.length;let ex=0;
+  for(let r=0;r<reps;r++){let s=0;const k=1+Math.floor(rand()*(R-1));for(const [a,b] of list)s+=tePair(circShift(cols[a],k),cols[b]);if(s/list.length>=obs-1e-12)ex++;}
+  return {obs,p:(ex+1)/(reps+1),floor:1/(reps+1)};};
+ const upNull=nullAgg([[5,0],[4,0],[7,0]]),downNull=nullAgg([[0,5],[0,4],[0,7]]);
+ const M=[];for(let i=0;i<8;i++){const row=[];for(let j=0;j<8;j++)row.push(i===j?Hn(R,cols[i]):mi(R,cols[i],cols[j]));M.push(row);}
+ return {envMI,tc,tce,oinfo,er,edges,edgesE,up,down,upE,downE,upNull,downNull,M,capC:1-h2((1-gate)/2),sig};
+}
+/* ---- What is a node: signatures, emergence, silencing ---- */
+function ablationFor(c,gate,baseEnv,baseTC){
+ const R=c.estRounds,out=[];
+ for(let k=0;k<8;k++){
+  const run=simulateLong(gate,c,k);
+  const hS=new Array(R),tS=new Array(R);
+  for(let t=0;t<R;t++){hS[t]=run.hist[t][0]>=0?1:0;tS[t]=run.truths[t]>0?1:0;}
+  const e=mi(R,hS,tS);
+  const bc=columns(run,2);let sH=0;for(let i=0;i<8;i++)sH+=Hn(R,bc[i]);
+  const tc=Math.max(0,sH-Hn(R,bc[0],bc[1],bc[2],bc[3],bc[4],bc[5],bc[6],bc[7]));
+  const cols=c.bins===2?bc:columns(run,c.bins);
+  out.push({k,dEnv:baseEnv-e,dTC:baseTC-tc,cols,tS});
+ }
+ return out;
+}
+/* Muted-source baseline for every TE edge: the same TE measured in the run where the edge's source is cut off from everyone. What survives cannot be a message. */
+function mutedEdges(ab){
+ return TE_EDGES.map(([s,d])=>{const m=ab[s];return tePair(m.cols[s],m.cols[d]);});
+}
+function cluster3(sig){
+ const F=5;const Z0=sig.map(s=>[s.H,s.er,s.tin,s.tout,s.env]);
+ const mean=new Array(F).fill(0);Z0.forEach(v=>v.forEach((x,d)=>mean[d]+=x/8));
+ const sd=new Array(F).fill(0);Z0.forEach(v=>v.forEach((x,d)=>sd[d]+=(x-mean[d])**2/8));
+ const Z=Z0.map(v=>v.map((x,d)=>(x-mean[d])/(Math.sqrt(sd[d])||1)));
+ const dz=(a,b)=>Math.hypot(Z[a][0]-Z[b][0],Z[a][1]-Z[b][1],Z[a][2]-Z[b][2],Z[a][3]-Z[b][3],Z[a][4]-Z[b][4]);
+ let clusters=Z.map((_,i)=>({id:i,members:[i]}));let nextId=8;const merges=[];let cut3=null;
+ while(clusters.length>1){
+  let bi=0,bj=1,bd=Infinity;
+  for(let i=0;i<clusters.length;i++)for(let j=i+1;j<clusters.length;j++){
+   let s=0,cnt=0;for(const a of clusters[i].members)for(const b of clusters[j].members){s+=dz(a,b);cnt++;}
+   const d=s/cnt;if(d<bd){bd=d;bi=i;bj=j;}}
+  const members=[...clusters[bi].members,...clusters[bj].members];
+  merges.push({a:clusters[bi].id,b:clusters[bj].id,h:bd,id:nextId});
+  clusters=clusters.filter((_,ix)=>ix!==bi&&ix!==bj);
+  clusters.push({id:nextId++,members});
+  if(clusters.length===3)cut3=clusters.map(g=>g.members.slice());
+ }
+ return {merges,cut3};
+}
+const LAYER=[1,1,0,0,2,2,0,2];
+function layerMatch(cut3){
+ const perm=[[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]];let best=0;
+ for(const pm of perm){let s=0;cut3.forEach((members,ci)=>members.forEach(nd=>{if(LAYER[nd]===pm[ci])s++;}));best=Math.max(best,s);}
+ return best;
+}
+function dendrogramSVG(merges,title){
+ const n=8,w=470,h=210,p={l:36,r:10,t:22,b:40};
+ const children={};merges.forEach(m=>children[m.id]=[m.a,m.b]);
+ const heights={};for(let i=0;i<n;i++)heights[i]=0;merges.forEach(m=>heights[m.id]=m.h);
+ const maxH=Math.max(merges[merges.length-1].h,1e-9);
+ const root=merges[merges.length-1].id;
+ const order=[];(function walk(id){if(id<n)order.push(id);else{walk(children[id][0]);walk(children[id][1]);}})(root);
+ const xpos={};order.forEach((leaf,ix)=>xpos[leaf]=p.l+(ix+0.5)*(w-p.l-p.r)/n);
+ const y=v=>p.t+(1-v/maxH)*(h-p.t-p.b);
+ const abbr=['He','Sh','Lo','St','Cr','Ha','Ar','Fl'];
+ let parts=[`<text x="${p.l}" y="13" font-size="12" font-weight="700" fill="#172536">${title}</text>`];
+ parts.push(`<text x="${p.l-6}" y="${y(maxH)+4}" font-size="10" fill="#65758a" text-anchor="end">${maxH.toFixed(1)}</text>`);
+ parts.push(`<text x="${p.l-6}" y="${y(0)+4}" font-size="10" fill="#65758a" text-anchor="end">0</text>`);
+ parts.push(`<line x1="${p.l-2}" x2="${p.l-2}" y1="${y(0)}" y2="${y(maxH)}" stroke="#dbe4ed"/>`);
+ order.forEach(leaf=>{parts.push(`<text x="${xpos[leaf]}" y="${h-p.b+16}" font-size="10.5" fill="#65758a" text-anchor="middle">${abbr[leaf]}</text>`);});
+ (function draw(id){
+  if(id<n)return {x:xpos[id],y:y(0)};
+  const pa=draw(children[id][0]),pb=draw(children[id][1]);
+  const yy=y(heights[id]),x=(pa.x+pb.x)/2;
+  parts.push(`<line x1="${pa.x}" y1="${pa.y}" x2="${pa.x}" y2="${yy}" stroke="#147f74" stroke-width="1.6"/>`);
+  parts.push(`<line x1="${pb.x}" y1="${pb.y}" x2="${pb.x}" y2="${yy}" stroke="#147f74" stroke-width="1.6"/>`);
+  parts.push(`<line x1="${pa.x}" y1="${yy}" x2="${pb.x}" y2="${yy}" stroke="#147f74" stroke-width="1.6"/>`);
+  return {x,y:yy};
+ })(root);
+ parts.push(`<text x="${w/2}" y="${h-4}" font-size="11" fill="#65758a" text-anchor="middle">Average-linkage clustering on standardised signatures</text>`);
+ return `<svg class="chart" role="img" aria-label="Dendrogram of information signatures, ${title}" viewBox="0 0 ${w} ${h}">${parts.join('')}</svg>`;
+}
+function sigTable(sig,title){
+ let h=`<table><thead><tr><th>${title}</th><th>H</th><th>h rate</th><th>TE in</th><th>TE out</th><th>env MI</th></tr></thead><tbody>`;
+ sig.forEach((s,i)=>{h+=`<tr><td>${names[i]}</td><td>${s.H.toFixed(3)}</td><td>${s.er.toFixed(3)}</td><td>${s.tin.toFixed(3)}</td><td>${s.tout.toFixed(3)}</td><td>${s.env.toFixed(3)}</td></tr>`;});
+ return h+'</tbody></table>';
+}
+function ablationChartSVG(abA,abB){
+ const labels=['He','Sh','Lo','St','Cr','Ha','Ar','Fl'];
+ const w=470,h=250,p={l:46,r:10,t:16,b:46};
+ let vmax=0.005,vmin=0;
+ abA.forEach((a,i)=>{vmax=Math.max(vmax,a.dEnv,abB[i].dEnv);vmin=Math.min(vmin,a.dEnv,abB[i].dEnv);});
+ vmax*=1.15;vmin*=1.15;
+ const y=v=>p.t+(vmax-v)/(vmax-vmin)*(h-p.t-p.b);
+ const gw=(w-p.l-p.r)/8;let parts=[];
+ for(let f=0;f<=4;f++){const v=vmin+(vmax-vmin)*f/4;
+  parts.push(`<line x1="${p.l}" x2="${w-p.r}" y1="${y(v)}" y2="${y(v)}" stroke="#e0e8ef"/>`);
+  parts.push(`<text x="${p.l-7}" y="${y(v)+4}" font-size="11" fill="#65758a" text-anchor="end">${v.toFixed(3)}</text>`);}
+ labels.forEach((lab,i)=>{const x0=p.l+i*gw;
+  const ya=y(abA[i].dEnv),yb=y(abB[i].dEnv),y0=y(0);
+  parts.push(`<rect x="${(x0+gw*0.16).toFixed(1)}" y="${Math.min(ya,y0).toFixed(1)}" width="${(gw*0.29).toFixed(1)}" height="${Math.abs(ya-y0).toFixed(1)}" fill="#ba5b26" rx="2"/>`);
+  parts.push(`<rect x="${(x0+gw*0.53).toFixed(1)}" y="${Math.min(yb,y0).toFixed(1)}" width="${(gw*0.29).toFixed(1)}" height="${Math.abs(yb-y0).toFixed(1)}" fill="#2463a2" rx="2"/>`);
+  parts.push(`<text x="${(x0+gw/2).toFixed(1)}" y="${h-p.b+15}" font-size="10.5" fill="#65758a" text-anchor="middle">${lab}</text>`);});
+ parts.push(`<text x="${w/2}" y="${h-4}" font-size="11" fill="#65758a" text-anchor="middle">Function silenced (outgoing messages cut)</text>`);
+ parts.push(`<text x="${p.l+4}" y="12" font-size="11" fill="#65758a">bits of Helm's environmental information lost</text>`);
+ return `<svg class="chart" role="img" aria-label="Bits of Helm environmental information lost when each function is silenced, Society A versus B" viewBox="0 0 ${w} ${h}">${parts.join('')}</svg>`;
+}
+function nodeRender(A,B,c,abA,abB){
+ $('sigTables').innerHTML=sigTable(A.sig,'Society A')+sigTable(B.sig,'Society B');
+ const clA=cluster3(A.sig),clB=cluster3(B.sig);
+ $('dendros').innerHTML=dendrogramSVG(clA.merges,'Society A')+dendrogramSVG(clB.merges,'Society B');
+ const mA=layerMatch(clA.cut3),mB=layerMatch(clB.cut3);
+ const fmt=cut=>cut.map(ms=>ms.map(i=>names[i]).join(', ')).join('  |  ');
+ $('clusterReading').textContent=`Three-cluster cuts against the LAPH layers: A recovers ${mA}/8, B recovers ${mB}/8. Chance rate, printed since the audit: a random three-partition of eight items matches 6/8 or better 12.9% of the time (16.4% at the LAPH group sizes 2,3,3), so a 6/8 match is suggestive, not decisive. B's clusters: ${fmt(clB.cut3)}. In a toy the parameters wrote the signatures, so a good match validates the measurement, not the partition; a poor match is informative about which functions share an informational role.`;
+ $('ablationChart').innerHTML=ablationChartSVG(abA,abB);
+ const topA=abA.reduce((a,b)=>b.dEnv>a.dEnv?b:a),topB=abB.reduce((a,b)=>b.dEnv>a.dEnv?b:a);
+ const botA=abA.reduce((a,b)=>b.dEnv<a.dEnv?b:a),botB=abB.reduce((a,b)=>b.dEnv<a.dEnv?b:a);
+ let msg=`Silencing ${names[topB.k]} costs B's Helm the most (${topB.dEnv.toFixed(3)} bits); in A the largest loss is ${names[topA.k]} (${topA.dEnv.toFixed(3)} bits).`;
+ msg+=topA.k!==topB.k?' The ranking shifts with the gate: informational necessity is realised through the topology, not intrinsic to the function: a node is what it connects.':' The ranking is stable across the gate here; vary the sliders and see whether it survives.';
+ const negB=abB.filter(a=>a.dEnv<-0.01),negA=abA.filter(a=>a.dEnv<-0.01);
+ if(negB.length||negA.length){
+  const pool=negB.length?negB:negA;
+  const ns=pool.map(a=>names[a.k]);
+  const list=ns.length>1?ns.slice(0,-1).join(', ')+' and '+ns.at(-1):ns[0];
+  msg+=` Note the negative bars: silencing ${list} actually gains Helm bits rather than losing them (largest gain ${(-Math.min(...abB.map(a=>a.dEnv),...abA.map(a=>a.dEnv))).toFixed(3)} bits). A channel that anchors the executive to stale states is a drag on accuracy, whatever its value for continuity. Memory and conservatism are separated by exactly this sign.`;}
+ $('ablationReading').textContent=msg;
+}
+function teChartSVG(A,B){
+ const w=470,h=250,p={l:42,r:10,t:16,b:46};
+ const vmax=Math.max(...A.edges,...B.edges,0.005)*1.15;
+ const y=v=>p.t+(1-v/vmax)*(h-p.t-p.b);
+ const gw=(w-p.l-p.r)/TE_LABELS.length;let parts=[];
+ for(let f=0;f<=4;f++){const v=vmax*f/4;
+  parts.push(`<line x1="${p.l}" x2="${w-p.r}" y1="${y(v)}" y2="${y(v)}" stroke="#e0e8ef"/>`);
+  parts.push(`<text x="${p.l-7}" y="${y(v)+4}" font-size="11" fill="#65758a" text-anchor="end">${v.toFixed(3)}</text>`);}
+ TE_LABELS.forEach((lab,i)=>{const x0=p.l+i*gw;const ya=y(A.edges[i]),yb=y(B.edges[i]);
+  parts.push(`<rect x="${(x0+gw*0.16).toFixed(1)}" y="${ya.toFixed(1)}" width="${(gw*0.29).toFixed(1)}" height="${(h-p.b-ya).toFixed(1)}" fill="#ba5b26" rx="2"/>`);
+  parts.push(`<rect x="${(x0+gw*0.53).toFixed(1)}" y="${yb.toFixed(1)}" width="${(gw*0.29).toFixed(1)}" height="${(h-p.b-yb).toFixed(1)}" fill="#2463a2" rx="2"/>`);
+  if(A.edgesMuted){const ma=y(A.edgesMuted[i]),mb=y(B.edgesMuted[i]);
+   parts.push(`<line x1="${(x0+gw*0.16).toFixed(1)}" x2="${(x0+gw*0.45).toFixed(1)}" y1="${ma.toFixed(1)}" y2="${ma.toFixed(1)}" stroke="#132a42" stroke-width="2.2"/>`);
+   parts.push(`<line x1="${(x0+gw*0.53).toFixed(1)}" x2="${(x0+gw*0.82).toFixed(1)}" y1="${mb.toFixed(1)}" y2="${mb.toFixed(1)}" stroke="#132a42" stroke-width="2.2"/>`);}
+  parts.push(`<text x="${(x0+gw/2).toFixed(1)}" y="${h-p.b+15}" font-size="10.5" fill="#65758a" text-anchor="middle">${lab}</text>`);});
+ parts.push(`<text x="${w/2}" y="${h-4}" fill="#65758a" font-size="11" text-anchor="middle">Directed pair, lag 1 (source → target) · dark tick: muted-source baseline (common drive); bar above the tick is the message</text>`);
+ parts.push(`<text x="${p.l+4}" y="12" font-size="11" fill="#65758a">bits</text>`);
+ return `<svg class="chart" role="img" aria-label="Transfer entropy in bits for seven directed node pairs, Society A versus B" viewBox="0 0 ${w} ${h}">${parts.join('')}</svg>`;
+}
+function heatmapSVG(M,title,vmax){
+ const cell=26,lab=30,n=8,w=lab+n*cell,h=lab+n*cell+18;
+ const abbr=['He','Sh','Lo','St','Cr','Ha','Ar','Fl'];
+ const col=v=>{const t=Math.min(1,v/vmax);
+  const r=Math.round(238+(20-238)*t),g=Math.round(243+(127-243)*t),b=Math.round(248+(116-248)*t);
+  return `rgb(${r},${g},${b})`;};
+ let parts=[`<text x="${lab}" y="13" font-size="12" font-weight="700" fill="#172536">${title}</text>`];
+ for(let i=0;i<n;i++){parts.push(`<text x="${lab-6}" y="${lab+i*cell+17}" font-size="10.5" fill="#65758a" text-anchor="end">${abbr[i]}</text>`);
+  parts.push(`<text x="${lab+i*cell+cell/2}" y="${lab-6}" font-size="10.5" fill="#65758a" text-anchor="middle">${abbr[i]}</text>`);}
+ for(let i=0;i<n;i++)for(let j=0;j<n;j++){const v=M[i][j];const x=lab+j*cell,y=lab+i*cell+16;
+  if(i===j){parts.push(`<rect x="${x}" y="${y}" width="${cell-1}" height="${cell-1}" fill="#e8edf2" rx="3"/>`);}
+  else{parts.push(`<rect x="${x}" y="${y}" width="${cell-1}" height="${cell-1}" fill="${col(v)}" rx="3"/>`);
+   parts.push(`<text x="${x+(cell-1)/2}" y="${y+16}" font-size="8.5" fill="${v/vmax>0.55?'#f4f8fc':'#41566d'}" text-anchor="middle">${v.toFixed(2)}</text>`);}}
+ return `<svg role="img" aria-label="Mutual information matrix, ${title}" viewBox="0 0 ${w} ${h}" width="${w}">${parts.join('')}</svg>`;
+}
+function shannonRender(c){
+ $('shannonInterp').textContent='Computing entropies, muted-source interventions, conditioned flows, clustering and silencing runs…';
+ setTimeout(()=>{
+ const A=shannonOne(c.gateA,c),B=shannonOne(c.gateB,c);
+ const abA=ablationFor(c,c.gateA,A.envMI,A.tc),abB=ablationFor(c,c.gateB,B.envMI,B.tc);
+ A.edgesMuted=mutedEdges(abA);B.edgesMuted=mutedEdges(abB);
+ /* Aggregate baselines follow the audit's intervention: all three operators cut off together for the upward figure; Helm cut off for the downward one. */
+ const upMuteRun=(gate)=>{const run=simulateLong(gate,c,[5,4,7]);const cols=columns(run,c.bins);return (tePair(cols[5],cols[0])+tePair(cols[4],cols[0])+tePair(cols[7],cols[0]))/3;};
+ A.upMuted=upMuteRun(c.gateA);B.upMuted=upMuteRun(c.gateB);
+ A.downMuted=(tePair(abA[0].cols[0],abA[0].cols[5])+tePair(abA[0].cols[0],abA[0].cols[4])+tePair(abA[0].cols[0],abA[0].cols[7]))/3;
+ B.downMuted=(tePair(abB[0].cols[0],abB[0].cols[5])+tePair(abB[0].cols[0],abB[0].cols[4])+tePair(abB[0].cols[0],abB[0].cols[7]))/3;
+ const bits=x=>x.toFixed(3);
+ const one=(title,a,b,sub)=>`<div class="metric"><div class="title">${title}</div><div class="nums"><span class="a">A ${a}</span><span class="b">B ${b}</span></div><div class="smalldef">${sub}</div></div>`;
+ const surp=(raw,muted)=>{const s=raw-muted;return `${bits(s)} (${raw>1e-9?Math.round(100*s/raw):0}% of raw)`;};
+ $('shannonMetrics').innerHTML=
+  one('Reality in Helm',bits(A.envMI),bits(B.envMI),'Bits of mutual information between the sign of Helm’s belief and the true state, over the whole estimation run.')+
+  one('Upward transfer entropy',bits(A.up),bits(B.up),`Mean Hands/Craft/Flow → Helm, lag 1. Muted baseline A ${bits(A.upMuted)}, B ${bits(B.upMuted)}; surplus (the message) A ${surp(A.up,A.upMuted)}, B ${surp(B.up,B.upMuted)}. Circular-shift null: A p=${A.upNull.p.toFixed(3)}, B p=${B.upNull.p.toFixed(3)} (floor ${A.upNull.floor}).`)+
+  one('Downward transfer entropy',bits(A.down),bits(B.down),`Mean Helm → Hands/Craft/Flow, lag 1. Muted baseline A ${bits(A.downMuted)}, B ${bits(B.downMuted)}; surplus A ${surp(A.down,A.downMuted)}, B ${surp(B.down,B.downMuted)}. Circular-shift null: A p=${A.downNull.p.toFixed(3)}, B p=${B.downNull.p.toFixed(3)} (floor ${A.downNull.floor}).`)+
+  one('TE conditioned on the environment',`↑ ${bits(A.upE)} ↓ ${bits(A.downE)}`,`↑ ${bits(B.upE)} ↓ ${bits(B.downE)}`,'Removing what both streams merely share about the world. The audit: A’s raw upward advantage inverts here; B’s survives. Conditioning is the sharper instrument.')+
+  one('Redundancy (total correlation)',bits(A.tc),bits(B.tc),'Bits shared across all eight functions, binary symbols; ceiling is 7 bits, not 8. The informational face of cross-node agreement.')+
+  one('Redundancy given the environment',bits(A.tce),bits(B.tce),'Agreement beyond what the shared world explains. In this toy about two thirds of the total.')+
+  one('O-information',bits(A.oinfo),bits(B.oinfo),'Positive at every setting: the toy is redundancy-dominated, and must be: weighted averaging copies information but cannot create joint-only bits. Emergence would need nonlinear coupling.')+
+  one('Gate channel capacity (BSC model)',bits(A.capC),bits(B.capC),'Bits per message; the gate modelled as a binary symmetric channel, crossover (1−gate)/2. An illustrative model of the gate, not a measured property.')+
+  one('Mean node entropy rate',bits(A.er),bits(B.er),'Bits of fresh uncertainty per function per round, given its own past.');
+ $('teChart').innerHTML=teChartSVG(A,B);
+ let mmax=0.005;for(const S of [A,B])for(let i=0;i<8;i++)for(let j=0;j<8;j++)if(i!==j)mmax=Math.max(mmax,S.M[i][j]);
+ $('miCharts').innerHTML=heatmapSVG(A.M,'Society A',mmax)+heatmapSVG(B.M,'Society B',mmax);
+ const shareA=A.up>1e-9?Math.round(100*(A.up-A.upMuted)/A.up):0,shareB=B.up>1e-9?Math.round(100*(B.up-B.upMuted)/B.up):0;
+ const dUp=B.up-A.up,dEnv=B.envMI-A.envMI;let msg='';
+ if(dUp>0.005&&dEnv>0.005)msg+=`Under these assumptions, opening the gate moved real information: upward transfer entropy is ${bits(B.up)} bits in B against ${bits(A.up)} in A, and Helm carries ${bits(B.envMI)} versus ${bits(A.envMI)} bits about the true environment. `;
+ else if(dUp<-0.005)msg+=`A shows the higher upward transfer entropy under these settings (${bits(A.up)} vs ${bits(B.up)} bits), a counterexample worth investigating. `;
+ else msg+='The two societies differ little in measured information flow under these settings. ';
+ msg+=`But read the raw bars against their dark ticks: most measured flow is the shared environment both societies watch. Only about ${shareA}% of A’s and ${shareB}% of B’s raw upward figure survives the muted-source baseline. The surplus is positive, but the audit is right that the raw number oversells the conversation. `;
+ const invA=A.upE<A.downE,invB=B.upE<B.downE;
+ if(invA&&!invB)msg+=`Conditioned on the environment the societies separate: A’s upward advantage inverts (↑ ${bits(A.upE)} against ↓ ${bits(A.downE)}), while B’s survives (↑ ${bits(B.upE)} against ↓ ${bits(B.downE)}). The conditional measure, not the raw one, is what the gate actually buys. `;
+ else if(invA&&invB)msg+=`Conditioned on the environment, the upward advantage inverts in both societies: what looked like flow was mostly common drive. `;
+ if(A.tc>B.tc+0.005)msg+=`A remains the more redundant society (${bits(A.tc)} vs ${bits(B.tc)} bits): agreement without corresponding accuracy, the coherence–correctness gap expressed in bits. `;
+ else if(B.tc>A.tc+0.005)msg+=`B is also more redundant (${bits(B.tc)} vs ${bits(A.tc)} bits): here agreement and accuracy rose together rather than trading off. `;
+ if(A.upNull.p>0.05&&B.upNull.p>0.05)msg+='Caution: neither upward-flow aggregate clears the circular-shift null at this run length; lengthen the estimation run before reading anything into it.';
+ msg+='Compare with Section 2: decision fit measures whether Helm is right; the surplus over the baseline measures whether the operators are telling Helm anything.';
+ $('shannonInterp').textContent=msg;
+ nodeRender(A,B,c,abA,abB);
+ echoRender(c);
+ },40);
+}
+/* ---- Section 5: the authority echo ---- */
+function echoSweep(c){
+ const pts=[];for(const auth of [0,.25,.5,.75,1]){
+  const cc={...c,authority:auth};const row={auth};
+  for(const [tag,gate] of [['A',c.gateA],['B',c.gateB]]){
+   const run=simulateLong(gate,cc);const R=c.estRounds;
+   const hS=new Array(R),tS=new Array(R);
+   for(let t=0;t<R;t++){hS[t]=run.hist[t][0]>=0?1:0;tS[t]=run.truths[t]>0?1:0;}
+   const bc=columns(run,2);
+   row[tag+'env']=mi(R,hS,tS);row[tag+'tce']=condTotalCorr(bc,tS);
+  }
+  pts.push(row);}
+ return pts;
+}
+function echoChartSVG(pts,key,title,ylab){
+ const w=470,h=230,p={l:46,r:14,t:16,b:38};
+ let lo=Infinity,hi=-Infinity;pts.forEach(r=>{lo=Math.min(lo,r['A'+key],r['B'+key]);hi=Math.max(hi,r['A'+key],r['B'+key]);});
+ const pad=(hi-lo)*0.15||0.01;lo-=pad;hi+=pad;
+ const x=i=>p.l+i*(w-p.l-p.r)/(pts.length-1),y=v=>p.t+(hi-v)/(hi-lo)*(h-p.t-p.b);
+ let parts=[];
+ for(let f=0;f<=4;f++){const v=lo+(hi-lo)*f/4;
+  parts.push(`<line x1="${p.l}" x2="${w-p.r}" y1="${y(v)}" y2="${y(v)}" stroke="#e0e8ef"/>`);
+  parts.push(`<text x="${p.l-7}" y="${y(v)+4}" font-size="11" fill="#65758a" text-anchor="end">${v.toFixed(3)}</text>`);}
+ pts.forEach((r,i)=>parts.push(`<text x="${x(i)}" y="${h-12}" font-size="11" fill="#65758a" text-anchor="middle">${r.auth.toFixed(2)}</text>`));
+ for(const [k,col] of [['A','#ba5b26'],['B','#2463a2']]){
+  const line=pts.map((r,i)=>`${x(i).toFixed(1)},${y(r[k+key]).toFixed(1)}`).join(' ');
+  parts.push(`<polyline points="${line}" fill="none" stroke="${col}" stroke-width="2.5" stroke-linejoin="round"/>`);
+  pts.forEach((r,i)=>parts.push(`<circle cx="${x(i).toFixed(1)}" cy="${y(r[k+key]).toFixed(1)}" r="3.2" fill="${col}"/>`));}
+ parts.push(`<text x="${w/2}" y="${h-1}" font-size="11" fill="#65758a" text-anchor="middle">Helm influence (authority slider)</text>`);
+ parts.push(`<text x="${p.l+4}" y="12" font-size="11" fill="#65758a">${ylab}</text>`);
+ return `<svg class="chart" role="img" aria-label="${title} across the authority slider, Societies A and B" viewBox="0 0 ${w} ${h}">${parts.join('')}</svg>`;
+}
+function echoRender(c){
+ $('echoReading').textContent='Sweeping authority…';
+ setTimeout(()=>{
+  const pts=echoSweep(c);
+  $('echoTCE').innerHTML=echoChartSVG(pts,'tce','Agreement beyond the environment','bits, TC | E');
+  $('echoEnv').innerHTML=echoChartSVG(pts,'env','Helm knowledge of the environment','bits, env MI of Helm');
+  const f=pts[0],l=pts[pts.length-1];
+  const dT=((l.Atce+l.Btce)/2-(f.Atce+f.Btce)/2),dE=((l.Aenv+l.Benv)/2-(f.Aenv+f.Benv)/2);
+  $('echoReading').textContent=`Across the authority sweep, agreement beyond the environment ${dT>=0?'rises':'falls'} by ${Math.abs(dT).toFixed(3)} bits while Helm's own knowledge ${dE>=0?'rises':'falls'} by ${Math.abs(dE).toFixed(3)} bits (single seed; the audit's 30-seed means are +0.161 and −0.015). The broadcast sets levels without adding news: control is not transmission, and transfer entropy alone cannot see it. The echo it creates is why silencing Helm's broadcast improves Helm's accuracy in Section 4.`;
+ },60);
+}
+/* ---- Section 6: memory is worth the environment's predictable structure (ported from the audit's controls) ---- */
+function memRunOnce(gate,c,o){
+ const p=Object.assign({R:3000,period:60,slip:0,archive:'calendar',lead:8,muteArchive:false,env:'periodic'},o);
+ const W=network(gate,c.authority);
+ if(p.muteArchive)for(let to=0;to<8;to++)if(to!==6)W[to][6]=0;
+ let b=initial.slice();const rand=RNG(c.seed),rand2=RNG(c.seed+104729);
+ const hist=[];let m=1,mk=1,truth=1;const truths=[];
+ for(let t=0;t<p.R;t++){
+  if(p.env==='markov'){if(rand()<(c.flip??0.04))mk=-mk;truth=mk;}
+  else{if(rand()<p.slip)m=-m;const sq=(Math.floor(t/(p.period/2))%2===0)?1:-1;truth=sq*m;}
+  truths.push(truth);
+  const obs=new Array(8);for(let i=0;i<8;i++)obs[i]=clamp(truth+normal(rand)*.6);
+  const next=[];
+  for(let i=0;i<8;i++){
+   let den=0,acc=0;for(let j=0;j<8;j++){den+=W[i][j];acc+=W[i][j]*b[j];}
+   const social=den?acc/den:b[i];
+   if(i===6&&(p.archive==='calendar'||p.archive==='misaligned')&&t-p.period+p.lead-(p.archive==='misaligned'?p.period/4:0)>=0){
+    const idx=p.archive==='calendar'?t-p.period+p.lead:t-p.period+p.lead-p.period/4;
+    const rec=hist[idx];const record=(rec[4]+rec[5]+rec[7])/3;
+    next.push(clamp(.62*record+.38*social));
+   }else{
+    const direct=b[i]+.55*c.evidence*reliability[i]*(obs[i]-b[i]);
+    next.push(clamp(.62*direct+.38*social));
+   }
+  }
+  b=next;hist.push(b.slice());
+ }
+ const burn=300,R=p.R-burn;
+ const hs=new Array(R),ts=new Array(R);
+ for(let t=0;t<R;t++){hs[t]=hist[burn+t][0]>=0?1:0;ts[t]=truths[burn+t]>0?1:0;}
+ return mi(R,hs,ts);
+}
+function memChartSVG(rows){
+ const w=470,h=250,p={l:46,r:14,t:16,b:40};
+ let hi=0.01;rows.forEach(r=>{hi=Math.max(hi,r.A,r.B);});hi*=1.15;
+ const xmax=Math.max(...rows.map(r=>r.h))*1.1||0.5;
+ const x=v=>p.l+v/xmax*(w-p.l-p.r),y=v=>p.t+(1-v/hi)*(h-p.t-p.b);
+ let parts=[];
+ for(let f=0;f<=4;f++){const v=hi*f/4;
+  parts.push(`<line x1="${p.l}" x2="${w-p.r}" y1="${y(v)}" y2="${y(v)}" stroke="#e0e8ef"/>`);
+  parts.push(`<text x="${p.l-7}" y="${y(v)+4}" font-size="11" fill="#65758a" text-anchor="end">${v.toFixed(3)}</text>`);}
+ rows.forEach(r=>parts.push(`<text x="${x(r.h)}" y="${h-14}" font-size="10" fill="#65758a" text-anchor="middle">${r.h.toFixed(2)}</text>`));
+ for(const [k,col] of [['A','#ba5b26'],['B','#2463a2']]){
+  const line=rows.map(r=>`${x(r.h).toFixed(1)},${y(r[k]).toFixed(1)}`).join(' ');
+  parts.push(`<polyline points="${line}" fill="none" stroke="${col}" stroke-width="2.5" stroke-linejoin="round"/>`);
+  rows.forEach(r=>parts.push(`<circle cx="${x(r.h).toFixed(1)}" cy="${y(r[k]).toFixed(1)}" r="3.2" fill="${col}"/>`));}
+ parts.push(`<text x="${w/2}" y="${h-1}" font-size="11" fill="#65758a" text-anchor="middle">Phase-slip entropy rate (bits per round)</text>`);
+ parts.push(`<text x="${p.l+4}" y="12" font-size="11" fill="#65758a">bits of Helm env MI: record minus out-of-phase record</text>`);
+ return `<svg class="chart" role="img" aria-label="Value of the Archive record to Helm against the cycle's phase-slip entropy rate, Societies A and B" viewBox="0 0 ${w} ${h}">${parts.join('')}</svg>`;
+}
+function memRender(){
+ const c=config();
+ const o={env:$('memEnv').value,archive:$('memArch').value,slip:+$('memSlip').value/1000};
+ $('memReading').textContent='Running the memory test (3000-round runs, 300 discarded)…';
+ setTimeout(()=>{
+  const bits=x=>(x>=0?'+':'')+x.toFixed(3);
+  const one=(title,a,b,sub)=>`<div class="metric"><div class="title">${title}</div><div class="nums"><span class="a">A ${a}</span><span class="b">B ${b}</span></div><div class="smalldef">${sub}</div></div>`;
+  const val=gate=>memRunOnce(gate,c,o)-memRunOnce(gate,c,{...o,muteArchive:true});
+  const vA=val(c.gateA),vB=val(c.gateB);
+  const content=gate=>memRunOnce(gate,c,{...o,archive:'calendar'})-memRunOnce(gate,c,{...o,archive:'misaligned'});
+  const cA=content(c.gateA),cB=content(c.gateB);
+  const pres=gate=>memRunOnce(gate,c,{...o,archive:'misaligned'})-memRunOnce(gate,c,{...o,archive:'echo',muteArchive:true});
+  const pA=pres(c.gateA),pB=pres(c.gateB);
+  $('memMetrics').innerHTML=
+   one('Value of Archive to Helm',bits(vA),bits(vB),'Helm’s environmental bits with the selected Archive speaking, minus with it silenced. Single seed; the audit used 10-seed means.')+
+   one('Content control',bits(cA),bits(cB),'Calendar record minus the same record read a quarter-cycle out of phase: what the record’s content, not its presence, is worth.')+
+   one('Presence control',bits(pA),bits(pB),'Out-of-phase record minus silenced Archive: what merely having another voice in the room is worth.');
+  let rows=[];
+  if(o.env==='periodic'){
+   for(const slip of [0,.005,.01,.02,.04,.08]){
+    rows.push({h:h2(slip),A:memRunOnce(c.gateA,c,{env:'periodic',archive:'calendar',slip})-memRunOnce(c.gateA,c,{env:'periodic',archive:'misaligned',slip}),
+     B:memRunOnce(c.gateB,c,{env:'periodic',archive:'calendar',slip})-memRunOnce(c.gateB,c,{env:'periodic',archive:'misaligned',slip})});
+   }
+   $('memChart').innerHTML=memChartSVG(rows);
+  }else{$('memChart').innerHTML='<p class="small">The slip sweep needs the recurring cycle; switch the environment to see it.</p>';}
+  let msg='';
+  if(o.archive==='echo')msg+=`With the echo Archive, memory’s measured value is ${bits(vA)} bits in A and ${bits(vB)} in B: nothing, or a small drag. That was the lab’s original design, and the audit is right: it proved nothing about memory, only about echoes. `;
+  else if(o.env==='markov')msg+=`A real record in a memoryless world is worth ${bits(vA)} bits in A and ${bits(vB)} in B: the present already says everything the past can, so the record is redundant. Memory cannot help here, and no archive could. `;
+  else msg+=`With a recurring world and a real record, Archive earns its keep: the record’s content is worth ${bits(cA)} bits to Helm in A and ${bits(cB)} in B. It is worth more to the closed-gate society: memory and upward feedback are substitutes; when the operators cannot reach the executive, the record is the executive’s main channel to the world. `;
+  if(o.env==='periodic'&&rows.length)msg+=`As the phase slips grow, the record’s worth decays toward zero near a slip entropy rate of ${h2(0.04).toFixed(2)} bits per round, the memoryless environment’s own rate. Memory is worth exactly the environment’s predictable structure, no more.`;
+  $('memReading').textContent=msg;
+ },60);
+}
+function refresh(){['gateA','gateB','authority','evidence','shock','estRounds'].forEach(id=>{$(id+'Val').textContent=id==='shock'?$('shock').value+' / 42':id==='estRounds'?$('estRounds').value+' rounds':$(''+id).value+'%';});
+ const fp=+$('flip').value/1000;$('flipVal').textContent=fp.toFixed(3)+' · '+h2(fp).toFixed(2)+' bits/round';
+ $('memSlipVal').textContent=(+$('memSlip').value/1000).toFixed(3);}
+function fullRun(){const c=config();render(compute(c));shannonRender(c);}
+['gateA','gateB','authority','evidence','shock','estRounds','flip'].forEach(id=>$(id).addEventListener('input',refresh));
+$('memSlip').addEventListener('input',refresh);
+$('memRun').addEventListener('click',memRender);
+$('run').addEventListener('click',fullRun);$('robust').addEventListener('click',robustness);$('csv').addEventListener('click',exportCSV);
+refresh();fullRun();memRender();
+</script></body></html>

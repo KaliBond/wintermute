@@ -46,7 +46,7 @@ GROUPS = [
         'explore', 'sdrl/', 'cams', 'cams-scorer', 'cams-scorer-local', 'cams-explorer', 'juno-36-explorer', 'juno_calculator',
         'cams-interpreter', 'cams-interpreter/', 'cams-compare/', 'cams-zeitgeist', 'cams-advanced-analysis',
         'cams-integrated-dashboard', 'juno/CAMS_4society_dashboard', 'cams-network-explorer', 'attractors', 'cams-3d-attractor',
-        'cams-coordination', 'seshat-explorer', 'granger-validator', 'cams-telescope/',
+        'cams-coordination', 'seshat-explorer', 'shannon-laboratory', 'granger-validator', 'cams-telescope/',
         ('cams-telescope/guide', 'Guide'), 'cams-instrument', 'cams-morphospace-atlas', 'mind-reader', 'story-maker', 'test/story_maker',
         ('cams-diy-kit', 'Guide'), 'nations-lens', 'score-one',
         'cams-history', 'cams-history/app/', 'cams-history/app/primer/', 'cams-history/app/prophet/',
