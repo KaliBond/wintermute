@@ -64,6 +64,7 @@ GROUPS = [
         'natural-history-of-civilisations', 'geopolitics-as-group-adaptation', 'synchronised-slide', 'human-ai-scientific-record',
         'adversary-02-results', 'attractor-coherence-revisited',
         'p4-retrospective-validation',
+        'cams-informational-perspective',
     ]),
     ('Country & Case Studies', 'Study', 'monthly', '0.6', [
         ('nations', 'Guide'), 'the-empty-pulpit', ('the-empty-pulpit-map', 'Map'), 'usa-empty-pulpit-perspectives',
