@@ -167,3 +167,6 @@ It does not claim the eight-node architecture is minimal or optimal: the appendi
 - Wang, S., & Yang, D. Y. (2021). Policy experimentation in China: The political economy of policy learning. *NBER Working Paper* 29402.
 - Watanabe, S. (1960). Information theoretical analysis of multivariate correlation. *IBM Journal of Research and Development*, 4(1), 66–82.
 - Wiener, N. (1948). *Cybernetics: or control and communication in the animal and the machine*. MIT Press.
+
+
+**Dated note, 24 November 2026, Australia/Sydney (AEDT).** Terminology note. "Healthy abstraction" (section 2) and "healthy" (section 3) should be read as "well-anchored abstraction" / "well-anchored"; the original wording is retained per the corrections policy. The Shannon Laboratory is now at https://neuralnations.org/shannon-laboratory. The version identifiers `d0080d0`, `7231113` and `b865d82` cited in the provenance line are internal laboratory-build labels, not Git commits in KaliBond/wintermute.

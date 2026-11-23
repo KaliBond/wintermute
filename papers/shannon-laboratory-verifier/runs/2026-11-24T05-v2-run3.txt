@@ -1,0 +1,56 @@
+PASS B1a lab: eta_loop as Library Attractor formula
+PASS B1b lab: no eta_loop <-> TE mapping
+PASS B2 lab: Stress = environmental entropy rate, not noise
+PASS B3a lab: coherence split row
+PASS B3b lab: semantic information (Kolchinsky
+PASS B4a lab: muted-source baseline ticks in TE chart
+PASS B4b lab: capacity tile labelled BSC model
+PASS B5 lab: authority-echo panel
+PASS B6 lab: memory panel with out-of-phase control
+PASS B7a note: dDIG cited as pre-existing register
+PASS B7b note: ESD cited
+PASS B7c note: no until-now claim
+PASS B8a note: eta_loop = (B_Lore x B_Archive)/S_Hands
+PASS B8b note: mislabel correction logged
+PASS B9a note: common-drive attenuation (24%/48%)
+PASS B9b note: A inversion under conditioning
+PASS B9c note: authority echo figures
+PASS B9d note: memory worth 0.218 bits
+PASS B10 note: new references (9)
+PASS B11 note: project-ledger provenance marks
+PASS B12 note: gate-as-regime caveat (Heilmann; Wang & Yang)
+PASS B13a note: INFO-2 revised to conditional TE
+PASS B13b note: coding fork (INFO-6)
+PASS B13c note: echo test (INFO-7)
+PASS B13d note: memory/feedback substitutes (INFO-8)
+PASS B13e note: dDIG repairs registered
+PASS B14 note: no em-dashes (style contract)
+---
+PASS A1a A envMI: got 0.1701, want 0.17 ±0.002
+PASS A1b A up TE: got 0.1077, want 0.108 ±0.002
+PASS A1c A down TE: got 0.0169, want 0.017 ±0.002
+PASS A1d A TC: got 5.4553, want 5.455 ±0.002
+PASS A1e B envMI: got 0.2476, want 0.248 ±0.002
+PASS A1f B up TE: got 0.1557, want 0.156 ±0.002
+PASS A1g B down TE: got 0.0114, want 0.011 ±0.002
+PASS A1h B TC: got 5.8035, want 5.803 ±0.002
+PASS A2a all3-muted up baseline A: got 0.0818, want 0.082 ±0.004
+PASS A2b all3-muted up baseline B: got 0.0818, want 0.082 ±0.004
+PASS A3a A up|E: got 0.0421, want 0.042 ±0.004
+PASS A3b A down|E: got 0.0550, want 0.055 ±0.004
+PASS A3c B up|E: got 0.0722, want 0.072 ±0.004
+PASS A3d B down|E: got 0.0411, want 0.041 ±0.004
+PASS A4a A TC|E: got 3.7332, want 3.733 ±0.004
+PASS A4b B TC|E: got 3.8240, want 3.824 ±0.004
+PASS A5a A O-info: got 3.8975, want 3.897 ±0.01
+PASS A5b B O-info: got 4.4019, want 4.402 ±0.01
+PASS A6a echo dTC|E (gate B): got 0.1502, want 0.151 ±0.02
+PASS A6b echo dEnvMI (gate B): got -0.0202, want -0.02 ±0.01
+PASS A7a record content A (slip 0): got 0.2212, want 0.218 ±0.05
+PASS A7b record content B (slip 0): got 0.0823, want 0.085 ±0.04
+PASS A7c record content decays with slips: 0.221 -> 0.013
+PASS A8a up null p at floor (A): got 0.0050, want 0.005 ±0.001
+PASS A8b null floor printed: got 0.0050, want 0.005 ±0.0001
+ALL NUMERIC CHECKS PASS
+---
+V2 ALL CHECKS PASS

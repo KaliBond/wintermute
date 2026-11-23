@@ -1,0 +1,45 @@
+PASS B1a lab: eta_loop as Library Attractor formula
+PASS B1b lab: no eta_loop <-> TE mapping
+PASS B2 lab: Stress = environmental entropy rate, not noise
+PASS B3a lab: coherence split row
+PASS B3b lab: semantic information (Kolchinsky
+PASS B4a lab: muted-source baseline ticks in TE chart
+PASS B4b lab: capacity tile labelled BSC model
+PASS B5 lab: authority-echo panel
+PASS B6 lab: memory panel with out-of-phase control
+PASS B7a note: dDIG cited as pre-existing register
+PASS B7b note: ESD cited
+PASS B7c note: no until-now claim
+PASS B8a note: eta_loop = (B_Lore x B_Archive)/S_Hands
+PASS B8b note: mislabel correction logged
+PASS B9a note: common-drive attenuation (24%/48%)
+PASS B9b note: A inversion under conditioning
+PASS B9c note: authority echo figures
+PASS B9d note: memory worth 0.218 bits
+PASS B10 note: new references (9)
+PASS B11 note: project-ledger provenance marks
+PASS B12 note: gate-as-regime caveat (Heilmann; Wang & Yang)
+PASS B13a note: INFO-2 revised to conditional TE
+PASS B13b note: coding fork (INFO-6)
+PASS B13c note: echo test (INFO-7)
+PASS B13d note: memory/feedback substitutes (INFO-8)
+PASS B13e note: dDIG repairs registered
+PASS B14 note: no em-dashes (style contract)
+---
+node:internal/modules/cjs/loader:1210
+  throw err;
+  ^
+
+Error: Cannot find module '/mnt/agents/output/verifier/v2/v2/numeric_checks.js'
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+    at Module._load (node:internal/modules/cjs/loader:1038:27)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:164:12)
+    at node:internal/main/run_main_module:28:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+
+Node.js v20.20.2
+---
+V2 FAILURES: 1
+exit=1
