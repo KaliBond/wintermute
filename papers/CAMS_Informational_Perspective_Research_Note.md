@@ -3,7 +3,7 @@
 **A research note on the Shannon layer: what the corpus holds, what the laboratory shows after audit, and what is ready for pre-registration**
 
 Status: exploratory synthesis, second edition. No empirical claims beyond the cited literature and the cited CAMS corpus; all simulation findings are conditional on a constructed toy.
-Provenance: extends the CAMS Shannon Laboratory v2.0 (version `d0080d0`), v2.1 (`7231113`) and v2.2 (`b865d82`), built on the CAMS Information Laboratory v1.0. Corpus anchors: KaliBond/wintermute, notably *Entropy Flows and Collapse Signatures* (Paper 4, corrected final internal draft, 16 May 2026) and the *Appendix on the Eight-Node Optimum*. This edition incorporates an independent audit of the laboratory and of the first edition (24 November 2026), whose scripts reproduce every default figure and test every headline claim against a control that could break it.
+Provenance: extends the CAMS Shannon Laboratory v2.0 (version `d0080d0`), v2.1 (`7231113`) and v2.2 (`b865d82`), built on the CAMS Information Laboratory v1.0. Corpus anchors: KaliBond/wintermute, notably *Entropy Flows and Collapse Signatures* (Paper 4, corrected final internal draft, 16 May 2026) and the *Appendix on the Eight-Node Optimum*. This edition incorporates an independent audit of the laboratory and of the first edition, carried out by GPT (OpenAI) on 24 November 2026, whose scripts reproduce every default figure and test every headline claim against a control that could break it.
 Date: 2026-11-24 (v2, same day, post-audit).
 
 ---
