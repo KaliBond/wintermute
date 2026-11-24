@@ -1,0 +1,106 @@
+/* SDRL repair layer: precise controls, provenance and the three-level portrait. */
+.intro {
+  max-width: 980px; margin: 0 auto; padding: 18px 24px 14px;
+  color: var(--text); font-size: 15px; line-height: 1.65;
+}
+.intro p { margin: 0; }
+.intro p + p { margin-top: 7px; }
+.intro .intro-note { color: var(--muted); font-size: 13px; }
+.boot-status {
+  margin: 12px 22px 0; padding: 10px 14px; border: 1px solid var(--line);
+  border-radius: 10px; background: var(--panel); color: var(--muted); font-size: 12.5px;
+}
+.boot-status.error { color: var(--danger); border-color: rgba(192,57,43,.45); }
+
+/* Year control: index-based range, calendar-year number entry, explicit steps. */
+.ctl-year { min-width: 310px; }
+.year-control-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.year-control-head label { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #6d6250; }
+#yearInput {
+  width: 76px; height: 26px; padding: 2px 5px; border: 1px solid var(--navline);
+  border-radius: 7px; background: var(--panel); color: var(--text);
+  font: 600 13px var(--font-m); text-align: center;
+}
+.year-track { display: grid; grid-template-columns: 27px minmax(180px, 1fr) 27px; align-items: center; gap: 7px; }
+.year-step {
+  width: 27px; height: 27px; display: grid; place-items: center; padding: 0;
+  border: 1px solid var(--navline); border-radius: 7px; background: var(--panel);
+  color: var(--text); cursor: pointer; font: 600 16px/1 var(--font-m);
+}
+.year-step:hover:not(:disabled) { border-color: var(--amber); color: var(--amber); }
+.year-step:disabled { opacity: .35; cursor: default; }
+.year-sampling { display: block; max-width: 340px; color: #6d6250; font-size: 10px; line-height: 1.3; }
+
+input[type="range"] {
+  --range-progress: 0%; --range-color: var(--amber);
+  appearance: none; -webkit-appearance: none; height: 24px; margin: 0;
+  background: transparent; cursor: pointer; touch-action: pan-y;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 5px; border-radius: 999px;
+  background: linear-gradient(to right, var(--range-color) 0 var(--range-progress), #ded6c1 var(--range-progress) 100%);
+}
+input[type="range"]::-moz-range-track {
+  height: 5px; border-radius: 999px;
+  background: linear-gradient(to right, var(--range-color) 0 var(--range-progress), #ded6c1 var(--range-progress) 100%);
+}
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none; -webkit-appearance: none; width: 17px; height: 17px; margin-top: -6px;
+  border: 2px solid #fff; border-radius: 50%; background: var(--range-color);
+  box-shadow: 0 0 0 1px rgba(27,42,51,.25), 0 2px 4px rgba(27,42,51,.16);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 14px; height: 14px; border: 2px solid #fff; border-radius: 50%;
+  background: var(--range-color); box-shadow: 0 0 0 1px rgba(27,42,51,.25);
+}
+.ctl-year input[type="range"] { width: 100%; min-width: 180px; }
+.ctl-year input[type="range"]::-webkit-slider-thumb { width: 19px; height: 19px; margin-top: -7px; }
+.fader input[type="range"] { height: 22px; }
+.fader.f-C input { --range-color: #46c08a; }
+.fader.f-K input { --range-color: #2f6f7d; }
+.fader.f-S input { --range-color: #e05d44; }
+.fader.f-A input { --range-color: #9d7bd0; }
+.fader { grid-template-columns: 14px minmax(60px, 1fr) 36px; min-height: 27px; }
+.fader output { font-variant-numeric: tabular-nums; }
+.probe-src { margin: 5px 0 8px; color: var(--muted); font-size: 11px; line-height: 1.45; }
+.probe-src.stale { color: var(--danger); font-weight: 600; }
+
+/* Measured scores, derived dynamics and interpretation remain visually distinct. */
+.dossier { display: block; }
+.portrait-chips { margin: 0 0 12px; }
+.level { border-top: 1px solid var(--line-soft); padding: 12px 0 2px; }
+.level + .level { margin-top: 10px; }
+.level > h3 {
+  display: flex; align-items: center; gap: 8px; margin: 0 0 8px;
+  color: var(--cyan); font-size: 12px; letter-spacing: .09em; text-transform: uppercase;
+}
+.level > h3 span {
+  display: inline-grid; place-items: center; width: 25px; height: 21px;
+  border-radius: 6px; background: var(--cyan-soft); color: var(--amber);
+  font: 600 10px var(--font-m); letter-spacing: 0;
+}
+.level-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.level .block { min-width: 0; }
+.level.measured > h3 { color: #2f6f7d; }
+.level.inferred > h3 { color: #806315; }
+.level.interpretive > h3 { color: #72558d; }
+.level .fineprint { margin-top: 8px; }
+
+.method { flex-basis: 100%; max-width: 1100px; color: var(--muted); }
+.method summary { cursor: pointer; color: var(--amber); font-weight: 600; }
+.method p { margin: 7px 0 0; line-height: 1.55; }
+
+@media (max-width: 1080px) {
+  .ctl-year { flex: 1 1 340px; }
+  .year-track { grid-template-columns: 28px minmax(160px, 1fr) 28px; }
+}
+@media (max-width: 680px) {
+  .intro { padding: 14px 16px 10px; font-size: 14px; }
+  .ctl-year { flex-basis: 100%; min-width: 0; }
+  .year-track { grid-template-columns: 30px minmax(0, 1fr) 30px; }
+  .year-sampling { max-width: none; }
+  .level-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  input[type="range"], .year-step { transition: none !important; }
+}
