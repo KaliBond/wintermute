@@ -4,8 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Social Dynamics Reference Library</title>
-<meta name="description" content="A soft machine of eight distributed functions under constraint: the spring machine, the slope of adaptation, the regime scope, the eight-node wheel and the dossier — 48 polities, 1750–2026, canonical CAMS operators.">
+<meta name="description" content="A soft machine of eight distributed functions under constraint: the spring machine, the Adaptive Landscape, regime trajectories and interpretive portraits, using canonical CAMS operators and disclosed source sampling.">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="repair.css">
 </head>
 <body>
 <header class="topbar">
@@ -14,21 +15,17 @@
       <svg viewBox="0 0 34 34" aria-hidden="true">
         <rect width="34" height="34" rx="10" fill="#1b2a33"/>
         <g fill="#fbf8ef">
-          <circle cx="17" cy="6" r="2"/>
-          <circle cx="24.78" cy="9.22" r="2"/>
-          <circle cx="28" cy="17" r="2"/>
-          <circle cx="24.78" cy="24.78" r="2"/>
-          <circle cx="17" cy="28" r="2"/>
-          <circle cx="9.22" cy="24.78" r="2"/>
-          <circle cx="6" cy="17" r="2"/>
-          <circle cx="9.22" cy="9.22" r="2"/>
+          <circle cx="17" cy="6" r="2"/><circle cx="24.78" cy="9.22" r="2"/>
+          <circle cx="28" cy="17" r="2"/><circle cx="24.78" cy="24.78" r="2"/>
+          <circle cx="17" cy="28" r="2"/><circle cx="9.22" cy="24.78" r="2"/>
+          <circle cx="6" cy="17" r="2"/><circle cx="9.22" cy="9.22" r="2"/>
         </g>
         <circle cx="17" cy="17" r="1.6" fill="#fbf8ef"/>
       </svg>
     </div>
     <div class="brand-text">
       <h1>The Social Dynamics Reference Library</h1>
-      <span class="tagline">Past footprints of Adaption</span>
+      <span class="tagline">Past footprints of adaptation</span>
     </div>
   </div>
   <div class="controls">
@@ -37,10 +34,18 @@
       <nav class="soc-links" id="socLinks" aria-label="Polity"></nav>
     </div>
     <div class="ctl ctl-year">
-      <span class="ctl-label">Year</span>
-      <input type="range" id="yearSlider" aria-label="Year">
+      <div class="year-control-head">
+        <label for="yearInput">Year</label>
+        <input type="number" id="yearInput" inputmode="numeric" step="1" value="2026" aria-label="Year">
+      </div>
+      <div class="year-track">
+        <button type="button" id="yearPrev" class="year-step" aria-label="Previous scored observation">&#8249;</button>
+        <input type="range" id="yearSlider" min="0" max="0" step="1" value="0" aria-label="Scored observation">
+        <button type="button" id="yearNext" class="year-step" aria-label="Next scored observation">&#8250;</button>
+      </div>
+      <span class="year-sampling" id="yearSampling">Checking source sampling</span>
     </div>
-    <button id="playBtn" class="btn-play" aria-label="Play the full sweep">
+    <button id="playBtn" class="btn-play" aria-label="Follow this society" title="Follow this society">
       <svg viewBox="0 0 16 16" class="ic-play" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>
       <svg viewBox="0 0 16 16" class="ic-pause" aria-hidden="true" style="display:none"><path d="M3.5 2.5h3.4v11H3.5zM9.1 2.5h3.4v11H9.1z" fill="currentColor"/></svg>
     </button>
@@ -48,13 +53,18 @@
   </div>
 </header>
 <p class="epigraph">Nature builds social complexity by the energetic iteration of the nested dynamics of the cooperation that sustains specialisation.</p>
+<div class="intro">
+  <p>CAMS reads a society through eight interdependent functions. Their scored coherence, capacity, stress and abstraction produce a changing institutional state, not a fixed national character.</p>
+  <p class="intro-note">The instruments distinguish measured scores, derived dynamics and interpretation. Annual rows are mounted where the repository supplies them; missing years are never manufactured.</p>
+</div>
+<div class="boot-status" id="bootStatus" role="status">Mounting annual source rows before drawing the instruments…</div>
 
 <main class="grid">
   <section class="panel panel-constellation" aria-label="The Soft Machine">
     <div class="panel-head">
       <h2>The Soft Machine</h2>
       <p class="machine-quote">A soft machine, a trireme without a hull; eight toiling prisoners of a chain gang.</p>
-      <p class="sub">Eight thermodynamic requirements — a mesh of distributed functions, not a pattern in the sky. No hull carries the rowers: each function toils under its neighbours&rsquo; stress, the machine holds together or flies apart, and every deficit is partly outside any single function&rsquo;s control.</p>
+      <p class="sub">Eight thermodynamic requirements form a mesh of distributed functions. No hull carries the rowers: each function works under its neighbours&rsquo; stress, the machine holds together or flies apart, and every deficit is partly outside any single function&rsquo;s control.</p>
     </div>
     <div class="const-wrap">
       <div class="yr-big" id="yrBig" aria-hidden="true">—</div>
@@ -63,67 +73,67 @@
     </div>
     <div class="sysvit" id="sysvit"></div>
     <div class="timeline-wrap">
-      <div class="tl-head"><h3>S/K timeline</h3><span class="sub">aggregate stress against capacity across the sampled series; the dashed line is sk = 1</span></div>
+      <div class="tl-head"><h3>S/K timeline</h3><span class="sub">aggregate stress against capacity across the scored series; the dashed line is sk = 1</span></div>
       <canvas id="skTimeline" aria-label="Stress over capacity timeline"></canvas>
     </div>
   </section>
 
-  <section class="panel panel-chart" aria-label="Star chart">
+  <section class="panel panel-chart" aria-label="The Adaptive Landscape">
     <div class="panel-head">
-      <h2>Star Chart</h2>
-      <p class="sub">mean node value V&#772; against aggregate bond strength B<sub>eff</sub>. The teal band is the slope of adaptation — the surface cooperation builds, on which every society rests; every branch in the same boat. Arrows mark each trajectory&rsquo;s direction of travel: up the front loop, down the back loop — a descent is release and reorganisation, and the hope of the climb back. Each dot is one polity-year.</p>
+      <h2>The Adaptive Landscape</h2>
+      <p class="sub"><strong>The changing relationship between functional viability and cooperative integration.</strong> Mean node value V&#772; is plotted against aggregate bond strength B<sub>eff</sub>. The teal <strong>Observed Adaptive Corridor</strong> shows the median and central 68 per cent of mounted observations within B<sub>eff</sub> bins. It is descriptive, not a fitted law. Arrows join successive scored observations; each point is one society-year.</p>
       <div class="legend" id="chartLegend"></div>
     </div>
     <div class="chart-wrap">
       <div class="yr-big" id="yrBigChart" aria-hidden="true">—</div>
-      <canvas id="starChart"></canvas>
+      <canvas id="starChart" aria-label="Adaptive Landscape of viability and bond strength"></canvas>
       <div class="tooltip" id="chartTip" hidden></div>
     </div>
     <div class="nodechips" id="nodechips"></div>
     <div class="strip-block">
-      <div class="strip-head"><h3>Spectral strip</h3><span class="sub">regime mix along the slope of adaptation (B<sub>eff</sub> bins)</span></div>
-      <canvas id="spectralStrip" aria-label="Regime composition along the slope of adaptation"></canvas>
+      <div class="strip-head"><h3>Regime composition</h3><span class="sub">observed regime mix along the Adaptive Landscape, in B<sub>eff</sub> bins</span></div>
+      <canvas id="spectralStrip" aria-label="Regime composition along the Adaptive Landscape"></canvas>
       <div class="strip-axis"><span>weak bonds</span><span>strong bonds</span></div>
     </div>
   </section>
 
-  <section class="panel panel-scope" aria-label="Regime scope">
+  <section class="panel panel-scope" aria-label="Regime Trajectory">
     <div class="panel-head">
-      <h2>Regime Scope</h2>
-      <p class="sub">the polity&rsquo;s path through time, segmented by regime type — the full sampled series.</p>
+      <h2>Regime Trajectory</h2>
+      <p class="sub">the polity&rsquo;s path through its scored observations, segmented by regime type.</p>
     </div>
-    <div class="scope-strip-wrap"><canvas id="scopeStrip"></canvas></div>
+    <div class="scope-strip-wrap"><canvas id="scopeStrip" aria-label="Viability and regime trajectory"></canvas></div>
     <div class="scope-readout" id="scopeReadout"></div>
     <div class="scope-mix" id="scopeMix"></div>
   </section>
 
-  <section class="panel panel-wheel" aria-label="The eight nodes">
+  <section class="panel panel-wheel" aria-label="The Eight Functions">
     <div class="panel-head">
-      <h2>The Eight Nodes</h2>
-      <p class="sub">arclength = node value V<sub>i</sub> at the selected year; ring order is the CAMS wheel.</p>
+      <h2>The Eight Functions</h2>
+      <p class="sub">arclength represents node value V<sub>i</sub> at the selected year; ring order is the CAMS wheel.</p>
     </div>
-    <canvas id="wheel" aria-label="Eight-node wheel"></canvas>
+    <canvas id="wheel" aria-label="Eight-function viability wheel"></canvas>
     <div class="wheel-legend" id="wheelLegend"></div>
   </section>
 
-  <section class="panel panel-dossier" aria-label="Dossier">
+  <section class="panel panel-dossier" aria-label="System Portrait">
     <div class="panel-head">
-      <h2>Dossier</h2>
+      <h2>System Portrait</h2>
       <p class="sub" id="dossierSub">—</p>
     </div>
     <div class="dossier" id="dossierBody"></div>
-    <p class="fineprint">USA 1933 snaps to 1935 (sparse sampling). b and cog_gap are recomputed canonically — the prototype&rsquo;s generators were unrecoverable.</p>
+    <p class="fineprint" id="dataNote">Source sampling and laboratory provenance are reported with each portrait.</p>
   </section>
 
   <section class="panel panel-bench" id="panel-bench" aria-label="Instrument bench" hidden>
     <div class="bench-tabs" role="tablist">
-      <button role="tab" id="tab-dynamics" aria-selected="true" aria-controls="bench-dynamics">Attractor wheel &amp; node vitals</button>
-      <button role="tab" id="tab-scorer" aria-selected="false" aria-controls="bench-scorer">Data Scorer</button>
+      <button role="tab" id="tab-dynamics" aria-selected="true" aria-controls="bench-dynamics">Functional Vitals</button>
+      <button role="tab" id="tab-scorer" aria-selected="false" aria-controls="bench-scorer">Model Laboratory</button>
     </div>
 
     <div id="bench-dynamics" role="tabpanel" aria-labelledby="tab-dynamics" class="bench-page">
       <div class="vitals-block">
-        <div class="vitals-head"><h3>Node vitals</h3><span class="sub">C coherence &middot; K capacity &middot; S stress &middot; A abstraction, across the sampled series</span></div>
+        <div class="vitals-head"><h3>Node vitals</h3><span class="sub">C coherence &middot; K capacity &middot; S stress &middot; A abstraction, across the scored series</span></div>
         <canvas id="vitals" aria-label="Node vital sparklines"></canvas>
       </div>
     </div>
@@ -133,11 +143,12 @@
         <div class="scorer-left">
           <div class="scorer-head">
             <h3>Eight-node scorecard</h3>
-            <p class="sub">Edit the vitals; derived quantities recompute live under the canonical operators and the probe star moves on the Star Chart.</p>
+            <p class="sub">Edit the vitals in 0.1 increments. Derived quantities recompute under the canonical operators and the laboratory state moves on the Adaptive Landscape.</p>
             <div class="scorer-actions">
               <button id="probeReset" class="btn">Reset to selected year</button>
-              <label class="ctl ctl-inline"><input type="checkbox" id="probeShow" checked> show probe on chart</label>
+              <label class="ctl ctl-inline"><input type="checkbox" id="probeShow" checked> show laboratory state</label>
             </div>
+            <p class="probe-src" id="probeSrc" role="status"></p>
           </div>
           <div class="scorer-cards" id="scorerCards"></div>
         </div>
@@ -152,12 +163,13 @@
 </main>
 
 <footer class="foot">
-  <span>Source: JUNO unified panel, 48 polities, 5,425 polity-years, 1750&ndash;2026 (KaliBond/wintermute, fetched 2026-11-14). Canonical drift check passed, max |&Delta;| = 3.6e&minus;15.</span>
+  <span id="sourceFoot">Source provenance is assembled after the annual rows are mounted.</span>
+  <details class="method"><summary>Data and method</summary><p id="sourceDetail"></p></details>
   <span>V<sub>i</sub> = C+K&minus;S+0.5A &middot; B<sub>ij</sub> = &radic;(q<sub>i</sub>q<sub>j</sub>)&middot;2<sup>&minus;(S<sub>i</sub>+S<sub>j</sub>)/10</sup> &middot; q<sub>i</sub>=(0.6C+0.4A)/10 &middot; &eta;<sub>floor</sub> = min(BS<sub>Lore</sub>,BS<sub>Archive</sub>)/max(S<sub>Hands</sub>,2)</span>
   <button id="benchToggle" class="bench-toggle" aria-expanded="false">Instrument bench <span aria-hidden="true">&#9656;</span></button>
 </footer>
 
 <script src="data/data.js"></script>
-<script src="app.js"></script>
+<script src="bootstrap.js"></script>
 </body>
 </html>
